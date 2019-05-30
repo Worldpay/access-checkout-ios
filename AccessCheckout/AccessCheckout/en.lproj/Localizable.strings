@@ -1,0 +1,5 @@
+"visa" = "Visa";
+"mastercard" = "Mastercard";
+"amex" = "Amex";
+"unknown_card_brand" = "Unknown";
+"card_number_placeholder" = "Card Number";

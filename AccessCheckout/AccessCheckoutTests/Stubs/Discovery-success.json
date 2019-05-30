@@ -1,0 +1,14 @@
+{
+    "_links": {
+        "service:verifiedTokens": {
+            "href": "https://access.worldpay.com/verifiedTokens"
+        },
+        "curies": [
+            {
+                "href": "https://access.worldpay.com/rels/payments/{rel}",
+                "name": "payments",
+                "templated": true
+            }
+        ]
+    }
+}

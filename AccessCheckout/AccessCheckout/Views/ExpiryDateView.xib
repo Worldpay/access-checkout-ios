@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExpiryDateView" customModule="AccessCheckout" customModuleProvider="target">
+            <connections>
+                <outlet property="monthTextField" destination="EO2-jh-dxt" id="PKR-Vr-U3F"/>
+                <outlet property="yearTextField" destination="v7N-XF-79w" id="5xV-JH-Hba"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="195"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EO2-jh-dxt">
+                    <rect key="frame" x="8" y="4" width="183" height="187"/>
+                    <accessibility key="accessibilityConfiguration" identifier="expiryMonth"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obb-Ke-jOM">
+                    <rect key="frame" x="195" y="85.5" width="6" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v7N-XF-79w">
+                    <rect key="frame" x="209" y="4" width="179" height="187"/>
+                    <accessibility key="accessibilityConfiguration" identifier="expiryYear"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                </textField>
+            </subviews>
+            <accessibility key="accessibilityConfiguration" identifier="expiryDate"/>
+            <constraints>
+                <constraint firstItem="obb-Ke-jOM" firstAttribute="leading" secondItem="EO2-jh-dxt" secondAttribute="trailing" constant="4" id="3T7-Fh-y7r"/>
+                <constraint firstItem="v7N-XF-79w" firstAttribute="leading" secondItem="obb-Ke-jOM" secondAttribute="trailing" constant="8" id="6o2-Ib-eq1"/>
+                <constraint firstAttribute="bottom" secondItem="v7N-XF-79w" secondAttribute="bottom" constant="4" id="7Ql-7g-DJK"/>
+                <constraint firstAttribute="bottom" secondItem="EO2-jh-dxt" secondAttribute="bottom" constant="4" id="7ln-2h-eAe"/>
+                <constraint firstItem="EO2-jh-dxt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CYh-lY-baa"/>
+                <constraint firstItem="v7N-XF-79w" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="EMn-gu-enU"/>
+                <constraint firstItem="obb-Ke-jOM" firstAttribute="firstBaseline" secondItem="EO2-jh-dxt" secondAttribute="firstBaseline" id="eLZ-Kl-Owu"/>
+                <constraint firstItem="obb-Ke-jOM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ghg-WB-YE6"/>
+                <constraint firstAttribute="trailing" secondItem="v7N-XF-79w" secondAttribute="trailing" constant="8" id="jEf-GJ-YFf"/>
+                <constraint firstItem="EO2-jh-dxt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="uAj-ft-kql"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="95.652173913043484" y="-104.79910714285714"/>
+        </view>
+    </objects>
+</document>

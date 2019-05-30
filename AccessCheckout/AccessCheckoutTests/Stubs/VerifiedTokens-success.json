@@ -1,0 +1,24 @@
+{
+    "_links":{
+        "verifiedTokens:recurring":{
+            "href":"https://access.worldpay.com/verifiedTokens/recurring"
+            
+        },
+        "verifiedTokens:cardOnFile":{
+            "href":"https://access.worldpay.com/verifiedTokens/cardOnFile"
+            
+        },
+        "verifiedTokens:sessions":{
+            "href":"https://access.worldpay.com/verifiedTokens/sessions"
+            
+        },
+        "resourceTree":{
+            "href":"https://access.worldpay.com/rels/verifiedTokens/resourceTree.json"
+            
+        },
+        "curies":[{
+            "href":"https://access.worldpay.com/rels/verifiedTokens/{rel}.json","name":"verifiedTokens","templated":true
+            
+        }]
+    }
+}
