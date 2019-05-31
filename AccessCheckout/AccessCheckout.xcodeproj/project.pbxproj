@@ -60,7 +60,7 @@
 		C9AC168A22524CAA006B7E05 /* cardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AC168422523364006B7E05 /* cardConfiguration.json */; };
 		C9AC168C225266B7006B7E05 /* CardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC168B225266B7006B7E05 /* CardValidator.swift */; };
 		C9B228F2220B457C00C91548 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9B228F1220B457C00C91548 /* Assets.xcassets */; };
-		C9D5130D221D96CC00D2DBDA /* AccessCheckoutClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5130C221D96CC00D2DBDA /* AccessCheckoutClient.swift */; };
+		C9D5130D221D96CC00D2DBDA /* AccessClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5130C221D96CC00D2DBDA /* AccessClient.swift */; };
 		C9E62DA221FF748D00BBCA3F /* PANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E62DA121FF748D00BBCA3F /* PANView.swift */; };
 		D3EAECAAC2808EE6A240C2E7 /* Pods_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ADF18E3AB321C1A777D1CE /* Pods_AccessCheckoutDemoUITests.framework */; };
 /* End PBXBuildFile section */
@@ -168,7 +168,7 @@
 		C9AC168822524B6C006B7E05 /* CardConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardConfigurationTests.swift; sourceTree = "<group>"; };
 		C9AC168B225266B7006B7E05 /* CardValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidator.swift; sourceTree = "<group>"; };
 		C9B228F1220B457C00C91548 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C9D5130C221D96CC00D2DBDA /* AccessCheckoutClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClient.swift; sourceTree = "<group>"; };
+		C9D5130C221D96CC00D2DBDA /* AccessClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessClient.swift; sourceTree = "<group>"; };
 		C9E62DA121FF748D00BBCA3F /* PANView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANView.swift; sourceTree = "<group>"; };
 		CFD31A2F97CD8CD6DB0763A9 /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,7 +284,7 @@
 				C9826EDB2298290200E2C32F /* Views */,
 				C94FA50E21EF97FA00047D11 /* AccessCheckout.h */,
 				C95D13362296DB24008CA293 /* Card.swift */,
-				C9D5130C221D96CC00D2DBDA /* AccessCheckoutClient.swift */,
+				C9D5130C221D96CC00D2DBDA /* AccessClient.swift */,
 				C9AC168B225266B7006B7E05 /* CardValidator.swift */,
 				C98311AC224102A6007E68C1 /* AccessDiscovery.swift */,
 				1B98C0E62242828200995A39 /* AccessCheckoutResponse.swift */,
@@ -715,7 +715,7 @@
 				C95D13372296DB24008CA293 /* Card.swift in Sources */,
 				1B25A919229409DE00DDDFC2 /* AccessCheckoutClientError.swift in Sources */,
 				1B25A91B22940A2200DDDFC2 /* AccessCheckoutClientValidationError.swift in Sources */,
-				C9D5130D221D96CC00D2DBDA /* AccessCheckoutClient.swift in Sources */,
+				C9D5130D221D96CC00D2DBDA /* AccessClient.swift in Sources */,
 				C9826EDA2298288600E2C32F /* CardView.swift in Sources */,
 				C9AC168C225266B7006B7E05 /* CardValidator.swift in Sources */,
 			);

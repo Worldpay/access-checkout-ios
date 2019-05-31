@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var accessCheckoutClient: AccessCheckoutClient?
+    private var accessClient: AccessClient?
     private var card: Card?
     
     private let merchantId = "<YOUR MERCHANT ID>"
@@ -37,10 +37,11 @@ class ViewController: UIViewController {
         expiryDateView.isEnabled = false
         cvvView.isEnabled = false
         spinner.startAnimating()
-        accessCheckoutClient?.createSession(pan: pan,
-                                         expiryMonth: expiryMonth,
-                                         expiryYear: expiryYear,
-                                         cvv: cvv) { result in
+        accessClient?.createSession(pan: pan,
+                                    expiryMonth: expiryMonth,
+                                    expiryYear: expiryYear,
+                                    cvv: cvv,
+                                    urlSession: URLSession.shared) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
@@ -145,7 +146,8 @@ class ViewController: UIViewController {
         
         let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: accessWorldpayBaseUrl)
         accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
-            self.accessCheckoutClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery, merchantIdentifier: self.merchantId)
+            self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
+                                                     merchantIdentifier: self.merchantId)
         }
     }
 }
