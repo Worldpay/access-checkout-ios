@@ -1,6 +1,6 @@
 import Foundation
 
-// A client for the Access Checkout API
+/// A client for the Access Checkout API
 public final class AccessCheckoutClient {
     
     private let merchantIdentifier: String
@@ -10,7 +10,7 @@ public final class AccessCheckoutClient {
      Initialises a client for API communication.
      
      - Parameters:
-        - discovery: The `AccessCheckoutDiscovery` object
+        - discovery: The `Discovery` component
         - merchantIdentifier: The merchants unique identifier provided by Worldpay
      */
     public init(discovery: Discovery, merchantIdentifier: String) {
@@ -19,7 +19,7 @@ public final class AccessCheckoutClient {
     }
     
     /**
-     Creates a Verified Tokens session.
+     Returns a Verified Tokens Session.
      
      - Parameters:
         - pan: The card number

@@ -115,9 +115,11 @@ final public class AccessCheckoutCardValidator: CardValidator {
     }
     
     /**
-     Validates a card CVV.
+     Validates a card CVV against a card number if present.
      
-     - Parameter cvv: The card CVV
+     - Parameters:
+        - cvv: The card CVV
+        - withPAN: The card number
      
      - Returns: The result of the validation.
      */
@@ -319,9 +321,11 @@ final public class AccessCheckoutCardValidator: CardValidator {
 
 /// Result of validation
 public struct ValidationResult {
-    /// The validity of a partially complete input
+    
+    /// Result is partially valid
     public let partial: Bool
-    /// The validity of a complete input
+    
+    /// Result is completely valid
     public let complete: Bool
 }
 

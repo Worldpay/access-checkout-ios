@@ -1,6 +1,6 @@
 import Foundation
 
-/// Discovers Verified Tokens Session service
+/// Discovery of the Access Worldpay Verified Tokens Session service
 public protocol Discovery {
     
     /// The discovered verified tokens session service endpoint

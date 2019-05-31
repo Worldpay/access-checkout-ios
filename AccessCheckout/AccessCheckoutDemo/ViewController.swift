@@ -33,9 +33,9 @@ class ViewController: UIViewController {
         }
         
         submitButton.isEnabled = false
-        panView.isEnabled(false)
-        expiryDateView.isEnabled(false)
-        cvvView.isEnabled(false)
+        panView.isEnabled = false
+        expiryDateView.isEnabled = false
+        cvvView.isEnabled = false
         spinner.startAnimating()
         accessCheckoutClient?.createSession(pan: pan,
                                          expiryMonth: expiryMonth,
@@ -78,14 +78,14 @@ class ViewController: UIViewController {
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
         
-        panView.isEnabled(true)
+        panView.isEnabled = true
         panView.imageView.image = UIImage(named: "unknown")
         panView.isValid(valid: true)
         
-        expiryDateView.isEnabled(true)
+        expiryDateView.isEnabled = true
         expiryDateView.isValid(valid: true)
         
-        cvvView.isEnabled(true)
+        cvvView.isEnabled = true
         cvvView.isValid(valid: true)
         
         submitButton.isEnabled = false

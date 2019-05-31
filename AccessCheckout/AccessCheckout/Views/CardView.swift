@@ -2,6 +2,10 @@ import Foundation
 
 /// A view managed by a `Card`
 public protocol CardView {
+    
+    /// Is enabled for editing
+    var isEnabled: Bool { get set }
+    
     /// A delegate property
     var cardViewDelegate: CardViewDelegate? { get set }
     
@@ -10,19 +14,22 @@ public protocol CardView {
     
     /// Clear the contents of any view input
     func clear()
-    
-    /// Is enabled for editing
-    func isEnabled(_ enabled: Bool)
 }
 
 /// A view representing a text field
 public protocol CardTextView: CardView {
+    
+    /// The text
     var text: String? { get }
 }
 
 /// A view representing a date field
 public protocol CardDateView: CardView {
+    
+    /// The date's month
     var month: String? { get }
+    
+    /// The date's year
     var year: String? { get }
 }
 
@@ -58,21 +65,4 @@ public protocol CardViewDelegate: class {
     
     /// Request permission to update card expiry date year
     func canUpdate(expiryYear: ExpiryYear?, withText text: String, inRange range: NSRange) -> Bool
-}
-
-public extension ExpiryYear {
-    /**
-     Convert to a 4 digit integer year format. E.g. if year is "19",
-     converts to 2019.
-     
-     - Returns: A 4 digit integer representation upon successful conversion.
-    */
-    func toFourDigitFormat() -> UInt? {
-        if let year = UInt(self) {
-            return year < 100 ? year + 2000 : year
-        }
-        else {
-            return nil
-        }
-    }
 }
