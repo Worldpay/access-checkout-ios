@@ -23,6 +23,9 @@
 		1B98C0E72242828200995A39 /* AccessCheckoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98C0E62242828200995A39 /* AccessCheckoutResponse.swift */; };
 		1BCB901E2295714E00D95EC2 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
 		1BCB901F229572F900D95EC2 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
+		1BFF07AA22A179D7008A265C /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF07A922A179D7008A265C /* visa.png */; };
+		1BFF07AE22A17D8E008A265C /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF07AB22A17D8E008A265C /* mastercard.png */; };
+		1BFF07AF22A17D8E008A265C /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF07AC22A17D8E008A265C /* amex.png */; };
 		272F2B612549E5CEAC1781FB /* Pods_AccessCheckout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 626CB5BDBC3621B2A8FCC030 /* Pods_AccessCheckout.framework */; };
 		2F58B90C8A60D2536BD74A59 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9879AD8D1C464F5BBFAF6635 /* Pods_AccessCheckoutDemo.framework */; };
 		400D03D622085BE100171ABE /* CardValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400D03D522085BE100171ABE /* CardValidatorTests.swift */; };
@@ -125,6 +128,9 @@
 		1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
 		1B98C0E62242828200995A39 /* AccessCheckoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutResponse.swift; sourceTree = "<group>"; };
 		1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokensSession-success.json"; sourceTree = "<group>"; };
+		1BFF07A922A179D7008A265C /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
+		1BFF07AB22A17D8E008A265C /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
+		1BFF07AC22A17D8E008A265C /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
 		34ADF18E3AB321C1A777D1CE /* Pods_AccessCheckoutDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E587E2F28C7BFCEB9DD70A0 /* Pods-AccessCheckout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckout.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckout/Pods-AccessCheckout.release.xcconfig"; sourceTree = "<group>"; };
 		400D03D522085BE100171ABE /* CardValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidatorTests.swift; sourceTree = "<group>"; };
@@ -295,6 +301,9 @@
 				C9977A1B220C9A3B00091084 /* Localizable.strings */,
 				C99E22E12215A266007F02CA /* bitrise.yml */,
 				C9AC168422523364006B7E05 /* cardConfiguration.json */,
+				1BFF07A922A179D7008A265C /* visa.png */,
+				1BFF07AC22A17D8E008A265C /* amex.png */,
+				1BFF07AB22A17D8E008A265C /* mastercard.png */,
 			);
 			path = AccessCheckout;
 			sourceTree = "<group>";
@@ -496,11 +505,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BFF07AF22A17D8E008A265C /* amex.png in Resources */,
 				C9977A19220C9A3B00091084 /* Localizable.strings in Resources */,
 				5CDA210721FF0DA800D50BEB /* CVVView.xib in Resources */,
 				C99E22E22215A266007F02CA /* bitrise.yml in Resources */,
 				5CDDE68421FA1C8000C77137 /* PANView.xib in Resources */,
 				C9AC168522523364006B7E05 /* cardConfiguration.json in Resources */,
+				1BFF07AE22A17D8E008A265C /* mastercard.png in Resources */,
+				1BFF07AA22A179D7008A265C /* visa.png in Resources */,
 				1B587B4F2292EFEF0099F684 /* VerifiedTokens-success.json in Resources */,
 				1B587B4D2292EFA30099F684 /* Discovery-success.json in Resources */,
 				5CDA210121FF047E00D50BEB /* ExpiryDateView.xib in Resources */,

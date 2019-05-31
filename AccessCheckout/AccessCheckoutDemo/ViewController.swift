@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     private var accessCheckoutClient: AccessCheckoutClient?
     private var card: Card?
+    private let unknownBrandImage = UIImage(named: "card_unknown")
     
     private let merchantId = "<YOUR MERCHANT ID>"
     private let accessWorldpayBaseUrl = URL(string: "https://access.worldpay.com")!
@@ -79,7 +80,7 @@ class ViewController: UIViewController {
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
         
         panView.isEnabled(true)
-        panView.imageView.image = UIImage(named: "unknown")
+        panView.imageView.image = unknownBrandImage
         panView.isValid(valid: true)
         
         expiryDateView.isEnabled(true)
@@ -148,6 +149,16 @@ class ViewController: UIViewController {
             self.accessCheckoutClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery, merchantIdentifier: self.merchantId)
         }
     }
+    
+    private func updateCardBrandImage(url: URL) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            if let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    self.panView.imageView.image = UIImage(data: data)
+                }
+            }
+        }
+    }
 }
 
 extension ViewController: CardDelegate {
@@ -159,10 +170,11 @@ extension ViewController: CardDelegate {
     }
     
     func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?) {
-        if let name = cardBrand?.name {
-            panView.imageView.image = UIImage(named: name)
+        if let imageUrl = cardBrand?.imageUrl,
+            let url = URL(string: imageUrl) {
+                updateCardBrandImage(url: url)
         } else {
-            panView.imageView.image = UIImage(named: "unknown")
+            panView.imageView.image = unknownBrandImage
         }
         panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
