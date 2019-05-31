@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "card_unknown.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "amex.png",
       "scale" : "2x"
     },
     {
