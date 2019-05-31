@@ -4,7 +4,7 @@ import Foundation
 public final class AccessCheckoutClient {
     
     private let merchantIdentifier: String
-    private let accessCheckoutDiscovery: AccessCheckoutDiscovery
+    private let discovery: Discovery
     
     /**
      Initialises a client for API communication.
@@ -13,8 +13,8 @@ public final class AccessCheckoutClient {
         - discovery: The `AccessCheckoutDiscovery` object
         - merchantIdentifier: The merchants unique identifier provided by Worldpay
      */
-    public init(discovery: AccessCheckoutDiscovery, merchantIdentifier: String) {
-        self.accessCheckoutDiscovery = discovery
+    public init(discovery: Discovery, merchantIdentifier: String) {
+        self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
     }
     
@@ -36,7 +36,7 @@ public final class AccessCheckoutClient {
                     urlSession: URLSession = URLSession.shared,
                     completionHandler: @escaping (Result<String, Error>) -> Void) {
         
-        if let url = accessCheckoutDiscovery.getVerifiedTokensSessionEndPoint() {
+        if let url = discovery.verifiedTokensSessionEndpoint {
             do {
                 let request = try buildRequest(url: url,
                                                bundle: Bundle(for: AccessCheckoutClient.self),
@@ -50,8 +50,8 @@ public final class AccessCheckoutClient {
                 completionHandler(.failure(error))
             }
         } else {
-            accessCheckoutDiscovery.discover(urlSession: urlSession) {
-                if let url = self.accessCheckoutDiscovery.getVerifiedTokensSessionEndPoint(){
+            discovery.discover(urlSession: urlSession) {
+                if let url = self.discovery.verifiedTokensSessionEndpoint {
                     do {
                         let request = try self.buildRequest(url: url,
                                                             bundle: Bundle(for: AccessCheckoutClient.self),

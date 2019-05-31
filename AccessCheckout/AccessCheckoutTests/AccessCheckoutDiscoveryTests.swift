@@ -63,14 +63,12 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     
     let destinationURI = "https://access.worldpay.com/verifiedTokens/sessions"
 
-    class MockAccessCheckoutDiscovery: AccessCheckoutDiscovery {
+    class MockDiscovery: Discovery {
+        var verifiedTokensSessionEndpoint: URL?
         var discoverCalls = 0
-        override func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
-            super.discover(urlSession: urlSession) {
-                self.discoverCalls += 1
-                onComplete?()
-            }
-            
+        func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
+            self.discoverCalls += 1
+            onComplete?()
         }
     }
     
@@ -162,7 +160,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
 
     func testDiscoveryFail_retryOnVTS() {
         
-        let mockDiscovery = MockAccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
+        let mockDiscovery = MockDiscovery()
         
         stub(http(.get, uri: accessRootURI), failure(StubError.test as NSError))
         
@@ -186,7 +184,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    fileprivate func verifyCanDecodeAndEncode(_ stubData: Data) {
+    private func verifyCanDecodeAndEncode(_ stubData: Data) {
         do {
             let accessCheckoutResponse1 = try JSONDecoder().decode(AccessCheckoutResponse.self, from: stubData)
             let encodedData = try JSONEncoder().encode(accessCheckoutResponse1)
@@ -198,32 +196,32 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         }
     }
     
-    fileprivate func givenFirstCallReturns(_ response: String) {
+    private func givenFirstCallReturns(_ response: String) {
         let accessRootResponse = response.data(using: .utf8)!
         stub(http(.get, uri: accessRootURI), jsonData(accessRootResponse))
     }
     
-    fileprivate func givenSecondCallReturns(_ response: String) {
+    private func givenSecondCallReturns(_ response: String) {
         let vtsRootResponse = response.data(using: .utf8)!
         stub(http(.get, uri: vtsRootURI), jsonData(vtsRootResponse))
     }
     
-    fileprivate func discoveryReturnsNil() {
+    private func discoveryReturnsNil() {
         let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
         let testExpectation = expectation(description: "failure")
         discovery.discover(urlSession: URLSession.shared) {
-            XCTAssertNil(discovery.getVerifiedTokensSessionEndPoint())
+            XCTAssertNil(discovery.verifiedTokensSessionEndpoint)
             testExpectation.fulfill()
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    fileprivate func discoveryFindsTheRightURL() {
+    private func discoveryFindsTheRightURL() {
         let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
         
         let testExpectation = expectation(description: "discovery")
         discovery.discover(urlSession: URLSession.shared) {
-            XCTAssertEqual(discovery.getVerifiedTokensSessionEndPoint(), URL(string: self.destinationURI))
+            XCTAssertEqual(discovery.verifiedTokensSessionEndpoint, URL(string: self.destinationURI))
             testExpectation.fulfill()
         }
         waitForExpectations(timeout: 10, handler: nil)

@@ -30,7 +30,7 @@ public protocol CardValidator {
     func canUpdate(expiryYear: ExpiryYear?, withText text: String, inRange range: NSRange) -> Bool
 }
 
-// An Access Checkout `CardValidator`
+/// An Access Checkout `CardValidator`
 final public class AccessCheckoutCardValidator: CardValidator {
     
     /// The configuration to validate against
