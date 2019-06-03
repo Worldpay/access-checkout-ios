@@ -73,10 +73,10 @@ of these views or for more custom requirements you may provide your own
 
     func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?) {
         // Update any card brand on the panView
-        if let name = cardBrand?.name {
-            panView.imageView.image = UIImage(named: name)
+        if let imageUrl = cardBrand?.imageUrl {
+            // Load the brand image here...
         } else {
-            panView.imageView.image = UIImage(named: "unknown")
+            // Clear brand image here...
         }
     }
   }

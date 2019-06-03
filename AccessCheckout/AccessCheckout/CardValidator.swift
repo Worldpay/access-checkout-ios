@@ -75,7 +75,20 @@ final public class AccessCheckoutCardValidator: CardValidator {
      - Returns: A tuple containing the result of the validation and any matching card brand.
      */
     public func validate(pan: PAN) -> (valid: ValidationResult, brand: CardConfiguration.CardBrand?) {
-        let cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
+        
+        var cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
+        
+        switch cardBrand?.name {
+        case "visa":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "visa", withExtension: "png")?.absoluteString
+        case "mastercard":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "mastercard", withExtension: "png")?.absoluteString
+        case "amex":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "amex", withExtension: "png")?.absoluteString
+        default:
+            break
+        }
+        
         guard let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan else {
             return (ValidationResult(partial: true, complete: pan.isValidLuhn()), cardBrand)
         }
