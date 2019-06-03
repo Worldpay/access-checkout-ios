@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var accessCheckoutClient: AccessCheckoutClient?
+    private var accessClient: AccessClient?
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
@@ -34,14 +34,15 @@ class ViewController: UIViewController {
         }
         
         submitButton.isEnabled = false
-        panView.isEnabled(false)
-        expiryDateView.isEnabled(false)
-        cvvView.isEnabled(false)
+        panView.isEnabled = false
+        expiryDateView.isEnabled = false
+        cvvView.isEnabled = false
         spinner.startAnimating()
-        accessCheckoutClient?.createSession(pan: pan,
-                                         expiryMonth: expiryMonth,
-                                         expiryYear: expiryYear,
-                                         cvv: cvv) { result in
+        accessClient?.createSession(pan: pan,
+                                    expiryMonth: expiryMonth,
+                                    expiryYear: expiryYear,
+                                    cvv: cvv,
+                                    urlSession: URLSession.shared) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
@@ -79,14 +80,14 @@ class ViewController: UIViewController {
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
         
-        panView.isEnabled(true)
+        panView.isEnabled = true
         panView.imageView.image = unknownBrandImage
         panView.isValid(valid: true)
         
-        expiryDateView.isEnabled(true)
+        expiryDateView.isEnabled = true
         expiryDateView.isValid(valid: true)
         
-        cvvView.isEnabled(true)
+        cvvView.isEnabled = true
         cvvView.isValid(valid: true)
         
         submitButton.isEnabled = false
@@ -146,7 +147,8 @@ class ViewController: UIViewController {
         
         let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: accessWorldpayBaseUrl)
         accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
-            self.accessCheckoutClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery, merchantIdentifier: self.merchantId)
+            self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
+                                                     merchantIdentifier: self.merchantId)
         }
     }
     

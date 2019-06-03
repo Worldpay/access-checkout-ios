@@ -1,23 +1,44 @@
 import Foundation
 
-public class AccessCheckoutDiscovery {
+/// Discovery of the Access Worldpay Verified Tokens Session service
+public protocol Discovery {
+    
+    /// The discovered verified tokens session service endpoint
+    var verifiedTokensSessionEndpoint: URL? { get }
+    
+    /// Starts discovery of services
+    func discover(urlSession: URLSession, onComplete: (() -> Void)?)
+}
+
+/// Discovers Access Worldpay Verified Tokens Session service
+public final class AccessCheckoutDiscovery: Discovery {
     
     private let baseUrl: URL
     private let verifiedTokensServiceLinkId = "service:verifiedTokens"
     private let verifiedTokensSessionLinkId = "verifiedTokens:sessions"
 
-    private var verifiedTokensSessionEndPoint: URL? = nil
     private var accessRootDiscoveryTask: URLSessionTask?
     private var verifiedTokensDiscoveryTask: URLSessionTask?
 
+    /// The discovered Access Worldpay Verified Tokens Session service endpoint
+    public var verifiedTokensSessionEndpoint: URL?
+    
+    /**
+     Initialises discovery with the base URL of Access Worldpay services.
+     
+     - Parameter baseUrl: The Access Worldpay services root URL
+     */
     public init(baseUrl: URL) {
         self.baseUrl = baseUrl
     }
     
-    public func getVerifiedTokensSessionEndPoint() -> URL? {
-        return verifiedTokensSessionEndPoint
-    }
-    
+    /**
+     Starts the discovery of the Access Worldpay Verified Tokens Session service.
+     
+     - Parameters:
+        - urlSession: A `URLSession` object
+        - onComplete: Callback upon discovery completion, successful or otherwise
+     */
     public func discover(urlSession: URLSession, onComplete: (() -> Void)? = nil) {
         
         // Check for existing tasks running
@@ -43,7 +64,7 @@ public class AccessCheckoutDiscovery {
         self.verifiedTokensDiscoveryTask = urlSession.dataTask(with: startUrl) { (data, response, error) in
             if let jsonData = data,
                let vtsSessionURL = self.fetchServiceURL(withLinkId: self.verifiedTokensSessionLinkId, in: jsonData) {
-                    self.verifiedTokensSessionEndPoint = vtsSessionURL
+                    self.verifiedTokensSessionEndpoint = vtsSessionURL
             }
             onComplete?()
         }

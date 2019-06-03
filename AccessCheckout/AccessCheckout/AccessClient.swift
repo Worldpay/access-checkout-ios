@@ -1,74 +1,33 @@
 import Foundation
 
-// A client for the Access Checkout API
+/// Entrypoint to Access Checkout API
+public protocol AccessClient {
+    
+    /// Request to create a Verified Token session
+    func createSession(pan: PAN,
+                       expiryMonth: UInt,
+                       expiryYear: UInt,
+                       cvv: CVV,
+                       urlSession: URLSession,
+                       completionHandler: @escaping (Result<String, Error>) -> Void)
+}
+
+/// A client for the Access Checkout API
 public final class AccessCheckoutClient {
     
     private let merchantIdentifier: String
-    private let accessCheckoutDiscovery: AccessCheckoutDiscovery
+    private let discovery: Discovery
     
     /**
      Initialises a client for API communication.
      
      - Parameters:
-        - discovery: The `AccessCheckoutDiscovery` object
+        - discovery: The `Discovery` component
         - merchantIdentifier: The merchants unique identifier provided by Worldpay
      */
-    public init(discovery: AccessCheckoutDiscovery, merchantIdentifier: String) {
-        self.accessCheckoutDiscovery = discovery
+    public init(discovery: Discovery, merchantIdentifier: String) {
+        self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
-    }
-    
-    /**
-     Creates a Verified Tokens session.
-     
-     - Parameters:
-        - pan: The card number
-        - expiryMonth: The card expiry date month
-        - expiryYear: The card expiry date year
-        - cvv: The card CVV
-        - urlSession: A `URLSession` object
-        - completionHandler: Closure returning a `Result` with the created session or an error
-     */
-    public func createSession(pan: PAN,
-                    expiryMonth: UInt,
-                    expiryYear: UInt,
-                    cvv: CVV,
-                    urlSession: URLSession = URLSession.shared,
-                    completionHandler: @escaping (Result<String, Error>) -> Void) {
-        
-        if let url = accessCheckoutDiscovery.getVerifiedTokensSessionEndPoint() {
-            do {
-                let request = try buildRequest(url: url,
-                                               bundle: Bundle(for: AccessCheckoutClient.self),
-                                               pan: pan,
-                                               expiryMonth: expiryMonth,
-                                               expiryYear: expiryYear,
-                                               cvv: cvv)
-                
-                createSession(request: request, completionHandler: completionHandler)
-            } catch {
-                completionHandler(.failure(error))
-            }
-        } else {
-            accessCheckoutDiscovery.discover(urlSession: urlSession) {
-                if let url = self.accessCheckoutDiscovery.getVerifiedTokensSessionEndPoint(){
-                    do {
-                        let request = try self.buildRequest(url: url,
-                                                            bundle: Bundle(for: AccessCheckoutClient.self),
-                                                            pan: pan,
-                                                            expiryMonth: expiryMonth,
-                                                            expiryYear: expiryYear,
-                                                            cvv: cvv)
-                        
-                        self.createSession(request: request, completionHandler: completionHandler)
-                    } catch {
-                        completionHandler(.failure(error))
-                    }
-                } else {
-                    completionHandler(.failure(AccessCheckoutClientError.undiscoverable(message: "Unable to discover services")))
-                }
-            }
-        }
     }
     
     private func buildRequest(url: URL,
@@ -115,6 +74,62 @@ public final class AccessCheckoutClient {
                         AccessCheckoutClientError.unknown(message: "Unexpected response: no data or error returned")))
             }
         }.resume()
+    }
+}
+
+extension AccessCheckoutClient: AccessClient {
+    
+    /**
+     Request to create a Verified Tokens Session.
+     
+     - Parameters:
+        - pan: The card number
+        - expiryMonth: The card expiry date month
+        - expiryYear: The card expiry date year
+        - cvv: The card CVV
+        - urlSession: A `URLSession` object
+        - completionHandler: Closure returning a `Result` with the created session or an error
+     */
+    public func createSession(pan: PAN,
+                              expiryMonth: UInt,
+                              expiryYear: UInt,
+                              cvv: CVV,
+                              urlSession: URLSession,
+                              completionHandler: @escaping (Result<String, Error>) -> Void) {
+        
+        if let url = discovery.verifiedTokensSessionEndpoint {
+            do {
+                let request = try buildRequest(url: url,
+                                               bundle: Bundle(for: AccessCheckoutClient.self),
+                                               pan: pan,
+                                               expiryMonth: expiryMonth,
+                                               expiryYear: expiryYear,
+                                               cvv: cvv)
+                
+                createSession(request: request, completionHandler: completionHandler)
+            } catch {
+                completionHandler(.failure(error))
+            }
+        } else {
+            discovery.discover(urlSession: urlSession) {
+                if let url = self.discovery.verifiedTokensSessionEndpoint {
+                    do {
+                        let request = try self.buildRequest(url: url,
+                                                            bundle: Bundle(for: AccessCheckoutClient.self),
+                                                            pan: pan,
+                                                            expiryMonth: expiryMonth,
+                                                            expiryYear: expiryYear,
+                                                            cvv: cvv)
+                        
+                        self.createSession(request: request, completionHandler: completionHandler)
+                    } catch {
+                        completionHandler(.failure(error))
+                    }
+                } else {
+                    completionHandler(.failure(AccessCheckoutClientError.undiscoverable(message: "Unable to discover services")))
+                }
+            }
+        }
     }
 }
 

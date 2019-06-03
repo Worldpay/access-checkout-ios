@@ -1,12 +1,15 @@
 import UIKit
 
+/// A view representing a card's expiry date
 @IBDesignable public class ExpiryDateView: UIView {
     
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     
+    /// The delegate to handle view events
     weak public var cardViewDelegate: CardViewDelegate?
     
+    /// The expiry date month element
     public var month: ExpiryMonth? {
         guard let text = monthTextField.text else {
             return nil
@@ -17,6 +20,7 @@ import UIKit
         return text
     }
     
+    /// The expiry date year element
     public var year: ExpiryYear? {
         guard let text = yearTextField.text else {
             return nil
@@ -27,12 +31,14 @@ import UIKit
         return text
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    /// Initialize ExpiryDateView from storyboard
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViewFromNib()
     }
     
-    public override init(frame: CGRect) {
+    /// Initializer override
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupViewFromNib()
     }
@@ -72,20 +78,32 @@ import UIKit
 }
 
 extension ExpiryDateView: CardDateView {
+    
+    public var isEnabled: Bool {
+        get {
+            return monthTextField.isEnabled && yearTextField.isEnabled
+        }
+        set {
+            monthTextField.isEnabled = newValue
+            yearTextField.isEnabled = newValue
+        }
+    }
+    
+    /**
+     The validity of the expiry date has updated.
+     
+     - Parameters:
+        - valid: View represents a valid expiry date
+     */
     public func isValid(valid: Bool) {
         monthTextField.textColor = valid ? UIColor.black : UIColor.red
         yearTextField.textColor = valid ? UIColor.black : UIColor.red
     }
     
-    
+    /// Clears any text input.
     public func clear() {
         monthTextField.text = nil
         yearTextField.text = nil
-    }
-    
-    public func isEnabled(_ enabled: Bool) {
-        monthTextField.isEnabled = enabled
-        yearTextField.isEnabled = enabled
     }
 }
 

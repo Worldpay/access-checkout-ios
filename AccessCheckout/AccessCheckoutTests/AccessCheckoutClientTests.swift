@@ -15,15 +15,17 @@ class AccessCheckoutClientTests: XCTestCase {
         }
     }
     
-    class MockAccessCheckoutDiscovery: AccessCheckoutDiscovery {
-        override func getVerifiedTokensSessionEndPoint() -> URL? {
-            return URL(string: "https://access.worldpay.com/verifiedTokens")
+    class MockDiscovery: Discovery {
+        var verifiedTokensSessionEndpoint = URL(string: "https://access.worldpay.com/verifiedTokens")
+        
+        func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
+            onComplete?()
         }
     }
     
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     private let getSessionRequestStub = http(.post, uri: "https://access.worldpay.com/verifiedTokens")
-    private let mockAccessDiscovery = MockAccessCheckoutDiscovery(baseUrl: URL(string: "https://access.worldpay.com")!)
+    private let mockDiscovery = MockDiscovery()
     
     override func setUp() {
     }
@@ -37,7 +39,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let data = getSampleResponseWith(href: expectedHref)
         stub(getSessionRequestStub, jsonData(data, status: 201, headers: nil))
         
-        let client = AccessCheckoutClient(discovery: mockAccessDiscovery, merchantIdentifier: "")
+        let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
         
         let tokenExpectation = expectation(description: "token")
         client.createSession(pan: "1234",
@@ -65,7 +67,7 @@ class AccessCheckoutClientTests: XCTestCase {
         }
         stub(getSessionRequestStub, jsonData(data))
         
-        let client = AccessCheckoutClient(discovery: mockAccessDiscovery, merchantIdentifier: "")
+        let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
         client.createSession(pan: "",
                              expiryMonth: 0,
                              expiryYear: 0,

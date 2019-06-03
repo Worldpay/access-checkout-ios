@@ -12,7 +12,7 @@ public protocol Card: CardViewDelegate {
     /// View capturing the card CVV
     var cvvView: CardTextView { get }
     
-    /// The Card's delegate
+    /// The `Card`'s delegate
     var cardDelegate: CardDelegate? { get set }
     
     /// The card validator
@@ -226,9 +226,29 @@ public protocol CardDelegate {
 
 /// The card number or 'Primary Account Number'
 public typealias PAN = String
+
 /// The card CVV
 public typealias CVV = String
+
 /// The card expiry date month
 public typealias ExpiryMonth = String
+
 /// The card expiry date year
 public typealias ExpiryYear = String
+
+public extension ExpiryYear {
+    /**
+     Convert to a 4 digit integer year format. E.g. if year is "19",
+     converts to 2019.
+     
+     - Returns: A 4 digit integer representation upon successful conversion.
+     */
+    func toFourDigitFormat() -> UInt? {
+        if let year = UInt(self) {
+            return year < 100 ? year + 2000 : year
+        }
+        else {
+            return nil
+        }
+    }
+}

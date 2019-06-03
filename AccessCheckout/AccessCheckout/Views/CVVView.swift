@@ -1,11 +1,14 @@
 import UIKit
 
+/// A view representing a card's Card Verification Value
 @IBDesignable public class CVVView: UIView {
 
     @IBOutlet weak var textField: UITextField!
     
+    /// The delegate to handle view events
     weak public var cardViewDelegate: CardViewDelegate?
     
+    /// The CVV represented by the view
     public var text: CVV? {
         guard let text = textField.text else {
             return nil
@@ -16,12 +19,14 @@ import UIKit
         return text
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    /// Initialize CVVView from storyboard
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViewFromNib()
     }
     
-    public override init(frame: CGRect) {
+    /// Initializer override
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupViewFromNib()
     }
@@ -51,16 +56,30 @@ import UIKit
 }
 
 extension CVVView: CardTextView {
+    
+    /// View is enabled for editing
+    public var isEnabled: Bool {
+        get {
+            return textField.isEnabled
+        }
+        set {
+            textField.isEnabled = newValue
+        }
+    }
+    
+    /**
+     The validity of the CVV has updated.
+     
+     - Parameters:
+        - valid: View represents a valid CVV
+     */
     public func isValid(valid: Bool) {
         textField.textColor = valid ? UIColor.black : UIColor.red
     }
     
+    /// Clears any text input.
     public func clear() {
         textField.text = nil
-    }
-    
-    public func isEnabled(_ enabled: Bool) {
-        textField.isEnabled = enabled
     }
 }
 
