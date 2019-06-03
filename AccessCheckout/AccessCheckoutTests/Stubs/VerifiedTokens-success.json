@@ -1,24 +1,22 @@
 {
     "_links":{
-        "verifiedTokens:recurring":{
-            "href":"https://access.worldpay.com/verifiedTokens/recurring"
+        "verifiedTokens:recurring": {
+            "href": "<BASE_URI>/verifiedTokens/recurring"
+        },
+        "verifiedTokens:cardOnFile": {
+            "href": "<BASE_URI>/verifiedTokens/cardOnFile"
+        },
+        "verifiedTokens:sessions": {
+            "href": "<BASE_URI>/verifiedTokens/sessions"
+        },
+        "resourceTree": {
+            "href": "<BASE_URI>/rels/verifiedTokens/resourceTree.json"
             
         },
-        "verifiedTokens:cardOnFile":{
-            "href":"https://access.worldpay.com/verifiedTokens/cardOnFile"
-            
-        },
-        "verifiedTokens:sessions":{
-            "href":"https://access.worldpay.com/verifiedTokens/sessions"
-            
-        },
-        "resourceTree":{
-            "href":"https://access.worldpay.com/rels/verifiedTokens/resourceTree.json"
-            
-        },
-        "curies":[{
-            "href":"https://access.worldpay.com/rels/verifiedTokens/{rel}.json","name":"verifiedTokens","templated":true
-            
+        "curies": [{
+            "href": "<BASE_URI>/rels/verifiedTokens/{rel}.json",
+            "name": "verifiedTokens",
+            "templated": true
         }]
     }
 }

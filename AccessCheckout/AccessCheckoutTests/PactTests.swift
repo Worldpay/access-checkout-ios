@@ -13,20 +13,21 @@ import Mockingjay
 
 class PactTests: XCTestCase {
 
+    let baseURI = "https://access.worldpay.com"
+    let verifiedTokensMockService = MockService(provider: "verified-tokens",
+                                                consumer: "access-checkout-iOS-sdk")
+    var mockDiscovery: AccessCheckoutDiscovery?
+    
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        mockDiscovery = AccessCheckoutDiscovery(baseUrl: URL(string: baseURI)!)
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
-    let verifiedTokensMockService = MockService(provider: "verified-tokens",
-                                                consumer: "access-checkout-iOS-sdk")
 
     func testGetSession() {
         
-        let baseURI = "https://access.worldpay.com"
         guard let url = Bundle(for: type(of: self)).url(forResource: "VerifiedTokens-success",
                                                         withExtension: "json") else {
             XCTFail()
@@ -36,7 +37,7 @@ class PactTests: XCTestCase {
             XCTFail()
             return
         }
-        let vtsStub = String(format: vtsStubFormat, baseURI)
+        let vtsStub = vtsStubFormat.replacingOccurrences(of: "<BASE_URI>", with: baseURI)
         
         guard let vtsData = vtsStub.data(using: .utf8) else {
             XCTFail()
