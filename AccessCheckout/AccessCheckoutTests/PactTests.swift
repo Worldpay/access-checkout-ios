@@ -1,90 +1,59 @@
-//
-//  PactTests.swift
-//  AccessCheckoutTests
-//
-//  Created by Matt Davison on 03/06/2019.
-//  Copyright © 2019 Worldpay. All rights reserved.
-//
-
 import XCTest
 import PactConsumerSwift
-import Mockingjay
 @testable import AccessCheckout
 
 class PactTests: XCTestCase {
 
-    let baseURI = "https://access.worldpay.com"
     let verifiedTokensMockService = MockService(provider: "verified-tokens",
                                                 consumer: "access-checkout-iOS-sdk")
-    var mockDiscovery: AccessCheckoutDiscovery?
     
-    override func setUp() {
-        mockDiscovery = AccessCheckoutDiscovery(baseUrl: URL(string: baseURI)!)
+    class MockDiscovery: Discovery {
+        var verifiedTokensSessionEndpoint: URL?
+        let baseURI: String
+        init(baseURI: String) {
+            self.baseURI = baseURI
+        }
+        func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
+            verifiedTokensSessionEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
+            onComplete?()
+        }
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testGetSession() {
+    func testCreateSession() {
         
-        guard let url = Bundle(for: type(of: self)).url(forResource: "VerifiedTokens-success",
-                                                        withExtension: "json") else {
+        let bundle = Bundle(for: type(of: self))
+        guard let sessionUrl = bundle.url(forResource: "VerifiedTokensSession-success",
+                                        withExtension: "json"),
+            let sessionStubFormat = try? String(contentsOf: sessionUrl) else {
             XCTFail()
             return
         }
-        guard let vtsStubFormat = try? String(contentsOf: url) else {
-            XCTFail()
-            return
-        }
-        let vtsStub = vtsStubFormat.replacingOccurrences(of: "<BASE_URI>", with: baseURI)
+        let sessionStub = sessionStubFormat.replacingOccurrences(of: "<BASE_URI>", with: verifiedTokensMockService.baseUrl)
         
-        guard let vtsData = vtsStub.data(using: .utf8) else {
-            XCTFail()
-            return
-        }
-        
-        let verifiedTokensPath = "/verifiedTokens"
-        let uri = baseURI + verifiedTokensPath
-        stub(http(.get, uri: uri), jsonData(vtsData))
-        
-//        let vtsRoot = "https://access.worldpay.com/verifiedTokens"
-//        let vtsStubData = vtsRootEndpointResponse(verifiedTokensMockService.baseUrl).data(using: .utf8)!
-//        stub(http(.get, uri: vtsRoot), jsonData(vtsStubData))
-//
-//
-//
-        let expectedHref = "\(baseURI)/verifiedTokens/sessions/token-id"
-//        let jsonData = vtsSessionsResponse(expectedHref)
-        
-        guard let json = try? JSONSerialization.jsonObject(with: vtsData, options: .allowFragments) else {
+        guard let sessionData = sessionStub.data(using: .utf8),
+            let sessionJson = try? JSONSerialization.jsonObject(with: sessionData, options: .allowFragments) else {
             XCTFail()
             return
         }
         
         verifiedTokensMockService
             .given("a session is available")
-            .uponReceiving("a request for verified tokens links")
-            .withRequest(method: .GET, path: verifiedTokensPath)
-            .willRespondWith(status: 200,
-                             headers: ["Content-Type": "application/json"],
-                             body: json)
+            .uponReceiving("a request to create a session")
+            .withRequest(method: .POST, path: "/verifiedTokens/sessions")
+            .willRespondWith(status: 201,
+                             headers: ["Content-Type": "application/json; charset=utf-8"],
+                             body: sessionJson)
         
-        
-        let accessDiscovery = AccessCheckoutDiscovery(baseUrl: URL(string: baseURI)!)
-        let verifiedTokensClient = AccessCheckoutClient(discovery: accessDiscovery, merchantIdentifier: "identity")
-        
+        let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
+        let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "identity")
         verifiedTokensMockService.run(timeout: 10) { testComplete in
-            verifiedTokensClient.createSession(pan: "1234", expiryMonth: 0, expiryYear: 0, cvv: "123") { result in
-                switch result {
-                case .success(let href):
-                    XCTAssertEqual(href, expectedHref)
-                case .failure:
-                    XCTFail()
-                }
+            verifiedTokensClient.createSession(pan: "",
+                                               expiryMonth: 0,
+                                               expiryYear: 0,
+                                               cvv: "",
+                                               urlSession: URLSession.shared) { result in
                 testComplete()
             }
         }
     }
-
 }

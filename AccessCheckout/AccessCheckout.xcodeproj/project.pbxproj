@@ -21,6 +21,33 @@
 		1B587B532292F74D0099F684 /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
 		1B587B55229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
 		1B92092722A5228100BA8B7B /* PactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B92092622A5228100BA8B7B /* PactTests.swift */; };
+		1B92092822A54BBF00BA8B7B /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
+		1B92092922A54BBF00BA8B7B /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
+		1B92092A22A54BBF00BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		1B92092B22A54BBF00BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91C2294480A00DDDFC2 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
+		1B92092C22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91E22944A1400DDDFC2 /* VerifiedTokens-unknown-variation1.json */; };
+		1B92092D22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92022944B6100DDDFC2 /* VerifiedTokens-unknown-variation2.json */; };
+		1B92092E22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
+		1B92092F22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
+		1B92093022A54BC000BA8B7B /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
+		1B92093122A54BC000BA8B7B /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
+		1B92093222A54BC000BA8B7B /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
+		1B92093322A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		1B92093422A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91C2294480A00DDDFC2 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
+		1B92093522A54BC000BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91E22944A1400DDDFC2 /* VerifiedTokens-unknown-variation1.json */; };
+		1B92093622A54BC000BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92022944B6100DDDFC2 /* VerifiedTokens-unknown-variation2.json */; };
+		1B92093722A54BC000BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
+		1B92093822A54BC000BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
+		1B92093922A54BC300BA8B7B /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
+		1B92093A22A54BC300BA8B7B /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
+		1B92093B22A54BC300BA8B7B /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
+		1B92093C22A54BC300BA8B7B /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
+		1B92093D22A54BC300BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		1B92093E22A54BC300BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91C2294480A00DDDFC2 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
+		1B92093F22A54BC300BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91E22944A1400DDDFC2 /* VerifiedTokens-unknown-variation1.json */; };
+		1B92094022A54BC300BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92022944B6100DDDFC2 /* VerifiedTokens-unknown-variation2.json */; };
+		1B92094122A54BC300BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
+		1B92094222A54BC300BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
 		1B98C0E72242828200995A39 /* AccessCheckoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98C0E62242828200995A39 /* AccessCheckoutResponse.swift */; };
 		1BCB901E2295714E00D95EC2 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
 		1BCB901F229572F900D95EC2 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
@@ -508,14 +535,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B92092E22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */,
 				1BFF07AF22A17D8E008A265C /* amex.png in Resources */,
 				C9977A19220C9A3B00091084 /* Localizable.strings in Resources */,
+				1B92092A22A54BBF00BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
+				1B92092822A54BBF00BA8B7B /* VerifiedTokensSession-success.json in Resources */,
+				1B92092922A54BBF00BA8B7B /* VerifiedTokens-internalServerError.json in Resources */,
 				5CDA210721FF0DA800D50BEB /* CVVView.xib in Resources */,
 				C99E22E22215A266007F02CA /* bitrise.yml in Resources */,
 				5CDDE68421FA1C8000C77137 /* PANView.xib in Resources */,
+				1B92092C22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */,
+				1B92092D22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */,
 				C9AC168522523364006B7E05 /* cardConfiguration.json in Resources */,
 				1BFF07AE22A17D8E008A265C /* mastercard.png in Resources */,
+				1B92092F22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */,
 				1BFF07AA22A179D7008A265C /* visa.png in Resources */,
+				1B92092B22A54BBF00BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				1B587B4F2292EFEF0099F684 /* VerifiedTokens-success.json in Resources */,
 				1B587B4D2292EFA30099F684 /* Discovery-success.json in Resources */,
 				5CDA210121FF047E00D50BEB /* ExpiryDateView.xib in Resources */,
@@ -526,9 +561,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B92093022A54BC000BA8B7B /* Discovery-success.json in Resources */,
+				1B92093522A54BC000BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */,
+				1B92093722A54BC000BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */,
+				1B92093122A54BC000BA8B7B /* VerifiedTokens-success.json in Resources */,
+				1B92093422A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
+				1B92093322A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
+				1B92093222A54BC000BA8B7B /* VerifiedTokens-internalServerError.json in Resources */,
+				1B92093822A54BC000BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */,
 				C9AC168A22524CAA006B7E05 /* cardConfiguration.json in Resources */,
 				C95B812522118C03008F07F4 /* Localizable.strings in Resources */,
 				1BCB901E2295714E00D95EC2 /* VerifiedTokensSession-success.json in Resources */,
+				1B92093622A54BC000BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,8 +602,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B92093B22A54BC300BA8B7B /* VerifiedTokensSession-success.json in Resources */,
+				1B92093F22A54BC300BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */,
+				1B92094122A54BC300BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */,
+				1B92093922A54BC300BA8B7B /* Discovery-success.json in Resources */,
+				1B92093E22A54BC300BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
+				1B92093D22A54BC300BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
+				1B92093C22A54BC300BA8B7B /* VerifiedTokens-internalServerError.json in Resources */,
+				1B92094222A54BC300BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */,
 				C99E9CE0225C9D95003F7025 /* cardConfiguration.json in Resources */,
 				C95B812322118C01008F07F4 /* Localizable.strings in Resources */,
+				1B92093A22A54BC300BA8B7B /* VerifiedTokens-success.json in Resources */,
+				1B92094022A54BC300BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
