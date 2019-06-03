@@ -80,7 +80,7 @@ class ViewController: UIViewController {
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
         
-        panView.isEnabled(true)
+        panView.isEnabled = true
         panView.imageView.image = unknownBrandImage
         panView.isValid(valid: true)
         
