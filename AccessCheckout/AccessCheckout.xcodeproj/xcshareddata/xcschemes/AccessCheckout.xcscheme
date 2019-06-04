@@ -50,7 +50,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "${SRCROOT}/pact/binpact-mock-service stop&#10;">
+               scriptText = "${SRCROOT}/pact/bin/pact-mock-service stop&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
