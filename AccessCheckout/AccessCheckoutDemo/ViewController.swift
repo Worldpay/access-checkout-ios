@@ -14,9 +14,6 @@ class ViewController: UIViewController {
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
-    private let merchantId = "<YOUR MERCHANT ID>"
-    private let accessWorldpayBaseUrl = URL(string: "https://access.worldpay.com")!
-    
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
             let month = expiryDateView.month,
@@ -145,10 +142,16 @@ class ViewController: UIViewController {
         }
         self.card = card
         
-        let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: accessWorldpayBaseUrl)
+        // Fetch configuration properties for AccessClient
+        guard let baseUri = Bundle.main.infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String,
+            let baseUrl = URL(string: baseUri),
+            let merchantId = Bundle.main.infoDictionary?["MERCHANT_IDENTIFIER"] as? String else {
+                return
+        }
+        let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: baseUrl)
         accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
             self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
-                                                     merchantIdentifier: self.merchantId)
+                                                     merchantIdentifier: merchantId)
         }
     }
     

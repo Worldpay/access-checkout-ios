@@ -43,5 +43,7 @@
 	</array>
     <key>ACCESS_CHECKOUT_BASE_URI</key>
     <string>$(ACCESS_CHECKOUT_BASE_URI)</string>
+    <key>MERCHANT_IDENTIFIER</key>
+    <string>$(MERCHANT_IDENTIFIER)</string>
 </dict>
 </plist>
