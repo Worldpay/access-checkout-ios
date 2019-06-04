@@ -1,7 +1,7 @@
 import UIKit
 
 /// A view representing a card's Primary Account Number
-@IBDesignable public class PANView: UIView {
+public class PANView: UIView {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet public weak var imageView: UIImageView!

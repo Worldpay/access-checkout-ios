@@ -40,30 +40,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setupDiscoveryStub() {
-        if let stubDiscovery = UserDefaults.standard.string(forKey: "stubDiscovery"),
-            let url = Bundle.main.url(forResource: stubDiscovery, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
-                MockingjayProtocol.addStub(matcher: http(.get, uri: "https://access.worldpay.com"),
-                                           builder: jsonData(data))
+        guard let stubName = UserDefaults.standard.string(forKey: "stub:discovery") else {
+            return
         }
+        guard let stub = StubProvider.stub(forName: stubName, bundle: Bundle.main) else {
+            return
+        }
+        MockingjayProtocol.addStub(matcher: http(.get, uri: stub.baseUri),
+                                   builder: jsonData(stub.data))
     }
 
     private func setupVerifiedTokensStub() {
-        if let stubVerifiedTokens = UserDefaults.standard.string(forKey: "stubVerifiedTokens"),
-            let url = Bundle.main.url(forResource: stubVerifiedTokens, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
-            MockingjayProtocol.addStub(matcher: http(.get, uri: "https://access.worldpay.com/verifiedTokens"),
-                                           builder: jsonData(data))
+        guard let stubName = UserDefaults.standard.string(forKey: "stub:tokens") else {
+            return
         }
+        guard let stub = StubProvider.stub(forName: stubName, bundle: Bundle.main) else {
+            return
+        }
+        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(stub.baseUri)/verifiedTokens"),
+                                   builder: jsonData(stub.data))
     }
     
     private func setupVerifiedTokensSessionStub() {
-        if let stubVerifiedTokensSession = UserDefaults.standard.string(forKey: "stubVerifiedTokensSession"),
-            let url = Bundle.main.url(forResource: stubVerifiedTokensSession, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
-                MockingjayProtocol.addStub(matcher: http(.post, uri: "https://access.worldpay.com/verifiedTokens/sessions"),
-                                       builder: jsonData(data))
+        guard let stubName = UserDefaults.standard.string(forKey: "stub:tokens-create") else {
+            return
         }
+        guard let stub = StubProvider.stub(forName: stubName, bundle: Bundle.main) else {
+            return
+        }
+        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(stub.baseUri)/verifiedTokens/sessions"),
+                                   builder: jsonData(stub.data))
     }
 
 }

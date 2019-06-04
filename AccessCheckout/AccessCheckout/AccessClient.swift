@@ -31,19 +31,19 @@ public final class AccessCheckoutClient {
     }
     
     private func buildRequest(url: URL,
-                      bundle: Bundle,
-                      pan: PAN,
-                      expiryMonth: UInt,
-                      expiryYear: UInt,
-                      cvv: CVV) throws -> URLRequest {
+                              bundle: Bundle,
+                              pan: PAN,
+                              expiryMonth: UInt,
+                              expiryYear: UInt,
+                              cvv: CVV) throws -> URLRequest {
         
         var request = URLRequest(url: url)
         request.addValue("application/vnd.worldpay.verified-tokens-v1.hal+json", forHTTPHeaderField: "content-type")
         request.httpMethod = "POST"
         let tokenRequest = VerifiedTokenRequest(cardNumber: pan,
                                                 cardExpiryDate: VerifiedTokenRequest.CardExpiryDate(
-                                                    month: expiryMonth,
-                                                    year: expiryYear),
+                                                month: expiryMonth,
+                                                year: expiryYear),
                                                 cvc: cvv,
                                                 identity: merchantIdentifier)
         request.httpBody = try JSONEncoder().encode(tokenRequest)
@@ -56,8 +56,8 @@ public final class AccessCheckoutClient {
     }
     
     private func createSession(request: URLRequest,
-                       urlSession: URLSession = URLSession.shared,
-                       completionHandler: @escaping (Result<String, Error>) -> Void ) {
+                               urlSession: URLSession,
+                               completionHandler: @escaping (Result<String, Error>) -> Void ) {
         
         urlSession.dataTask(with: request) { (data, _, error) in
             if let sessionData = data {
@@ -106,7 +106,9 @@ extension AccessCheckoutClient: AccessClient {
                                                expiryYear: expiryYear,
                                                cvv: cvv)
                 
-                createSession(request: request, completionHandler: completionHandler)
+                createSession(request: request,
+                              urlSession: urlSession,
+                              completionHandler: completionHandler)
             } catch {
                 completionHandler(.failure(error))
             }
@@ -121,7 +123,9 @@ extension AccessCheckoutClient: AccessClient {
                                                             expiryYear: expiryYear,
                                                             cvv: cvv)
                         
-                        self.createSession(request: request, completionHandler: completionHandler)
+                        self.createSession(request: request,
+                                           urlSession: urlSession,
+                                           completionHandler: completionHandler)
                     } catch {
                         completionHandler(.failure(error))
                     }

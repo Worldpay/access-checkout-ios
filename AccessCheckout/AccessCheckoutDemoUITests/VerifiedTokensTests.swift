@@ -52,9 +52,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponseSuccess() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokensSession-success"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokensSession-success"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -84,9 +84,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_internalServerError() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-internalServerError"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-internalServerError"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -116,9 +116,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_bodyDoesNotMatchSchema_panFailedLuhnCheck() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -150,9 +150,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_bodyDoesNotMatchSchema_fieldIsMissing_cardNumber() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -184,9 +184,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_unknown_variation1() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-unknown-variation1"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-unknown-variation1"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -217,9 +217,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_unknown_variation2() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-unknown-variation2"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-unknown-variation2"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -250,9 +250,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_unknown_variation3() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-unknown-variation3"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-unknown-variation3"])
         app.launch()
         
         let pan = app.textFields["pan"]
@@ -283,9 +283,9 @@ class VerifiedTokensTests: XCTestCase {
     func testResponse_unknown_variation4() {
         
         let app = XCUIApplication()
-        app.launchArguments.append(contentsOf: ["-stubDiscovery", "Discovery-success",
-                                                "-stubVerifiedTokens", "VerifiedTokens-success",
-                                                "-stubVerifiedTokensSession", "VerifiedTokens-unknown-variation4"])
+        app.launchArguments.append(contentsOf: ["-stub:discovery", "Discovery-success",
+                                                "-stub:tokens", "VerifiedTokens-success",
+                                                "-stub:tokens-create", "VerifiedTokens-unknown-variation4"])
         app.launch()
         
         let pan = app.textFields["pan"]

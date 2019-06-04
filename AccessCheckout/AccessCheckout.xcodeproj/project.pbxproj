@@ -78,6 +78,7 @@
 		C95B812522118C03008F07F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9977A1B220C9A3B00091084 /* Localizable.strings */; };
 		C95D13372296DB24008CA293 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D13362296DB24008CA293 /* Card.swift */; };
 		C970A190221AFB200018C7DA /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C970A18F221AFB200018C7DA /* AccessCheckoutClientTests.swift */; };
+		C97B4CC522A690EB007C3781 /* StubProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B4CC222A68FC0007C3781 /* StubProvider.swift */; };
 		C9826EDA2298288600E2C32F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9826ED92298288600E2C32F /* CardView.swift */; };
 		C98311AD224102A6007E68C1 /* AccessDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98311AC224102A6007E68C1 /* AccessDiscovery.swift */; };
 		C98311AF2241031A007E68C1 /* AccessCheckoutDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98311AE2241031A007E68C1 /* AccessCheckoutDiscoveryTests.swift */; };
@@ -192,6 +193,7 @@
 		C94FA54D21EF984600047D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C95D13362296DB24008CA293 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		C970A18F221AFB200018C7DA /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
+		C97B4CC222A68FC0007C3781 /* StubProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubProvider.swift; sourceTree = "<group>"; };
 		C9826ED92298288600E2C32F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		C98311AC224102A6007E68C1 /* AccessDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessDiscovery.swift; sourceTree = "<group>"; };
 		C98311AE2241031A007E68C1 /* AccessCheckoutDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDiscoveryTests.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				1B25A918229409DE00DDDFC2 /* AccessCheckoutClientError.swift */,
 				1B25A91A22940A2200DDDFC2 /* AccessCheckoutClientValidationError.swift */,
 				C9AC16862252394B006B7E05 /* CardConfiguration.swift */,
+				C97B4CC222A68FC0007C3781 /* StubProvider.swift */,
 				C94FA50F21EF97FA00047D11 /* Info.plist */,
 				C9977A1B220C9A3B00091084 /* Localizable.strings */,
 				C99E22E12215A266007F02CA /* bitrise.yml */,
@@ -783,6 +786,7 @@
 				C9E62DA221FF748D00BBCA3F /* PANView.swift in Sources */,
 				C95D13372296DB24008CA293 /* Card.swift in Sources */,
 				1B25A919229409DE00DDDFC2 /* AccessCheckoutClientError.swift in Sources */,
+				C97B4CC522A690EB007C3781 /* StubProvider.swift in Sources */,
 				1B25A91B22940A2200DDDFC2 /* AccessCheckoutClientValidationError.swift in Sources */,
 				C9D5130D221D96CC00D2DBDA /* AccessClient.swift in Sources */,
 				C9826EDA2298288600E2C32F /* CardView.swift in Sources */,
@@ -876,6 +880,7 @@
 		C94FA51D21EF97FA00047D11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ACCESS_CHECKOUT_BASE_URI = "https://access.worldpay.com";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -942,6 +947,7 @@
 		C94FA51E21EF97FA00047D11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ACCESS_CHECKOUT_BASE_URI = "https://access.worldpay.com";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

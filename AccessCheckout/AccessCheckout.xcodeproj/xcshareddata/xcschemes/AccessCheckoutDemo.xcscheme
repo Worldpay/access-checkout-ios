@@ -73,15 +73,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-stubDiscovery Discovery-success"
+            argument = "-stub:discovery Discovery-success"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-stubVerifiedTokens VerifiedTokens-success"
+            argument = "-stub:tokens VerifiedTokens-success"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-stubVerifiedTokensSession VerifiedTokensSession-success"
+            argument = "-stub:tokens-create VerifiedTokensSession-success"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -1,7 +1,7 @@
 import UIKit
 
 /// A view representing a card's expiry date
-@IBDesignable public class ExpiryDateView: UIView {
+public class ExpiryDateView: UIView {
     
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!

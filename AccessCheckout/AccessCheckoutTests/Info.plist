@@ -18,5 +18,7 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+    <key>ACCESS_CHECKOUT_BASE_URI</key>
+    <string>$(ACCESS_CHECKOUT_BASE_URI)</string>
 </dict>
 </plist>

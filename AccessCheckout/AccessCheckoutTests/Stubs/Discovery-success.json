@@ -1,11 +1,11 @@
 {
     "_links": {
         "service:verifiedTokens": {
-            "href": "https://access.worldpay.com/verifiedTokens"
+            "href": "<BASE_URI>/verifiedTokens"
         },
         "curies": [
             {
-                "href": "https://access.worldpay.com/rels/payments/{rel}",
+                "href": "<BASE_URI>/rels/payments/{rel}",
                 "name": "payments",
                 "templated": true
             }

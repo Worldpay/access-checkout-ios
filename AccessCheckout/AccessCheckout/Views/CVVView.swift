@@ -1,7 +1,7 @@
 import UIKit
 
 /// A view representing a card's Card Verification Value
-@IBDesignable public class CVVView: UIView {
+public class CVVView: UIView {
 
     @IBOutlet weak var textField: UITextField!
     

@@ -41,5 +41,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>ACCESS_CHECKOUT_BASE_URI</key>
+    <string>$(ACCESS_CHECKOUT_BASE_URI)</string>
 </dict>
 </plist>

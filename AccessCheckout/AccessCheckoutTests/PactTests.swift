@@ -21,17 +21,10 @@ class PactTests: XCTestCase {
 
     func testCreateSession() {
         
-        let bundle = Bundle(for: type(of: self))
-        guard let sessionUrl = bundle.url(forResource: "VerifiedTokensSession-success",
-                                        withExtension: "json"),
-            let sessionStubFormat = try? String(contentsOf: sessionUrl) else {
-            XCTFail()
-            return
-        }
-        let sessionStub = sessionStubFormat.replacingOccurrences(of: "<BASE_URI>", with: verifiedTokensMockService.baseUrl)
+        let stub = StubProvider.stub(forName: "VerifiedTokensSession-success",
+                                     bundle: Bundle(for: type(of: self)))
         
-        guard let sessionData = sessionStub.data(using: .utf8),
-            let sessionJson = try? JSONSerialization.jsonObject(with: sessionData, options: .allowFragments) else {
+        guard let data = stub?.data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
             XCTFail()
             return
         }
@@ -42,7 +35,7 @@ class PactTests: XCTestCase {
             .withRequest(method: .POST, path: "/verifiedTokens/sessions")
             .willRespondWith(status: 201,
                              headers: ["Content-Type": "application/json; charset=utf-8"],
-                             body: sessionJson)
+                             body: json)
         
         let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
         let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "identity")
