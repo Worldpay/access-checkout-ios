@@ -40,10 +40,10 @@ class PactTests: XCTestCase {
         let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
         let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "identity")
         verifiedTokensMockService.run(timeout: 10) { testComplete in
-            verifiedTokensClient.createSession(pan: "",
-                                               expiryMonth: 0,
-                                               expiryYear: 0,
-                                               cvv: "",
+            verifiedTokensClient.createSession(pan: "4111111111111111",
+                                               expiryMonth: 12,
+                                               expiryYear: 99,
+                                               cvv: "123",
                                                urlSession: URLSession.shared) { result in
                 testComplete()
             }
