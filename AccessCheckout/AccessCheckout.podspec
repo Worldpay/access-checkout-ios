@@ -20,5 +20,5 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "#{ENV['COCOAPODS_SOURCE_REPO_URL']}", :tag => "v#{spec.version}" }
   spec.source_files = 'AccessCheckout/AccessCheckout/**/*.{h,swift,xib,strings}'
   spec.public_header_files = 'AccessCheckout/AccessCheckout/AccessCheckout.h'
-  spec.resources    = 'AccessCheckout/AccessCheckout/**/*.json'
+  spec.resources    = 'AccessCheckout/AccessCheckout/**/*.{json,png}'
 end
