@@ -4,6 +4,8 @@ import PactConsumerSwift
 
 class PactTests: XCTestCase {
 
+    let baseURI: String = Bundle(for: PactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
+    
     let verifiedTokensMockService = MockService(provider: "verified-tokens",
                                                 consumer: "access-checkout-iOS-sdk")
     
@@ -21,13 +23,14 @@ class PactTests: XCTestCase {
 
     func testCreateSession() {
         
-        let stub = StubProvider.stub(forName: "VerifiedTokensSession-success",
-                                     bundle: Bundle(for: type(of: self)))
-        
-        guard let data = stub?.data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
-            XCTFail()
-            return
-        }
+        let expectedValue = "\(baseURI)/verifiedTokens/sessions"
+        let json = [
+            "_links": [
+                "verifiedTokens:session": [
+                    "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions", generate: expectedValue)
+                ],
+            ]
+        ]
         
         verifiedTokensMockService
             .given("a session is available")
@@ -39,12 +42,19 @@ class PactTests: XCTestCase {
         
         let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
         let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "identity")
+        
         verifiedTokensMockService.run(timeout: 10) { testComplete in
             verifiedTokensClient.createSession(pan: "4111111111111111",
                                                expiryMonth: 12,
-                                               expiryYear: 99,
+                                               expiryYear: 2099,
                                                cvv: "123",
                                                urlSession: URLSession.shared) { result in
+                switch result {
+                case let .success(sessionState):
+                    XCTAssertEqual(sessionState, expectedValue)
+                case let .failure(error):
+                    XCTFail(error.localizedDescription)
+                }
                 testComplete()
             }
         }

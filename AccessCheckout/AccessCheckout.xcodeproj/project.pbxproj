@@ -15,9 +15,7 @@
 		1B25A92322944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
 		1B25A92522944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
 		1B587B4D2292EFA30099F684 /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
-		1B587B4F2292EFEF0099F684 /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
 		1B587B502292F6210099F684 /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
-		1B587B512292F6210099F684 /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
 		1B587B532292F74D0099F684 /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
 		1B587B55229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
 		1B92092722A5228100BA8B7B /* PactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B92092622A5228100BA8B7B /* PactTests.swift */; };
@@ -30,7 +28,6 @@
 		1B92092E22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
 		1B92092F22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
 		1B92093022A54BC000BA8B7B /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
-		1B92093122A54BC000BA8B7B /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
 		1B92093222A54BC000BA8B7B /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
 		1B92093322A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
 		1B92093422A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A91C2294480A00DDDFC2 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
@@ -39,7 +36,6 @@
 		1B92093722A54BC000BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */; };
 		1B92093822A54BC000BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */; };
 		1B92093922A54BC300BA8B7B /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4C2292EFA30099F684 /* Discovery-success.json */; };
-		1B92093A22A54BC300BA8B7B /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */; };
 		1B92093B22A54BC300BA8B7B /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */; };
 		1B92093C22A54BC300BA8B7B /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */; };
 		1B92093D22A54BC300BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
@@ -152,7 +148,6 @@
 		1B25A92222944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		1B25A92422944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation4.json"; sourceTree = "<group>"; };
 		1B587B4C2292EFA30099F684 /* Discovery-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Discovery-success.json"; sourceTree = "<group>"; };
-		1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
 		1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-internalServerError.json"; sourceTree = "<group>"; };
 		1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
 		1B92092622A5228100BA8B7B /* PactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactTests.swift; sourceTree = "<group>"; };
@@ -267,7 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				1B587B4C2292EFA30099F684 /* Discovery-success.json */,
-				1B587B4E2292EFEF0099F684 /* VerifiedTokens-success.json */,
 				1BCB901D2295714E00D95EC2 /* VerifiedTokensSession-success.json */,
 				1B587B522292F74D0099F684 /* VerifiedTokens-internalServerError.json */,
 				1B587B54229302410099F684 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */,
@@ -554,7 +548,6 @@
 				1B92092F22A54BBF00BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */,
 				1BFF07AA22A179D7008A265C /* visa.png in Resources */,
 				1B92092B22A54BBF00BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
-				1B587B4F2292EFEF0099F684 /* VerifiedTokens-success.json in Resources */,
 				1B587B4D2292EFA30099F684 /* Discovery-success.json in Resources */,
 				5CDA210121FF047E00D50BEB /* ExpiryDateView.xib in Resources */,
 			);
@@ -567,7 +560,6 @@
 				1B92093022A54BC000BA8B7B /* Discovery-success.json in Resources */,
 				1B92093522A54BC000BA8B7B /* VerifiedTokens-unknown-variation1.json in Resources */,
 				1B92093722A54BC000BA8B7B /* VerifiedTokens-unknown-variation3.json in Resources */,
-				1B92093122A54BC000BA8B7B /* VerifiedTokens-success.json in Resources */,
 				1B92093422A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				1B92093322A54BC000BA8B7B /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
 				1B92093222A54BC000BA8B7B /* VerifiedTokens-internalServerError.json in Resources */,
@@ -584,7 +576,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B587B502292F6210099F684 /* Discovery-success.json in Resources */,
-				1B587B512292F6210099F684 /* VerifiedTokens-success.json in Resources */,
 				1B25A92322944B8E00DDDFC2 /* VerifiedTokens-unknown-variation3.json in Resources */,
 				1B25A92522944BBB00DDDFC2 /* VerifiedTokens-unknown-variation4.json in Resources */,
 				1B25A92122944B6100DDDFC2 /* VerifiedTokens-unknown-variation2.json in Resources */,
@@ -615,7 +606,6 @@
 				1B92094222A54BC300BA8B7B /* VerifiedTokens-unknown-variation4.json in Resources */,
 				C99E9CE0225C9D95003F7025 /* cardConfiguration.json in Resources */,
 				C95B812322118C01008F07F4 /* Localizable.strings in Resources */,
-				1B92093A22A54BC300BA8B7B /* VerifiedTokens-success.json in Resources */,
 				1B92094022A54BC300BA8B7B /* VerifiedTokens-unknown-variation2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
