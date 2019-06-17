@@ -1,0 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'AccessCheckoutExample' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  pod 'AccessCheckoutSDK', :path => '../AccessCheckoutSDK'
+  pod 'Mockingjay/Core', '~> 3.0.0-alpha.1'
+
+  target 'AccessCheckoutExampleUITests' do
+    # inherit! :search_paths
+    # Pods for testing
+  end
+
+end
