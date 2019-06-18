@@ -11,6 +11,7 @@
 		1BCBFED722B8F63300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED322B8F63300A65FAA /* README.md */; };
 		1BCBFED822B8F63300A65FAA /* bitrise.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED422B8F63300A65FAA /* bitrise.yml */; };
 		1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED522B8F63300A65FAA /* CHANGELOG.md */; };
+		1BCBFEDA22B903A300A65FAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
 		8002F7BEAE926611F27EF4B4 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342334FADEA49AA74804D641 /* Pods_AccessCheckoutDemo.framework */; };
 		A0023E4AB9ABF56E8D2A0F3E /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40A99550A1690EDA617B739 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
@@ -299,6 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BCBFEDA22B903A300A65FAA /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
