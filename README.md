@@ -1,6 +1,5 @@
 # Access Checkout SDK for iOS
 
-
 ## Simple Integration Example
 
 The three basic components for integration are as follows:
