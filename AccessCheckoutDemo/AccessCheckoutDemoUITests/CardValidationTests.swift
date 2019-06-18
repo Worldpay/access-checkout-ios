@@ -153,7 +153,7 @@ class CardValidationTests: XCTestCase {
         field.tap()
         field.typeText("1000")
         field.tap()
-        let deleteKey = app.keys["Delete"]
+        let deleteKey = app.keys["delete"]
         deleteKey.tap()
         deleteKey.tap()
         deleteKey.tap()
@@ -165,7 +165,7 @@ class CardValidationTests: XCTestCase {
         field.tap()
         field.typeText("12")
         field.tap()
-        let deleteKey = app.keys["Delete"]
+        let deleteKey = app.keys["delete"]
         deleteKey.tap()
         XCTAssertEqual(field.value as? String, "1")
     }
@@ -175,7 +175,7 @@ class CardValidationTests: XCTestCase {
         field.tap()
         field.typeText("42")
         field.tap()
-        let deleteKey = app.keys["Delete"]
+        let deleteKey = app.keys["delete"]
         deleteKey.tap()
         XCTAssertEqual(field.value as? String, "4")
     }
@@ -186,7 +186,7 @@ class CardValidationTests: XCTestCase {
         field.tap()
         field.typeText("1234")
         field.tap()
-        let deleteKey = app.keys["Delete"]
+        let deleteKey = app.keys["delete"]
         deleteKey.tap()
         deleteKey.tap()
         deleteKey.tap()

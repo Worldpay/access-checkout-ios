@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AccessCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hy8-fq-jdj"/>
+                        <viewControllerLayoutGuide type="bottom" id="P4U-sM-I5g"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,19 +58,18 @@
                         <constraints>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="4" id="2Xc-0j-Cl6"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.3" id="2lh-yf-px9"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="5oD-DE-ecu"/>
+                            <constraint firstItem="8gc-ER-g0x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="40" id="5oD-DE-ecu"/>
                             <constraint firstItem="JyH-be-DH8" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.2" id="CjK-XF-tNB"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="top" secondItem="8gc-ER-g0x" secondAttribute="bottom" constant="32" id="EYt-N1-sAU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" constant="40" id="Jpu-J7-tg7"/>
+                            <constraint firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" constant="40" id="Jpu-J7-tg7"/>
                             <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="bottom" constant="32" id="YkC-nL-0wk" userLabel="Cvv View.top = Expiry Date View.bottom + 40"/>
                             <constraint firstItem="JyH-be-DH8" firstAttribute="leading" secondItem="8gc-ER-g0x" secondAttribute="leading" id="e4N-5H-bFx"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="leading" secondItem="8gc-ER-g0x" secondAttribute="leading" id="m3w-o4-bLi"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="JyH-be-DH8" secondAttribute="centerY" id="pfH-bB-QAT"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="NXi-qk-FE5" secondAttribute="centerY" id="rcL-4k-KqU"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="tS1-UK-467"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="uqb-2l-M1k"/>
+                            <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="uqb-2l-M1k"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
