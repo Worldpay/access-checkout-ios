@@ -1,6 +1,5 @@
 import UIKit
 import AccessCheckoutSDK
-import os.log
 
 class ViewController: UIViewController {
     
@@ -54,7 +53,6 @@ class ViewController: UIViewController {
                         self.resetCard(preserveContent: false, validationErrors: nil)
                     }))
                     self.present(alertController, animated: true)
-                    os_log("Received verified token href: %@", href)
                 case .failure(let error):
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
@@ -112,7 +110,7 @@ class ViewController: UIViewController {
                 case "$.cvv":
                     cvvView.isValid(valid: false)
                 default:
-                    os_log("Unrecognized jsonPath")
+                    print("Unrecognized jsonPath")
                 }
             default:
                 break

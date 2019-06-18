@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C9AFE3F522B799AC00943B3E"
-               BuildableName = "AccessCheckoutExample.app"
-               BlueprintName = "AccessCheckoutExample"
-               ReferencedContainer = "container:AccessCheckoutExample.xcodeproj">
+               BuildableName = "AccessCheckoutDemo.app"
+               BlueprintName = "AccessCheckoutDemo"
+               ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C9AFE40922B799AE00943B3E"
-               BuildableName = "AccessCheckoutExampleUITests.xctest"
-               BlueprintName = "AccessCheckoutExampleUITests"
-               ReferencedContainer = "container:AccessCheckoutExample.xcodeproj">
+               BuildableName = "AccessCheckoutDemoUITests.xctest"
+               BlueprintName = "AccessCheckoutDemoUITests"
+               ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9AFE3F522B799AC00943B3E"
-            BuildableName = "AccessCheckoutExample.app"
-            BlueprintName = "AccessCheckoutExample"
-            ReferencedContainer = "container:AccessCheckoutExample.xcodeproj">
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
+            ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9AFE3F522B799AC00943B3E"
-            BuildableName = "AccessCheckoutExample.app"
-            BlueprintName = "AccessCheckoutExample"
-            ReferencedContainer = "container:AccessCheckoutExample.xcodeproj">
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
+            ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -99,9 +99,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9AFE3F522B799AC00943B3E"
-            BuildableName = "AccessCheckoutExample.app"
-            BlueprintName = "AccessCheckoutExample"
-            ReferencedContainer = "container:AccessCheckoutExample.xcodeproj">
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
+            ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

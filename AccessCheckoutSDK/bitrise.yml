@@ -3,49 +3,6 @@ format_version: '6'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 workflows:
-  deploy:
-    steps:
-    - cache-pull: {}
-    - certificate-and-profile-installer: {}
-    - cocoapods-install: {}
-    - recreate-user-schemes:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-    - script:
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Download to AccessCheckout directory
-            cd AccessCheckout
-            echo "Fetching pact-ruby-standalone..."
-            curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
-            echo "Unpacking..."
-            tar xzf pact-1.63.0-osx.tar.gz
-            ./pact/bin/pact-mock-service --help start
-            echo "... pact-ruby-standalone ready!"
-        title: Install pact-ruby-standalone
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
-    - xcode-archive:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_DEMO_SCHEME"
-        - export_method: "$BITRISE_EXPORT_METHOD"
-    - deploy-to-bitrise-io:
-    - cache-push: {}
   primary:
     steps:
     - cache-pull: {}
@@ -77,11 +34,6 @@ workflows:
         - project_path: "$BITRISE_PROJECT_PATH"
         - simulator_device: iPhone XS
         - scheme: "$BITRISE_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
     - cache-push: {}
   release:
     steps:
@@ -126,11 +78,6 @@ workflows:
         - project_path: "$BITRISE_PROJECT_PATH"
         - simulator_device: iPhone XS
         - scheme: "$BITRISE_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
     - github-release:
         inputs:
         - username: "$GITHUB_USERNAME"
@@ -151,19 +98,13 @@ workflows:
             # debug log
             set -x
 
-            pod spec lint AccessCheckout/AccessCheckout.podspec --allow-warnings
+            pod spec lint AccessCheckoutSDK/AccessCheckoutSDK.podspec --allow-warnings
     - cache-push: {}
 app:
   envs:
   - opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: AccessCheckout/AccessCheckout.xcworkspace
+    BITRISE_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
   - opts:
       is_expand: false
-    BITRISE_SCHEME: AccessCheckout
-  - opts:
-      is_expand: false
-    BITRISE_DEMO_SCHEME: AccessCheckoutDemo
-  - opts:
-      is_expand: false
-    BITRISE_EXPORT_METHOD: enterprise
+    BITRISE_SCHEME: AccessCheckoutSDK

@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A6BAF2F975665B582A9B8AD9 /* Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6838341066F93E1C1FF74700 /* Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework */; };
-		C93ECFF45190B3DB1C8A3245 /* Pods_AccessCheckoutExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7080EAB569D7B81EEA68DD9D /* Pods_AccessCheckoutExample.framework */; };
+		1BCBFED622B8F63300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED222B8F63300A65FAA /* LICENSE */; };
+		1BCBFED722B8F63300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED322B8F63300A65FAA /* README.md */; };
+		1BCBFED822B8F63300A65FAA /* bitrise.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED422B8F63300A65FAA /* bitrise.yml */; };
+		1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED522B8F63300A65FAA /* CHANGELOG.md */; };
+		8002F7BEAE926611F27EF4B4 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342334FADEA49AA74804D641 /* Pods_AccessCheckoutDemo.framework */; };
+		A0023E4AB9ABF56E8D2A0F3E /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40A99550A1690EDA617B739 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
 		C9AFE47022B7C5A600943B3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* ViewController.swift */; };
 		C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE46E22B7C5A600943B3E /* Assets.xcassets */; };
@@ -41,13 +45,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BCBFED222B8F63300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		1BCBFED322B8F63300A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1BCBFED422B8F63300A65FAA /* bitrise.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrise.yml; sourceTree = "<group>"; };
+		1BCBFED522B8F63300A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		342334FADEA49AA74804D641 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51B03CFA4A0BF97B153A795F /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		6838341066F93E1C1FF74700 /* Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7080EAB569D7B81EEA68DD9D /* Pods_AccessCheckoutExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		651FFE646D750766796A2AA8 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		874EA70C5AB794A0A68877C6 /* Pods-AccessCheckoutExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutExample.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutExample/Pods-AccessCheckoutExample.debug.xcconfig"; sourceTree = "<group>"; };
-		C9AFE3F622B799AC00943B3E /* AccessCheckoutExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EC420546899073E722F314E /* Pods-AccessCheckoutDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		B3E57F95893F5958570075E5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B40A99550A1690EDA617B739 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9AFE3F622B799AC00943B3E /* AccessCheckoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE40522B799AE00943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9AFE40A22B799AE00943B3E /* AccessCheckoutExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9AFE40A22B799AE00943B3E /* AccessCheckoutDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE41022B799AE00943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9AFE46D22B7C5A600943B3E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +79,7 @@
 		C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
 		C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		D547B733D95D2B5BF5D6E1D9 /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EF0E04139869E8DDDC1869CA /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		FA823242DD96A9B0D5680F8C /* Pods-AccessCheckoutExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutExample.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutExample/Pods-AccessCheckoutExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C93ECFF45190B3DB1C8A3245 /* Pods_AccessCheckoutExample.framework in Frameworks */,
+				8002F7BEAE926611F27EF4B4 /* Pods_AccessCheckoutDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6BAF2F975665B582A9B8AD9 /* Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework in Frameworks */,
+				A0023E4AB9ABF56E8D2A0F3E /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,8 +107,8 @@
 		2F550299AF5A12663EB9B08C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7080EAB569D7B81EEA68DD9D /* Pods_AccessCheckoutExample.framework */,
-				6838341066F93E1C1FF74700 /* Pods_AccessCheckoutExample_AccessCheckoutExampleUITests.framework */,
+				342334FADEA49AA74804D641 /* Pods_AccessCheckoutDemo.framework */,
+				B40A99550A1690EDA617B739 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -108,6 +120,10 @@
 				FA823242DD96A9B0D5680F8C /* Pods-AccessCheckoutExample.release.xcconfig */,
 				EF0E04139869E8DDDC1869CA /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.debug.xcconfig */,
 				51B03CFA4A0BF97B153A795F /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.release.xcconfig */,
+				9EC420546899073E722F314E /* Pods-AccessCheckoutDemo.debug.xcconfig */,
+				D547B733D95D2B5BF5D6E1D9 /* Pods-AccessCheckoutDemo.release.xcconfig */,
+				651FFE646D750766796A2AA8 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */,
+				B3E57F95893F5958570075E5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -115,8 +131,12 @@
 		C9AFE3ED22B799AC00943B3E = {
 			isa = PBXGroup;
 			children = (
-				C9AFE3F822B799AC00943B3E /* AccessCheckoutExample */,
-				C9AFE40D22B799AE00943B3E /* AccessCheckoutExampleUITests */,
+				1BCBFED422B8F63300A65FAA /* bitrise.yml */,
+				1BCBFED522B8F63300A65FAA /* CHANGELOG.md */,
+				1BCBFED222B8F63300A65FAA /* LICENSE */,
+				1BCBFED322B8F63300A65FAA /* README.md */,
+				C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */,
+				C9AFE40D22B799AE00943B3E /* AccessCheckoutDemoUITests */,
 				C9AFE3F722B799AC00943B3E /* Products */,
 				B19274C2E107754F00595B4C /* Pods */,
 				2F550299AF5A12663EB9B08C /* Frameworks */,
@@ -126,13 +146,13 @@
 		C9AFE3F722B799AC00943B3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9AFE3F622B799AC00943B3E /* AccessCheckoutExample.app */,
-				C9AFE40A22B799AE00943B3E /* AccessCheckoutExampleUITests.xctest */,
+				C9AFE3F622B799AC00943B3E /* AccessCheckoutDemo.app */,
+				C9AFE40A22B799AE00943B3E /* AccessCheckoutDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C9AFE3F822B799AC00943B3E /* AccessCheckoutExample */ = {
+		C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
 				C9AFE4A822B7EE5800943B3E /* Discovery-success.json */,
@@ -154,25 +174,25 @@
 				C9AFE40522B799AE00943B3E /* Info.plist */,
 				C9AFE48422B7C8D700943B3E /* Localizable.strings */,
 			);
-			path = AccessCheckoutExample;
+			path = AccessCheckoutDemo;
 			sourceTree = "<group>";
 		};
-		C9AFE40D22B799AE00943B3E /* AccessCheckoutExampleUITests */ = {
+		C9AFE40D22B799AE00943B3E /* AccessCheckoutDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
 				C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */,
 				C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */,
 				C9AFE41022B799AE00943B3E /* Info.plist */,
 			);
-			path = AccessCheckoutExampleUITests;
+			path = AccessCheckoutDemoUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C9AFE3F522B799AC00943B3E /* AccessCheckoutExample */ = {
+		C9AFE3F522B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9AFE41322B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutExample" */;
+			buildConfigurationList = C9AFE41322B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutDemo" */;
 			buildPhases = (
 				8745E60CDE93410B8D69B006 /* [CP] Check Pods Manifest.lock */,
 				C9AFE3F222B799AC00943B3E /* Sources */,
@@ -184,14 +204,14 @@
 			);
 			dependencies = (
 			);
-			name = AccessCheckoutExample;
+			name = AccessCheckoutDemo;
 			productName = AccessCheckoutExample;
-			productReference = C9AFE3F622B799AC00943B3E /* AccessCheckoutExample.app */;
+			productReference = C9AFE3F622B799AC00943B3E /* AccessCheckoutDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C9AFE40922B799AE00943B3E /* AccessCheckoutExampleUITests */ = {
+		C9AFE40922B799AE00943B3E /* AccessCheckoutDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9AFE41622B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutExampleUITests" */;
+			buildConfigurationList = C9AFE41622B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutDemoUITests" */;
 			buildPhases = (
 				90D821E3838EF9EC3EBD87A0 /* [CP] Check Pods Manifest.lock */,
 				C9AFE40622B799AE00943B3E /* Sources */,
@@ -204,9 +224,9 @@
 			dependencies = (
 				C9AFE40C22B799AE00943B3E /* PBXTargetDependency */,
 			);
-			name = AccessCheckoutExampleUITests;
+			name = AccessCheckoutDemoUITests;
 			productName = AccessCheckoutExampleUITests;
-			productReference = C9AFE40A22B799AE00943B3E /* AccessCheckoutExampleUITests.xctest */;
+			productReference = C9AFE40A22B799AE00943B3E /* AccessCheckoutDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +249,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C9AFE3F122B799AC00943B3E /* Build configuration list for PBXProject "AccessCheckoutExample" */;
+			buildConfigurationList = C9AFE3F122B799AC00943B3E /* Build configuration list for PBXProject "AccessCheckoutDemo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,8 +262,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9AFE3F522B799AC00943B3E /* AccessCheckoutExample */,
-				C9AFE40922B799AE00943B3E /* AccessCheckoutExampleUITests */,
+				C9AFE3F522B799AC00943B3E /* AccessCheckoutDemo */,
+				C9AFE40922B799AE00943B3E /* AccessCheckoutDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -255,14 +275,18 @@
 			files = (
 				C9AFE47722B7C62700943B3E /* LaunchScreen.storyboard in Resources */,
 				C9AFE4B822B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
+				1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */,
 				C9AFE48222B7C8D700943B3E /* Localizable.strings in Resources */,
 				C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */,
 				C9AFE4B522B7EE5900943B3E /* VerifiedTokensSession-success.json in Resources */,
 				C9AFE4AF22B7EE5900943B3E /* VerifiedTokens-internalServerError.json in Resources */,
 				C9AFE4B422B7EE5900943B3E /* VerifiedTokens-unknown-variation2.json in Resources */,
+				1BCBFED822B8F63300A65FAA /* bitrise.yml in Resources */,
 				C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */,
 				C9AFE4B222B7EE5900943B3E /* Discovery-success.json in Resources */,
 				C9AFE4B122B7EE5900943B3E /* VerifiedTokens-unknown-variation4.json in Resources */,
+				1BCBFED622B8F63300A65FAA /* LICENSE in Resources */,
+				1BCBFED722B8F63300A65FAA /* README.md in Resources */,
 				C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */,
 				C9AFE4B322B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				C9AFE4B022B7EE5900943B3E /* VerifiedTokens-unknown-variation1.json in Resources */,
@@ -287,15 +311,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		590EAFDF1C68EC538624CC0D /* [CP] Embed Pods Frameworks */ = {
@@ -304,15 +328,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample/Pods-AccessCheckoutExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample/Pods-AccessCheckoutExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutExample/Pods-AccessCheckoutExample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8745E60CDE93410B8D69B006 /* [CP] Check Pods Manifest.lock */ = {
@@ -330,7 +354,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutExample-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -352,7 +376,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutExample-AccessCheckoutExampleUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -385,7 +409,7 @@
 /* Begin PBXTargetDependency section */
 		C9AFE40C22B799AE00943B3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C9AFE3F522B799AC00943B3E /* AccessCheckoutExample */;
+			target = C9AFE3F522B799AC00943B3E /* AccessCheckoutDemo */;
 			targetProxy = C9AFE40B22B799AE00943B3E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -469,7 +493,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -524,7 +548,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -536,18 +560,18 @@
 		};
 		C9AFE41422B799AE00943B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 874EA70C5AB794A0A68877C6 /* Pods-AccessCheckoutExample.debug.xcconfig */;
+			baseConfigurationReference = 9EC420546899073E722F314E /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AccessCheckoutDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -557,18 +581,18 @@
 		};
 		C9AFE41522B799AE00943B3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA823242DD96A9B0D5680F8C /* Pods-AccessCheckoutExample.release.xcconfig */;
+			baseConfigurationReference = D547B733D95D2B5BF5D6E1D9 /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AccessCheckoutDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -577,48 +601,50 @@
 		};
 		C9AFE41722B799AE00943B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF0E04139869E8DDDC1869CA /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.debug.xcconfig */;
+			baseConfigurationReference = 651FFE646D750766796A2AA8 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutExampleUITests/Info.plist;
+				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AccessCheckoutExample;
+				TEST_TARGET_NAME = AccessCheckoutDemo;
 			};
 			name = Debug;
 		};
 		C9AFE41822B799AE00943B3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51B03CFA4A0BF97B153A795F /* Pods-AccessCheckoutExample-AccessCheckoutExampleUITests.release.xcconfig */;
+			baseConfigurationReference = B3E57F95893F5958570075E5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutExampleUITests/Info.plist;
+				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AccessCheckoutExample;
+				TEST_TARGET_NAME = AccessCheckoutDemo;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C9AFE3F122B799AC00943B3E /* Build configuration list for PBXProject "AccessCheckoutExample" */ = {
+		C9AFE3F122B799AC00943B3E /* Build configuration list for PBXProject "AccessCheckoutDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9AFE41122B799AE00943B3E /* Debug */,
@@ -627,7 +653,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9AFE41322B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutExample" */ = {
+		C9AFE41322B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9AFE41422B799AE00943B3E /* Debug */,
@@ -636,7 +662,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9AFE41622B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutExampleUITests" */ = {
+		C9AFE41622B799AE00943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9AFE41722B799AE00943B3E /* Debug */,
