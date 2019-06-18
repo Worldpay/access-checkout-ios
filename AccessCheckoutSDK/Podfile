@@ -10,6 +10,10 @@ target 'AccessCheckoutSDK' do
   target 'AccessCheckoutSDKTests' do
     inherit! :search_paths
     pod 'Mockingjay', '~> 3.0.0-alpha.1'
+  end
+  
+  target 'AccessCheckoutSDKPactTests' do
+    inherit! :search_paths
     pod 'PactConsumerSwift'
   end
 

@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */; };
+		1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
+		1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */; };
+		1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */; };
+		1BCBFEC622B8EB4400A65FAA /* CardConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */; };
+		1BCBFEC722B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */; };
+		2707BE7D2784CC8B41B96CC4 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7CED50953EA477FA4898AB /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		997E56CC0195F887EBF5D4A9 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FEE35656CEE0454DD5A543 /* Pods_AccessCheckoutSDKTests.framework */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
-		C9AFE3E222B7996200943B3E /* AccessCheckoutSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE3E122B7996200943B3E /* AccessCheckoutSDKTests.swift */; };
 		C9AFE3E422B7996200943B3E /* AccessCheckoutSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9AFE45922B7AA4800943B3E /* AccessClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44622B7AA4700943B3E /* AccessClient.swift */; };
 		C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44722B7AA4700943B3E /* AccessCheckoutClientError.swift */; };
@@ -33,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
+			remoteInfo = AccessCheckoutSDK;
+		};
 		C9AFE3DE22B7996200943B3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
@@ -43,15 +56,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKPactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKPactTests.swift; sourceTree = "<group>"; };
+		1BCBFEB922B8EA3C00A65FAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
+		1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidatorTests.swift; sourceTree = "<group>"; };
+		1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfigurationTests.swift; sourceTree = "<group>"; };
+		1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDiscoveryTests.swift; sourceTree = "<group>"; };
+		49866E55F7539B14378DF984 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
 		64FEE35656CEE0454DD5A543 /* Pods_AccessCheckoutSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C52A4119C901D4D8C8E030F /* Pods_AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72209379320A144C8BC1E1D2 /* Pods-AccessCheckoutSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		79C7F8A7CDFEC9FC68A83612 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.release.xcconfig"; sourceTree = "<group>"; };
 		81FBAF5016D99A1257470DCF /* Pods-AccessCheckoutSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessCheckoutSDK.h; sourceTree = "<group>"; };
 		C9AFE3D722B7996200943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9AFE3E122B7996200943B3E /* AccessCheckoutSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTests.swift; sourceTree = "<group>"; };
 		C9AFE3E322B7996200943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9AFE44622B7AA4700943B3E /* AccessClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessClient.swift; sourceTree = "<group>"; };
 		C9AFE44722B7AA4700943B3E /* AccessCheckoutClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientError.swift; sourceTree = "<group>"; };
@@ -71,11 +92,21 @@
 		C9AFE45622B7AA4700943B3E /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
 		C9AFE45722B7AA4700943B3E /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		C9AFE45822B7AA4800943B3E /* AccessDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessDiscovery.swift; sourceTree = "<group>"; };
+		CB7CED50953EA477FA4898AB /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F444F05FDA028204DC6BD8 /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		EF66BD00E6863CA249784A29 /* Pods-AccessCheckoutSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1BCBFEB222B8EA3C00A65FAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */,
+				2707BE7D2784CC8B41B96CC4 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9AFE3D022B7996200943B3E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -96,11 +127,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BCBFEB622B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */ = {
+			isa = PBXGroup;
+			children = (
+				1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */,
+				1BCBFEB922B8EA3C00A65FAA /* Info.plist */,
+			);
+			path = AccessCheckoutSDKPactTests;
+			sourceTree = "<group>";
+		};
 		4992A01C4C5BCF6C0F8BD72A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				6C52A4119C901D4D8C8E030F /* Pods_AccessCheckoutSDK.framework */,
 				64FEE35656CEE0454DD5A543 /* Pods_AccessCheckoutSDKTests.framework */,
+				CB7CED50953EA477FA4898AB /* Pods_AccessCheckoutSDKPactTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,6 +151,7 @@
 			children = (
 				C9AFE3D522B7996200943B3E /* AccessCheckoutSDK */,
 				C9AFE3E022B7996200943B3E /* AccessCheckoutSDKTests */,
+				1BCBFEB622B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
 				C9AFE3D422B7996200943B3E /* Products */,
 				FE5EBE1BF82722DA10BBC5FC /* Pods */,
 				4992A01C4C5BCF6C0F8BD72A /* Frameworks */,
@@ -121,6 +163,7 @@
 			children = (
 				C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */,
 				C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */,
+				1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,7 +198,10 @@
 		C9AFE3E022B7996200943B3E /* AccessCheckoutSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				C9AFE3E122B7996200943B3E /* AccessCheckoutSDKTests.swift */,
+				1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */,
+				1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */,
+				1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */,
+				1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */,
 				C9AFE3E322B7996200943B3E /* Info.plist */,
 			);
 			path = AccessCheckoutSDKTests;
@@ -168,6 +214,8 @@
 				D0F444F05FDA028204DC6BD8 /* Pods-AccessCheckoutSDK.release.xcconfig */,
 				81FBAF5016D99A1257470DCF /* Pods-AccessCheckoutSDKTests.debug.xcconfig */,
 				72209379320A144C8BC1E1D2 /* Pods-AccessCheckoutSDKTests.release.xcconfig */,
+				49866E55F7539B14378DF984 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */,
+				79C7F8A7CDFEC9FC68A83612 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -186,6 +234,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1BCBFEB422B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BCBFEBF22B8EA3C00A65FAA /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */;
+			buildPhases = (
+				F1ADCE197AC70392DB67773B /* [CP] Check Pods Manifest.lock */,
+				1BCBFEB122B8EA3C00A65FAA /* Sources */,
+				1BCBFEB222B8EA3C00A65FAA /* Frameworks */,
+				1BCBFEB322B8EA3C00A65FAA /* Resources */,
+				5EFC222FF97722B81721483A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1BCBFEBC22B8EA3C00A65FAA /* PBXTargetDependency */,
+			);
+			name = AccessCheckoutSDKPactTests;
+			productName = AccessCheckoutSDKPactTests;
+			productReference = 1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9AFE3E722B7996200943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutSDK" */;
@@ -235,6 +303,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Worldpay;
 				TargetAttributes = {
+					1BCBFEB422B8EA3C00A65FAA = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 					C9AFE3D222B7996200943B3E = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
@@ -258,11 +329,19 @@
 			targets = (
 				C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */,
 				C9AFE3DB22B7996200943B3E /* AccessCheckoutSDKTests */,
+				1BCBFEB422B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1BCBFEB322B8EA3C00A65FAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9AFE3D122B7996200943B3E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +387,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5EFC222FF97722B81721483A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		73ADE5838364D9BFBB125B5F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -347,9 +443,39 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F1ADCE197AC70392DB67773B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutSDKPactTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1BCBFEB122B8EA3C00A65FAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9AFE3CF22B7996200943B3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,13 +499,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE3E222B7996200943B3E /* AccessCheckoutSDKTests.swift in Sources */,
+				1BCBFEC622B8EB4400A65FAA /* CardConfigurationTests.swift in Sources */,
+				1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */,
+				1BCBFEC722B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift in Sources */,
+				1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1BCBFEBC22B8EA3C00A65FAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
+			targetProxy = 1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */;
+		};
 		C9AFE3DF22B7996200943B3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
@@ -388,6 +522,44 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1BCBFEBD22B8EA3C00A65FAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49866E55F7539B14378DF984 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1BCBFEBE22B8EA3C00A65FAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79C7F8A7CDFEC9FC68A83612 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C9AFE3E522B7996200943B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -569,7 +741,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81FBAF5016D99A1257470DCF /* Pods-AccessCheckoutSDKTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
@@ -589,7 +760,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 72209379320A144C8BC1E1D2 /* Pods-AccessCheckoutSDKTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
@@ -608,6 +778,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1BCBFEBF22B8EA3C00A65FAA /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BCBFEBD22B8EA3C00A65FAA /* Debug */,
+				1BCBFEBE22B8EA3C00A65FAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C9AFE3CD22B7996200943B3E /* Build configuration list for PBXProject "AccessCheckoutSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
