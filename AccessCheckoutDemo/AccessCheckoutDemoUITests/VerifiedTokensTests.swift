@@ -42,8 +42,7 @@ class VerifiedTokensTests: XCTestCase {
         // Valid state
         XCTAssertTrue(submit.isEnabled)
         
-        let deleteKey = app.keys["delete"]
-        deleteKey.tap()
+        cvv.typeText(XCUIKeyboardKey.delete.rawValue)
         
         // Invalid state
         XCTAssertFalse(submit.isEnabled)

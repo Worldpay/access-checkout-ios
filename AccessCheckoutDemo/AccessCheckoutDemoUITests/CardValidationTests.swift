@@ -152,11 +152,9 @@ class CardValidationTests: XCTestCase {
         let field = app.textFields["pan"]
         field.tap()
         field.typeText("1000")
-        field.tap()
-        let deleteKey = app.keys["delete"]
-        deleteKey.tap()
-        deleteKey.tap()
-        deleteKey.tap()
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
         XCTAssertEqual(field.value as? String, "1")
     }
     
@@ -164,9 +162,7 @@ class CardValidationTests: XCTestCase {
         let field = app.textFields["expiryMonth"]
         field.tap()
         field.typeText("12")
-        field.tap()
-        let deleteKey = app.keys["delete"]
-        deleteKey.tap()
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
         XCTAssertEqual(field.value as? String, "1")
     }
     
@@ -174,9 +170,7 @@ class CardValidationTests: XCTestCase {
         let field = app.textFields["expiryYear"]
         field.tap()
         field.typeText("42")
-        field.tap()
-        let deleteKey = app.keys["delete"]
-        deleteKey.tap()
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
         XCTAssertEqual(field.value as? String, "4")
     }
 
@@ -185,11 +179,9 @@ class CardValidationTests: XCTestCase {
         let field = app.textFields["cvv"]
         field.tap()
         field.typeText("1234")
-        field.tap()
-        let deleteKey = app.keys["delete"]
-        deleteKey.tap()
-        deleteKey.tap()
-        deleteKey.tap()
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
+        field.typeText(XCUIKeyboardKey.delete.rawValue)
         XCTAssertEqual(field.value as? String, "1")
     }
     
