@@ -11,11 +11,15 @@ workflows:
     - recreate-user-schemes:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
-    - xcode-test:
+    - xcode-build-for-test:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
         - scheme: "$BITRISE_SCHEME"
+        - project_path: "$BITRISE_PROJECT_PATH"
+    - virtual-device-testing-for-ios:
+        inputs:
+        - test_devices: |-
+            ipad5,12.0,en,portrait
+            iphonex,12.0,en,portrait
     - xcode-archive:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
