@@ -77,11 +77,6 @@ workflows:
         - project_path: "$BITRISE_PROJECT_PATH"
         - simulator_device: iPhone XS
         - scheme: "$BITRISE_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
     - cache-push: {}
   release:
     steps:
@@ -157,10 +152,10 @@ app:
   envs:
   - opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: AccessCheckout/AccessCheckout.xcworkspace
+    BITRISE_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
   - opts:
       is_expand: false
-    BITRISE_SCHEME: AccessCheckout
+    BITRISE_SCHEME: AccessCheckoutSDK
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
