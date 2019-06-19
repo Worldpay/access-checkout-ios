@@ -64,7 +64,7 @@ workflows:
             set -x
 
             # Download to AccessCheckout directory
-            cd AccessCheckout
+            cd AccessCheckoutSDK
             echo "Fetching pact-ruby-standalone..."
             curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
             echo "Unpacking..."
@@ -152,10 +152,10 @@ app:
   envs:
   - opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
+    BITRISE_PROJECT_PATH: AccessCheckoutDemo/AccessCheckoutDemo.xcworkspace
   - opts:
       is_expand: false
-    BITRISE_SCHEME: AccessCheckoutSDK
+    BITRISE_SCHEME: AccessCheckoutDemo
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
