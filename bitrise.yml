@@ -50,7 +50,9 @@ workflows:
     steps:
     - cache-pull: {}
     - certificate-and-profile-installer: {}
-    - cocoapods-install: {}
+    - cocoapods-install:
+        inputs:
+        - source_root_path: AccessCheckoutDemo
     - recreate-user-schemes:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
