@@ -63,6 +63,61 @@ workflows:
         - simulator_device: iPhone XS
         - scheme: "$SDK_SCHEME"
     - cache-push: {}
+  primary:
+    steps:
+    - cache-pull: {}
+    - certificate-and-profile-installer: {}
+    - cocoapods-install:
+        inputs:
+        - source_root_path: AccessCheckoutSDK
+    - recreate-user-schemes:
+        inputs:
+        - project_path: "$SDK_PROJECT_PATH"
+    - script:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # Download to AccessCheckout directory
+            cd AccessCheckoutSDK
+            echo "Fetching pact-ruby-standalone..."
+            curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
+            echo "Unpacking..."
+            tar xzf pact-1.63.0-osx.tar.gz
+            ./pact/bin/pact-mock-service --help start
+            echo "... pact-ruby-standalone ready!"
+        title: Install pact-ruby-standalone
+    - xcode-test:
+        inputs:
+        - project_path: "$SDK_PROJECT_PATH"
+        - simulator_device: iPhone 8
+        - scheme: "$SDK_SCHEME"
+    - cocoapods-install:
+        inputs:
+        - source_root_path: AccessCheckoutDemo
+    - recreate-user-schemes:
+        inputs:
+        - project_path: "$DEMO_PROJECT_PATH"
+    - xcode-build-for-test:
+        inputs:
+        - scheme: "$DEMO_SCHEME"
+        - project_path: "$DEMO_PROJECT_PATH"
+    - virtual-device-testing-for-ios:
+        inputs:
+        - test_devices: |-
+            ipad5,12.0,en,portrait
+            iphonex,12.0,en,portrait
+    - xcode-archive:
+        inputs:
+        - project_path: "$DEMO_PROJECT_PATH"
+        - scheme: "$BITRISE_DEMO_SCHEME"
+        - export_method: "$BITRISE_EXPORT_METHOD"
+    - deploy-to-bitrise-io:
+    - cache-push: {}
   release:
     steps:
     - cache-pull: {}
