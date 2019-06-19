@@ -52,7 +52,7 @@ workflows:
     - certificate-and-profile-installer: {}
     - cocoapods-install:
         inputs:
-        - source_root_path: AccessCheckoutDemo
+        - source_root_path: AccessCheckoutSDK
     - recreate-user-schemes:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
@@ -154,10 +154,10 @@ app:
   envs:
   - opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: AccessCheckoutDemo/AccessCheckoutDemo.xcworkspace
+    BITRISE_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
   - opts:
       is_expand: false
-    BITRISE_SCHEME: AccessCheckoutDemo
+    BITRISE_SCHEME: AccessCheckoutSDK
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
