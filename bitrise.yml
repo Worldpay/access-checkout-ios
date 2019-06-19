@@ -3,50 +3,33 @@ format_version: '6'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 workflows:
-  deploy:
+  primary-demo:
     steps:
     - cache-pull: {}
     - certificate-and-profile-installer: {}
-    - cocoapods-install: {}
+    - cocoapods-install:
+        inputs:
+        - source_root_path: AccessCheckoutDemo
     - recreate-user-schemes:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-    - script:
+        - project_path: "$DEMO_PROJECT_PATH"
+    - xcode-build-for-test:
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Download to AccessCheckout directory
-            cd AccessCheckout
-            echo "Fetching pact-ruby-standalone..."
-            curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
-            echo "Unpacking..."
-            tar xzf pact-1.63.0-osx.tar.gz
-            ./pact/bin/pact-mock-service --help start
-            echo "... pact-ruby-standalone ready!"
-        title: Install pact-ruby-standalone
-    - xcode-test:
+        - scheme: "$DEMO_SCHEME"
+        - project_path: "$DEMO_PROJECT_PATH"
+    - virtual-device-testing-for-ios:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
+        - test_devices: |-
+            ipad5,12.0,en,portrait
+            iphonex,12.0,en,portrait
     - xcode-archive:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$DEMO_PROJECT_PATH"
         - scheme: "$BITRISE_DEMO_SCHEME"
         - export_method: "$BITRISE_EXPORT_METHOD"
     - deploy-to-bitrise-io:
     - cache-push: {}
-  primary:
+  primary-sdk:
     steps:
     - cache-pull: {}
     - certificate-and-profile-installer: {}
@@ -55,7 +38,7 @@ workflows:
         - source_root_path: AccessCheckoutSDK
     - recreate-user-schemes:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
     - script:
         inputs:
         - content: |-
@@ -76,9 +59,9 @@ workflows:
         title: Install pact-ruby-standalone
     - xcode-test:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone XS
-        - scheme: "$BITRISE_SCHEME"
+        - scheme: "$SDK_SCHEME"
     - cache-push: {}
   release:
     steps:
@@ -87,7 +70,7 @@ workflows:
     - cocoapods-install: {}
     - recreate-user-schemes:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
     - script:
         inputs:
         - content: |-
@@ -120,12 +103,12 @@ workflows:
         title: Install pact-ruby-standalone
     - xcode-test:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone XS
-        - scheme: "$BITRISE_SCHEME"
+        - scheme: "$SDK_SCHEME"
     - xcode-test:
         inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone XS
         - scheme: "$BITRISE_DEMO_SCHEME"
     - github-release:
@@ -154,10 +137,16 @@ app:
   envs:
   - opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
+    SDK_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
   - opts:
       is_expand: false
-    BITRISE_SCHEME: AccessCheckoutSDK
+    DEMO_PROJECT_PATH: AccessCheckoutDemo/AccessCheckoutDemo.xcworkspace
+  - opts:
+      is_expand: false
+    SDK_SCHEME: AccessCheckoutSDK
+  - opts:
+      is_expand: false
+    DEMO_SCHEME: AccessCheckoutDemo
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
