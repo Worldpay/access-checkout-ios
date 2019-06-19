@@ -14,7 +14,6 @@
 		1BCBFEC622B8EB4400A65FAA /* CardConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */; };
 		1BCBFEC722B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */; };
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
-		1BCBFECD22B8F40300A65FAA /* bitrise.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC922B8F40200A65FAA /* bitrise.yml */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
 		1BCBFED122B8F45200A65FAA /* AccessCheckoutSDK.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED022B8F45200A65FAA /* AccessCheckoutSDK.podspec */; };
@@ -69,7 +68,6 @@
 		1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfigurationTests.swift; sourceTree = "<group>"; };
 		1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDiscoveryTests.swift; sourceTree = "<group>"; };
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		1BCBFEC922B8F40200A65FAA /* bitrise.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrise.yml; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1BCBFED022B8F45200A65FAA /* AccessCheckoutSDK.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AccessCheckoutSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -160,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				1BCBFED022B8F45200A65FAA /* AccessCheckoutSDK.podspec */,
-				1BCBFEC922B8F40200A65FAA /* bitrise.yml */,
 				1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */,
 				1BCBFECB22B8F40300A65FAA /* LICENSE */,
 				1BCBFEC822B8F40200A65FAA /* README.md */,
@@ -369,7 +366,6 @@
 				1BCBFECC22B8F40300A65FAA /* README.md in Resources */,
 				1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */,
 				C9AFE46A22B7AA4800943B3E /* visa.png in Resources */,
-				1BCBFECD22B8F40300A65FAA /* bitrise.yml in Resources */,
 				C9AFE46922B7AA4800943B3E /* mastercard.png in Resources */,
 				1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */,
 				C9AFE45C22B7AA4800943B3E /* CVVView.xib in Resources */,

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1BCBFED622B8F63300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED222B8F63300A65FAA /* LICENSE */; };
 		1BCBFED722B8F63300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED322B8F63300A65FAA /* README.md */; };
-		1BCBFED822B8F63300A65FAA /* bitrise.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED422B8F63300A65FAA /* bitrise.yml */; };
 		1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED522B8F63300A65FAA /* CHANGELOG.md */; };
 		1BCBFEDA22B903A300A65FAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
@@ -48,7 +47,6 @@
 /* Begin PBXFileReference section */
 		1BCBFED222B8F63300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1BCBFED322B8F63300A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		1BCBFED422B8F63300A65FAA /* bitrise.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrise.yml; sourceTree = "<group>"; };
 		1BCBFED522B8F63300A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F532F45E152C8559DCC281F /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 		C9AFE3ED22B799AC00943B3E = {
 			isa = PBXGroup;
 			children = (
-				1BCBFED422B8F63300A65FAA /* bitrise.yml */,
 				1BCBFED522B8F63300A65FAA /* CHANGELOG.md */,
 				1BCBFED222B8F63300A65FAA /* LICENSE */,
 				1BCBFED322B8F63300A65FAA /* README.md */,
@@ -274,7 +271,6 @@
 				C9AFE4B522B7EE5900943B3E /* VerifiedTokensSession-success.json in Resources */,
 				C9AFE4AF22B7EE5900943B3E /* VerifiedTokens-internalServerError.json in Resources */,
 				C9AFE4B422B7EE5900943B3E /* VerifiedTokens-unknown-variation2.json in Resources */,
-				1BCBFED822B8F63300A65FAA /* bitrise.yml in Resources */,
 				C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */,
 				C9AFE4B222B7EE5900943B3E /* Discovery-success.json in Resources */,
 				C9AFE4B122B7EE5900943B3E /* VerifiedTokens-unknown-variation4.json in Resources */,
