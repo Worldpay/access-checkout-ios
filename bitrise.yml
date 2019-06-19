@@ -67,7 +67,9 @@ workflows:
     steps:
     - cache-pull: {}
     - certificate-and-profile-installer: {}
-    - cocoapods-install: {}
+    - cocoapods-install:
+        inputs:
+        - source_root_path: AccessCheckoutSDK
     - recreate-user-schemes:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
@@ -92,8 +94,8 @@ workflows:
             # debug log
             set -x
 
-            # Download to AccessCheckout directory
-            cd AccessCheckout
+            # Download to AccessCheckoutSDK directory
+            cd AccessCheckoutSDK
             echo "Fetching pact-ruby-standalone..."
             curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
             echo "Unpacking..."
@@ -106,11 +108,6 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone XS
         - scheme: "$SDK_SCHEME"
-    - xcode-test:
-        inputs:
-        - project_path: "$SDK_PROJECT_PATH"
-        - simulator_device: iPhone XS
-        - scheme: "$BITRISE_DEMO_SCHEME"
     - github-release:
         inputs:
         - username: "$GITHUB_USERNAME"
