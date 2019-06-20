@@ -6,7 +6,7 @@ class PactTests: XCTestCase {
 
     let baseURI: String = Bundle(for: PactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
     
-    let requestHeaders: [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
+    let requestHeaders:  [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json;charset=UTF-8"]
 
     let verifiedTokensMockService = MockService(provider: "verified-tokens",
@@ -24,7 +24,7 @@ class PactTests: XCTestCase {
         }
     }
 
-    func testCreateSession() {
+    func testRequestCreatesTokenWithValidRequest() {
         
         let requestJson : [String: Any] = [
             "cvc": "123",
@@ -76,7 +76,7 @@ class PactTests: XCTestCase {
         }
     }
     
-    func testProvideIncorrectMerchantId() {
+    func testRequestFailsWhenAnIncorrectMerchantIdIsProvided() {
         
         let request = PactRequest(
                 identity: "incorrectValue",
@@ -95,7 +95,7 @@ class PactTests: XCTestCase {
         performTestCase(forScenario: "a request with an invalid identity", withRequest: request, andErrorResponse: expectedErrorResponse)
     }
     
-    func testPANDoesNotPassLuhnCheck() {
+    func testRequestFailsWhenCardNumberFailsLuhnCheck() {
         
         let request = PactRequest(
             identity: "identity",
@@ -114,7 +114,44 @@ class PactTests: XCTestCase {
         performTestCase(forScenario: "a request with a PAN that does not pass Luhn check", withRequest: request, andErrorResponse: expectedErrorResponse)
     }
 
-
+    func testRequestFailsWhenMonthIsSetToThirteen() {
+        
+        let request = PactRequest(
+            identity: "identity",
+            cvc: "123",
+            cardNumber: "4111111111111111",
+            expiryMonth: 13,
+            expiryYear: 2099)
+        
+        let expectedErrorResponse = ExpectedPactErrorResponse(
+            mainErrorName: "bodyDoesNotMatchSchema",
+            mainErrorMessage: "The json body provided does not match the expected schema",
+            validationErrorName: "integerIsTooLarge",
+            validationErrorMessage: "Card expiry month is too large - must be between 1 & 12",
+            validationJsonPath: "$.cardExpiryDate.month")
+        
+        performTestCase(forScenario: "a request with a month number that is too large", withRequest: request, andErrorResponse: expectedErrorResponse)
+    }
+    
+    func testRequestFailsWhenPANHasLetters() {
+        
+        let request = PactRequest(
+            identity: "identity",
+            cvc: "123",
+            cardNumber: "notACardNumber",
+            expiryMonth: 13,
+            expiryYear: 2099)
+        
+        let expectedErrorResponse = ExpectedPactErrorResponse(
+            mainErrorName: "bodyDoesNotMatchSchema",
+            mainErrorMessage: "The json body provided does not match the expected schema",
+            validationErrorName: "fieldHasInvalidValue",
+            validationErrorMessage: "Card number must be numeric",
+            validationJsonPath: "$.cardNumber")
+        
+        performTestCase(forScenario: "a request with a PAN containing letters", withRequest: request, andErrorResponse: expectedErrorResponse)
+    }
+    
     private struct PactRequest {
         let identity: String
         let cvc: String
@@ -181,6 +218,7 @@ class PactTests: XCTestCase {
                     case .success(_):
                         XCTFail("Service response expected to be unsuccessful")
                     case let .failure(error):
+                        print(error)
                         XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
                         XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
                         XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
