@@ -14,7 +14,7 @@ of these views or for more custom requirements you may provide your own
 1. Begin by creating and referencing the card views in your view controller:
 
   ```
-  import AccessCheckout
+  import AccessCheckoutSDK
 
   class ViewController: UIViewController {
 
@@ -24,7 +24,7 @@ of these views or for more custom requirements you may provide your own
       ...
   ```
 
-  * Note to import the `AccessCheckout` module.
+  * Note to import the `AccessCheckoutSDK` module.
 
 2. Override `viewDidLoad` and instantiate your `AccessCheckoutCard` object with the `CardView`'s:
 
