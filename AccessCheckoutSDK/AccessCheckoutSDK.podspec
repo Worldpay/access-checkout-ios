@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'AccessCheckoutSDK'
-  spec.version      = "1.0.0"
+  spec.version      = "1.1.0"
   spec.summary      = 'Worldpay Access Checkout iOS SDK'
   spec.description  = <<-DESC
   iOS SDK library for Worldpay Access Checkout.
