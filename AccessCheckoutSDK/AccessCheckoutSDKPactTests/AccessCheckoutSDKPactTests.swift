@@ -1,11 +1,3 @@
-//
-//  AccessCheckoutSDKPactTests.swift
-//  AccessCheckoutSDKPactTests
-//
-//  Created by Matt Davison on 18/06/2019.
-//  Copyright © 2019 Worldpay. All rights reserved.
-//
-
 import XCTest
 import PactConsumerSwift
 @testable import AccessCheckoutSDK
