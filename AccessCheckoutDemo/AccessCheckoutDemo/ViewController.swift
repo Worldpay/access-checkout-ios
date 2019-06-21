@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     private let merchantId = "<YOUR MERCHANT ID>"
     private let accessWorldpayBaseUrl = URL(string: "https://access.worldpay.com")!
+    private let cardConfigurationUrl = URL(string: "https://preprod.worldpay.com/cardConfiguration.json")!
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
@@ -136,12 +137,11 @@ class ViewController: UIViewController {
         resetCard(preserveContent: false, validationErrors: nil)
         
         // Card setup
+        let cardValidator = AccessCheckoutCardValidator()
+        cardValidator.cardConfiguration = CardConfiguration(fromURL: cardConfigurationUrl)
+        
         let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
         card.cardDelegate = self
-        let cardValidator = AccessCheckoutCardValidator()
-        if let url = Bundle.main.url(forResource: "cardConfiguration", withExtension: "json") {
-            cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
-        }
         card.cardValidator = cardValidator
         self.card = card
         
