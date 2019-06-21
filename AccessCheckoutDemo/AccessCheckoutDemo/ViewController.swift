@@ -138,9 +138,11 @@ class ViewController: UIViewController {
         // Card setup
         let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
         card.cardDelegate = self
+        let cardValidator = AccessCheckoutCardValidator()
         if let url = Bundle.main.url(forResource: "cardConfiguration", withExtension: "json") {
-            card.cardValidator = AccessCheckoutCardValidator(cardConfiguration: CardConfiguration(fromURL: url))
+            cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
         }
+        card.cardValidator = cardValidator
         self.card = card
         
         let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: accessWorldpayBaseUrl)

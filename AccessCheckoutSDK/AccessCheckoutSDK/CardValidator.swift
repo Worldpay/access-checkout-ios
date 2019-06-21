@@ -36,15 +36,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
     /// The configuration to validate against
     public var cardConfiguration: CardConfiguration?
     
-    /**
-     Initializes the validator.
-     
-     - Parameter cardConfiguration: Optional `CardConfiguration`
-    */
-    public init(cardConfiguration: CardConfiguration?) {
-        self.cardConfiguration = cardConfiguration
-    }
-    
+    /// Initializes the validator.
+    public init(){}
     
     /**
      Validates all card input.
