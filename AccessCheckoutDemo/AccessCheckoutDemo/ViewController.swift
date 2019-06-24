@@ -136,7 +136,7 @@ class ViewController: UIViewController {
         
         // Card setup
         let cardValidator = AccessCheckoutCardValidator()
-        if let base = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String, let url = URL(string: base) {
+        if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String, let url = URL(string: configUrl) {
             cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
         }
         
@@ -145,7 +145,7 @@ class ViewController: UIViewController {
         card.cardValidator = cardValidator
         self.card = card
         
-        if let cardConfigURL = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: cardConfigURL) {
+        if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
             let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: url)
             accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
                 self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
