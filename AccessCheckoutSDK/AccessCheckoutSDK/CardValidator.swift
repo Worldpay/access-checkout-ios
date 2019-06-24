@@ -305,29 +305,34 @@ final public class AccessCheckoutCardValidator: CardValidator {
         var partiallyValid = true
         var completelyValid = true
         
-        guard let rule = validationRule else {
-            return ValidationResult(partial: partiallyValid, complete: completelyValid)
-        }
-
-        if let matcher = rule.matcher {
-            guard matcher.regexMatches(text: text) == true else {
-                return ValidationResult(partial: false, complete: false)
+        if let rule = validationRule {
+            if let matcher = rule.matcher {
+                guard matcher.regexMatches(text: text) == true else {
+                    return ValidationResult(partial: false, complete: false)
+                }
             }
-        }
-        if let validLength = rule.validLength {
-            partiallyValid = text.count <= validLength
-            completelyValid = text.count == validLength
-        } else if let minLength = rule.minLength, let maxLength = rule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count >= minLength && text.count <= maxLength
-        } else if let minLength = rule.minLength {
-            partiallyValid = true
-            completelyValid = text.count >= minLength
-        } else if let maxLength = rule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count == maxLength
+            if let validLength = rule.validLength {
+                partiallyValid = text.count <= validLength
+                completelyValid = text.count == validLength
+            } else if let minLength = rule.minLength, let maxLength = rule.maxLength {
+                partiallyValid = text.count <= maxLength
+                completelyValid = text.count >= minLength && text.count <= maxLength
+            } else if let minLength = rule.minLength {
+                partiallyValid = true
+                completelyValid = text.count >= minLength
+            } else if let maxLength = rule.maxLength {
+                partiallyValid = text.count <= maxLength
+                completelyValid = text.count == maxLength
+            }
+        } else {
+            partiallyValid = isNumeric(text: text)
+            completelyValid = isNumeric(text: text)
         }
         return ValidationResult(partial: partiallyValid, complete: completelyValid)
+    }
+    
+    private func isNumeric(text: String) -> Bool {
+        return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: text))
     }
 }
 
