@@ -33,11 +33,39 @@ public protocol CardValidator {
 /// An Access Checkout `CardValidator`
 final public class AccessCheckoutCardValidator: CardValidator {
     
+    /// The base card configuration, will be overridden by any `cardConfiguration`
+    private let baseCardDefaults: CardConfiguration.CardDefaults
+    
     /// The configuration to validate against
     public var cardConfiguration: CardConfiguration?
     
-    /// Initializes the validator.
-    public init(){}
+    /// Initializes the validator with basic card configuration defaults
+    public init() {
+        let initialPanValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,19}$",
+                                                                            minLength: 13,
+                                                                            maxLength: 19,
+                                                                            validLength: nil,
+                                                                            subRules: nil)
+        let initialCvvValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,4}$",
+                                                                            minLength: 3,
+                                                                            maxLength: 4,
+                                                                            validLength: nil,
+                                                                            subRules: nil)
+        let initialMonthValidationRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
+                                                                              minLength: 2,
+                                                                              maxLength: 2,
+                                                                              validLength: nil,
+                                                                              subRules: nil)
+        let initialYearValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
+                                                                             minLength: 2,
+                                                                             maxLength: 2,
+                                                                             validLength: nil,
+                                                                             subRules: nil)
+        baseCardDefaults = CardConfiguration.CardDefaults(pan: initialPanValidationRule,
+                                                             cvv: initialCvvValidationRule,
+                                                             month: initialMonthValidationRule,
+                                                             year: initialYearValidationRule)
+    }
     
     /**
      Validates all card input.
@@ -69,28 +97,21 @@ final public class AccessCheckoutCardValidator: CardValidator {
      */
     public func validate(pan: PAN) -> (valid: ValidationResult, brand: CardConfiguration.CardBrand?) {
         
-        var validationResult = ValidationResult(partial: true, complete: true)
-        var cardBrand: CardConfiguration.CardBrand?
+        var cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
         
-        if let configuration = cardConfiguration {
-            cardBrand = configuration.cardBrand(forPAN: pan)
-        
-            switch cardBrand?.name {
-            case "visa":
-                cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "visa", withExtension: "png")?.absoluteString
-            case "mastercard":
-                cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "mastercard", withExtension: "png")?.absoluteString
-            case "amex":
-                cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "amex", withExtension: "png")?.absoluteString
-            default:
-                break
-            }
-            
-            guard let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan else {
-                return (ValidationResult(partial: true, complete: pan.isValidLuhn()), cardBrand)
-            }
-            validationResult = validate(text: pan, againstValidationRule: panRule)
+        switch cardBrand?.name {
+        case "visa":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "visa", withExtension: "png")?.absoluteString
+        case "mastercard":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "mastercard", withExtension: "png")?.absoluteString
+        case "amex":
+            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "amex", withExtension: "png")?.absoluteString
+        default:
+            break
         }
+            
+        let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
+        var validationResult = validate(text: pan, againstValidationRule: panRule)
 
         if validationResult.complete {
             let validLuhn = pan.isValidLuhn()
@@ -117,13 +138,12 @@ final public class AccessCheckoutCardValidator: CardValidator {
         var panRule: CardConfiguration.CardValidationRule?
         if let currentPan = pan, let range = Range(range, in: currentPan) {
             expectedPan = currentPan.replacingCharacters(in: range, with: text)
-            let cardBrand = cardConfiguration?.cardBrand(forPAN: currentPan)
-            panRule = cardBrand?.cardValidationRule(forPAN: currentPan) ?? cardConfiguration?.defaults?.pan
+            panRule = cardConfiguration?.cardBrand(forPAN: currentPan)?.cardValidationRule(forPAN: currentPan)
         } else {
             expectedPan = text
-            panRule = cardConfiguration?.defaults?.pan
         }
-        return validate(text: expectedPan, againstValidationRule: panRule).partial
+        let rule = panRule ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
+        return validate(text: expectedPan, againstValidationRule: rule).partial
     }
     
     /**
@@ -136,13 +156,12 @@ final public class AccessCheckoutCardValidator: CardValidator {
      - Returns: The result of the validation.
      */
     public func validate(cvv: CVV, withPAN pan: PAN?) -> ValidationResult {
-        let cvvRule: CardConfiguration.CardValidationRule?
+        var cvvRule: CardConfiguration.CardValidationRule?
         if let pan = pan {
-            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv ?? cardConfiguration?.defaults?.cvv
-        } else {
-            cvvRule = cardConfiguration?.defaults?.cvv
+            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv
         }
-        return validate(text: cvv, againstValidationRule: cvvRule)
+        let rule = cvvRule ?? cardConfiguration?.defaults?.cvv ?? baseCardDefaults.cvv!
+        return validate(text: cvv, againstValidationRule: rule)
     }
     
     /**
@@ -161,12 +180,11 @@ final public class AccessCheckoutCardValidator: CardValidator {
             return true // Always allow deletion
         }
         
-        let cvvRule: CardConfiguration.CardValidationRule?
+        var cvvRule: CardConfiguration.CardValidationRule?
         if let pan = pan {
-            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv ?? cardConfiguration?.defaults?.cvv
-        } else {
-            cvvRule = cardConfiguration?.defaults?.cvv
+            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv
         }
+        let rule = cvvRule ?? cardConfiguration?.defaults?.cvv ?? baseCardDefaults.cvv!
         
         let expectedCVV: String
         if let cvv = cvv, let range = Range(range, in: cvv) {
@@ -174,7 +192,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
         } else {
             expectedCVV = text
         }
-        return validate(text: expectedCVV, againstValidationRule: cvvRule).partial
+        return validate(text: expectedCVV, againstValidationRule: rule).partial
     }
     
     /**
@@ -200,7 +218,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
         } else {
             expectedMonth = text
         }
-        return validate(text: expectedMonth, againstValidationRule: cardConfiguration?.defaults?.month).partial
+        let rule = cardConfiguration?.defaults?.month ?? baseCardDefaults.month!
+        return validate(text: expectedMonth, againstValidationRule: rule).partial
     }
     
     /**
@@ -215,12 +234,15 @@ final public class AccessCheckoutCardValidator: CardValidator {
      */
     public func validate(month: ExpiryMonth?, year: ExpiryYear?, target: Date) -> ValidationResult {
         
+        let monthRule = cardConfiguration?.defaults?.month ?? baseCardDefaults.month!
+        let yearRule = cardConfiguration?.defaults?.year ?? baseCardDefaults.year!
+        
         var partiallyValid = true
         var completelyValid = true
         
         if let expiryMonth = month, let expiryYear = year {
-            let monthValid = validate(text: expiryMonth, againstValidationRule: cardConfiguration?.defaults?.month)
-            let yearValid = validate(text: expiryYear, againstValidationRule: cardConfiguration?.defaults?.year)
+            let monthValid = validate(text: expiryMonth, againstValidationRule: monthRule)
+            let yearValid = validate(text: expiryYear, againstValidationRule: yearRule)
             partiallyValid = monthValid.partial && yearValid.partial
             completelyValid = monthValid.complete && yearValid.complete
             if completelyValid {
@@ -242,7 +264,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
                 }
             }
         } else if let expiryMonth = month {
-            let valid = validate(text: expiryMonth, againstValidationRule: cardConfiguration?.defaults?.month)
+            let valid = validate(text: expiryMonth, againstValidationRule: monthRule)
             partiallyValid = valid.partial
             completelyValid = valid.complete
             // Numeric month handling
@@ -250,7 +272,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
                 completelyValid = intMonth > 0
             }
         } else if let expiryYear = year {
-            let valid = validate(text: expiryYear, againstValidationRule: cardConfiguration?.defaults?.year)
+            let valid = validate(text: expiryYear, againstValidationRule: yearRule)
             partiallyValid = valid.partial
             completelyValid = valid.complete
             if completelyValid {
@@ -293,40 +315,37 @@ final public class AccessCheckoutCardValidator: CardValidator {
         } else {
             expectedYear = text
         }
-        return validate(text: expectedYear, againstValidationRule: cardConfiguration?.defaults?.year).partial
+        let rule = cardConfiguration?.defaults?.year ?? baseCardDefaults.year!
+        return validate(text: expectedYear, againstValidationRule: rule).partial
     }
     
-    private func validate(text: String, againstValidationRule validationRule: CardConfiguration.CardValidationRule?) -> ValidationResult {
+    private func validate(text: String, againstValidationRule validationRule: CardConfiguration.CardValidationRule) -> ValidationResult {
         
-        guard text.isEmpty == false else {
+        guard !text.isEmpty else {
             return ValidationResult(partial: true, complete: false)
         }
+        if let matcher = validationRule.matcher, matcher.regexMatches(text: text) == false {
+            return ValidationResult(partial: false, complete: false)
+        }
         
-        var partiallyValid = true
-        var completelyValid = true
+        let partiallyValid: Bool
+        let completelyValid: Bool
         
-        if let rule = validationRule {
-            if let matcher = rule.matcher {
-                guard matcher.regexMatches(text: text) == true else {
-                    return ValidationResult(partial: false, complete: false)
-                }
-            }
-            if let validLength = rule.validLength {
-                partiallyValid = text.count <= validLength
-                completelyValid = text.count == validLength
-            } else if let minLength = rule.minLength, let maxLength = rule.maxLength {
-                partiallyValid = text.count <= maxLength
-                completelyValid = text.count >= minLength && text.count <= maxLength
-            } else if let minLength = rule.minLength {
-                partiallyValid = true
-                completelyValid = text.count >= minLength
-            } else if let maxLength = rule.maxLength {
-                partiallyValid = text.count <= maxLength
-                completelyValid = text.count == maxLength
-            }
+        if let validLength = validationRule.validLength {
+            partiallyValid = text.count <= validLength
+            completelyValid = text.count == validLength
+        } else if let minLength = validationRule.minLength, let maxLength = validationRule.maxLength {
+            partiallyValid = text.count <= maxLength
+            completelyValid = text.count >= minLength && text.count <= maxLength
+        } else if let minLength = validationRule.minLength {
+            partiallyValid = true
+            completelyValid = text.count >= minLength
+        } else if let maxLength = validationRule.maxLength {
+            partiallyValid = text.count <= maxLength
+            completelyValid = text.count == maxLength
         } else {
-            partiallyValid = isNumeric(text: text)
-            completelyValid = isNumeric(text: text)
+            partiallyValid = true
+            completelyValid = true
         }
         return ValidationResult(partial: partiallyValid, complete: completelyValid)
     }

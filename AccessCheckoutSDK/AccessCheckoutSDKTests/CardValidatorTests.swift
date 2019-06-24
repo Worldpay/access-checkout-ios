@@ -15,16 +15,11 @@ class CardValidatorTests: XCTestCase {
     override func setUp() {
     }
     
-    func testCardValidator() {
-        let cardValidator = AccessCheckoutCardValidator()
-        XCTAssertNotNil(cardValidator)
-    }
-    
     func testValidatePAN_empty_noConfiguration() {
         let cardValidator = AccessCheckoutCardValidator()
         let valid = cardValidator.validate(pan: "").valid
         XCTAssertTrue(valid.partial)
-        XCTAssertTrue(valid.complete)
+        XCTAssertFalse(valid.complete)
     }
     
     func testValidatePAN_noConfiguration_alpha() {
@@ -373,7 +368,7 @@ class CardValidatorTests: XCTestCase {
         let invalidPan = "456756789654"
         let cardValidator = AccessCheckoutCardValidator()
         let valid = cardValidator.validate(pan: invalidPan).valid
-        XCTAssertFalse(valid.partial)
+        XCTAssertTrue(valid.partial)
         XCTAssertFalse(valid.complete)
     }
     
@@ -573,7 +568,7 @@ class CardValidatorTests: XCTestCase {
     func testValidateCVVDefaults_maxLength(){
         let cvv = "1"
         let cvvRule = CardConfiguration.CardValidationRule(matcher: nil,
-                                                           minLength: nil,
+                                                           minLength: 3,
                                                            maxLength: 4,
                                                            validLength: nil,
                                                            subRules: nil)
@@ -1537,7 +1532,7 @@ class CardValidatorTests: XCTestCase {
         let validPan = "4111111111111111"
         let validMonth = monthDateFormatter.string(from: futureDate)
         let validYear = yearDateFormatter.string(from: futureDate)
-        let validCvv = "1"
+        let validCvv = "123"
         
         let cardValidator = AccessCheckoutCardValidator()
         XCTAssertTrue(cardValidator.isValid(pan: validPan,
