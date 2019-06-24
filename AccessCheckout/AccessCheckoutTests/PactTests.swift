@@ -36,11 +36,11 @@ class PactTests: XCTestCase {
             ]
         ]
 
-        let expectedValue = "\(baseURI)/verifiedTokens/sessions"
+        let expectedValue = "\(baseURI)/verifiedTokens/sessions/sampleSessionID"
         let responseJson = [
             "_links": [
                 "verifiedTokens:session": [
-                    "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions", generate: expectedValue)
+                    "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions/.+", generate: expectedValue)
                 ],
             ]
         ]
@@ -139,7 +139,7 @@ class PactTests: XCTestCase {
             identity: "identity",
             cvc: "123",
             cardNumber: "notACardNumber",
-            expiryMonth: 13,
+            expiryMonth: 1,
             expiryYear: 2099)
         
         let expectedErrorResponse = ExpectedPactErrorResponse(
