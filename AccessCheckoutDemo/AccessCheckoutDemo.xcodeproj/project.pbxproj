@@ -21,7 +21,6 @@
 		C9AFE47D22B7C6DA00943B3E /* CardValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */; };
 		C9AFE47E22B7C6DA00943B3E /* VerifiedTokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */; };
 		C9AFE48222B7C8D700943B3E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
-		C9AFE48622B7CB4700943B3E /* cardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48522B7CB4700943B3E /* cardConfiguration.json */; };
 		C9AFE4AF22B7EE5900943B3E /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A522B7EE5800943B3E /* VerifiedTokens-internalServerError.json */; };
 		C9AFE4B022B7EE5900943B3E /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A622B7EE5800943B3E /* VerifiedTokens-unknown-variation1.json */; };
 		C9AFE4B122B7EE5900943B3E /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A722B7EE5800943B3E /* VerifiedTokens-unknown-variation4.json */; };
@@ -65,7 +64,6 @@
 		C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidationTests.swift; sourceTree = "<group>"; };
 		C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifiedTokensTests.swift; sourceTree = "<group>"; };
 		C9AFE48322B7C8D700943B3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C9AFE48522B7CB4700943B3E /* cardConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cardConfiguration.json; sourceTree = "<group>"; };
 		C9AFE4A522B7EE5800943B3E /* VerifiedTokens-internalServerError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-internalServerError.json"; sourceTree = "<group>"; };
 		C9AFE4A622B7EE5800943B3E /* VerifiedTokens-unknown-variation1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation1.json"; sourceTree = "<group>"; };
 		C9AFE4A722B7EE5800943B3E /* VerifiedTokens-unknown-variation4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation4.json"; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 				C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */,
 				C9AFE4A722B7EE5800943B3E /* VerifiedTokens-unknown-variation4.json */,
 				C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */,
-				C9AFE48522B7CB4700943B3E /* cardConfiguration.json */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* ViewController.swift */,
 				C9AFE47222B7C62700943B3E /* Main.storyboard */,
@@ -279,7 +276,6 @@
 				C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */,
 				C9AFE4B322B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				C9AFE4B022B7EE5900943B3E /* VerifiedTokens-unknown-variation1.json in Resources */,
-				C9AFE48622B7CB4700943B3E /* cardConfiguration.json in Resources */,
 				C9AFE47622B7C62700943B3E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
