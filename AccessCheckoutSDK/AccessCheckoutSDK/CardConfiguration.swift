@@ -37,11 +37,38 @@ public struct CardConfiguration: Decodable {
         var subRules: [CardValidationRule]?
     }
     
-    struct CardDefaults: Decodable {
+    public struct CardDefaults: Decodable {
         var pan: CardValidationRule?
         var cvv: CardValidationRule?
         var month: CardValidationRule?
         var year: CardValidationRule?
+        
+        public static func baseDefaults() -> CardDefaults {
+            let panValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,19}$",
+                                                                         minLength: 13,
+                                                                         maxLength: 19,
+                                                                         validLength: nil,
+                                                                         subRules: nil)
+            let cvvValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,4}$",
+                                                                         minLength: 3,
+                                                                         maxLength: 4,
+                                                                         validLength: nil,
+                                                                         subRules: nil)
+            let monthValidationRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
+                                                                           minLength: 2,
+                                                                           maxLength: 2,
+                                                                           validLength: nil,
+                                                                           subRules: nil)
+            let yearValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
+                                                                          minLength: 2,
+                                                                          maxLength: 2,
+                                                                          validLength: nil,
+                                                                          subRules: nil)
+            return CardDefaults(pan: panValidationRule,
+                                cvv: cvvValidationRule,
+                                month: monthValidationRule,
+                                year: yearValidationRule)
+        }
     }
     
     /// The brand identity of a card, e.g Visa

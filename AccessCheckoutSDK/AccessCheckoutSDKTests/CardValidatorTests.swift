@@ -15,6 +15,57 @@ class CardValidatorTests: XCTestCase {
     override func setUp() {
     }
     
+    func testCardDefaults_base() {
+        let panRule = CardConfiguration.CardValidationRule(matcher: nil,
+                                                           minLength: 4,
+                                                           maxLength: 10,
+                                                           validLength: nil,
+                                                           subRules: nil)
+        let baseDefaults = CardConfiguration.CardDefaults(pan: panRule,
+                                                          cvv: nil,
+                                                          month: nil,
+                                                          year: nil)
+        let cardValidator = AccessCheckoutCardValidator(cardDefaults: baseDefaults)
+        let result1 = cardValidator.validate(pan: "411")
+        XCTAssertTrue(result1.valid.partial)
+        XCTAssertFalse(result1.valid.complete)
+        
+        let result2 = cardValidator.validate(pan: "41111") // Valid luhn
+        XCTAssertTrue(result2.valid.partial)
+        XCTAssertTrue(result2.valid.complete)
+    }
+    
+    func testCardDefaults_overrideBase() {
+        // Set base defaults
+        let panRule1 = CardConfiguration.CardValidationRule(matcher: nil,
+                                                           minLength: 4,
+                                                           maxLength: 6,
+                                                           validLength: nil,
+                                                           subRules: nil)
+        let baseDefaults = CardConfiguration.CardDefaults(pan: panRule1,
+                                                          cvv: nil,
+                                                          month: nil,
+                                                          year: nil)
+        let cardValidator = AccessCheckoutCardValidator(cardDefaults: baseDefaults)
+        
+        // Set a cardConfiguration to override base defaults
+        let panRule2 = CardConfiguration.CardValidationRule(matcher: nil,
+                                                           minLength: 8,
+                                                           maxLength: 10,
+                                                           validLength: nil,
+                                                           subRules: nil)
+        let cardDefaults = CardConfiguration.CardDefaults(pan: panRule2, cvv: nil, month: nil, year: nil)
+        cardValidator.cardConfiguration = CardConfiguration(defaults: cardDefaults, brands: nil)
+        
+        let result1 = cardValidator.validate(pan: "41111") // Valid luhn
+        XCTAssertTrue(result1.valid.partial)
+        XCTAssertFalse(result1.valid.complete)
+        
+        let result2 = cardValidator.validate(pan: "41111113") // Valid luhn
+        XCTAssertTrue(result2.valid.partial)
+        XCTAssertTrue(result2.valid.complete)
+    }
+    
     func testValidatePAN_empty_noConfiguration() {
         let cardValidator = AccessCheckoutCardValidator()
         let valid = cardValidator.validate(pan: "").valid

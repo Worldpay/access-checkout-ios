@@ -40,31 +40,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
     public var cardConfiguration: CardConfiguration?
     
     /// Initializes the validator with basic card configuration defaults
-    public init() {
-        let initialPanValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,19}$",
-                                                                            minLength: 13,
-                                                                            maxLength: 19,
-                                                                            validLength: nil,
-                                                                            subRules: nil)
-        let initialCvvValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,4}$",
-                                                                            minLength: 3,
-                                                                            maxLength: 4,
-                                                                            validLength: nil,
-                                                                            subRules: nil)
-        let initialMonthValidationRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                                              minLength: 2,
-                                                                              maxLength: 2,
-                                                                              validLength: nil,
-                                                                              subRules: nil)
-        let initialYearValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
-                                                                             minLength: 2,
-                                                                             maxLength: 2,
-                                                                             validLength: nil,
-                                                                             subRules: nil)
-        baseCardDefaults = CardConfiguration.CardDefaults(pan: initialPanValidationRule,
-                                                             cvv: initialCvvValidationRule,
-                                                             month: initialMonthValidationRule,
-                                                             year: initialYearValidationRule)
+    public init(cardDefaults: CardConfiguration.CardDefaults = CardConfiguration.CardDefaults.baseDefaults()) {
+        baseCardDefaults = cardDefaults
     }
     
     /**

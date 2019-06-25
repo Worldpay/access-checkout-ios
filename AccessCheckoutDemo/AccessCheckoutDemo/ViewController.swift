@@ -136,8 +136,9 @@ class ViewController: UIViewController {
         
         // Card setup
         let cardValidator = AccessCheckoutCardValidator()
-        if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String, let url = URL(string: configUrl) {
-            cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
+        if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String,
+            let url = URL(string: configUrl) {
+                cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
         }
         
         let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
