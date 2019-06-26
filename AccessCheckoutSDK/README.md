@@ -39,10 +39,11 @@ of these views or for more custom requirements you may provide your own
   and set on the card, e.g, `extension ViewController: CardDelegate { ...`
   
   3. Create a `CardValidator` with a `CardConfiguration` encapsulating card validation rules. A default card configuration is located here:
-  [https://preprod.access.worldpay.com/access-checkout/cardConfiguration.json]
+  [https://access.worldpay.com/access-checkout/cardConfiguration.json]
 ```
+    let cardValidator = AccessCheckoutCardValidator()
     if let url = URL(string: <YOUR_CARD_CONFIGURATION>) {
-        card.cardValidator = AccessCheckoutCardValidator(cardConfiguration: CardConfiguration(fromURL: url))
+        cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
     }
     self.card = card
 ```
