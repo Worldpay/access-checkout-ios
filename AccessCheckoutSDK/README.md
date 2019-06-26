@@ -26,23 +26,27 @@ of these views or for more custom requirements you may provide your own
 
   * Note to import the `AccessCheckoutSDK` module.
 
-2. Override `viewDidLoad` and instantiate your `AccessCheckoutCard` object with the `CardView`'s:
+2. Instantiate your `AccessCheckoutCard` object with the `CardView`'s:
 
   ```
   override func viewDidLoad() {
 
       let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
       card.cardDelegate = self
-      if let url = Bundle.main.url(forResource: "cardConfiguration", withExtension: "json") {
-          card.cardValidator = AccessCheckoutCardValidator(cardConfiguration: CardConfiguration(fromURL: url))
-      }
-      self.card = card
   ```
 
   - The `CardDelegate` handles the events on the card views, add conformance to the protocol on the view controller
   and set on the card, e.g, `extension ViewController: CardDelegate { ...`
-  - Instantiate an `AccessCheckoutCardValidator` with the supplied card configuration rules, `cardConfiguration.json`.
-  You may supply your own card configurations for custom requirements.
+  
+  3. Create a `CardValidator` with a `CardConfiguration` encapsulating card validation rules. A default card configuration is located here:
+  [https://access.worldpay.com/access-checkout/cardConfiguration.json]
+```
+    let cardValidator = AccessCheckoutCardValidator()
+    if let url = URL(string: <YOUR_CARD_CONFIGURATION>) {
+        cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
+    }
+    self.card = card
+```
 
 3. Create an `AccessCheckoutClient` instance with an `AccessCheckoutDiscovery` object:
 

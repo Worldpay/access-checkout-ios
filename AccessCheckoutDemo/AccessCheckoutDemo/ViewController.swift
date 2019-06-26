@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
     private let merchantId = "<YOUR MERCHANT ID>"
-    private let accessWorldpayBaseUrl = URL(string: "https://access.worldpay.com")!
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
@@ -136,17 +135,23 @@ class ViewController: UIViewController {
         resetCard(preserveContent: false, validationErrors: nil)
         
         // Card setup
+        let cardValidator = AccessCheckoutCardValidator()
+        if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String,
+            let url = URL(string: configUrl) {
+                cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
+        }
+        
         let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
         card.cardDelegate = self
-        if let url = Bundle.main.url(forResource: "cardConfiguration", withExtension: "json") {
-            card.cardValidator = AccessCheckoutCardValidator(cardConfiguration: CardConfiguration(fromURL: url))
-        }
+        card.cardValidator = cardValidator
         self.card = card
         
-        let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: accessWorldpayBaseUrl)
-        accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
-            self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
-                                                     merchantIdentifier: self.merchantId)
+        if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
+            let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: url)
+            accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
+                self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
+                                                         merchantIdentifier: self.merchantId)
+            }
         }
     }
     

@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>AccessBaseURL</key>
+	<string>$(ACCESS_BASE_URL)</string>
+	<key>AccessCardConfigurationURL</key>
+	<string>$(ACCESS_CARD_CONFIG_URL)</string>
 </dict>
 </plist>
