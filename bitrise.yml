@@ -123,7 +123,7 @@ workflows:
             # debug log
             set -x
 
-            pod spec lint AccessCheckout/AccessCheckout.podspec --allow-warnings
+            pod spec lint AccessCheckoutSDK.podspec --allow-warnings
     - cache-push: {}
 app:
   envs:
