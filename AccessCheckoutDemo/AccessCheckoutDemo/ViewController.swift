@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
-    private let merchantId = ProcessInfo.processInfo.environment["MERCHANT_ID"] ?? ""
-    
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
             let month = expiryDateView.month,
@@ -150,7 +148,7 @@ class ViewController: UIViewController {
             let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: url)
             accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
                 self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
-                                                         merchantIdentifier: self.merchantId)
+                                                         merchantIdentifier: CI.merchantId)
             }
         }
     }
@@ -183,4 +181,10 @@ extension ViewController: CardDelegate {
         }
         panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
+}
+
+/// Bitrise Swift variable injector step, see https://github.com/LucianoPAlmeida/variable-injector
+struct CI {
+    /// The merchant identity
+    static var merchantId = "$(MERCHANT_ID)"
 }
