@@ -21,3 +21,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - `AccessCheckoutCardValidator` constructor does not now require `CardConfiguration`, can now take `CardConfiguration.CardDefaults` instead.
 - `CardConfiguration` encapsulates the card validation rules which are loaded from an external json file.
+- Pod/Framework renamed from `AccessCheckout` to `AccessCheckoutSDK`
