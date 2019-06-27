@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
-    private let merchantId = "<YOUR MERCHANT ID>"
+    private let merchantId = ProcessInfo.processInfo.environment["MERCHANT_ID"] ?? ""
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
