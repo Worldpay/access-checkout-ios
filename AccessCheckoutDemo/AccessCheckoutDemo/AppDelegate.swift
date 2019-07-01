@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let stubDiscovery = UserDefaults.standard.string(forKey: "stubDiscovery"),
             let url = Bundle.main.url(forResource: stubDiscovery, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
+            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
                 MockingjayProtocol.addStub(matcher: http(.get, uri: baseURI),
                                            builder: jsonData(data))
         }
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupVerifiedTokensStub(baseURI: String) {
         if let stubVerifiedTokens = UserDefaults.standard.string(forKey: "stubVerifiedTokens"),
             let url = Bundle.main.url(forResource: stubVerifiedTokens, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
+            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
             MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseURI)/verifiedTokens"),
                                            builder: jsonData(data))
         }
@@ -63,10 +63,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupVerifiedTokensSessionStub(baseURI: String) {
         if let stubVerifiedTokensSession = UserDefaults.standard.string(forKey: "stubVerifiedTokensSession"),
             let url = Bundle.main.url(forResource: stubVerifiedTokensSession, withExtension: "json"),
-            let data = try? Data(contentsOf: url) {
+            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
                 MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseURI)/verifiedTokens/sessions"),
                                        builder: jsonData(data))
         }
+    }
+    
+    private func replaceBaseUri(base: String, inStubURL: URL) -> Data? {
+        guard let stub = try? String(contentsOf: inStubURL) else {
+            return nil
+        }
+        let modified = stub.replacingOccurrences(of: "<BASE_URI>", with: base)
+        return modified.data(using: .utf8)
     }
 
 }
