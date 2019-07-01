@@ -548,8 +548,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8BA50193BD557BCBB2DE4933 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://access.worldpay.com/access-checkout/cardConfiguration.json";
+				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -571,8 +571,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://access.worldpay.com/access-checkout/cardConfiguration.json";
+				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
