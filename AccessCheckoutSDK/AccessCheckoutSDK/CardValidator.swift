@@ -74,19 +74,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
      */
     public func validate(pan: PAN) -> (valid: ValidationResult, brand: CardConfiguration.CardBrand?) {
         
-        var cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
-        
-        switch cardBrand?.name {
-        case "visa":
-            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "visa", withExtension: "png")?.absoluteString
-        case "mastercard":
-            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "mastercard", withExtension: "png")?.absoluteString
-        case "amex":
-            cardBrand?.imageUrl = Bundle(for: type(of: self)).url(forResource: "amex", withExtension: "png")?.absoluteString
-        default:
-            break
-        }
-            
+        let cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
         let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
         var validationResult = validate(text: pan, againstValidationRule: panRule)
 
