@@ -76,7 +76,6 @@ class ViewController: UIViewController {
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
         
         panView.isEnabled = true
-        panView.imageView.image = unknownBrandImage
         panView.isValid(valid: true)
         
         expiryDateView.isEnabled = true
@@ -91,6 +90,7 @@ class ViewController: UIViewController {
             panView.clear()
             expiryDateView.clear()
             cvvView.clear()
+            panView.imageView.image = unknownBrandImage
         }
         validationErrors?.forEach({ error in
             switch error {
