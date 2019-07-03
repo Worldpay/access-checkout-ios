@@ -1,11 +1,11 @@
 {
     "_links": {
         "verifiedTokens:session": {
-            "href": "https://access.worldpay.com/verifiedTokens/sessions/session123456789"
+            "href": "<BASE_URI>/verifiedTokens/sessions/session123456789"
         },
         "curies": [
             {
-                "href": "https://access.worldpay.com/rels/verifiedTokens/{rel}.json",
+                "href": "<BASE_URI>/rels/verifiedTokens/{rel}.json",
                 "name": "verifiedTokens",
                 "templated": true
             }

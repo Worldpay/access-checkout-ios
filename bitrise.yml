@@ -13,6 +13,9 @@ workflows:
     - recreate-user-schemes:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
+    - swift-environment-variable-injector:
+        inputs:
+        - files: AccessCheckoutDemo/AccessCheckoutDemo/ViewController.swift
     - script:
         inputs:
         - content: |-
