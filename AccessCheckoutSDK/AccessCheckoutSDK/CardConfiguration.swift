@@ -74,11 +74,16 @@ public struct CardConfiguration: Decodable {
     /// The brand identity of a card, e.g Visa
     public struct CardBrand: Decodable, Equatable {
         
+        public struct CardBrandImage: Decodable {
+            public var type: String?
+            public var url: String?
+        }
+        
         /// The brand name
         public let name: String
         
         /// The URL of the brand logo
-        public var imageUrl: String?
+        public var images: [CardBrandImage]?
         
         var cvv: CardValidationRule?
         let pans: [CardValidationRule]

@@ -77,6 +77,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-stubCardConfiguration CardConfiguration"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-stubVerifiedTokens VerifiedTokens-success"
             isEnabled = "YES">
          </CommandLineArgument>

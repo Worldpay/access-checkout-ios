@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setupVerifiedTokensStub(baseURI: base)
             setupVerifiedTokensSessionStub(baseURI: base)
         }
-        
+        if let configurationURI = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
+            setupCardConfigurationStub(configurationURI: configurationURI)
+        }
         return true
     }
 
@@ -56,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let url = Bundle.main.url(forResource: stubVerifiedTokens, withExtension: "json"),
             let data = replaceBaseUri(base: baseURI, inStubURL: url) {
             MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseURI)/verifiedTokens"),
-                                           builder: jsonData(data))
+                                       builder: jsonData(data))
         }
     }
     
@@ -65,7 +67,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let url = Bundle.main.url(forResource: stubVerifiedTokensSession, withExtension: "json"),
             let data = replaceBaseUri(base: baseURI, inStubURL: url) {
                 MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseURI)/verifiedTokens/sessions"),
-                                       builder: jsonData(data))
+                                           builder: jsonData(data))
+        }
+    }
+    
+    private func setupCardConfigurationStub(configurationURI: String) {
+        if let stubCardConfiguration = UserDefaults.standard.string(forKey: "stubCardConfiguration"),
+            let url = Bundle.main.url(forResource: stubCardConfiguration, withExtension: "json"),
+            let data = replaceBaseUri(base: Bundle.main.bundleURL.absoluteString, inStubURL: url) {
+                MockingjayProtocol.addStub(matcher: http(.get, uri: configurationURI),
+                                           builder: jsonData(data))
         }
     }
     

@@ -306,7 +306,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: nil,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "test", imageUrl: nil, cvv: nil, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "test", images: nil, cvv: nil, pans: [panRule])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: nil,
@@ -328,8 +328,8 @@ class CardValidatorTests: XCTestCase {
                                                             maxLength: nil,
                                                             validLength: nil,
                                                             subRules: nil)
-        let cardBrand1 = CardConfiguration.CardBrand(name: "brand1", imageUrl: nil, cvv: nil, pans: [panRule1])
-        let cardBrand2 = CardConfiguration.CardBrand(name: "brand2", imageUrl: nil, cvv: nil, pans: [panRule2])
+        let cardBrand1 = CardConfiguration.CardBrand(name: "brand1", images: nil, cvv: nil, pans: [panRule1])
+        let cardBrand2 = CardConfiguration.CardBrand(name: "brand2", images: nil, cvv: nil, pans: [panRule2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: nil,
@@ -352,8 +352,8 @@ class CardValidatorTests: XCTestCase {
                                                             maxLength: nil,
                                                             validLength: nil,
                                                             subRules: nil)
-        let cardBrand1 = CardConfiguration.CardBrand(name: "brand1", imageUrl: nil, cvv: nil, pans: [panRule1])
-        let cardBrand2 = CardConfiguration.CardBrand(name: "brand2", imageUrl: nil, cvv: nil, pans: [panRule2])
+        let cardBrand1 = CardConfiguration.CardBrand(name: "brand1", images: nil, cvv: nil, pans: [panRule1])
+        let cardBrand2 = CardConfiguration.CardBrand(name: "brand2", images: nil, cvv: nil, pans: [panRule2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: nil,
@@ -372,7 +372,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: nil,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "amex", imageUrl: nil, cvv: nil, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "amex", images: nil, cvv: nil, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: nil,
                                                   brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
@@ -390,7 +390,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: 15,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "amex", imageUrl: nil, cvv: nil, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "amex", images: nil, cvv: nil, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: nil,
                                                   brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
@@ -437,7 +437,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: nil,
                                                            subRules: [subPanRule])
-        let cardBrand = CardConfiguration.CardBrand(name: "test", imageUrl: nil, cvv: nil, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "test", images: nil, cvv: nil, pans: [panRule])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: nil,
@@ -564,7 +564,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: 16,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", imageUrl: nil, cvv: cvvRule, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: cvvRule, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -587,7 +587,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: 16,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", imageUrl: nil, cvv: cvvRule, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: cvvRule, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -745,7 +745,7 @@ class CardValidatorTests: XCTestCase {
                                                       cvv: cvvRule,
                                                       month: nil,
                                                       year: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", imageUrl: nil, cvv: cvvRule, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: cvvRule, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -770,7 +770,7 @@ class CardValidatorTests: XCTestCase {
                                                       cvv: nil,
                                                       month: nil,
                                                       year: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", imageUrl: nil, cvv: cvvRule, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: cvvRule, pans: [panRule])
         let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -1830,7 +1830,7 @@ class CardValidatorTests: XCTestCase {
                                                            maxLength: nil,
                                                            validLength: 3,
                                                            subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "visa", imageUrl: nil, cvv: cvvRule, pans: [brandPanRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "visa", images: nil, cvv: cvvRule, pans: [brandPanRule])
         let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
         
         let now = Date()

@@ -110,7 +110,7 @@ class CardValidationTests: XCTestCase {
 
     // MARK: Card brand images
     
-    func testPAN_brandImage() {
+    func testBrandImage_visa() {
         let brandName = "visa"
         let field = app.textFields["pan"]
         field.tap()
@@ -120,15 +120,33 @@ class CardValidationTests: XCTestCase {
                                                                              comment: ""))
     }
     
-    func testPAN_unknownImage() {
-        
+    func testBrandImage_mastercard() {
+        let brandName = "mastercard"
         let field = app.textFields["pan"]
         field.tap()
-        field.typeText("1")
+        field.typeText("5")
+        XCTAssertEqual(app.images["cardBrandImage"].label, NSLocalizedString(brandName,
+                                                                             bundle: Bundle(for: type(of: self)),
+                                                                             comment: ""))
+    }
+    
+    func testBrandImage_amex() {
+        let brandName = "amex"
+        let field = app.textFields["pan"]
+        field.tap()
+        field.typeText("34")
+        XCTAssertEqual(app.images["cardBrandImage"].label, NSLocalizedString(brandName,
+                                                                             bundle: Bundle(for: type(of: self)),
+                                                                             comment: ""))
+    }
+    
+    func testBrandImage_unknown() {
+        let field = app.textFields["pan"]
+        field.tap()
+        field.typeText("0")
         XCTAssertEqual(app.images["cardBrandImage"].label, NSLocalizedString("unknown_card_brand",
                                                                              bundle: Bundle(for: type(of: self)),
                                                                              comment: ""))
-        
     }
     
     // MARK: Dynamic CVV

@@ -173,7 +173,7 @@ extension ViewController: CardDelegate {
     }
     
     func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?) {
-        if let imageUrl = cardBrand?.imageUrl,
+        if let imageUrl = cardBrand?.images?.filter( { $0.type == "image/png" } ).first?.url,
             let url = URL(string: imageUrl) {
                 updateCardBrandImage(url: url)
         } else {
