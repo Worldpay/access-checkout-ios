@@ -5,4 +5,6 @@ set -e
 set -x
 
 # Apply fix to generated PACT file
-python $PROJECT_LOCATION/scripts/pactFix/main.py $PROJECT_LOCATION/AccessCheckoutSDK/tmp/pacts/access-checkout-ios-sdk-verified-tokens.json $PROJECT_LOCATION/access-checkout-ios-sdk-verified-tokens.json
+python $BITRISE_SOURCE_DIR/scripts/pactFix/main.py \
+       $BITRISE_SOURCE_DIR/AccessCheckoutSDK/tmp/pacts/access-checkout-ios-sdk-verified-tokens.json \
+       $BITRISE_SOURCE_DIR/access-checkout-ios-sdk-verified-tokens.json
