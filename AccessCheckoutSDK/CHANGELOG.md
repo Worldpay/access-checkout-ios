@@ -22,3 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - `AccessCheckoutCardValidator` constructor does not now require `CardConfiguration`, can now take `CardConfiguration.CardDefaults` instead.
 - `CardConfiguration` encapsulates the card validation rules which are loaded from an external json file.
 - Pod/Framework renamed from `AccessCheckout` to `AccessCheckoutSDK`
+
+## [1.2.1] - 2019-07-18
+### Changed
+- Default card type images are now fetched from an external location. This allows apps using this feature to always display the most up-to-date version of a given card type image.
