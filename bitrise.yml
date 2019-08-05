@@ -39,6 +39,7 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone 8
         - scheme: "$SDK_SCHEME"
+        - generate_code_coverage_files: "yes"
     - cocoapods-install:
         inputs:
         - source_root_path: AccessCheckoutDemo
