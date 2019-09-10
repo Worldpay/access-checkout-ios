@@ -40,6 +40,10 @@ workflows:
         - simulator_device: iPhone 8
         - scheme: "$SDK_SCHEME"
         - generate_code_coverage_files: "yes"
+    - script-runner:
+        inputs:
+        - file_path: "scripts/gather_coverage.sh"
+        - runner: bash
     - cocoapods-install:
         inputs:
         - source_root_path: AccessCheckoutDemo
@@ -143,6 +147,9 @@ app:
   - opts:
       is_expand: false
     DEMO_SCHEME: AccessCheckoutDemo
+  - opts:
+      is_expand: false
+    SDK_FRAMEWORK: AccessCheckoutSDK.framework
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
