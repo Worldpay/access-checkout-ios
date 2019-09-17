@@ -7,274 +7,329 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */; };
-		1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
-		1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */; };
-		1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */; };
-		1BCBFEC622B8EB4400A65FAA /* CardConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */; };
-		1BCBFEC722B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */; };
-		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
-		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
-		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
-		1BD0EE9522CB6EF800147A71 /* cardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD0EE9322CB6EEE00147A71 /* cardConfiguration.json */; };
-		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
-		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
-		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
-		C9AFE3E422B7996200943B3E /* AccessCheckoutSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9AFE45922B7AA4800943B3E /* AccessClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44622B7AA4700943B3E /* AccessClient.swift */; };
-		C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44722B7AA4700943B3E /* AccessCheckoutClientError.swift */; };
-		C9AFE45B22B7AA4800943B3E /* AccessCheckoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44822B7AA4700943B3E /* AccessCheckoutResponse.swift */; };
-		C9AFE45C22B7AA4800943B3E /* CVVView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44922B7AA4700943B3E /* CVVView.xib */; };
-		C9AFE45D22B7AA4800943B3E /* PANView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44A22B7AA4700943B3E /* PANView.xib */; };
-		C9AFE45E22B7AA4800943B3E /* CardConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44B22B7AA4700943B3E /* CardConfiguration.swift */; };
-		C9AFE46022B7AA4800943B3E /* ExpiryDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */; };
-		C9AFE46122B7AA4800943B3E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44E22B7AA4700943B3E /* CardView.swift */; };
-		C9AFE46222B7AA4800943B3E /* CVVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44F22B7AA4700943B3E /* CVVView.swift */; };
-		C9AFE46322B7AA4800943B3E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45022B7AA4700943B3E /* Card.swift */; };
-		C9AFE46422B7AA4800943B3E /* PANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45122B7AA4700943B3E /* PANView.swift */; };
-		C9AFE46522B7AA4800943B3E /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45222B7AA4700943B3E /* amex.png */; };
-		C9AFE46622B7AA4800943B3E /* CardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45322B7AA4700943B3E /* CardValidator.swift */; };
-		C9AFE46722B7AA4800943B3E /* AccessCheckoutClientValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45422B7AA4700943B3E /* AccessCheckoutClientValidationError.swift */; };
-		C9AFE46822B7AA4800943B3E /* ExpiryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */; };
-		C9AFE46922B7AA4800943B3E /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45622B7AA4700943B3E /* mastercard.png */; };
-		C9AFE46A22B7AA4800943B3E /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45722B7AA4700943B3E /* visa.png */; };
-		C9AFE46B22B7AA4800943B3E /* AccessDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45822B7AA4800943B3E /* AccessDiscovery.swift */; };
-		FCF80925ABFA3D13D91AC196 /* Pods_AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA77127DB45BFE97F1FBCF23 /* Pods_AccessCheckoutSDK.framework */; };
+		0915C1FBB5EC902CEDE2CA84 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD81265D71B8A14A7A53ADCE /* Pods_AccessCheckoutSDKTests.framework */; };
+		2B4CE486E5DEDEBF2A58D65B /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B938ED2087C58EA7EB13AA93 /* Pods_AccessCheckoutDemo.framework */; };
+		591C7C59965874B6FB8FC1B1 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D42B2ED8B3197B7B43AC9C /* Pods_AccessCheckoutSDKPactTests.framework */; };
+		78AA9BEDF18A7EF20BBC49D6 /* Pods_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CAAC6EA45E805C00DF5AFA /* Pods_AccessCheckoutDemoUITests.framework */; };
+		BA4CA5D0E92EF3897C76D9EE /* Pods_AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A25AE44BF49802C98B3A463C /* Pods_AccessCheckoutSDK.framework */; };
+		C9247506233118900017042B /* CardValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9247504233118900017042B /* CardValidationTests.swift */; };
+		C9247507233118900017042B /* VerifiedTokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9247505233118900017042B /* VerifiedTokensTests.swift */; };
+		C92475092331195D0017042B /* cardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C92475082331195D0017042B /* cardConfiguration.json */; };
+		C9605CB3233101CC007B8E93 /* CVVView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9605CA4233101CB007B8E93 /* CVVView.xib */; };
+		C9605CB4233101CC007B8E93 /* PANView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9605CA5233101CB007B8E93 /* PANView.xib */; };
+		C9605CB5233101CC007B8E93 /* AccessDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CA6233101CB007B8E93 /* AccessDiscovery.swift */; };
+		C9605CB6233101CC007B8E93 /* ExpiryDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9605CA7233101CB007B8E93 /* ExpiryDateView.xib */; };
+		C9605CB7233101CC007B8E93 /* CVVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CA8233101CB007B8E93 /* CVVView.swift */; };
+		C9605CB8233101CC007B8E93 /* AccessCheckoutClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CA9233101CB007B8E93 /* AccessCheckoutClientError.swift */; };
+		C9605CB9233101CC007B8E93 /* ExpiryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAA233101CB007B8E93 /* ExpiryDateView.swift */; };
+		C9605CBA233101CC007B8E93 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAB233101CB007B8E93 /* Card.swift */; };
+		C9605CBB233101CC007B8E93 /* AccessClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAC233101CB007B8E93 /* AccessClient.swift */; };
+		C9605CBC233101CC007B8E93 /* AccessCheckoutClientValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAD233101CC007B8E93 /* AccessCheckoutClientValidationError.swift */; };
+		C9605CBD233101CC007B8E93 /* CardConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAE233101CC007B8E93 /* CardConfiguration.swift */; };
+		C9605CBE233101CC007B8E93 /* PANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CAF233101CC007B8E93 /* PANView.swift */; };
+		C9605CBF233101CC007B8E93 /* CardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CB0233101CC007B8E93 /* CardValidator.swift */; };
+		C9605CC0233101CC007B8E93 /* AccessCheckoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CB1233101CC007B8E93 /* AccessCheckoutResponse.swift */; };
+		C9605CC1233101CC007B8E93 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CB2233101CC007B8E93 /* CardView.swift */; };
+		C9605CC623310212007B8E93 /* CardConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CC223310212007B8E93 /* CardConfigurationTests.swift */; };
+		C9605CC723310212007B8E93 /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CC323310212007B8E93 /* AccessCheckoutClientTests.swift */; };
+		C9605CC823310212007B8E93 /* AccessCheckoutDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CC423310212007B8E93 /* AccessCheckoutDiscoveryTests.swift */; };
+		C9605CC923310212007B8E93 /* CardValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9605CC523310212007B8E93 /* CardValidatorTests.swift */; };
+		C9605CCF23310B15007B8E93 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9605CD123310B15007B8E93 /* Localizable.strings */; };
+		C9625A372330EA79004B6981 /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9625A2D2330EA79004B6981 /* AccessCheckoutSDK.framework */; };
+		C9625A3E2330EA79004B6981 /* AccessCheckoutSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = C9625A302330EA79004B6981 /* AccessCheckoutSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9625A7A2330EBC4004B6981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9625A792330EBC4004B6981 /* AppDelegate.swift */; };
+		C9625A7C2330EBC4004B6981 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9625A7B2330EBC4004B6981 /* ViewController.swift */; };
+		C9625A7F2330EBC4004B6981 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9625A7D2330EBC4004B6981 /* Main.storyboard */; };
+		C9625A812330EBC5004B6981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9625A802330EBC5004B6981 /* Assets.xcassets */; };
+		C9625A842330EBC5004B6981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9625A822330EBC5004B6981 /* LaunchScreen.storyboard */; };
+		C9C1990423310094004AB4D7 /* AccessCheckoutSDKPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C1990323310094004AB4D7 /* AccessCheckoutSDKPactTests.swift */; };
+		C9C1990623310094004AB4D7 /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9625A2D2330EA79004B6981 /* AccessCheckoutSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */ = {
+		C9625A382330EA79004B6981 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
+			containerPortal = C9625A242330EA79004B6981 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
+			remoteGlobalIDString = C9625A2C2330EA79004B6981;
 			remoteInfo = AccessCheckoutSDK;
 		};
-		C9AFE3DE22B7996200943B3E /* PBXContainerItemProxy */ = {
+		C9625A8B2330EBC5004B6981 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
+			containerPortal = C9625A242330EA79004B6981 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
+			remoteGlobalIDString = C9625A762330EBC4004B6981;
+			remoteInfo = AccessCheckoutDemo;
+		};
+		C9C1990723310094004AB4D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9625A242330EA79004B6981 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9625A2C2330EA79004B6981;
 			remoteInfo = AccessCheckoutSDK;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKPactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKPactTests.swift; sourceTree = "<group>"; };
-		1BCBFEB922B8EA3C00A65FAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
-		1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidatorTests.swift; sourceTree = "<group>"; };
-		1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfigurationTests.swift; sourceTree = "<group>"; };
-		1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDiscoveryTests.swift; sourceTree = "<group>"; };
-		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		1BD0EE9322CB6EEE00147A71 /* cardConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cardConfiguration.json; sourceTree = "<group>"; };
-		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
-		6F228E4B50C5655DF4E7F378 /* Pods-AccessCheckoutSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		7B355B4B411B9052D09D24D3 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.release.xcconfig"; sourceTree = "<group>"; };
-		A7D16DA602AF1C240EFDD905 /* Pods-AccessCheckoutSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.release.xcconfig"; sourceTree = "<group>"; };
-		ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B885CDE61870E5A0F3BB91D5 /* Pods-AccessCheckoutSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessCheckoutSDK.h; sourceTree = "<group>"; };
-		C9AFE3D722B7996200943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9AFE3E322B7996200943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9AFE44622B7AA4700943B3E /* AccessClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessClient.swift; sourceTree = "<group>"; };
-		C9AFE44722B7AA4700943B3E /* AccessCheckoutClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientError.swift; sourceTree = "<group>"; };
-		C9AFE44822B7AA4700943B3E /* AccessCheckoutResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutResponse.swift; sourceTree = "<group>"; };
-		C9AFE44922B7AA4700943B3E /* CVVView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVVView.xib; sourceTree = "<group>"; };
-		C9AFE44A22B7AA4700943B3E /* PANView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PANView.xib; sourceTree = "<group>"; };
-		C9AFE44B22B7AA4700943B3E /* CardConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfiguration.swift; sourceTree = "<group>"; };
-		C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpiryDateView.xib; sourceTree = "<group>"; };
-		C9AFE44E22B7AA4700943B3E /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		C9AFE44F22B7AA4700943B3E /* CVVView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVVView.swift; sourceTree = "<group>"; };
-		C9AFE45022B7AA4700943B3E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		C9AFE45122B7AA4700943B3E /* PANView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANView.swift; sourceTree = "<group>"; };
-		C9AFE45222B7AA4700943B3E /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
-		C9AFE45322B7AA4700943B3E /* CardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidator.swift; sourceTree = "<group>"; };
-		C9AFE45422B7AA4700943B3E /* AccessCheckoutClientValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientValidationError.swift; sourceTree = "<group>"; };
-		C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiryDateView.swift; sourceTree = "<group>"; };
-		C9AFE45622B7AA4700943B3E /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
-		C9AFE45722B7AA4700943B3E /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
-		C9AFE45822B7AA4800943B3E /* AccessDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessDiscovery.swift; sourceTree = "<group>"; };
-		EA77127DB45BFE97F1FBCF23 /* Pods_AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2133CF521FF6EF36CF9B9EC5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		38D42B2ED8B3197B7B43AC9C /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		39CF1A387943DB25CBDD8B7E /* Pods-AccessCheckoutSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		51BA91EF6447BEDAE6A43A83 /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
+		599AE9035075094D07AFDAF6 /* Pods-AccessCheckoutSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		5A47260A54F489F55D12FE97 /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
+		6E6325158ADD27050C9EBAAD /* Pods-AccessCheckoutSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		798AD2DD8A06C0A6E1220440 /* Pods-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		80B8C063F13D45F67B01A9B1 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.release.xcconfig"; sourceTree = "<group>"; };
+		96A05B9A757CF96582C7173F /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A25AE44BF49802C98B3A463C /* Pods_AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4CAAC6EA45E805C00DF5AFA /* Pods_AccessCheckoutDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC247AB85382B676E1BC7F70 /* Pods-AccessCheckoutDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		B938ED2087C58EA7EB13AA93 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE98C98A2E39ED12A7C6F928 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C53DE45B9F957F198B69506F /* Pods-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C6D6FB215953ACFBF4A71288 /* Pods-AccessCheckoutSDK-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK-AccessCheckoutDemo/Pods-AccessCheckoutSDK-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
+		C9247504233118900017042B /* CardValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidationTests.swift; sourceTree = "<group>"; };
+		C9247505233118900017042B /* VerifiedTokensTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifiedTokensTests.swift; sourceTree = "<group>"; };
+		C92475082331195D0017042B /* cardConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cardConfiguration.json; sourceTree = "<group>"; };
+		C9605CA4233101CB007B8E93 /* CVVView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVVView.xib; sourceTree = "<group>"; };
+		C9605CA5233101CB007B8E93 /* PANView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PANView.xib; sourceTree = "<group>"; };
+		C9605CA6233101CB007B8E93 /* AccessDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessDiscovery.swift; sourceTree = "<group>"; };
+		C9605CA7233101CB007B8E93 /* ExpiryDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpiryDateView.xib; sourceTree = "<group>"; };
+		C9605CA8233101CB007B8E93 /* CVVView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVVView.swift; sourceTree = "<group>"; };
+		C9605CA9233101CB007B8E93 /* AccessCheckoutClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientError.swift; sourceTree = "<group>"; };
+		C9605CAA233101CB007B8E93 /* ExpiryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiryDateView.swift; sourceTree = "<group>"; };
+		C9605CAB233101CB007B8E93 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		C9605CAC233101CB007B8E93 /* AccessClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessClient.swift; sourceTree = "<group>"; };
+		C9605CAD233101CC007B8E93 /* AccessCheckoutClientValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientValidationError.swift; sourceTree = "<group>"; };
+		C9605CAE233101CC007B8E93 /* CardConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfiguration.swift; sourceTree = "<group>"; };
+		C9605CAF233101CC007B8E93 /* PANView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANView.swift; sourceTree = "<group>"; };
+		C9605CB0233101CC007B8E93 /* CardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidator.swift; sourceTree = "<group>"; };
+		C9605CB1233101CC007B8E93 /* AccessCheckoutResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutResponse.swift; sourceTree = "<group>"; };
+		C9605CB2233101CC007B8E93 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		C9605CC223310212007B8E93 /* CardConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardConfigurationTests.swift; sourceTree = "<group>"; };
+		C9605CC323310212007B8E93 /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
+		C9605CC423310212007B8E93 /* AccessCheckoutDiscoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDiscoveryTests.swift; sourceTree = "<group>"; };
+		C9605CC523310212007B8E93 /* CardValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidatorTests.swift; sourceTree = "<group>"; };
+		C9605CD023310B15007B8E93 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C9625A2D2330EA79004B6981 /* AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9625A302330EA79004B6981 /* AccessCheckoutSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessCheckoutSDK.h; sourceTree = "<group>"; };
+		C9625A312330EA79004B6981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9625A362330EA79004B6981 /* AccessCheckoutSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9625A3D2330EA79004B6981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9625A772330EBC4004B6981 /* AccessCheckoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9625A792330EBC4004B6981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C9625A7B2330EBC4004B6981 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C9625A7E2330EBC4004B6981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C9625A802330EBC5004B6981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9625A832330EBC5004B6981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C9625A852330EBC5004B6981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9625A8A2330EBC5004B6981 /* AccessCheckoutDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9625A902330EBC5004B6981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9C1990123310094004AB4D7 /* AccessCheckoutSDKPactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKPactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9C1990323310094004AB4D7 /* AccessCheckoutSDKPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKPactTests.swift; sourceTree = "<group>"; };
+		C9C1990523310094004AB4D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD81265D71B8A14A7A53ADCE /* Pods_AccessCheckoutSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8E801D734A89EA757A8ED70 /* Pods-AccessCheckoutSDK-AccessCheckoutDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK-AccessCheckoutDemo.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK-AccessCheckoutDemo/Pods-AccessCheckoutSDK-AccessCheckoutDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1BCBFEB222B8EA3C00A65FAA /* Frameworks */ = {
+		C9625A2A2330EA79004B6981 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */,
-				75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */,
+				BA4CA5D0E92EF3897C76D9EE /* Pods_AccessCheckoutSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9AFE3D022B7996200943B3E /* Frameworks */ = {
+		C9625A332330EA79004B6981 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCF80925ABFA3D13D91AC196 /* Pods_AccessCheckoutSDK.framework in Frameworks */,
+				C9625A372330EA79004B6981 /* AccessCheckoutSDK.framework in Frameworks */,
+				0915C1FBB5EC902CEDE2CA84 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9AFE3D922B7996200943B3E /* Frameworks */ = {
+		C9625A742330EBC4004B6981 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */,
-				8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */,
+				2B4CE486E5DEDEBF2A58D65B /* Pods_AccessCheckoutDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9625A872330EBC5004B6981 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78AA9BEDF18A7EF20BBC49D6 /* Pods_AccessCheckoutDemoUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9C198FE23310094004AB4D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9C1990623310094004AB4D7 /* AccessCheckoutSDK.framework in Frameworks */,
+				591C7C59965874B6FB8FC1B1 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1BCBFEB622B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */ = {
+		178EEF54D5FAF0DE2C44BD17 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift */,
-				1BCBFEB922B8EA3C00A65FAA /* Info.plist */,
-			);
-			path = AccessCheckoutSDKPactTests;
-			sourceTree = "<group>";
-		};
-		55978FA9739F804F88DE07A1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EA77127DB45BFE97F1FBCF23 /* Pods_AccessCheckoutSDK.framework */,
-				5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */,
-				ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */,
+				A25AE44BF49802C98B3A463C /* Pods_AccessCheckoutSDK.framework */,
+				38D42B2ED8B3197B7B43AC9C /* Pods_AccessCheckoutSDKPactTests.framework */,
+				CD81265D71B8A14A7A53ADCE /* Pods_AccessCheckoutSDKTests.framework */,
+				A4CAAC6EA45E805C00DF5AFA /* Pods_AccessCheckoutDemoUITests.framework */,
+				B938ED2087C58EA7EB13AA93 /* Pods_AccessCheckoutDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C9AFE3C922B7996200943B3E = {
+		7C8B5E1892E6B069B79B732E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */,
-				1BCBFECB22B8F40300A65FAA /* LICENSE */,
-				1BCBFEC822B8F40200A65FAA /* README.md */,
-				C9AFE3D522B7996200943B3E /* AccessCheckoutSDK */,
-				C9AFE3E022B7996200943B3E /* AccessCheckoutSDKTests */,
-				1BCBFEB622B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
-				C9AFE3D422B7996200943B3E /* Products */,
-				FE5EBE1BF82722DA10BBC5FC /* Pods */,
-				55978FA9739F804F88DE07A1 /* Frameworks */,
+				AC247AB85382B676E1BC7F70 /* Pods-AccessCheckoutDemo.debug.xcconfig */,
+				5A47260A54F489F55D12FE97 /* Pods-AccessCheckoutDemo.release.xcconfig */,
+				C53DE45B9F957F198B69506F /* Pods-AccessCheckoutDemoUITests.debug.xcconfig */,
+				798AD2DD8A06C0A6E1220440 /* Pods-AccessCheckoutDemoUITests.release.xcconfig */,
+				6E6325158ADD27050C9EBAAD /* Pods-AccessCheckoutSDK.debug.xcconfig */,
+				51BA91EF6447BEDAE6A43A83 /* Pods-AccessCheckoutSDK.release.xcconfig */,
+				BE98C98A2E39ED12A7C6F928 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */,
+				80B8C063F13D45F67B01A9B1 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */,
+				39CF1A387943DB25CBDD8B7E /* Pods-AccessCheckoutSDKTests.debug.xcconfig */,
+				599AE9035075094D07AFDAF6 /* Pods-AccessCheckoutSDKTests.release.xcconfig */,
+				2133CF521FF6EF36CF9B9EC5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */,
+				96A05B9A757CF96582C7173F /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */,
+				E8E801D734A89EA757A8ED70 /* Pods-AccessCheckoutSDK-AccessCheckoutDemo.debug.xcconfig */,
+				C6D6FB215953ACFBF4A71288 /* Pods-AccessCheckoutSDK-AccessCheckoutDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C9625A232330EA79004B6981 = {
+			isa = PBXGroup;
+			children = (
+				C9625A2F2330EA79004B6981 /* AccessCheckoutSDK */,
+				C9625A3A2330EA79004B6981 /* AccessCheckoutSDKTests */,
+				C9625A782330EBC4004B6981 /* AccessCheckoutDemo */,
+				C9625A8D2330EBC5004B6981 /* AccessCheckoutDemoUITests */,
+				C9C1990223310094004AB4D7 /* AccessCheckoutSDKPactTests */,
+				C9625A2E2330EA79004B6981 /* Products */,
+				7C8B5E1892E6B069B79B732E /* Pods */,
+				178EEF54D5FAF0DE2C44BD17 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		C9AFE3D422B7996200943B3E /* Products */ = {
+		C9625A2E2330EA79004B6981 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */,
-				C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */,
-				1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */,
+				C9625A2D2330EA79004B6981 /* AccessCheckoutSDK.framework */,
+				C9625A362330EA79004B6981 /* AccessCheckoutSDKTests.xctest */,
+				C9625A772330EBC4004B6981 /* AccessCheckoutDemo.app */,
+				C9625A8A2330EBC5004B6981 /* AccessCheckoutDemoUITests.xctest */,
+				C9C1990123310094004AB4D7 /* AccessCheckoutSDKPactTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C9AFE3D522B7996200943B3E /* AccessCheckoutSDK */ = {
+		C9625A2F2330EA79004B6981 /* AccessCheckoutSDK */ = {
 			isa = PBXGroup;
 			children = (
-				C9AFE44722B7AA4700943B3E /* AccessCheckoutClientError.swift */,
-				C9AFE45422B7AA4700943B3E /* AccessCheckoutClientValidationError.swift */,
-				C9AFE44822B7AA4700943B3E /* AccessCheckoutResponse.swift */,
-				C9AFE44622B7AA4700943B3E /* AccessClient.swift */,
-				C9AFE45822B7AA4800943B3E /* AccessDiscovery.swift */,
-				C9AFE45222B7AA4700943B3E /* amex.png */,
-				C9AFE45022B7AA4700943B3E /* Card.swift */,
-				C9AFE44B22B7AA4700943B3E /* CardConfiguration.swift */,
-				C9AFE45322B7AA4700943B3E /* CardValidator.swift */,
-				C9AFE44E22B7AA4700943B3E /* CardView.swift */,
-				C9AFE44F22B7AA4700943B3E /* CVVView.swift */,
-				C9AFE44922B7AA4700943B3E /* CVVView.xib */,
-				C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */,
-				C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */,
-				C9AFE45622B7AA4700943B3E /* mastercard.png */,
-				C9AFE45122B7AA4700943B3E /* PANView.swift */,
-				C9AFE44A22B7AA4700943B3E /* PANView.xib */,
-				C9AFE45722B7AA4700943B3E /* visa.png */,
-				C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */,
-				C9AFE3D722B7996200943B3E /* Info.plist */,
+				C9605CA9233101CB007B8E93 /* AccessCheckoutClientError.swift */,
+				C9605CAD233101CC007B8E93 /* AccessCheckoutClientValidationError.swift */,
+				C9605CB1233101CC007B8E93 /* AccessCheckoutResponse.swift */,
+				C9605CAC233101CB007B8E93 /* AccessClient.swift */,
+				C9605CA6233101CB007B8E93 /* AccessDiscovery.swift */,
+				C9605CAB233101CB007B8E93 /* Card.swift */,
+				C9605CAE233101CC007B8E93 /* CardConfiguration.swift */,
+				C9605CB0233101CC007B8E93 /* CardValidator.swift */,
+				C9605CB2233101CC007B8E93 /* CardView.swift */,
+				C9605CA8233101CB007B8E93 /* CVVView.swift */,
+				C9605CA4233101CB007B8E93 /* CVVView.xib */,
+				C9605CAA233101CB007B8E93 /* ExpiryDateView.swift */,
+				C9605CA7233101CB007B8E93 /* ExpiryDateView.xib */,
+				C9605CAF233101CC007B8E93 /* PANView.swift */,
+				C9605CA5233101CB007B8E93 /* PANView.xib */,
+				C9625A302330EA79004B6981 /* AccessCheckoutSDK.h */,
+				C9625A312330EA79004B6981 /* Info.plist */,
 			);
 			path = AccessCheckoutSDK;
 			sourceTree = "<group>";
 		};
-		C9AFE3E022B7996200943B3E /* AccessCheckoutSDKTests */ = {
+		C9625A3A2330EA79004B6981 /* AccessCheckoutSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */,
-				1BCBFEC322B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift */,
-				1BCBFEC222B8EB4400A65FAA /* CardConfigurationTests.swift */,
-				1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */,
-				1BD0EE9322CB6EEE00147A71 /* cardConfiguration.json */,
-				C9AFE3E322B7996200943B3E /* Info.plist */,
+				C92475082331195D0017042B /* cardConfiguration.json */,
+				C9605CC323310212007B8E93 /* AccessCheckoutClientTests.swift */,
+				C9605CC423310212007B8E93 /* AccessCheckoutDiscoveryTests.swift */,
+				C9605CC223310212007B8E93 /* CardConfigurationTests.swift */,
+				C9605CC523310212007B8E93 /* CardValidatorTests.swift */,
+				C9625A3D2330EA79004B6981 /* Info.plist */,
 			);
 			path = AccessCheckoutSDKTests;
 			sourceTree = "<group>";
 		};
-		FE5EBE1BF82722DA10BBC5FC /* Pods */ = {
+		C9625A782330EBC4004B6981 /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
-				6F228E4B50C5655DF4E7F378 /* Pods-AccessCheckoutSDK.debug.xcconfig */,
-				63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */,
-				C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */,
-				7B355B4B411B9052D09D24D3 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */,
-				B885CDE61870E5A0F3BB91D5 /* Pods-AccessCheckoutSDKTests.debug.xcconfig */,
-				A7D16DA602AF1C240EFDD905 /* Pods-AccessCheckoutSDKTests.release.xcconfig */,
+				C9625A792330EBC4004B6981 /* AppDelegate.swift */,
+				C9625A7B2330EBC4004B6981 /* ViewController.swift */,
+				C9625A7D2330EBC4004B6981 /* Main.storyboard */,
+				C9625A802330EBC5004B6981 /* Assets.xcassets */,
+				C9625A822330EBC5004B6981 /* LaunchScreen.storyboard */,
+				C9625A852330EBC5004B6981 /* Info.plist */,
+				C9605CD123310B15007B8E93 /* Localizable.strings */,
 			);
-			path = Pods;
+			path = AccessCheckoutDemo;
+			sourceTree = "<group>";
+		};
+		C9625A8D2330EBC5004B6981 /* AccessCheckoutDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C9247504233118900017042B /* CardValidationTests.swift */,
+				C9247505233118900017042B /* VerifiedTokensTests.swift */,
+				C9625A902330EBC5004B6981 /* Info.plist */,
+			);
+			path = AccessCheckoutDemoUITests;
+			sourceTree = "<group>";
+		};
+		C9C1990223310094004AB4D7 /* AccessCheckoutSDKPactTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9C1990323310094004AB4D7 /* AccessCheckoutSDKPactTests.swift */,
+				C9C1990523310094004AB4D7 /* Info.plist */,
+			);
+			path = AccessCheckoutSDKPactTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		C9AFE3CE22B7996200943B3E /* Headers */ = {
+		C9625A282330EA79004B6981 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE3E422B7996200943B3E /* AccessCheckoutSDK.h in Headers */,
+				C9625A3E2330EA79004B6981 /* AccessCheckoutSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1BCBFEB422B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */ = {
+		C9625A2C2330EA79004B6981 /* AccessCheckoutSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1BCBFEBF22B8EA3C00A65FAA /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */;
+			buildConfigurationList = C9625A412330EA79004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDK" */;
 			buildPhases = (
-				E9DDDD9A5B90424BC80DC3E0 /* [CP] Check Pods Manifest.lock */,
-				1BCBFEB122B8EA3C00A65FAA /* Sources */,
-				1BCBFEB222B8EA3C00A65FAA /* Frameworks */,
-				1BCBFEB322B8EA3C00A65FAA /* Resources */,
-				DDA5D2B40274F01DBE2420FC /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1BCBFEBC22B8EA3C00A65FAA /* PBXTargetDependency */,
-			);
-			name = AccessCheckoutSDKPactTests;
-			productName = AccessCheckoutSDKPactTests;
-			productReference = 1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9AFE3E722B7996200943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutSDK" */;
-			buildPhases = (
-				9941BD35ACCA6EA2E3D64B32 /* [CP] Check Pods Manifest.lock */,
-				C9AFE3CE22B7996200943B3E /* Headers */,
-				C9AFE3CF22B7996200943B3E /* Sources */,
-				C9AFE3D022B7996200943B3E /* Frameworks */,
-				C9AFE3D122B7996200943B3E /* Resources */,
+				364BBCB4B097382165516B6E /* [CP] Check Pods Manifest.lock */,
+				C9625A282330EA79004B6981 /* Headers */,
+				C9625A292330EA79004B6981 /* Sources */,
+				C9625A2A2330EA79004B6981 /* Frameworks */,
+				C9625A2B2330EA79004B6981 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -282,124 +337,187 @@
 			);
 			name = AccessCheckoutSDK;
 			productName = AccessCheckoutSDK;
-			productReference = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */;
+			productReference = C9625A2D2330EA79004B6981 /* AccessCheckoutSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C9AFE3DB22B7996200943B3E /* AccessCheckoutSDKTests */ = {
+		C9625A352330EA79004B6981 /* AccessCheckoutSDKTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9AFE3EA22B7996200943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTests" */;
+			buildConfigurationList = C9625A442330EA79004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTests" */;
 			buildPhases = (
-				DFF6808373B6BCDB46FA3D3F /* [CP] Check Pods Manifest.lock */,
-				C9AFE3D822B7996200943B3E /* Sources */,
-				C9AFE3D922B7996200943B3E /* Frameworks */,
-				C9AFE3DA22B7996200943B3E /* Resources */,
-				2F6B5F396F18EB0B85FD1552 /* [CP] Embed Pods Frameworks */,
+				78DB10AE062EA5AA3513CFC2 /* [CP] Check Pods Manifest.lock */,
+				C9625A322330EA79004B6981 /* Sources */,
+				C9625A332330EA79004B6981 /* Frameworks */,
+				C9625A342330EA79004B6981 /* Resources */,
+				6D5330F7F7D313329CA9BB3B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C9AFE3DF22B7996200943B3E /* PBXTargetDependency */,
+				C9625A392330EA79004B6981 /* PBXTargetDependency */,
 			);
 			name = AccessCheckoutSDKTests;
 			productName = AccessCheckoutSDKTests;
-			productReference = C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */;
+			productReference = C9625A362330EA79004B6981 /* AccessCheckoutSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C9625A762330EBC4004B6981 /* AccessCheckoutDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9625A912330EBC5004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutDemo" */;
+			buildPhases = (
+				9F4282218D4A74FB2F4C06F5 /* [CP] Check Pods Manifest.lock */,
+				C9625A732330EBC4004B6981 /* Sources */,
+				C9625A742330EBC4004B6981 /* Frameworks */,
+				C9625A752330EBC4004B6981 /* Resources */,
+				E8AD947FD7256E5DB648B933 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AccessCheckoutDemo;
+			productName = AccessCheckoutDemo;
+			productReference = C9625A772330EBC4004B6981 /* AccessCheckoutDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C9625A892330EBC5004B6981 /* AccessCheckoutDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9625A942330EBC5004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutDemoUITests" */;
+			buildPhases = (
+				D21882C5BA5083967F786845 /* [CP] Check Pods Manifest.lock */,
+				C9625A862330EBC5004B6981 /* Sources */,
+				C9625A872330EBC5004B6981 /* Frameworks */,
+				C9625A882330EBC5004B6981 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9625A8C2330EBC5004B6981 /* PBXTargetDependency */,
+			);
+			name = AccessCheckoutDemoUITests;
+			productName = AccessCheckoutDemoUITests;
+			productReference = C9625A8A2330EBC5004B6981 /* AccessCheckoutDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C9C1990023310094004AB4D7 /* AccessCheckoutSDKPactTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9C1990B23310094004AB4D7 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */;
+			buildPhases = (
+				69663483BA376DEB701A7890 /* [CP] Check Pods Manifest.lock */,
+				C9C198FD23310094004AB4D7 /* Sources */,
+				C9C198FE23310094004AB4D7 /* Frameworks */,
+				C9C198FF23310094004AB4D7 /* Resources */,
+				97FE32EF9FC257EAD7936206 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9C1990823310094004AB4D7 /* PBXTargetDependency */,
+			);
+			name = AccessCheckoutSDKPactTests;
+			productName = AccessCheckoutSDKPactTests;
+			productReference = C9C1990123310094004AB4D7 /* AccessCheckoutSDKPactTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C9AFE3CA22B7996200943B3E /* Project object */ = {
+		C9625A242330EA79004B6981 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Worldpay;
 				TargetAttributes = {
-					1BCBFEB422B8EA3C00A65FAA = {
-						CreatedOnToolsVersion = 10.2.1;
-						LastSwiftMigration = 1020;
+					C9625A2C2330EA79004B6981 = {
+						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1030;
 					};
-					C9AFE3D222B7996200943B3E = {
-						CreatedOnToolsVersion = 10.2.1;
-						LastSwiftMigration = 1020;
+					C9625A352330EA79004B6981 = {
+						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1030;
 					};
-					C9AFE3DB22B7996200943B3E = {
-						CreatedOnToolsVersion = 10.2.1;
+					C9625A762330EBC4004B6981 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					C9625A892330EBC5004B6981 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = C9625A762330EBC4004B6981;
+					};
+					C9C1990023310094004AB4D7 = {
+						CreatedOnToolsVersion = 10.3;
 					};
 				};
 			};
-			buildConfigurationList = C9AFE3CD22B7996200943B3E /* Build configuration list for PBXProject "AccessCheckoutSDK" */;
+			buildConfigurationList = C9625A272330EA79004B6981 /* Build configuration list for PBXProject "AccessCheckoutSDK" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
-			mainGroup = C9AFE3C922B7996200943B3E;
-			productRefGroup = C9AFE3D422B7996200943B3E /* Products */;
+			mainGroup = C9625A232330EA79004B6981;
+			productRefGroup = C9625A2E2330EA79004B6981 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */,
-				C9AFE3DB22B7996200943B3E /* AccessCheckoutSDKTests */,
-				1BCBFEB422B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
+				C9625A2C2330EA79004B6981 /* AccessCheckoutSDK */,
+				C9625A352330EA79004B6981 /* AccessCheckoutSDKTests */,
+				C9625A762330EBC4004B6981 /* AccessCheckoutDemo */,
+				C9625A892330EBC5004B6981 /* AccessCheckoutDemoUITests */,
+				C9C1990023310094004AB4D7 /* AccessCheckoutSDKPactTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1BCBFEB322B8EA3C00A65FAA /* Resources */ = {
+		C9625A2B2330EA79004B6981 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9605CB4233101CC007B8E93 /* PANView.xib in Resources */,
+				C9605CB6233101CC007B8E93 /* ExpiryDateView.xib in Resources */,
+				C9605CB3233101CC007B8E93 /* CVVView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9625A342330EA79004B6981 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C92475092331195D0017042B /* cardConfiguration.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9625A752330EBC4004B6981 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9625A842330EBC5004B6981 /* LaunchScreen.storyboard in Resources */,
+				C9605CCF23310B15007B8E93 /* Localizable.strings in Resources */,
+				C9625A812330EBC5004B6981 /* Assets.xcassets in Resources */,
+				C9625A7F2330EBC4004B6981 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9625A882330EBC5004B6981 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9AFE3D122B7996200943B3E /* Resources */ = {
+		C9C198FF23310094004AB4D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE45D22B7AA4800943B3E /* PANView.xib in Resources */,
-				C9AFE46522B7AA4800943B3E /* amex.png in Resources */,
-				C9AFE46022B7AA4800943B3E /* ExpiryDateView.xib in Resources */,
-				1BCBFECC22B8F40300A65FAA /* README.md in Resources */,
-				1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */,
-				C9AFE46A22B7AA4800943B3E /* visa.png in Resources */,
-				C9AFE46922B7AA4800943B3E /* mastercard.png in Resources */,
-				1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */,
-				C9AFE45C22B7AA4800943B3E /* CVVView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9AFE3DA22B7996200943B3E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1BD0EE9522CB6EF800147A71 /* cardConfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2F6B5F396F18EB0B85FD1552 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9941BD35ACCA6EA2E3D64B32 /* [CP] Check Pods Manifest.lock */ = {
+		364BBCB4B097382165516B6E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -421,46 +539,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DDA5D2B40274F01DBE2420FC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DFF6808373B6BCDB46FA3D3F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutSDKTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E9DDDD9A5B90424BC80DC3E0 /* [CP] Check Pods Manifest.lock */ = {
+		69663483BA376DEB701A7890 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -482,104 +561,231 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6D5330F7F7D313329CA9BB3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78DB10AE062EA5AA3513CFC2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutSDKTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97FE32EF9FC257EAD7936206 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F4282218D4A74FB2F4C06F5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D21882C5BA5083967F786845 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AccessCheckoutDemoUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8AD947FD7256E5DB648B933 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1BCBFEB122B8EA3C00A65FAA /* Sources */ = {
+		C9625A292330EA79004B6981 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.swift in Sources */,
+				C9605CBB233101CC007B8E93 /* AccessClient.swift in Sources */,
+				C9605CB7233101CC007B8E93 /* CVVView.swift in Sources */,
+				C9605CBC233101CC007B8E93 /* AccessCheckoutClientValidationError.swift in Sources */,
+				C9605CB9233101CC007B8E93 /* ExpiryDateView.swift in Sources */,
+				C9605CBF233101CC007B8E93 /* CardValidator.swift in Sources */,
+				C9605CBD233101CC007B8E93 /* CardConfiguration.swift in Sources */,
+				C9605CBA233101CC007B8E93 /* Card.swift in Sources */,
+				C9605CBE233101CC007B8E93 /* PANView.swift in Sources */,
+				C9605CB5233101CC007B8E93 /* AccessDiscovery.swift in Sources */,
+				C9605CC0233101CC007B8E93 /* AccessCheckoutResponse.swift in Sources */,
+				C9605CC1233101CC007B8E93 /* CardView.swift in Sources */,
+				C9605CB8233101CC007B8E93 /* AccessCheckoutClientError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9AFE3CF22B7996200943B3E /* Sources */ = {
+		C9625A322330EA79004B6981 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE45E22B7AA4800943B3E /* CardConfiguration.swift in Sources */,
-				C9AFE45922B7AA4800943B3E /* AccessClient.swift in Sources */,
-				C9AFE46B22B7AA4800943B3E /* AccessDiscovery.swift in Sources */,
-				C9AFE46622B7AA4800943B3E /* CardValidator.swift in Sources */,
-				C9AFE46422B7AA4800943B3E /* PANView.swift in Sources */,
-				C9AFE46322B7AA4800943B3E /* Card.swift in Sources */,
-				C9AFE46222B7AA4800943B3E /* CVVView.swift in Sources */,
-				C9AFE46822B7AA4800943B3E /* ExpiryDateView.swift in Sources */,
-				C9AFE46722B7AA4800943B3E /* AccessCheckoutClientValidationError.swift in Sources */,
-				C9AFE45B22B7AA4800943B3E /* AccessCheckoutResponse.swift in Sources */,
-				C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */,
-				C9AFE46122B7AA4800943B3E /* CardView.swift in Sources */,
+				C9605CC723310212007B8E93 /* AccessCheckoutClientTests.swift in Sources */,
+				C9605CC823310212007B8E93 /* AccessCheckoutDiscoveryTests.swift in Sources */,
+				C9605CC923310212007B8E93 /* CardValidatorTests.swift in Sources */,
+				C9605CC623310212007B8E93 /* CardConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9AFE3D822B7996200943B3E /* Sources */ = {
+		C9625A732330EBC4004B6981 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BCBFEC622B8EB4400A65FAA /* CardConfigurationTests.swift in Sources */,
-				1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */,
-				1BCBFEC722B8EB4400A65FAA /* AccessCheckoutDiscoveryTests.swift in Sources */,
-				1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */,
+				C9625A7C2330EBC4004B6981 /* ViewController.swift in Sources */,
+				C9625A7A2330EBC4004B6981 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9625A862330EBC5004B6981 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9247507233118900017042B /* VerifiedTokensTests.swift in Sources */,
+				C9247506233118900017042B /* CardValidationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9C198FD23310094004AB4D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9C1990423310094004AB4D7 /* AccessCheckoutSDKPactTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1BCBFEBC22B8EA3C00A65FAA /* PBXTargetDependency */ = {
+		C9625A392330EA79004B6981 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
-			targetProxy = 1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */;
+			target = C9625A2C2330EA79004B6981 /* AccessCheckoutSDK */;
+			targetProxy = C9625A382330EA79004B6981 /* PBXContainerItemProxy */;
 		};
-		C9AFE3DF22B7996200943B3E /* PBXTargetDependency */ = {
+		C9625A8C2330EBC5004B6981 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
-			targetProxy = C9AFE3DE22B7996200943B3E /* PBXContainerItemProxy */;
+			target = C9625A762330EBC4004B6981 /* AccessCheckoutDemo */;
+			targetProxy = C9625A8B2330EBC5004B6981 /* PBXContainerItemProxy */;
+		};
+		C9C1990823310094004AB4D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9625A2C2330EA79004B6981 /* AccessCheckoutSDK */;
+			targetProxy = C9C1990723310094004AB4D7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		C9605CD123310B15007B8E93 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9605CD023310B15007B8E93 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		C9625A7D2330EBC4004B6981 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9625A7E2330EBC4004B6981 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C9625A822330EBC5004B6981 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9625A832330EBC5004B6981 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		1BCBFEBD22B8EA3C00A65FAA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1BCBFEBE22B8EA3C00A65FAA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B355B4B411B9052D09D24D3 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LPBQ5BR8NU;
-				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		C9AFE3E522B7996200943B3E /* Debug */ = {
+		C9625A3F2330EA79004B6981 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -631,7 +837,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -643,7 +849,7 @@
 			};
 			name = Debug;
 		};
-		C9AFE3E622B7996200943B3E /* Release */ = {
+		C9625A402330EA79004B6981 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -689,7 +895,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -701,9 +907,9 @@
 			};
 			name = Release;
 		};
-		C9AFE3E822B7996200943B3E /* Debug */ = {
+		C9625A422330EA79004B6981 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F228E4B50C5655DF4E7F378 /* Pods-AccessCheckoutSDK.debug.xcconfig */;
+			baseConfigurationReference = 6E6325158ADD27050C9EBAAD /* Pods-AccessCheckoutSDK.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -715,6 +921,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AccessCheckoutSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -729,9 +936,9 @@
 			};
 			name = Debug;
 		};
-		C9AFE3E922B7996200943B3E /* Release */ = {
+		C9625A432330EA79004B6981 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */;
+			baseConfigurationReference = 51BA91EF6447BEDAE6A43A83 /* Pods-AccessCheckoutSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -743,6 +950,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AccessCheckoutSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -756,13 +964,15 @@
 			};
 			name = Release;
 		};
-		C9AFE3EB22B7996200943B3E /* Debug */ = {
+		C9625A452330EA79004B6981 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B885CDE61870E5A0F3BB91D5 /* Pods-AccessCheckoutSDKTests.debug.xcconfig */;
+			baseConfigurationReference = 39CF1A387943DB25CBDD8B7E /* Pods-AccessCheckoutSDKTests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -770,18 +980,21 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		C9AFE3EC22B7996200943B3E /* Release */ = {
+		C9625A462330EA79004B6981 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A7D16DA602AF1C240EFDD905 /* Pods-AccessCheckoutSDKTests.release.xcconfig */;
+			baseConfigurationReference = 599AE9035075094D07AFDAF6 /* Pods-AccessCheckoutSDKTests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -794,46 +1007,190 @@
 			};
 			name = Release;
 		};
+		C9625A922330EBC5004B6981 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC247AB85382B676E1BC7F70 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9625A932330EBC5004B6981 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A47260A54F489F55D12FE97 /* Pods-AccessCheckoutDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C9625A952330EBC5004B6981 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C53DE45B9F957F198B69506F /* Pods-AccessCheckoutDemoUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AccessCheckoutDemo;
+			};
+			name = Debug;
+		};
+		C9625A962330EBC5004B6981 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 798AD2DD8A06C0A6E1220440 /* Pods-AccessCheckoutDemoUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AccessCheckoutDemo;
+			};
+			name = Release;
+		};
+		C9C1990923310094004AB4D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE98C98A2E39ED12A7C6F928 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9C1990A23310094004AB4D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80B8C063F13D45F67B01A9B1 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
+				INFOPLIST_FILE = AccessCheckoutSDKPactTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutSDKPactTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1BCBFEBF22B8EA3C00A65FAA /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */ = {
+		C9625A272330EA79004B6981 /* Build configuration list for PBXProject "AccessCheckoutSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1BCBFEBD22B8EA3C00A65FAA /* Debug */,
-				1BCBFEBE22B8EA3C00A65FAA /* Release */,
+				C9625A3F2330EA79004B6981 /* Debug */,
+				C9625A402330EA79004B6981 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9AFE3CD22B7996200943B3E /* Build configuration list for PBXProject "AccessCheckoutSDK" */ = {
+		C9625A412330EA79004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9AFE3E522B7996200943B3E /* Debug */,
-				C9AFE3E622B7996200943B3E /* Release */,
+				C9625A422330EA79004B6981 /* Debug */,
+				C9625A432330EA79004B6981 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9AFE3E722B7996200943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutSDK" */ = {
+		C9625A442330EA79004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9AFE3E822B7996200943B3E /* Debug */,
-				C9AFE3E922B7996200943B3E /* Release */,
+				C9625A452330EA79004B6981 /* Debug */,
+				C9625A462330EA79004B6981 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9AFE3EA22B7996200943B3E /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTests" */ = {
+		C9625A912330EBC5004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9AFE3EB22B7996200943B3E /* Debug */,
-				C9AFE3EC22B7996200943B3E /* Release */,
+				C9625A922330EBC5004B6981 /* Debug */,
+				C9625A932330EBC5004B6981 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9625A942330EBC5004B6981 /* Build configuration list for PBXNativeTarget "AccessCheckoutDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9625A952330EBC5004B6981 /* Debug */,
+				C9625A962330EBC5004B6981 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9C1990B23310094004AB4D7 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKPactTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9C1990923310094004AB4D7 /* Debug */,
+				C9C1990A23310094004AB4D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C9AFE3CA22B7996200943B3E /* Project object */;
+	rootObject = C9625A242330EA79004B6981 /* Project object */;
 }

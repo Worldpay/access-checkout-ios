@@ -1,6 +1,0 @@
-{
-    "errorName": "variation2",
-    "message": "Reference must be a valid value",
-    "jsonPath": "$.merchant.reference"
-}
-
