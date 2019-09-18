@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
-               BuildableName = "AccessCheckoutSDK.framework"
-               BlueprintName = "AccessCheckoutSDK"
-               ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C95D2DA123323DA300F40D6D"
-               BuildableName = "AccessCheckoutSDKPactTests.xctest"
-               BlueprintName = "AccessCheckoutSDKPactTests"
+               BlueprintIdentifier = "C95D2DB023323DC200F40D6D"
+               BuildableName = "AccessCheckoutDemo.app"
+               BlueprintName = "AccessCheckoutDemo"
                ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,19 +33,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C95D2D8C23323D8F00F40D6D"
-               BuildableName = "AccessCheckoutSDKTests.xctest"
-               BlueprintName = "AccessCheckoutSDKTests"
-               ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C95D2DA123323DA300F40D6D"
-               BuildableName = "AccessCheckoutSDKPactTests.xctest"
-               BlueprintName = "AccessCheckoutSDKPactTests"
+               BlueprintIdentifier = "C95D2DC323323DC300F40D6D"
+               BuildableName = "AccessCheckoutDemoUITests.xctest"
+               BlueprintName = "AccessCheckoutDemoUITests"
                ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -67,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
-            BuildableName = "AccessCheckoutSDK.framework"
-            BlueprintName = "AccessCheckoutSDK"
+            BlueprintIdentifier = "C95D2DB023323DC200F40D6D"
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
             ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -86,15 +62,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
-            BuildableName = "AccessCheckoutSDK.framework"
-            BlueprintName = "AccessCheckoutSDK"
+            BlueprintIdentifier = "C95D2DB023323DC200F40D6D"
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
             ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -104,15 +81,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
-            BuildableName = "AccessCheckoutSDK.framework"
-            BlueprintName = "AccessCheckoutSDK"
+            BlueprintIdentifier = "C95D2DB023323DC200F40D6D"
+            BuildableName = "AccessCheckoutDemo.app"
+            BlueprintName = "AccessCheckoutDemo"
             ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
