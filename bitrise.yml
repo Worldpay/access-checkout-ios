@@ -37,18 +37,12 @@ workflows:
     - xcode-test:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
-        - simulator_device: iPhone 8
+        - simulator_device: iPhone X
         - scheme: "$SDK_SCHEME"
-    - cocoapods-install:
-        inputs:
-        - source_root_path: AccessCheckoutDemo
-    - recreate-user-schemes:
-        inputs:
-        - project_path: "$DEMO_PROJECT_PATH"
     - xcode-build-for-test:
         inputs:
         - scheme: "$DEMO_SCHEME"
-        - project_path: "$DEMO_PROJECT_PATH"
+        - project_path: "$SDK_PROJECT_PATH"
     - virtual-device-testing-for-ios:
         inputs:
         - test_devices: |-
@@ -56,8 +50,8 @@ workflows:
             iphonex,12.0,en,portrait
     - xcode-archive:
         inputs:
-        - project_path: "$DEMO_PROJECT_PATH"
-        - scheme: "$BITRISE_DEMO_SCHEME"
+        - project_path: "$SDK_PROJECT_PATH"
+        - scheme: "$DEMO_SCHEME"
         - export_method: "$BITRISE_EXPORT_METHOD"
     - deploy-to-bitrise-io:
     - cache-push: {}
@@ -135,16 +129,10 @@ app:
     SDK_PROJECT_PATH: AccessCheckoutSDK/AccessCheckoutSDK.xcworkspace
   - opts:
       is_expand: false
-    DEMO_PROJECT_PATH: AccessCheckoutDemo/AccessCheckoutDemo.xcworkspace
-  - opts:
-      is_expand: false
     SDK_SCHEME: AccessCheckoutSDK
   - opts:
       is_expand: false
     DEMO_SCHEME: AccessCheckoutDemo
-  - opts:
-      is_expand: false
-    BITRISE_DEMO_SCHEME: AccessCheckoutDemo
   - opts:
       is_expand: false
     BITRISE_EXPORT_METHOD: enterprise
