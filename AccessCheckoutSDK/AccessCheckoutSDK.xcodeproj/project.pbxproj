@@ -45,6 +45,34 @@
 		C95D2E1E2332441500F40D6D /* AccessCheckoutSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C95D2D8423323D8F00F40D6D /* AccessCheckoutSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C95D2E242332445D00F40D6D /* VerifiedTokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D2E222332445D00F40D6D /* VerifiedTokensTests.swift */; };
 		C95D2E252332445D00F40D6D /* CardValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D2E232332445D00F40D6D /* CardValidationTests.swift */; };
+		C9FDF89B2333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF88D2333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		C9FDF89C2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF88E2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json */; };
+		C9FDF89D2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF88F2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json */; };
+		C9FDF89E2333C04B00F4FB64 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8902333C04B00F4FB64 /* visa.png */; };
+		C9FDF89F2333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8912333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json */; };
+		C9FDF8A02333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8922333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
+		C9FDF8A12333C04B00F4FB64 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8932333C04B00F4FB64 /* VerifiedTokensSession-success.json */; };
+		C9FDF8A22333C04B00F4FB64 /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8942333C04B00F4FB64 /* Discovery-success.json */; };
+		C9FDF8A32333C04B00F4FB64 /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8952333C04B00F4FB64 /* amex.png */; };
+		C9FDF8A42333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8962333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json */; };
+		C9FDF8A52333C04B00F4FB64 /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8972333C04B00F4FB64 /* mastercard.png */; };
+		C9FDF8A62333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8982333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json */; };
+		C9FDF8A72333C04B00F4FB64 /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8992333C04B00F4FB64 /* VerifiedTokens-success.json */; };
+		C9FDF8A82333C04B00F4FB64 /* CardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF89A2333C04B00F4FB64 /* CardConfiguration.json */; };
+		C9FDF8AA2333C08900F4FB64 /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF88E2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json */; };
+		C9FDF8AB2333C08900F4FB64 /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF88F2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json */; };
+		C9FDF8AC2333C08900F4FB64 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8902333C04B00F4FB64 /* visa.png */; };
+		C9FDF8AD2333C08900F4FB64 /* VerifiedTokens-unknown-variation4.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8912333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json */; };
+		C9FDF8AE2333C08900F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8922333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */; };
+		C9FDF8AF2333C08900F4FB64 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8932333C04B00F4FB64 /* VerifiedTokensSession-success.json */; };
+		C9FDF8B02333C08900F4FB64 /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8942333C04B00F4FB64 /* Discovery-success.json */; };
+		C9FDF8B12333C08900F4FB64 /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8952333C04B00F4FB64 /* amex.png */; };
+		C9FDF8B22333C08900F4FB64 /* VerifiedTokens-unknown-variation2.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8962333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json */; };
+		C9FDF8B32333C08900F4FB64 /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8972333C04B00F4FB64 /* mastercard.png */; };
+		C9FDF8B42333C08900F4FB64 /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8982333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json */; };
+		C9FDF8B52333C08900F4FB64 /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF8992333C04B00F4FB64 /* VerifiedTokens-success.json */; };
+		C9FDF8B62333C08900F4FB64 /* CardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C9FDF89A2333C04B00F4FB64 /* CardConfiguration.json */; };
+		C9FDF8B72333C3FC00F4FB64 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C95D2E162332434D00F40D6D /* Localizable.strings */; };
 		F468E901FD1045FEEC1DED67 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2987CEA3A62611A87C4F31F6 /* Pods_AccessCheckoutSDKTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +177,20 @@
 		C95D2E1B2332437900F40D6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C95D2E222332445D00F40D6D /* VerifiedTokensTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifiedTokensTests.swift; sourceTree = "<group>"; };
 		C95D2E232332445D00F40D6D /* CardValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidationTests.swift; sourceTree = "<group>"; };
+		C9FDF88D2333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		C9FDF88E2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation1.json"; sourceTree = "<group>"; };
+		C9FDF88F2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-internalServerError.json"; sourceTree = "<group>"; };
+		C9FDF8902333C04B00F4FB64 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
+		C9FDF8912333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation4.json"; sourceTree = "<group>"; };
+		C9FDF8922333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json"; sourceTree = "<group>"; };
+		C9FDF8932333C04B00F4FB64 /* VerifiedTokensSession-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokensSession-success.json"; sourceTree = "<group>"; };
+		C9FDF8942333C04B00F4FB64 /* Discovery-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Discovery-success.json"; sourceTree = "<group>"; };
+		C9FDF8952333C04B00F4FB64 /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
+		C9FDF8962333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation2.json"; sourceTree = "<group>"; };
+		C9FDF8972333C04B00F4FB64 /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
+		C9FDF8982333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
+		C9FDF8992333C04B00F4FB64 /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
+		C9FDF89A2333C04B00F4FB64 /* CardConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CardConfiguration.json; sourceTree = "<group>"; };
 		CCCB5EA2FA21098B69AB0FD6 /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		FF1D71C871FCC30481925CFD /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -306,6 +348,7 @@
 		C95D2DB223323DC200F40D6D /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C9FDF88C2333C04B00F4FB64 /* Stubs */,
 				C95D2E162332434D00F40D6D /* Localizable.strings */,
 				C95D2E192332437400F40D6D /* LaunchScreen.storyboard */,
 				C95D2E1C2332437900F40D6D /* Main.storyboard */,
@@ -325,6 +368,27 @@
 				C95D2DCA23323DC300F40D6D /* Info.plist */,
 			);
 			path = AccessCheckoutDemoUITests;
+			sourceTree = "<group>";
+		};
+		C9FDF88C2333C04B00F4FB64 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				C9FDF88D2333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */,
+				C9FDF88E2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json */,
+				C9FDF88F2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json */,
+				C9FDF8902333C04B00F4FB64 /* visa.png */,
+				C9FDF8912333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json */,
+				C9FDF8922333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */,
+				C9FDF8932333C04B00F4FB64 /* VerifiedTokensSession-success.json */,
+				C9FDF8942333C04B00F4FB64 /* Discovery-success.json */,
+				C9FDF8952333C04B00F4FB64 /* amex.png */,
+				C9FDF8962333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json */,
+				C9FDF8972333C04B00F4FB64 /* mastercard.png */,
+				C9FDF8982333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json */,
+				C9FDF8992333C04B00F4FB64 /* VerifiedTokens-success.json */,
+				C9FDF89A2333C04B00F4FB64 /* CardConfiguration.json */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -526,10 +590,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9FDF8A22333C04B00F4FB64 /* Discovery-success.json in Resources */,
+				C9FDF8A32333C04B00F4FB64 /* amex.png in Resources */,
+				C9FDF8A12333C04B00F4FB64 /* VerifiedTokensSession-success.json in Resources */,
+				C9FDF8A42333C04B00F4FB64 /* VerifiedTokens-unknown-variation2.json in Resources */,
 				C95D2E172332437400F40D6D /* LaunchScreen.storyboard in Resources */,
+				C9FDF89B2333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
 				C95D2E142332434D00F40D6D /* Localizable.strings in Resources */,
+				C9FDF8A72333C04B00F4FB64 /* VerifiedTokens-success.json in Resources */,
 				C95D2E0D233242A700F40D6D /* Assets.xcassets in Resources */,
+				C9FDF89F2333C04B00F4FB64 /* VerifiedTokens-unknown-variation4.json in Resources */,
+				C9FDF8A82333C04B00F4FB64 /* CardConfiguration.json in Resources */,
+				C9FDF89C2333C04B00F4FB64 /* VerifiedTokens-unknown-variation1.json in Resources */,
+				C9FDF8A62333C04B00F4FB64 /* VerifiedTokens-unknown-variation3.json in Resources */,
+				C9FDF8A02333C04B00F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				C95D2E1A2332437900F40D6D /* Main.storyboard in Resources */,
+				C9FDF8A52333C04B00F4FB64 /* mastercard.png in Resources */,
+				C9FDF89E2333C04B00F4FB64 /* visa.png in Resources */,
+				C9FDF89D2333C04B00F4FB64 /* VerifiedTokens-internalServerError.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +615,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9FDF8B62333C08900F4FB64 /* CardConfiguration.json in Resources */,
+				C9FDF8AF2333C08900F4FB64 /* VerifiedTokensSession-success.json in Resources */,
+				C9FDF8AA2333C08900F4FB64 /* VerifiedTokens-unknown-variation1.json in Resources */,
+				C9FDF8B72333C3FC00F4FB64 /* Localizable.strings in Resources */,
+				C9FDF8B12333C08900F4FB64 /* amex.png in Resources */,
+				C9FDF8AE2333C08900F4FB64 /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
+				C9FDF8B52333C08900F4FB64 /* VerifiedTokens-success.json in Resources */,
+				C9FDF8B02333C08900F4FB64 /* Discovery-success.json in Resources */,
+				C9FDF8B42333C08900F4FB64 /* VerifiedTokens-unknown-variation3.json in Resources */,
+				C9FDF8AC2333C08900F4FB64 /* visa.png in Resources */,
+				C9FDF8B32333C08900F4FB64 /* mastercard.png in Resources */,
+				C9FDF8AB2333C08900F4FB64 /* VerifiedTokens-internalServerError.json in Resources */,
+				C9FDF8AD2333C08900F4FB64 /* VerifiedTokens-unknown-variation4.json in Resources */,
+				C9FDF8B22333C08900F4FB64 /* VerifiedTokens-unknown-variation2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1106,6 +1198,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 93B4739E69CBB718F997E7B1 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
+				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1129,6 +1223,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B917D4D6697C9D84C00757DB /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
+				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
