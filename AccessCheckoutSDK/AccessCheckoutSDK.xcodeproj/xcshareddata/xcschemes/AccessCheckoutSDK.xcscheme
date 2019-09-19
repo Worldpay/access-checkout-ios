@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1030"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -42,6 +42,42 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Pre-actions&#10;PATH=${SRCROOT}/pact/bin:$PATH&#10;pact-mock-service start --pact-specification-version 2.0.0 --log &quot;${SRCROOT}/tmp/pact.log&quot; --pact-dir &quot;${SRCROOT}/tmp/pacts&quot; -p 1234&#10;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
+                     BuildableName = "AccessCheckoutSDK.framework"
+                     BlueprintName = "AccessCheckoutSDK"
+                     ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Post-actions&#10;PATH=${SRCROOT}/pact/bin:$PATH&#10;pact-mock-service stop&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "C95D2D8323323D8F00F40D6D"
+                     BuildableName = "AccessCheckoutSDK.framework"
+                     BlueprintName = "AccessCheckoutSDK"
+                     ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
       <Testables>
          <TestableReference
             skipped = "NO">
