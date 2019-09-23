@@ -21,7 +21,7 @@ DEPENDENCIES:
   - PactConsumerSwift
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - BrightFutures
     - Mockingjay
     - Nimble
@@ -42,4 +42,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ef9fc691a2a282b3da807715e12e8514c9ef473f
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.8.0.beta.2
