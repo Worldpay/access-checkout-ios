@@ -6,10 +6,11 @@ target 'AccessCheckoutDemo' do
   use_frameworks!
 
   # Pods for AccessCheckoutDemo
+  pod 'AccessCheckoutSDK', :path => './'
   pod 'Mockingjay/Core', '~> 3.0.0-alpha.1'
 
   target 'AccessCheckoutDemoUITests' do
-    #inherit! :search_paths
+    # inherit! :search_paths
     # Pods for testing
   end
 
