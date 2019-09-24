@@ -31,14 +31,19 @@ workflows:
             curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
             echo "Unpacking..."
             tar xzf pact-1.63.0-osx.tar.gz
-            ./pact/bin/pact-mock-service --help start
+            ./pact/bin/pact-mock-service version
             echo "... pact-ruby-standalone ready!"
         title: Install pact-ruby-standalone
     - xcode-test:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
-        - simulator_device: iPhone X
+        - simulator_device: iPhone 11 Pro
         - scheme: "$SDK_SCHEME"
+        - generate_code_coverage_files: "yes"
+    - script-runner:
+        inputs:
+        - file_path: "scripts/gather_coverage.sh"
+        - runner: bash
     - xcode-build-for-test:
         inputs:
         - scheme: "$DEMO_SCHEME"
@@ -130,6 +135,9 @@ app:
   - opts:
       is_expand: false
     SDK_SCHEME: AccessCheckoutSDK
+  - opts:
+      is_expand: false
+    SDK_FRAMEWORK: AccessCheckoutSDK.framework
   - opts:
       is_expand: false
     DEMO_SCHEME: AccessCheckoutDemo
