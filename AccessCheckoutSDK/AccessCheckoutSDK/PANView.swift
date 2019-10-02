@@ -11,24 +11,12 @@ import UIKit
     
     /// The card number represented by the view
     public var text: PAN? {
-        guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
+        return textField.text?.isEmpty == true ? nil : textField.text
     }
     
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupViewFromNib()
-    }
-    
-    /// Initializer override
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
         setupViewFromNib()
     }
     
