@@ -161,6 +161,26 @@ class CardValidatorTests: XCTestCase {
         XCTAssertTrue(canUpdate)
     }
     
+    func testPANLuhn_empty() {
+        let pan = PAN("")
+        XCTAssertTrue(pan.isValidLuhn())
+    }
+    
+    func testPANLuhn_good() {
+        let pan = PAN("41111")
+        XCTAssertTrue(pan.isValidLuhn())
+    }
+    
+    func testPANLuhn_bad() {
+        let pan = PAN("1234")
+        XCTAssertFalse(pan.isValidLuhn())
+    }
+    
+    func testPANLuhn_alpha() {
+        let pan = PAN("ABC")
+        XCTAssertFalse(pan.isValidLuhn())
+    }
+    
     func testValidatePAN_badMatcher() {
         let panRule = CardConfiguration.CardValidationRule(matcher: "",
                                                            minLength: nil,
@@ -1136,6 +1156,13 @@ class CardValidatorTests: XCTestCase {
         XCTAssertTrue(cardValidator.canUpdate(expiryYear: "1",
                                               withText: "",
                                               inRange: NSRange(location: 0, length: 1)))
+    }
+    
+    func testCanUpdateExpiryYear_noConfiguration() {
+        let cardValidator = AccessCheckoutCardValidator()
+        XCTAssertTrue(cardValidator.canUpdate(expiryYear: "1",
+                                              withText: "1",
+                                              inRange: NSRange(location: 1, length: 1)))
     }
     
     func testValidateExpiryYear_noConfiguration() {
