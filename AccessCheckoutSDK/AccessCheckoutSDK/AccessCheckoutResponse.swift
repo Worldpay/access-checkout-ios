@@ -50,10 +50,6 @@ struct AccessCheckoutResponse: Codable {
                 self.intValue = intValue
                 self.stringValue = "\(intValue)"
             }
-            
-            static func make(key: String) -> CodingKeys? {
-                return CodingKeys(stringValue: key)
-            }
         }
     }
     public struct Link: Codable {

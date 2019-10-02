@@ -1854,4 +1854,30 @@ class CardValidatorTests: XCTestCase {
                                           cvv: validCvv)
         XCTAssertTrue(valid)
     }
+    
+    func testCard_noValidator() {
+        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
+        XCTAssertTrue(card.isValid())
+    }
+    
+    func testCard_noValidator_canUpdatePAN() {
+        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
+        XCTAssertTrue(card.canUpdate(pan: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    }
+    
+    func testCard_noValidator_canUpdateCVV() {
+        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
+        XCTAssertTrue(card.canUpdate(cvv: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    }
+    
+    func testCard_noValidator_canUpdateExpiryYear() {
+        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
+        XCTAssertTrue(card.canUpdate(expiryYear: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    }
+    
+    func testCard_noValidator_canUpdateExpiryMonth() {
+        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
+        XCTAssertTrue(card.canUpdate(expiryMonth: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    }
+    
 }

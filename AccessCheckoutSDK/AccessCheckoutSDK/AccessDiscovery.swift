@@ -84,9 +84,8 @@ public final class AccessCheckoutDiscovery: Discovery {
                 resultURL = serviceMap[linkId] ?? nil
             }
         } catch {
-            if let json = String(data: jsonData, encoding: .utf8) {
-                print("Error parsing JSON: \(json)")
-            }
+            let json = String(decoding: jsonData, as: UTF8.self)
+            print("Error parsing JSON: \(json)")
         }
         
         return resultURL

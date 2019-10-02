@@ -85,13 +85,21 @@ extension AccessCheckoutCard: CardViewDelegate {
      - Parameter pan: The card number
      */
     public func didUpdate(pan: PAN) {
-     
-        if let result = cardValidator?.validate(pan: pan) {
-            cardDelegate?.cardView(panView, isValid: result.valid.partial)
-            cardDelegate?.didChangeCardBrand(result.brand)
+        
+        guard let validator = cardValidator else {
+            cardDelegate?.cardView(panView, isValid: true)
+            cardDelegate?.cardView(cvvView, isValid: true)
+            cardDelegate?.didChangeCardBrand(nil)
+            return
         }
-        if let cvv = cvvView.text, let validationResult = cardValidator?.validate(cvv: cvv, withPAN: pan) {
-            cardDelegate?.cardView(cvvView, isValid: validationResult.partial)
+     
+        let panResult = validator.validate(pan: pan)
+        cardDelegate?.cardView(panView, isValid: panResult.valid.partial)
+        cardDelegate?.didChangeCardBrand(panResult.brand)
+            
+        if let cvv = cvvView.text {
+            let cvvResult = validator.validate(cvv: cvv, withPAN: pan)
+            cardDelegate?.cardView(cvvView, isValid: cvvResult.partial)
         }
     }
     
