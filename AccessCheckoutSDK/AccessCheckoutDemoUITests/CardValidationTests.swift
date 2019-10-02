@@ -203,4 +203,44 @@ class CardValidationTests: XCTestCase {
         XCTAssertEqual(field.value as? String, "1")
     }
     
+    // MARK: Field validity
+    
+    func testPANAccessibilityLabel_validComplete() {
+        let field = app.textFields["pan"]
+        field.tap()
+        field.typeText("4111111111111111")
+        XCTAssertEqual(field.label, "valid")
+    }
+    
+    func testPANAccessibilityLabel_validPartial() {
+        let field = app.textFields["pan"]
+        field.tap()
+        field.typeText("4111")
+        XCTAssertEqual(field.label, "valid")
+    }
+    
+    func testCVVAccessibilityLabel_validComplete() {
+        let field = app.textFields["cvv"]
+        field.tap()
+        field.typeText("1234")
+        XCTAssertEqual(field.label, "valid")
+    }
+    
+    func testCVVAccessibilityLabel_validPartial() {
+        let field = app.textFields["cvv"]
+        field.tap()
+        field.typeText("1")
+        XCTAssertEqual(field.label, "valid")
+    }
+    
+    func testCVVAccessibilityLabel_invalid() {
+        let cvv = app.textFields["cvv"]
+        cvv.tap()
+        cvv.typeText("1234")
+        let field = app.textFields["pan"]
+        field.tap()
+        field.typeText("4")
+        XCTAssertEqual(cvv.label, "invalid")
+    }
+    
 }

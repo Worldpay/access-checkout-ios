@@ -97,7 +97,9 @@ extension ExpiryDateView: CardDateView {
      */
     public func isValid(valid: Bool) {
         monthTextField.textColor = valid ? UIColor.black : UIColor.red
+        monthTextField.accessibilityLabel = valid ? "valid" : "invalid"
         yearTextField.textColor = valid ? UIColor.black : UIColor.red
+        yearTextField.accessibilityLabel = valid ? "valid" : "invalid"
     }
     
     /// Clears any text input.

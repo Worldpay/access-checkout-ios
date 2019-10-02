@@ -75,6 +75,7 @@ extension CVVView: CardTextView {
      */
     public func isValid(valid: Bool) {
         textField.textColor = valid ? UIColor.black : UIColor.red
+        textField.accessibilityLabel = valid ? "valid" : "invalid"
     }
     
     /// Clears any text input.
