@@ -1855,29 +1855,40 @@ class CardValidatorTests: XCTestCase {
         XCTAssertTrue(valid)
     }
     
-    func testCard_noValidator() {
-        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
-        XCTAssertTrue(card.isValid())
+    // MARK: ExpiryYear tests
+    
+    func testExpiryYear_zero() {
+        let expiryYear: ExpiryYear = "0"
+        XCTAssertEqual(2000, expiryYear.toFourDigitFormat())
     }
     
-    func testCard_noValidator_canUpdatePAN() {
-        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
-        XCTAssertTrue(card.canUpdate(pan: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    func testExpiryYear_negative() {
+        let expiryYear: ExpiryYear = "-2"
+        XCTAssertNil(expiryYear.toFourDigitFormat())
     }
     
-    func testCard_noValidator_canUpdateCVV() {
-        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
-        XCTAssertTrue(card.canUpdate(cvv: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    func testExpiryYear_fourDigits() {
+        let expiryYear: ExpiryYear = "2012"
+        XCTAssertEqual(2012, expiryYear.toFourDigitFormat())
     }
     
-    func testCard_noValidator_canUpdateExpiryYear() {
-        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
-        XCTAssertTrue(card.canUpdate(expiryYear: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    func testExpiryYear_twoDigits() {
+        let expiryYear: ExpiryYear = "12"
+        XCTAssertEqual(2012, expiryYear.toFourDigitFormat())
     }
     
-    func testCard_noValidator_canUpdateExpiryMonth() {
-        let card = AccessCheckoutCard(panView: PANView(), expiryDateView: ExpiryDateView(), cvvView: CVVView())
-        XCTAssertTrue(card.canUpdate(expiryMonth: nil, withText: "", inRange: NSRange(location: 0, length: 0)))
+    func testExpiryYear_threeDigits() {
+        let expiryYear: ExpiryYear = "112"
+        XCTAssertEqual(112, expiryYear.toFourDigitFormat())
     }
     
+    func testExpiryYear_oneDigit() {
+        let expiryYear: ExpiryYear = "8"
+        XCTAssertEqual(2008, expiryYear.toFourDigitFormat())
+    }
+    
+    func testExpiryYear_fiveDigits() {
+        let expiryYear: ExpiryYear = "20131"
+        XCTAssertEqual(20131, expiryYear.toFourDigitFormat())
+    }
 }

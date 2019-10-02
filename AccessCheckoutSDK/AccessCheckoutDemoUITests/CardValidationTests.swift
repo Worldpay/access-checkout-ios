@@ -2,8 +2,6 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CardValidationTests: XCTestCase {
-
-    let app = XCUIApplication()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -12,7 +10,6 @@ class CardValidationTests: XCTestCase {
         continueAfterFailure = false
 
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        app.launch()
     }
 
     override func tearDown() {
@@ -21,28 +18,52 @@ class CardValidationTests: XCTestCase {
 
     // MARK: Fields existance
     func testCardNumberTextField_exists() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         XCTAssertTrue(app.textFields["pan"].exists)
     }
     
     func testExpiryDateView_exists() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         XCTAssertTrue(app.otherElements["expiryDate"].exists)
     }
     
     func testCVVTextField_exists() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         XCTAssertTrue(app.textFields["cvv"].exists)
     }
     
     func testCVVTextFieldPlaceholder_exists() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         XCTAssertTrue(app.textFields["cvv"].placeholderValue == "CVV")
     }
     
     func testCardNumberImageView_exists() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         XCTAssertTrue(app.images["cardBrandImage"].exists)
     }
     
     // MARK: PAN validation
     
+    func testPAN_noValidator() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", ""])
+        app.launch()
+    }
+    
     func testPAN_alpha() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "A"
         let panField = app.textFields["pan"]
         panField.tap()
@@ -51,6 +72,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryMonth_alpha() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "A"
         let expiryMonthField = app.textFields["expiryMonth"]
         expiryMonthField.tap()
@@ -59,6 +83,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryYear_alpha() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "A"
         let expiryYearField = app.textFields["expiryYear"]
         expiryYearField.tap()
@@ -67,6 +94,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testCVV_alpha() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "A"
         let cvvField = app.textFields["cvv"]
         cvvField.tap()
@@ -76,6 +106,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testPAN_maxLength() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "111122223333444455556666"
         let panField = app.textFields["pan"]
         panField.tap()
@@ -84,6 +117,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryMonth_maxLength() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "1212"
         let field = app.textFields["expiryMonth"]
         field.tap()
@@ -93,6 +129,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryYear_maxLength() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "1212"
         let field = app.textFields["expiryYear"]
         field.tap()
@@ -101,6 +140,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testCVV_maxLength() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let text = "123456"
         let field = app.textFields["cvv"]
         field.tap()
@@ -111,6 +153,9 @@ class CardValidationTests: XCTestCase {
     // MARK: Card brand images
     
     func testBrandImage_visa() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let brandName = "visa"
         let field = app.textFields["pan"]
         field.tap()
@@ -121,6 +166,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testBrandImage_mastercard() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let brandName = "mastercard"
         let field = app.textFields["pan"]
         field.tap()
@@ -131,6 +179,9 @@ class CardValidationTests: XCTestCase {
     }
     
     func testBrandImage_amex() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         let brandName = "amex"
         let field = app.textFields["pan"]
         field.tap()
@@ -141,6 +192,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testBrandImage_unknown() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["pan"]
         field.tap()
         field.typeText("0")
@@ -152,6 +207,10 @@ class CardValidationTests: XCTestCase {
     // MARK: Dynamic CVV
     
     func testCVV_brandValidLength() {
+        
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         
         let pan = app.textFields["pan"]
         pan.tap()
@@ -166,6 +225,9 @@ class CardValidationTests: XCTestCase {
     }
 
     func testPAN_removeDigits() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         
         let field = app.textFields["pan"]
         field.tap()
@@ -177,6 +239,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryMonth_removeDigits() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["expiryMonth"]
         field.tap()
         field.typeText("12")
@@ -185,6 +251,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testExpiryYear_removeDigits() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["expiryYear"]
         field.tap()
         field.typeText("42")
@@ -193,6 +263,9 @@ class CardValidationTests: XCTestCase {
     }
 
     func testCVV_removeDigits() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
         
         let field = app.textFields["cvv"]
         field.tap()
@@ -206,6 +279,10 @@ class CardValidationTests: XCTestCase {
     // MARK: Field validity
     
     func testPANAccessibilityLabel_validComplete() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["pan"]
         field.tap()
         field.typeText("4111111111111111")
@@ -213,6 +290,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testPANAccessibilityLabel_validPartial() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["pan"]
         field.tap()
         field.typeText("4111")
@@ -220,6 +301,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testCVVAccessibilityLabel_validComplete() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["cvv"]
         field.tap()
         field.typeText("1234")
@@ -227,6 +312,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testCVVAccessibilityLabel_validPartial() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let field = app.textFields["cvv"]
         field.tap()
         field.typeText("1")
@@ -234,6 +323,10 @@ class CardValidationTests: XCTestCase {
     }
     
     func testCVVAccessibilityLabel_invalid() {
+        let app = XCUIApplication()
+        app.launchArguments.append(contentsOf: ["-stubCardConfiguration", "CardConfiguration"])
+        app.launch()
+        
         let cvv = app.textFields["cvv"]
         cvv.tap()
         cvv.typeText("1234")
