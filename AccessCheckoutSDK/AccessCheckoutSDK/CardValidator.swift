@@ -314,10 +314,6 @@ final public class AccessCheckoutCardValidator: CardValidator {
         }
         return ValidationResult(partial: partiallyValid, complete: completelyValid)
     }
-    
-    private func isNumeric(text: String) -> Bool {
-        return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: text))
-    }
 }
 
 /// Result of validation
