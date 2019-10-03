@@ -184,6 +184,22 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
+    func testDiscovery_currentlyDiscovering() {
+        
+        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
+        let urlSession = URLSession.shared
+        let discoverExpectation = expectation(description: "discovery")
+
+        discovery.discover(urlSession: urlSession) {
+            discoverExpectation.fulfill()
+        }
+        discovery.discover(urlSession: urlSession) {
+            XCTFail()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+        
+    }
+    
     private func verifyCanDecodeAndEncode(_ stubData: Data) {
         do {
             let accessCheckoutResponse1 = try JSONDecoder().decode(AccessCheckoutResponse.self, from: stubData)
