@@ -13,9 +13,6 @@ class AccessCheckoutClientErrorTests: XCTestCase {
     
     let expectedMessage = "Some error message"
     let expectedJsonPath = "json.path"
-    let accessDeniedJSON = """
-{"errorName": "accessDenied", "message": "Access is denied"}
-"""
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,11 +22,122 @@ class AccessCheckoutClientErrorTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testCodable() {
-        let data = Data(accessDeniedJSON.utf8)
-        let error = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: data)
-        XCTAssertEqual(error?.errorName, "accessDenied")
+    func testCodable_bodyIsEmpty() {
+        assertCodable(forErrorName: "bodyIsEmpty")
+    }
+    
+    func testCodable_bodyIsNotJson() {
+        assertCodable(forErrorName: "bodyIsNotJson")
+    }
+    
+    func testCodable_bodyDoesNotMatchSchema() {
+        assertCodable(forErrorName: "bodyDoesNotMatchSchema")
+    }
+    
+    func testCodable_resourceNotFound() {
+        assertCodable(forErrorName: "resourceNotFound")
+    }
+    
+    func testCodable_endpointNotFound() {
+        assertCodable(forErrorName: "endpointNotFound")
+    }
+    
+    func testCodable_methodNotAllowed() {
+        assertCodable(forErrorName: "methodNotAllowed")
+    }
+    
+    func testCodable_unsupportedAcceptHeader() {
+        assertCodable(forErrorName: "unsupportedAcceptHeader")
+    }
+    
+    func testCodable_unsupportedContentType() {
+        assertCodable(forErrorName: "unsupportedContentType")
+    }
+    
+    func testCodable_sessionNotFound() {
+        assertCodable(forErrorName: "sessionNotFound")
+    }
+    
+    func testCodable_tooManyTokensForNamespace() {
+        assertCodable(forErrorName: "tooManyTokensForNamespace")
+    }
+    
+    func testCodable_unrecognizedCardBrand() {
+        assertCodable(forErrorName: "unrecognizedCardBrand")
+    }
+    
+    func testCodable_tokenExpiryDateExceededMaximum() {
+        assertCodable(forErrorName: "tokenExpiryDateExceededMaximum")
+    }
+    
+    func testCodable_unsupportedCardBrand() {
+        assertCodable(forErrorName: "unsupportedCardBrand")
+    }
+    
+    func testCodable_fieldHasInvalidValue() {
+        assertCodable(forErrorName: "fieldHasInvalidValue")
+    }
+    
+    func testCodable_unsupportedVerificationCurrency() {
+        assertCodable(forErrorName: "unsupportedVerificationCurrency")
+    }
+    
+    func testCodable_maximumUpdatesExceeded() {
+        assertCodable(forErrorName: "maximumUpdatesExceeded")
+    }
+    
+    func testCodable_apiRateLimitExceeded() {
+        assertCodable(forErrorName: "apiRateLimitExceeded")
+    }
+    
+    func testCodable_unauthorized() {
+        assertCodable(forErrorName: "unauthorized")
+    }
+    
+    func testCodable_invalidCredentials() {
+        assertCodable(forErrorName: "invalidCredentials")
+    }
+    
+    func testCodable_accessDenied() {
+        assertCodable(forErrorName: "accessDenied")
+    }
+    
+    func testCodable_internalServerError() {
+        assertCodable(forErrorName: "internalServerError")
+    }
+    
+    func testCodable_notTokenizable() {
+        assertCodable(forErrorName: "notTokenizable")
+    }
+    
+    func testCodable_internalErrorTokenNotCreated() {
+        assertCodable(forErrorName: "internalErrorTokenNotCreated")
+    }
+    
+    func testCodable_undiscoverable() {
+        assertCodable(forErrorName: "undiscoverable")
+    }
+    
+    func testCodable_unknown() {
+        assertCodable(forErrorName: "unknown")
+    }
+    
+    func testCodable_somethingUnexpected() {
+        let data = Data("{\"errorName\": \"something totally unexpected!\", \"message\": \"Access is denied\", \"validationErrors\": [{\"errorName\": \"unrecognizedField\"}] }".utf8)
+        let error = try? JSONDecoder().decode(AccessCheckoutClientError.self,
+                                              from: data)
+        XCTAssertEqual(error?.errorName, "unknown")
         XCTAssertNotNil(try? JSONEncoder().encode(error))
+        
+        let dataNil = Data("{\"errorName\": \"something totally unexpected!\"}".utf8)
+        let errorNil = try? JSONDecoder().decode(AccessCheckoutClientError.self,
+                                                  from: dataNil)
+        XCTAssertEqual(errorNil?.errorName, "unknown")
+        
+        let dataEmpty = Data("{}".utf8)
+        let errorEmpty = try? JSONDecoder().decode(AccessCheckoutClientError.self,
+                                                   from: dataEmpty)
+        XCTAssertEqual(errorEmpty?.errorName, "unknown")
     }
 
     func testLocalizedDescription_accessDenied() {
@@ -208,6 +316,14 @@ class AccessCheckoutClientErrorTests: XCTestCase {
             XCTAssertTrue(localizedDescription.contains(expectedJsonPath))
         }
         validationMessages?.forEach { XCTAssertTrue(localizedDescription.contains($0)) }
+    }
+    
+    private func assertCodable(forErrorName name: String) {
+        let data = Data("{\"errorName\": \"\(name)\", \"message\": \"Access is denied\"}".utf8)
+        let error = try? JSONDecoder().decode(AccessCheckoutClientError.self,
+                                              from: data)
+        XCTAssertEqual(error?.errorName, name)
+        XCTAssertNotNil(try? JSONEncoder().encode(error))
     }
 }
 
