@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B130667AC237D1084ECD83D /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A72B5175C0EF5B253EADFEC /* Pods_AccessCheckoutSDKTests.framework */; };
 		1BF0D222234608C500767B2B /* AccessCheckoutClientErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0D221234608C500767B2B /* AccessCheckoutClientErrorTests.swift */; };
-		3A87C6C03DD548EA34933516 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0778ED2AE6A9B9B2586F6 /* Pods_AccessCheckoutSDKPactTests.framework */; };
+		62E019517FAC65C748CE3233 /* Pods_AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4E534AA6F01CAB36DF7E59 /* Pods_AccessCheckoutSDK.framework */; };
+		8258CB953EB3DEBADDDD9F5D /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A72B5175C0EF5B253EADFEC /* Pods_AccessCheckoutSDKTests.framework */; };
+		9F036F751200E40F9BF0A631 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0778ED2AE6A9B9B2586F6 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		A5D806C2C61BFB3366DBBD07 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A58760BBDD0A6D3D73C330 /* Pods_AccessCheckoutDemo.framework */; };
 		BD2B2E7A11E1D08D2D33006E /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D01B50BCE9C5012CDC26808 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C95D2D8E23323D8F00F40D6D /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C95D2D8423323D8F00F40D6D /* AccessCheckoutSDK.framework */; };
@@ -176,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62E019517FAC65C748CE3233 /* Pods_AccessCheckoutSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C95D2D8E23323D8F00F40D6D /* AccessCheckoutSDK.framework in Frameworks */,
-				1B130667AC237D1084ECD83D /* Pods_AccessCheckoutSDKTests.framework in Frameworks */,
+				8258CB953EB3DEBADDDD9F5D /* Pods_AccessCheckoutSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C95D2DA723323DA300F40D6D /* AccessCheckoutSDK.framework in Frameworks */,
-				3A87C6C03DD548EA34933516 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */,
+				9F036F751200E40F9BF0A631 /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1177,7 +1179,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1202,7 +1204,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.AccessCheckoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
