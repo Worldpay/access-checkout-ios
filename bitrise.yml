@@ -54,6 +54,28 @@ workflows:
         - test_devices: |-
             ipad5,12.0,en,portrait
             iphonex,12.0,en,portrait
+    - script:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # Capture the release number and put it in a workflow variable
+            release_version=$(grep -A1 CFBundleShortVersionString AccessCheckoutSDK/AccessCheckoutSDK/Info.plist | grep string | sed -E "s/<\/?string>//g" | xargs echo -n)
+            envman add --key PROJECT_VERSION --value $release_version
+    - script-runner@0.9.3:
+        title: Amend PACT file
+        run_if: not .IsPR
+        inputs:
+          - file_path: scripts/apply_pact_fix.sh
+    - script-runner@0.9.3:
+        title: "Deploy pact file to pact broker"
+        run_if: not .IsPR
+        inputs:
+          - file_path: scripts/upload_pact.sh
     - xcode-archive:
         inputs:
         - project_path: "$DEMO_PROJECT_PATH"
