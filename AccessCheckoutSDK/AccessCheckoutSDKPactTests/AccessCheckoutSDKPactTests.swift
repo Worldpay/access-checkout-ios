@@ -7,7 +7,7 @@ class AccessCheckoutSDKPactTests: XCTestCase {
     let baseURI: String = Bundle(for: AccessCheckoutSDKPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
     
     let requestHeaders:  [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
-    let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json;charset=UTF-8"]
+    let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
     
     let verifiedTokensMockService = MockService(provider: "verified-tokens",
                                                 consumer: "access-checkout-iOS-sdk")
