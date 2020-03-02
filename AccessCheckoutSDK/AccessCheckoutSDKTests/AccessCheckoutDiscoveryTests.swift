@@ -20,6 +20,9 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
                 "service:tokens": {
                     "href": "https://access.worldpay.com/tokens"
                 },
+                "service:sessions": {
+                    "href": "https://access.worldpay.com/sessions"
+                },
                 "service:verifiedTokens": {
                     "href": "https://access.worldpay.com/verifiedTokens"
                 },
@@ -34,6 +37,18 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         }
         """
 
+    let sessionsRootURI = "https://access.worldpay.com/sessions"
+    let sessionsRootResponseJson = """
+        {
+            "_links": {
+                  "sessions:session": {
+                    "href": "https://access.worldpay.com/sessions/sessionURI"
+                  }
+                
+            }
+        }
+        """
+    
     let vtsRootURI = "https://access.worldpay.com/verifiedTokens"
     let vtsRootResponseJson = """
         {
@@ -61,12 +76,14 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         }
         """
     
-    let destinationURI = "https://access.worldpay.com/verifiedTokens/sessions"
+    let vtsDestinationURI = "https://access.worldpay.com/verifiedTokens/sessions"
+    let sessionsDestinationURI = "https://access.worldpay.com/sessions/sessionURI"
 
     class MockDiscovery: Discovery {
         var verifiedTokensSessionEndpoint: URL?
+        var sessionsEndpoint: URL?
         var discoverCalls = 0
-        func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
+        func discover(service: String, urlSession: URLSession, onComplete: (() -> Void)?) {
             self.discoverCalls += 1
             onComplete?()
         }
@@ -96,13 +113,22 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         verifyCanDecodeAndEncode(stubData)
     }
     
-    func testDiscovery_returnsRightValue() {
+    func testDiscoverySessions_returnsRightValue() {
         // Given
         givenFirstCallReturns(accessRootResponseJson)
-        givenSecondCallReturns(vtsRootResponseJson)
+        givenSecondCallReturns(to: sessionsRootURI, sessionsRootResponseJson)
 
         // Then
-        discoveryFindsTheRightURL()
+        discoveryFindsTheRightURL(serviceName: "sessions")
+    }
+    
+    func testDiscoveryVTS_returnsRightValue() {
+        // Given
+        givenFirstCallReturns(accessRootResponseJson)
+        givenSecondCallReturns(to: vtsRootURI, vtsRootResponseJson)
+
+        // Then
+        discoveryFindsTheRightURL(serviceName: "vts")
     }
     
     func testDiscovery_firstRequestReturnsError() {
@@ -125,7 +151,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     func testDiscovery_firstRequestReturnsInvalidJson() {
         // Given
         givenFirstCallReturns("invalidJson")
-        givenSecondCallReturns(vtsRootResponseJson)
+        givenSecondCallReturns(to: vtsRootURI, vtsRootResponseJson)
 
         // Then
         discoveryReturnsNil()
@@ -134,7 +160,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     func testDiscovery_secondRequestReturnsInvalidJson() {
         // Given
         givenFirstCallReturns(accessRootResponseJson)
-        givenSecondCallReturns("invalidJson")
+        givenSecondCallReturns(to: vtsRootURI, "invalidJson")
         
         // Then
         discoveryReturnsNil()
@@ -143,7 +169,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     func testDiscovery_linkNotFoundInFirstRequest() {
         // Given
         givenFirstCallReturns(vtsRootResponseJson)
-        givenSecondCallReturns(vtsRootResponseJson)
+        givenSecondCallReturns(to: vtsRootURI, vtsRootResponseJson)
         
         // Then
         discoveryReturnsNil()
@@ -152,7 +178,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     func testDiscovery_linkNotFoundInSecondRequest() {
         // Given
         givenFirstCallReturns(accessRootResponseJson)
-        givenSecondCallReturns(accessRootResponseJson)
+        givenSecondCallReturns(to: vtsRootURI, accessRootResponseJson)
         
         // Then
         discoveryReturnsNil()
@@ -169,7 +195,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         let session = URLSession.shared
         
         // Stub discovery with error
-        mockDiscovery.discover(urlSession: session) {
+        mockDiscovery.discover(service: "vts", urlSession: session) {
             XCTAssertEqual(mockDiscovery.discoverCalls, 1)
             let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
             client.createSession(pan: "1234",
@@ -201,28 +227,38 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         stub(http(.get, uri: accessRootURI), jsonData(accessRootResponse))
     }
     
-    private func givenSecondCallReturns(_ response: String) {
-        let vtsRootResponse = response.data(using: .utf8)!
-        stub(http(.get, uri: vtsRootURI), jsonData(vtsRootResponse))
+    private func givenSecondCallReturns(to uriEndpoint: String, _ response: String) {
+        let rootResponse = response.data(using: .utf8)!
+        stub(http(.get, uri: uriEndpoint), jsonData(rootResponse))
     }
     
     private func discoveryReturnsNil() {
         let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
         let testExpectation = expectation(description: "failure")
-        discovery.discover(urlSession: URLSession.shared) {
+        discovery.discover(service: "vts", urlSession: URLSession.shared) {
             XCTAssertNil(discovery.verifiedTokensSessionEndpoint)
             testExpectation.fulfill()
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    private func discoveryFindsTheRightURL() {
+    private func discoveryFindsTheRightURL(serviceName service: String) {
         let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
         
         let testExpectation = expectation(description: "discovery")
-        discovery.discover(urlSession: URLSession.shared) {
-            XCTAssertEqual(discovery.verifiedTokensSessionEndpoint, URL(string: self.destinationURI))
-            testExpectation.fulfill()
+        if service == "vts" {
+            discovery.discover(service: "vts", urlSession: URLSession.shared) {
+                print("WATCH VTS", discovery.verifiedTokensSessionEndpoint ?? "no value");
+                XCTAssertEqual(discovery.verifiedTokensSessionEndpoint, URL(string: self.vtsDestinationURI))
+                testExpectation.fulfill()
+            }
+        }
+        else if service == "sessions" {
+           discovery.discover(service: "sessions", urlSession: URLSession.shared) {
+                print("WATCH SESSIONS", discovery.sessionsEndpoint ?? "no value");
+                XCTAssertEqual(discovery.sessionsEndpoint, URL(string: self.sessionsDestinationURI))
+                testExpectation.fulfill()
+            }
         }
         waitForExpectations(timeout: 10, handler: nil)
     }

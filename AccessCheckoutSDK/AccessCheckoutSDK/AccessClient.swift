@@ -111,7 +111,7 @@ extension AccessCheckoutClient: AccessClient {
                 completionHandler(.failure(error))
             }
         } else {
-            discovery.discover(urlSession: urlSession) {
+            discovery.discover(service: "vts", urlSession: urlSession) {
                 if let url = self.discovery.verifiedTokensSessionEndpoint {
                     do {
                         let request = try self.buildRequest(url: url,
