@@ -136,7 +136,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         stub(http(.get, uri: accessRootURI), failure(StubError.test as NSError))
         
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
     }
     
     func testDiscovery_secondRequestReturnsError() {
@@ -145,7 +145,16 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         stub(http(.get, uri: vtsRootURI), failure(StubError.test as NSError))
 
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
+    }
+    
+    func testDiscoverySessions_secondRequestReturnsError() {
+        // Given
+        givenFirstCallReturns(accessRootResponseJson)
+        stub(http(.get, uri: sessionsRootURI), failure(StubError.test as NSError))
+
+        // Then
+        discoveryReturnsNil(serviceName: "sessions")
     }
     
     func testDiscovery_firstRequestReturnsInvalidJson() {
@@ -154,7 +163,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         givenSecondCallReturns(to: vtsRootURI, vtsRootResponseJson)
 
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
     }
     
     func testDiscovery_secondRequestReturnsInvalidJson() {
@@ -163,7 +172,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         givenSecondCallReturns(to: vtsRootURI, "invalidJson")
         
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
     }
     
     func testDiscovery_linkNotFoundInFirstRequest() {
@@ -172,7 +181,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         givenSecondCallReturns(to: vtsRootURI, vtsRootResponseJson)
         
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
     }
     
     func testDiscovery_linkNotFoundInSecondRequest() {
@@ -181,7 +190,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         givenSecondCallReturns(to: vtsRootURI, accessRootResponseJson)
         
         // Then
-        discoveryReturnsNil()
+        discoveryReturnsNil(serviceName: "vts")
     }
 
     func testDiscoveryFail_retryOnVTS() {
@@ -232,12 +241,20 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         stub(http(.get, uri: uriEndpoint), jsonData(rootResponse))
     }
     
-    private func discoveryReturnsNil() {
+    private func discoveryReturnsNil(serviceName service: String) {
         let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: accessRootURI)!)
         let testExpectation = expectation(description: "failure")
-        discovery.discover(service: "vts", urlSession: URLSession.shared) {
-            XCTAssertNil(discovery.verifiedTokensSessionEndpoint)
-            testExpectation.fulfill()
+        if service == "vts" {
+            discovery.discover(service: "vts", urlSession: URLSession.shared) {
+                XCTAssertNil(discovery.verifiedTokensSessionEndpoint)
+                testExpectation.fulfill()
+            }
+        }
+        else {
+            discovery.discover(service: "sessions", urlSession: URLSession.shared) {
+                XCTAssertNil(discovery.sessionsEndpoint)
+                testExpectation.fulfill()
+            }
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
@@ -248,14 +265,12 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         let testExpectation = expectation(description: "discovery")
         if service == "vts" {
             discovery.discover(service: "vts", urlSession: URLSession.shared) {
-                print("WATCH VTS", discovery.verifiedTokensSessionEndpoint ?? "no value");
                 XCTAssertEqual(discovery.verifiedTokensSessionEndpoint, URL(string: self.vtsDestinationURI))
                 testExpectation.fulfill()
             }
         }
         else if service == "sessions" {
            discovery.discover(service: "sessions", urlSession: URLSession.shared) {
-                print("WATCH SESSIONS", discovery.sessionsEndpoint ?? "no value");
                 XCTAssertEqual(discovery.sessionsEndpoint, URL(string: self.sessionsDestinationURI))
                 testExpectation.fulfill()
             }
