@@ -24,8 +24,8 @@ public final class AccessCheckoutDiscovery: Discovery {
     
     private let baseUrl: URL
 
-    private var accessRootDiscoveryTask: URLSessionTask?
-    private var verifiedTokensDiscoveryTask: URLSessionTask?
+    private var serviceDiscoveryTask: URLSessionTask?
+    private var endpointDiscoveryTask: URLSessionTask?
 
     /// The discovered Access Worldpay Verified Tokens Session service endpoint
     public var serviceEndpoint: URL?
@@ -49,13 +49,13 @@ public final class AccessCheckoutDiscovery: Discovery {
     public func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)? = nil) {
         
         // Check for existing tasks running
-        guard accessRootDiscoveryTask?.state != URLSessionTask.State.running &&
-             verifiedTokensDiscoveryTask?.state != URLSessionTask.State.running else {
+        guard serviceDiscoveryTask?.state != URLSessionTask.State.running &&
+             endpointDiscoveryTask?.state != URLSessionTask.State.running else {
             return
         }
 
         // Discovers the root end-point in verified tokens service
-        self.accessRootDiscoveryTask = urlSession.dataTask(with: baseUrl) { (data, response, error) in
+        self.serviceDiscoveryTask = urlSession.dataTask(with: baseUrl) { (data, response, error) in
             if let jsonData = data,
                 let rootEndPoint = self.fetchServiceURL(withLinkId: serviceLinks.service, in: jsonData) {
                 self.discoverServiceEndPoint(service: serviceLinks.endpoint, withSession: urlSession, from: rootEndPoint, onComplete: onComplete)
@@ -63,19 +63,19 @@ public final class AccessCheckoutDiscovery: Discovery {
                 onComplete?()
             }
         }
-        self.accessRootDiscoveryTask?.resume()
+        self.serviceDiscoveryTask?.resume()
     }
     
     private func discoverServiceEndPoint(service: String, withSession urlSession: URLSession, from startUrl: URL, onComplete: (() -> Void)? = nil) -> Void {
         
-        self.verifiedTokensDiscoveryTask = urlSession.dataTask(with: startUrl) { (data, response, error) in
+        self.endpointDiscoveryTask = urlSession.dataTask(with: startUrl) { (data, response, error) in
             if let jsonData = data,
                let endpointURL = self.fetchServiceURL(withLinkId: service, in: jsonData) {
                     self.serviceEndpoint = endpointURL
             }
             onComplete?()
         }
-        self.verifiedTokensDiscoveryTask?.resume()
+        self.endpointDiscoveryTask?.resume()
     }
     
     private func decodeJSON(fromData data: Data) throws -> AccessCheckoutResponse? {
