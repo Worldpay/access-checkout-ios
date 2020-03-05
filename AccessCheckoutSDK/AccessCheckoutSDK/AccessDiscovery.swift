@@ -4,28 +4,31 @@ import Foundation
 public protocol Discovery {
     
     /// The discovered verified tokens session service endpoint
-    var verifiedTokensSessionEndpoint: URL? { get }
-    var sessionsEndpoint: URL?{ get }
+    var serviceEndpoint: URL? { get }
     /// Starts discovery of services
-    func discover(service: String, urlSession: URLSession, onComplete: (() -> Void)?)
+    func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?)
+}
+
+public class DiscoverLinks {
+    var service: String
+    var endpoint: String
+    
+    public init(service: String, endpoint: String) {
+        self.service = service
+        self.endpoint = endpoint
+    }
 }
 
 /// Discovers Access Worldpay Verified Tokens Session service
 public final class AccessCheckoutDiscovery: Discovery {
     
     private let baseUrl: URL
-    private let verifiedTokensServiceLinkId = "service:verifiedTokens"
-    private let verifiedTokensSessionLinkId = "verifiedTokens:sessions"
-    
-    private let sessionsServiceLinkId = "service:sessions"
-    private let sessionsLinkId = "sessions:session"
 
     private var accessRootDiscoveryTask: URLSessionTask?
     private var verifiedTokensDiscoveryTask: URLSessionTask?
 
     /// The discovered Access Worldpay Verified Tokens Session service endpoint
-    public var verifiedTokensSessionEndpoint: URL?
-    public var sessionsEndpoint: URL?
+    public var serviceEndpoint: URL?
     
     /**
      Initialises discovery with the base URL of Access Worldpay services.
@@ -43,29 +46,19 @@ public final class AccessCheckoutDiscovery: Discovery {
         - urlSession: A `URLSession` object
         - onComplete: Callback upon discovery completion, successful or otherwise
      */
-    public func discover(service:String, urlSession: URLSession, onComplete: (() -> Void)? = nil) {
+    public func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)? = nil) {
         
         // Check for existing tasks running
         guard accessRootDiscoveryTask?.state != URLSessionTask.State.running &&
              verifiedTokensDiscoveryTask?.state != URLSessionTask.State.running else {
             return
         }
-        var linkID: String
-        
-        switch service {
-        case "vts":
-            linkID = self.verifiedTokensServiceLinkId
-        case "sessions":
-            linkID = self.sessionsServiceLinkId
-        default:
-            linkID = "NOT FOUND"
-        }
-        
+
         // Discovers the root end-point in verified tokens service
         self.accessRootDiscoveryTask = urlSession.dataTask(with: baseUrl) { (data, response, error) in
             if let jsonData = data,
-               let rootEndPoint = self.fetchServiceURL(withLinkId: linkID, in: jsonData) {
-                self.discoverServiceEndPoint(discoverService: service, withSession: urlSession, from: rootEndPoint, onComplete: onComplete)
+                let rootEndPoint = self.fetchServiceURL(withLinkId: serviceLinks.service, in: jsonData) {
+                self.discoverServiceEndPoint(service: serviceLinks.endpoint, withSession: urlSession, from: rootEndPoint, onComplete: onComplete)
             } else {
                 onComplete?()
             }
@@ -73,20 +66,12 @@ public final class AccessCheckoutDiscovery: Discovery {
         self.accessRootDiscoveryTask?.resume()
     }
     
-    private func discoverServiceEndPoint(discoverService service: String, withSession urlSession: URLSession, from startUrl: URL, onComplete: (() -> Void)? = nil) -> Void {
+    private func discoverServiceEndPoint(service: String, withSession urlSession: URLSession, from startUrl: URL, onComplete: (() -> Void)? = nil) -> Void {
         
         self.verifiedTokensDiscoveryTask = urlSession.dataTask(with: startUrl) { (data, response, error) in
-            if service == "vts" {
-                if let jsonData = data,
-                   let vtsSessionURL = self.fetchServiceURL(withLinkId: self.verifiedTokensSessionLinkId, in: jsonData) {
-                        self.verifiedTokensSessionEndpoint = vtsSessionURL
-                }
-            }
-            else if service == "sessions" {
-                if let jsonData = data,
-                   let sessionsURL = self.fetchServiceURL(withLinkId: self.sessionsLinkId, in: jsonData) {
-                        self.sessionsEndpoint = sessionsURL
-                }
+            if let jsonData = data,
+               let endpointURL = self.fetchServiceURL(withLinkId: service, in: jsonData) {
+                    self.serviceEndpoint = endpointURL
             }
             onComplete?()
         }

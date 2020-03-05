@@ -13,6 +13,8 @@ class AccessCheckoutSDKPactTests: XCTestCase {
                                                 consumer: "access-checkout-iOS-sdk")
 
     class MockDiscovery: Discovery {
+        var serviceEndpoint: URL?
+        
         var verifiedTokensSessionEndpoint: URL?
         var sessionsEndpoint: URL?
         /// Starts discovery of services
@@ -21,7 +23,8 @@ class AccessCheckoutSDKPactTests: XCTestCase {
             self.baseURI = baseURI
         }
         
-        func discover(service: String, urlSession: URLSession, onComplete: (() -> Void)?){
+        func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?){
+            serviceEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessionssss")
             verifiedTokensSessionEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
             sessionsEndpoint = URL(string: "\(baseURI)/sessions/payments/cvc")
             onComplete?()
