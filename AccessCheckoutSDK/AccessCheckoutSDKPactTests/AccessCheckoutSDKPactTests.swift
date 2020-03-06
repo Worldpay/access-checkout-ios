@@ -15,8 +15,6 @@ class AccessCheckoutSDKPactTests: XCTestCase {
     class MockDiscovery: Discovery {
         var serviceEndpoint: URL?
         
-        var verifiedTokensSessionEndpoint: URL?
-        var sessionsEndpoint: URL?
         /// Starts discovery of services
         let baseURI: String
         init(baseURI: String) {
@@ -24,9 +22,7 @@ class AccessCheckoutSDKPactTests: XCTestCase {
         }
         
         func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?){
-            serviceEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessionssss")
-            verifiedTokensSessionEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
-            sessionsEndpoint = URL(string: "\(baseURI)/sessions/payments/cvc")
+            serviceEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
             onComplete?()
         }
     }

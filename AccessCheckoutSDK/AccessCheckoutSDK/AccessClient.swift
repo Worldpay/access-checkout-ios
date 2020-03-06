@@ -111,8 +111,7 @@ extension AccessCheckoutClient: AccessClient {
                 completionHandler(.failure(error))
             }
         } else {
-            let vts = DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:session")
-            discovery.discover(serviceLinks: vts, urlSession: urlSession) {
+            discovery.discover(serviceLinks: DiscoverLinks.verifiedTokens, urlSession: urlSession) {
                 if let url = self.discovery.serviceEndpoint {
                     do {
                         let request = try self.buildRequest(url: url,

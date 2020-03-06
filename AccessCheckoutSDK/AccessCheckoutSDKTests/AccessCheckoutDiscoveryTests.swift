@@ -86,7 +86,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         // Then
         discoveryReturnsNil()
     }
-//
+
     func testDiscovery_secondRequestReturnsError() {
         // Given
         givenFirstCallReturns(rootResponseJson)
@@ -113,7 +113,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         // Then
         discoveryReturnsNil()
     }
-//
+    
     func testDiscovery_secondRequestReturnsInvalidJson() {
         // Given
         let invalidServiceResponseJson = """
@@ -131,7 +131,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         // Then
         discoveryReturnsNil()
     }
-//
+
     func testDiscovery_linkNotFoundInFirstRequest() {
         // Given
         let missingRootResponseJson = """
@@ -149,7 +149,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         // Then
         discoveryReturnsNil()
     }
-//
+
     func testDiscovery_linkNotFoundInSecondRequest() {
         // Given
         let missingServiceResponseJson = """
