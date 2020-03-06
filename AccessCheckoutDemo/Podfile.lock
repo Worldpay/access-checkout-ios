@@ -1,27 +1,27 @@
 PODS:
-  - AccessCheckoutSDK (1.2.1)
+  - AccessCheckoutSDK (1.1.0)
   - Mockingjay/Core (3.0.0-alpha.1):
     - URITemplate (~> 3.0)
   - URITemplate (3.0.0)
 
 DEPENDENCIES:
-  - AccessCheckoutSDK (from `../`)
+  - AccessCheckoutSDK (from `../AccessCheckoutSDK`)
   - Mockingjay/Core (~> 3.0.0-alpha.1)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - Mockingjay
     - URITemplate
 
 EXTERNAL SOURCES:
   AccessCheckoutSDK:
-    :path: "../"
+    :path: "../AccessCheckoutSDK"
 
 SPEC CHECKSUMS:
-  AccessCheckoutSDK: a4b9a32452fd65cf60d08b82af7d234a58185fa2
+  AccessCheckoutSDK: 5139259710048452f3848aa2e49c503a5526eb8c
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
-PODFILE CHECKSUM: 7a8ff758b3e31484f3ad3136b8f831c7cfc4943d
+PODFILE CHECKSUM: b50226136468ea67471a99b3e816fcb4745534f4
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.1
