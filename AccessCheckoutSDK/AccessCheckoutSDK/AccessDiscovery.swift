@@ -9,7 +9,7 @@ public protocol Discovery {
     func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?)
 }
 
-public class DiscoverLinks {
+public final class DiscoverLinks {
     var service: String
     var endpoint: String
     
