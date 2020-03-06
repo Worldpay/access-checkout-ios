@@ -146,7 +146,7 @@ class ViewController: UIViewController {
         
         if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
             let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: url)
-            accessCheckoutDiscovery.discover(urlSession: URLSession.shared) {
+            accessCheckoutDiscovery.discover(serviceLinks: DiscoverLinks.verifiedTokens, urlSession: URLSession.shared) {
                 self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
                                                          merchantIdentifier: CI.merchantId)
             }
