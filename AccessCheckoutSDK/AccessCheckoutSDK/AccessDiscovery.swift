@@ -5,6 +5,7 @@ public protocol Discovery {
     
     /// The discovered verified tokens session service endpoint
     var verifiedTokensSessionEndpoint: URL? { get }
+    var serviceEndpoint: URL? { get }
     
     /// Starts discovery of services
     func discover(urlSession: URLSession, onComplete: (() -> Void)?)
@@ -16,12 +17,14 @@ public final class AccessCheckoutDiscovery: Discovery {
     private let baseUrl: URL
     private let verifiedTokensServiceLinkId = "service:verifiedTokens"
     private let verifiedTokensSessionLinkId = "verifiedTokens:sessions"
+    
 
     private var accessRootDiscoveryTask: URLSessionTask?
     private var verifiedTokensDiscoveryTask: URLSessionTask?
 
     /// The discovered Access Worldpay Verified Tokens Session service endpoint
     public var verifiedTokensSessionEndpoint: URL?
+    public var serviceEndpoint: URL?
     
     /**
      Initialises discovery with the base URL of Access Worldpay services.

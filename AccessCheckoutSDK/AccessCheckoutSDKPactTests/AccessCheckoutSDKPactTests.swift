@@ -14,6 +14,7 @@ class AccessCheckoutSDKPactTests: XCTestCase {
 
     class MockDiscovery: Discovery {
         var verifiedTokensSessionEndpoint: URL?
+        var serviceEndpoint: URL?
         let baseURI: String
         init(baseURI: String) {
             self.baseURI = baseURI

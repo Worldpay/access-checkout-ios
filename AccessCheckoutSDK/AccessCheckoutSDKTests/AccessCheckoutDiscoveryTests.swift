@@ -65,6 +65,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
 
     class MockDiscovery: Discovery {
         var verifiedTokensSessionEndpoint: URL?
+        var serviceEndpoint: URL?
         var discoverCalls = 0
         func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
             self.discoverCalls += 1
