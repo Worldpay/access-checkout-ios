@@ -13,7 +13,7 @@ public final class DiscoverLinks {
     var service: String
     var endpoint: String
     
-    public static let verifiedTokens =  DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:session")
+    public static let verifiedTokens =  DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions")
     public static let sessions =  DiscoverLinks(service: "service:sessions", endpoint: "sessions:session")
     
     
