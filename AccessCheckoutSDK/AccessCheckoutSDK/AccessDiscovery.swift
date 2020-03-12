@@ -14,7 +14,7 @@ public final class DiscoverLinks {
     var endpoint: String
     
     public static let verifiedTokens =  DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions")
-    public static let sessions =  DiscoverLinks(service: "service:sessions", endpoint: "sessions:session")
+    public static let sessions =  DiscoverLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc")
     
     
     public init(service: String, endpoint: String) {
