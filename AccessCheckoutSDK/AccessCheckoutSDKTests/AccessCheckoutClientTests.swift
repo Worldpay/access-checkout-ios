@@ -16,9 +16,10 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     class MockDiscovery: Discovery {
-        var verifiedTokensSessionEndpoint = URL(string: "https://access.worldpay.com/verifiedTokens")
+        var serviceEndpoint = URL(string: "https://access.worldpay.com/verifiedTokens")
         
-        func discover(urlSession: URLSession, onComplete: (() -> Void)?) {
+        /// Starts discovery of services
+        func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?) {
             onComplete?()
         }
     }
