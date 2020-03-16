@@ -23,7 +23,7 @@ class AccessCheckoutClientTests: XCTestCase {
             onComplete?()
         }
     }
-    
+ 
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     private let getSessionRequestStub = http(.post, uri: "https://access.worldpay.com/verifiedTokens")
     private let mockDiscovery = MockDiscovery()
