@@ -39,6 +39,12 @@ final public class AccessCheckoutCardValidator: CardValidator {
     /// The configuration to validate against
     public var cardConfiguration: CardConfiguration?
     
+    /// The validor used to validate text against a generic validation rule
+    private var textValidator = TextValidator()
+    
+    /// The validor used to validate a CVV against a validation rule
+    private var cvvValidator = CVVValidator()
+    
     /// Initializes the validator with basic card configuration defaults
     public init(cardDefaults: CardConfiguration.CardDefaults = CardConfiguration.CardDefaults.baseDefaults()) {
         baseCardDefaults = cardDefaults
@@ -76,7 +82,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
         
         let cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
         let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
-        var validationResult = validate(text: pan, againstValidationRule: panRule)
+        var validationResult = textValidator.validate(text: pan, againstValidationRule: panRule)
 
         if validationResult.complete {
             let validLuhn = pan.isValidLuhn()
@@ -108,7 +114,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
             expectedPan = text
         }
         let rule = panRule ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
-        return validate(text: expectedPan, againstValidationRule: rule).partial
+        return textValidator.validate(text: expectedPan, againstValidationRule: rule).partial
     }
     
     /**
@@ -126,7 +132,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
             cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv
         }
         let rule = cvvRule ?? cardConfiguration?.defaults?.cvv ?? baseCardDefaults.cvv!
-        return validate(text: cvv, againstValidationRule: rule)
+        return cvvValidator.validate(cvv: cvv, againstValidationRule: rule)
     }
     
     /**
@@ -157,7 +163,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
         } else {
             expectedCVV = text
         }
-        return validate(text: expectedCVV, againstValidationRule: rule).partial
+        return cvvValidator.validate(cvv: expectedCVV, againstValidationRule: rule).partial
     }
     
     /**
@@ -184,7 +190,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
             expectedMonth = text
         }
         let rule = cardConfiguration?.defaults?.month ?? baseCardDefaults.month!
-        return validate(text: expectedMonth, againstValidationRule: rule).partial
+        return textValidator.validate(text: expectedMonth, againstValidationRule: rule).partial
     }
     
     /**
@@ -206,8 +212,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
         var completelyValid = true
         
         if let expiryMonth = month, let expiryYear = year {
-            let monthValid = validate(text: expiryMonth, againstValidationRule: monthRule)
-            let yearValid = validate(text: expiryYear, againstValidationRule: yearRule)
+            let monthValid = textValidator.validate(text: expiryMonth, againstValidationRule: monthRule)
+            let yearValid = textValidator.validate(text: expiryYear, againstValidationRule: yearRule)
             partiallyValid = monthValid.partial && yearValid.partial
             completelyValid = monthValid.complete && yearValid.complete
             if completelyValid {
@@ -229,7 +235,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
                 }
             }
         } else if let expiryMonth = month {
-            let valid = validate(text: expiryMonth, againstValidationRule: monthRule)
+            let valid = textValidator.validate(text: expiryMonth, againstValidationRule: monthRule)
             partiallyValid = valid.partial
             completelyValid = valid.complete
             // Numeric month handling
@@ -237,7 +243,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
                 completelyValid = intMonth > 0
             }
         } else if let expiryYear = year {
-            let valid = validate(text: expiryYear, againstValidationRule: yearRule)
+            let valid = textValidator.validate(text: expiryYear, againstValidationRule: yearRule)
             partiallyValid = valid.partial
             completelyValid = valid.complete
             if completelyValid {
@@ -281,38 +287,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
             expectedYear = text
         }
         let rule = cardConfiguration?.defaults?.year ?? baseCardDefaults.year!
-        return validate(text: expectedYear, againstValidationRule: rule).partial
-    }
-    
-    private func validate(text: String, againstValidationRule validationRule: CardConfiguration.CardValidationRule) -> ValidationResult {
-        
-        guard !text.isEmpty else {
-            return ValidationResult(partial: true, complete: false)
-        }
-        if let matcher = validationRule.matcher, matcher.regexMatches(text: text) == false {
-            return ValidationResult(partial: false, complete: false)
-        }
-        
-        let partiallyValid: Bool
-        let completelyValid: Bool
-        
-        if let validLength = validationRule.validLength {
-            partiallyValid = text.count <= validLength
-            completelyValid = text.count == validLength
-        } else if let minLength = validationRule.minLength, let maxLength = validationRule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count >= minLength && text.count <= maxLength
-        } else if let minLength = validationRule.minLength {
-            partiallyValid = true
-            completelyValid = text.count >= minLength
-        } else if let maxLength = validationRule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count == maxLength
-        } else {
-            partiallyValid = true
-            completelyValid = true
-        }
-        return ValidationResult(partial: partiallyValid, complete: completelyValid)
+        return textValidator.validate(text: expectedYear, againstValidationRule: rule).partial
     }
     
     private func isNumeric(text: String) -> Bool {
