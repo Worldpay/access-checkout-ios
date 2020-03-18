@@ -61,3 +61,6 @@ tmp
 #jazzy
 build
 docs
+
+# AppCode
+**/.idea
