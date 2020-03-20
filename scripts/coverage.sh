@@ -11,3 +11,22 @@ echo "*****               *****"
 echo "***** CODE COVERAGE *****"
 echo "*****               *****"
 echo "CODE COVERAGE FOR ${TARGET}: ${COVERAGE}%"
+
+
+# Render Template.
+cat > ${BITRISE_SOURCE_DIR}/coverage.html << EOF
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Access Wallets iOS Code Coverage</title>
+  </head>
+  <body>
+    <h1>Access Checkouts iOS Code Coverage</h1>
+    <p><strong>Module:</strong> ${TARGET}</p>
+    <p><strong>Rate:</strong> ${COVERAGE}%</p>
+  </body>
+</html>
+EOF
+
+envman add --key COVERAGE_RATE --value ${COVERAGE}
