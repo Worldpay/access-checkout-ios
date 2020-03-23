@@ -14,4 +14,4 @@ with open(args.filein, 'r') as file_input:
     json_output = fix_pact_contract(json_input)
 
     with open(args.fileout, 'w') as file_output:
-        json.dump(json_output, file_output)
+        json.dump(json_output, file_output, indent=4)

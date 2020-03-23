@@ -34,13 +34,13 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         """
     
     let destinationURI = "https://root/service1/endpoint"
-    let serviceEndpointKeys = DiscoverLinks(service: "service:service1", endpoint: "service1:endpoint")
+    let serviceEndpointKeys = ApiLinks(service: "service:service1", endpoint: "service1:endpoint", result: "service1:result")
 
     class MockDiscovery: Discovery {
         
         var serviceEndpoint: URL?
         var discoverCalls = 0
-        func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?) {
+        func discover(serviceLinks: ApiLinks, urlSession: URLSession, onComplete: (() -> Void)?) {
             self.discoverCalls += 1
             onComplete?()
         }

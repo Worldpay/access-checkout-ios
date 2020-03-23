@@ -38,7 +38,7 @@ public final class AccessCheckoutClient {
                       cvv: CVV) throws -> URLRequest {
         
         var request = URLRequest(url: url)
-        request.addValue("application/vnd.worldpay.verified-tokens-v1.hal+json", forHTTPHeaderField: "content-type")
+        request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
         request.httpMethod = "POST"
         let tokenRequest = VerifiedTokenRequest(cardNumber: pan,
                                                 cardExpiryDate: VerifiedTokenRequest.CardExpiryDate(
@@ -62,7 +62,7 @@ public final class AccessCheckoutClient {
         urlSession.dataTask(with: request) { (data, _, error) in
             if let sessionData = data {
                 if let verifiedTokensResponse = try? JSONDecoder().decode(AccessCheckoutResponse.self, from: sessionData),
-                    let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })["verifiedTokens:session"] {
+                    let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })[ApiLinks.verifiedTokens.result] {
                         completionHandler(.success(href))
                 } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: sessionData) {
                     completionHandler(.failure(accessCheckoutClientError))
@@ -111,7 +111,7 @@ extension AccessCheckoutClient: AccessClient {
                 completionHandler(.failure(error))
             }
         } else {
-            discovery.discover(serviceLinks: DiscoverLinks.verifiedTokens, urlSession: urlSession) {
+            discovery.discover(serviceLinks: ApiLinks.verifiedTokens, urlSession: urlSession) {
                 if let url = self.discovery.serviceEndpoint {
                     do {
                         let request = try self.buildRequest(url: url,

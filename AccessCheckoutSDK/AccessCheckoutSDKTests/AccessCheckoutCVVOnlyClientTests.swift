@@ -227,7 +227,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
                 """
                     {
                         "_links": {
-                            "sessions:paymentsCvc": {
+                            "sessions:session": {
                                 "href": "\(withSession)"
                             }
                         }
