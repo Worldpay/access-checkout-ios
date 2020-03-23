@@ -124,3 +124,7 @@ of these views or for more custom requirements you may provide your own
   * Errors may be of type `AccessCheckoutClientError`, which may contain an array, `[AccessCheckoutClientValidationError]`. These will
   need to be inspected and handle on the UI accordingly. Validation errors contain `jsonPath` properties to establish the offending card view.
   * The call to `createSession` takes a closure that returns on a background thread - note all UI calls on the main thread here.
+
+## Steps to generate a mock class using Cuckoo for an existing production code class or protocol
+
+See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
