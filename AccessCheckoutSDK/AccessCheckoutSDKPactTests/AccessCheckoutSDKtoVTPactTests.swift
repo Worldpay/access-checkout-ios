@@ -2,9 +2,9 @@ import XCTest
 import PactConsumerSwift
 @testable import AccessCheckoutSDK
 
-class AccessCheckoutSDKPactTests: XCTestCase {
+class AccessCheckoutSDKtoVTPactTests: XCTestCase {
 
-    let baseURI: String = Bundle(for: AccessCheckoutSDKPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
+    let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
     
     let requestHeaders:  [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
@@ -49,7 +49,7 @@ class AccessCheckoutSDKPactTests: XCTestCase {
         ]
         
         verifiedTokensMockService
-            .uponReceiving("a valid request")
+            .uponReceiving("a valid request to VT")
             .withRequest(
                 method: .POST,
                 path: "/verifiedTokens/sessions",
@@ -95,7 +95,7 @@ class AccessCheckoutSDKPactTests: XCTestCase {
             validationErrorMessage: "Identity is invalid",
             validationJsonPath: "$.identity")
         
-        performTestCase(forScenario: "a request with an invalid identity", withRequest: request, andErrorResponse: expectedErrorResponse)
+        performTestCase(forScenario: "a request with an invalid identity to VT", withRequest: request, andErrorResponse: expectedErrorResponse)
     }
     
     func testRequestFailsWhenCardNumberFailsLuhnCheck() {

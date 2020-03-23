@@ -26,14 +26,14 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <PreActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "${SRCROOT}/pact/bin/pact-mock-service start --pact-specification-version 2.0.0 --log &quot;${SRCROOT}/tmp/pact.log&quot; --pact-dir &quot;${SRCROOT}/tmp/pacts&quot; -p 1234&#10;">
+               scriptText = "${SRCROOT}/pact/bin/pact-mock-service start --pact-specification-version 2.0.0 --log &quot;${SRCROOT}/pacts/logs/pact.log&quot; --pact-dir &quot;${SRCROOT}/pacts&quot; -p 1234&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -64,6 +64,15 @@
             </ActionContent>
          </ExecutionAction>
       </PostActions>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C9AFE3D222B7996200943B3E"
+            BuildableName = "AccessCheckoutSDK.framework"
+            BlueprintName = "AccessCheckoutSDK"
+            ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -84,19 +93,12 @@
                BlueprintName = "AccessCheckoutSDKPactTests"
                ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
             </BuildableReference>
+            <LocationScenarioReference
+               identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+               referenceType = "1">
+            </LocationScenarioReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C9AFE3D222B7996200943B3E"
-            BuildableName = "AccessCheckoutSDK.framework"
-            BlueprintName = "AccessCheckoutSDK"
-            ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -117,8 +119,6 @@
             ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

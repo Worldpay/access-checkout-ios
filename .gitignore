@@ -57,6 +57,7 @@ fastlane/test_output
 # Pact
 pact
 tmp
+pacts/logs
 
 #jazzy
 build
