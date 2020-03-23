@@ -39,6 +39,7 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
         - simulator_device: iPhone 8
         - scheme: "$SDK_SCHEME"
+        - generate_code_coverage_files: "yes"
     - cocoapods-install:
         inputs:
         - source_root_path: AccessCheckoutDemo
@@ -76,12 +77,18 @@ workflows:
         run_if: not .IsPR
         inputs:
           - file_path: scripts/upload_pact.sh
+    - script-runner@0.9.3:
+        inputs:
+        - file_path: "scripts/coverage.sh"
+        - runner: bash
     - xcode-archive:
         inputs:
         - project_path: "$DEMO_PROJECT_PATH"
         - scheme: "$BITRISE_DEMO_SCHEME"
         - export_method: "$BITRISE_EXPORT_METHOD"
     - deploy-to-bitrise-io:
+        inputs:
+        - deploy_path: "${BITRISE_SOURCE_DIR}/coverage.html"
     - cache-push: {}
   release:
     steps:
@@ -161,6 +168,9 @@ app:
   - opts:
       is_expand: false
     SDK_SCHEME: AccessCheckoutSDK
+  - opts:
+      is_expand: false
+    SDK_FRAMEWORK: AccessCheckoutSDK.framework
   - opts:
       is_expand: false
     DEMO_SCHEME: AccessCheckoutDemo
