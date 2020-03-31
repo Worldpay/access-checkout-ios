@@ -54,7 +54,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
              {
                  "_links": {
                      "service:sessions": {
-                         "href": "https://root/sessions"
+                         "href": "\(sessionsMockService.baseUrl)/sessions"
                      }
                  }
              }

@@ -1,17 +1,17 @@
-I, [2020-03-31T12:37:01.934685 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:37:01.940235 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.940722 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.047223 #22998]  INFO -- : Cleared interactions
+I, [2020-03-31T14:26:51.052893 #22998]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.053555 #22998] DEBUG -- : {
   "description": "a valid request to sessions",
   "request": {
     "method": "post",
     "path": "/sessions/payments/cvc",
     "headers": {
-      "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-      "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+      "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+      "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "cvc": "1234",
-      "identity": "identity"
+      "identity": "identity",
+      "cvc": "1234"
     }
   },
   "response": {
@@ -39,8 +39,8 @@ D, [2020-03-31T12:37:01.940722 #20478] DEBUG -- : {
   },
   "metadata": null
 }
-I, [2020-03-31T12:37:01.949680 #20478]  INFO -- : Received request POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.950037 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.064624 #22998]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.065040 #22998] DEBUG -- : {
   "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
@@ -61,8 +61,8 @@ D, [2020-03-31T12:37:01.950037 #20478] DEBUG -- : {
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-31T12:37:01.950529 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.950872 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.065522 #22998]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.066254 #22998] DEBUG -- : {
   "status": 201,
   "headers": {
     "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
@@ -85,11 +85,11 @@ D, [2020-03-31T12:37:01.950872 #20478] DEBUG -- : {
     }
   }
 }
-I, [2020-03-31T12:37:01.954759 #20478]  INFO -- : Verifying - interactions matched
-I, [2020-03-31T12:37:01.959726 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
-I, [2020-03-31T12:37:01.965286 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:37:01.969861 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.970425 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.070445 #22998]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T14:26:51.075295 #22998]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T14:26:51.081339 #22998]  INFO -- : Cleared interactions
+I, [2020-03-31T14:26:51.085808 #22998]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.086319 #22998] DEBUG -- : {
   "description": "a request with an invalid identity to sessions",
   "request": {
     "method": "post",
@@ -99,8 +99,8 @@ D, [2020-03-31T12:37:01.970425 #20478] DEBUG -- : {
       "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "cvc": "123",
-      "identity": "incorrectValue"
+      "identity": "incorrectValue",
+      "cvc": "123"
     }
   },
   "response": {
@@ -113,234 +113,23 @@ D, [2020-03-31T12:37:01.970425 #20478] DEBUG -- : {
         "json_class": "Pact::SomethingLike",
         "contents": "The json body provided does not match the expected schema"
       },
-      "errorName": "bodyDoesNotMatchSchema",
       "validationErrors": [
         {
           "message": {
             "json_class": "Pact::SomethingLike",
             "contents": "Identity is invalid"
           },
-          "jsonPath": "$.identity",
-          "errorName": "fieldHasInvalidValue"
-        }
-      ]
-    }
-  },
-  "metadata": null
-}
-I, [2020-03-31T12:37:01.974756 #20478]  INFO -- : Received request POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.975209 #20478] DEBUG -- : {
-  "path": "/sessions/payments/cvc",
-  "query": "",
-  "method": "post",
-  "body": {
-    "cvc": "123",
-    "identity": "incorrectValue"
-  },
-  "headers": {
-    "Content-Length": "41",
-    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
-    "Host": "localhost:1234",
-    "Connection": "keep-alive",
-    "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-    "Accept-Language": "en-us",
-    "Accept-Encoding": "gzip, deflate",
-    "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
-    "Version": "HTTP/1.1"
-  }
-}
-I, [2020-03-31T12:37:01.975735 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
-D, [2020-03-31T12:37:01.976149 #20478] DEBUG -- : {
-  "status": 400,
-  "headers": {
-    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-  },
-  "body": {
-    "message": {
-      "json_class": "Pact::SomethingLike",
-      "contents": "The json body provided does not match the expected schema"
-    },
-    "errorName": "bodyDoesNotMatchSchema",
-    "validationErrors": [
-      {
-        "message": {
-          "json_class": "Pact::SomethingLike",
-          "contents": "Identity is invalid"
-        },
-        "jsonPath": "$.identity",
-        "errorName": "fieldHasInvalidValue"
-      }
-    ]
-  }
-}
-I, [2020-03-31T12:37:01.981772 #20478]  INFO -- : Verifying - interactions matched
-I, [2020-03-31T12:37:01.986372 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
-I, [2020-03-31T12:37:01.993806 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:37:02.001326 #20478]  INFO -- : Registered expected interaction GET /sessions
-D, [2020-03-31T12:37:02.002057 #20478] DEBUG -- : {
-  "description": "a GET request to the service root",
-  "request": {
-    "method": "get",
-    "path": "/sessions"
-  },
-  "response": {
-    "status": 200,
-    "headers": {
-      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-    },
-    "body": {
-      "_links": {
-        "sessions:paymentsCvc": {
-          "href": {
-            "json_class": "Pact::Term",
-            "data": {
-              "generate": "https://test/sessions/payments/cvc",
-              "matcher": {
-                "json_class": "Regexp",
-                "o": 0,
-                "s": "https?://[^/]+/sessions/payments/cvc"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "metadata": null
-}
-I, [2020-03-31T12:43:15.373873 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:43:15.379436 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.379945 #20478] DEBUG -- : {
-  "description": "a valid request to sessions",
-  "request": {
-    "method": "post",
-    "path": "/sessions/payments/cvc",
-    "headers": {
-      "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-      "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
-    },
-    "body": {
-      "cvc": "1234",
-      "identity": "identity"
-    }
-  },
-  "response": {
-    "status": 201,
-    "headers": {
-      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-    },
-    "body": {
-      "_links": {
-        "sessions:paymentsCvc": {
-          "href": {
-            "json_class": "Pact::Term",
-            "data": {
-              "generate": "https://test/sessions/sessionURI",
-              "matcher": {
-                "json_class": "Regexp",
-                "o": 0,
-                "s": "https?://[^/]+/sessions/.+"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "metadata": null
-}
-I, [2020-03-31T12:43:15.390736 #20478]  INFO -- : Received request POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.391215 #20478] DEBUG -- : {
-  "path": "/sessions/payments/cvc",
-  "query": "",
-  "method": "post",
-  "body": {
-    "cvc": "1234",
-    "identity": "identity"
-  },
-  "headers": {
-    "Content-Length": "36",
-    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
-    "Host": "localhost:1234",
-    "Connection": "keep-alive",
-    "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-    "Accept-Language": "en-us",
-    "Accept-Encoding": "gzip, deflate",
-    "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
-    "Version": "HTTP/1.1"
-  }
-}
-I, [2020-03-31T12:43:15.391674 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.392036 #20478] DEBUG -- : {
-  "status": 201,
-  "headers": {
-    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-  },
-  "body": {
-    "_links": {
-      "sessions:paymentsCvc": {
-        "href": {
-          "json_class": "Pact::Term",
-          "data": {
-            "generate": "https://test/sessions/sessionURI",
-            "matcher": {
-              "json_class": "Regexp",
-              "o": 0,
-              "s": "https?://[^/]+/sessions/.+"
-            }
-          }
-        }
-      }
-    }
-  }
-}
-I, [2020-03-31T12:43:15.396347 #20478]  INFO -- : Verifying - interactions matched
-I, [2020-03-31T12:43:15.400709 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
-I, [2020-03-31T12:43:15.406731 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:43:15.412589 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.413229 #20478] DEBUG -- : {
-  "description": "a request with an invalid identity to sessions",
-  "request": {
-    "method": "post",
-    "path": "/sessions/payments/cvc",
-    "headers": {
-      "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-      "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
-    },
-    "body": {
-      "cvc": "123",
-      "identity": "incorrectValue"
-    }
-  },
-  "response": {
-    "status": 400,
-    "headers": {
-      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-    },
-    "body": {
-      "errorName": "bodyDoesNotMatchSchema",
-      "message": {
-        "json_class": "Pact::SomethingLike",
-        "contents": "The json body provided does not match the expected schema"
-      },
-      "validationErrors": [
-        {
           "errorName": "fieldHasInvalidValue",
-          "message": {
-            "json_class": "Pact::SomethingLike",
-            "contents": "Identity is invalid"
-          },
           "jsonPath": "$.identity"
         }
-      ]
+      ],
+      "errorName": "bodyDoesNotMatchSchema"
     }
   },
   "metadata": null
 }
-I, [2020-03-31T12:43:15.419153 #20478]  INFO -- : Received request POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.419786 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.091078 #22998]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.091652 #22998] DEBUG -- : {
   "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
@@ -361,35 +150,35 @@ D, [2020-03-31T12:43:15.419786 #20478] DEBUG -- : {
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-31T12:43:15.420493 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
-D, [2020-03-31T12:43:15.421082 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.092198 #22998]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T14:26:51.092552 #22998] DEBUG -- : {
   "status": 400,
   "headers": {
     "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
   },
   "body": {
-    "errorName": "bodyDoesNotMatchSchema",
     "message": {
       "json_class": "Pact::SomethingLike",
       "contents": "The json body provided does not match the expected schema"
     },
     "validationErrors": [
       {
-        "errorName": "fieldHasInvalidValue",
         "message": {
           "json_class": "Pact::SomethingLike",
           "contents": "Identity is invalid"
         },
+        "errorName": "fieldHasInvalidValue",
         "jsonPath": "$.identity"
       }
-    ]
+    ],
+    "errorName": "bodyDoesNotMatchSchema"
   }
 }
-I, [2020-03-31T12:43:15.427964 #20478]  INFO -- : Verifying - interactions matched
-I, [2020-03-31T12:43:15.432176 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
-I, [2020-03-31T12:43:15.439816 #20478]  INFO -- : Cleared interactions
-I, [2020-03-31T12:43:15.445056 #20478]  INFO -- : Registered expected interaction GET /sessions
-D, [2020-03-31T12:43:15.445680 #20478] DEBUG -- : {
+I, [2020-03-31T14:26:51.098732 #22998]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T14:26:51.103099 #22998]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T14:26:51.110381 #22998]  INFO -- : Cleared interactions
+I, [2020-03-31T14:26:51.115867 #22998]  INFO -- : Registered expected interaction GET /sessions
+D, [2020-03-31T14:26:51.116409 #22998] DEBUG -- : {
   "description": "a GET request to the service root",
   "request": {
     "method": "get",
@@ -420,3 +209,44 @@ D, [2020-03-31T12:43:15.445680 #20478] DEBUG -- : {
   },
   "metadata": null
 }
+I, [2020-03-31T14:26:51.123628 #22998]  INFO -- : Received request GET /sessions
+D, [2020-03-31T14:26:51.124241 #22998] DEBUG -- : {
+  "path": "/sessions",
+  "query": "",
+  "method": "get",
+  "headers": {
+    "Host": "localhost:1234",
+    "Accept": "*/*",
+    "Accept-Language": "en-us",
+    "Connection": "keep-alive",
+    "Accept-Encoding": "gzip, deflate",
+    "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
+    "Version": "HTTP/1.1"
+  }
+}
+I, [2020-03-31T14:26:51.124772 #22998]  INFO -- : Found matching response for GET /sessions
+D, [2020-03-31T14:26:51.125276 #22998] DEBUG -- : {
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+  },
+  "body": {
+    "_links": {
+      "sessions:paymentsCvc": {
+        "href": {
+          "json_class": "Pact::Term",
+          "data": {
+            "generate": "https://test/sessions/payments/cvc",
+            "matcher": {
+              "json_class": "Regexp",
+              "o": 0,
+              "s": "https?://[^/]+/sessions/payments/cvc"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+I, [2020-03-31T14:26:51.130369 #22998]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T14:26:51.134320 #22998]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json

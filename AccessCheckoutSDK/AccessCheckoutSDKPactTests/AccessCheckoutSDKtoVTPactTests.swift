@@ -1,10 +1,11 @@
 import XCTest
 import PactConsumerSwift
+import Mockingjay
 @testable import AccessCheckoutSDK
 
 class AccessCheckoutSDKtoVTPactTests: XCTestCase {
 
-    let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
+    let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://test"
     
     let requestHeaders:  [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
@@ -24,6 +25,53 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
         func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?){
             serviceEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
             onComplete?()
+        }
+    }
+
+func testServiceDiscoveryOnServiceRoot(){
+        
+        let expectedValue = "\(baseURI)/verifiedTokens/sessions"
+        let responseJson = [
+            "_links": [
+                "verifiedTokens:sessions": [
+                    "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions", generate: expectedValue)
+                ],
+            ]
+        ]
+
+        verifiedTokensMockService
+            .uponReceiving("a GET request to the VT service root")
+            .withRequest(
+                method: .GET,
+                path: "/verifiedTokens")
+            .willRespondWith(
+                status: 200,
+                headers: responseHeaders,
+                body: responseJson
+        )
+        
+        let rootResponseJson = """
+             {
+                 "_links": {
+                     "service:verifiedTokens": {
+                         "href": "\(verifiedTokensMockService.baseUrl)/verifiedTokens"
+                     }
+                 }
+             }
+             """
+        
+        let rootResponse = rootResponseJson.data(using: .utf8)!
+        stub(http(.get, uri: "https://root"), jsonData(rootResponse))
+        
+        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: "https://root")!)
+        let serviceEndpointKeys = DiscoverLinks.verifiedTokens
+        
+        
+        verifiedTokensMockService.run(timeout: 3) {testComplete in
+            discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
+                XCTAssertEqual(discovery.serviceEndpoint?.absoluteString, expectedValue)
+                testComplete();
+            }
         }
     }
 

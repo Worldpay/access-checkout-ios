@@ -1,229 +1,255 @@
 {
-  "consumer": {
-    "name": "access-checkout-iOS-sdk"
-  },
-  "provider": {
-    "name": "verified-tokens"
-  },
-  "interactions": [
-    {
-      "description": "a valid request to VT",
-      "request": {
-        "method": "post",
-        "path": "/verifiedTokens/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "cvc": "123",
-          "identity": "identity",
-          "cardNumber": "4111111111111111",
-          "cardExpiryDate": {
-            "year": 2099,
-            "month": 12
-          }
-        }
-      },
-      "response": {
-        "status": 201,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "_links": {
-            "verifiedTokens:session": {
-              "href": "https://access.worldpay.com/verifiedTokens/sessions/sampleSessionID"
+    "interactions": [
+        {
+            "request": {
+                "body": {
+                    "cardNumber": "4111111111111111", 
+                    "cvc": "123", 
+                    "identity": "identity", 
+                    "cardExpiryDate": {
+                        "month": 12, 
+                        "year": 2099
+                    }
+                }, 
+                "path": "/verifiedTokens/sessions", 
+                "method": "post", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }
+            }, 
+            "description": "a valid request to VT", 
+            "response": {
+                "status": 201, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "_links": {
+                        "verifiedTokens:session": {
+                            "href": "https://test/verifiedTokens/sessions/sampleSessionID"
+                        }
+                    }
+                }, 
+                "matchingRules": {
+                    "$.body._links['verifiedTokens:session'].href": {
+                        "regex": "https?:\\/\\/[^\\/]+\\/verifiedTokens\\/sessions\\/.+", 
+                        "match": "regex"
+                    }
+                }
             }
-          }
-        },
-        "matchingRules": {
-          "$.body._links.verifiedTokens:session.href": {
-            "match": "regex",
-            "regex": "https?:\\/\\/[^\\/]+\\/verifiedTokens\\/sessions\\/.+"
-          }
-        }
-      }
-    },
-    {
-      "description": "a request with an invalid identity to VT",
-      "request": {
-        "method": "post",
-        "path": "/verifiedTokens/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "cvc": "123",
-          "identity": "incorrectValue",
-          "cardNumber": "4111111111111111",
-          "cardExpiryDate": {
-            "month": 12,
-            "year": 2099
-          }
-        }
-      },
-      "response": {
-        "status": 400,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "message": "The json body provided does not match the expected schema",
-          "validationErrors": [
-            {
-              "errorName": "fieldHasInvalidValue",
-              "jsonPath": "$.identity",
-              "message": "Identity is invalid"
+        }, 
+        {
+            "request": {
+                "body": {
+                    "cardNumber": "4111111111111111", 
+                    "cvc": "123", 
+                    "identity": "incorrectValue", 
+                    "cardExpiryDate": {
+                        "year": 2099, 
+                        "month": 12
+                    }
+                }, 
+                "path": "/verifiedTokens/sessions", 
+                "method": "post", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }
+            }, 
+            "description": "a request with an invalid identity to VT", 
+            "response": {
+                "status": 400, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "validationErrors": [
+                        {
+                            "message": "Identity is invalid", 
+                            "jsonPath": "$.identity", 
+                            "errorName": "fieldHasInvalidValue"
+                        }
+                    ], 
+                    "message": "The json body provided does not match the expected schema", 
+                    "errorName": "bodyDoesNotMatchSchema"
+                }, 
+                "matchingRules": {
+                    "$.body.message": {
+                        "match": "type"
+                    }, 
+                    "$.body.validationErrors[0].message": {
+                        "match": "type"
+                    }
+                }
             }
-          ],
-          "errorName": "bodyDoesNotMatchSchema"
-        },
-        "matchingRules": {
-          "$.body.message": {
-            "match": "type"
-          },
-          "$.body.validationErrors[0].message": {
-            "match": "type"
-          }
-        }
-      }
-    },
-    {
-      "description": "a request with a PAN that does not pass Luhn check",
-      "request": {
-        "method": "post",
-        "path": "/verifiedTokens/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "identity": "identity",
-          "cvc": "123",
-          "cardExpiryDate": {
-            "month": 12,
-            "year": 2099
-          },
-          "cardNumber": "4111111111111110"
-        }
-      },
-      "response": {
-        "status": 400,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "message": "The json body provided does not match the expected schema",
-          "errorName": "bodyDoesNotMatchSchema",
-          "validationErrors": [
-            {
-              "errorName": "panFailedLuhnCheck",
-              "message": "The identified field contains a PAN that has failed the Luhn check.",
-              "jsonPath": "$.cardNumber"
+        }, 
+        {
+            "request": {
+                "body": {
+                    "cardNumber": "4111111111111110", 
+                    "cardExpiryDate": {
+                        "year": 2099, 
+                        "month": 12
+                    }, 
+                    "identity": "identity", 
+                    "cvc": "123"
+                }, 
+                "path": "/verifiedTokens/sessions", 
+                "method": "post", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }
+            }, 
+            "description": "a request with a PAN that does not pass Luhn check", 
+            "response": {
+                "status": 400, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "validationErrors": [
+                        {
+                            "message": "The identified field contains a PAN that has failed the Luhn check.", 
+                            "jsonPath": "$.cardNumber", 
+                            "errorName": "panFailedLuhnCheck"
+                        }
+                    ], 
+                    "message": "The json body provided does not match the expected schema", 
+                    "errorName": "bodyDoesNotMatchSchema"
+                }, 
+                "matchingRules": {
+                    "$.body.validationErrors[0].message": {
+                        "match": "type"
+                    }, 
+                    "$.body.message": {
+                        "match": "type"
+                    }
+                }
             }
-          ]
-        },
-        "matchingRules": {
-          "$.body.message": {
-            "match": "type"
-          },
-          "$.body.validationErrors[0].message": {
-            "match": "type"
-          }
-        }
-      }
-    },
-    {
-      "description": "a request with a month number that is too large",
-      "request": {
-        "method": "post",
-        "path": "/verifiedTokens/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "cardNumber": "4111111111111111",
-          "cvc": "123",
-          "cardExpiryDate": {
-            "year": 2099,
-            "month": 13
-          },
-          "identity": "identity"
-        }
-      },
-      "response": {
-        "status": 400,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "errorName": "bodyDoesNotMatchSchema",
-          "message": "The json body provided does not match the expected schema",
-          "validationErrors": [
-            {
-              "message": "Card expiry month is too large - must be between 1 & 12",
-              "jsonPath": "$.cardExpiryDate.month",
-              "errorName": "integerIsTooLarge"
+        }, 
+        {
+            "request": {
+                "body": {
+                    "cardNumber": "4111111111111111", 
+                    "cvc": "123", 
+                    "identity": "identity", 
+                    "cardExpiryDate": {
+                        "year": 2099, 
+                        "month": 13
+                    }
+                }, 
+                "path": "/verifiedTokens/sessions", 
+                "method": "post", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }
+            }, 
+            "description": "a request with a month number that is too large", 
+            "response": {
+                "status": 400, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "validationErrors": [
+                        {
+                            "message": "Card expiry month is too large - must be between 1 & 12", 
+                            "jsonPath": "$.cardExpiryDate.month", 
+                            "errorName": "integerIsTooLarge"
+                        }
+                    ], 
+                    "message": "The json body provided does not match the expected schema", 
+                    "errorName": "bodyDoesNotMatchSchema"
+                }, 
+                "matchingRules": {
+                    "$.body.message": {
+                        "match": "type"
+                    }, 
+                    "$.body.validationErrors[0].message": {
+                        "match": "type"
+                    }
+                }
             }
-          ]
-        },
-        "matchingRules": {
-          "$.body.message": {
-            "match": "type"
-          },
-          "$.body.validationErrors[0].message": {
-            "match": "type"
-          }
-        }
-      }
-    },
-    {
-      "description": "a request with a PAN containing letters",
-      "request": {
-        "method": "post",
-        "path": "/verifiedTokens/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "cvc": "123",
-          "identity": "identity",
-          "cardExpiryDate": {
-            "year": 2099,
-            "month": 1
-          },
-          "cardNumber": "notACardNumber"
-        }
-      },
-      "response": {
-        "status": 400,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-        },
-        "body": {
-          "errorName": "bodyDoesNotMatchSchema",
-          "message": "The json body provided does not match the expected schema",
-          "validationErrors": [
-            {
-              "errorName": "fieldHasInvalidValue",
-              "message": "Card number must be numeric",
-              "jsonPath": "$.cardNumber"
+        }, 
+        {
+            "request": {
+                "body": {
+                    "cardNumber": "notACardNumber", 
+                    "cardExpiryDate": {
+                        "month": 1, 
+                        "year": 2099
+                    }, 
+                    "identity": "identity", 
+                    "cvc": "123"
+                }, 
+                "path": "/verifiedTokens/sessions", 
+                "method": "post", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }
+            }, 
+            "description": "a request with a PAN containing letters", 
+            "response": {
+                "status": 400, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "validationErrors": [
+                        {
+                            "message": "Card number must be numeric", 
+                            "jsonPath": "$.cardNumber", 
+                            "errorName": "fieldHasInvalidValue"
+                        }
+                    ], 
+                    "message": "The json body provided does not match the expected schema", 
+                    "errorName": "bodyDoesNotMatchSchema"
+                }, 
+                "matchingRules": {
+                    "$.body.message": {
+                        "match": "type"
+                    }, 
+                    "$.body.validationErrors[0].message": {
+                        "match": "type"
+                    }
+                }
             }
-          ]
-        },
-        "matchingRules": {
-          "$.body.message": {
-            "match": "type"
-          },
-          "$.body.validationErrors[0].message": {
-            "match": "type"
-          }
+        }, 
+        {
+            "request": {
+                "path": "/verifiedTokens", 
+                "method": "get"
+            }, 
+            "description": "a GET request to the VT service root", 
+            "response": {
+                "status": 200, 
+                "headers": {
+                    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+                }, 
+                "body": {
+                    "_links": {
+                        "verifiedTokens:sessions": {
+                            "href": "https://test/verifiedTokens/sessions"
+                        }
+                    }
+                }, 
+                "matchingRules": {
+                    "$.body._links['verifiedTokens:sessions'].href": {
+                        "regex": "https?:\\/\\/[^\\/]+\\/verifiedTokens\\/sessions", 
+                        "match": "regex"
+                    }
+                }
+            }
         }
-      }
+    ], 
+    "consumer": {
+        "name": "access-checkout-iOS-sdk"
+    }, 
+    "metadata": {
+        "pactSpecification": {
+            "version": "2.0.0"
+        }
+    }, 
+    "provider": {
+        "name": "verified-tokens"
     }
-  ],
-  "metadata": {
-    "pactSpecification": {
-      "version": "2.0.0"
-    }
-  }
 }
