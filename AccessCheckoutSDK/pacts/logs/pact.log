@@ -1,39 +1,35 @@
-I, [2020-03-26T13:54:55.626454 #82959]  INFO -- : Cleared interactions
-I, [2020-03-26T13:54:55.632381 #82959]  INFO -- : Registered expected interaction POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.632861 #82959] DEBUG -- : {
-  "description": "a valid request to VT",
+I, [2020-03-31T12:37:01.934685 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:37:01.940235 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.940722 #20478] DEBUG -- : {
+  "description": "a valid request to sessions",
   "request": {
     "method": "post",
-    "path": "/verifiedTokens/sessions",
+    "path": "/sessions/payments/cvc",
     "headers": {
-      "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+      "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "cvc": "123",
-      "identity": "identity",
-      "cardNumber": "4111111111111111",
-      "cardExpiryDate": {
-        "month": 12,
-        "year": 2099
-      }
+      "cvc": "1234",
+      "identity": "identity"
     }
   },
   "response": {
     "status": 201,
     "headers": {
-      "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
       "_links": {
-        "verifiedTokens:session": {
+        "sessions:paymentsCvc": {
           "href": {
             "json_class": "Pact::Term",
             "data": {
-              "generate": "https://access.worldpay.com/verifiedTokens/sessions/sampleSessionID",
+              "generate": "https://test/sessions/sessionURI",
               "matcher": {
                 "json_class": "Regexp",
                 "o": 0,
-                "s": "https?://[^/]+/verifiedTokens/sessions/.+"
+                "s": "https?://[^/]+/sessions/.+"
               }
             }
           }
@@ -43,50 +39,45 @@ D, [2020-03-26T13:54:55.632861 #82959] DEBUG -- : {
   },
   "metadata": null
 }
-I, [2020-03-26T13:54:55.643090 #82959]  INFO -- : Received request POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.643530 #82959] DEBUG -- : {
-  "path": "/verifiedTokens/sessions",
+I, [2020-03-31T12:37:01.949680 #20478]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.950037 #20478] DEBUG -- : {
+  "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
   "body": {
-    "cardExpiryDate": {
-      "month": 12,
-      "year": 2099
-    },
-    "cvc": "123",
-    "identity": "identity",
-    "cardNumber": "4111111111111111"
+    "cvc": "1234",
+    "identity": "identity"
   },
   "headers": {
-    "Content-Length": "109",
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+    "Content-Length": "36",
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
     "Host": "localhost:1234",
     "Connection": "keep-alive",
     "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "*/*",
+    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
     "Accept-Language": "en-us",
     "Accept-Encoding": "gzip, deflate",
     "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-26T13:54:55.644015 #82959]  INFO -- : Found matching response for POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.644329 #82959] DEBUG -- : {
+I, [2020-03-31T12:37:01.950529 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.950872 #20478] DEBUG -- : {
   "status": 201,
   "headers": {
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
   },
   "body": {
     "_links": {
-      "verifiedTokens:session": {
+      "sessions:paymentsCvc": {
         "href": {
           "json_class": "Pact::Term",
           "data": {
-            "generate": "https://access.worldpay.com/verifiedTokens/sessions/sampleSessionID",
+            "generate": "https://test/sessions/sessionURI",
             "matcher": {
               "json_class": "Regexp",
               "o": 0,
-              "s": "https?://[^/]+/verifiedTokens/sessions/.+"
+              "s": "https?://[^/]+/sessions/.+"
             }
           }
         }
@@ -94,38 +85,35 @@ D, [2020-03-26T13:54:55.644329 #82959] DEBUG -- : {
     }
   }
 }
-I, [2020-03-26T13:54:55.648481 #82959]  INFO -- : Verifying - interactions matched
-I, [2020-03-26T13:54:55.653105 #82959]  INFO -- : Writing pact for verified-tokens to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-verified-tokens.json
-I, [2020-03-26T13:54:55.659604 #82959]  INFO -- : Cleared interactions
-I, [2020-03-26T13:54:55.664503 #82959]  INFO -- : Registered expected interaction POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.665150 #82959] DEBUG -- : {
-  "description": "a request with an invalid identity to VT",
+I, [2020-03-31T12:37:01.954759 #20478]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T12:37:01.959726 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T12:37:01.965286 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:37:01.969861 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.970425 #20478] DEBUG -- : {
+  "description": "a request with an invalid identity to sessions",
   "request": {
     "method": "post",
-    "path": "/verifiedTokens/sessions",
+    "path": "/sessions/payments/cvc",
     "headers": {
-      "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+      "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "identity": "incorrectValue",
-      "cardExpiryDate": {
-        "month": 12,
-        "year": 2099
-      },
-      "cardNumber": "4111111111111111",
-      "cvc": "123"
+      "cvc": "123",
+      "identity": "incorrectValue"
     }
   },
   "response": {
     "status": 400,
     "headers": {
-      "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
       "message": {
         "json_class": "Pact::SomethingLike",
         "contents": "The json body provided does not match the expected schema"
       },
+      "errorName": "bodyDoesNotMatchSchema",
       "validationErrors": [
         {
           "message": {
@@ -135,50 +123,45 @@ D, [2020-03-26T13:54:55.665150 #82959] DEBUG -- : {
           "jsonPath": "$.identity",
           "errorName": "fieldHasInvalidValue"
         }
-      ],
-      "errorName": "bodyDoesNotMatchSchema"
+      ]
     }
   },
   "metadata": null
 }
-I, [2020-03-26T13:54:55.669469 #82959]  INFO -- : Received request POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.670062 #82959] DEBUG -- : {
-  "path": "/verifiedTokens/sessions",
+I, [2020-03-31T12:37:01.974756 #20478]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.975209 #20478] DEBUG -- : {
+  "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
   "body": {
-    "cardExpiryDate": {
-      "month": 12,
-      "year": 2099
-    },
     "cvc": "123",
-    "identity": "incorrectValue",
-    "cardNumber": "4111111111111111"
+    "identity": "incorrectValue"
   },
   "headers": {
-    "Content-Length": "115",
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+    "Content-Length": "41",
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
     "Host": "localhost:1234",
     "Connection": "keep-alive",
     "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "*/*",
+    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
     "Accept-Language": "en-us",
     "Accept-Encoding": "gzip, deflate",
     "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-26T13:54:55.670609 #82959]  INFO -- : Found matching response for POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.671136 #82959] DEBUG -- : {
+I, [2020-03-31T12:37:01.975735 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T12:37:01.976149 #20478] DEBUG -- : {
   "status": 400,
   "headers": {
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
   },
   "body": {
     "message": {
       "json_class": "Pact::SomethingLike",
       "contents": "The json body provided does not match the expected schema"
     },
+    "errorName": "bodyDoesNotMatchSchema",
     "validationErrors": [
       {
         "message": {
@@ -188,303 +171,252 @@ D, [2020-03-26T13:54:55.671136 #82959] DEBUG -- : {
         "jsonPath": "$.identity",
         "errorName": "fieldHasInvalidValue"
       }
-    ],
-    "errorName": "bodyDoesNotMatchSchema"
+    ]
   }
 }
-I, [2020-03-26T13:54:55.677783 #82959]  INFO -- : Verifying - interactions matched
-I, [2020-03-26T13:54:55.682697 #82959]  INFO -- : Writing pact for verified-tokens to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-verified-tokens.json
-I, [2020-03-26T13:54:55.689104 #82959]  INFO -- : Cleared interactions
-I, [2020-03-26T13:54:55.694621 #82959]  INFO -- : Registered expected interaction POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.695139 #82959] DEBUG -- : {
-  "description": "a request with a PAN that does not pass Luhn check",
+I, [2020-03-31T12:37:01.981772 #20478]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T12:37:01.986372 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T12:37:01.993806 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:37:02.001326 #20478]  INFO -- : Registered expected interaction GET /sessions
+D, [2020-03-31T12:37:02.002057 #20478] DEBUG -- : {
+  "description": "a GET request to the service root",
   "request": {
-    "method": "post",
-    "path": "/verifiedTokens/sessions",
-    "headers": {
-      "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-    },
-    "body": {
-      "cardNumber": "4111111111111110",
-      "cardExpiryDate": {
-        "month": 12,
-        "year": 2099
-      },
-      "cvc": "123",
-      "identity": "identity"
-    }
+    "method": "get",
+    "path": "/sessions"
   },
   "response": {
-    "status": 400,
+    "status": 200,
     "headers": {
-      "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "validationErrors": [
-        {
-          "errorName": "panFailedLuhnCheck",
-          "message": {
-            "json_class": "Pact::SomethingLike",
-            "contents": "The identified field contains a PAN that has failed the Luhn check."
-          },
-          "jsonPath": "$.cardNumber"
+      "_links": {
+        "sessions:paymentsCvc": {
+          "href": {
+            "json_class": "Pact::Term",
+            "data": {
+              "generate": "https://test/sessions/payments/cvc",
+              "matcher": {
+                "json_class": "Regexp",
+                "o": 0,
+                "s": "https?://[^/]+/sessions/payments/cvc"
+              }
+            }
+          }
         }
-      ],
-      "errorName": "bodyDoesNotMatchSchema",
-      "message": {
-        "json_class": "Pact::SomethingLike",
-        "contents": "The json body provided does not match the expected schema"
       }
     }
   },
   "metadata": null
 }
-I, [2020-03-26T13:54:55.699435 #82959]  INFO -- : Received request POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.699844 #82959] DEBUG -- : {
-  "path": "/verifiedTokens/sessions",
+I, [2020-03-31T12:43:15.373873 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:43:15.379436 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.379945 #20478] DEBUG -- : {
+  "description": "a valid request to sessions",
+  "request": {
+    "method": "post",
+    "path": "/sessions/payments/cvc",
+    "headers": {
+      "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+      "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+    },
+    "body": {
+      "cvc": "1234",
+      "identity": "identity"
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+    },
+    "body": {
+      "_links": {
+        "sessions:paymentsCvc": {
+          "href": {
+            "json_class": "Pact::Term",
+            "data": {
+              "generate": "https://test/sessions/sessionURI",
+              "matcher": {
+                "json_class": "Regexp",
+                "o": 0,
+                "s": "https?://[^/]+/sessions/.+"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadata": null
+}
+I, [2020-03-31T12:43:15.390736 #20478]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.391215 #20478] DEBUG -- : {
+  "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
   "body": {
-    "cardExpiryDate": {
-      "month": 12,
-      "year": 2099
-    },
-    "cvc": "123",
-    "identity": "identity",
-    "cardNumber": "4111111111111110"
+    "cvc": "1234",
+    "identity": "identity"
   },
   "headers": {
-    "Content-Length": "109",
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+    "Content-Length": "36",
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
     "Host": "localhost:1234",
     "Connection": "keep-alive",
     "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "*/*",
+    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
     "Accept-Language": "en-us",
     "Accept-Encoding": "gzip, deflate",
     "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-26T13:54:55.700313 #82959]  INFO -- : Found matching response for POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.700665 #82959] DEBUG -- : {
-  "status": 400,
+I, [2020-03-31T12:43:15.391674 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.392036 #20478] DEBUG -- : {
+  "status": 201,
   "headers": {
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
   },
   "body": {
-    "validationErrors": [
-      {
-        "errorName": "panFailedLuhnCheck",
-        "message": {
-          "json_class": "Pact::SomethingLike",
-          "contents": "The identified field contains a PAN that has failed the Luhn check."
-        },
-        "jsonPath": "$.cardNumber"
+    "_links": {
+      "sessions:paymentsCvc": {
+        "href": {
+          "json_class": "Pact::Term",
+          "data": {
+            "generate": "https://test/sessions/sessionURI",
+            "matcher": {
+              "json_class": "Regexp",
+              "o": 0,
+              "s": "https?://[^/]+/sessions/.+"
+            }
+          }
+        }
       }
-    ],
-    "errorName": "bodyDoesNotMatchSchema",
-    "message": {
-      "json_class": "Pact::SomethingLike",
-      "contents": "The json body provided does not match the expected schema"
     }
   }
 }
-I, [2020-03-26T13:54:55.705048 #82959]  INFO -- : Verifying - interactions matched
-I, [2020-03-26T13:54:55.711964 #82959]  INFO -- : Writing pact for verified-tokens to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-verified-tokens.json
-I, [2020-03-26T13:54:55.718188 #82959]  INFO -- : Cleared interactions
-I, [2020-03-26T13:54:55.723757 #82959]  INFO -- : Registered expected interaction POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.724287 #82959] DEBUG -- : {
-  "description": "a request with a month number that is too large",
+I, [2020-03-31T12:43:15.396347 #20478]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T12:43:15.400709 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T12:43:15.406731 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:43:15.412589 #20478]  INFO -- : Registered expected interaction POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.413229 #20478] DEBUG -- : {
+  "description": "a request with an invalid identity to sessions",
   "request": {
     "method": "post",
-    "path": "/verifiedTokens/sessions",
+    "path": "/sessions/payments/cvc",
     "headers": {
-      "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+      "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "identity": "identity",
       "cvc": "123",
-      "cardNumber": "4111111111111111",
-      "cardExpiryDate": {
-        "month": 13,
-        "year": 2099
-      }
+      "identity": "incorrectValue"
     }
   },
   "response": {
     "status": 400,
     "headers": {
-      "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
+      "errorName": "bodyDoesNotMatchSchema",
       "message": {
         "json_class": "Pact::SomethingLike",
         "contents": "The json body provided does not match the expected schema"
       },
-      "errorName": "bodyDoesNotMatchSchema",
       "validationErrors": [
         {
+          "errorName": "fieldHasInvalidValue",
           "message": {
             "json_class": "Pact::SomethingLike",
-            "contents": "Card expiry month is too large - must be between 1 & 12"
+            "contents": "Identity is invalid"
           },
-          "errorName": "integerIsTooLarge",
-          "jsonPath": "$.cardExpiryDate.month"
+          "jsonPath": "$.identity"
         }
       ]
     }
   },
   "metadata": null
 }
-I, [2020-03-26T13:54:55.728632 #82959]  INFO -- : Received request POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.729055 #82959] DEBUG -- : {
-  "path": "/verifiedTokens/sessions",
+I, [2020-03-31T12:43:15.419153 #20478]  INFO -- : Received request POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.419786 #20478] DEBUG -- : {
+  "path": "/sessions/payments/cvc",
   "query": "",
   "method": "post",
   "body": {
-    "cardExpiryDate": {
-      "month": 13,
-      "year": 2099
-    },
     "cvc": "123",
-    "identity": "identity",
-    "cardNumber": "4111111111111111"
+    "identity": "incorrectValue"
   },
   "headers": {
-    "Content-Length": "109",
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+    "Content-Length": "41",
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json",
     "Host": "localhost:1234",
     "Connection": "keep-alive",
     "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "*/*",
+    "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
     "Accept-Language": "en-us",
     "Accept-Encoding": "gzip, deflate",
     "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
     "Version": "HTTP/1.1"
   }
 }
-I, [2020-03-26T13:54:55.729486 #82959]  INFO -- : Found matching response for POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.729851 #82959] DEBUG -- : {
+I, [2020-03-31T12:43:15.420493 #20478]  INFO -- : Found matching response for POST /sessions/payments/cvc
+D, [2020-03-31T12:43:15.421082 #20478] DEBUG -- : {
   "status": 400,
   "headers": {
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
   },
   "body": {
+    "errorName": "bodyDoesNotMatchSchema",
     "message": {
       "json_class": "Pact::SomethingLike",
       "contents": "The json body provided does not match the expected schema"
     },
-    "errorName": "bodyDoesNotMatchSchema",
     "validationErrors": [
       {
+        "errorName": "fieldHasInvalidValue",
         "message": {
           "json_class": "Pact::SomethingLike",
-          "contents": "Card expiry month is too large - must be between 1 & 12"
+          "contents": "Identity is invalid"
         },
-        "errorName": "integerIsTooLarge",
-        "jsonPath": "$.cardExpiryDate.month"
+        "jsonPath": "$.identity"
       }
     ]
   }
 }
-I, [2020-03-26T13:54:55.734863 #82959]  INFO -- : Verifying - interactions matched
-I, [2020-03-26T13:54:55.741164 #82959]  INFO -- : Writing pact for verified-tokens to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-verified-tokens.json
-I, [2020-03-26T13:54:55.748766 #82959]  INFO -- : Cleared interactions
-I, [2020-03-26T13:54:55.754251 #82959]  INFO -- : Registered expected interaction POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.755052 #82959] DEBUG -- : {
-  "description": "a request with a PAN containing letters",
+I, [2020-03-31T12:43:15.427964 #20478]  INFO -- : Verifying - interactions matched
+I, [2020-03-31T12:43:15.432176 #20478]  INFO -- : Writing pact for sessions to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-sessions.json
+I, [2020-03-31T12:43:15.439816 #20478]  INFO -- : Cleared interactions
+I, [2020-03-31T12:43:15.445056 #20478]  INFO -- : Registered expected interaction GET /sessions
+D, [2020-03-31T12:43:15.445680 #20478] DEBUG -- : {
+  "description": "a GET request to the service root",
   "request": {
-    "method": "post",
-    "path": "/verifiedTokens/sessions",
-    "headers": {
-      "content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-    },
-    "body": {
-      "identity": "identity",
-      "cardExpiryDate": {
-        "year": 2099,
-        "month": 1
-      },
-      "cvc": "123",
-      "cardNumber": "notACardNumber"
-    }
+    "method": "get",
+    "path": "/sessions"
   },
   "response": {
-    "status": 400,
+    "status": 200,
     "headers": {
-      "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
+      "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
     },
     "body": {
-      "validationErrors": [
-        {
-          "jsonPath": "$.cardNumber",
-          "message": {
-            "json_class": "Pact::SomethingLike",
-            "contents": "Card number must be numeric"
-          },
-          "errorName": "fieldHasInvalidValue"
+      "_links": {
+        "sessions:paymentsCvc": {
+          "href": {
+            "json_class": "Pact::Term",
+            "data": {
+              "generate": "https://test/sessions/payments/cvc",
+              "matcher": {
+                "json_class": "Regexp",
+                "o": 0,
+                "s": "https?://[^/]+/sessions/payments/cvc"
+              }
+            }
+          }
         }
-      ],
-      "errorName": "bodyDoesNotMatchSchema",
-      "message": {
-        "json_class": "Pact::SomethingLike",
-        "contents": "The json body provided does not match the expected schema"
       }
     }
   },
   "metadata": null
 }
-I, [2020-03-26T13:54:55.760124 #82959]  INFO -- : Received request POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.760708 #82959] DEBUG -- : {
-  "path": "/verifiedTokens/sessions",
-  "query": "",
-  "method": "post",
-  "body": {
-    "cardExpiryDate": {
-      "month": 1,
-      "year": 2099
-    },
-    "cvc": "123",
-    "identity": "identity",
-    "cardNumber": "notACardNumber"
-  },
-  "headers": {
-    "Content-Length": "106",
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json",
-    "Host": "localhost:1234",
-    "Connection": "keep-alive",
-    "X-Wp-Sdk": "access-checkout-ios/1.2.2",
-    "Accept": "*/*",
-    "Accept-Language": "en-us",
-    "Accept-Encoding": "gzip, deflate",
-    "User-Agent": "xctest/15702 CFNetwork/1121.2.1 Darwin/19.3.0",
-    "Version": "HTTP/1.1"
-  }
-}
-I, [2020-03-26T13:54:55.761395 #82959]  INFO -- : Found matching response for POST /verifiedTokens/sessions
-D, [2020-03-26T13:54:55.761900 #82959] DEBUG -- : {
-  "status": 400,
-  "headers": {
-    "Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"
-  },
-  "body": {
-    "validationErrors": [
-      {
-        "jsonPath": "$.cardNumber",
-        "message": {
-          "json_class": "Pact::SomethingLike",
-          "contents": "Card number must be numeric"
-        },
-        "errorName": "fieldHasInvalidValue"
-      }
-    ],
-    "errorName": "bodyDoesNotMatchSchema",
-    "message": {
-      "json_class": "Pact::SomethingLike",
-      "contents": "The json body provided does not match the expected schema"
-    }
-  }
-}
-I, [2020-03-26T13:54:55.766886 #82959]  INFO -- : Verifying - interactions matched
-I, [2020-03-26T13:54:55.772506 #82959]  INFO -- : Writing pact for verified-tokens to /Users/petechitvicheankul/Documents/GitHub/access-checkout-ios/AccessCheckoutSDK/pacts/access-checkout-ios-sdk-verified-tokens.json

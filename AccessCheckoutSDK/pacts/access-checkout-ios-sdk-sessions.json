@@ -12,12 +12,12 @@
         "method": "post",
         "path": "/sessions/payments/cvc",
         "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "identity": "identity",
-          "cvc": "1234"
+          "cvc": "1234",
+          "identity": "identity"
         }
       },
       "response": {
@@ -28,7 +28,7 @@
         "body": {
           "_links": {
             "sessions:paymentsCvc": {
-              "href": "https://access.worldpay.com/sessions/sessionURI"
+              "href": "https://test/sessions/sessionURI"
             }
           }
         },
@@ -61,52 +61,12 @@
         },
         "body": {
           "message": "The json body provided does not match the expected schema",
+          "errorName": "bodyDoesNotMatchSchema",
           "validationErrors": [
             {
               "message": "Identity is invalid",
               "jsonPath": "$.identity",
               "errorName": "fieldHasInvalidValue"
-            }
-          ],
-          "errorName": "bodyDoesNotMatchSchema"
-        },
-        "matchingRules": {
-          "$.body.message": {
-            "match": "type"
-          },
-          "$.body.validationErrors[0].message": {
-            "match": "type"
-          }
-        }
-      }
-    },
-    {
-      "description": " a request for a session reference with non-numerical CVV",
-      "request": {
-        "method": "post",
-        "path": "/sessions/payments/cvc",
-        "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
-        },
-        "body": {
-          "identity": "identity",
-          "cvc": "aaa"
-        }
-      },
-      "response": {
-        "status": 400,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-        },
-        "body": {
-          "message": "TThe json body provided does not match the expected schema",
-          "errorName": "bodyDoesNotMatchSchema",
-          "validationErrors": [
-            {
-              "jsonPath": "$.cvc",
-              "message": "CVC must be numeric",
-              "errorName": "fieldMustBeNumber"
             }
           ]
         },

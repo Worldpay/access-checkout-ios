@@ -1,10 +1,11 @@
 import XCTest
 import PactConsumerSwift
+import Mockingjay
 @testable import AccessCheckoutSDK
 
 class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
 
-    let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://access.worldpay.com"
+    let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://test"
     
     let requestHeaders:  [String: Any] = ["Accept": "application/vnd.worldpay.sessions-v1.hal+json", "content-type": "application/vnd.worldpay.sessions-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"]
@@ -24,6 +25,53 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)?){
             serviceEndpoint = URL(string: "\(baseURI)/sessions/payments/cvc")
             onComplete?()
+        }
+    }
+
+    func testServiceDiscoveryOnServiceRoot(){
+        
+        let expectedValue = "\(baseURI)/sessions/payments/cvc"
+        let responseJson = [
+            "_links": [
+                "sessions:paymentsCvc": [
+                    "href": Matcher.term(matcher: "https?://[^/]+/sessions/payments/cvc", generate: expectedValue)
+                ],
+            ]
+        ]
+
+        sessionsMockService
+            .uponReceiving("a GET request to the service root")
+            .withRequest(
+                method: .GET,
+                path: "/sessions")
+            .willRespondWith(
+                status: 200,
+                headers: responseHeaders,
+                body: responseJson
+        )
+        
+        let rootResponseJson = """
+             {
+                 "_links": {
+                     "service:sessions": {
+                         "href": "https://root/sessions"
+                     }
+                 }
+             }
+             """
+        
+        let rootResponse = rootResponseJson.data(using: .utf8)!
+        stub(http(.get, uri: "https://root"), jsonData(rootResponse))
+        
+        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: "https://root")!)
+        let serviceEndpointKeys = DiscoverLinks.sessions
+        
+        
+        sessionsMockService.run(timeout: 3) {testComplete in
+            discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
+                XCTAssertEqual(discovery.serviceEndpoint?.absoluteString, expectedValue)
+                testComplete();
+            }
         }
     }
 
@@ -87,21 +135,6 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             validationJsonPath: "$.identity")
         
         performTestCase(forScenario: "a request with an invalid identity to sessions", withRequest: request, andErrorResponse: expectedErrorResponse)
-    }
-    
-    func testRequestFailsWhenCvcIsInvalid() {
-        
-        let request = PactRequest(identity: "identity",
-            cvc: "aaa")
-        
-        let expectedErrorResponse = ExpectedPactErrorResponse(
-            mainErrorName: "bodyDoesNotMatchSchema",
-            mainErrorMessage: "TThe json body provided does not match the expected schema",
-            validationErrorName: "fieldMustBeNumber",
-            validationErrorMessage: "CVC must be numeric",
-            validationJsonPath: "$.cvc")
-        
-        performTestCase(forScenario: " a request for a session reference with non-numerical CVV", withRequest: request, andErrorResponse: expectedErrorResponse)
     }
     
     private struct PactRequest {

@@ -19,6 +19,7 @@ target 'AccessCheckoutSDK' do
     platform :ios, '9.0'
     inherit! :search_paths
     pod 'PactConsumerSwift'
+    pod 'Mockingjay', '~> 3.0.0-alpha.1'
   end
 
 end
