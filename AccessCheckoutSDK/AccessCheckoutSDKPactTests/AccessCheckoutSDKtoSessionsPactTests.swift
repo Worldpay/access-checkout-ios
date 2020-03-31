@@ -5,7 +5,7 @@ import Mockingjay
 
 class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
 
-    let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://test"
+    let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://access.worldpay.com"
     
     let requestHeaders:  [String: Any] = ["Accept": "application/vnd.worldpay.sessions-v1.hal+json", "content-type": "application/vnd.worldpay.sessions-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"]

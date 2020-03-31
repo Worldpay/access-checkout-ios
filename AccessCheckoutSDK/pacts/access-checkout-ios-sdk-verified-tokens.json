@@ -4,12 +4,12 @@
             "request": {
                 "body": {
                     "cardNumber": "4111111111111111", 
-                    "cvc": "123", 
-                    "identity": "identity", 
                     "cardExpiryDate": {
                         "month": 12, 
                         "year": 2099
-                    }
+                    }, 
+                    "identity": "identity", 
+                    "cvc": "123"
                 }, 
                 "path": "/verifiedTokens/sessions", 
                 "method": "post", 
@@ -26,7 +26,7 @@
                 "body": {
                     "_links": {
                         "verifiedTokens:session": {
-                            "href": "https://test/verifiedTokens/sessions/sampleSessionID"
+                            "href": "http://access.worldpay.com/verifiedTokens/sessions/sampleSessionID"
                         }
                     }
                 }, 
@@ -42,12 +42,12 @@
             "request": {
                 "body": {
                     "cardNumber": "4111111111111111", 
-                    "cvc": "123", 
-                    "identity": "incorrectValue", 
                     "cardExpiryDate": {
                         "year": 2099, 
                         "month": 12
-                    }
+                    }, 
+                    "identity": "incorrectValue", 
+                    "cvc": "123"
                 }, 
                 "path": "/verifiedTokens/sessions", 
                 "method": "post", 
@@ -86,12 +86,12 @@
             "request": {
                 "body": {
                     "cardNumber": "4111111111111110", 
+                    "cvc": "123", 
+                    "identity": "identity", 
                     "cardExpiryDate": {
                         "year": 2099, 
                         "month": 12
-                    }, 
-                    "identity": "identity", 
-                    "cvc": "123"
+                    }
                 }, 
                 "path": "/verifiedTokens/sessions", 
                 "method": "post", 
@@ -130,12 +130,12 @@
             "request": {
                 "body": {
                     "cardNumber": "4111111111111111", 
-                    "cvc": "123", 
-                    "identity": "identity", 
                     "cardExpiryDate": {
-                        "year": 2099, 
-                        "month": 13
-                    }
+                        "month": 13, 
+                        "year": 2099
+                    }, 
+                    "identity": "identity", 
+                    "cvc": "123"
                 }, 
                 "path": "/verifiedTokens/sessions", 
                 "method": "post", 
@@ -161,10 +161,10 @@
                     "errorName": "bodyDoesNotMatchSchema"
                 }, 
                 "matchingRules": {
-                    "$.body.message": {
+                    "$.body.validationErrors[0].message": {
                         "match": "type"
                     }, 
-                    "$.body.validationErrors[0].message": {
+                    "$.body.message": {
                         "match": "type"
                     }
                 }
@@ -174,12 +174,12 @@
             "request": {
                 "body": {
                     "cardNumber": "notACardNumber", 
+                    "cvc": "123", 
+                    "identity": "identity", 
                     "cardExpiryDate": {
                         "month": 1, 
                         "year": 2099
-                    }, 
-                    "identity": "identity", 
-                    "cvc": "123"
+                    }
                 }, 
                 "path": "/verifiedTokens/sessions", 
                 "method": "post", 
@@ -228,7 +228,7 @@
                 "body": {
                     "_links": {
                         "verifiedTokens:sessions": {
-                            "href": "https://test/verifiedTokens/sessions"
+                            "href": "http://access.worldpay.com/verifiedTokens/sessions"
                         }
                     }
                 }, 

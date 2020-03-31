@@ -5,7 +5,7 @@ import Mockingjay
 
 class AccessCheckoutSDKtoVTPactTests: XCTestCase {
 
-    let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "https://test"
+    let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://access.worldpay.com"
     
     let requestHeaders:  [String: Any] = ["content-type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]
     let responseHeaders: [String: Any] = ["Content-Type": "application/vnd.worldpay.verified-tokens-v1.hal+json"]

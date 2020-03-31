@@ -22,7 +22,7 @@
                 "body": {
                     "_links": {
                         "sessions:paymentsCvc": {
-                            "href": "https://test/sessions/sessionURI"
+                            "href": "http://access.worldpay.com/sessions/sessionURI"
                         }
                     }
                 }, 
@@ -88,7 +88,7 @@
                 "body": {
                     "_links": {
                         "sessions:paymentsCvc": {
-                            "href": "https://test/sessions/payments/cvc"
+                            "href": "http://access.worldpay.com/sessions/payments/cvc"
                         }
                     }
                 }, 
