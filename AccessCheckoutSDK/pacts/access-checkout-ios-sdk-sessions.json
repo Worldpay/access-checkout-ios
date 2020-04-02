@@ -21,13 +21,13 @@
                 }, 
                 "body": {
                     "_links": {
-                        "sessions:paymentsCvc": {
+                        "sessions:session": {
                             "href": "http://access.worldpay.com/sessions/sessionURI"
                         }
                     }
                 }, 
                 "matchingRules": {
-                    "$.body._links['sessions:paymentsCvc'].href": {
+                    "$.body._links['sessions:session'].href": {
                         "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/.+", 
                         "match": "regex"
                     }
@@ -77,7 +77,11 @@
         {
             "request": {
                 "path": "/sessions", 
-                "method": "get"
+                "method": "get", 
+                "headers": {
+                    "content-type": "application/vnd.worldpay.sessions-v1.hal+json", 
+                    "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+                }
             }, 
             "description": "a GET request to the service root", 
             "response": {

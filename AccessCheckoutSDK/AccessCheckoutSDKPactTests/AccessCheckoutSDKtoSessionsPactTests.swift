@@ -43,7 +43,8 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             .uponReceiving("a GET request to the service root")
             .withRequest(
                 method: .GET,
-                path: "/sessions")
+                path: "/sessions",
+                headers: requestHeaders)
             .willRespondWith(
                 status: 200,
                 headers: responseHeaders,
@@ -67,7 +68,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let serviceEndpointKeys = DiscoverLinks.sessions
         
         
-        sessionsMockService.run(timeout: 3) {testComplete in
+        sessionsMockService.run(timeout: 10) {testComplete in
             discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
                 XCTAssertEqual(discovery.serviceEndpoint?.absoluteString, expectedValue)
                 testComplete();
@@ -85,7 +86,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let expectedValue = "\(baseURI)/sessions/sessionURI"
         let responseJson = [
             "_links": [
-                "sessions:paymentsCvc": [
+                "sessions:session": [
                     "href": Matcher.term(matcher: "https?://[^/]+/sessions/.+", generate: expectedValue)
                 ],
             ]

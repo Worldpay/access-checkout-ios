@@ -12,13 +12,17 @@ public protocol Discovery {
 public final class DiscoverLinks {
     var service: String
     var endpoint: String
+    var result: String
     
-    public static let verifiedTokens =  DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions")
-    public static let sessions =  DiscoverLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc")
+    public static let verifiedTokens =  DiscoverLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions", result: "verifiedTokens:session")
+    public static let sessions =  DiscoverLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc", result: "sessions:session")
+    public static let verifiedTokensHeaderValue = "application/vnd.worldpay.verified-tokens-v1.hal+json"
+    public static let sessionsHeaderValue = "application/vnd.worldpay.sessions-v1.hal+json"
     
-    public init(service: String, endpoint: String) {
+    public init(service: String, endpoint: String, result: String) {
         self.service = service
         self.endpoint = endpoint
+        self.result = result
     }
 }
 
@@ -49,6 +53,22 @@ public final class AccessCheckoutDiscovery: Discovery {
         - urlSession: A `URLSession` object
         - onComplete: Callback upon discovery completion, successful or otherwise
      */
+    private func buildRequest(url: URL, service: String) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        switch service {
+            case DiscoverLinks.verifiedTokens.endpoint:
+                request.addValue(DiscoverLinks.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
+            case DiscoverLinks.sessions.endpoint:
+                request.addValue(DiscoverLinks.sessionsHeaderValue, forHTTPHeaderField: "content-type")
+                request.addValue(DiscoverLinks.sessionsHeaderValue, forHTTPHeaderField: "accept")
+            default:
+                return request
+        }
+        return request
+    }
+    
+    
     public func discover(serviceLinks: DiscoverLinks, urlSession: URLSession, onComplete: (() -> Void)? = nil) {
         
         // Check for existing tasks running
@@ -71,7 +91,8 @@ public final class AccessCheckoutDiscovery: Discovery {
     
     private func discoverServiceEndPoint(service: String, withSession urlSession: URLSession, from startUrl: URL, onComplete: (() -> Void)? = nil) -> Void {
         
-        self.endpointDiscoveryTask = urlSession.dataTask(with: startUrl) { (data, response, error) in
+        let request = buildRequest(url: startUrl, service: service)
+        self.endpointDiscoveryTask = urlSession.dataTask(with: request) { (data, response, error) in
             if let jsonData = data,
                let endpointURL = self.fetchServiceURL(withLinkId: service, in: jsonData) {
                     self.serviceEndpoint = endpointURL

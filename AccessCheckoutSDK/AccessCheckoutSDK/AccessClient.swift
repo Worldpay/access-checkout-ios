@@ -62,7 +62,7 @@ public final class AccessCheckoutClient {
         urlSession.dataTask(with: request) { (data, _, error) in
             if let sessionData = data {
                 if let verifiedTokensResponse = try? JSONDecoder().decode(AccessCheckoutResponse.self, from: sessionData),
-                    let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })["verifiedTokens:session"] {
+                    let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })[DiscoverLinks.verifiedTokens.result] {
                         completionHandler(.success(href))
                 } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: sessionData) {
                     completionHandler(.failure(accessCheckoutClientError))

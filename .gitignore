@@ -57,7 +57,7 @@ fastlane/test_output
 # Pact
 pact
 tmp
-pacts/logs
+AccessCheckoutSDK/pacts/logs/pact.log
 
 #jazzy
 build
