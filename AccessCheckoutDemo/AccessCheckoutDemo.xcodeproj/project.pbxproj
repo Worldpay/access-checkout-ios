@@ -22,8 +22,8 @@
 		C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE46E22B7C5A600943B3E /* Assets.xcassets */; };
 		C9AFE47622B7C62700943B3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE47222B7C62700943B3E /* Main.storyboard */; };
 		C9AFE47722B7C62700943B3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE47422B7C62700943B3E /* LaunchScreen.storyboard */; };
-		C9AFE47D22B7C6DA00943B3E /* CardValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */; };
-		C9AFE47E22B7C6DA00943B3E /* VerifiedTokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */; };
+		C9AFE47D22B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47922B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift */; };
+		C9AFE47E22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE47A22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift */; };
 		C9AFE48222B7C8D700943B3E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
 		C9AFE4AF22B7EE5900943B3E /* VerifiedTokens-internalServerError.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A522B7EE5800943B3E /* VerifiedTokens-internalServerError.json */; };
 		C9AFE4B022B7EE5900943B3E /* VerifiedTokens-unknown-variation1.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A622B7EE5800943B3E /* VerifiedTokens-unknown-variation1.json */; };
@@ -35,6 +35,14 @@
 		C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */; };
 		C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */; };
 		C9AFE4B822B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D362437AE3900DD842F /* AppLauncher.swift */; };
+		E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D382437B1BA00DD842F /* XCTestExtension.swift */; };
+		E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
+		E72152842437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */; };
+		E72152862437DBAC009AAFB3 /* AlertViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72152852437DBAC009AAFB3 /* AlertViewPageObject.swift */; };
+		E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */; };
+		E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85F82437CB440031F7AC /* ServiceStub.swift */; };
+		E75F85FB2437CDC80031F7AC /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
 		E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +78,8 @@
 		C9AFE46E22B7C5A600943B3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9AFE47322B7C62700943B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C9AFE47522B7C62700943B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardValidationTests.swift; sourceTree = "<group>"; };
-		C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifiedTokensTests.swift; sourceTree = "<group>"; };
+		C9AFE47922B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowValidationTests.swift; sourceTree = "<group>"; };
+		C9AFE47A22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowRetrieveSessionTests.swift; sourceTree = "<group>"; };
 		C9AFE48322B7C8D700943B3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C9AFE4A522B7EE5800943B3E /* VerifiedTokens-internalServerError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-internalServerError.json"; sourceTree = "<group>"; };
 		C9AFE4A622B7EE5800943B3E /* VerifiedTokens-unknown-variation1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation1.json"; sourceTree = "<group>"; };
@@ -83,6 +91,13 @@
 		C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
 		C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		E7134D362437AE3900DD842F /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
+		E7134D382437B1BA00DD842F /* XCTestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtension.swift; sourceTree = "<group>"; };
+		E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowViewPageObject.swift; sourceTree = "<group>"; };
+		E72152852437DBAC009AAFB3 /* AlertViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewPageObject.swift; sourceTree = "<group>"; };
+		E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonStubbedResponse.swift; sourceTree = "<group>"; };
+		E75F85F82437CB440031F7AC /* ServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStub.swift; sourceTree = "<group>"; };
+		E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
 		E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowViewController.swift; sourceTree = "<group>"; };
 		F05A61772A68844665C943F5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +148,9 @@
 				C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */,
 				C9AFE4A722B7EE5800943B3E /* VerifiedTokens-unknown-variation4.json */,
 				C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */,
+				E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */,
+				E75F85F82437CB440031F7AC /* ServiceStub.swift */,
+				E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -190,11 +208,31 @@
 		C9AFE40D22B799AE00943B3E /* AccessCheckoutDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
-				C9AFE47922B7C6DA00943B3E /* CardValidationTests.swift */,
-				C9AFE47A22B7C6DA00943B3E /* VerifiedTokensTests.swift */,
+				E7134D352437AE1100DD842F /* utils */,
+				E7B7F4DE2435EE7000E2DDA6 /* pageObjects */,
+				C9AFE47922B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift */,
+				C9AFE47A22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift */,
 				C9AFE41022B799AE00943B3E /* Info.plist */,
 			);
 			path = AccessCheckoutDemoUITests;
+			sourceTree = "<group>";
+		};
+		E7134D352437AE1100DD842F /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				E7134D362437AE3900DD842F /* AppLauncher.swift */,
+				E7134D382437B1BA00DD842F /* XCTestExtension.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		E7B7F4DE2435EE7000E2DDA6 /* pageObjects */ = {
+			isa = PBXGroup;
+			children = (
+				E72152852437DBAC009AAFB3 /* AlertViewPageObject.swift */,
+				E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */,
+			);
+			path = pageObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,9 +441,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardPaymentFlowViewController.swift in Sources */,
+				E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */,
 				E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
+				E75F85FB2437CDC80031F7AC /* LaunchArguments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,8 +454,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE47E22B7C6DA00943B3E /* VerifiedTokensTests.swift in Sources */,
-				C9AFE47D22B7C6DA00943B3E /* CardValidationTests.swift in Sources */,
+				E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */,
+				E72152842437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift in Sources */,
+				E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */,
+				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
+				C9AFE47E22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift in Sources */,
+				C9AFE47D22B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift in Sources */,
+				E72152862437DBAC009AAFB3 /* AlertViewPageObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
