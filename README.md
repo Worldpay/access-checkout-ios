@@ -69,6 +69,8 @@ Note: <access-checkout-ios-root> refers to the folder that contains your copy of
 5. Click on the `Play` icon next to `AccessCheckoutSDKPactTest` to run the PACT tests
     1. If you're having failures, make sure that the `<access-checkout-ios-root>/AccessCheckoutSDK/pact/bin` sym link exists
 
+6. When running the Pact tests to generate and upload new Pact versions - make sure you run each Pact test file separately one after the other. There is an issue with PactConsumerSwift not supporting multiple providers.
+
 ### Running the Demo App
 
 1. Install dependencies for the demo app

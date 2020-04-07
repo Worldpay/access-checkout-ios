@@ -15,7 +15,7 @@ class CVVSessionURLRequestFactoryTests: XCTestCase {
 
     func testCreatesACvvSessionRequest() {
         let expectedHttpBody: Data = expectedBodyAsString.data(using: .utf8)!
-        let expectedHeaderFields = ["Content-Type": "application/vnd.worldpay.sessions-v1.hal+json", "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
+        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue, "Content-Type": ApiHeaders.sessionsHeaderValue, "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
         var expectedRequest = URLRequest(url: url)
         expectedRequest.httpBody = expectedHttpBody
         expectedRequest.httpMethod = expectedMethod
@@ -33,7 +33,7 @@ class CVVSessionURLRequestFactoryTests: XCTestCase {
     }
 
     func testHeadersAreSetCorrectly() {
-        let expectedHeaderFields = ["Content-Type": "application/vnd.worldpay.sessions-v1.hal+json", "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
+        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue, "Content-Type": ApiHeaders.sessionsHeaderValue, "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
 
         let request = urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: "some-identity", bundle: bundle)
 

@@ -76,7 +76,8 @@ workflows:
         title: "Deploy pact file to pact broker"
         run_if: not .IsPR
         inputs:
-          - file_path: scripts/upload_pact.sh
+          - file_path: scripts/upload_pact_VT.sh
+          - file_path: scripts/upload_pact_sessions.sh
     - script-runner@0.9.3:
         inputs:
         - file_path: "scripts/coverage.sh"
