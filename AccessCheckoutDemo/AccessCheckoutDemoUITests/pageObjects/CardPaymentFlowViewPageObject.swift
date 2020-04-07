@@ -1,6 +1,6 @@
 import XCTest
 
-public class CardPaymentFlowViewPageObject {
+class CardPaymentFlowViewPageObject {
     private let app:XCUIApplication
     
     var panField:XCUIElement {

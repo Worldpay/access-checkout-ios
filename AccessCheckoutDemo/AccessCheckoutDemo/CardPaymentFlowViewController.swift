@@ -44,12 +44,9 @@ class CardPaymentFlowViewController: UIViewController {
                 
                 switch result {
                 case .success(let href):
-                    let alertController = UIAlertController(title: "Session", message: href, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        alertController.dismiss(animated: true)
+                    AlertView.display(using: self, title: "Session", message: href, closeHandler: {
                         self.resetCard(preserveContent: false, validationErrors: nil)
-                    }))
-                    self.present(alertController, animated: true)
+                    })
                 case .failure(let error):
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
@@ -63,11 +60,7 @@ class CardPaymentFlowViewController: UIViewController {
                     }
 
                     self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-                    let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        alertController.dismiss(animated: true)
-                    }))
-                    self.present(alertController, animated: true )
+                    AlertView.display(using: self, title: title, message: nil)
                 }
             }
         }

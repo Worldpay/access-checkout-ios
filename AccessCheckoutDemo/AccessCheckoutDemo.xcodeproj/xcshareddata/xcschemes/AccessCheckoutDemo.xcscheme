@@ -86,6 +86,14 @@
             argument = "-stubVerifiedTokensSession VerifiedTokensSession-success"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-stubSessions sessions-success"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-stubSessionsPaymentsCvc sessions-paymentsCvc-success"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction

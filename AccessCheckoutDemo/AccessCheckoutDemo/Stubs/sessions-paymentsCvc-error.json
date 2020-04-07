@@ -1,0 +1,11 @@
+{
+    "errorName": "bodyDoesNotMatchSchema",
+    "message": "Sessions paymentsCvc error",
+    "validationErrors": [
+        {
+            "errorName": "stringFailedRegexCheck",
+            "message": "Some validation error message",
+            "jsonPath": "$.cvv"
+        }
+    ]
+}

@@ -43,7 +43,16 @@
 		E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */; };
 		E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85F82437CB440031F7AC /* ServiceStub.swift */; };
 		E75F85FB2437CDC80031F7AC /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
+		E7993C8A243730820082E2C2 /* sessions-paymentsCvc-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E7993C89243730820082E2C2 /* sessions-paymentsCvc-error.json */; };
+		E79A3F1524360C0D00A20555 /* CvvOnlyFlowRetrieveSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79A3F1424360C0D00A20555 /* CvvOnlyFlowRetrieveSessionTests.swift */; };
+		E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A09297243CB24100BCABC8 /* AlertView.swift */; };
+		E7B7F4DB24350F4B00E2DDA6 /* CvvOnlyFlowValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4DA24350F4B00E2DDA6 /* CvvOnlyFlowValidationTests.swift */; };
+		E7B7F4DD2435125400E2DDA6 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */; };
+		E7B7F4E02435EEB200E2DDA6 /* CvvOnlyFlowViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4DF2435EEB200E2DDA6 /* CvvOnlyFlowViewPageObject.swift */; };
+		E7B7F4E22435EF5100E2DDA6 /* NavigationViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4E12435EF5100E2DDA6 /* NavigationViewPageObject.swift */; };
 		E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */; };
+		E7CFBA3C2436663B009FA24A /* sessions-success.json in Resources */ = {isa = PBXBuildFile; fileRef = E7CFBA3B2436663B009FA24A /* sessions-success.json */; };
+		E7CFBA4024366AF1009FA24A /* sessions-paymentsCvc-success.json in Resources */ = {isa = PBXBuildFile; fileRef = E7CFBA3F24366AF1009FA24A /* sessions-paymentsCvc-success.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +107,16 @@
 		E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonStubbedResponse.swift; sourceTree = "<group>"; };
 		E75F85F82437CB440031F7AC /* ServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStub.swift; sourceTree = "<group>"; };
 		E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
+		E7993C89243730820082E2C2 /* sessions-paymentsCvc-error.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sessions-paymentsCvc-error.json"; sourceTree = "<group>"; };
+		E79A3F1424360C0D00A20555 /* CvvOnlyFlowRetrieveSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowRetrieveSessionTests.swift; sourceTree = "<group>"; };
+		E7A09297243CB24100BCABC8 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		E7B7F4DA24350F4B00E2DDA6 /* CvvOnlyFlowValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowValidationTests.swift; sourceTree = "<group>"; };
+		E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
+		E7B7F4DF2435EEB200E2DDA6 /* CvvOnlyFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowViewPageObject.swift; sourceTree = "<group>"; };
+		E7B7F4E12435EF5100E2DDA6 /* NavigationViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewPageObject.swift; sourceTree = "<group>"; };
 		E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowViewController.swift; sourceTree = "<group>"; };
+		E7CFBA3B2436663B009FA24A /* sessions-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sessions-success.json"; sourceTree = "<group>"; };
+		E7CFBA3F24366AF1009FA24A /* sessions-paymentsCvc-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sessions-paymentsCvc-success.json"; sourceTree = "<group>"; };
 		F05A61772A68844665C943F5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +166,9 @@
 				C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */,
 				C9AFE4A722B7EE5800943B3E /* VerifiedTokens-unknown-variation4.json */,
 				C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */,
+				E7CFBA3B2436663B009FA24A /* sessions-success.json */,
+				E7CFBA3F24366AF1009FA24A /* sessions-paymentsCvc-success.json */,
+				E7993C89243730820082E2C2 /* sessions-paymentsCvc-error.json */,
 				E75F85F62437BFE40031F7AC /* JsonStubbedResponse.swift */,
 				E75F85F82437CB440031F7AC /* ServiceStub.swift */,
 				E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */,
@@ -193,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				1BD0EE9E22CBB59400147A71 /* Stubs */,
+				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardPaymentFlowViewController.swift */,
@@ -212,6 +234,9 @@
 				E7B7F4DE2435EE7000E2DDA6 /* pageObjects */,
 				C9AFE47922B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift */,
 				C9AFE47A22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift */,
+				E7B7F4DA24350F4B00E2DDA6 /* CvvOnlyFlowValidationTests.swift */,
+				E79A3F1424360C0D00A20555 /* CvvOnlyFlowRetrieveSessionTests.swift */,
+				E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */,
 				C9AFE41022B799AE00943B3E /* Info.plist */,
 			);
 			path = AccessCheckoutDemoUITests;
@@ -231,6 +256,8 @@
 			children = (
 				E72152852437DBAC009AAFB3 /* AlertViewPageObject.swift */,
 				E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */,
+				E7B7F4DF2435EEB200E2DDA6 /* CvvOnlyFlowViewPageObject.swift */,
+				E7B7F4E12435EF5100E2DDA6 /* NavigationViewPageObject.swift */,
 			);
 			path = pageObjects;
 			sourceTree = "<group>";
@@ -328,13 +355,16 @@
 				C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */,
 				1BD0EE9B22CBB01C00147A71 /* mastercard.png in Resources */,
 				1BD0EE9C22CBB01C00147A71 /* amex.png in Resources */,
+				E7993C8A243730820082E2C2 /* sessions-paymentsCvc-error.json in Resources */,
 				C9AFE4B522B7EE5900943B3E /* VerifiedTokensSession-success.json in Resources */,
 				C9AFE4AF22B7EE5900943B3E /* VerifiedTokens-internalServerError.json in Resources */,
 				C9AFE4B422B7EE5900943B3E /* VerifiedTokens-unknown-variation2.json in Resources */,
 				C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */,
+				E7CFBA4024366AF1009FA24A /* sessions-paymentsCvc-success.json in Resources */,
 				C9AFE4B222B7EE5900943B3E /* Discovery-success.json in Resources */,
 				C9AFE4B122B7EE5900943B3E /* VerifiedTokens-unknown-variation4.json in Resources */,
 				1BCBFED622B8F63300A65FAA /* LICENSE in Resources */,
+				E7CFBA3C2436663B009FA24A /* sessions-success.json in Resources */,
 				1BCBFED722B8F63300A65FAA /* README.md in Resources */,
 				C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */,
 				C9AFE4B322B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
@@ -443,6 +473,7 @@
 			files = (
 				E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardPaymentFlowViewController.swift in Sources */,
+				E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */,
 				E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */,
 				E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
@@ -456,10 +487,15 @@
 			files = (
 				E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */,
 				E72152842437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift in Sources */,
+				E79A3F1524360C0D00A20555 /* CvvOnlyFlowRetrieveSessionTests.swift in Sources */,
 				E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */,
+				E7B7F4E22435EF5100E2DDA6 /* NavigationViewPageObject.swift in Sources */,
+				E7B7F4E02435EEB200E2DDA6 /* CvvOnlyFlowViewPageObject.swift in Sources */,
 				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
 				C9AFE47E22B7C6DA00943B3E /* CardPaymentFlowRetrieveSessionTests.swift in Sources */,
 				C9AFE47D22B7C6DA00943B3E /* CardPaymentFlowValidationTests.swift in Sources */,
+				E7B7F4DB24350F4B00E2DDA6 /* CvvOnlyFlowValidationTests.swift in Sources */,
+				E7B7F4DD2435125400E2DDA6 /* NavigationTests.swift in Sources */,
 				E72152862437DBAC009AAFB3 /* AlertViewPageObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

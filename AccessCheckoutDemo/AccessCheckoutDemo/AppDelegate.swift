@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DiscoveryStub().start(baseUri: base)
             VerifiedTokensStub().start(baseUri: base)
             VerifiedTokensSessionStub().start(baseUri: base)
+            SessionsStub().start(baseUri: base)
+            SessionsPaymentsCvcStub().start(baseUri: base)
         }
         if let configurationUri = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
             CardConfigurationStub().start(baseUri: configurationUri)

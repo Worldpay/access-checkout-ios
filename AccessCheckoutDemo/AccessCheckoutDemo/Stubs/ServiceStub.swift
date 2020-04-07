@@ -48,3 +48,25 @@ class CardConfigurationStub : ServiceStub {
         MockingjayProtocol.addStub(matcher: http(.get, uri: baseUri), builder: jsonData(data))
     }
 }
+
+class SessionsStub : ServiceStub {
+    func start(baseUri:String) {
+        guard let resourceName = LaunchArguments.valueOf(LaunchArguments.SessionsStub),
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+                return
+        }
+            
+        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseUri)/sessions"), builder: jsonData(data))
+    }
+}
+
+class SessionsPaymentsCvcStub : ServiceStub {
+    func start(baseUri:String) {
+        guard let resourceName = LaunchArguments.valueOf(LaunchArguments.SessionsPaymentsCvcStub),
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+                return
+        }
+            
+        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseUri)/sessions/payments/cvc"), builder: jsonData(data))
+    }
+}

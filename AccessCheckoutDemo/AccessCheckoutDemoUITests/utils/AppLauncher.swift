@@ -3,6 +3,8 @@ import XCTest
 
 class AppLauncher {
     private var discoveryStub:String?
+    private var sessionsPaymentsCvcStub:String?
+    private var sessionsStub:String?
     private var verifiedTokensSessionStub:String?
     private var verifiedTokensStub:String?
     
@@ -20,6 +22,12 @@ class AppLauncher {
         if let resourceName = self.discoveryStub {
             app.launchArguments.append(contentsOf:["-\(LaunchArguments.DiscoveryStub)", resourceName])
         }
+        if let resourceName = self.sessionsPaymentsCvcStub {
+            app.launchArguments.append(contentsOf:["-\(LaunchArguments.SessionsPaymentsCvcStub)", resourceName])
+        }
+        if let resourceName = self.sessionsStub {
+            app.launchArguments.append(contentsOf:["-\(LaunchArguments.SessionsStub)", resourceName])
+        }
         if let resourceName = self.verifiedTokensSessionStub {
             app.launchArguments.append(contentsOf:["-\(LaunchArguments.VerifiedTokensSessionStub)", resourceName])
         }
@@ -36,6 +44,16 @@ class AppLauncher {
         return self
     }
     
+    func sessionsStub(respondsWith sessionsStub:String) -> AppLauncher {
+        self.sessionsStub = sessionsStub
+        return self
+    }
+    
+    func sessionsPaymentsCvcStub(respondsWith sessionsPaymentsCvcStub:String) -> AppLauncher {
+        self.sessionsPaymentsCvcStub = sessionsPaymentsCvcStub
+        return self
+    }
+    
     func verifiedTokensStub(respondsWith verifiedTokensStub:String) -> AppLauncher {
         self.verifiedTokensStub = verifiedTokensStub
         return self
@@ -46,4 +64,3 @@ class AppLauncher {
         return self
     }
 }
-

@@ -3,6 +3,9 @@
         "service:verifiedTokens": {
             "href": "<BASE_URI>/verifiedTokens"
         },
+        "service:sessions": {
+            "href": "<BASE_URI>/sessions"
+        },
         "curies": [
             {
                 "href": "<BASE_URI>/rels/payments/{rel}",
