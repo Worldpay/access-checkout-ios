@@ -69,7 +69,6 @@ workflows:
             envman add --key PROJECT_VERSION --value $release_version
     - script-runner@0.9.3:
         title: Amend PACT file
-        run_if: not .IsPR
         inputs:
           - file_path: scripts/apply_pact_fix.sh
     - script-runner@0.9.3:
