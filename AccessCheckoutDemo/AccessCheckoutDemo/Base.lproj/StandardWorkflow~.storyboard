@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cD1-ZJ-IHZ">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Card payment flow-->
+        <!--Standard workflow-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CardPaymentFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Standard workflow" id="BYZ-38-t0r" customClass="ViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hy8-fq-jdj"/>
                         <viewControllerLayoutGuide type="bottom" id="P4U-sM-I5g"/>
@@ -66,10 +66,13 @@
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="JyH-be-DH8" secondAttribute="centerY" id="pfH-bB-QAT"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="NXi-qk-FE5" secondAttribute="centerY" id="rcL-4k-KqU"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="tS1-UK-467"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="tff-uB-MuP"/>
+                            <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="uqb-2l-M1k"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Card payment flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
+                    <tabBarItem key="tabBarItem" id="aTv-7O-92i">
+                        <string key="title">Standard flow
+Workflow</string>
+                    </tabBarItem>
                     <connections>
                         <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
                         <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
@@ -80,85 +83,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-444" y="808"/>
-        </scene>
-        <!--Cvv only flow-->
-        <scene sceneID="lPP-8k-MJs">
-            <objects>
-                <viewController id="ZEX-QF-aID" userLabel="Cvv only flow" customClass="CvvOnlyFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="og0-0P-fDP"/>
-                        <viewControllerLayoutGuide type="bottom" id="OMc-0h-5O9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="y9R-az-JC0" userLabel="View">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuw-Kr-otx" userLabel="Cvv View" customClass="CVVView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="40" y="60" width="59" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="59" id="Anj-JH-PkA"/>
-                                    <constraint firstAttribute="height" constant="44" id="Zla-nE-qrU"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
-                                <rect key="frame" x="286" y="67" width="49" height="30"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <bool key="isElement" value="NO"/>
-                                </accessibility>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submitTouchUpInsideHandler:" destination="ZEX-QF-aID" eventType="touchUpInside" id="cZ5-UI-NCI"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
-                                <rect key="frame" x="262" y="72" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.94820205479452058" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="zuw-Kr-otx" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leading" constant="40" id="7zB-vW-Jav"/>
-                            <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="zuw-Kr-otx" secondAttribute="centerY" id="AdL-Dh-VWH"/>
-                            <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="xFk-y0-dUk" secondAttribute="centerY" id="H8K-dj-UoU"/>
-                            <constraint firstAttribute="trailing" secondItem="xFk-y0-dUk" secondAttribute="trailing" constant="40" id="JQW-bv-woI"/>
-                            <constraint firstItem="zuw-Kr-otx" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="60" id="c2o-Rt-FAO"/>
-                            <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="eAA-XG-Jrm"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Cvv-only flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
-                    <connections>
-                        <outlet property="cvvField" destination="zuw-Kr-otx" id="06k-Zx-spg"/>
-                        <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
-                        <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L8W-88-77L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="564" y="806.44677661169419"/>
+            <point key="canvasLocation" x="-614" y="813"/>
         </scene>
         <!--Tab Bar Controller-->
-        <scene sceneID="oXd-yx-4Rr">
+        <scene sceneID="Yke-4o-Y08">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="0kh-GD-3gP" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="cD1-ZJ-IHZ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tbw-5F-SX1">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MeW-Cx-lOV">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="7FM-Vx-f4v"/>
-                        <segue destination="ZEX-QF-aID" kind="relationship" relationship="viewControllers" id="OO7-M4-UBj"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="cVC-fV-YP3"/>
+                        <segue destination="M9D-pB-s7H" kind="relationship" relationship="viewControllers" id="gss-9c-6c4"/>
                     </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oWN-Y4-JAA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vx9-0f-kZq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53.600000000000001" y="27.436281859070466"/>
         </scene>
+        <!--CvvOnlyWorkflow-->
+        <scene sceneID="ndG-cg-R70">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CvvOnlyWorkflow" id="M9D-pB-s7H" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="h7E-ub-TCk"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ioh-o5-IDO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="774" y="512"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="creditcard" catalog="system" width="128" height="91"/>
-        <image name="macwindow" catalog="system" width="128" height="93"/>
-    </resources>
 </document>

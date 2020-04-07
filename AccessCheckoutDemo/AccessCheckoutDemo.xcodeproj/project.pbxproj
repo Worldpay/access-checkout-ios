@@ -18,7 +18,7 @@
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
 		B9E2AA0C48294C91BA6E878D /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B46E6E24989CAB4DC75302 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
-		C9AFE47022B7C5A600943B3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* ViewController.swift */; };
+		C9AFE47022B7C5A600943B3E /* CardPaymentFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* CardPaymentFlowViewController.swift */; };
 		C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE46E22B7C5A600943B3E /* Assets.xcassets */; };
 		C9AFE47622B7C62700943B3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE47222B7C62700943B3E /* Main.storyboard */; };
 		C9AFE47722B7C62700943B3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE47422B7C62700943B3E /* LaunchScreen.storyboard */; };
@@ -35,6 +35,7 @@
 		C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */; };
 		C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */; };
 		C9AFE4B822B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +66,7 @@
 		C9AFE40A22B799AE00943B3E /* AccessCheckoutDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE41022B799AE00943B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C9AFE46D22B7C5A600943B3E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C9AFE46D22B7C5A600943B3E /* CardPaymentFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowViewController.swift; sourceTree = "<group>"; };
 		C9AFE46E22B7C5A600943B3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9AFE47322B7C62700943B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C9AFE47522B7C62700943B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 		C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
 		C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvOnlyFlowViewController.swift; sourceTree = "<group>"; };
 		F05A61772A68844665C943F5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,7 +176,8 @@
 			children = (
 				1BD0EE9E22CBB59400147A71 /* Stubs */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
-				C9AFE46D22B7C5A600943B3E /* ViewController.swift */,
+				E7B9A349243393C400137BCF /* CvvOnlyFlowViewController.swift */,
+				C9AFE46D22B7C5A600943B3E /* CardPaymentFlowViewController.swift */,
 				C9AFE47222B7C62700943B3E /* Main.storyboard */,
 				C9AFE47422B7C62700943B3E /* LaunchScreen.storyboard */,
 				C9AFE46E22B7C5A600943B3E /* Assets.xcassets */,
@@ -400,7 +403,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9AFE47022B7C5A600943B3E /* ViewController.swift in Sources */,
+				C9AFE47022B7C5A600943B3E /* CardPaymentFlowViewController.swift in Sources */,
+				E7B9A34A243393C400137BCF /* CvvOnlyFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
