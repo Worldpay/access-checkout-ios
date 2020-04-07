@@ -1,7 +1,7 @@
 import Foundation
 
 /// A view managed by a `Card`
-public protocol CardView {
+public protocol CardView : class {
     
     /// Is enabled for editing
     var isEnabled: Bool { get set }
