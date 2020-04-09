@@ -80,20 +80,9 @@ class CvvOnlyFlowViewController: UIViewController {
         var fieldToReturn:String?
         validationErrors.forEach { validationError in
             switch validationError {
-                case .fieldHasInvalidValue(_, let jsonPath),
-                    .fieldIsMissing(_, let jsonPath),
-                    .stringIsTooShort(_, let jsonPath),
-                    .stringIsTooLong(_, let jsonPath),
-                    .panFailedLuhnCheck(_, let jsonPath),
-                    .fieldMustBeInteger(_, let jsonPath),
-                    .integerIsTooSmall(_, let jsonPath),
-                    .integerIsTooLarge(_, let jsonPath),
-                    .fieldMustBeNumber(_, let jsonPath),
-                    .stringFailedRegexCheck(_, let jsonPath),
-                    .dateHasInvalidFormat(_, let jsonPath):
+                case .stringFailedRegexCheck(_, let jsonPath):
                     switch jsonPath {
                         case "$.cvv":
-                            self.cvvField.isValid(valid: false)
                             fieldToReturn = jsonPath
                         default:
                             print("Unrecognized jsonPath")

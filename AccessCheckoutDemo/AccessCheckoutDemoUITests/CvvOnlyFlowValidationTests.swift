@@ -4,7 +4,6 @@ import XCTest
 class CvvOnlyFlowCvvValidationTests: XCTestCase {
     let app = XCUIApplication()
     var view:CvvOnlyFlowViewPageObject?
-    let backspace = XCUIKeyboardKey.delete.rawValue
     
     override func setUp() {
         continueAfterFailure = false
@@ -46,15 +45,6 @@ class CvvOnlyFlowCvvValidationTests: XCTestCase {
         view!.typeTextIntoCvv("123456")
         
         XCTAssertEqual("1234", view!.cvvText)
-    }
-    
-    func testCanDeleteTextFromCvv(){
-        view!.typeTextIntoCvv("1234")
-        XCTAssertEqual("1234", view!.cvvText)
-        
-        view!.typeTextIntoCvv(backspace)
-        
-        XCTAssertEqual("123", view!.cvvText)
     }
     
     func testSubmitButtonIsDisplayed() {
