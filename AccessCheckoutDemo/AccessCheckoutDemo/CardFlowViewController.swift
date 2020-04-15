@@ -1,7 +1,7 @@
 import UIKit
 import AccessCheckoutSDK
 
-class CardPaymentFlowViewController: UIViewController {
+class CardFlowViewController: UIViewController {
     
     @IBOutlet weak var panView: PANView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
@@ -158,7 +158,7 @@ class CardPaymentFlowViewController: UIViewController {
     }
 }
 
-extension CardPaymentFlowViewController: CardDelegate {
+extension CardFlowViewController: CardDelegate {
     func cardView(_ cardView: CardView, isValid valid: Bool) {
         cardView.isValid(valid: valid)
         if let valid = card?.isValid() {

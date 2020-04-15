@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Card payment flow-->
+        <!--Card flow-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CardPaymentFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CardFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hy8-fq-jdj"/>
                         <viewControllerLayoutGuide type="bottom" id="P4U-sM-I5g"/>
@@ -69,7 +69,7 @@
                             <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="tff-uB-MuP"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Card payment flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
+                    <tabBarItem key="tabBarItem" title="Card flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
                     <connections>
                         <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
                         <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
@@ -85,7 +85,7 @@
         <!--Cvv only flow-->
         <scene sceneID="lPP-8k-MJs">
             <objects>
-                <viewController id="ZEX-QF-aID" userLabel="Cvv only flow" customClass="CvvOnlyFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZEX-QF-aID" userLabel="Cvv only flow" customClass="CvvFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="og0-0P-fDP"/>
                         <viewControllerLayoutGuide type="bottom" id="OMc-0h-5O9"/>
@@ -126,7 +126,7 @@
                             <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="eAA-XG-Jrm"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Cvv-only flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
+                    <tabBarItem key="tabBarItem" title="CVV flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
                     <connections>
                         <outlet property="cvvField" destination="zuw-Kr-otx" id="06k-Zx-spg"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>

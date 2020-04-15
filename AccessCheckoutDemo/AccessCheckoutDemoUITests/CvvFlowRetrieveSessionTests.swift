@@ -17,7 +17,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvOnlyFlow()
+        let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
         
@@ -32,7 +32,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvOnlyFlow()
+        let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
         
@@ -56,7 +56,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-error")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvOnlyFlow()
+        let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
         
@@ -71,7 +71,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-error")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvOnlyFlow()
+        let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
         

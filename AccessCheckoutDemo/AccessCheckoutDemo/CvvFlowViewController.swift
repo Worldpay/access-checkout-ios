@@ -1,7 +1,7 @@
 import UIKit
 import AccessCheckoutSDK
 
-class CvvOnlyFlowViewController: UIViewController {
+class CvvFlowViewController: UIViewController {
 
     @IBOutlet weak var cvvField: CVVView!
     @IBOutlet weak var submitButton: UIButton!
@@ -96,7 +96,7 @@ class CvvOnlyFlowViewController: UIViewController {
     }
 }
 
-extension CvvOnlyFlowViewController : CVVOnlyDelegate {
+extension CvvFlowViewController : CVVOnlyDelegate {
     public func handleValidationResult(cvvView: CardView, isValid: Bool) {
         cvvView.isValid(valid: isValid)
         

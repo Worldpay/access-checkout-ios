@@ -10,14 +10,14 @@ class NavigationTests: XCTestCase {
         app.launch()
     }
     
-    func testHasButtonsToNavigateToCvvOnlyFlow() {
-        let element:XCUIElement = app.tabBars.buttons["Cvv-only flow"]
+    func testHasButtonsToNavigateToCvvFlow() {
+        let element:XCUIElement = NavigationViewPageObject(app).cvvFlowNavigationButton
         
         XCTAssertTrue(element.exists)
     }
     
-    func testHasButtonToNavigateToStandardFlow() {
-        let element:XCUIElement = app.tabBars.buttons["Card payment flow"]
+    func testHasButtonToNavigateToCardFlow() {
+        let element:XCUIElement = NavigationViewPageObject(app).cardFlowNavigationButton
         
         XCTAssertTrue(element.exists)
     }

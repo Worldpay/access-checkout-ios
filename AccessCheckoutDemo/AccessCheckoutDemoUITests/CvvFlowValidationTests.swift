@@ -10,7 +10,7 @@ class CvvOnlyFlowCvvValidationTests: XCTestCase {
         
         app.launch()
         
-        view = NavigationViewPageObject(app).navigateToCvvOnlyFlow()
+        view = NavigationViewPageObject(app).navigateToCvvFlow()
     }
     
     func testCvvFieldIsDisplayed() {

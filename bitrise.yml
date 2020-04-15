@@ -15,7 +15,7 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
     - swift-environment-variable-injector:
         inputs:
-        - files: AccessCheckoutDemo/AccessCheckoutDemo/CardPaymentFlowViewController.swift
+        - files: AccessCheckoutDemo/AccessCheckoutDemo/CardFlowViewController.swift
     - script:
         inputs:
         - content: |-
