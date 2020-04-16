@@ -16,7 +16,7 @@ workflows:
     - swift-environment-variable-injector:
         inputs:
         - files: AccessCheckoutDemo/AccessCheckoutDemo/CardFlowViewController.swift
-	- verbose: true
+        - verbose: true
     - script:
         inputs:
         - content: |-
