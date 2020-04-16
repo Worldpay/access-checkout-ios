@@ -15,6 +15,7 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
     - swift-environment-variable-injector:
         inputs:
+        - variable_injector_version: 0.3.1
         - files: AccessCheckoutDemo/AccessCheckoutDemo/CardFlowViewController.swift
         - verbose: true
     - script:
