@@ -35,6 +35,7 @@
 		C9AFE4B622B7EE5900943B3E /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */; };
 		C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */; };
 		C9AFE4B822B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1BD93A2448BB9200A4C745 /* CIVariables.swift */; };
 		E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D362437AE3900DD842F /* AppLauncher.swift */; };
 		E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D382437B1BA00DD842F /* XCTestExtension.swift */; };
 		E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
@@ -100,6 +101,7 @@
 		C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
 		C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		CC1BD93A2448BB9200A4C745 /* CIVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIVariables.swift; sourceTree = "<group>"; };
 		E7134D362437AE3900DD842F /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
 		E7134D382437B1BA00DD842F /* XCTestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtension.swift; sourceTree = "<group>"; };
 		E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowViewPageObject.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				E7B9A349243393C400137BCF /* CvvFlowViewController.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
+				CC1BD93A2448BB9200A4C745 /* CIVariables.swift */,
 				C9AFE47222B7C62700943B3E /* Main.storyboard */,
 				C9AFE47422B7C62700943B3E /* LaunchScreen.storyboard */,
 				C9AFE46E22B7C5A600943B3E /* Assets.xcassets */,
@@ -472,6 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */,
+				CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,
 				E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */,
 				E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */,

@@ -176,9 +176,3 @@ extension CardFlowViewController: CardDelegate {
         panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
 }
-
-/// Bitrise Swift variable injector step, see https://github.com/LucianoPAlmeida/variable-injector
-struct CI {
-    /// The merchant identity
-    static var merchantId = "$(MERCHANT_ID)"
-}
