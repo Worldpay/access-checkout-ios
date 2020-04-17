@@ -15,7 +15,9 @@ workflows:
         - project_path: "$SDK_PROJECT_PATH"
     - swift-environment-variable-injector:
         inputs:
-        - files: AccessCheckoutDemo/AccessCheckoutDemo/ViewController.swift
+        - variable_injector_version: 0.3.1
+        - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
+        - verbose: true
     - script:
         inputs:
         - content: |-
@@ -87,6 +89,7 @@ workflows:
         - project_path: "$DEMO_PROJECT_PATH"
         - scheme: "$BITRISE_DEMO_SCHEME"
         - export_method: "$BITRISE_EXPORT_METHOD"
+    - deploy-to-bitrise-io:
     - deploy-to-bitrise-io:
         inputs:
         - deploy_path: "${BITRISE_SOURCE_DIR}/coverage.html"

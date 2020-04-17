@@ -11,12 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let base = Bundle.main.infoDictionary?["AccessBaseURL"] as? String {
             // Network stubs
-            setupDiscoveryStub(baseURI: base)
-            setupVerifiedTokensStub(baseURI: base)
-            setupVerifiedTokensSessionStub(baseURI: base)
+            DiscoveryStub().start(baseUri: base)
+            VerifiedTokensStub().start(baseUri: base)
+            VerifiedTokensSessionStub().start(baseUri: base)
+            SessionsStub().start(baseUri: base)
+            SessionsPaymentsCvcStub().start(baseUri: base)
         }
-        if let configurationURI = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
-            setupCardConfigurationStub(configurationURI: configurationURI)
+        if let configurationUri = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
+            CardConfigurationStub().start(baseUri: configurationUri)
         }
         return true
     }
@@ -42,51 +44,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    private func setupDiscoveryStub(baseURI: String) {
-        
-        if let stubDiscovery = UserDefaults.standard.string(forKey: "stubDiscovery"),
-            let url = Bundle.main.url(forResource: stubDiscovery, withExtension: "json"),
-            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
-                MockingjayProtocol.addStub(matcher: http(.get, uri: baseURI),
-                                           builder: jsonData(data))
-        }
-    }
-
-    private func setupVerifiedTokensStub(baseURI: String) {
-        if let stubVerifiedTokens = UserDefaults.standard.string(forKey: "stubVerifiedTokens"),
-            let url = Bundle.main.url(forResource: stubVerifiedTokens, withExtension: "json"),
-            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
-            MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseURI)/verifiedTokens"),
-                                       builder: jsonData(data))
-        }
-    }
-    
-    private func setupVerifiedTokensSessionStub(baseURI: String) {
-        if let stubVerifiedTokensSession = UserDefaults.standard.string(forKey: "stubVerifiedTokensSession"),
-            let url = Bundle.main.url(forResource: stubVerifiedTokensSession, withExtension: "json"),
-            let data = replaceBaseUri(base: baseURI, inStubURL: url) {
-                MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseURI)/verifiedTokens/sessions"),
-                                           builder: jsonData(data))
-        }
-    }
-    
-    private func setupCardConfigurationStub(configurationURI: String) {
-        if let stubCardConfiguration = UserDefaults.standard.string(forKey: "stubCardConfiguration"),
-            let url = Bundle.main.url(forResource: stubCardConfiguration, withExtension: "json"),
-            let data = replaceBaseUri(base: Bundle.main.bundleURL.absoluteString, inStubURL: url) {
-                MockingjayProtocol.addStub(matcher: http(.get, uri: configurationURI),
-                                           builder: jsonData(data))
-        }
-    }
-    
-    private func replaceBaseUri(base: String, inStubURL: URL) -> Data? {
-        guard let stub = try? String(contentsOf: inStubURL) else {
-            return nil
-        }
-        let modified = stub.replacingOccurrences(of: "<BASE_URI>", with: base)
-        return modified.data(using: .utf8)
-    }
-
 }
 

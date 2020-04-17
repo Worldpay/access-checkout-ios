@@ -1,7 +1,7 @@
 import UIKit
 import AccessCheckoutSDK
 
-class ViewController: UIViewController {
+class CardFlowViewController: UIViewController {
     
     @IBOutlet weak var panView: PANView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
@@ -44,12 +44,9 @@ class ViewController: UIViewController {
                 
                 switch result {
                 case .success(let href):
-                    let alertController = UIAlertController(title: "Session", message: href, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        alertController.dismiss(animated: true)
+                    AlertView.display(using: self, title: "Session", message: href, closeHandler: {
                         self.resetCard(preserveContent: false, validationErrors: nil)
-                    }))
-                    self.present(alertController, animated: true)
+                    })
                 case .failure(let error):
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
@@ -63,11 +60,7 @@ class ViewController: UIViewController {
                     }
 
                     self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-                    let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        alertController.dismiss(animated: true)
-                    }))
-                    self.present(alertController, animated: true )
+                    AlertView.display(using: self, title: title, message: nil)
                 }
             }
         }
@@ -165,7 +158,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CardDelegate {
+extension CardFlowViewController: CardDelegate {
     func cardView(_ cardView: CardView, isValid valid: Bool) {
         cardView.isValid(valid: valid)
         if let valid = card?.isValid() {
@@ -182,10 +175,4 @@ extension ViewController: CardDelegate {
         }
         panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
-}
-
-/// Bitrise Swift variable injector step, see https://github.com/LucianoPAlmeida/variable-injector
-struct CI {
-    /// The merchant identity
-    static var merchantId = "$(MERCHANT_ID)"
 }
