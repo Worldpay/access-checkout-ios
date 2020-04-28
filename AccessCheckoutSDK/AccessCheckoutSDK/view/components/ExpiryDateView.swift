@@ -7,7 +7,7 @@ import UIKit
     @IBOutlet weak var yearTextField: UITextField!
     
     /// The delegate to handle view events
-    weak public var accessCheckoutViewDelegate: AccessCheckoutViewDelegate?
+    weak public var validationDelegate: ValidationDelegate?
     
     /// The expiry date month element
     public var month: ExpiryMonth? {
@@ -68,9 +68,9 @@ import UIKit
         }
         switch textField {
         case monthTextField:
-            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didUpdate(expiryMonth: text, expiryYear: nil)
+            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyPartialMatchValidation(forExpiryMonth: text, andExpiryYear: nil)
         case yearTextField:
-            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didUpdate(expiryMonth: nil, expiryYear: text)
+            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyPartialMatchValidation(forExpiryMonth: nil, andExpiryYear: text)
         default:
             return
         }
@@ -115,9 +115,9 @@ extension ExpiryDateView: UITextFieldDelegate {
         }
         switch textField {
         case monthTextField:
-            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didEndUpdate(expiryMonth: text, expiryYear: nil)
+            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyCompleteMatchValidation(forExpiryMonth: text, andExpiryYear: nil)
         case yearTextField:
-            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didEndUpdate(expiryMonth: nil, expiryYear: text)
+            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyCompleteMatchValidation(forExpiryMonth: nil, andExpiryYear: text)
         default:
             return
         }
@@ -127,9 +127,9 @@ extension ExpiryDateView: UITextFieldDelegate {
         
         switch textField {
         case monthTextField:
-            return (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
+            return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
         case yearTextField:
-            return (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
+            return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
         default:
             return false
         }

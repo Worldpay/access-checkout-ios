@@ -6,7 +6,7 @@ import UIKit
     @IBOutlet weak var textField: UITextField!
     
     /// The delegate to handle view events
-    weak public var accessCheckoutViewDelegate: AccessCheckoutViewDelegate?
+    weak public var validationDelegate: ValidationDelegate?
     
     /// The CVV represented by the view
     public var text: CVV? {
@@ -51,7 +51,7 @@ import UIKit
         guard let cvv = textField.text else {
             return
         }
-        (accessCheckoutViewDelegate as? CVVViewDelegate)?.didUpdate(cvv: cvv)
+        (validationDelegate as? CVVValidationDelegate)?.notifyPartialMatchValidation(forCvv: cvv)
     }
 }
 
@@ -86,11 +86,11 @@ extension CVVView: AccessCheckoutTextView {
 extension CVVView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if let cvv = textField.text {
-            (accessCheckoutViewDelegate as? CVVViewDelegate)?.didEndUpdate(cvv: cvv)
+            (validationDelegate as? CVVValidationDelegate)?.notifyCompleteMatchValidation(forCvv: cvv)
         }
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return (accessCheckoutViewDelegate as? CVVViewDelegate)?.canUpdate(cvv: textField.text, withText: string, inRange: range) ?? false
+        return (validationDelegate as? CVVValidationDelegate)?.canUpdate(cvv: textField.text, withText: string, inRange: range) ?? false
     }
 }

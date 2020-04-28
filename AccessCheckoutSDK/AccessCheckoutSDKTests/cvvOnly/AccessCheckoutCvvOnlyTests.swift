@@ -8,7 +8,7 @@ class AccessCheckoutCVVOnlyTests : XCTestCase {
         let cvvView = CVVView()
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: nil)
         
-        XCTAssertTrue(checkoutCvvOnly === cvvView.accessCheckoutViewDelegate)
+        XCTAssertTrue(checkoutCvvOnly === cvvView.validationDelegate)
     }
     
     func testIsNotValidWhenTextFieldIsEmpty() {
@@ -96,7 +96,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
         XCTAssertTrue(result)
     }
     
-    func testDidUpdateCvvNotifiesDelegateWithPartialValidationResult() {
+    func testNotifyPartialMatchValidationNotifiesDelegateWithPartialValidationResult() {
         let cvvView = CVVView()
         let cvvValidator = MockCVVValidator()
         let expectedValidationResult: ValidationResult = ValidationResult(partial: true, complete: false)
@@ -105,14 +105,14 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
         when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: true)).thenDoNothing()
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator: cvvValidator)
         
-        checkoutCvvOnly.didUpdate(cvv: "12")
+        checkoutCvvOnly.notifyPartialMatchValidation(forCvv: "12")
         
         let argumentCaptor = ArgumentCaptor<AccessCheckoutView>()
         verify(cvvOnlyDelegate).handleValidationResult(cvvView: argumentCaptor.capture(), isValid: expectedValidationResult.partial)
         XCTAssertTrue(argumentCaptor.value! === (cvvView as AccessCheckoutView))
     }
     
-    func testDidEndUpdateCvvNotifiesDelegateWithCompleteValidationResult() {
+    func testNotifyCompleteMatchValidationNotifiesDelegateWithCompleteValidationResult() {
         let cvvView = CVVView()
         let cvvValidator = MockCVVValidator()
         let expectedValidationResult: ValidationResult = ValidationResult(partial: false, complete: true)
@@ -121,7 +121,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
         when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: true)).thenDoNothing()
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator: cvvValidator)
         
-        checkoutCvvOnly.didEndUpdate(cvv: "12")
+        checkoutCvvOnly.notifyCompleteMatchValidation(forCvv: "12")
         
         let argumentCaptor = ArgumentCaptor<AccessCheckoutView>()
         verify(cvvOnlyDelegate).handleValidationResult(cvvView: argumentCaptor.capture(), isValid: expectedValidationResult.complete)

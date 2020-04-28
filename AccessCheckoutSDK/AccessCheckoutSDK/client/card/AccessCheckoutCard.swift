@@ -36,9 +36,9 @@ public final class AccessCheckoutCard: Card {
         self.expiryDateView = expiryDateView
         self.cvvView = cvvView
      
-        self.panView.accessCheckoutViewDelegate = self
-        self.expiryDateView.accessCheckoutViewDelegate = self
-        self.cvvView.accessCheckoutViewDelegate = self
+        self.panView.validationDelegate = self
+        self.expiryDateView.validationDelegate = self
+        self.cvvView.validationDelegate = self
     }
     
     /**
@@ -53,12 +53,12 @@ public final class AccessCheckoutCard: Card {
     }
 }
 
-extension AccessCheckoutCard: PANViewDelegate {
+extension AccessCheckoutCard: PANValidationDelegate {
     /**
      The card number was updated.
      - Parameter pan: The card number
      */
-    public func didUpdate(pan: PAN) {
+    public func notifyPartialMatchValidation(forPan pan: PAN) {
      
         if let result = cardValidator?.validate(pan: pan) {
             cardDelegate?.handleValidationResult(panView, isValid: result.valid.partial)
@@ -73,7 +73,7 @@ extension AccessCheckoutCard: PANViewDelegate {
      Card number updates have completed.
      - Parameter pan: The card number
      */
-    public func didEndUpdate(pan: PAN) {
+    public func notifyCompleteMatchValidation(forPan pan: PAN) {
         if let validationResult = cardValidator?.validate(pan: pan).valid {
             cardDelegate?.handleValidationResult(panView, isValid: validationResult.complete)
         }
@@ -94,12 +94,12 @@ extension AccessCheckoutCard: PANViewDelegate {
     }
 }
 
-extension AccessCheckoutCard: CVVViewDelegate {
+extension AccessCheckoutCard: CVVValidationDelegate {
     /**
      The CVV was updated.
      - Parameter cvv: The card CVV
      */
-    public func didUpdate(cvv: CVV) {
+    public func notifyPartialMatchValidation(forCvv cvv: CVV) {
         if let valid = cardValidator?.validate(cvv: cvv, withPAN: panView.text) {
             cardDelegate?.handleValidationResult(cvvView, isValid: valid.partial)
         }
@@ -109,7 +109,7 @@ extension AccessCheckoutCard: CVVViewDelegate {
      CVV updates have completed.
      - Parameter cvv: The card CVV
      */
-    public func didEndUpdate(cvv: CVV) {
+    public func notifyCompleteMatchValidation(forCvv cvv: CVV) {
         if let valid = cardValidator?.validate(cvv: cvv, withPAN: panView.text) {
             cardDelegate?.handleValidationResult(cvvView, isValid: valid.complete)
         }
@@ -130,7 +130,7 @@ extension AccessCheckoutCard: CVVViewDelegate {
     }
 }
 
-extension AccessCheckoutCard: ExpiryDateViewDelegate {
+extension AccessCheckoutCard: ExpiryDateValidationDelegate {
     /**
      The expiry month or year was updated.
      
@@ -138,7 +138,7 @@ extension AccessCheckoutCard: ExpiryDateViewDelegate {
         - expiryMonth: The card expiry month
         - expiryYear: The card expiry year
      */
-    public func didUpdate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) {
+    public func notifyPartialMatchValidation(forExpiryMonth expiryMonth: ExpiryMonth?, andExpiryYear expiryYear: ExpiryYear?) {
         if let valid = cardValidator?.validate(month: expiryMonth ?? expiryDateView.month,
                                                year: expiryYear ?? expiryDateView.year,
                                                target: Date()) {
@@ -153,7 +153,7 @@ extension AccessCheckoutCard: ExpiryDateViewDelegate {
         - expiryMonth: The card expiry month
         - expiryYear: The card expiry year
      */
-    public func didEndUpdate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) {
+    public func notifyCompleteMatchValidation(forExpiryMonth expiryMonth: ExpiryMonth?, andExpiryYear expiryYear: ExpiryYear?) {
         guard let month = expiryMonth ?? expiryDateView.month, let year = expiryYear ?? expiryDateView.year else {
             return
         }

@@ -7,7 +7,7 @@ import UIKit
     @IBOutlet public weak var imageView: UIImageView!
     
     /// The delegate to handle view events
-    weak public var accessCheckoutViewDelegate: AccessCheckoutViewDelegate?
+    weak public var validationDelegate: ValidationDelegate?
     
     /// The card number represented by the view
     public var text: PAN? {
@@ -53,7 +53,7 @@ import UIKit
         guard let pan = textField.text else {
             return
         }
-        (accessCheckoutViewDelegate as? PANViewDelegate)?.didUpdate(pan: pan)
+        (validationDelegate as? PANValidationDelegate)?.notifyPartialMatchValidation(forPan: pan)
     }
 }
 
@@ -89,11 +89,11 @@ extension PANView: UITextFieldDelegate {
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if let pan = textField.text {
-            (accessCheckoutViewDelegate as? PANViewDelegate)?.didEndUpdate(pan: pan)
+            (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
         }
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return (accessCheckoutViewDelegate as? PANViewDelegate)?.canUpdate(pan: textField.text, withText: string, inRange: range) ?? false
+        return (validationDelegate as? PANValidationDelegate)?.canUpdate(pan: textField.text, withText: string, inRange: range) ?? false
     }
 }

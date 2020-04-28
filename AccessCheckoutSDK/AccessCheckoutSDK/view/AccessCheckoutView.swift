@@ -7,7 +7,7 @@ public protocol AccessCheckoutView : class {
     var isEnabled: Bool { get set }
     
     /// A delegate property
-    var accessCheckoutViewDelegate: AccessCheckoutViewDelegate? { get set }
+    var validationDelegate: ValidationDelegate? { get set }
     
     /// Called when a `CardView` validity changes
     func isValid(valid: Bool)

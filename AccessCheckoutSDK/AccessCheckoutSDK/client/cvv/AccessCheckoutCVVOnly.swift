@@ -18,7 +18,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvValidator = CVVValidator()
         self.cvvOnlyDelegate = cvvOnlyDelegate
         
-        cvvView.accessCheckoutViewDelegate = self
+        cvvView.validationDelegate = self
     }
     
     /**
@@ -29,7 +29,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvValidator = cvvValidator
         self.cvvOnlyDelegate = cvvOnlyDelegate
         
-        cvvView.accessCheckoutViewDelegate = self
+        cvvView.validationDelegate = self
     }
     
     /**
@@ -40,7 +40,7 @@ public class AccessCheckoutCVVOnly {
     }
 }
 
-extension AccessCheckoutCVVOnly : CVVViewDelegate {
+extension AccessCheckoutCVVOnly : CVVValidationDelegate {
     /**
      Returns true if the result of applying withText using selection range inRange to cvv makes up a text which is a partially valid CVV
      This is used when the text (i.e. cvv) is being edited in the CvvView UI component in order to allow or reject text edits based on the text being inputed
@@ -60,7 +60,7 @@ extension AccessCheckoutCVVOnly : CVVViewDelegate {
      This is used when the text (i.e. cvv) is being edited in the CvvView UI component and editing has not yet finished
      - Parameter cvv: the cvv text coming from the CvvView UI component
     */
-    public func didUpdate(cvv: CVV) {
+    public func notifyPartialMatchValidation(forCvv cvv: CVV) {
         guard let cvvOnlyDelegate = self.cvvOnlyDelegate, let cvvValidator = self.cvvValidator else {
             return
         }
@@ -73,7 +73,7 @@ extension AccessCheckoutCVVOnly : CVVViewDelegate {
      This is used when the text (i.e. cvv) editing has finished in the CvvView UI component
      - Parameter cvv: the cvv text coming from the CvvView UI component
     */
-    public func didEndUpdate(cvv: CVV) {
+    public func notifyCompleteMatchValidation(forCvv cvv: CVV) {
         guard let cvvOnlyDelegate = self.cvvOnlyDelegate, let cvvValidator = self.cvvValidator else {
             return
         }
