@@ -2,71 +2,109 @@ import Foundation
 import Mockingjay
 
 protocol ServiceStub {
-    func start(baseUri:String)
+    func start()
 }
 
 class DiscoveryStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    
+    init(baseUri: String) {
+        self.baseUri = baseUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.DiscoveryStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.get, uri: baseUri), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.get, uri: self.baseUri), builder: jsonData(data))
     }
 }
 
 class VerifiedTokensStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    
+    init(baseUri: String) {
+        self.baseUri = baseUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.VerifiedTokensStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseUri)/verifiedTokens"), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(self.baseUri)/verifiedTokens"), builder: jsonData(data))
     }
 }
 
 class VerifiedTokensSessionStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    
+    init(baseUri: String) {
+        self.baseUri = baseUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.VerifiedTokensSessionStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseUri)/verifiedTokens/sessions"), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(self.baseUri)/verifiedTokens/sessions"), builder: jsonData(data))
     }
 }
 
 class CardConfigurationStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    let cardConfigurationUri:String
+    
+    init(baseUri: String, cardConfigurationUri: String) {
+        self.baseUri = baseUri
+        self.cardConfigurationUri = cardConfigurationUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.CardConfigurationStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.get, uri: baseUri), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.get, uri: self.cardConfigurationUri), builder: jsonData(data))
     }
 }
 
 class SessionsStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    
+    init(baseUri: String) {
+        self.baseUri = baseUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.SessionsStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(baseUri)/sessions"), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.get, uri: "\(self.baseUri)/sessions"), builder: jsonData(data))
     }
 }
 
 class SessionsPaymentsCvcStub : ServiceStub {
-    func start(baseUri:String) {
+    let baseUri:String
+    
+    init(baseUri: String) {
+        self.baseUri = baseUri
+    }
+    
+    func start() {
         guard let resourceName = LaunchArguments.valueOf(LaunchArguments.SessionsPaymentsCvcStub),
-            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: baseUri) else {
+            let data = JsonStubbedResponse(resourceName).toData(usingBaseUri: self.baseUri) else {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(baseUri)/sessions/payments/cvc"), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(self.baseUri)/sessions/payments/cvc"), builder: jsonData(data))
     }
 }

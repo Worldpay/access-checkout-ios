@@ -9,16 +9,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        if let base = Bundle.main.infoDictionary?["AccessBaseURL"] as? String {
+        if let servicesBaseUri = Bundle.main.infoDictionary?["AccessBaseURL"] as? String {
             // Network stubs
-            DiscoveryStub().start(baseUri: base)
-            VerifiedTokensStub().start(baseUri: base)
-            VerifiedTokensSessionStub().start(baseUri: base)
-            SessionsStub().start(baseUri: base)
-            SessionsPaymentsCvcStub().start(baseUri: base)
+            DiscoveryStub(baseUri: servicesBaseUri).start()
+            VerifiedTokensStub(baseUri: servicesBaseUri).start()
+            VerifiedTokensSessionStub(baseUri: servicesBaseUri).start()
+            SessionsStub(baseUri: servicesBaseUri).start()
+            SessionsPaymentsCvcStub(baseUri: servicesBaseUri).start()
         }
         if let configurationUri = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
-            CardConfigurationStub().start(baseUri: configurationUri)
+            CardConfigurationStub(baseUri: Bundle.main.bundleURL.absoluteString, cardConfigurationUri: configurationUri).start()
         }
         return true
     }
