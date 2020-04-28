@@ -4,11 +4,11 @@ import Cuckoo
 
 class AccessCheckoutCVVOnlyTests : XCTestCase {
     
-    func testSetsCardViewDelegateOnCvvView() {
+    func testSetsAccessCheckoutViewDelegateOnCvvView() {
         let cvvView = CVVView()
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: nil)
         
-        XCTAssertTrue(checkoutCvvOnly === cvvView.cardViewDelegate)
+        XCTAssertTrue(checkoutCvvOnly === cvvView.accessCheckoutViewDelegate)
     }
     
     func testIsNotValidWhenTextFieldIsEmpty() {
@@ -58,7 +58,7 @@ class AccessCheckoutCVVOnlyTests : XCTestCase {
     }
 }
 
-class AccessCheckoutCVVOnly_CardViewDelegateImplementation_Tests : XCTestCase {
+class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testCanUpdateCvvWithTextWhenResultingCvvIsPartiallyValid() {
         let cvvView = CVVView()
@@ -126,76 +126,5 @@ class AccessCheckoutCVVOnly_CardViewDelegateImplementation_Tests : XCTestCase {
         let argumentCaptor = ArgumentCaptor<AccessCheckoutView>()
         verify(cvvOnlyDelegate).handleValidationResult(cvvView: argumentCaptor.capture(), isValid: expectedValidationResult.complete)
         XCTAssertTrue(argumentCaptor.value! === (cvvView as AccessCheckoutView))
-    }
-    
-    func testCannotUpdatePan() {
-        let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: MockCVVOnlyDelegate(), cvvValidator:CVVValidator())
-        
-        let result = checkoutCvvOnly.canUpdate(pan: "123", withText: "4", inRange: NSRange(location: 2, length: 0))
-        
-        XCTAssertFalse(result)
-    }
-    
-    func testDidUpdatePanDoesNotNotifyDelegate() {
-        let cvvView = CVVView()
-        let cvvOnlyDelegate = MockCVVOnlyDelegate()
-        when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: any())).thenDoNothing()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator:CVVValidator())
-        
-        checkoutCvvOnly.didUpdate(pan: "")
-        
-        verify(cvvOnlyDelegate, never()).handleValidationResult(cvvView: any(), isValid: any())
-    }
-    
-    func testDidEndUpdatePanDoesNotNotifyDelegate() {
-        let cvvView = CVVView()
-        let cvvOnlyDelegate = MockCVVOnlyDelegate()
-        when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: any())).thenDoNothing()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator:CVVValidator())
-        
-        checkoutCvvOnly.didEndUpdate(pan: "")
-        
-        verify(cvvOnlyDelegate, never()).handleValidationResult(cvvView: any(), isValid: any())
-    }
-    
-    func testCannotUpdateExpiryMonth() {
-        let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator:CVVValidator())
-        
-        let result = checkoutCvvOnly.canUpdate(expiryMonth: "1", withText: "2", inRange: NSRange(location: 1, length: 0))
-        
-        XCTAssertFalse(result)
-    }
-    
-    func testCannotUpdateExpiryYear() {
-        let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator:CVVValidator())
-        
-        let result = checkoutCvvOnly.canUpdate(expiryYear: "1", withText: "2", inRange: NSRange(location: 1, length: 0))
-        
-        XCTAssertFalse(result)
-    }
-    
-    func testDidUpdateExpiryDoesNotNotifyDelegate() {
-        let cvvView = CVVView()
-        let cvvOnlyDelegate = MockCVVOnlyDelegate()
-        when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: any())).thenDoNothing()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator:CVVValidator())
-        
-        checkoutCvvOnly.didUpdate(expiryMonth: "12", expiryYear: "34")
-        
-        verify(cvvOnlyDelegate, never()).handleValidationResult(cvvView: any(), isValid: any())
-    }
-    
-    func testDidEndUpdateExpiryDoesNotNotifyDelegate() {
-        let cvvView = CVVView()
-        let cvvOnlyDelegate = MockCVVOnlyDelegate()
-        when(cvvOnlyDelegate.getStubbingProxy().handleValidationResult(cvvView: any(), isValid: any())).thenDoNothing()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: cvvOnlyDelegate, cvvValidator:CVVValidator())
-        
-        checkoutCvvOnly.didEndUpdate(expiryMonth: "12", expiryYear: "34")
-        
-        verify(cvvOnlyDelegate, never()).handleValidationResult(cvvView: any(), isValid: any())
     }
 }

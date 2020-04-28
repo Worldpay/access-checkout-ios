@@ -7,7 +7,7 @@ import UIKit
     @IBOutlet weak var yearTextField: UITextField!
     
     /// The delegate to handle view events
-    weak public var cardViewDelegate: CardViewDelegate?
+    weak public var accessCheckoutViewDelegate: AccessCheckoutViewDelegate?
     
     /// The expiry date month element
     public var month: ExpiryMonth? {
@@ -68,9 +68,9 @@ import UIKit
         }
         switch textField {
         case monthTextField:
-            cardViewDelegate?.didUpdate(expiryMonth: text, expiryYear: nil)
+            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didUpdate(expiryMonth: text, expiryYear: nil)
         case yearTextField:
-            cardViewDelegate?.didUpdate(expiryMonth: nil, expiryYear: text)
+            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didUpdate(expiryMonth: nil, expiryYear: text)
         default:
             return
         }
@@ -115,9 +115,9 @@ extension ExpiryDateView: UITextFieldDelegate {
         }
         switch textField {
         case monthTextField:
-            cardViewDelegate?.didEndUpdate(expiryMonth: text, expiryYear: nil)
+            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didEndUpdate(expiryMonth: text, expiryYear: nil)
         case yearTextField:
-            cardViewDelegate?.didEndUpdate(expiryMonth: nil, expiryYear: text)
+            (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.didEndUpdate(expiryMonth: nil, expiryYear: text)
         default:
             return
         }
@@ -127,9 +127,9 @@ extension ExpiryDateView: UITextFieldDelegate {
         
         switch textField {
         case monthTextField:
-            return cardViewDelegate?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
+            return (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
         case yearTextField:
-            return cardViewDelegate?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
+            return (accessCheckoutViewDelegate as? ExpiryDateViewDelegate)?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
         default:
             return false
         }

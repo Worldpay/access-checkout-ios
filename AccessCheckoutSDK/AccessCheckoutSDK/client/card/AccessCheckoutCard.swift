@@ -1,3 +1,5 @@
+import Foundation
+
 /// An AccessCheckout card
 public final class AccessCheckoutCard: Card {
     
@@ -34,9 +36,9 @@ public final class AccessCheckoutCard: Card {
         self.expiryDateView = expiryDateView
         self.cvvView = cvvView
      
-        self.panView.cardViewDelegate = self
-        self.expiryDateView.cardViewDelegate = self
-        self.cvvView.cardViewDelegate = self
+        self.panView.accessCheckoutViewDelegate = self
+        self.expiryDateView.accessCheckoutViewDelegate = self
+        self.cvvView.accessCheckoutViewDelegate = self
     }
     
     /**
@@ -51,8 +53,7 @@ public final class AccessCheckoutCard: Card {
     }
 }
 
-extension AccessCheckoutCard: CardViewDelegate {
-    
+extension AccessCheckoutCard: PANViewDelegate {
     /**
      The card number was updated.
      - Parameter pan: The card number
@@ -91,7 +92,9 @@ extension AccessCheckoutCard: CardViewDelegate {
     public func canUpdate(pan: PAN?, withText text: String, inRange range: NSRange) -> Bool {
         return cardValidator?.canUpdate(pan: pan, withText: text, inRange: range) ?? true
     }
-    
+}
+
+extension AccessCheckoutCard: CVVViewDelegate {
     /**
      The CVV was updated.
      - Parameter cvv: The card CVV
@@ -125,7 +128,9 @@ extension AccessCheckoutCard: CardViewDelegate {
     public func canUpdate(cvv: CVV?, withText text: String, inRange range: NSRange) -> Bool {
         return cardValidator?.canUpdate(cvv: cvv, withPAN: panView.text, withText: text, inRange: range) ?? true
     }
-    
+}
+
+extension AccessCheckoutCard: ExpiryDateViewDelegate {
     /**
      The expiry month or year was updated.
      

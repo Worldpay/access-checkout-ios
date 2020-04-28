@@ -18,7 +18,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvValidator = CVVValidator()
         self.cvvOnlyDelegate = cvvOnlyDelegate
         
-        cvvView.cardViewDelegate = self
+        cvvView.accessCheckoutViewDelegate = self
     }
     
     /**
@@ -29,7 +29,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvValidator = cvvValidator
         self.cvvOnlyDelegate = cvvOnlyDelegate
         
-        cvvView.cardViewDelegate = self
+        cvvView.accessCheckoutViewDelegate = self
     }
     
     /**
@@ -40,7 +40,7 @@ public class AccessCheckoutCVVOnly {
     }
 }
 
-extension AccessCheckoutCVVOnly : CardViewDelegate {
+extension AccessCheckoutCVVOnly : CVVViewDelegate {
     /**
      Returns true if the result of applying withText using selection range inRange to cvv makes up a text which is a partially valid CVV
      This is used when the text (i.e. cvv) is being edited in the CvvView UI component in order to allow or reject text edits based on the text being inputed
@@ -79,58 +79,6 @@ extension AccessCheckoutCVVOnly : CardViewDelegate {
         }
         
         cvvOnlyDelegate.handleValidationResult(cvvView: cvvView, isValid: cvvValidator.validate(cvv: cvv).complete)
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design.
-     - Returns: false
-     */
-    public func canUpdate(pan: PAN?, withText text: String, inRange range: NSRange) -> Bool {
-        return false
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design. Does nothing.
-    */
-    public func didUpdate(pan: PAN) {
-        
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design. Does nothing.
-    */
-    public func didEndUpdate(pan: PAN) {
-        
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design.
-     - Returns: false
-    */
-    public func canUpdate(expiryMonth: ExpiryMonth?, withText text: String, inRange range: NSRange) -> Bool {
-        return false
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design.
-     - Returns: false
-    */
-    public func canUpdate(expiryYear: ExpiryYear?, withText text: String, inRange range: NSRange) -> Bool {
-        return false
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design. Does nothing.
-    */
-    public func didUpdate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) {
-        
-    }
-    
-    /**
-     Unused for the CVV-only workflow but implementation is required by design. Does nothing.
-    */
-    public func didEndUpdate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) {
-        
     }
     
     private func applyTextUpdate(toText originalText:String?, usingRange range:NSRange, usingText:String) -> String {

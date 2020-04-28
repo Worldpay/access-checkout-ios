@@ -1,7 +1,7 @@
 import Foundation
 
 /// A payment card. Manages card input and validation.
-public protocol Card: CardViewDelegate {
+public protocol Card: PANViewDelegate, ExpiryDateViewDelegate, CVVViewDelegate {
     
     /// View capturing the card number
     var panView: AccessCheckoutTextView { get }
