@@ -66,9 +66,9 @@ of these views or for more custom requirements you may provide your own
   ```
   extension ViewController: CardDelegate {
 
-    func cardView(_ cardView: CardView, isValid valid: Bool) {
+    func handleValidationResult(_ accessCheckoutView: AccessCheckoutView, isValid valid: Bool) {
         // Update your UI with the validation result
-        cardView.isValid(valid: valid)
+        accessCheckoutView.isValid(valid: valid)
         // Check for card validity to enable submission
         if let valid = card?.isValid() {
             submitButton.isEnabled = valid
@@ -86,7 +86,7 @@ of these views or for more custom requirements you may provide your own
   }
   ```
 
-  * The `cardView(_, isValid:)` function can be used to update the UI with card view validation
+  * The `handleValidationResult(_, isValid:)` function can be used to update the UI with card view validation
   outcomes and enabling the form for submission.
 
 5. Implement a submit function on the view controller, e.g.:

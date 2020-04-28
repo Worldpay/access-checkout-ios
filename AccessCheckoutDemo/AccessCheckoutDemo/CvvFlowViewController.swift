@@ -97,7 +97,7 @@ class CvvFlowViewController: UIViewController {
 }
 
 extension CvvFlowViewController : CVVOnlyDelegate {
-    public func handleValidationResult(cvvView: CardView, isValid: Bool) {
+    public func handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool) {
         cvvView.isValid(valid: isValid)
         
         submitButton.isEnabled = self.cvvOnly!.isValid()

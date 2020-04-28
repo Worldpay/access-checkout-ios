@@ -4,13 +4,13 @@ import Foundation
 public protocol Card: CardViewDelegate {
     
     /// View capturing the card number
-    var panView: CardTextView { get }
+    var panView: AccessCheckoutTextView { get }
     
     /// View capturing the card expiry date
-    var expiryDateView: CardDateView { get }
+    var expiryDateView: AccessCheckoutDateView { get }
     
     /// View capturing the card CVV
-    var cvvView: CardTextView { get }
+    var cvvView: AccessCheckoutTextView { get }
     
     /// The `Card`'s delegate
     var cardDelegate: CardDelegate? { get set }

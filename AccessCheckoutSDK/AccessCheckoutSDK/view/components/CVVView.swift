@@ -55,7 +55,7 @@ import UIKit
     }
 }
 
-extension CVVView: CardTextView {
+extension CVVView: AccessCheckoutTextView {
     
     /// View is enabled for editing
     public var isEnabled: Bool {

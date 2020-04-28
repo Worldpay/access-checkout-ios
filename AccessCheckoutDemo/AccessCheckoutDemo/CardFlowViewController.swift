@@ -159,8 +159,8 @@ class CardFlowViewController: UIViewController {
 }
 
 extension CardFlowViewController: CardDelegate {
-    func cardView(_ cardView: CardView, isValid valid: Bool) {
-        cardView.isValid(valid: valid)
+    func handleValidationResult(_ accessCheckoutView: AccessCheckoutView, isValid valid: Bool) {
+        accessCheckoutView.isValid(valid: valid)
         if let valid = card?.isValid() {
             submitButton.isEnabled = valid
         }

@@ -1,5 +1,5 @@
 /// A view representing a text field
-public protocol CardTextView: CardView {
+public protocol AccessCheckoutTextView: AccessCheckoutView {
     
     /// The text
     var text: String? { get }

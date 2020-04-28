@@ -57,7 +57,7 @@ import UIKit
     }
 }
 
-extension PANView: CardTextView {
+extension PANView: AccessCheckoutTextView {
     
     /// View is enabled for editing
     public var isEnabled: Bool {

@@ -27,9 +27,9 @@ public class MockCVVOnlyDelegate: CVVOnlyDelegate, Cuckoo.ProtocolMock {
     
     
     
-    public func handleValidationResult(cvvView: CardView, isValid: Bool)  {
+    public func handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool)  {
         
-    return cuckoo_manager.call("handleValidationResult(cvvView: CardView, isValid: Bool)",
+    return cuckoo_manager.call("handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool)",
             parameters: (cvvView, isValid),
             escapingParameters: (cvvView, isValid),
             superclassCall:
@@ -49,9 +49,9 @@ public class MockCVVOnlyDelegate: CVVOnlyDelegate, Cuckoo.ProtocolMock {
 	    }
 	    
 	    
-	    func handleValidationResult<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(cvvView: M1, isValid: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(CardView, Bool)> where M1.MatchedType == CardView, M2.MatchedType == Bool {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardView, Bool)>] = [wrap(matchable: cvvView) { $0.0 }, wrap(matchable: isValid) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCVVOnlyDelegate.self, method: "handleValidationResult(cvvView: CardView, isValid: Bool)", parameterMatchers: matchers))
+	    func handleValidationResult<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(cvvView: M1, isValid: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(AccessCheckoutView, Bool)> where M1.MatchedType == AccessCheckoutView, M2.MatchedType == Bool {
+	        let matchers: [Cuckoo.ParameterMatcher<(AccessCheckoutView, Bool)>] = [wrap(matchable: cvvView) { $0.0 }, wrap(matchable: isValid) { $0.1 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCVVOnlyDelegate.self, method: "handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -71,9 +71,9 @@ public class MockCVVOnlyDelegate: CVVOnlyDelegate, Cuckoo.ProtocolMock {
 	
 	    
 	    @discardableResult
-	    func handleValidationResult<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(cvvView: M1, isValid: M2) -> Cuckoo.__DoNotUse<(CardView, Bool), Void> where M1.MatchedType == CardView, M2.MatchedType == Bool {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardView, Bool)>] = [wrap(matchable: cvvView) { $0.0 }, wrap(matchable: isValid) { $0.1 }]
-	        return cuckoo_manager.verify("handleValidationResult(cvvView: CardView, isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func handleValidationResult<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(cvvView: M1, isValid: M2) -> Cuckoo.__DoNotUse<(AccessCheckoutView, Bool), Void> where M1.MatchedType == AccessCheckoutView, M2.MatchedType == Bool {
+	        let matchers: [Cuckoo.ParameterMatcher<(AccessCheckoutView, Bool)>] = [wrap(matchable: cvvView) { $0.0 }, wrap(matchable: isValid) { $0.1 }]
+	        return cuckoo_manager.verify("handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -85,7 +85,7 @@ public class CVVOnlyDelegateStub: CVVOnlyDelegate {
     
 
     
-    public func handleValidationResult(cvvView: CardView, isValid: Bool)   {
+    public func handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

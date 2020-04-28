@@ -77,7 +77,7 @@ import UIKit
     }
 }
 
-extension ExpiryDateView: CardDateView {
+extension ExpiryDateView: AccessCheckoutDateView {
     
     public var isEnabled: Bool {
         get {

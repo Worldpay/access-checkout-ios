@@ -3,6 +3,6 @@ public protocol CardDelegate {
     /// The card brand has changed
     func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?)
     
-    /// The card view has been validated
-    func cardView(_ cardView: CardView, isValid: Bool)
+    /// A UI component (pan, expiry date or cvv) has been validated
+    func handleValidationResult(_ accessCheckoutView: AccessCheckoutView, isValid: Bool)
 }

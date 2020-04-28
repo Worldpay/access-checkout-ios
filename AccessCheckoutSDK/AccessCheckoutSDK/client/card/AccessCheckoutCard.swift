@@ -2,13 +2,13 @@
 public final class AccessCheckoutCard: Card {
     
     /// A view representing the card number
-    public var panView: CardTextView
+    public var panView: AccessCheckoutTextView
     
     /// A view representing the card expiry date
-    public var expiryDateView: CardDateView
+    public var expiryDateView: AccessCheckoutDateView
     
     /// A view representing the card CVV
-    public var cvvView: CardTextView
+    public var cvvView: AccessCheckoutTextView
     
     /// The delegate to receive card events
     public var cardDelegate: CardDelegate?
@@ -26,9 +26,9 @@ public final class AccessCheckoutCard: Card {
      
      - Returns: An AccessCheckoutCard object
     */
-    public init(panView: CardTextView,
-                expiryDateView: CardDateView,
-                cvvView: CardTextView) {
+    public init(panView: AccessCheckoutTextView,
+                expiryDateView: AccessCheckoutDateView,
+                cvvView: AccessCheckoutTextView) {
         
         self.panView = panView
         self.expiryDateView = expiryDateView
@@ -60,11 +60,11 @@ extension AccessCheckoutCard: CardViewDelegate {
     public func didUpdate(pan: PAN) {
      
         if let result = cardValidator?.validate(pan: pan) {
-            cardDelegate?.cardView(panView, isValid: result.valid.partial)
+            cardDelegate?.handleValidationResult(panView, isValid: result.valid.partial)
             cardDelegate?.didChangeCardBrand(result.brand)
         }
         if let cvv = cvvView.text, let validationResult = cardValidator?.validate(cvv: cvv, withPAN: pan) {
-            cardDelegate?.cardView(cvvView, isValid: validationResult.partial)
+            cardDelegate?.handleValidationResult(cvvView, isValid: validationResult.partial)
         }
     }
     
@@ -74,7 +74,7 @@ extension AccessCheckoutCard: CardViewDelegate {
      */
     public func didEndUpdate(pan: PAN) {
         if let validationResult = cardValidator?.validate(pan: pan).valid {
-            cardDelegate?.cardView(panView, isValid: validationResult.complete)
+            cardDelegate?.handleValidationResult(panView, isValid: validationResult.complete)
         }
     }
     
@@ -98,7 +98,7 @@ extension AccessCheckoutCard: CardViewDelegate {
      */
     public func didUpdate(cvv: CVV) {
         if let valid = cardValidator?.validate(cvv: cvv, withPAN: panView.text) {
-            cardDelegate?.cardView(cvvView, isValid: valid.partial)
+            cardDelegate?.handleValidationResult(cvvView, isValid: valid.partial)
         }
     }
     
@@ -108,7 +108,7 @@ extension AccessCheckoutCard: CardViewDelegate {
      */
     public func didEndUpdate(cvv: CVV) {
         if let valid = cardValidator?.validate(cvv: cvv, withPAN: panView.text) {
-            cardDelegate?.cardView(cvvView, isValid: valid.complete)
+            cardDelegate?.handleValidationResult(cvvView, isValid: valid.complete)
         }
     }
     
@@ -137,7 +137,7 @@ extension AccessCheckoutCard: CardViewDelegate {
         if let valid = cardValidator?.validate(month: expiryMonth ?? expiryDateView.month,
                                                year: expiryYear ?? expiryDateView.year,
                                                target: Date()) {
-            cardDelegate?.cardView(expiryDateView, isValid: valid.partial)
+            cardDelegate?.handleValidationResult(expiryDateView, isValid: valid.partial)
         }
     }
     
@@ -155,7 +155,7 @@ extension AccessCheckoutCard: CardViewDelegate {
         if let valid = cardValidator?.validate(month: month,
                                                year: year,
                                                target: Date()) {
-            cardDelegate?.cardView(expiryDateView, isValid: valid.complete)
+            cardDelegate?.handleValidationResult(expiryDateView, isValid: valid.complete)
         }
     }
     

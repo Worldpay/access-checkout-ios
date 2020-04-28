@@ -2,7 +2,7 @@ import Foundation
 
 public class AccessCheckoutCVVOnly {
     
-    private let cvvView:CardTextView
+    private let cvvView:AccessCheckoutTextView
     private let cvvValidator:CVVValidator?
     private let cvvOnlyDelegate:CVVOnlyDelegate?
 
@@ -13,7 +13,7 @@ public class AccessCheckoutCVVOnly {
         - cvvView: the CVVView field being validated
         - cvvOnlyDelegate: an instance of CVVOnlyDelegate which will be called on validation of the CVV entered in the cvvView field
     */
-    public init (cvvView:CardTextView, cvvOnlyDelegate:CVVOnlyDelegate?) {
+    public init (cvvView:AccessCheckoutTextView, cvvOnlyDelegate:CVVOnlyDelegate?) {
         self.cvvView = cvvView
         self.cvvValidator = CVVValidator()
         self.cvvOnlyDelegate = cvvOnlyDelegate
@@ -24,7 +24,7 @@ public class AccessCheckoutCVVOnly {
     /**
      Convenience constructor used by unit tests
      */
-    init (cvvView:CardTextView, cvvOnlyDelegate:CVVOnlyDelegate?, cvvValidator:CVVValidator?) {
+    init (cvvView:AccessCheckoutTextView, cvvOnlyDelegate:CVVOnlyDelegate?, cvvValidator:CVVValidator?) {
         self.cvvView = cvvView
         self.cvvValidator = cvvValidator
         self.cvvOnlyDelegate = cvvOnlyDelegate

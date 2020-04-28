@@ -107,9 +107,9 @@ class AccessCheckoutCVVOnly_CardViewDelegateImplementation_Tests : XCTestCase {
         
         checkoutCvvOnly.didUpdate(cvv: "12")
         
-        let argumentCaptor = ArgumentCaptor<CardView>()
+        let argumentCaptor = ArgumentCaptor<AccessCheckoutView>()
         verify(cvvOnlyDelegate).handleValidationResult(cvvView: argumentCaptor.capture(), isValid: expectedValidationResult.partial)
-        XCTAssertTrue(argumentCaptor.value! === (cvvView as CardView))
+        XCTAssertTrue(argumentCaptor.value! === (cvvView as AccessCheckoutView))
     }
     
     func testDidEndUpdateCvvNotifiesDelegateWithCompleteValidationResult() {
@@ -123,9 +123,9 @@ class AccessCheckoutCVVOnly_CardViewDelegateImplementation_Tests : XCTestCase {
         
         checkoutCvvOnly.didEndUpdate(cvv: "12")
         
-        let argumentCaptor = ArgumentCaptor<CardView>()
+        let argumentCaptor = ArgumentCaptor<AccessCheckoutView>()
         verify(cvvOnlyDelegate).handleValidationResult(cvvView: argumentCaptor.capture(), isValid: expectedValidationResult.complete)
-        XCTAssertTrue(argumentCaptor.value! === (cvvView as CardView))
+        XCTAssertTrue(argumentCaptor.value! === (cvvView as AccessCheckoutView))
     }
     
     func testCannotUpdatePan() {
