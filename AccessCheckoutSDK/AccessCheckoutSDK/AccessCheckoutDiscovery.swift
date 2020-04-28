@@ -1,34 +1,3 @@
-import Foundation
-
-/// Discovery of the Access Worldpay Verified Tokens Session service
-public protocol Discovery {
-    
-    /// The discovered verified tokens session service endpoint
-    var serviceEndpoint: URL? { get }
-    /// Starts discovery of services
-    func discover(serviceLinks: ApiLinks, urlSession: URLSession, onComplete: (() -> Void)?)
-}
-
-public final class ApiLinks {
-    var service: String
-    var endpoint: String
-    var result: String
-    
-    public static let verifiedTokens =  ApiLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions", result: "verifiedTokens:session")
-    public static let sessions =  ApiLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc", result: "sessions:session")
-    
-    public init(service: String, endpoint: String, result: String) {
-        self.service = service
-        self.endpoint = endpoint
-        self.result = result
-    }
-}
-
-public final class ApiHeaders {
-    public static let verifiedTokensHeaderValue = "application/vnd.worldpay.verified-tokens-v1.hal+json"
-    public static let sessionsHeaderValue = "application/vnd.worldpay.sessions-v1.hal+json"
-}
-
 /// Discovers Access Worldpay Verified Tokens Session service
 public final class AccessCheckoutDiscovery: Discovery {
     
