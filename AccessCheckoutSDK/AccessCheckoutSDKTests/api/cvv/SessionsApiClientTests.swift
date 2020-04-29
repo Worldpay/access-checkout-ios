@@ -2,18 +2,18 @@ import XCTest
 import Mockingjay
 @testable import AccessCheckoutSDK
 
-class AccessCheckoutCVVOnlyClientTests: XCTestCase {
+class SessionsApiClientTests: XCTestCase {
 
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     private let mockDiscovery = DiscoveryMock()
-    private let mockURLRequestFactory = CVVSessionURLRequestFactoryMock()
+    private let mockURLRequestFactory = SessionsSessionURLRequestFactoryMock()
     private let expectedSession = "http://access.worldpay.com/sessions/sessions/encrypted-data"
     private let validCvv = "123"
     
     func testCreatesASession_andReceivesExpectedSession() {
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory,
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory,
                                                  restClient: mockRestClient)
         let testExpectation = expectation(description: "")
         
@@ -33,7 +33,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
             switch result {
@@ -51,7 +51,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         mockDiscovery.serviceEndpoint = URL(string: "url")
         
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
@@ -70,7 +70,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
 
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
             switch result {
@@ -88,7 +88,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         mockDiscovery.serviceEndpoint = URL(string: "some-url-discovered")
         
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
@@ -110,7 +110,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         mockURLRequestFactory.requestToReturn = expectedURLRequest
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
        
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
             switch result {
@@ -129,7 +129,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         mockDiscovery.failDiscovery = true
         let expectedError = AccessCheckoutClientError.undiscoverable(message: "Unable to discover service")
 
@@ -149,7 +149,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? responseWithoutExpectedKey()
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         let expectedError = AccessCheckoutClientError.endpointNotFound(message: "Endpoint not found in response")
 
         client.createSession(cvv: validCvv, urlSession: urlSession) { result in
@@ -168,7 +168,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? responseWithoutExpectedKey()
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         mockDiscovery.serviceEndpoint = URL(string: "url")
         let expectedError = AccessCheckoutClientError.endpointNotFound(message: "Endpoint not found in response")
 
@@ -188,7 +188,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         let testExpectation = expectation(description: "")
         let response = try? successResponse(withSession: expectedSession)
         let mockRestClient = RestClientMock(replyWith: response)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         let expectedError = AccessCheckoutClientError.unknown(message: "CVV cannot be empty")
         
         client.createSession(cvv: "", urlSession: urlSession) { result in
@@ -206,7 +206,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
     func testCvvSessionServiceErrorReturnedToClient() {
         let expectedError = AccessCheckoutClientError.accessDenied(message: "some error")
         let mockRestClient = RestClientMock<String>(replyWith: expectedError)
-        let client = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory,
+        let client = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "", urlRequestFactory: mockURLRequestFactory,
                                                  restClient: mockRestClient)
         let testExpectation = expectation(description: "")
         
@@ -222,7 +222,7 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    private func successResponse(withSession: String) throws -> AccessCheckoutResponse {
+    private func successResponse(withSession: String) throws -> ApiResponse {
         let responseAsString =
                 """
                     {
@@ -235,10 +235,10 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
                 """
 
         let responseAsData = responseAsString.data(using: .utf8)!
-        return try JSONDecoder().decode(AccessCheckoutResponse.self, from: responseAsData)
+        return try JSONDecoder().decode(ApiResponse.self, from: responseAsData)
     }
 
-    private func responseWithoutExpectedKey() throws -> AccessCheckoutResponse {
+    private func responseWithoutExpectedKey() throws -> ApiResponse {
         let responseAsString =
                 """
                     {
@@ -251,6 +251,6 @@ class AccessCheckoutCVVOnlyClientTests: XCTestCase {
                 """
 
         let responseAsData = responseAsString.data(using: .utf8)!
-        return try! JSONDecoder().decode(AccessCheckoutResponse.self, from: responseAsData)
+        return try! JSONDecoder().decode(ApiResponse.self, from: responseAsData)
     }
 }

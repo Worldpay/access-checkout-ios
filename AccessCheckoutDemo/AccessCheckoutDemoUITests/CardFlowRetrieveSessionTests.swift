@@ -50,7 +50,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         XCTAssertTrue(alert.exists)
         XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
         XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.panFailedLuhnCheck(message: nil, jsonPath: nil).errorName))
-        XCTAssert(alert.title.contains(VerifiedTokenRequest.Key.cardNumber.rawValue))
+        XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
     
     func testResponse_bodyDoesNotMatchSchema_fieldIsMissing_cardNumber() {
@@ -67,7 +67,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         XCTAssertTrue(alert.exists)
         XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
         XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.fieldIsMissing(message: nil, jsonPath: nil).errorName))
-        XCTAssert(alert.title.contains(VerifiedTokenRequest.Key.cardNumber.rawValue))
+        XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
 
     func testResponse_unknown_variation1() {

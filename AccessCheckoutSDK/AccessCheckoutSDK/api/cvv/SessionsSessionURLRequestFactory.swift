@@ -1,6 +1,6 @@
 import Foundation
 
-class CVVSessionURLRequestFactory {
+class SessionsSessionURLRequestFactory {
     func create(url :URL, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         var request = URLRequest(url: url)
         let sessionRequest: SessionsSessionRequest = SessionsSessionRequest(cvc: cvv, identity: merchantIdentity)

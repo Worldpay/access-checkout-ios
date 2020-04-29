@@ -64,7 +64,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let rootResponse = rootResponseJson.data(using: .utf8)!
         stub(http(.get, uri: "https://root"), jsonData(rootResponse))
         
-        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: "https://root")!)
+        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "https://root")!)
         let serviceEndpointKeys = ApiLinks.sessions
         
         
@@ -104,7 +104,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
                              body: responseJson)
         
         let mockDiscovery = MockDiscovery(baseURI: sessionsMockService.baseUrl)
-        let sessionsClient = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: "identity")
+        let sessionsClient = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "identity")
         
         sessionsMockService.run(timeout: 10) { testComplete in
             sessionsClient.createSession(cvv: "1234",
@@ -184,7 +184,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
                              body: responseJson)
         
         let mockDiscovery = MockDiscovery(baseURI: sessionsMockService.baseUrl)
-        let sessionsClient = AccessCheckoutCVVOnlyClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
+        let sessionsClient = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
         
         sessionsMockService.run(timeout: 10) { testComplete in
             sessionsClient.createSession(cvv: request.cvc,

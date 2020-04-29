@@ -63,7 +63,7 @@ func testServiceDiscoveryOnServiceRoot(){
         let rootResponse = rootResponseJson.data(using: .utf8)!
         stub(http(.get, uri: "https://root"), jsonData(rootResponse))
         
-        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: "https://root")!)
+        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "https://root")!)
         let serviceEndpointKeys = ApiLinks.verifiedTokens
         
         
@@ -108,7 +108,7 @@ func testServiceDiscoveryOnServiceRoot(){
                              body: responseJson)
         
         let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
-        let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "identity")
+        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "identity")
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
             verifiedTokensClient.createSession(pan: "4111111111111111",
@@ -257,7 +257,7 @@ func testServiceDiscoveryOnServiceRoot(){
                              body: responseJson)
         
         let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
-        let verifiedTokensClient = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
+        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
             verifiedTokensClient.createSession(pan: request.cardNumber,

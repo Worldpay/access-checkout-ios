@@ -8,7 +8,7 @@ class CvvFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     private var cvvOnly:AccessCheckoutCVVOnly?
-    private var cvvOnlyClient:AccessCheckoutCVVOnlyClient?
+    private var sessionsApiClient:SessionsApiClient?
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         guard let cvv = cvvField.text else {
@@ -19,7 +19,7 @@ class CvvFlowViewController: UIViewController {
         
         cvvField.isEnabled = false
         
-        cvvOnlyClient?.createSession(cvv: cvv,
+        sessionsApiClient?.createSession(cvv: cvv,
                                     urlSession: URLSession.shared) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
@@ -55,9 +55,9 @@ class CvvFlowViewController: UIViewController {
         cvvOnly = AccessCheckoutCVVOnly(cvvView: cvvField, cvvOnlyDelegate: self)
         
         if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
-            let discovery = AccessCheckoutDiscovery(baseUrl: url)
-            discovery.discover(serviceLinks: ApiLinks.sessions, urlSession: URLSession.shared) {
-                self.cvvOnlyClient = AccessCheckoutCVVOnlyClient(discovery: discovery, merchantIdentifier: CI.merchantId)
+            let apiDiscoveryClient = ApiDiscoveryClient(baseUrl: url)
+            apiDiscoveryClient.discover(serviceLinks: ApiLinks.sessions, urlSession: URLSession.shared) {
+                self.sessionsApiClient = SessionsApiClient(discovery: apiDiscoveryClient, merchantIdentifier: CI.merchantId)
             }
         }
     }

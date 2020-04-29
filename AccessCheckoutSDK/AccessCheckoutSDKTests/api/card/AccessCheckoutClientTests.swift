@@ -40,7 +40,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let data = getSampleResponseWith(href: expectedHref)
         stub(getSessionRequestStub, jsonData(data, status: 201, headers: nil))
         
-        let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "")
         
         let tokenExpectation = expectation(description: "token")
         client.createSession(pan: "1234",
@@ -68,7 +68,7 @@ class AccessCheckoutClientTests: XCTestCase {
         }
         stub(getSessionRequestStub, jsonData(data))
         
-        let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "")
         client.createSession(pan: "",
                              expiryMonth: 0,
                              expiryYear: 0,
@@ -359,7 +359,7 @@ class AccessCheckoutClientTests: XCTestCase {
     
     func testParser_canDecodeJsonResponse() {
         do {
-            _ = try JSONDecoder().decode(AccessCheckoutResponse.self, from: getSampleResponse())
+            _ = try JSONDecoder().decode(ApiResponse.self, from: getSampleResponse())
         } catch {
             XCTFail(error.localizedDescription)
         }

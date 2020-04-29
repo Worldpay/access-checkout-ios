@@ -3,9 +3,9 @@ import Mockingjay
 import XCTest
 @testable import AccessCheckoutSDK
 
-class CVVSessionURLRequestFactoryTests: XCTestCase {
+class SessionsSessionURLRequestFactoryTests: XCTestCase {
 
-    private let urlRequestFactory = CVVSessionURLRequestFactory()
+    private let urlRequestFactory = SessionsSessionURLRequestFactory()
     private let cvv: CVV = "123"
     private let bundle = BundleMock()
     private let appVersion = BundleMock.appVersion

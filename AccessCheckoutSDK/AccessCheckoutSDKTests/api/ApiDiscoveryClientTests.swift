@@ -2,7 +2,7 @@ import XCTest
 import Mockingjay
 @testable import AccessCheckoutSDK
 
-class AccessCheckoutDiscoveryTests: XCTestCase {
+class ApiDiscoveryClientTests: XCTestCase {
     
     enum StubError: Error {
         case test
@@ -182,7 +182,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
         
         mockDiscovery.discover(serviceLinks: serviceEndpointKeys, urlSession: session) {
             XCTAssertEqual(mockDiscovery.discoverCalls, 1)
-            let client = AccessCheckoutClient(discovery: mockDiscovery, merchantIdentifier: "")
+            let client = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "")
             client.createSession(pan: "1234",
                               expiryMonth: 1,
                               expiryYear: 0,
@@ -197,11 +197,11 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     
     private func verifyCanDecodeAndEncode(_ stubData: Data) {
         do {
-            let accessCheckoutResponse1 = try JSONDecoder().decode(AccessCheckoutResponse.self, from: stubData)
-            let encodedData = try JSONEncoder().encode(accessCheckoutResponse1)
-            let accessCheckoutResponse2 = try JSONDecoder().decode(AccessCheckoutResponse.self, from: encodedData)
-            XCTAssertEqual(accessCheckoutResponse1.links.endpoints.count, accessCheckoutResponse2.links.endpoints.count)
-            XCTAssertEqual(accessCheckoutResponse1.links.curies?.count, accessCheckoutResponse2.links.curies?.count)
+            let apiResponse1 = try JSONDecoder().decode(ApiResponse.self, from: stubData)
+            let encodedData = try JSONEncoder().encode(apiResponse1)
+            let apiResponse2 = try JSONDecoder().decode(ApiResponse.self, from: encodedData)
+            XCTAssertEqual(apiResponse1.links.endpoints.count, apiResponse2.links.endpoints.count)
+            XCTAssertEqual(apiResponse1.links.curies?.count, apiResponse2.links.curies?.count)
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -218,7 +218,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     }
     
     private func discoveryFindsServiceEndpoint() {
-        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: rootURI)!)
+        let discovery = ApiDiscoveryClient(baseUrl: URL(string: rootURI)!)
         let testExpectation = expectation(description: "discovery")
         
         discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
@@ -230,7 +230,7 @@ class AccessCheckoutDiscoveryTests: XCTestCase {
     }
     
     private func discoveryReturnsNil() {
-        let discovery = AccessCheckoutDiscovery(baseUrl: URL(string: rootURI)!)
+        let discovery = ApiDiscoveryClient(baseUrl: URL(string: rootURI)!)
         let testExpectation = expectation(description: "failure")
        
         discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {

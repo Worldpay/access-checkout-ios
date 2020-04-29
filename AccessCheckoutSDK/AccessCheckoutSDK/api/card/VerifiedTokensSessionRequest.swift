@@ -1,4 +1,4 @@
-struct VerifiedTokenRequest: Codable {
+struct VerifiedTokensSessionRequest: Codable {
     
     enum Key: String, CodingKey {
         case cardExpiryDate = "cardExpiryDate"

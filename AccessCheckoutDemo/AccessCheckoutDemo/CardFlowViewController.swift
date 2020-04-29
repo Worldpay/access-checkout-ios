@@ -9,7 +9,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var accessClient: AccessClient?
+    private var verifiedTokensApiClient: VerifiedTokensApiClient?
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
@@ -34,7 +34,7 @@ class CardFlowViewController: UIViewController {
         expiryDateView.isEnabled = false
         cvvView.isEnabled = false
         spinner.startAnimating()
-        accessClient?.createSession(pan: pan,
+        verifiedTokensApiClient?.createSession(pan: pan,
                                     expiryMonth: expiryMonth,
                                     expiryYear: expiryYear,
                                     cvv: cvv,
@@ -138,10 +138,10 @@ class CardFlowViewController: UIViewController {
         self.card = card
         
         if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
-            let accessCheckoutDiscovery = AccessCheckoutDiscovery(baseUrl: url)
+            let apiDiscoveryClient = ApiDiscoveryClient(baseUrl: url)
             let vts = ApiLinks.verifiedTokens
-            accessCheckoutDiscovery.discover(serviceLinks: vts, urlSession: URLSession.shared) {
-                self.accessClient = AccessCheckoutClient(discovery: accessCheckoutDiscovery,
+            apiDiscoveryClient.discover(serviceLinks: vts, urlSession: URLSession.shared) {
+                self.verifiedTokensApiClient = VerifiedTokensApiClient(discovery: apiDiscoveryClient,
                                                          merchantIdentifier: CI.merchantId)
             }
         }

@@ -1,5 +1,5 @@
 /// Discovers Access Worldpay Verified Tokens Session service
-public final class AccessCheckoutDiscovery: Discovery {
+public final class ApiDiscoveryClient: Discovery {
     
     private let baseUrl: URL
 
@@ -74,16 +74,16 @@ public final class AccessCheckoutDiscovery: Discovery {
         self.endpointDiscoveryTask?.resume()
     }
     
-    private func decodeJSON(fromData data: Data) throws -> AccessCheckoutResponse? {
-        return try JSONDecoder().decode(AccessCheckoutResponse.self, from: data)
+    private func decodeJSON(fromData data: Data) throws -> ApiResponse? {
+        return try JSONDecoder().decode(ApiResponse.self, from: data)
     }
     
     private func fetchServiceURL(withLinkId linkId: String, in jsonData: Data) -> URL? {
         var resultURL : URL? = nil
         
         do {
-            if let accessCheckoutResponse = try self.decodeJSON(fromData: jsonData) {
-                let serviceMap = accessCheckoutResponse.links.endpoints.mapValues({ URL(string: $0.href) })
+            if let apiResponse = try self.decodeJSON(fromData: jsonData) {
+                let serviceMap = apiResponse.links.endpoints.mapValues({ URL(string: $0.href) })
                 resultURL = serviceMap[linkId] ?? nil
             }
         } catch {

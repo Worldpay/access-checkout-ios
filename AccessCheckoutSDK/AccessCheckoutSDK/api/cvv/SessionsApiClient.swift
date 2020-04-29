@@ -1,26 +1,26 @@
 import Foundation
 
-public final class AccessCheckoutCVVOnlyClient {
+public final class SessionsApiClient {
     private var merchantIdentifier: String
     private var discovery: Discovery
-    private var urlRequestFactory:CVVSessionURLRequestFactory
+    private var urlRequestFactory:SessionsSessionURLRequestFactory
     private var restClient:RestClient
 
     public init(discovery: Discovery, merchantIdentifier: String) {
         self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
-        self.urlRequestFactory = CVVSessionURLRequestFactory()
+        self.urlRequestFactory = SessionsSessionURLRequestFactory()
         self.restClient = RestClient()
     }
 
-    init(discovery: Discovery, merchantIdentifier: String, urlRequestFactory: CVVSessionURLRequestFactory, restClient: RestClient) {
+    init(discovery: Discovery, merchantIdentifier: String, urlRequestFactory: SessionsSessionURLRequestFactory, restClient: RestClient) {
         self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
         self.urlRequestFactory = urlRequestFactory
         self.restClient = restClient
     }
     
-    fileprivate func extractSession(from response:AccessCheckoutResponse) -> String? {
+    fileprivate func extractSession(from response:ApiResponse) -> String? {
         return response.links.endpoints.mapValues({ $0.href })[ApiLinks.sessions.result]
     }
     
@@ -31,8 +31,8 @@ public final class AccessCheckoutCVVOnlyClient {
         }
         
         if let url = discovery.serviceEndpoint {
-            let request = urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: merchantIdentifier, bundle: Bundle(for: AccessCheckoutCVVOnlyClient.self))
-            restClient.send(urlSession: urlSession, request: request, responseType: AccessCheckoutResponse.self ) { result in
+            let request = urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: merchantIdentifier, bundle: Bundle(for: SessionsApiClient.self))
+            restClient.send(urlSession: urlSession, request: request, responseType: ApiResponse.self ) { result in
                 switch result {
                     case .success(let response):
                         if let session = self.extractSession(from: response) {
@@ -51,8 +51,8 @@ public final class AccessCheckoutCVVOnlyClient {
                     return
                 }
                 
-                let request = self.urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: self.merchantIdentifier, bundle: Bundle(for: AccessCheckoutCVVOnlyClient.self))
-                self.restClient.send(urlSession: urlSession, request: request, responseType: AccessCheckoutResponse.self) { result in
+                let request = self.urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: self.merchantIdentifier, bundle: Bundle(for: SessionsApiClient.self))
+                self.restClient.send(urlSession: urlSession, request: request, responseType: ApiResponse.self) { result in
                     switch result {
                         case .success(let response):
                             if let session = self.extractSession(from: response) {

@@ -1,6 +1,6 @@
 import Foundation
 
-struct AccessCheckoutResponse: Codable {
+struct ApiResponse: Codable {
     
     enum CodingKeys: String, CodingKey {
         case links = "_links"
