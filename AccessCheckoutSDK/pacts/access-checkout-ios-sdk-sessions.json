@@ -1,119 +1,119 @@
 {
-    "interactions": [
-        {
-            "request": {
-                "body": {
-                    "cvc": "1234", 
-                    "identity": "identity"
-                }, 
-                "path": "/sessions/payments/cvc", 
-                "method": "post", 
-                "headers": {
-                    "content-type": "application/vnd.worldpay.sessions-v1.hal+json", 
-                    "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
-                }
-            }, 
-            "description": "a valid request to sessions", 
-            "response": {
-                "status": 201, 
-                "headers": {
-                    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-                }, 
-                "body": {
-                    "_links": {
-                        "sessions:session": {
-                            "href": "http://pacttest/sessions/sessionURI"
-                        }
-                    }
-                }, 
-                "matchingRules": {
-                    "$.body._links['sessions:session'].href": {
-                        "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/.+", 
-                        "match": "regex"
-                    }
-                }
-            }
-        }, 
-        {
-            "request": {
-                "body": {
-                    "cvc": "123", 
-                    "identity": "incorrectValue"
-                }, 
-                "path": "/sessions/payments/cvc", 
-                "method": "post", 
-                "headers": {
-                    "content-type": "application/vnd.worldpay.sessions-v1.hal+json", 
-                    "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
-                }
-            }, 
-            "description": "a request with an invalid identity to sessions", 
-            "response": {
-                "status": 400, 
-                "headers": {
-                    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-                }, 
-                "body": {
-                    "validationErrors": [
-                        {
-                            "message": "Identity is invalid", 
-                            "jsonPath": "$.identity", 
-                            "errorName": "fieldHasInvalidValue"
-                        }
-                    ], 
-                    "message": "The json body provided does not match the expected schema", 
-                    "errorName": "bodyDoesNotMatchSchema"
-                }, 
-                "matchingRules": {
-                    "$.body.message": {
-                        "match": "type"
-                    }, 
-                    "$.body.validationErrors[0].message": {
-                        "match": "type"
-                    }
-                }
-            }
-        }, 
-        {
-            "request": {
-                "path": "/sessions", 
-                "method": "get", 
-                "headers": {
-                    "content-type": "application/vnd.worldpay.sessions-v1.hal+json", 
-                    "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
-                }
-            }, 
-            "description": "a GET request to the service root", 
-            "response": {
-                "status": 200, 
-                "headers": {
-                    "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-                }, 
-                "body": {
-                    "_links": {
-                        "sessions:paymentsCvc": {
-                            "href": "http://pacttest/sessions/payments/cvc"
-                        }
-                    }
-                }, 
-                "matchingRules": {
-                    "$.body._links['sessions:paymentsCvc'].href": {
-                        "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/payments\\/cvc", 
-                        "match": "regex"
-                    }
-                }
-            }
+  "consumer": {
+    "name": "access-checkout-iOS-sdk"
+  },
+  "provider": {
+    "name": "sessions"
+  },
+  "interactions": [
+    {
+      "description": "a valid request to sessions",
+      "request": {
+        "method": "post",
+        "path": "/sessions/payments/cvc",
+        "headers": {
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "cvc": "1234",
+          "identity": "identity"
         }
-    ], 
-    "consumer": {
-        "name": "access-checkout-iOS-sdk"
-    }, 
-    "metadata": {
-        "pactSpecification": {
-            "version": "3.0.0"
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "_links": {
+            "sessions:session": {
+              "href": "http://pacttest/sessions/sessionURI"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.sessions:session.href": {
+            "match": "regex",
+            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/.+"
+          }
         }
-    }, 
-    "provider": {
-        "name": "sessions"
+      }
+    },
+    {
+      "description": "a request with an invalid identity to sessions",
+      "request": {
+        "method": "post",
+        "path": "/sessions/payments/cvc",
+        "headers": {
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "cvc": "123",
+          "identity": "incorrectValue"
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "errorName": "bodyDoesNotMatchSchema",
+          "message": "The json body provided does not match the expected schema",
+          "validationErrors": [
+            {
+              "jsonPath": "$.identity",
+              "errorName": "fieldHasInvalidValue",
+              "message": "Identity is invalid"
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body.message": {
+            "match": "type"
+          },
+          "$.body.validationErrors[0].message": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a GET request to the service root",
+      "request": {
+        "method": "get",
+        "path": "/sessions",
+        "headers": {
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "_links": {
+            "sessions:paymentsCvc": {
+              "href": "http://pacttest/sessions/payments/cvc"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.sessions:paymentsCvc.href": {
+            "match": "regex",
+            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/payments\\/cvc"
+          }
+        }
+      }
     }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  }
 }

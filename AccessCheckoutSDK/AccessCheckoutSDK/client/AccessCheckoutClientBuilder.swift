@@ -22,6 +22,7 @@ public class AccessCheckoutClientBuilder {
             throw AccessCheckoutClientInitialisationError.missingAccessBaseUrl
         }
         
-        return AccessCheckoutClientImpl(merchantId: merchantId, baseUrl: accessBaseUrl)
+        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [VerifiedTokensRetrieveSessionHandler(), PaymentsCvcRetrieveSessionHandler()])
+        return AccessCheckoutClientImpl(merchantId: merchantId, baseUrl: accessBaseUrl, retrieveSessionHandlerDispatcher: dispatcher)
     }
 }

@@ -1,4 +1,4 @@
 public enum SessionType {
-    case VerifiedTokens
-    case PaymentsCvc
+    case verifiedTokens
+    case paymentsCvc
 }
