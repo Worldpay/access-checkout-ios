@@ -6,8 +6,8 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     let merchantId = "123"
     let baseUrl = "some-url"
     let cardDetails = CardDetails.builder().build()
-    let verifiedTokensSessionHandler = VerifiedTokensRetrieveSessionHandlerMock()
     let paymentsCvcSessionHandler = PaymentsCvcRetrieveSessionHandlerMock()
+    let verifiedTokensSessionHandler = VerifiedTokensRetrieveSessionHandlerMock()
     
     func testDispatchesToRetrieveAVerifiedTokensSession() {
         let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, verifiedTokensSessionHandler])

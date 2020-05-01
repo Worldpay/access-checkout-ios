@@ -1,18 +1,33 @@
 @testable import AccessCheckoutSDK
+import Mockingjay
 import XCTest
 
 class AccessCheckoutClientImplTests: XCTestCase {
+    let baseUrl = "http://localhost"
+    let verifiedTokensServicePath = "/verifiedTokens"
+    let verifiedTokensServiceSessionsPath = "/verifiedTokens/sessions"
+    let sessionsPath = "/sessions"
+    let sessionsPaymentsCvcPath = "/sessions/paymentsCvc"
+
     func testRetrievesAVerifiedTokensSession() {
-        let client = try! AccessCheckoutClientBuilder().merchantId("123")
-            .accessBaseUrl("some url")
+        stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
+        stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
+        stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), successfulVerifiedTokensSessionResponse(session: "expected-verified-tokens-session"))
+
+        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+            .accessBaseUrl(baseUrl)
             .build()
-        let cardDetails = CardDetails.builder().build()
+        let cardDetails = CardDetails.builder().pan("pan")
+            .expiryMonth("12")
+            .expiryYear("20")
+            .cvv("123")
+            .build()
         let sessionExpectation = expectation(description: "Session retrieved")
 
         client.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
             switch result {
                 case .success(let session):
-                    XCTAssertEqual("a-session", session)
+                    XCTAssertEqual("expected-verified-tokens-session", session)
                     sessionExpectation.fulfill()
                 case .failure:
                     XCTFail("got an error back from services")
@@ -23,16 +38,21 @@ class AccessCheckoutClientImplTests: XCTestCase {
     }
 
     func testRetrievesAPaymentsCvcSession() {
-        let client = try! AccessCheckoutClientBuilder().merchantId("123")
-            .accessBaseUrl("some url")
+        stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
+        stub(http(.get, uri: "\(baseUrl)\(sessionsPath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
+        stub(http(.post, uri: "\(baseUrl)\(sessionsPaymentsCvcPath)"), successfulPaymentsCvcSessionResponse(session: "expected-payments-cvc-session"))
+
+        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+            .accessBaseUrl(baseUrl)
             .build()
-        let cardDetails = CardDetails.builder().build()
+        let cardDetails = CardDetails.builder().cvv("123")
+            .build()
         let sessionExpectation = expectation(description: "Session retrieved")
 
         client.generateSession(cardDetails: cardDetails, sessionType: SessionType.paymentsCvc) { result in
             switch result {
                 case .success(let session):
-                    XCTAssertEqual("a-session", session)
+                    XCTAssertEqual("expected-payments-cvc-session", session)
                     sessionExpectation.fulfill()
                 case .failure:
                     XCTFail("got an error back from services")
@@ -40,5 +60,54 @@ class AccessCheckoutClientImplTests: XCTestCase {
         }
 
         wait(for: [sessionExpectation], timeout: 1)
+    }
+
+    private func toData(_ stringData: String) -> Data {
+        return stringData.data(using: .utf8)!
+    }
+
+    private func successfulDiscoveryResponse(baseUrl: String) -> (URLRequest) -> Response {
+        return jsonData(toData("""
+        {
+            "_links": {
+                "service:verifiedTokens": {
+                    "href": "\(baseUrl)\(verifiedTokensServicePath)"
+                },
+                "verifiedTokens:sessions": {
+                    "href": "\(baseUrl)\(verifiedTokensServiceSessionsPath)"
+                },
+                "service:sessions": {
+                    "href": "\(baseUrl)\(sessionsPath)"
+                },
+                "sessions:paymentsCvc": {
+                    "href": "\(baseUrl)\(sessionsPaymentsCvcPath)"
+                }
+            }
+        }
+        """), status: 200)
+    }
+
+    private func successfulVerifiedTokensSessionResponse(session: String) -> (URLRequest) -> Response {
+        return jsonData(toData("""
+        {
+            "_links": {
+                "verifiedTokens:session": {
+                    "href": "\(session)"
+                }
+            }
+        }
+        """), status: 201)
+    }
+
+    private func successfulPaymentsCvcSessionResponse(session: String) -> (URLRequest) -> Response {
+        return jsonData(toData("""
+        {
+            "_links": {
+                "sessions:session": {
+                    "href": "\(session)"
+                }
+            }
+        }
+        """), status: 201)
     }
 }

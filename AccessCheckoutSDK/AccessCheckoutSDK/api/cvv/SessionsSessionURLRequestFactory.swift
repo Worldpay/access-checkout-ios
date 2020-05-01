@@ -1,5 +1,6 @@
 import Foundation
 
+// ToDo - This should be renamed once the SessionsSessionRequest class has been renamed
 class SessionsSessionURLRequestFactory {
     func create(url :URL, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         var request = URLRequest(url: url)

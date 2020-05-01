@@ -1,5 +1,4 @@
-public final class VerifiedTokensApiClient {
-    
+public class VerifiedTokensApiClient {
     private let merchantIdentifier: String
     private let discovery: Discovery
     
@@ -31,8 +30,8 @@ public final class VerifiedTokensApiClient {
                               expiryYear: UInt,
                               cvv: CVV,
                               urlSession: URLSession,
+                              // ToDo - The type of error returned should be AccessCheckoutClientError
                               completionHandler: @escaping (Result<String, Error>) -> Void) {
-        
         if let url = discovery.serviceEndpoint {
             do {
                 let request = try buildRequest(url: url,
@@ -69,23 +68,21 @@ public final class VerifiedTokensApiClient {
     }
     
     private func buildRequest(url: URL,
-                      bundle: Bundle,
-                      pan: PAN,
-                      expiryMonth: UInt,
-                      expiryYear: UInt,
-                      cvv: CVV) throws -> URLRequest {
-        
+                              bundle: Bundle,
+                              pan: PAN,
+                              expiryMonth: UInt,
+                              expiryYear: UInt,
+                              cvv: CVV) throws -> URLRequest {
         var request = URLRequest(url: url)
         request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
         request.httpMethod = "POST"
         let tokenRequest = VerifiedTokensSessionRequest(cardNumber: pan,
-                                                cardExpiryDate: VerifiedTokensSessionRequest.CardExpiryDate(
-                                                    month: expiryMonth,
-                                                    year: expiryYear),
-                                                cvc: cvv,
-                                                identity: merchantIdentifier)
+                                                        cardExpiryDate: VerifiedTokensSessionRequest.CardExpiryDate(month: expiryMonth,
+                                                                                                                    year: expiryYear),
+                                                        cvc: cvv,
+                                                        identity: merchantIdentifier)
         request.httpBody = try JSONEncoder().encode(tokenRequest)
-            
+        
         // Add user-agent header
         let userAgent = UserAgent(bundle: bundle)
         request.addValue(userAgent.headerValue, forHTTPHeaderField: UserAgent.headerName)
@@ -93,22 +90,22 @@ public final class VerifiedTokensApiClient {
         return request
     }
     
+    // ToDo - This should use the RestClient class internally
     private func createSession(request: URLRequest,
-                       urlSession: URLSession = URLSession.shared,
-                       completionHandler: @escaping (Result<String, Error>) -> Void ) {
-        
-        urlSession.dataTask(with: request) { (data, _, error) in
+                               urlSession: URLSession = URLSession.shared,
+                               completionHandler: @escaping (Result<String, Error>) -> Void) {
+        urlSession.dataTask(with: request) { data, _, error in
             if let sessionData = data {
                 if let verifiedTokensResponse = try? JSONDecoder().decode(ApiResponse.self, from: sessionData),
                     let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })[ApiLinks.verifiedTokens.result] {
-                        completionHandler(.success(href))
+                    completionHandler(.success(href))
                 } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: sessionData) {
                     completionHandler(.failure(accessCheckoutClientError))
                 } else {
                     completionHandler(.failure(AccessCheckoutClientError.unknown(message: "Failed to decode response data")))
                 }
             } else {
-                    completionHandler(.failure(error ??
+                completionHandler(.failure(error ??
                         AccessCheckoutClientError.unknown(message: "Unexpected response: no data or error returned")))
             }
         }.resume()

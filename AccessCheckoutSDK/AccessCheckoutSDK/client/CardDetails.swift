@@ -1,6 +1,7 @@
 
 public struct CardDetails {
     let pan: String?
+    // ToDo - expiryMonth & expiryYear should be of type UInt. We need to introduce some basic validation
     let expiryMonth: String?
     let expiryYear: String?
     let cvv: String?
@@ -22,9 +23,7 @@ public struct CardDetails {
         private var expiryYear: String?
         private var cvv: String?
         
-        fileprivate init() {
-            
-        }
+        fileprivate init() {}
         
         func pan(_ pan: String) -> CardDetailsBuilder {
             self.pan = pan
