@@ -50,14 +50,13 @@ class CardFlowViewController: UIViewController {
                 case .failure(let error):
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
-                    if let accessCheckoutClientError = error as? AccessCheckoutClientError {
-                        switch accessCheckoutClientError {
+                    switch error {
                         case .bodyDoesNotMatchSchema(_, let validationErrors):
                             accessCheckoutClientValidationErrors = validationErrors
                         default:
                             break
-                        }
                     }
+          
 
                     self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
                     AlertView.display(using: self, title: title, message: nil)

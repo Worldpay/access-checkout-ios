@@ -3,17 +3,17 @@ import Foundation
 public class SessionsApiClient {
     private var merchantIdentifier: String
     private var discovery: Discovery
-    private var urlRequestFactory: SessionsSessionURLRequestFactory
+    private var urlRequestFactory: PaymentsCvcSessionURLRequestFactory
     private var restClient: RestClient
 
     public init(discovery: Discovery, merchantIdentifier: String) {
         self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
-        self.urlRequestFactory = SessionsSessionURLRequestFactory()
+        self.urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
         self.restClient = RestClient()
     }
 
-    init(discovery: Discovery, merchantIdentifier: String, urlRequestFactory: SessionsSessionURLRequestFactory, restClient: RestClient) {
+    init(discovery: Discovery, merchantIdentifier: String, urlRequestFactory: PaymentsCvcSessionURLRequestFactory, restClient: RestClient) {
         self.discovery = discovery
         self.merchantIdentifier = merchantIdentifier
         self.urlRequestFactory = urlRequestFactory

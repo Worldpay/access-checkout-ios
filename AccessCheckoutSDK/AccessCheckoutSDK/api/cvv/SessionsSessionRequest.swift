@@ -1,5 +1,4 @@
-// ToDo - This should be renamed into PaymentsCvcSessionRequest since this is what the end point is about really)
-struct SessionsSessionRequest: Codable {
+struct PaymentsCvcSessionRequest: Codable {
     enum Key: String, CodingKey {
         case cvc = "cvc"
         case identity = "identity"

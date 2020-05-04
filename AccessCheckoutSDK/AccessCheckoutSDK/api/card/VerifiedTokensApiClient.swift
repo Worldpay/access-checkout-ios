@@ -30,8 +30,7 @@ public class VerifiedTokensApiClient {
                               expiryYear: UInt,
                               cvv: CVV,
                               urlSession: URLSession,
-                              // ToDo - The type of error returned should be AccessCheckoutClientError
-                              completionHandler: @escaping (Result<String, Error>) -> Void) {
+                              completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         if let url = discovery.serviceEndpoint {
             do {
                 let request = try buildRequest(url: url,
@@ -43,7 +42,7 @@ public class VerifiedTokensApiClient {
                 
                 createSession(request: request, completionHandler: completionHandler)
             } catch {
-                completionHandler(.failure(error))
+                completionHandler(.failure(.unknown(message: "unable to get request")))
             }
         } else {
             discovery.discover(serviceLinks: ApiLinks.verifiedTokens, urlSession: urlSession) {
@@ -58,10 +57,10 @@ public class VerifiedTokensApiClient {
                         
                         self.createSession(request: request, completionHandler: completionHandler)
                     } catch {
-                        completionHandler(.failure(error))
+                        completionHandler(.failure(.unknown(message: "unable to get request")))
                     }
                 } else {
-                    completionHandler(.failure(AccessCheckoutClientError.undiscoverable(message: "Unable to discover services")))
+                    completionHandler(.failure(.undiscoverable(message: "Unable to discover services")))
                 }
             }
         }
@@ -93,7 +92,7 @@ public class VerifiedTokensApiClient {
     // ToDo - This should use the RestClient class internally
     private func createSession(request: URLRequest,
                                urlSession: URLSession = URLSession.shared,
-                               completionHandler: @escaping (Result<String, Error>) -> Void) {
+                               completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         urlSession.dataTask(with: request) { data, _, error in
             if let sessionData = data {
                 if let verifiedTokensResponse = try? JSONDecoder().decode(ApiResponse.self, from: sessionData),
@@ -102,11 +101,10 @@ public class VerifiedTokensApiClient {
                 } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: sessionData) {
                     completionHandler(.failure(accessCheckoutClientError))
                 } else {
-                    completionHandler(.failure(AccessCheckoutClientError.unknown(message: "Failed to decode response data")))
+                    completionHandler(.failure(.unknown(message: "Failed to decode response data")))
                 }
             } else {
-                completionHandler(.failure(error ??
-                        AccessCheckoutClientError.unknown(message: "Unexpected response: no data or error returned")))
+                completionHandler(.failure(.unknown(message: "Unexpected response: no data or error returned")))
             }
         }.resume()
     }

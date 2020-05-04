@@ -1,10 +1,9 @@
 import Foundation
 
-// ToDo - This should be renamed once the SessionsSessionRequest class has been renamed
-class SessionsSessionURLRequestFactory {
+class PaymentsCvcSessionURLRequestFactory {
     func create(url :URL, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         var request = URLRequest(url: url)
-        let sessionRequest: SessionsSessionRequest = SessionsSessionRequest(cvc: cvv, identity: merchantIdentity)
+        let sessionRequest: PaymentsCvcSessionRequest = PaymentsCvcSessionRequest(cvc: cvv, identity: merchantIdentity)
         request.httpBody = try? JSONEncoder().encode(sessionRequest)
         request.httpMethod = "POST"
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "Content-type")

@@ -5,7 +5,7 @@ import XCTest
 
 class SessionsSessionURLRequestFactoryTests: XCTestCase {
 
-    private let urlRequestFactory = SessionsSessionURLRequestFactory()
+    private let urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
     private let cvv: CVV = "123"
     private let bundle = BundleMock()
     private let appVersion = BundleMock.appVersion

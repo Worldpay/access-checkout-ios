@@ -21,13 +21,13 @@ class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
         super.init(discovery: discovery, merchantIdentifier: merchantId)
     }
     
-    public override func createSession(pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, urlSession: URLSession, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    public override func createSession(pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, urlSession: URLSession, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         createSessionCalled = true
         
         if let sessionToReturn = self.sessionToReturn {
             completionHandler(.success(sessionToReturn))
-        } else if let error = self.error {
-            completionHandler(.failure(error))
+        } else if self.error != nil {
+            completionHandler(.failure(AccessCheckoutClientError.unknown(message: "failed to create session")))
         }
     }
 }

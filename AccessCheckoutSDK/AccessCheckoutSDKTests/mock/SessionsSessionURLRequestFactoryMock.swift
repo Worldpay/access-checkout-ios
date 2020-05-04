@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-class SessionsSessionURLRequestFactoryMock: SessionsSessionURLRequestFactory {
+class SessionsSessionURLRequestFactoryMock: PaymentsCvcSessionURLRequestFactory {
     var createCalled = false
     var urlPassed = URL(string: "")
     var cvvPassed = ""

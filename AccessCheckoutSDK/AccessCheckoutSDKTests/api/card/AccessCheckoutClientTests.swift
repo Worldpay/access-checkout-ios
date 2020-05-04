@@ -78,7 +78,7 @@ class AccessCheckoutClientTests: XCTestCase {
                                 case .success:
                                     expectError(nil)
                                 case .failure(let error):
-                                    expectError(error as? AccessCheckoutClientError)
+                                    expectError(error)
                                 }
         }
     }
