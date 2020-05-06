@@ -24,6 +24,7 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 --file-prefix "Mock" \
 --output "${OUTPUT_DIR}" \
 "${INPUT_SOURCE_DIR}/api/ApiClientFactory.swift" \
+"${INPUT_SOURCE_DIR}/api/SingleLinkDiscoveryFactory.swift" \
 "${INPUT_SOURCE_DIR}/validation/cvv/CVVValidator.swift" \
 "${INPUT_SOURCE_DIR}/client/cvv/CVVOnlyDelegate.swift"
 # all lines of this command must end with a \ apart from the last line
