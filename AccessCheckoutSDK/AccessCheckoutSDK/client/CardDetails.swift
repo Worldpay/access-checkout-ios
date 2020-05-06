@@ -1,12 +1,11 @@
 
 public struct CardDetails {
     let pan: String?
-    // ToDo - expiryMonth & expiryYear should be of type UInt. We need to introduce some basic validation
-    let expiryMonth: String?
-    let expiryYear: String?
+    let expiryMonth: UInt?
+    let expiryYear: UInt?
     let cvv: String?
     
-    private init(pan: String?, expiryMonth: String?, expiryYear: String?, cvv: String?) {
+    private init(pan: String?, expiryMonth: UInt?, expiryYear: UInt?, cvv: String?) {
         self.pan = pan
         self.expiryMonth = expiryMonth
         self.expiryYear = expiryYear
@@ -46,7 +45,15 @@ public struct CardDetails {
         }
         
         func build() -> CardDetails {
-            return CardDetails(pan: self.pan, expiryMonth: self.expiryMonth, expiryYear: self.expiryYear, cvv: self.cvv)
+            return CardDetails(pan: self.pan, expiryMonth: self.toUInt(self.expiryMonth), expiryYear: self.toUInt(self.expiryYear), cvv: self.cvv)
+        }
+        
+        private func toUInt(_ string: String?) -> UInt? {
+            guard let string = string else {
+                return nil
+            }
+            
+            return UInt(string)
         }
     }
 }

@@ -29,8 +29,9 @@ public class AccessCheckoutClientBuilder {
         let sessionsApiClient = apiClientFactory.createSessionsApiClient(baseUrl: accessBaseUrl, merchantId: merchantId)
         let paymentsCvcRetrieveSessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: sessionsApiClient)
         
-        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [verifiedTokensRetrieveSessionHandler, paymentsCvcRetrieveSessionHandler])
+        let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()
+        let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [verifiedTokensRetrieveSessionHandler, paymentsCvcRetrieveSessionHandler])
         
-        return AccessCheckoutClientImpl(merchantId: merchantId, baseUrl: accessBaseUrl, retrieveSessionHandlerDispatcher: dispatcher)
+        return AccessCheckoutClientImpl(merchantId: merchantId, baseUrl: accessBaseUrl, cardDetailsForSessionTypeValidator, retrieveSessionHandlerDispatcher)
     }
 }

@@ -10,10 +10,9 @@ class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
     }
 
     func retrieveSession(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
-        // ToDo - we should fail the process if we're trying to retrieve a session and the pan or expiry or CVV are empty
         apiClient.createSession(pan: cardDetails.pan!,
-                                expiryMonth: UInt(cardDetails.expiryMonth!)!,
-                                expiryYear: UInt(cardDetails.expiryYear!)!,
+                                expiryMonth: cardDetails.expiryMonth!,
+                                expiryYear: cardDetails.expiryYear!,
                                 cvv: cardDetails.cvv!,
                                 urlSession: URLSession.shared, completionHandler: completionHandler)
     }

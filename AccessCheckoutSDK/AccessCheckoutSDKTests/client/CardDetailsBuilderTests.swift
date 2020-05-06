@@ -1,8 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class CardDetailsBuilderTests : XCTestCase {
-    
+class CardDetailsBuilderTests: XCTestCase {
     func testBuildsCardDetailsWithPanCvvAndExpiryDate() {
         let cardDetailsBuilder = CardDetails.builder().pan("1234123412341234")
             .expiryMonth("10")
@@ -12,8 +11,8 @@ class CardDetailsBuilderTests : XCTestCase {
         let cardDetails = cardDetailsBuilder.build()
         
         XCTAssertEqual("1234123412341234", cardDetails.pan)
-        XCTAssertEqual("10", cardDetails.expiryMonth)
-        XCTAssertEqual("23", cardDetails.expiryYear)
+        XCTAssertEqual(10, cardDetails.expiryMonth)
+        XCTAssertEqual(23, cardDetails.expiryYear)
         XCTAssertEqual("123", cardDetails.cvv)
     }
     

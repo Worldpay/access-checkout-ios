@@ -9,7 +9,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
     let sessionsPath = "/sessions"
     let sessionsPaymentsCvcPath = "/sessions/paymentsCvc"
 
-    func testRetrievesAVerifiedTokensSession() {
+    func testRetrievesAVerifiedTokensSession() throws {
         stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
         stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
         stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), successfulVerifiedTokensSessionResponse(session: "expected-verified-tokens-session"))
@@ -24,7 +24,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
             .build()
         let sessionExpectation = expectation(description: "Session retrieved")
 
-        client.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
+        try client.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
             switch result {
                 case .success(let session):
                     XCTAssertEqual("expected-verified-tokens-session", session)
@@ -37,7 +37,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         wait(for: [sessionExpectation], timeout: 1)
     }
 
-    func testRetrievesAPaymentsCvcSession() {
+    func testRetrievesAPaymentsCvcSession() throws {
         stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
         stub(http(.get, uri: "\(baseUrl)\(sessionsPath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
         stub(http(.post, uri: "\(baseUrl)\(sessionsPaymentsCvcPath)"), successfulPaymentsCvcSessionResponse(session: "expected-payments-cvc-session"))
@@ -49,7 +49,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
             .build()
         let sessionExpectation = expectation(description: "Session retrieved")
 
-        client.generateSession(cardDetails: cardDetails, sessionType: SessionType.paymentsCvc) { result in
+        try client.generateSession(cardDetails: cardDetails, sessionType: SessionType.paymentsCvc) { result in
             switch result {
                 case .success(let session):
                     XCTAssertEqual("expected-payments-cvc-session", session)
@@ -60,6 +60,33 @@ class AccessCheckoutClientImplTests: XCTestCase {
         }
 
         wait(for: [sessionExpectation], timeout: 1)
+    }
+
+    func testDoesNotRetrieveVerifiedTokensSessionWhenCardDetailsAreIncomplete() {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Month is mandatory to retrieve a Verified Tokens session")
+        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+            .accessBaseUrl(baseUrl)
+            .build()
+        let cardDetails = CardDetails.builder().pan("pan")
+            .expiryYear("20")
+            .cvv("123")
+            .build()
+
+        XCTAssertThrowsError(try client.generateSession(cardDetails: cardDetails, sessionType: .verifiedTokens) { _ in }) { error in
+            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+        }
+    }
+
+    func testDoesNotRetrieveVPaymentsCvcSessionWhenCardDetailsAreIncomplete() {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
+        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+            .accessBaseUrl(baseUrl)
+            .build()
+        let cardDetails = CardDetails.builder().build()
+
+        XCTAssertThrowsError(try client.generateSession(cardDetails: cardDetails, sessionType: .paymentsCvc) { _ in }) { error in
+            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+        }
     }
 
     private func toData(_ stringData: String) -> Data {
