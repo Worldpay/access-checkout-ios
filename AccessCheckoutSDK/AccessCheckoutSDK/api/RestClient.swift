@@ -2,7 +2,7 @@ import Foundation
 
  class RestClient {
     func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutClientError>) -> Void) {
-        urlSession.dataTask(with: request) { (data, _, error) in
+        urlSession.dataTask(with: request) { (data, response, error) in
             if let responseBody = data {
                 if let decodedResponse = try? JSONDecoder().decode(T.self, from: responseBody) {
                     completionHandler(.success(decodedResponse))
