@@ -6,7 +6,7 @@ class SessionsApiClientTests: XCTestCase {
 
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     private let mockDiscovery = DiscoveryMock()
-    private let mockURLRequestFactory = SessionsSessionURLRequestFactoryMock()
+    private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
     private let expectedSession = "http://access.worldpay.com/sessions/sessions/encrypted-data"
     private let validCvv = "123"
     

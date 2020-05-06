@@ -17,7 +17,7 @@
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
 		1BD0EE9522CB6EF800147A71 /* cardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BD0EE9322CB6EEE00147A71 /* cardConfiguration.json */; };
-		683DFBB48F1684E7AFD56E13 /* SessionsSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* SessionsSessionURLRequestFactory.swift */; };
+		683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
@@ -40,7 +40,6 @@
 		C9AFE46A22B7AA4800943B3E /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45722B7AA4700943B3E /* visa.png */; };
 		C9AFE46B22B7AA4800943B3E /* Discovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45822B7AA4800943B3E /* Discovery.swift */; };
 		CC0572552428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */; };
-		D70A3E10241BB4B80051E95A /* SessionsSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70A3E0F241BB4B80051E95A /* SessionsSessionURLRequestFactoryTests.swift */; };
 		E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70A5E842420C8B200F8B73E /* RestClientTests.swift */; };
 		E72A590E24589EF500655C80 /* ValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72A590D24589EF500655C80 /* ValidationDelegate.swift */; };
 		E72A99E42459E385004FEAD5 /* CardDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72A99E32459E385004FEAD5 /* CardDetails.swift */; };
@@ -78,7 +77,7 @@
 		E7821A9324586BC5003F7231 /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9224586BC5003F7231 /* ValidationResult.swift */; };
 		E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */; };
 		E7821A9724586C03003F7231 /* AccessCheckoutDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9624586C03003F7231 /* AccessCheckoutDateView.swift */; };
-		E7821A9B24586C79003F7231 /* SessionsSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* SessionsSessionRequest.swift */; };
+		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
 		E7821A9D24586CC5003F7231 /* PAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9C24586CC5003F7231 /* PAN.swift */; };
 		E7821A9F24586CE3003F7231 /* CVV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9E24586CE3003F7231 /* CVV.swift */; };
 		E7821AA124586CF5003F7231 /* ExpiryMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821AA024586CF5003F7231 /* ExpiryMonth.swift */; };
@@ -93,8 +92,9 @@
 		E7AFC3F6241FEBCB00C0E432 /* BundleMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFBC1E84A1C88BF4ADCD0 /* BundleMock.swift */; };
 		E7AFC3F7241FEBEB00C0E432 /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DF0FE5331B699757B3D19 /* URLSessionMock.swift */; };
 		E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF2A0D1603232514AD9 /* URLSessionDataTaskMock.swift */; };
-		E7AFC3F9241FEBFF00C0E432 /* SessionsSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFA3645698BE4CA926FCB /* SessionsSessionURLRequestFactoryMock.swift */; };
 		E7B0A17424293D290028797E /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = E7B0A17324293D290028797E /* scripts */; };
+		E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */; };
+		E7D19F6C24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */; };
 		E7D2D27924223116002403DC /* TextValidatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D27824223116002403DC /* TextValidatorMock.swift */; };
 		E7E6758F241AA57A0022292F /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E6758E241AA57A0022292F /* RestClient.swift */; };
 		E7EAC48324213B2D005240D3 /* TextValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EAC48224213B2D005240D3 /* TextValidator.swift */; };
@@ -142,10 +142,9 @@
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		683DF0FE5331B699757B3D19 /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
-		683DFA3645698BE4CA926FCB /* SessionsSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
 		683DFBC1E84A1C88BF4ADCD0 /* BundleMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleMock.swift; sourceTree = "<group>"; };
 		683DFFF2A0D1603232514AD9 /* URLSessionDataTaskMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskMock.swift; sourceTree = "<group>"; };
-		683DFFF3DC25699A1CE15270 /* SessionsSessionURLRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsSessionURLRequestFactory.swift; sourceTree = "<group>"; };
+		683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactory.swift; sourceTree = "<group>"; };
 		6F228E4B50C5655DF4E7F378 /* Pods-AccessCheckoutSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		7B355B4B411B9052D09D24D3 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7D16DA602AF1C240EFDD905 /* Pods-AccessCheckoutSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -175,7 +174,6 @@
 		C9AFE45722B7AA4700943B3E /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		C9AFE45822B7AA4800943B3E /* Discovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Discovery.swift; sourceTree = "<group>"; };
 		CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKtoSessionsPactTests.swift; sourceTree = "<group>"; };
-		D70A3E0F241BB4B80051E95A /* SessionsSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		E70A5E842420C8B200F8B73E /* RestClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientTests.swift; sourceTree = "<group>"; };
 		E72A590D24589EF500655C80 /* ValidationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationDelegate.swift; sourceTree = "<group>"; };
 		E72A99E32459E385004FEAD5 /* CardDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetails.swift; sourceTree = "<group>"; };
@@ -213,7 +211,7 @@
 		E7821A9224586BC5003F7231 /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutTextView.swift; sourceTree = "<group>"; };
 		E7821A9624586C03003F7231 /* AccessCheckoutDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDateView.swift; sourceTree = "<group>"; };
-		E7821A9A24586C79003F7231 /* SessionsSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsSessionRequest.swift; sourceTree = "<group>"; };
+		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
 		E7821A9C24586CC5003F7231 /* PAN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAN.swift; sourceTree = "<group>"; };
 		E7821A9E24586CE3003F7231 /* CVV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVV.swift; sourceTree = "<group>"; };
 		E7821AA024586CF5003F7231 /* ExpiryMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryMonth.swift; sourceTree = "<group>"; };
@@ -226,6 +224,8 @@
 		E7AE68C624195050002380AF /* RestClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientMock.swift; sourceTree = "<group>"; };
 		E7AE68C8241950FC002380AF /* DiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryMock.swift; sourceTree = "<group>"; };
 		E7B0A17324293D290028797E /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
+		E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
+		E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		E7D2D27824223116002403DC /* TextValidatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidatorMock.swift; sourceTree = "<group>"; };
 		E7E6758E241AA57A0022292F /* RestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		E7EAC48224213B2D005240D3 /* TextValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidator.swift; sourceTree = "<group>"; };
@@ -297,9 +297,9 @@
 				E79EAC5E24588D5B00A8DDA6 /* MockCVVOnlyDelegate.swift */,
 				E79EAC6024588D5C00A8DDA6 /* MockCVVValidator.swift */,
 				683DFBC1E84A1C88BF4ADCD0 /* BundleMock.swift */,
-				683DFA3645698BE4CA926FCB /* SessionsSessionURLRequestFactoryMock.swift */,
 				E7AE68C8241950FC002380AF /* DiscoveryMock.swift */,
 				E77B8BA6245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift */,
+				E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */,
 				E7AE68C624195050002380AF /* RestClientMock.swift */,
 				E77B8BBA245C8D3F00564C19 /* SessionsApiClientMock.swift */,
 				E7D2D27824223116002403DC /* TextValidatorMock.swift */,
@@ -395,8 +395,8 @@
 		E73A20172459D41100D5EB4C /* cvv */ = {
 			isa = PBXGroup;
 			children = (
+				E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */,
 				E72D9E5A24113F0F00C94D5B /* SessionsApiClientTests.swift */,
-				D70A3E0F241BB4B80051E95A /* SessionsSessionURLRequestFactoryTests.swift */,
 			);
 			path = cvv;
 			sourceTree = "<group>";
@@ -517,8 +517,8 @@
 			isa = PBXGroup;
 			children = (
 				E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */,
-				683DFFF3DC25699A1CE15270 /* SessionsSessionURLRequestFactory.swift */,
-				E7821A9A24586C79003F7231 /* SessionsSessionRequest.swift */,
+				683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */,
+				E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */,
 			);
 			path = cvv;
 			sourceTree = "<group>";
@@ -970,13 +970,13 @@
 				C9AFE45B22B7AA4800943B3E /* ApiResponse.swift in Sources */,
 				E77B8B96245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift in Sources */,
 				E7821A9324586BC5003F7231 /* ValidationResult.swift in Sources */,
-				E7821A9B24586C79003F7231 /* SessionsSessionRequest.swift in Sources */,
+				E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */,
 				E77DCAF9242A83B900ED3E31 /* CVVOnlyDelegate.swift in Sources */,
 				C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */,
 				E7A4AB66245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift in Sources */,
 				E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */,
 				C9AFE46122B7AA4800943B3E /* AccessCheckoutView.swift in Sources */,
-				683DFBB48F1684E7AFD56E13 /* SessionsSessionURLRequestFactory.swift in Sources */,
+				683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */,
 				E7821A8B24586AF9003F7231 /* AccessCheckoutCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -985,8 +985,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7AFC3F9241FEBFF00C0E432 /* SessionsSessionURLRequestFactoryMock.swift in Sources */,
 				E77B8BAB245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift in Sources */,
+				E7D19F6C24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift in Sources */,
 				E7AFC3F7241FEBEB00C0E432 /* URLSessionMock.swift in Sources */,
 				E77B8B99245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift in Sources */,
 				E7F5456324228E5F002A42FA /* AccessCheckoutCvvOnlyTests.swift in Sources */,
@@ -1008,12 +1008,12 @@
 				E77B8BAD245C5A8D00564C19 /* AccessCheckoutClientImplTests.swift in Sources */,
 				E77B8BB9245C816A00564C19 /* MockApiClientFactory.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
+				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
 				1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */,
 				E73946512420D1CE0007D7B3 /* CVVValidatorTests.swift in Sources */,
 				1BCBFEC722B8EB4400A65FAA /* ApiDiscoveryClientTests.swift in Sources */,
 				E77B8BB5245C7DD000564C19 /* VerifiedTokensApiClientMock.swift in Sources */,
 				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
-				D70A3E10241BB4B80051E95A /* SessionsSessionURLRequestFactoryTests.swift in Sources */,
 				1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */,
 				E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */,
 			);

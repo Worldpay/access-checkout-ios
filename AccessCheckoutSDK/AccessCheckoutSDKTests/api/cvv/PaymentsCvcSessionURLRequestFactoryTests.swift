@@ -3,7 +3,7 @@ import Mockingjay
 import XCTest
 @testable import AccessCheckoutSDK
 
-class SessionsSessionURLRequestFactoryTests: XCTestCase {
+class PaymentsCvcSessionURLRequestFactoryTests: XCTestCase {
 
     private let urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
     private let cvv: CVV = "123"
