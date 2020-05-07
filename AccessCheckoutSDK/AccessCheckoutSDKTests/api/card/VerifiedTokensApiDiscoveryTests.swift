@@ -17,11 +17,11 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = PromiseFactory.fulfilled(with: "http://localhost/a-service")
+        let promiseToReturnToFindService = Promise.value("http://localhost/a-service")
         mockDiscoveryService.willReturn(promiseToReturnToFindService)
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        let promiseToReturnToFindEndPoint = PromiseFactory.fulfilled(with: "http://localhost/an-end-point")
+        let promiseToReturnToFindEndPoint = Promise.value("http://localhost/an-end-point")
         mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
@@ -53,10 +53,10 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = PromiseFactory.rejected(with: AccessCheckoutClientError.unknown(message: "an error"), returningType: String.self)
+        let promiseToReturnToFindService = Promise<String>(error: AccessCheckoutClientError.unknown(message: "an error"))
         mockDiscoveryService.willReturn(promiseToReturnToFindService)
         
-        let promiseToReturnToFindEndPoint = PromiseFactory.fulfilled(with: "http://localhost/an-end-point")
+        let promiseToReturnToFindEndPoint = Promise.value("http://localhost/an-end-point")
         mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
@@ -85,11 +85,11 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = PromiseFactory.fulfilled(with: "http://localhost/a-service")
+        let promiseToReturnToFindService = Promise.value("http://localhost/a-service")
         mockDiscoveryService.willReturn(promiseToReturnToFindService)
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        let promiseToReturnToFindEndPoint = PromiseFactory.rejected(with: AccessCheckoutClientError.unknown(message: "an error"), returningType: String.self)
+        let promiseToReturnToFindEndPoint = Promise<String>(error: AccessCheckoutClientError.unknown(message: "an error"))
         mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)

@@ -1,44 +1,41 @@
-import XCTest
-import PactConsumerSwift
-import Mockingjay
 @testable import AccessCheckoutSDK
+import Mockingjay
+import PactConsumerSwift
+import PromiseKit
+import XCTest
 
 class AccessCheckoutSDKtoVTPactTests: XCTestCase {
-
     let baseURI: String = Bundle(for: AccessCheckoutSDKtoVTPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://pacttest"
     
-    let requestHeaders:  [String: Any] = ["content-type": ApiHeaders.verifiedTokensHeaderValue]
+    let requestHeaders: [String: Any] = ["content-type": ApiHeaders.verifiedTokensHeaderValue]
     let responseHeaders: [String: Any] = ["Content-Type": ApiHeaders.verifiedTokensHeaderValue]
     
     let verifiedTokensMockService = MockService(provider: "verified-tokens",
                                                 consumer: "access-checkout-iOS-sdk")
-
-    class MockDiscovery: Discovery {
-        var serviceEndpoint: URL?
+    
+    class DiscoveryMock: VerifiedTokensApiDiscovery {
+        private var discoveredUrl: String
         
-        /// Starts discovery of services
-        let baseURI: String
-        init(baseURI: String) {
-            self.baseURI = baseURI
+        init(discoveredUrl: String) {
+            self.discoveredUrl = discoveredUrl
+            super.init()
         }
         
-        func discover(serviceLinks: ApiLinks, urlSession: URLSession, onComplete: (() -> Void)?){
-            serviceEndpoint = URL(string: "\(baseURI)/verifiedTokens/sessions")
-            onComplete?()
+        override func discover(baseUrl: String) -> Promise<String> {
+            return Promise.value(discoveredUrl)
         }
     }
-
-func testServiceDiscoveryOnServiceRoot(){
-        
+    
+    func testServiceDiscoveryOnServiceRoot() {
         let expectedValue = "\(baseURI)/verifiedTokens/sessions"
         let responseJson = [
             "_links": [
                 "verifiedTokens:sessions": [
                     "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions", generate: expectedValue)
-                ],
+                ]
             ]
         ]
-
+        
         verifiedTokensMockService
             .uponReceiving("a GET request to the VT service root")
             .withRequest(
@@ -47,37 +44,35 @@ func testServiceDiscoveryOnServiceRoot(){
             .willRespondWith(
                 status: 200,
                 headers: responseHeaders,
-                body: responseJson
-        )
+                body: responseJson)
         
         let rootResponseJson = """
-             {
-                 "_links": {
-                     "service:verifiedTokens": {
-                         "href": "\(verifiedTokensMockService.baseUrl)/verifiedTokens"
-                     }
-                 }
-             }
-             """
+        {
+            "_links": {
+                "service:verifiedTokens": {
+                    "href": "\(verifiedTokensMockService.baseUrl)/verifiedTokens"
+                }
+            }
+        }
+        """
         
         let rootResponse = rootResponseJson.data(using: .utf8)!
         stub(http(.get, uri: "https://root"), jsonData(rootResponse))
         
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "https://root")!)
-        let serviceEndpointKeys = ApiLinks.verifiedTokens
+        let discovery = VerifiedTokensApiDiscovery()
         
-        
-        verifiedTokensMockService.run(timeout: 3) {testComplete in
-            discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
-                XCTAssertEqual(discovery.serviceEndpoint?.absoluteString, expectedValue)
-                testComplete();
+        verifiedTokensMockService.run(timeout: 3) { testComplete in
+            firstly {
+                discovery.discover(baseUrl: "https://root")
+            }.done { discoveredUrl in
+                XCTAssertEqual(discoveredUrl, expectedValue)
+                testComplete()
             }
         }
     }
-
+    
     func testRequestCreatesTokenWithValidRequest() {
-        
-        let requestJson : [String: Any] = [
+        let requestJson: [String: Any] = [
             "cvc": "123",
             "identity": "identity",
             "cardNumber": "4111111111111111",
@@ -92,7 +87,7 @@ func testServiceDiscoveryOnServiceRoot(){
             "_links": [
                 "verifiedTokens:session": [
                     "href": Matcher.term(matcher: "https?://[^/]+/verifiedTokens/sessions/.+", generate: expectedValue)
-                ],
+                ]
             ]
         ]
         
@@ -107,28 +102,28 @@ func testServiceDiscoveryOnServiceRoot(){
                              headers: responseHeaders,
                              body: responseJson)
         
-        let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
-        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "identity")
+        let mockDiscovery = DiscoveryMock(discoveredUrl: "\(verifiedTokensMockService.baseUrl)/verifiedTokens/sessions")
+        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery)
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
-            verifiedTokensClient.createSession(pan: "4111111111111111",
-                                               expiryMonth: 12,
-                                               expiryYear: 2099,
-                                               cvv: "123",
-                                               urlSession: URLSession.shared) { result in
-                                                switch result {
-                                                case let .success(sessionState):
-                                                    XCTAssertEqual(sessionState, expectedValue)
-                                                case let .failure(error):
-                                                    XCTFail(error.localizedDescription)
-                                                }
-                                                testComplete()
+            firstly {
+                verifiedTokensClient.createSession(baseUrl: "",
+                                                   merchantId: "identity",
+                                                   pan: "4111111111111111",
+                                                   expiryMonth: 12,
+                                                   expiryYear: 2099,
+                                                   cvc: "123")
+            }.done { session in
+                XCTAssertEqual(session, expectedValue)
+            }.catch { error in
+                XCTFail(error.localizedDescription)
+            }.finally {
+                testComplete()
             }
         }
     }
     
     func testRequestFailsWhenAnIncorrectMerchantIdIsProvided() {
-        
         let request = PactRequest(
             identity: "incorrectValue",
             cvc: "123",
@@ -147,7 +142,6 @@ func testServiceDiscoveryOnServiceRoot(){
     }
     
     func testRequestFailsWhenCardNumberFailsLuhnCheck() {
-        
         let request = PactRequest(
             identity: "identity",
             cvc: "123",
@@ -166,7 +160,6 @@ func testServiceDiscoveryOnServiceRoot(){
     }
     
     func testRequestFailsWhenMonthIsSetToThirteen() {
-        
         let request = PactRequest(
             identity: "identity",
             cvc: "123",
@@ -185,7 +178,6 @@ func testServiceDiscoveryOnServiceRoot(){
     }
     
     func testRequestFailsWhenPANHasLetters() {
-        
         let request = PactRequest(
             identity: "identity",
             cvc: "123",
@@ -223,8 +215,7 @@ func testServiceDiscoveryOnServiceRoot(){
         forScenario scenario: String,
         withRequest request: PactRequest,
         andErrorResponse response: ExpectedPactErrorResponse) {
-        
-        let requestJson : [String: Any] = [
+        let requestJson: [String: Any] = [
             "cvc": request.cvc,
             "identity": request.identity,
             "cardNumber": request.cardNumber,
@@ -234,7 +225,7 @@ func testServiceDiscoveryOnServiceRoot(){
             ]
         ]
         
-        let responseJson : [String : Any] = [
+        let responseJson: [String: Any] = [
             "errorName": response.mainErrorName,
             "message": Matcher.somethingLike(response.mainErrorMessage),
             "validationErrors": [
@@ -256,25 +247,26 @@ func testServiceDiscoveryOnServiceRoot(){
                              headers: responseHeaders,
                              body: responseJson)
         
-        let mockDiscovery = MockDiscovery(baseURI: verifiedTokensMockService.baseUrl)
-        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
+        let mockDiscovery = DiscoveryMock(discoveredUrl: "\(verifiedTokensMockService.baseUrl)/verifiedTokens/sessions")
+        let verifiedTokensClient = VerifiedTokensApiClient(discovery: mockDiscovery)
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
-            verifiedTokensClient.createSession(pan: request.cardNumber,
-                                               expiryMonth: request.expiryMonth,
-                                               expiryYear: request.expiryYear,
-                                               cvv: request.cvc,
-                                               urlSession: URLSession.shared) { result in
-                                                switch result {
-                                                case .success(_):
-                                                    XCTFail("Service response expected to be unsuccessful")
-                                                case let .failure(error):
-                                                    print(error)
-                                                    XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
-                                                    XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
-                                                    XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
-                                                }
-                                                testComplete()
+            firstly {
+                verifiedTokensClient.createSession(baseUrl: "",
+                                                   merchantId: request.identity,
+                                                   pan: request.cardNumber,
+                                                   expiryMonth: request.expiryMonth,
+                                                   expiryYear: request.expiryYear,
+                                                   cvc: request.cvc)
+            }.done { _ in
+                XCTFail("Service response expected to be unsuccessful")
+            }.catch { error in
+                print(error)
+                XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
+                XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
+                XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
+            }.finally {
+                testComplete()
             }
         }
     }

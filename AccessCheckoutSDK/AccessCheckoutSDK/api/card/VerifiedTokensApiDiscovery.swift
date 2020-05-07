@@ -3,6 +3,10 @@ import PromiseKit
 class VerifiedTokensApiDiscovery {
     private var discoveryFactory: SingleLinkDiscoveryFactory
     
+    init() {
+        self.discoveryFactory = SingleLinkDiscoveryFactory()
+    }
+    
     init(discoveryFactory: SingleLinkDiscoveryFactory) {
         self.discoveryFactory = discoveryFactory
     }

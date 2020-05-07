@@ -3,17 +3,22 @@
 class PaymentsCvcSessionURLRequestFactoryMock: PaymentsCvcSessionURLRequestFactory {
     var createCalled = false
     var urlPassed = URL(string: "")
+    var urlStringPassed:String?
     var cvvPassed = ""
-    var requestToReturn:URLRequest?
-
-    override func create(url: URL, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
+    private var requestToReturn:URLRequest?
+    
+    override func create(url: String, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         createCalled = true
-        urlPassed = url
+        urlStringPassed = url
         cvvPassed = cvv
         if requestToReturn != nil {
             return requestToReturn!
         } else {
-            return URLRequest(url: url)
+            return URLRequest(url: URL(string: url)!)
         }
+    }
+    
+    func willReturn(_ urlRequest:URLRequest) {
+        self.requestToReturn = urlRequest
     }
 }

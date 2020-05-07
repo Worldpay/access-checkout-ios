@@ -1,5 +1,6 @@
 import XCTest
 import Mockingjay
+import PromiseKit
 @testable import AccessCheckoutSDK
 
 class AccessCheckoutClientTests: XCTestCase {
@@ -15,107 +16,58 @@ class AccessCheckoutClientTests: XCTestCase {
         }
     }
     
-    class MockDiscovery: Discovery {
-        var serviceEndpoint = URL(string: "https://access.worldpay.com/verifiedTokens")
-        
-        /// Starts discovery of services
-        func discover(serviceLinks: ApiLinks, urlSession: URLSession, onComplete: (() -> Void)?) {
-            onComplete?()
-        }
-    }
- 
-    private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-    private let getSessionRequestStub = http(.post, uri: "https://access.worldpay.com/verifiedTokens")
-    private let mockDiscovery = MockDiscovery()
-    
-    override func setUp() {
-    }
-
     override func tearDown() {
         removeAllStubs()
     }
     
-    func testCreateSession_success() {
-        let expectedHref = "http://access.worldpay.com/verifiedTokens/sessions/encrypted-data"
-        let data = getSampleResponseWith(href: expectedHref)
-        stub(getSessionRequestStub, jsonData(data, status: 201, headers: nil))
-        
-        let client = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "")
-        
-        let tokenExpectation = expectation(description: "token")
-        client.createSession(pan: "1234",
-                          expiryMonth: 1,
-                          expiryYear: 0,
-                          cvv: "123",
-                          urlSession: urlSession) { result in
-                            switch result {
-                            case .success(let href):
-                                XCTAssertEqual(href, expectedHref)
-                            case .failure(let error):
-                                XCTFail(error.localizedDescription)
-                            }
-                            tokenExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
     // Error tests
     
-    private func stubError(accessCheckoutClientError: AccessCheckoutClientError, expectError: @escaping (AccessCheckoutClientError?) -> Void) {
+    private func stubError(accessCheckoutClientError: AccessCheckoutClientError) {
+        let errorExpectation = expectation(description: "error")
+        
         guard let data = try? JSONEncoder().encode(accessCheckoutClientError) else {
             XCTFail()
             return
         }
-        stub(getSessionRequestStub, jsonData(data))
+        stub(http(.get, uri: "http://localhost"), successfulDiscoveryResponse())
+        stub(http(.get, uri: "http://localhost/verifiedTokens"), successfulDiscoveryResponse())
+        stub(http(.post, uri: "http://localhost/verifiedTokens/session"), jsonData(data))
         
-        let client = VerifiedTokensApiClient(discovery: mockDiscovery, merchantIdentifier: "")
-        client.createSession(pan: "",
+        let client = VerifiedTokensApiClient()
+        firstly {
+            client.createSession(baseUrl: "http://localhost",
+                             merchantId: "123",
+                             pan: "",
                              expiryMonth: 0,
                              expiryYear: 0,
-                             cvv: "",
-                             urlSession: urlSession) { result in
-                                switch result {
-                                case .success:
-                                    expectError(nil)
-                                case .failure(let error):
-                                    expectError(error)
-                                }
+                             cvc: "")
+        }.done { _ in
+            XCTFail("Should have received an error but received a sucessful response")
+        }.catch { error in
+            XCTAssertEqual(accessCheckoutClientError, error as! AccessCheckoutClientError )
+            errorExpectation.fulfill()
         }
+        
+        wait(for: [errorExpectation], timeout: 1)
     }
     
     func testCreateSession_bodyIsEmpty() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.bodyIsEmpty(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_bodyIsNotJson() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.bodyIsNotJson(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_bodyDoesNotMatchSchema() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "",
                                                                              validationErrors: nil)
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_validationErrors() {
-        let errorExpectation = expectation(description: "error")
         let validationErrors: [AccessCheckoutClientValidationError] = [.unrecognizedField(message: "", jsonPath: ""),
                                                                        .fieldHasInvalidValue(message: "", jsonPath: ""),
                                                                        .fieldIsMissing(message: "", jsonPath: ""),
@@ -129,232 +81,118 @@ class AccessCheckoutClientTests: XCTestCase {
                                                                        .stringFailedRegexCheck(message: "", jsonPath: ""),
                                                                        .dateHasInvalidFormat(message: "", jsonPath: "")]
         let expectedError = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "",
-                                                                             validationErrors: validationErrors)
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        validationErrors: validationErrors)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_resourceNotFound() {
-        let errorExpectation = expectation(description: "error")
-        let expectedError = AccessCheckoutClientError.resourceNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+       let expectedError = AccessCheckoutClientError.resourceNotFound(message: "")
+       stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_endpointNotFound() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.endpointNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_methodNotAllowed() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.methodNotAllowed(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unsupportedAcceptHeader() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unsupportedAcceptHeader(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unsupportedContentType() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unsupportedContentType(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_sessionNotFound() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.sessionNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_tooManyTokensForNamespace() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.tooManyTokensForNamespace(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unrecognizedCardBrand() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unrecognizedCardBrand(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_tokenExpiryDateExceededMaximum() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.tokenExpiryDateExceededMaximum(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unsupportedCardBrand() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unsupportedCardBrand(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_fieldHasInvalidValue() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.fieldHasInvalidValue(message: "", jsonPath: nil)
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unsupportedVerificationCurrency() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unsupportedVerificationCurrency(message: "", jsonPath: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_maximumUpdatesExceeded() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.maximumUpdatesExceeded(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_apiRateLimitExceeded() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.apiRateLimitExceeded(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unauthorized() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unauthorized(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_invalidCredentials() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.invalidCredentials(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_internalServerError() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.internalServerError(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_notTokenizable() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.notTokenizable(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_internalErrorTokenNotCreated() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.internalErrorTokenNotCreated(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_undiscoverable() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.undiscoverable(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_accessDenied() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.accessDenied(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_unknown() {
-        let errorExpectation = expectation(description: "error")
         let expectedError = AccessCheckoutClientError.unknown(message: "")
-        stubError(accessCheckoutClientError: expectedError) { error in
-            XCTAssertEqual(expectedError, error)
-            errorExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testParser_canDecodeJsonResponse() {
@@ -389,5 +227,24 @@ class AccessCheckoutClientTests: XCTestCase {
     
     fileprivate func getSampleResponse() -> Data {
         return getSampleResponseWith(href: "https://access.worldpay.com/verifiedTokens/sessions/session123456789")
+    }
+    
+    private func successfulDiscoveryResponse() -> (URLRequest) -> Response {
+        return jsonData(toData("""
+        {
+            "_links": {
+                "service:verifiedTokens": {
+                    "href": "http://localhost/verifiedTokens"
+                },
+                "verifiedTokens:sessions": {
+                    "href": "http://localhost/verifiedTokens/session"
+                }
+            }
+        }
+        """), status: 200)
+    }
+    
+    private func toData(_ stringData: String) -> Data {
+        return stringData.data(using: .utf8)!
     }
 }

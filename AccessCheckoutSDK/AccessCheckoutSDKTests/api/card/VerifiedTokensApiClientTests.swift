@@ -3,12 +3,15 @@ import XCTest
 import Mockingjay
 import PromiseKit
 
-class SessionsApiClientTests: XCTestCase {
+class VerifiedTokensApiClientTests: XCTestCase {
     private let baseUrl = "http://localhost"
-    private let cvv = "123"
+    private let pan = "a-pan"
+    private let expiryMonth:UInt = 12
+    private let expiryYear:UInt = 24
+    private let cvc = "123"
     
-    private let mockDiscovery = SessionsApiDiscoveryMock()
-    private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
+    private let mockDiscovery = VerifiedTokensApiDiscoveryMock()
+    private let mockURLRequestFactory = VerifiedTokensSessionURLRequestFactoryMock()
     
     private let expectedSession = "a-session"
     private let expectedDiscoveredUrl = "http://and-end-point"
@@ -25,15 +28,18 @@ class SessionsApiClientTests: XCTestCase {
         mockDiscovery.willReturn(Promise.value(expectedDiscoveredUrl))
         let mockRestClient = RestClientMock(replyWith: successResponse(withSession: expectedSession))
         
-        let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc)
         }.done() { session in
             XCTAssertEqual(self.expectedSession, session)
             XCTAssertEqual(self.urlRequestFactoryResult, mockRestClient.requestSent)
-            XCTAssertEqual(self.cvv, self.mockURLRequestFactory.cvvPassed)
-            XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlStringPassed)
+            XCTAssertEqual(self.pan, self.mockURLRequestFactory.panPassed)
+            XCTAssertEqual(self.expiryMonth, self.mockURLRequestFactory.expiryMonthPassed)
+            XCTAssertEqual(self.expiryYear, self.mockURLRequestFactory.expiryYearPassed)
+            XCTAssertEqual(self.cvc, self.mockURLRequestFactory.cvcPassed)
+            XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlPassed)
         }.catch() { error in
             XCTFail("Creation of session shoul have succeeded")
         }.finally {
@@ -48,10 +54,10 @@ class SessionsApiClientTests: XCTestCase {
         mockDiscovery.willReturn(Promise<String>(error: expectedError))
         let mockRestClient = RestClientMock(replyWith: successResponse(withSession: expectedSession))
         
-        let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in
@@ -67,10 +73,10 @@ class SessionsApiClientTests: XCTestCase {
         mockDiscovery.willReturn(Promise.value(expectedDiscoveredUrl))
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
         
-        let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in
@@ -87,10 +93,10 @@ class SessionsApiClientTests: XCTestCase {
         let expectedError = AccessCheckoutClientError.unknown(message: "some-error")
         let mockRestClient = RestClientMock<String>(errorWith: expectedError)
         
-        let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
+        let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in
@@ -107,7 +113,7 @@ class SessionsApiClientTests: XCTestCase {
                 """
                     {
                         "_links": {
-                            "sessions:session": {
+                            "verifiedTokens:session": {
                                 "href": "\(withSession)"
                             }
                         }
@@ -134,3 +140,4 @@ class SessionsApiClientTests: XCTestCase {
         return try! JSONDecoder().decode(ApiResponse.self, from: responseAsData)
     }
 }
+

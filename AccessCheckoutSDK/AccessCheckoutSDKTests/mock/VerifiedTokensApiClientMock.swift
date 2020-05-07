@@ -1,33 +1,30 @@
 @testable import AccessCheckoutSDK
+import PromiseKit
 
-class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
+public class VerifiedTokensApiClientMock : VerifiedTokensApiClient {
     var createSessionCalled: Bool = false
     var sessionToReturn: String?
-    var error: Error?
+    var error: AccessCheckoutClientError?
     
     init(sessionToReturn: String?) {
         self.sessionToReturn = sessionToReturn
-        
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "http://localhost")!)
-        let merchantId = ""
-        super.init(discovery: discovery, merchantIdentifier: merchantId)
+        super.init()
     }
     
-    init(error: Error?) {
+    init(error: AccessCheckoutClientError?) {
         self.error = error
-        
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "")!)
-        let merchantId = ""
-        super.init(discovery: discovery, merchantIdentifier: merchantId)
+        super.init()
     }
     
-    public override func createSession(pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, urlSession: URLSession, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    public override func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<String> {
         createSessionCalled = true
         
-        if let sessionToReturn = self.sessionToReturn {
-            completionHandler(.success(sessionToReturn))
-        } else if self.error != nil {
-            completionHandler(.failure(AccessCheckoutClientError.unknown(message: "failed to create session")))
+        return Promise { seal in
+            if let sessionToReturn = self.sessionToReturn {
+                seal.fulfill(sessionToReturn)
+            } else if let error = self.error {
+                seal.reject(error)
+            }
         }
     }
 }

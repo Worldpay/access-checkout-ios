@@ -1,8 +1,8 @@
 import Foundation
 
 class PaymentsCvcSessionURLRequestFactory {
-    func create(url :URL, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
-        var request = URLRequest(url: url)
+    func create(url: String, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
+        var request = URLRequest(url: URL(string: url)!)
         let sessionRequest: PaymentsCvcSessionRequest = PaymentsCvcSessionRequest(cvc: cvv, identity: merchantIdentity)
         request.httpBody = try? JSONEncoder().encode(sessionRequest)
         request.httpMethod = "POST"
