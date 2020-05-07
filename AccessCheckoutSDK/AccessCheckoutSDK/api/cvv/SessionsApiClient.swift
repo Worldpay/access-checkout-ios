@@ -1,70 +1,59 @@
-import Foundation
+import PromiseKit
 
-public class SessionsApiClient {
-    private var merchantIdentifier: String
-    private var discovery: Discovery
+class SessionsApiClient {
+    private let sessionNotFoundError = AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response")
+    
+    private var discovery: SessionsApiDiscovery
     private var urlRequestFactory: PaymentsCvcSessionURLRequestFactory
     private var restClient: RestClient
+    private var apiResponseLinkLookup:ApiResponseLinkLookup
 
-    public init(discovery: Discovery, merchantIdentifier: String) {
-        self.discovery = discovery
-        self.merchantIdentifier = merchantIdentifier
+    init() {
+        self.discovery = SessionsApiDiscovery()
         self.urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
         self.restClient = RestClient()
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
+    }
+    
+    init(discovery:SessionsApiDiscovery) {
+        self.discovery = discovery
+        self.urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
+        self.restClient = RestClient()
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    init(discovery: Discovery, merchantIdentifier: String, urlRequestFactory: PaymentsCvcSessionURLRequestFactory, restClient: RestClient) {
+    init(discovery: SessionsApiDiscovery, urlRequestFactory: PaymentsCvcSessionURLRequestFactory, restClient: RestClient) {
         self.discovery = discovery
-        self.merchantIdentifier = merchantIdentifier
         self.urlRequestFactory = urlRequestFactory
         self.restClient = restClient
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    fileprivate func extractSession(from response: ApiResponse) -> String? {
-        return response.links.endpoints.mapValues { $0.href }[ApiLinks.sessions.result]
+    func createSession(baseUrl: String, merchantId: String, cvc: CVV) -> Promise<String> {
+        return Promise { seal in
+            firstly {
+                discovery.discover(baseUrl: baseUrl)
+            }.then { endPointUrl in
+                self.fireRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvc: cvc)
+            }.done { response in
+                if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.sessions.result, in: response) {
+                    seal.fulfill(session)
+                } else {
+                    seal.reject(self.sessionNotFoundError)
+                }
+            }.catch { error in
+                seal.reject(error)
+            }
+        }
     }
+    
+    private func fireRequest(endPointUrl: String, merchantId: String, cvc: CVV) -> Promise<ApiResponse> {
+        let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvc: cvc)
+        return restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self)
+    }
+    
+    private func createRequest(endPointUrl: String, merchantId:String, cvc: CVV) -> URLRequest {
+        return urlRequestFactory.create(url: endPointUrl, cvv: cvc, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
 
-    public func createSession(cvv: CVV, urlSession: URLSession, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
-        guard !cvv.isEmpty else {
-            completionHandler(.failure(AccessCheckoutClientError.unknown(message: "CVV cannot be empty")))
-            return
-        }
-
-        if let url = discovery.serviceEndpoint {
-            let request = urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: merchantIdentifier, bundle: Bundle(for: SessionsApiClient.self))
-            restClient.send(urlSession: urlSession, request: request, responseType: ApiResponse.self) { result in
-                switch result {
-                    case .success(let response):
-                        if let session = self.extractSession(from: response) {
-                            completionHandler(.success(session))
-                        } else {
-                            completionHandler(.failure(AccessCheckoutClientError.endpointNotFound(message: "Endpoint not found in response")))
-                        }
-                    case .failure(let error):
-                        completionHandler(.failure(error))
-                }
-            }
-        } else {
-            discovery.discover(serviceLinks: ApiLinks.sessions, urlSession: urlSession) {
-                guard let url = self.discovery.serviceEndpoint else {
-                    completionHandler(.failure(AccessCheckoutClientError.undiscoverable(message: "Unable to discover service")))
-                    return
-                }
-
-                let request = self.urlRequestFactory.create(url: url, cvv: cvv, merchantIdentity: self.merchantIdentifier, bundle: Bundle(for: SessionsApiClient.self))
-                self.restClient.send(urlSession: urlSession, request: request, responseType: ApiResponse.self) { result in
-                    switch result {
-                        case .success(let response):
-                            if let session = self.extractSession(from: response) {
-                                completionHandler(.success(session))
-                            } else {
-                                completionHandler(.failure(AccessCheckoutClientError.endpointNotFound(message: "Endpoint not found in response")))
-                            }
-                        case .failure(let error):
-                            completionHandler(.failure(error))
-                    }
-                }
-            }
-        }
     }
 }

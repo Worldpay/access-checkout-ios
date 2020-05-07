@@ -1,4 +1,5 @@
 @testable import AccessCheckoutSDK
+import PromiseKit
 
 class SessionsApiClientMock: SessionsApiClient {
     var createSessionCalled: Bool = false
@@ -7,27 +8,23 @@ class SessionsApiClientMock: SessionsApiClient {
     
     init(sessionToReturn: String?) {
         self.sessionToReturn = sessionToReturn
-        
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "http://localhost")!)
-        let merchantId = ""
-        super.init(discovery: discovery, merchantIdentifier: merchantId)
+        super.init()
     }
     
     init(error: AccessCheckoutClientError?) {
         self.error = error
-        
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "")!)
-        let merchantId = ""
-        super.init(discovery: discovery, merchantIdentifier: merchantId)
+        super.init()
     }
     
-    public override func createSession(cvv: CVV, urlSession: URLSession, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    public override func createSession(baseUrl: String, merchantId:String, cvc: CVV) -> Promise<String> {
         createSessionCalled = true
         
-        if let sessionToReturn = self.sessionToReturn {
-            completionHandler(.success(sessionToReturn))
-        } else if let error = self.error {
-            completionHandler(.failure(error))
+        return Promise { seal in
+            if let sessionToReturn = self.sessionToReturn {
+                seal.fulfill(sessionToReturn)
+            } else if let error = self.error {
+                seal.reject(error)
+            }
         }
     }
 }

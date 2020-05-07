@@ -1,111 +1,74 @@
-public class VerifiedTokensApiClient {
-    private let merchantIdentifier: String
-    private let discovery: Discovery
-    
-    /**
-     Initialises a client for API communication.
-     
-     - Parameters:
-        - discovery: The `Discovery` component
-        - merchantIdentifier: The merchants unique identifier provided by Worldpay
-     */
-    public init(discovery: Discovery, merchantIdentifier: String) {
-        self.discovery = discovery
-        self.merchantIdentifier = merchantIdentifier
+import PromiseKit
+
+class VerifiedTokensApiClient {
+    private let sessionNotFoundError = AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response")
+
+    private var discovery: VerifiedTokensApiDiscovery
+    private var urlRequestFactory: VerifiedTokensSessionURLRequestFactory
+    private var restClient: RestClient
+    private var apiResponseLinkLookup: ApiResponseLinkLookup
+
+    init() {
+        self.discovery = VerifiedTokensApiDiscovery()
+        self.urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
+        self.restClient = RestClient()
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
     
-    /**
-     Request to create a Verified Tokens Session.
-     
-     - Parameters:
-        - pan: The card number
-        - expiryMonth: The card expiry date month
-        - expiryYear: The card expiry date year
-        - cvv: The card CVV
-        - urlSession: A `URLSession` object
-        - completionHandler: Closure returning a `Result` with the created session or an error
-     */
-    public func createSession(pan: PAN,
-                              expiryMonth: UInt,
-                              expiryYear: UInt,
-                              cvv: CVV,
-                              urlSession: URLSession,
-                              completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
-        if let url = discovery.serviceEndpoint {
-            do {
-                let request = try buildRequest(url: url,
-                                               bundle: Bundle(for: VerifiedTokensApiClient.self),
-                                               pan: pan,
-                                               expiryMonth: expiryMonth,
-                                               expiryYear: expiryYear,
-                                               cvv: cvv)
-                
-                createSession(request: request, completionHandler: completionHandler)
-            } catch {
-                completionHandler(.failure(.unknown(message: "unable to get request")))
-            }
-        } else {
-            discovery.discover(serviceLinks: ApiLinks.verifiedTokens, urlSession: urlSession) {
-                if let url = self.discovery.serviceEndpoint {
-                    do {
-                        let request = try self.buildRequest(url: url,
-                                                            bundle: Bundle(for: VerifiedTokensApiClient.self),
-                                                            pan: pan,
-                                                            expiryMonth: expiryMonth,
-                                                            expiryYear: expiryYear,
-                                                            cvv: cvv)
-                        
-                        self.createSession(request: request, completionHandler: completionHandler)
-                    } catch {
-                        completionHandler(.failure(.unknown(message: "unable to get request")))
-                    }
+    init(discovery: VerifiedTokensApiDiscovery) {
+        self.discovery = discovery
+        self.urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
+        self.restClient = RestClient()
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
+    }
+
+    init(discovery: VerifiedTokensApiDiscovery, urlRequestFactory: VerifiedTokensSessionURLRequestFactory, restClient: RestClient) {
+        self.discovery = discovery
+        self.urlRequestFactory = urlRequestFactory
+        self.restClient = restClient
+        self.apiResponseLinkLookup = ApiResponseLinkLookup()
+    }
+
+    func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<String> {
+        return Promise { seal in
+            firstly {
+                discovery.discover(baseUrl: baseUrl)
+            }.then { endPointUrl in
+                self.fireRequest(endPointUrl: endPointUrl,
+                                 merchantId: merchantId,
+                                 pan: pan, expiryMonth:
+                                 expiryMonth, expiryYear:
+                                 expiryYear,
+                                 cvc: cvc)
+            }.done { response in
+                if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.verifiedTokens.result, in: response) {
+                    seal.fulfill(session)
                 } else {
-                    completionHandler(.failure(.undiscoverable(message: "Unable to discover services")))
+                    seal.reject(self.sessionNotFoundError)
                 }
+            }.catch { error in
+                seal.reject(error)
             }
         }
     }
-    
-    private func buildRequest(url: URL,
-                              bundle: Bundle,
-                              pan: PAN,
-                              expiryMonth: UInt,
-                              expiryYear: UInt,
-                              cvv: CVV) throws -> URLRequest {
-        var request = URLRequest(url: url)
-        request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
-        request.httpMethod = "POST"
-        let tokenRequest = VerifiedTokensSessionRequest(cardNumber: pan,
-                                                        cardExpiryDate: VerifiedTokensSessionRequest.CardExpiryDate(month: expiryMonth,
-                                                                                                                    year: expiryYear),
-                                                        cvc: cvv,
-                                                        identity: merchantIdentifier)
-        request.httpBody = try JSONEncoder().encode(tokenRequest)
-        
-        // Add user-agent header
-        let userAgent = UserAgent(bundle: bundle)
-        request.addValue(userAgent.headerValue, forHTTPHeaderField: UserAgent.headerName)
-        
-        return request
+
+    private func fireRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<ApiResponse> {
+        let request = createRequest(endPointUrl: endPointUrl,
+                                    merchantId: merchantId,
+                                    pan: pan, expiryMonth:
+                                    expiryMonth,
+                                    expiryYear: expiryYear,
+                                    cvc: cvc)
+        return restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self)
     }
-    
-    // ToDo - This should use the RestClient class internally
-    private func createSession(request: URLRequest,
-                               urlSession: URLSession = URLSession.shared,
-                               completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
-        urlSession.dataTask(with: request) { data, _, error in
-            if let sessionData = data {
-                if let verifiedTokensResponse = try? JSONDecoder().decode(ApiResponse.self, from: sessionData),
-                    let href = verifiedTokensResponse.links.endpoints.mapValues({ $0.href })[ApiLinks.verifiedTokens.result] {
-                    completionHandler(.success(href))
-                } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: sessionData) {
-                    completionHandler(.failure(accessCheckoutClientError))
-                } else {
-                    completionHandler(.failure(.unknown(message: "Failed to decode response data")))
-                }
-            } else {
-                completionHandler(.failure(.unknown(message: "Unexpected response: no data or error returned")))
-            }
-        }.resume()
+
+    private func createRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> URLRequest {
+        return urlRequestFactory.create(url: endPointUrl,
+                                        merchantId: merchantId,
+                                        pan: pan,
+                                        expiryMonth: expiryMonth,
+                                        expiryYear: expiryYear,
+                                        cvc: cvc,
+                                        bundle: Bundle(for: VerifiedTokensApiClient.self))
     }
 }

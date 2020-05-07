@@ -1,6 +1,5 @@
 
 public class AccessCheckoutClientBuilder {
-    private let apiClientFactory = ApiClientFactory()
     private var merchantId: String?
     private var accessBaseUrl: String?
     
@@ -23,13 +22,10 @@ public class AccessCheckoutClientBuilder {
             throw AccessCheckoutClientInitialisationError.missingAccessBaseUrl
         }
         
-        let verifiedTokensApiClient = apiClientFactory.createVerifiedTokensApiClient(baseUrl: accessBaseUrl, merchantId: merchantId)
-        let verifiedTokensRetrieveSessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: verifiedTokensApiClient)
-        
-        let sessionsApiClient = apiClientFactory.createSessionsApiClient(baseUrl: accessBaseUrl, merchantId: merchantId)
-        let paymentsCvcRetrieveSessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: sessionsApiClient)
-        
         let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()
+        
+        let verifiedTokensRetrieveSessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: VerifiedTokensApiClient())
+        let paymentsCvcRetrieveSessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: SessionsApiClient())
         let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [verifiedTokensRetrieveSessionHandler, paymentsCvcRetrieveSessionHandler])
         
         return AccessCheckoutClientImpl(merchantId: merchantId, baseUrl: accessBaseUrl, cardDetailsForSessionTypeValidator, retrieveSessionHandlerDispatcher)

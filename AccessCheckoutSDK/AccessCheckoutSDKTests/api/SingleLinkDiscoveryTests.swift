@@ -6,7 +6,6 @@ import Foundation
 class SingleLinkDiscoveryTests : XCTestCase {
     private let urlRequest = URLRequest(url: URL(string: "http://localhost")!)
     
-    
     func testsSuccessfullyDiscoversALink() {
         let expectationToFulfill = expectation(description: "")
         let jsonResponse = """

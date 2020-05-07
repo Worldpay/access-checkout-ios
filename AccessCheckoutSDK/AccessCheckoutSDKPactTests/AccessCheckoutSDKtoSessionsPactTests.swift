@@ -1,44 +1,41 @@
-import XCTest
-import PactConsumerSwift
-import Mockingjay
 @testable import AccessCheckoutSDK
+import Mockingjay
+import PactConsumerSwift
+import PromiseKit
+import XCTest
 
 class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
-
     let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://pacttest"
     
-    let requestHeaders:  [String: Any] = ["Accept": ApiHeaders.sessionsHeaderValue, "content-type": ApiHeaders.sessionsHeaderValue]
+    let requestHeaders: [String: Any] = ["Accept": ApiHeaders.sessionsHeaderValue, "content-type": ApiHeaders.sessionsHeaderValue]
     let responseHeaders: [String: Any] = ["Content-Type": ApiHeaders.sessionsHeaderValue]
     
     let sessionsMockService = MockService(provider: "sessions",
-                                                consumer: "access-checkout-iOS-sdk")
-
-    class MockDiscovery: Discovery {
-        var serviceEndpoint: URL?
+                                          consumer: "access-checkout-iOS-sdk")
+    
+    class DiscoveryMock: SessionsApiDiscovery {
+        private var discoveredUrl: String
         
-        /// Starts discovery of services
-        let baseURI: String
-        init(baseURI: String) {
-            self.baseURI = baseURI
+        init(discoveredUrl: String) {
+            self.discoveredUrl = discoveredUrl
+            super.init()
         }
         
-        func discover(serviceLinks: ApiLinks, urlSession: URLSession, onComplete: (() -> Void)?){
-            serviceEndpoint = URL(string: "\(baseURI)/sessions/payments/cvc")
-            onComplete?()
+        override func discover(baseUrl: String) -> Promise<String> {
+            return Promise.value(discoveredUrl)
         }
     }
-
-    func testServiceDiscoveryOnServiceRoot(){
-        
+    
+    func testServiceDiscoveryOnServiceRoot() {
         let expectedValue = "\(baseURI)/sessions/payments/cvc"
         let responseJson = [
             "_links": [
                 "sessions:paymentsCvc": [
                     "href": Matcher.term(matcher: "https?://[^/]+/sessions/payments/cvc", generate: expectedValue)
-                ],
+                ]
             ]
         ]
-
+        
         sessionsMockService
             .uponReceiving("a GET request to the service root")
             .withRequest(
@@ -48,37 +45,35 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             .willRespondWith(
                 status: 200,
                 headers: responseHeaders,
-                body: responseJson
-        )
+                body: responseJson)
         
         let rootResponseJson = """
-             {
-                 "_links": {
-                     "service:sessions": {
-                         "href": "\(sessionsMockService.baseUrl)/sessions"
-                     }
-                 }
-             }
-             """
+        {
+            "_links": {
+                "service:sessions": {
+                    "href": "\(sessionsMockService.baseUrl)/sessions"
+                }
+            }
+        }
+        """
         
         let rootResponse = rootResponseJson.data(using: .utf8)!
         stub(http(.get, uri: "https://root"), jsonData(rootResponse))
         
-        let discovery = ApiDiscoveryClient(baseUrl: URL(string: "https://root")!)
-        let serviceEndpointKeys = ApiLinks.sessions
+        let discovery = SessionsApiDiscovery()
         
-        
-        sessionsMockService.run(timeout: 10) {testComplete in
-            discovery.discover(serviceLinks: serviceEndpointKeys, urlSession: URLSession.shared) {
-                XCTAssertEqual(discovery.serviceEndpoint?.absoluteString, expectedValue)
-                testComplete();
+        sessionsMockService.run(timeout: 10) { testComplete in
+            firstly {
+                discovery.discover(baseUrl: "https://root")
+            }.done { discoveredUrl in
+                XCTAssertEqual(discoveredUrl, expectedValue)
+                testComplete()
             }
         }
     }
-
+    
     func testRequestCreatesTokenWithValidRequest() {
-        
-        let requestJson : [String: Any] = [
+        let requestJson: [String: Any] = [
             "cvc": "1234",
             "identity": "identity"
         ]
@@ -88,7 +83,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             "_links": [
                 "sessions:session": [
                     "href": Matcher.term(matcher: "https?://[^/]+/sessions/.+", generate: expectedValue)
-                ],
+                ]
             ]
         ]
         
@@ -103,27 +98,25 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
                              headers: responseHeaders,
                              body: responseJson)
         
-        let mockDiscovery = MockDiscovery(baseURI: sessionsMockService.baseUrl)
-        let sessionsClient = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: "identity")
+        let mockDiscovery = DiscoveryMock(discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(cvv: "1234",
-                                         urlSession: URLSession.shared) { result in
-                                         switch result {
-                                         case let .success(sessionState):
-                                             XCTAssertEqual(sessionState, expectedValue)
-                                         case let .failure(error):
-                                             XCTFail(error.localizedDescription)
-                                         }
-                                         testComplete()
+            firstly {
+                sessionsClient.createSession(baseUrl: "",
+                                             merchantId: "identity",
+                                             cvc: "1234")
+            }.done { session in
+                XCTAssertEqual(session, expectedValue)
+            }.catch { error in
+                XCTFail(error.localizedDescription)
+            }.finally {
+                testComplete()
             }
         }
     }
     
-
-    
     func testRequestFailsWhenAnIncorrectMerchantIdIsProvided() {
-        
         let request = PactRequest(
             identity: "incorrectValue",
             cvc: "123")
@@ -155,13 +148,12 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         forScenario scenario: String,
         withRequest request: PactRequest,
         andErrorResponse response: ExpectedPactErrorResponse) {
-        
-        let requestJson : [String: Any] = [
+        let requestJson: [String: Any] = [
             "cvc": request.cvc,
             "identity": request.identity
         ]
         
-        let responseJson : [String : Any] = [
+        let responseJson: [String: Any] = [
             "errorName": response.mainErrorName,
             "message": Matcher.somethingLike(response.mainErrorMessage),
             "validationErrors": [
@@ -183,22 +175,23 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
                              headers: responseHeaders,
                              body: responseJson)
         
-        let mockDiscovery = MockDiscovery(baseURI: sessionsMockService.baseUrl)
-        let sessionsClient = SessionsApiClient(discovery: mockDiscovery, merchantIdentifier: request.identity)
+        let mockDiscovery = DiscoveryMock(discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(cvv: request.cvc,
-                                         urlSession: URLSession.shared) { result in
-                                            switch result {
-                                            case .success(_):
-                                                XCTFail("Service response expected to be unsuccessful")
-                                            case let .failure(error):
-                                                print(error)
-                                                XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
-                                                XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
-                                                XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
-                                            }
-                                            testComplete()
+            firstly {
+                sessionsClient.createSession(baseUrl: "",
+                                         merchantId: request.identity,
+                                         cvc: request.cvc)
+            }.done { session in
+                XCTFail("Service response expected to be unsuccessful")
+            }.catch { error in
+                print(error)
+                XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
+                XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
+                XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
+            }.finally {
+                testComplete()
             }
         }
     }

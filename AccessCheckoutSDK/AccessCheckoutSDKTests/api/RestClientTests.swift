@@ -1,6 +1,7 @@
 import Foundation
 import Mockingjay
 import XCTest
+import PromiseKit
 @testable import AccessCheckoutSDK
 
 class RestClientTests: XCTestCase {
@@ -16,34 +17,33 @@ class RestClientTests: XCTestCase {
         let urlSessionDataTaskMock:URLSessionDataTaskMock = URLSessionDataTaskMock()
         let urlSession:URLSessionMock = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
         
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self, completionHandler: { result in });
+        let result = restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self);
         
+        XCTAssertNotNil(result)
         XCTAssertTrue(urlSession.dataTaskCalled)
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
     }
     
-    func testRestClientProvidesSuccessfulResponseToCompletionHandler() {
+    func testRestClientProvidesSuccessfulResponseToPromise() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("{\"id\":1, \"name\":\"some name\"}"), status: 200))
         
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self, completionHandler: { result in
-            switch result {
-            case .success(let dummyResponse):
-                XCTAssertEqual(1, dummyResponse.id)
-                XCTAssertEqual("some name", dummyResponse.name)
-                
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            }
-            
+        firstly  {
+            restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        }.done() { response in
+            XCTAssertEqual(1, response.id)
+            XCTAssertEqual("some name", response.name)
+        }.catch() { error in
+            XCTFail(error.localizedDescription)
+        }.finally() {
             expectationToWaitFor.fulfill()
-        });
+        }
         
         wait(for: [expectationToWaitFor], timeout: 1)
     }
     
-    func testRestClientProvidesTranslatedErrorToCompletionHandler() {
+    func testRestClientProvidesTranslatedErrorToPromise() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("""
@@ -58,35 +58,52 @@ class RestClientTests: XCTestCase {
                 }
             """), status: 400))
         
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self, completionHandler: { result in
-            switch result {
-            case .success(_):
-                XCTFail("Expected failed response but received successful response")
-            case .failure(let error):
-                XCTAssertEqual("bodyDoesNotMatchSchema", (error as AccessCheckoutClientError).errorName)
-            }
-            
+        firstly  {
+            restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        }.done() { response in
+            XCTFail("Expected failed response but received successful response")
+        }.catch() { error in
+            XCTAssertEqual("bodyDoesNotMatchSchema", (error as! AccessCheckoutClientError).errorName)
+        }.finally() {
             expectationToWaitFor.fulfill()
-        });
+        }
         
         wait(for: [expectationToWaitFor], timeout: 1)
     }
     
-    func testRestClientProvidesGenericErrorToCompletionHandlerWhenFailingToTranslateResponse() {
+    func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
+        let expectedError = AccessCheckoutClientError.unknown(message: "Failed to decode response data")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("some data returned"), status: 200))
         
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self, completionHandler: { result in
-            switch result {
-            case .success(_):
-                XCTFail("Expected failed response but received successful response")
-            case .failure(let error):
-                XCTAssertEqual("Error: unknown Message: Failed to decode response data", (error as AccessCheckoutClientError).errorDescription)
-            }
-            
+        firstly  {
+            restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        }.done() { response in
+            XCTFail("Expected failed response but received successful response")
+        }.catch() { error in
+            XCTAssertEqual(expectedError, (error as! AccessCheckoutClientError))
+        }.finally() {
             expectationToWaitFor.fulfill()
-        });
+        }
+        
+        wait(for: [expectationToWaitFor], timeout: 1)
+    }
+    
+    func testRestClientProvidesGenericErrorToPromiseWhenFailingToGetAResponse() {
+        let expectationToWaitFor = XCTestExpectation(description: "")
+        let expectedError = AccessCheckoutClientError.unknown(message: "Could not connect to the server.")
+        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
+        
+        firstly  {
+            restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        }.done() { response in
+            XCTFail("Expected failed response but received successful response")
+        }.catch() { error in
+            XCTAssertEqual(expectedError, (error as! AccessCheckoutClientError))
+        }.finally() {
+            expectationToWaitFor.fulfill()
+        }
         
         wait(for: [expectationToWaitFor], timeout: 1)
     }
@@ -101,9 +118,9 @@ class RestClientTests: XCTestCase {
     private func toData(_ stringData:String) -> Data {
         return stringData.data(using: .utf8)!
     }
-}
-
-class DummyResponse : Codable {
-    var id:Int
-    var name:String
+    
+    class DummyResponse : Codable {
+        var id:Int
+        var name:String
+    }
 }
