@@ -6,16 +6,16 @@ class VerifiedTokensSessionURLRequestFactoryMock: VerifiedTokensSessionURLReques
     private(set) var panPassed:String?
     private(set) var expiryMonthPassed:UInt?
     private(set) var expiryYearPassed:UInt?
-    private(set) var cvcPassed:String?
+    private(set) var cvvPassed:String?
     private var requestToReturn:URLRequest?
     
-    override func create(url: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV, bundle: Bundle) -> URLRequest {
+    override func create(url: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, bundle: Bundle) -> URLRequest {
         createCalled = true
         urlPassed = url
         panPassed = pan
         expiryMonthPassed = expiryMonth
         expiryYearPassed = expiryYear
-        cvcPassed = cvc
+        cvvPassed = cvv
         if requestToReturn != nil {
             return requestToReturn!
         } else {

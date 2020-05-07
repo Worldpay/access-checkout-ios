@@ -105,7 +105,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             firstly {
                 sessionsClient.createSession(baseUrl: "",
                                              merchantId: "identity",
-                                             cvc: "1234")
+                                             cvv: "1234")
             }.done { session in
                 XCTAssertEqual(session, expectedValue)
             }.catch { error in
@@ -182,7 +182,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             firstly {
                 sessionsClient.createSession(baseUrl: "",
                                          merchantId: request.identity,
-                                         cvc: request.cvc)
+                                         cvv: request.cvc)
             }.done { session in
                 XCTFail("Service response expected to be unsuccessful")
             }.catch { error in

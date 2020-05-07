@@ -18,7 +18,7 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         let apiClient = SessionsApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetails.builder().cvv("123")
+        let cardDetails = CardDetailsBuilder().cvv("123")
             .build()
 
         sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in
@@ -39,7 +39,7 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
         let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an-error")
         let apiClient = SessionsApiClientMock(error: expectedError)
         let sessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetails.builder().cvv("123")
+        let cardDetails = CardDetailsBuilder().cvv("123")
             .build()
 
         sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in

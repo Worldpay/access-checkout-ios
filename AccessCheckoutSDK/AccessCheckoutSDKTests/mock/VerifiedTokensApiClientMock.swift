@@ -16,7 +16,7 @@ public class VerifiedTokensApiClientMock : VerifiedTokensApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<String> {
+    public override func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV) -> Promise<String> {
         createSessionCalled = true
         
         return Promise { seal in

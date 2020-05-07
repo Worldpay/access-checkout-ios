@@ -29,7 +29,7 @@ class VerifiedTokensApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<String> {
+    func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV) -> Promise<String> {
         return Promise { seal in
             firstly {
                 discovery.discover(baseUrl: baseUrl)
@@ -39,7 +39,7 @@ class VerifiedTokensApiClient {
                                  pan: pan, expiryMonth:
                                  expiryMonth, expiryYear:
                                  expiryYear,
-                                 cvc: cvc)
+                                 cvv: cvv)
             }.done { response in
                 if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.verifiedTokens.result, in: response) {
                     seal.fulfill(session)
@@ -52,23 +52,23 @@ class VerifiedTokensApiClient {
         }
     }
 
-    private func fireRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> Promise<ApiResponse> {
+    private func fireRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV) -> Promise<ApiResponse> {
         let request = createRequest(endPointUrl: endPointUrl,
                                     merchantId: merchantId,
                                     pan: pan, expiryMonth:
                                     expiryMonth,
                                     expiryYear: expiryYear,
-                                    cvc: cvc)
+                                    cvv: cvv)
         return restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self)
     }
 
-    private func createRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV) -> URLRequest {
+    private func createRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV) -> URLRequest {
         return urlRequestFactory.create(url: endPointUrl,
                                         merchantId: merchantId,
                                         pan: pan,
                                         expiryMonth: expiryMonth,
                                         expiryYear: expiryYear,
-                                        cvc: cvc,
+                                        cvv: cvv,
                                         bundle: Bundle(for: VerifiedTokensApiClient.self))
     }
 }

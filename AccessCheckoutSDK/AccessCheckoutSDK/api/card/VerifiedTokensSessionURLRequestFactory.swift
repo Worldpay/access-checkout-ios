@@ -1,5 +1,5 @@
 class VerifiedTokensSessionURLRequestFactory {
-    func create(url: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvc: CVV, bundle: Bundle) -> URLRequest {
+    func create(url: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, bundle: Bundle) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         
@@ -10,7 +10,7 @@ class VerifiedTokensSessionURLRequestFactory {
         let expiryDate = VerifiedTokensSessionRequest.CardExpiryDate(month: expiryMonth, year: expiryYear)
         let tokenRequest = VerifiedTokensSessionRequest(cardNumber: pan,
                                                         cardExpiryDate: expiryDate,
-                                                        cvc: cvc,
+                                                        cvc: cvv,
                                                         identity: merchantId)
         
         request.httpBody = try? JSONEncoder().encode(tokenRequest)

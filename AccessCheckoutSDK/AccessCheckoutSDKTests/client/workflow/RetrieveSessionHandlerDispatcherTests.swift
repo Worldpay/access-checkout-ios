@@ -5,7 +5,7 @@ import XCTest
 class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     let merchantId = "123"
     let baseUrl = "some-url"
-    let cardDetails = CardDetails.builder().build()
+    let cardDetails = CardDetailsBuilder().build()
     let paymentsCvcSessionHandler = PaymentsCvcRetrieveSessionHandlerMock()
     let verifiedTokensSessionHandler = VerifiedTokensRetrieveSessionHandlerMock()
     

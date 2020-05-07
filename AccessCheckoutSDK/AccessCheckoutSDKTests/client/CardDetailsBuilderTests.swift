@@ -3,7 +3,7 @@ import XCTest
 
 class CardDetailsBuilderTests: XCTestCase {
     func testBuildsCardDetailsWithPanCvvAndExpiryDate() {
-        let cardDetailsBuilder = CardDetails.builder().pan("1234123412341234")
+        let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
             .expiryMonth("10")
             .expiryYear("23")
             .cvv("123")
@@ -17,7 +17,7 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testBuildsCardDetailsWithJustACvv() {
-        let cardDetailsBuilder = CardDetails.builder().cvv("123")
+        let cardDetailsBuilder = CardDetailsBuilder().cvv("123")
         
         let cardDetails = cardDetailsBuilder.build()
         
