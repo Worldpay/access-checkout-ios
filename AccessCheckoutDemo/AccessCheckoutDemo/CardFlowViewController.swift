@@ -1,15 +1,14 @@
-import UIKit
 import AccessCheckoutSDK
+import UIKit
 
 class CardFlowViewController: UIViewController {
-    
+
     @IBOutlet weak var panView: PANView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
     @IBOutlet weak var cvvView: CVVView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var verifiedTokensApiClient: VerifiedTokensApiClient?
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
@@ -18,14 +17,13 @@ class CardFlowViewController: UIViewController {
             let month = expiryDateView.month,
             let year = expiryDateView.year,
             let cvv = cvvView.text else {
-                return
+            return
         }
         submitCard(pan: pan, month: month, year: year, cvv: cvv)
     }
     
     private func submitCard(pan: PAN, month: ExpiryMonth, year: ExpiryYear, cvv: CVV) {
-        
-        guard let expiryMonth = UInt(month), let expiryYear = year.toFourDigitFormat() else {
+        guard let _ = UInt(month), let _ = year.toFourDigitFormat() else {
             return
         }
         
@@ -34,11 +32,19 @@ class CardFlowViewController: UIViewController {
         expiryDateView.isEnabled = false
         cvvView.isEnabled = false
         spinner.startAnimating()
-        verifiedTokensApiClient?.createSession(pan: pan,
-                                    expiryMonth: expiryMonth,
-                                    expiryYear: expiryYear,
-                                    cvv: cvv,
-                                    urlSession: URLSession.shared) { result in
+        
+        let cardDetails = CardDetailsBuilder().pan(pan)
+        .expiryMonth(month)
+        .expiryYear(year)
+        .cvv(cvv)
+        .build()
+        
+        let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
+            .merchantId(CI.merchantId)
+            .build()
+        
+        try? accessCheckoutClient?.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
@@ -51,13 +57,12 @@ class CardFlowViewController: UIViewController {
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
                     switch error {
-                        case .bodyDoesNotMatchSchema(_, let validationErrors):
-                            accessCheckoutClientValidationErrors = validationErrors
-                        default:
-                            break
+                    case .bodyDoesNotMatchSchema(_, let validationErrors):
+                        accessCheckoutClientValidationErrors = validationErrors
+                    default:
+                        break
                     }
-          
-
+                    
                     self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
                     AlertView.display(using: self, title: title, message: nil)
                 }
@@ -66,7 +71,6 @@ class CardFlowViewController: UIViewController {
     }
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
-        
         panView.isEnabled = true
         panView.isValid(valid: true)
         
@@ -84,7 +88,7 @@ class CardFlowViewController: UIViewController {
             cvvView.clear()
             panView.imageView.image = unknownBrandImage
         }
-        validationErrors?.forEach({ error in
+        validationErrors?.forEach { error in
             switch error {
             case .panFailedLuhnCheck:
                 panView?.isValid(valid: false)
@@ -104,7 +108,7 @@ class CardFlowViewController: UIViewController {
             default:
                 break
             }
-        })
+        }
     }
     
     override func viewDidLoad() {
@@ -128,22 +132,13 @@ class CardFlowViewController: UIViewController {
         let cardValidator = AccessCheckoutCardValidator()
         if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String,
             let url = URL(string: configUrl) {
-                cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
+            cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
         }
         
         let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
         card.cardDelegate = self
         card.cardValidator = cardValidator
         self.card = card
-        
-        if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
-            let apiDiscoveryClient = ApiDiscoveryClient(baseUrl: url)
-            let vts = ApiLinks.verifiedTokens
-            apiDiscoveryClient.discover(serviceLinks: vts, urlSession: URLSession.shared) {
-                self.verifiedTokensApiClient = VerifiedTokensApiClient(discovery: apiDiscoveryClient,
-                                                         merchantIdentifier: CI.merchantId)
-            }
-        }
     }
     
     private func updateCardBrandImage(url: URL) {
@@ -166,9 +161,9 @@ extension CardFlowViewController: CardDelegate {
     }
     
     func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?) {
-        if let imageUrl = cardBrand?.images?.filter( { $0.type == "image/png" } ).first?.url,
+        if let imageUrl = cardBrand?.images?.filter({ $0.type == "image/png" }).first?.url,
             let url = URL(string: imageUrl) {
-                updateCardBrandImage(url: url)
+            updateCardBrandImage(url: url)
         } else {
             panView.imageView.image = unknownBrandImage
         }

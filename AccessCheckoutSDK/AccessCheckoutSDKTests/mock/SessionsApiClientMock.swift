@@ -16,7 +16,7 @@ class SessionsApiClientMock: SessionsApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId:String, cvc: CVV) -> Promise<String> {
+    public override func createSession(baseUrl: String, merchantId:String, cvv: CVV) -> Promise<String> {
         createSessionCalled = true
         
         return Promise { seal in

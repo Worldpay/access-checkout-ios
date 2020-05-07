@@ -29,12 +29,12 @@ class SessionsApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, cvc: CVV) -> Promise<String> {
+    func createSession(baseUrl: String, merchantId: String, cvv: CVV) -> Promise<String> {
         return Promise { seal in
             firstly {
                 discovery.discover(baseUrl: baseUrl)
             }.then { endPointUrl in
-                self.fireRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvc: cvc)
+                self.fireRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
             }.done { response in
                 if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.sessions.result, in: response) {
                     seal.fulfill(session)
@@ -47,13 +47,13 @@ class SessionsApiClient {
         }
     }
     
-    private func fireRequest(endPointUrl: String, merchantId: String, cvc: CVV) -> Promise<ApiResponse> {
-        let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvc: cvc)
+    private func fireRequest(endPointUrl: String, merchantId: String, cvv: CVV) -> Promise<ApiResponse> {
+        let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
         return restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self)
     }
     
-    private func createRequest(endPointUrl: String, merchantId:String, cvc: CVV) -> URLRequest {
-        return urlRequestFactory.create(url: endPointUrl, cvv: cvc, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
+    private func createRequest(endPointUrl: String, merchantId:String, cvv: CVV) -> URLRequest {
+        return urlRequestFactory.create(url: endPointUrl, cvv: cvv, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
 
     }
 }

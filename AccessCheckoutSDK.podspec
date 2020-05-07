@@ -21,4 +21,5 @@ Pod::Spec.new do |spec|
   spec.source_files = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{h,swift,xib,strings}'
   spec.public_header_files = 'AccessCheckoutSDK/AccessCheckoutSDK/AccessCheckoutSDK.h'
   spec.resources    = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{json,png}'
+  spec.dependency 'PromiseKit/CorePromise'
 end

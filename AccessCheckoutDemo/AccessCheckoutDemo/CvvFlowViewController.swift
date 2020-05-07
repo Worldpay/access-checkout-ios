@@ -1,5 +1,5 @@
-import UIKit
 import AccessCheckoutSDK
+import UIKit
 
 class CvvFlowViewController: UIViewController {
 
@@ -8,7 +8,6 @@ class CvvFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     private var cvvOnly:AccessCheckoutCVVOnly?
-    private var sessionsApiClient:SessionsApiClient?
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         guard let cvv = cvvField.text else {
@@ -19,24 +18,32 @@ class CvvFlowViewController: UIViewController {
         
         cvvField.isEnabled = false
         
-        sessionsApiClient?.createSession(cvv: cvv,
-                                    urlSession: URLSession.shared) { result in
+        let cardDetails = CardDetailsBuilder()
+            .cvv(cvv)
+            .build()
+        
+        let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
+            .merchantId(CI.merchantId)
+            .build()
+        
+        try? accessCheckoutClient?.generateSession(cardDetails: cardDetails, sessionType: .paymentsCvc) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
                 switch result {
-                case .success(let session):
-                    AlertView.display(using: self, title: "Session", message: session, closeHandler: {
-                        self.cvvField.clear()
-                        self.cvvField.isEnabled = true
-                        self.submitButton.isEnabled = self.cvvOnly!.isValid()
+                    case .success(let session):
+                        AlertView.display(using: self, title: "Session", message: session, closeHandler: {
+                            self.cvvField.clear()
+                            self.cvvField.isEnabled = true
+                            self.submitButton.isEnabled = self.cvvOnly!.isValid()
                     })
-                case .failure(let error):
-                    self.highlightCvvField(error: error)
-                    
-                    AlertView.display(using: self, title: "Error", message: error.localizedDescription, closeHandler: {
-                        self.cvvField.isEnabled = true
-                        self.submitButton.isEnabled = self.cvvOnly!.isValid()
+                    case .failure(let error):
+                        self.highlightCvvField(error: error)
+                        
+                        AlertView.display(using: self, title: "Error", message: error.localizedDescription, closeHandler: {
+                            self.cvvField.isEnabled = true
+                            self.submitButton.isEnabled = self.cvvOnly!.isValid()
                     })
                 }
             }
@@ -53,23 +60,16 @@ class CvvFlowViewController: UIViewController {
         submitButton.isEnabled = false
         
         cvvOnly = AccessCheckoutCVVOnly(cvvView: cvvField, cvvOnlyDelegate: self)
-        
-        if let baseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as? String, let url = URL(string: baseUrl) {
-            let apiDiscoveryClient = ApiDiscoveryClient(baseUrl: url)
-            apiDiscoveryClient.discover(serviceLinks: ApiLinks.sessions, urlSession: URLSession.shared) {
-                self.sessionsApiClient = SessionsApiClient(discovery: apiDiscoveryClient, merchantIdentifier: CI.merchantId)
-            }
-        }
     }
     
-    private func highlightCvvField(error:AccessCheckoutClientError) {
-        if (extractFieldThatCausedError(from: error) == "$.cvv") {
-            self.cvvField.isValid(valid: false)
+    private func highlightCvvField(error: AccessCheckoutClientError) {
+        if extractFieldThatCausedError(from: error) == "$.cvv" {
+            cvvField.isValid(valid: false)
         }
     }
     
     private func extractFieldThatCausedError(from error: AccessCheckoutClientError) -> String? {
-        var validationErrors:[AccessCheckoutClientValidationError] = []
+        var validationErrors: [AccessCheckoutClientValidationError] = []
         switch error {
             case .bodyDoesNotMatchSchema(_, let errors):
                 validationErrors += errors!
@@ -77,7 +77,7 @@ class CvvFlowViewController: UIViewController {
                 return nil
         }
         
-        var fieldToReturn:String?
+        var fieldToReturn: String?
         validationErrors.forEach { validationError in
             switch validationError {
                 case .stringFailedRegexCheck(_, let jsonPath):
@@ -86,7 +86,7 @@ class CvvFlowViewController: UIViewController {
                             fieldToReturn = jsonPath
                         default:
                             print("Unrecognized jsonPath")
-                        }
+                    }
                 default:
                     break
             }
@@ -96,10 +96,10 @@ class CvvFlowViewController: UIViewController {
     }
 }
 
-extension CvvFlowViewController : CVVOnlyDelegate {
+extension CvvFlowViewController: CVVOnlyDelegate {
     public func handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool) {
         cvvView.isValid(valid: isValid)
         
-        submitButton.isEnabled = self.cvvOnly!.isValid()
+        submitButton.isEnabled = cvvOnly!.isValid()
     }
 }

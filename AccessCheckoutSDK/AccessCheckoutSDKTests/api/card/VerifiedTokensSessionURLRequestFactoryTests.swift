@@ -5,7 +5,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
     private let pan: PAN = "a-pan"
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
-    private let cvc: CVV = "123"
+    private let cvv: CVV = "123"
     private let merchantId: String = "a-merchant-id"
 
     private let urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
@@ -28,7 +28,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
+                                               cvv: cvv,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedRequest, request)
@@ -40,7 +40,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
+                                               cvv: cvv,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedMethod, request.httpMethod)
@@ -55,33 +55,9 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
+                                               cvv: cvv,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedHeaderFields, request.allHTTPHeaderFields)
     }
 }
-
-//
-// private func buildRequest(url: URL,
-//                          bundle: Bundle,
-//                          pan: PAN,
-//                          expiryMonth: UInt,
-//                          expiryYear: UInt,
-//                          cvv: CVV) throws -> URLRequest {
-//    var request = URLRequest(url: url)
-//    request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
-//    request.httpMethod = "POST"
-//    let tokenRequest = VerifiedTokensSessionRequest(cardNumber: pan,
-//                                                    cardExpiryDate: VerifiedTokensSessionRequest.CardExpiryDate(month: expiryMonth,
-//                                                                                                                year: expiryYear),
-//                                                    cvc: cvv,
-//                                                    identity: merchantIdentifier)
-//    request.httpBody = try JSONEncoder().encode(tokenRequest)
-//
-//    // Add user-agent header
-//    let userAgent = UserAgent(bundle: bundle)
-//    request.addValue(userAgent.headerValue, forHTTPHeaderField: UserAgent.headerName)
-//
-//    return request
-// }

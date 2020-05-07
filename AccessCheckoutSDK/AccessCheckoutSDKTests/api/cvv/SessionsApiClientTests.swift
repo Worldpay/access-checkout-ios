@@ -28,7 +28,7 @@ class SessionsApiClientTests: XCTestCase {
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv)
         }.done() { session in
             XCTAssertEqual(self.expectedSession, session)
             XCTAssertEqual(self.urlRequestFactoryResult, mockRestClient.requestSent)
@@ -51,7 +51,7 @@ class SessionsApiClientTests: XCTestCase {
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in
@@ -70,7 +70,7 @@ class SessionsApiClientTests: XCTestCase {
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in
@@ -90,7 +90,7 @@ class SessionsApiClientTests: XCTestCase {
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
         firstly {
-            client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvv)
+            client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv)
         }.done() { session in
             XCTFail("Creation of session should have failed")
         }.catch() { error in

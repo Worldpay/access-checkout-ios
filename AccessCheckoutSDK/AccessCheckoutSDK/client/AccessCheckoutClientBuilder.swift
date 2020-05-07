@@ -3,6 +3,10 @@ public class AccessCheckoutClientBuilder {
     private var merchantId: String?
     private var accessBaseUrl: String?
     
+    public init() {
+        
+    }
+    
     public func merchantId(_ merchantId: String) -> AccessCheckoutClientBuilder {
         self.merchantId = merchantId
         return self

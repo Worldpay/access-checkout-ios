@@ -14,7 +14,7 @@ class PaymentsCvcRetrieveSessionHandler: RetrieveSessionHandler {
     func retrieveSession(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
         
         firstly {
-            apiClient!.createSession(baseUrl: baseUrl, merchantId: merchantId, cvc: cardDetails.cvv!)
+            apiClient!.createSession(baseUrl: baseUrl, merchantId: merchantId, cvv: cardDetails.cvv!)
         }.done() { session in
             completionHandler(.success(session))
         }.catch() { error in

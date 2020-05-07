@@ -18,7 +18,7 @@ class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
                                       pan: cardDetails.pan!,
                                       expiryMonth: cardDetails.expiryMonth!,
                                       expiryYear: cardDetails.expiryYear!,
-                                      cvc: cardDetails.cvv!)
+                                      cvv: cardDetails.cvv!)
         }.done { session in
             completionHandler(.success(session))
         }.catch { error in

@@ -112,7 +112,7 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
                                                    pan: "4111111111111111",
                                                    expiryMonth: 12,
                                                    expiryYear: 2099,
-                                                   cvc: "123")
+                                                   cvv: "123")
             }.done { session in
                 XCTAssertEqual(session, expectedValue)
             }.catch { error in
@@ -257,7 +257,7 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
                                                    pan: request.cardNumber,
                                                    expiryMonth: request.expiryMonth,
                                                    expiryYear: request.expiryYear,
-                                                   cvc: request.cvc)
+                                                   cvv: request.cvc)
             }.done { _ in
                 XCTFail("Service response expected to be unsuccessful")
             }.catch { error in

@@ -40,7 +40,7 @@ class AccessCheckoutClientTests: XCTestCase {
                              pan: "",
                              expiryMonth: 0,
                              expiryYear: 0,
-                             cvc: "")
+                             cvv: "")
         }.done { _ in
             XCTFail("Should have received an error but received a sucessful response")
         }.catch { error in
