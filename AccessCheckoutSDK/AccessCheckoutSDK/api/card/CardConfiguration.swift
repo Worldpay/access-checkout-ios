@@ -13,11 +13,42 @@ public struct CardConfiguration: Decodable {
      */
     public init?(fromURL url: URL) {
         guard let data = try? Data(contentsOf: url),
-            let cardConfiguration = try? JSONDecoder().decode(CardConfiguration.self, from: data) else {
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [Dictionary<String, Any>] else {
                 return nil
+            }
+        var brandsFromJson: [CardBrand] = []
+        for brand in json {
+            guard let name = brand["name"],
+                let matcher = brand["pattern"],
+                let pans = brand["panLengths"]
+                else {
+                    return nil
+                }
+            var brandImages: [CardBrand.CardBrandImage]? = []
+            if let images = brand["images"] as? [[String: Any]] {
+                for image in images {
+                    brandImages?.append(
+                        CardBrand.CardBrandImage(
+                            type: image["type"] as? String,
+                            url: image["url"] as? String
+                        )
+                    )
+                }
+            } else {
+                brandImages = nil
+            }
+                brandsFromJson.append(
+                    CardBrand(
+                        name: name as! String,
+                        images: brandImages,
+                        matcher: matcher as! String,
+                        cvv: brand["cvvLength"] as? Int,
+                        pans: pans as! [Int]
+                    )
+                )
         }
-        defaults = cardConfiguration.defaults
-        brands = cardConfiguration.brands
+        defaults = CardDefaults.baseDefaults()
+        brands = brandsFromJson
     }
 
     init(defaults: CardDefaults?, brands: [CardBrand]?) {
@@ -26,15 +57,12 @@ public struct CardConfiguration: Decodable {
     }
     
     func cardBrand(forPAN pan: PAN) -> CardBrand? {
-        return brands?.first { $0.cardValidationRule(forPAN: pan) != nil }
+        return brands?.first { $0.matcher.regexMatches(text: pan) == true }
     }
     
     struct CardValidationRule: Decodable, Equatable {
         var matcher: String?
-        var minLength: Int?
-        var maxLength: Int?
-        var validLength: Int?
-        var subRules: [CardValidationRule]?
+        var validLengths: Array<Int>?
     }
     
     public struct CardDefaults: Decodable {
@@ -44,26 +72,22 @@ public struct CardConfiguration: Decodable {
         var year: CardValidationRule?
         
         public static func baseDefaults() -> CardDefaults {
-            let panValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,19}$",
-                                                                         minLength: 13,
-                                                                         maxLength: 19,
-                                                                         validLength: nil,
-                                                                         subRules: nil)
-            let cvvValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,4}$",
-                                                                         minLength: 3,
-                                                                         maxLength: 4,
-                                                                         validLength: nil,
-                                                                         subRules: nil)
-            let monthValidationRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                                           minLength: 2,
-                                                                           maxLength: 2,
-                                                                           validLength: nil,
-                                                                           subRules: nil)
-            let yearValidationRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
-                                                                          minLength: 2,
-                                                                          maxLength: 2,
-                                                                          validLength: nil,
-                                                                          subRules: nil)
+            let panValidationRule = CardConfiguration.CardValidationRule(
+                matcher: "^\\d{0,19}$",
+                validLengths: [13,15,16,18,19]
+            )
+            let cvvValidationRule = CardConfiguration.CardValidationRule(
+                matcher: "^\\d{0,4}$",
+                validLengths: [3,4]
+            )
+            let monthValidationRule = CardConfiguration.CardValidationRule(
+                matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
+                validLengths: [2]
+            )
+            let yearValidationRule = CardConfiguration.CardValidationRule(
+                matcher: "^\\d{0,2}$",
+                validLengths: [2]
+            )
             return CardDefaults(pan: panValidationRule,
                                 cvv: cvvValidationRule,
                                 month: monthValidationRule,
@@ -85,13 +109,20 @@ public struct CardConfiguration: Decodable {
         /// The URL of the brand logo
         public var images: [CardBrandImage]?
         
-        var cvv: CardValidationRule?
-        let pans: [CardValidationRule]
+        let matcher: String
+        var cvv: Int?
+        let pans: [Int]
         
-        func cardValidationRule(forPAN pan: PAN) -> CardValidationRule? {
-            let panRule = pans.first { $0.matcher?.regexMatches(text: pan) == true }
-            let subPanRule = panRule?.subRules?.first { $0.matcher?.regexMatches(text: pan) == true }
-            return subPanRule ?? panRule
+        func cvvRule() -> CardValidationRule? {
+            if cvv != nil {
+                return CardValidationRule(matcher: nil, validLengths: [cvv!])
+            } else {
+                return nil
+            }
+        }
+        
+        func panValidationRule() -> CardValidationRule {
+            return CardValidationRule(matcher: matcher, validLengths: pans)
         }
         
         /// Equatable operator

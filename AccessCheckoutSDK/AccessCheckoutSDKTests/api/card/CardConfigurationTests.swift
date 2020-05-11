@@ -16,7 +16,7 @@ class CardConfigurationTests: XCTestCase {
     }
     
     func testInitFromURL() {
-        let url = Bundle(for: type(of: self)).url(forResource: "cardConfiguration", withExtension: "json")!
+        let url = Bundle(for: type(of: self)).url(forResource: "cardTypes", withExtension: "json")!
         let cardConfiguration = CardConfiguration(fromURL: url)
         XCTAssertNotNil(cardConfiguration?.defaults)
         XCTAssertNotNil(cardConfiguration?.brands)
@@ -31,62 +31,54 @@ class CardConfigurationTests: XCTestCase {
     // MARK: Card brand
     
     func testCardBrandForPAN() {
-        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-                                                           minLength: nil,
-                                                           maxLength: nil,
-                                                           validLength: 16,
-                                                           subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, matcher: "^4\\d{0,15}", cvv: nil, pans: [16])
         let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
         XCTAssertEqual(cardConfiguration.cardBrand(forPAN: "4000"), cardBrand)
     }
     
     func testCardBrand_validationRule() {
         let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-                                                           minLength: nil,
-                                                           maxLength: nil,
-                                                           validLength: 16,
-                                                           subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
-        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "4"), panRule)
+                                                           validLengths: [16])
+        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, matcher: "^4\\d{0,15}", cvv: nil, pans: [16])
+        XCTAssertEqual(cardBrand.panValidationRule(), panRule)
     }
     
-    func testCardBrand_validationRule_subPan() {
-        
-        let subPanRule = CardConfiguration.CardValidationRule(matcher: "^413600\\d{0,7}",
-                                                              minLength: nil,
-                                                              maxLength: nil,
-                                                              validLength: 13,
-                                                              subRules: nil)
-        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-                                                           minLength: nil,
-                                                           maxLength: nil,
-                                                           validLength: 16,
-                                                           subRules: [subPanRule])
-        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
-        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "41360"), panRule)
-        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "413600"), subPanRule)
-    }
-    
-    func testCardBrand_noValidationRule() {
-        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-                                                           minLength: nil,
-                                                           maxLength: nil,
-                                                           validLength: 16,
-                                                           subRules: nil)
-        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
-        XCTAssertNil(cardBrand.cardValidationRule(forPAN: "2"))
-    }
+//    func testCardBrand_validationRule_subPan() {
+//
+//        let subPanRule = CardConfiguration.CardValidationRule(matcher: "^413600\\d{0,7}",
+//                                                              minLength: nil,
+//                                                              maxLength: nil,
+//                                                              validLength: 13,
+//                                                              subRules: nil)
+//        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
+//                                                           minLength: nil,
+//                                                           maxLength: nil,
+//                                                           validLength: 16,
+//                                                           subRules: [subPanRule])
+//        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
+//        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "41360"), panRule)
+//        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "413600"), subPanRule)
+//    }
+//
+//    func testCardBrand_noValidationRule() {
+//        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
+//                                                           minLength: nil,
+//                                                           maxLength: nil,
+//                                                           validLength: 16,
+//                                                           subRules: nil)
+//        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
+//        XCTAssertNil(cardBrand.cardValidationRule(forPAN: "2"))
+//    }
     
     func testCardBrand_equality() {
-        let cardBrand1 = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [])
-        let cardBrand2 = CardConfiguration.CardBrand(name: cardBrand1.name, images: nil, cvv: nil, pans: [])
+        let cardBrand1 = CardConfiguration.CardBrand(name: "", images: nil, matcher: "", cvv: nil, pans: [])
+        let cardBrand2 = CardConfiguration.CardBrand(name: cardBrand1.name, images: nil, matcher: "", cvv: nil, pans: [])
         XCTAssertEqual(cardBrand1, cardBrand2)
     }
     
     func testCardBrand_inequality() {
-        let cardBrand1 = CardConfiguration.CardBrand(name: "cardBrand1", images: nil, cvv: nil, pans: [])
-        let cardBrand2 = CardConfiguration.CardBrand(name: "cardBrand2", images: nil, cvv: nil, pans: [])
+        let cardBrand1 = CardConfiguration.CardBrand(name: "cardBrand1", images: nil, matcher: "", cvv: nil, pans: [])
+        let cardBrand2 = CardConfiguration.CardBrand(name: "cardBrand2", images: nil, matcher: "", cvv: nil, pans: [])
         XCTAssertNotEqual(cardBrand1, cardBrand2)
     }
 }

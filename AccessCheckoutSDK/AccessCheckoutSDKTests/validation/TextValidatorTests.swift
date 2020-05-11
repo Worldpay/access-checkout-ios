@@ -25,7 +25,7 @@ class TextValidatorTests : XCTestCase {
     
     func testTextShorterThanValidLengthOnlyPartiallyValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.validLength = 3
+        validationRule.validLengths = [3]
         
         let result = textValidator.validate(text: "12", againstValidationRule: validationRule)
         
@@ -35,7 +35,7 @@ class TextValidatorTests : XCTestCase {
     
     func testTextAsLongAsValidLengthIsPartiallyValidAndCompletelyValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.validLength = 3
+        validationRule.validLengths = [3]
         
         let result = textValidator.validate(text: "123", againstValidationRule: validationRule)
         
@@ -45,8 +45,8 @@ class TextValidatorTests : XCTestCase {
     
     func testTextLongerThanValidLengthIsNotValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.validLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "1234", againstValidationRule: validationRule)
         
         XCTAssertFalse(result.partial)
@@ -55,8 +55,8 @@ class TextValidatorTests : XCTestCase {
 
     func testTextAsLongAsMinLengthIsPartiallyValidAndCompletelyValid(){
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "123", againstValidationRule: validationRule)
         
         XCTAssertTrue(result.partial)
@@ -65,28 +65,19 @@ class TextValidatorTests : XCTestCase {
     
     func testTextShorterThanMinLengthIsOnlyPartiallyValid(){
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "12", againstValidationRule: validationRule)
         
         XCTAssertTrue(result.partial)
         XCTAssertFalse(result.complete)
     }
     
-    func testTextLongerThanMinLengthIsPartiallyValidAndCompletelyValid(){
-        var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        
-        let result = textValidator.validate(text: "1234", againstValidationRule: validationRule)
-        
-        XCTAssertTrue(result.partial)
-        XCTAssertTrue(result.complete)
-    }
     
     func testTextShorterThanMaxLengthIsOnlyPartiallyValid(){
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.maxLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "12", againstValidationRule: validationRule)
         
         XCTAssertTrue(result.partial)
@@ -95,8 +86,8 @@ class TextValidatorTests : XCTestCase {
     
     func testTextAsLongAsMaxLengthIsPartiallyValidAndCompletelyValid(){
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.maxLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "123", againstValidationRule: validationRule)
         
         XCTAssertTrue(result.partial)
@@ -105,29 +96,18 @@ class TextValidatorTests : XCTestCase {
     
     func testTextLongerThanMaxLengthIsNotValid(){
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.maxLength = 3
-        
+        validationRule.validLengths = [3]
+
         let result = textValidator.validate(text: "1234", againstValidationRule: validationRule)
         
         XCTAssertFalse(result.partial)
         XCTAssertFalse(result.complete)
     }
     
-    func testTextLongerThanMinLengthAndShorterThanMaxLengthIsPartiallyValidAndCompletelyValid() {
-        var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        validationRule.maxLength = 5
-        
-        let result = textValidator.validate(text: "1234", againstValidationRule: validationRule)
-        
-        XCTAssertTrue(result.partial)
-        XCTAssertTrue(result.complete)
-    }
-    
     func testTextAsLongAsMinLengthAndShorterThanMaxLengthIsPartiallyValidAndCompletelyValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        validationRule.maxLength = 5
+        validationRule.validLengths = [3, 5]
+
         
         let result = textValidator.validate(text: "123", againstValidationRule: validationRule)
         
@@ -137,8 +117,7 @@ class TextValidatorTests : XCTestCase {
     
     func testTextLongerThanMinLengthAndAsLongAsMaxLengthIsPartiallyValidAndCompletelyValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 3
-        validationRule.maxLength = 5
+        validationRule.validLengths = [3, 5]
         
         let result = textValidator.validate(text: "12345", againstValidationRule: validationRule)
         
@@ -148,8 +127,8 @@ class TextValidatorTests : XCTestCase {
     
     func testTextAsLongAsMinLengthAndAsLongAsMaxLengthIsPartiallyValidAndCompletelyValid() {
         var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.minLength = 4
-        validationRule.maxLength = 4
+        validationRule.validLengths = [4]
+
         
         let result = textValidator.validate(text: "1234", againstValidationRule: validationRule)
         
@@ -160,9 +139,8 @@ class TextValidatorTests : XCTestCase {
     func testRuleRegexTakesPrecedenceOverAllOtherCriteria(){
         var validationRule = CardConfiguration.CardValidationRule()
         validationRule.matcher = "^[0-9]{3}$"
-        validationRule.validLength = 3
-        validationRule.minLength = 2
-        validationRule.maxLength = 4
+        validationRule.validLengths = [2, 3, 4]
+
         
         let result = textValidator.validate(text: "abc", againstValidationRule: validationRule)
         
@@ -170,16 +148,4 @@ class TextValidatorTests : XCTestCase {
         XCTAssertFalse(result.complete)
     }
     
-    func testRuleValidLengthTakesPrecedenceOverMinLengthAndMaxLength(){
-        var validationRule = CardConfiguration.CardValidationRule()
-        validationRule.matcher = "^[0-9]{3}$"
-        validationRule.validLength = 3
-        validationRule.minLength = 6
-        validationRule.maxLength = 7
-        
-        let result = textValidator.validate(text: "123", againstValidationRule: validationRule)
-        
-        XCTAssertTrue(result.partial)
-        XCTAssertTrue(result.complete)
-    }
 }

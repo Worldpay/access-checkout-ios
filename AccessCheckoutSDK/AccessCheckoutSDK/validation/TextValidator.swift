@@ -12,18 +12,9 @@ class TextValidator {
         let partiallyValid: Bool
         let completelyValid: Bool
         
-        if let validLength = validationRule.validLength {
-            partiallyValid = text.count <= validLength
-            completelyValid = text.count == validLength
-        } else if let minLength = validationRule.minLength, let maxLength = validationRule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count >= minLength && text.count <= maxLength
-        } else if let minLength = validationRule.minLength {
-            partiallyValid = true
-            completelyValid = text.count >= minLength
-        } else if let maxLength = validationRule.maxLength {
-            partiallyValid = text.count <= maxLength
-            completelyValid = text.count == maxLength
+        if let validLengths = validationRule.validLengths {
+            partiallyValid = text.count <= validLengths.max()!
+            completelyValid = validLengths.contains(text.count)
         } else {
             partiallyValid = true
             completelyValid = true
