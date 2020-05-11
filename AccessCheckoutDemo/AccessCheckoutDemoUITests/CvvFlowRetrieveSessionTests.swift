@@ -20,6 +20,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
+        waitFor(timeoutInSeconds: 0.5)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -35,6 +36,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
+        waitFor(timeoutInSeconds: 0.5)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -59,6 +61,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
+        waitFor(timeoutInSeconds: 0.5)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -74,6 +77,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         let view = NavigationViewPageObject(app).navigateToCvvFlow()
         view.typeTextIntoCvv("123")
         view.submit()
+        waitFor(timeoutInSeconds: 0.5)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
