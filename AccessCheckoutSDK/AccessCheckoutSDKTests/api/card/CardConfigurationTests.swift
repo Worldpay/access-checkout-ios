@@ -43,33 +43,6 @@ class CardConfigurationTests: XCTestCase {
         XCTAssertEqual(cardBrand.panValidationRule(), panRule)
     }
     
-//    func testCardBrand_validationRule_subPan() {
-//
-//        let subPanRule = CardConfiguration.CardValidationRule(matcher: "^413600\\d{0,7}",
-//                                                              minLength: nil,
-//                                                              maxLength: nil,
-//                                                              validLength: 13,
-//                                                              subRules: nil)
-//        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-//                                                           minLength: nil,
-//                                                           maxLength: nil,
-//                                                           validLength: 16,
-//                                                           subRules: [subPanRule])
-//        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
-//        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "41360"), panRule)
-//        XCTAssertEqual(cardBrand.cardValidationRule(forPAN: "413600"), subPanRule)
-//    }
-//
-//    func testCardBrand_noValidationRule() {
-//        let panRule = CardConfiguration.CardValidationRule(matcher: "^4\\d{0,15}",
-//                                                           minLength: nil,
-//                                                           maxLength: nil,
-//                                                           validLength: 16,
-//                                                           subRules: nil)
-//        let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, cvv: nil, pans: [panRule])
-//        XCTAssertNil(cardBrand.cardValidationRule(forPAN: "2"))
-//    }
-    
     func testCardBrand_equality() {
         let cardBrand1 = CardConfiguration.CardBrand(name: "", images: nil, matcher: "", cvv: nil, pans: [])
         let cardBrand2 = CardConfiguration.CardBrand(name: cardBrand1.name, images: nil, matcher: "", cvv: nil, pans: [])
