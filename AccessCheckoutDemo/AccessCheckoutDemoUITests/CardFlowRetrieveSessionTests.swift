@@ -15,7 +15,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
 
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -31,7 +31,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -47,7 +47,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -65,7 +65,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -83,7 +83,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -100,7 +100,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -117,7 +117,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -134,7 +134,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
-        waitFor(timeoutInSeconds: 0.5)
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
