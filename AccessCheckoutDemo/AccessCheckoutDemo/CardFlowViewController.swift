@@ -2,7 +2,6 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-
     @IBOutlet weak var panView: PANView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
     @IBOutlet weak var cvvView: CVVView!
@@ -23,7 +22,7 @@ class CardFlowViewController: UIViewController {
     }
     
     private func submitCard(pan: PAN, month: ExpiryMonth, year: ExpiryYear, cvv: CVV) {
-        guard let _ = UInt(month), let _ = year.toFourDigitFormat() else {
+        guard let expiryMonth = UInt(month), let expiryYear = year.toFourDigitFormat() else {
             return
         }
         
@@ -34,10 +33,10 @@ class CardFlowViewController: UIViewController {
         spinner.startAnimating()
         
         let cardDetails = CardDetailsBuilder().pan(pan)
-        .expiryMonth(month)
-        .expiryYear(year)
-        .cvv(cvv)
-        .build()
+            .expiryMonth(expiryMonth.description)
+            .expiryYear(expiryYear.description)
+            .cvv(cvv)
+            .build()
         
         let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
