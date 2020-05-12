@@ -24,23 +24,11 @@ public struct CardConfiguration: Decodable {
                 else {
                     return nil
                 }
-            var brandImages: [CardBrand.CardBrandImage]? = []
-            if let images = brand["images"] as? [[String: Any]] {
-                for image in images {
-                    brandImages?.append(
-                        CardBrand.CardBrandImage(
-                            type: image["type"] as? String,
-                            url: image["url"] as? String
-                        )
-                    )
-                }
-            } else {
-                brandImages = nil
-            }
+
                 brandsFromJson.append(
                     CardBrand(
                         name: name as! String,
-                        images: brandImages,
+                        images: getBrandImages(brand: brand),
                         matcher: matcher as! String,
                         cvv: brand["cvvLength"] as? Int,
                         pans: pans as! [Int]
@@ -54,6 +42,23 @@ public struct CardConfiguration: Decodable {
     init(defaults: CardDefaults?, brands: [CardBrand]?) {
         self.defaults = defaults
         self.brands = brands
+    }
+    
+    func getBrandImages(brand: Dictionary<String, Any>) ->  [CardBrand.CardBrandImage]? {
+        var brandImages: [CardBrand.CardBrandImage]? = []
+        if let images = brand["images"] as? [[String: Any]] {
+            for image in images {
+                brandImages?.append(
+                    CardBrand.CardBrandImage(
+                        type: image["type"] as? String,
+                        url: image["url"] as? String
+                    )
+                )
+            }
+        } else {
+            brandImages = nil
+        }
+        return brandImages
     }
     
     func cardBrand(forPAN pan: PAN) -> CardBrand? {
