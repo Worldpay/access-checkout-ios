@@ -1,7 +1,7 @@
 import PromiseKit
 
 class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
-    private var apiClient: VerifiedTokensApiClient?
+    private let apiClient: VerifiedTokensApiClient
 
     init(apiClient: VerifiedTokensApiClient) {
         self.apiClient = apiClient
@@ -11,9 +11,9 @@ class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
         return sessionType == SessionType.verifiedTokens
     }
 
-    func retrieveSession(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
         firstly {
-            apiClient!.createSession(baseUrl: baseUrl,
+            apiClient.createSession(baseUrl: baseUrl,
                                       merchantId: merchantId,
                                       pan: cardDetails.pan!,
                                       expiryMonth: cardDetails.expiryMonth!,

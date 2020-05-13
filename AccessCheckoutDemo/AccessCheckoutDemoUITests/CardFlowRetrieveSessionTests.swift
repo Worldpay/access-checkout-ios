@@ -151,6 +151,6 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
     
     private func waitFor(timeoutInSeconds:Double) {
         let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
-        XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
+        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
 }

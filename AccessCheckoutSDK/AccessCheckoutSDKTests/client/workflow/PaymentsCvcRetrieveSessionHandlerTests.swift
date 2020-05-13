@@ -21,7 +21,7 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
         let cardDetails = CardDetailsBuilder().cvv("123")
             .build()
 
-        sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
             switch result {
                 case .success(let session):
                     XCTAssertEqual("expected-session", session)
@@ -42,7 +42,7 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
         let cardDetails = CardDetailsBuilder().cvv("123")
             .build()
 
-        sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
             switch result {
                 case .success(_):
                     XCTFail("should have failed to retrieve a session")

@@ -18,8 +18,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
             .accessBaseUrl(baseUrl)
             .build()
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryMonth("12")
-            .expiryYear("20")
+            .expiryDate(month: "12", year: "20")
             .cvv("123")
             .build()
         let sessionExpectation = expectation(description: "Session retrieved")
@@ -68,7 +67,6 @@ class AccessCheckoutClientImplTests: XCTestCase {
             .accessBaseUrl(baseUrl)
             .build()
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryYear("20")
             .cvv("123")
             .build()
 

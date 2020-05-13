@@ -33,8 +33,7 @@ class CardFlowViewController: UIViewController {
         spinner.startAnimating()
         
         let cardDetails = CardDetailsBuilder().pan(pan)
-            .expiryMonth(expiryMonth.description)
-            .expiryYear(expiryYear.description)
+            .expiryDate(month: expiryMonth.description, year: expiryYear.description)
             .cvv(cvv)
             .build()
         

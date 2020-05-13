@@ -26,13 +26,9 @@ public final class CardDetailsBuilder {
         return self
     }
     
-    public func expiryMonth(_ expiryMonth: String) -> CardDetailsBuilder {
-        self.expiryMonth = expiryMonth
-        return self
-    }
-    
-    public func expiryYear(_ expiryYear: String) -> CardDetailsBuilder {
-        self.expiryYear = expiryYear
+    public func expiryDate(month: String, year:String) -> CardDetailsBuilder {
+        self.expiryMonth = month
+        self.expiryYear = year
         return self
     }
     

@@ -19,12 +19,11 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         let apiClient = VerifiedTokensApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryMonth("12")
-            .expiryYear("20")
+            .expiryDate(month: "12", year: "20")
             .cvv("123")
             .build()
         
-        sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
             switch result {
                 case .success(let session):
                     XCTAssertEqual("expected-session", session)
@@ -43,12 +42,11 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         let apiClient = VerifiedTokensApiClientMock(error: expectedError)
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryMonth("12")
-            .expiryYear("20")
+            .expiryDate(month: "12", year: "20")
             .cvv("123")
             .build()
 
-        sessionHandler.retrieveSession("a-merchant-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
             switch result {
                 case .success(_):
                     XCTFail("should have failed to retrieve a session")

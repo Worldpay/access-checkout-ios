@@ -4,8 +4,7 @@ import XCTest
 class CardDetailsBuilderTests: XCTestCase {
     func testBuildsCardDetailsWithPanCvvAndExpiryDate() {
         let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
-            .expiryMonth("10")
-            .expiryYear("23")
+            .expiryDate(month: "10", year: "23")
             .cvv("123")
         
         let cardDetails = cardDetailsBuilder.build()

@@ -7,8 +7,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_PanIsMandatory
         let sessionType = SessionType.verifiedTokens
-        let cardDetails = CardDetailsBuilder().expiryMonth("12")
-            .expiryYear("20")
+        let cardDetails = CardDetailsBuilder().expiryDate(month: "12", year: "20")
             .cvv("123")
             .build()
 
@@ -17,24 +16,10 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         }
     }
 
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryMonthIsNotProvided() {
+    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryMonthIsMandatory
         let sessionType = SessionType.verifiedTokens
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryYear("20")
-            .cvv("123")
-            .build()
-
-        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
-        }
-    }
-
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryYearIsNotProvided() {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryYearIsMandatory
-        let sessionType = SessionType.verifiedTokens
-        let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryMonth("12")
             .cvv("123")
             .build()
 
@@ -47,8 +32,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_CvcIsMandatory
         let sessionType = SessionType.verifiedTokens
         let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryMonth("12")
-            .expiryYear("20")
+            .expiryDate(month: "12", year: "20")
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
