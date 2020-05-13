@@ -1,5 +1,3 @@
-import PromiseKit
-
 class PaymentsCvcRetrieveSessionHandler: RetrieveSessionHandler {
     private let apiClient: SessionsApiClient
 
@@ -12,13 +10,6 @@ class PaymentsCvcRetrieveSessionHandler: RetrieveSessionHandler {
     }
 
     func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
-        
-        firstly {
-            apiClient.createSession(baseUrl: baseUrl, merchantId: merchantId, cvv: cardDetails.cvv!)
-        }.done() { session in
-            completionHandler(.success(session))
-        }.catch() { error in
-            completionHandler(.failure(error as! AccessCheckoutClientError))
-        }
+        apiClient.createSession(baseUrl: baseUrl, merchantId: merchantId, cvv: cardDetails.cvv!, completionHandler: completionHandler)
     }
 }

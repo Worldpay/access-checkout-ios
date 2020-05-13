@@ -1,5 +1,4 @@
 @testable import AccessCheckoutSDK
-import PromiseKit
 
 class RestClientMock<T: Decodable>: RestClient {
     private(set) var sendMethodCalled = false
@@ -16,16 +15,14 @@ class RestClientMock<T: Decodable>: RestClient {
         self.error = error
     }
     
-    override func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type) -> Promise<T>  {
+    override func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutClientError>) -> Void) {
         sendMethodCalled = true
         requestSent = request
         
-        return Promise { seal in
-            if(response != nil) {
-                seal.fulfill(response as! T)
-            } else if (error != nil) {
-                seal.reject(error!)
-            }
+        if(response != nil) {
+            completionHandler(.success(response as! T))
+        } else if (error != nil) {
+            completionHandler(.failure(error!))
         }
     }
 }

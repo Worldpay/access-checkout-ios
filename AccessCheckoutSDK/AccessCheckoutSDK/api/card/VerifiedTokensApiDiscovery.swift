@@ -1,5 +1,3 @@
-import PromiseKit
-
 class VerifiedTokensApiDiscovery {
     private var discoveryFactory: SingleLinkDiscoveryFactory
     
@@ -11,25 +9,35 @@ class VerifiedTokensApiDiscovery {
         self.discoveryFactory = discoveryFactory
     }
     
-    func discover(baseUrl: String) -> Promise<String> {
-        return firstly {
-            discoveryFactory.create(toFindLink: ApiLinks.verifiedTokens.service, usingRequest: requestToFindService(baseUrl)).discover()
-        }.then { serviceUrl in
-            self.discoveryFactory.create(toFindLink: ApiLinks.verifiedTokens.endpoint, usingRequest: self.requestToFindEndPoint(serviceUrl)).discover()
-        }.then { endPointUrl -> Promise<String> in
-            .value(endPointUrl)
+    func discover(baseUrl: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+        createServiceDiscovery(baseUrl).discover { result in
+            switch result {
+                case .success(let serviceUrl):
+                    self.createEndPointDiscovery(serviceUrl).discover { result in
+                        switch result {
+                            case .success(let endPointUrl):
+                                completionHandler(.success(endPointUrl))
+                            case .failure(let error):
+                                completionHandler(.failure(error))
+                        }
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
+            }
         }
     }
     
-    private func requestToFindService(_ baseUrl: String) -> URLRequest{
-        return URLRequest(url: URL(string: baseUrl)!)
+    private func createServiceDiscovery(_ baseUrl: String) -> SingleLinkDiscovery {
+        let request = URLRequest(url: URL(string: baseUrl)!)
+        
+        return discoveryFactory.create(toFindLink: ApiLinks.verifiedTokens.service, usingRequest: request)
     }
     
-    private func requestToFindEndPoint(_ serviceUrl: String) -> URLRequest{
+    private func createEndPointDiscovery(_ serviceUrl: String) -> SingleLinkDiscovery {
         var request = URLRequest(url: URL(string: serviceUrl)!)
         request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
         
-        return request
+        return discoveryFactory.create(toFindLink: ApiLinks.verifiedTokens.endpoint, usingRequest: request)
     }
 }
 

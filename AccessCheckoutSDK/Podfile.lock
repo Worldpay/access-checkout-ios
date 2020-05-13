@@ -18,7 +18,6 @@ PODS:
     - BrightFutures (~> 7.0)
     - Nimble (~> 8.0)
     - Quick (~> 2.0)
-  - PromiseKit/CorePromise (6.13.1)
   - Quick (2.1.0)
   - Result (4.1.0)
   - URITemplate (3.0.0)
@@ -27,7 +26,6 @@ DEPENDENCIES:
   - Cuckoo
   - Mockingjay (~> 3.0.0-alpha.1)
   - PactConsumerSwift
-  - PromiseKit/CorePromise (~> 6.8)
 
 SPEC REPOS:
   trunk:
@@ -37,7 +35,6 @@ SPEC REPOS:
     - Mockingjay
     - Nimble
     - PactConsumerSwift
-    - PromiseKit
     - Quick
     - Result
     - URITemplate
@@ -49,11 +46,10 @@ SPEC CHECKSUMS:
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
   PactConsumerSwift: 64078e5589fa970d67b66bb5bd9b654c22a7f036
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
-PODFILE CHECKSUM: d4ee0c7900136c113e0fbf326d6ea9cc6bc544e1
+PODFILE CHECKSUM: 533bc3de53ecdc768b831ced07ef125060d68a8f
 
 COCOAPODS: 1.8.4

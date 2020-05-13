@@ -1,12 +1,10 @@
-import PromiseKit
-
 class SessionsApiClient {
     private let sessionNotFoundError = AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response")
-    
+
     private var discovery: SessionsApiDiscovery
     private var urlRequestFactory: PaymentsCvcSessionURLRequestFactory
     private var restClient: RestClient
-    private var apiResponseLinkLookup:ApiResponseLinkLookup
+    private var apiResponseLinkLookup: ApiResponseLinkLookup
 
     init() {
         self.discovery = SessionsApiDiscovery()
@@ -14,8 +12,8 @@ class SessionsApiClient {
         self.restClient = RestClient()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
-    
-    init(discovery:SessionsApiDiscovery) {
+
+    init(discovery: SessionsApiDiscovery) {
         self.discovery = discovery
         self.urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
         self.restClient = RestClient()
@@ -29,31 +27,37 @@ class SessionsApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, cvv: CVV) -> Promise<String> {
-        return Promise { seal in
-            firstly {
-                discovery.discover(baseUrl: baseUrl)
-            }.then { endPointUrl in
-                self.fireRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
-            }.done { response in
-                if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.sessions.result, in: response) {
-                    seal.fulfill(session)
-                } else {
-                    seal.reject(self.sessionNotFoundError)
+    func createSession(baseUrl: String, merchantId: String, cvv: CVV, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+        discovery.discover(baseUrl: baseUrl) { result in
+            switch result {
+            case .success(let endPointUrl):
+                self.fireRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv) { result in
+                    switch result {
+                    case .success(let response):
+                        if let session = self.apiResponseLinkLookup.lookup(link: ApiLinks.sessions.result, in: response) {
+                            completionHandler(.success(session))
+                        } else {
+                            completionHandler(.failure(self.sessionNotFoundError))
+                        }
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
                 }
-            }.catch { error in
-                seal.reject(error)
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
         }
     }
-    
-    private func fireRequest(endPointUrl: String, merchantId: String, cvv: CVV) -> Promise<ApiResponse> {
-        let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
-        return restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self)
-    }
-    
-    private func createRequest(endPointUrl: String, merchantId:String, cvv: CVV) -> URLRequest {
-        return urlRequestFactory.create(url: endPointUrl, cvv: cvv, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
 
+    private func fireRequest(endPointUrl: String, merchantId: String, cvv: CVV, completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
+        let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
+
+        restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self) { result in
+            completionHandler(result)
+        }
+    }
+
+    private func createRequest(endPointUrl: String, merchantId: String, cvv: CVV) -> URLRequest {
+        return urlRequestFactory.create(url: endPointUrl, cvv: cvv, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
     }
 }

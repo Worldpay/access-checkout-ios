@@ -1,18 +1,26 @@
 @testable import AccessCheckoutSDK
-import PromiseKit
 
-class SingleLinkDiscoveryMock : SingleLinkDiscovery {
-    private var promiseToReturn:Promise<String>?
+class SingleLinkDiscoveryMock: SingleLinkDiscovery {
+    private var url: String?
+    private var error: AccessCheckoutClientError?
     
     init() {
         super.init(linkToFind: "", urlRequest: URLRequest(url: URL(string: "http://localhost")!))
     }
     
-    override func discover() -> Promise<String> {
-        return promiseToReturn!
+    override func discover(completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+        if let url = url {
+            completionHandler(.success(url))
+        } else if let error = error {
+            completionHandler(.failure(error))
+        }
     }
     
-    func willReturn(_ promise:Promise<String>) {
-        self.promiseToReturn = promise
+    func willComplete(with url: String) {
+        self.url = url
+    }
+    
+    func willComplete(with error: AccessCheckoutClientError) {
+        self.error = error
     }
 }

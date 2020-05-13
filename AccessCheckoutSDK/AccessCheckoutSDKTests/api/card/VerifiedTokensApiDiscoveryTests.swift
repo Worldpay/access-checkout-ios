@@ -1,6 +1,5 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
-import PromiseKit
 import XCTest
 
 class VerifiedTokensApiDiscoveryTests: XCTestCase {
@@ -17,33 +16,31 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = Promise.value("http://localhost/a-service")
-        mockDiscoveryService.willReturn(promiseToReturnToFindService)
+        mockDiscoveryService.willComplete(with: "http://localhost/a-service")
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        let promiseToReturnToFindEndPoint = Promise.value("http://localhost/an-end-point")
-        mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
+        mockDiscoveryEndPoint.willComplete(with: "http://localhost/an-end-point")
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
         
-        firstly {
-            discovery.discover(baseUrl: "http://localhost")
-        }.done { link in
-            XCTAssertEqual("http://localhost/an-end-point", link)
-            
-            let argumentCaptorLinks = ArgumentCaptor<String>()
-            let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
-            verify(self.discoveryFactory, times(2)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
-            
-            XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
-            XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
-            
-            XCTAssertEqual(ApiLinks.verifiedTokens.endpoint, argumentCaptorLinks.allValues[1])
-            XCTAssertEqual(expectedRequestToFindEndPoint, argumentCaptorRequests.allValues[1])
-            
+        discovery.discover(baseUrl: "http://localhost") { result in
+            switch result {
+                case .success(let link):
+                    XCTAssertEqual("http://localhost/an-end-point", link)
+                    
+                    let argumentCaptorLinks = ArgumentCaptor<String>()
+                    let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
+                    verify(self.discoveryFactory, times(2)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
+                    
+                    XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
+                    XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
+                    
+                    XCTAssertEqual(ApiLinks.verifiedTokens.endpoint, argumentCaptorLinks.allValues[1])
+                    XCTAssertEqual(expectedRequestToFindEndPoint, argumentCaptorRequests.allValues[1])
+                case .failure:
+                    XCTFail("Discovery should not have failed")
+            }
             expectationToFulfill.fulfill()
-        }.catch { _ in
-            XCTFail("Discovery should not have failed")
         }
         
         wait(for: [expectationToFulfill], timeout: 1)
@@ -53,28 +50,25 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = Promise<String>(error: AccessCheckoutClientError.unknown(message: "an error"))
-        mockDiscoveryService.willReturn(promiseToReturnToFindService)
-        
-        let promiseToReturnToFindEndPoint = Promise.value("http://localhost/an-end-point")
-        mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
+        mockDiscoveryService.willComplete(with: AccessCheckoutClientError.unknown(message: "an error"))
+        mockDiscoveryEndPoint.willComplete(with: "http://localhost/an-end-point")
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
         
-        firstly {
-            discovery.discover(baseUrl: "http://localhost")
-        }.done { link in
-            XCTFail("Discovery should have failed")
-        }.catch { error in
-            XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error as! AccessCheckoutClientError)
-            
-            let argumentCaptorLinks = ArgumentCaptor<String>()
-            let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
-            verify(self.discoveryFactory, times(1)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
-            
-            XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
-            XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
-            
+        discovery.discover(baseUrl: "http://localhost") { result in
+            switch result {
+                case .success:
+                    XCTFail("Discovery should have failed")
+                case .failure(let error):
+                    XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error)
+                    
+                    let argumentCaptorLinks = ArgumentCaptor<String>()
+                    let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
+                    verify(self.discoveryFactory, times(1)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
+                    
+                    XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
+                    XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
+            }
             expectationToFulfill.fulfill()
         }
         
@@ -85,32 +79,30 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let promiseToReturnToFindService = Promise.value("http://localhost/a-service")
-        mockDiscoveryService.willReturn(promiseToReturnToFindService)
+        mockDiscoveryService.willComplete(with: "http://localhost/a-service")
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        let promiseToReturnToFindEndPoint = Promise<String>(error: AccessCheckoutClientError.unknown(message: "an error"))
-        mockDiscoveryEndPoint.willReturn(promiseToReturnToFindEndPoint)
+        mockDiscoveryEndPoint.willComplete(with: AccessCheckoutClientError.unknown(message: "an error"))
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
         
-        firstly {
-            discovery.discover(baseUrl: "http://localhost")
-        }.done { link in
-            XCTFail("Discovery should have failed")
-        }.catch { error in
-            XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error as! AccessCheckoutClientError)
-            
-            let argumentCaptorLinks = ArgumentCaptor<String>()
-            let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
-            verify(self.discoveryFactory, times(2)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
-            
-            XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
-            XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
-            
-            XCTAssertEqual(ApiLinks.verifiedTokens.endpoint, argumentCaptorLinks.allValues[1])
-            XCTAssertEqual(expectedRequestToFindEndPoint, argumentCaptorRequests.allValues[1])
-            
+        discovery.discover(baseUrl: "http://localhost") { result in
+            switch result {
+                case .success:
+                    XCTFail("Discovery should have failed")
+                case .failure(let error):
+                    XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error)
+                    
+                    let argumentCaptorLinks = ArgumentCaptor<String>()
+                    let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
+                    verify(self.discoveryFactory, times(2)).create(toFindLink: argumentCaptorLinks.capture(), usingRequest: argumentCaptorRequests.capture())
+                    
+                    XCTAssertEqual(ApiLinks.verifiedTokens.service, argumentCaptorLinks.allValues[0])
+                    XCTAssertEqual(expectedRequestToFindService, argumentCaptorRequests.allValues[0])
+                    
+                    XCTAssertEqual(ApiLinks.verifiedTokens.endpoint, argumentCaptorLinks.allValues[1])
+                    XCTAssertEqual(expectedRequestToFindEndPoint, argumentCaptorRequests.allValues[1])
+            }
             expectationToFulfill.fulfill()
         }
         

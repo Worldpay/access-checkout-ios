@@ -1,5 +1,3 @@
-import PromiseKit
-
 class SingleLinkDiscovery {
     private let restClient: RestClient
     private let apiResponseLinkLookup: ApiResponseLinkLookup
@@ -13,18 +11,17 @@ class SingleLinkDiscovery {
         self.urlRequest = urlRequest
     }
 
-    func discover() -> Promise<String> {
-        return Promise { seal in
-            firstly {
-                restClient.send(urlSession: URLSession.shared, request: self.urlRequest, responseType: ApiResponse.self)
-            }.done { response in
-                if let linkValue = self.apiResponseLinkLookup.lookup(link: self.linkToFind, in: response) {
-                    seal.resolve(.fulfilled(linkValue))
-                } else {
-                    seal.reject(AccessCheckoutClientError.unknown(message: "Failed to find link \(self.linkToFind) in response"))
-                }
-            }.catch { error in
-                seal.reject(error)
+    func discover(completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+        restClient.send(urlSession: URLSession.shared, request: urlRequest, responseType: ApiResponse.self) { result in
+            switch result {
+                case .success(let response):
+                    if let linkValue = self.apiResponseLinkLookup.lookup(link: self.linkToFind, in: response) {
+                        completionHandler(.success(linkValue))
+                    } else {
+                        completionHandler(.failure(AccessCheckoutClientError.unknown(message: "Failed to find link \(self.linkToFind) in response")))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
             }
         }
     }

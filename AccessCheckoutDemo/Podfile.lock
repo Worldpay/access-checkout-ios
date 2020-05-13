@@ -1,9 +1,7 @@
 PODS:
-  - AccessCheckoutSDK (1.2.1):
-    - PromiseKit/CorePromise
+  - AccessCheckoutSDK (1.2.1)
   - Mockingjay/Core (3.0.0-alpha.1):
     - URITemplate (~> 3.0)
-  - PromiseKit/CorePromise (6.13.1)
   - URITemplate (3.0.0)
 
 DEPENDENCIES:
@@ -13,7 +11,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Mockingjay
-    - PromiseKit
     - URITemplate
 
 EXTERNAL SOURCES:
@@ -21,9 +18,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AccessCheckoutSDK: 0bfa494373bcf81fe6a9c27afa948e212418b3dd
+  AccessCheckoutSDK: a4b9a32452fd65cf60d08b82af7d234a58185fa2
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
 PODFILE CHECKSUM: 7a8ff758b3e31484f3ad3136b8f831c7cfc4943d

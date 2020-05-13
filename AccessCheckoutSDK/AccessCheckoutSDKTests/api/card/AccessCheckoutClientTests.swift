@@ -1,10 +1,8 @@
-import XCTest
-import Mockingjay
-import PromiseKit
 @testable import AccessCheckoutSDK
+import Mockingjay
+import XCTest
 
 class AccessCheckoutClientTests: XCTestCase {
-    
     class MockBundle: Bundle {
         static let appVersion = "3.2.9"
         override func object(forInfoDictionaryKey key: String) -> Any? {
@@ -34,17 +32,18 @@ class AccessCheckoutClientTests: XCTestCase {
         stub(http(.post, uri: "http://localhost/verifiedTokens/session"), jsonData(data))
         
         let client = VerifiedTokensApiClient()
-        firstly {
-            client.createSession(baseUrl: "http://localhost",
+        client.createSession(baseUrl: "http://localhost",
                              merchantId: "123",
                              pan: "",
                              expiryMonth: 0,
                              expiryYear: 0,
-                             cvv: "")
-        }.done { _ in
-            XCTFail("Should have received an error but received a sucessful response")
-        }.catch { error in
-            XCTAssertEqual(accessCheckoutClientError, error as! AccessCheckoutClientError )
+                             cvv: "") { result in
+            switch result {
+            case .success:
+                XCTFail("Should have received an error but received a sucessful response")
+            case .failure(let error):
+                XCTAssertEqual(accessCheckoutClientError, error)
+            }
             errorExpectation.fulfill()
         }
         
@@ -81,13 +80,13 @@ class AccessCheckoutClientTests: XCTestCase {
                                                                        .stringFailedRegexCheck(message: "", jsonPath: ""),
                                                                        .dateHasInvalidFormat(message: "", jsonPath: "")]
         let expectedError = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "",
-        validationErrors: validationErrors)
+                                                                             validationErrors: validationErrors)
         stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_resourceNotFound() {
-       let expectedError = AccessCheckoutClientError.resourceNotFound(message: "")
-       stubError(accessCheckoutClientError: expectedError)
+        let expectedError = AccessCheckoutClientError.resourceNotFound(message: "")
+        stubError(accessCheckoutClientError: expectedError)
     }
     
     func testCreateSession_endpointNotFound() {
@@ -205,7 +204,7 @@ class AccessCheckoutClientTests: XCTestCase {
     
     fileprivate func getSampleResponseWith(href: String) -> Data {
         let responseAsString =
-        """
+            """
                 {
                     "_links": {
                         "verifiedTokens:session": {

@@ -12,12 +12,12 @@
         "method": "post",
         "path": "/sessions/payments/cvc",
         "headers": {
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "cvc": "1234",
-          "identity": "identity"
+          "identity": "identity",
+          "cvc": "1234"
         }
       },
       "response": {
@@ -50,8 +50,8 @@
           "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "cvc": "123",
-          "identity": "incorrectValue"
+          "identity": "incorrectValue",
+          "cvc": "123"
         }
       },
       "response": {
@@ -60,13 +60,13 @@
           "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "message": "The json body provided does not match the expected schema",
           "errorName": "bodyDoesNotMatchSchema",
+          "message": "The json body provided does not match the expected schema",
           "validationErrors": [
             {
               "message": "Identity is invalid",
-              "errorName": "fieldHasInvalidValue",
-              "jsonPath": "$.identity"
+              "jsonPath": "$.identity",
+              "errorName": "fieldHasInvalidValue"
             }
           ]
         },
@@ -86,8 +86,8 @@
         "method": "get",
         "path": "/sessions",
         "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         }
       },
       "response": {

@@ -1,5 +1,4 @@
 @testable import AccessCheckoutSDK
-import PromiseKit
 
 class SessionsApiClientMock: SessionsApiClient {
     var createSessionCalled: Bool = false
@@ -16,15 +15,13 @@ class SessionsApiClientMock: SessionsApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId:String, cvv: CVV) -> Promise<String> {
+    public override func createSession(baseUrl: String, merchantId: String, cvv: CVV, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         createSessionCalled = true
         
-        return Promise { seal in
-            if let sessionToReturn = self.sessionToReturn {
-                seal.fulfill(sessionToReturn)
-            } else if let error = self.error {
-                seal.reject(error)
-            }
+        if let sessionToReturn = self.sessionToReturn {
+            completionHandler(.success(sessionToReturn))
+        } else if let error = self.error {
+            completionHandler(.failure(error))
         }
     }
 }

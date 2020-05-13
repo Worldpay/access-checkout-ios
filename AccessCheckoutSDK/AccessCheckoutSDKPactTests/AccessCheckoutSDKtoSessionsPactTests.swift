@@ -1,7 +1,6 @@
 @testable import AccessCheckoutSDK
 import Mockingjay
 import PactConsumerSwift
-import PromiseKit
 import XCTest
 
 class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
@@ -21,8 +20,8 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             super.init()
         }
         
-        override func discover(baseUrl: String) -> Promise<String> {
-            return Promise.value(discoveredUrl)
+        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+            completionHandler(.success(discoveredUrl))
         }
     }
     
@@ -63,11 +62,14 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let discovery = SessionsApiDiscovery()
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            firstly {
-                discovery.discover(baseUrl: "https://root")
-            }.done { discoveredUrl in
-                XCTAssertEqual(discoveredUrl, expectedValue)
-                testComplete()
+            discovery.discover(baseUrl: "https://root") { result in
+                switch result {
+                case .success(let discoveredUrl):
+                    XCTAssertEqual(discoveredUrl, expectedValue)
+                    testComplete()
+                case .failure:
+                    XCTFail("Discovery should not have failed")
+                }
             }
         }
     }
@@ -102,15 +104,13 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            firstly {
-                sessionsClient.createSession(baseUrl: "",
-                                             merchantId: "identity",
-                                             cvv: "1234")
-            }.done { session in
-                XCTAssertEqual(session, expectedValue)
-            }.catch { error in
-                XCTFail(error.localizedDescription)
-            }.finally {
+            sessionsClient.createSession(baseUrl: "", merchantId: "identity", cvv: "1234") { result in
+                switch result {
+                case .success(let session):
+                    XCTAssertEqual(session, expectedValue)
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
                 testComplete()
             }
         }
@@ -179,18 +179,16 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            firstly {
-                sessionsClient.createSession(baseUrl: "",
-                                         merchantId: request.identity,
-                                         cvv: request.cvc)
-            }.done { session in
-                XCTFail("Service response expected to be unsuccessful")
-            }.catch { error in
-                print(error)
-                XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
-                XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
-                XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
-            }.finally {
+            sessionsClient.createSession(baseUrl: "", merchantId: request.identity, cvv: request.cvc) { result in
+                switch result {
+                case .success:
+                    XCTFail("Service response expected to be unsuccessful")
+                case .failure(let error):
+                    print(error)
+                    XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
+                    XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
+                    XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
+                }
                 testComplete()
             }
         }

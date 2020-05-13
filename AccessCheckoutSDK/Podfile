@@ -9,13 +9,11 @@ target 'AccessCheckoutSDK' do
   use_frameworks!
 
   # Pods for AccessCheckoutSDK
-  pod 'PromiseKit/CorePromise', '~> 6.8'  
-
+  
   target 'AccessCheckoutSDKTests' do
     inherit! :search_paths
     pod 'Mockingjay', '~> 3.0.0-alpha.1'
     pod 'Cuckoo'
-    pod 'PromiseKit/CorePromise', '~> 6.8'
   end
   
   target 'AccessCheckoutSDKPactTests' do
@@ -23,7 +21,6 @@ target 'AccessCheckoutSDK' do
     inherit! :search_paths
     pod 'PactConsumerSwift'
     pod 'Mockingjay', '~> 3.0.0-alpha.1'
-    pod 'PromiseKit/CorePromise', '~> 6.8'
   end
 
 end
