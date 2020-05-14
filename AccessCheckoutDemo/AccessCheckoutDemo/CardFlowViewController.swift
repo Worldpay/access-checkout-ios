@@ -42,13 +42,13 @@ class CardFlowViewController: UIViewController {
             .merchantId(CI.merchantId)
             .build()
         
-        try? accessCheckoutClient?.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.verifiedTokens]) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
                 switch result {
-                case .success(let href):
-                    AlertView.display(using: self, title: "Session", message: href, closeHandler: {
+                case .success(let sessions):
+                    AlertView.display(using: self, title: "Session", message: sessions[SessionType.verifiedTokens], closeHandler: {
                         self.resetCard(preserveContent: false, validationErrors: nil)
                     })
                 case .failure(let error):
