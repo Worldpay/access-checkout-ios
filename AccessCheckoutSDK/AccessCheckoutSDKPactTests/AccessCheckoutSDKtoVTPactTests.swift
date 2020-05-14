@@ -65,10 +65,10 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
                 switch result {
                 case .success(let discoveredUrl):
                     XCTAssertEqual(discoveredUrl, expectedValue)
-                    testComplete()
                 case .failure:
                     XCTFail("Discovery should not have failed")
                 }
+                testComplete()
             }
         }
     }
@@ -259,8 +259,8 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
                     XCTAssertTrue(error.localizedDescription.contains(response.mainErrorName), "Error msg must contain general error code")
                     XCTAssertTrue(error.localizedDescription.contains(response.validationErrorName), "Error msg must contain specific validation error code")
                     XCTAssertTrue(error.localizedDescription.contains(response.validationJsonPath), "Error msg must contain path to error value")
-                    testComplete()
                 }
+                testComplete()
             }
         }
     }

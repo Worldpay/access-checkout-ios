@@ -66,10 +66,10 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
                 switch result {
                 case .success(let discoveredUrl):
                     XCTAssertEqual(discoveredUrl, expectedValue)
-                    testComplete()
                 case .failure:
                     XCTFail("Discovery should not have failed")
                 }
+                testComplete()
             }
         }
     }

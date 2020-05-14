@@ -1,3 +1,3 @@
 public protocol AccessCheckoutClient {
-    func generateSession(cardDetails: CardDetails, sessionType: SessionType, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) throws
+    func generateSessions(cardDetails: CardDetails, sessionTypes: Set<SessionType>, completionHandler: @escaping (Result<[SessionType: String], AccessCheckoutClientError>) -> Void) throws
 }
