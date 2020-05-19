@@ -1,81 +1,69 @@
 import XCTest
 
 class CardPaymentFlowViewPageObject {
-    private let app:XCUIApplication
+    private let app: XCUIApplication
     
-    var panField:XCUIElement {
-        get {
-            return app.textFields["pan"]
-        }
+    var panField: XCUIElement {
+        return app.textFields["pan"]
     }
     
-    var panText:String? {
-        get {
-            return panField.value as? String
-        }
+    var panText: String? {
+        return panField.value as? String
     }
     
-    var expiryMonthField:XCUIElement {
-        get {
-            return app.textFields["expiryMonth"]
-        }
+    var expiryMonthField: XCUIElement {
+        return app.textFields["expiryMonth"]
     }
     
-    var expiryMonthText:String? {
-        get {
-            return expiryMonthField.value as? String
-        }
+    var expiryMonthText: String? {
+        return expiryMonthField.value as? String
     }
     
-    var expiryYearField:XCUIElement {
-        get {
-            return app.textFields["expiryYear"]
-        }
+    var expiryYearField: XCUIElement {
+        return app.textFields["expiryYear"]
     }
     
-    var expiryYearText:String? {
-        get {
-            return expiryYearField.value as? String
-        }
+    var expiryYearText: String? {
+        return expiryYearField.value as? String
     }
     
-    var expiryDateField:XCUIElement {
-        get {
-            return app.otherElements["expiryDate"]
-        }
+    var expiryDateField: XCUIElement {
+        return app.otherElements["expiryDate"]
     }
     
-    var cvvField:XCUIElement {
-        get {
-            return app.textFields["cvv"]
-        }
+    var cvvField: XCUIElement {
+        return app.textFields["cvv"]
     }
     
-    var cvvText:String? {
-        get {
-            return cvvField.value as? String
-        }
+    var cvvText: String? {
+        return cvvField.value as? String
     }
     
-    var cardBrandImage:XCUIElement {
-        get {
-            return app.images["cardBrandImage"]
-        }
+    var cardBrandImage: XCUIElement {
+        return app.images["cardBrandImage"]
     }
     
-    var submitButton:XCUIElement {
-        get {
-            return app.buttons["Submit"]
-        }
+    var submitButton: XCUIElement {
+        return app.buttons["Submit"]
     }
     
-    var alert:AlertViewPageObject {
-        get {
-            return AlertViewPageObject(element: app.alerts.firstMatch)
-        }
+    var paymentsCvcSessionToggleLabel: XCUIElement {
+        return app.staticTexts["paymentsCvcSessionToggleLabel"]
     }
     
-    init(_ app:XCUIApplication) {
+    var paymentsCvcSessionToggleHintLabel: XCUIElement {
+        return app.staticTexts["paymentsCvcSessionToggleHintLabel"]
+    }
+    
+    var alert: AlertViewPageObject {
+        return AlertViewPageObject(element: app.alerts.firstMatch)
+    }
+    
+    var paymentsCvcSessionToggle: SwitchViewPageObject {
+        return SwitchViewPageObject(element: app.switches["paymentsCvcSessionToggle"])
+    }
+    
+    init(_ app: XCUIApplication) {
         self.app = app
     }
     

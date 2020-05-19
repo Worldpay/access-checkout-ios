@@ -1,7 +1,7 @@
 {
     "_links":{
         "sessions:session": {
-            "href": "<BASE_URI>/sessions/some-uri"
+            "href": "<BASE_URI>/sessions/some-payments-cvc-session"
             
         },
         "resourceTree": {
