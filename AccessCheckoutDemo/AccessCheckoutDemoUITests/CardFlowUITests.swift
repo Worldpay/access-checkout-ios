@@ -1,21 +1,22 @@
-import XCTest
-import Foundation
 @testable import AccessCheckoutSDK
+import Foundation
+import XCTest
 
 class CardPaymentFlowUITests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
     let app = XCUIApplication()
-    var view:CardPaymentFlowViewPageObject?
+    var view: CardPaymentFlowViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
-
+        
         app.launch()
         view = CardPaymentFlowViewPageObject(app)
     }
-
+    
     // MARK: Fields existance
+    
     func testCardNumberTextField_exists() {
         XCTAssertTrue(view!.panField.exists)
     }
@@ -36,20 +37,19 @@ class CardPaymentFlowUITests: XCTestCase {
         XCTAssertTrue(view!.cardBrandImage.exists)
     }
     
-    func testSessionsToggleLabel_exists() {
-        XCTAssertTrue(view!.sessionsToggleLabel.exists)
+    func testPaymentsCvcSessionToggleLabel_exists() {
+        XCTAssertTrue(view!.paymentsCvcSessionToggleLabel.exists)
     }
     
-    func testSessionsToggleHintLabel_exists() {
-        XCTAssertTrue(view!.sessionsToggleHintLabel.exists)
+    func testPaymentsCvcSessionToggleHintLabel_exists() {
+        XCTAssertTrue(view!.paymentsCvcSessionToggleHintLabel.exists)
     }
     
-    func testSessionsToggle_exists() {
-        XCTAssertTrue(view!.sessionsToggle.exists)
+    func testPaymentsCvcSessionToggle_exists() {
+        XCTAssertTrue(view!.paymentsCvcSessionToggle.exists)
     }
     
-    func testSessionsToggleIsOffByDefault_exists() {
-        XCTAssertTrue(view!.sessionsToggle.isOff)
+    func testPaymentsCvcSessionToggleIsOffByDefault_exists() {
+        XCTAssertTrue(view!.paymentsCvcSessionToggle.isOff)
     }
 }
-

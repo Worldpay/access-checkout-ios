@@ -45,18 +45,18 @@
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
                                 <rect key="frame" x="35" y="212" width="168.5" height="19.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="sessionsToggleLabel"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
                                 <rect key="frame" x="291" y="206.5" width="51" height="31"/>
-                                <accessibility key="accessibilityConfiguration" identifier="sessionsToggle"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
                                 <rect key="frame" x="35" y="235.5" width="244.5" height="12"/>
-                                <accessibility key="accessibilityConfiguration" identifier="sessionsToggleHintLabel"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -98,6 +98,7 @@
                         <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
                         <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
                         <outlet property="panView" destination="8gc-ER-g0x" id="axR-fD-Koc"/>
+                        <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
                     </connections>

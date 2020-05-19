@@ -7,6 +7,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var cvvView: CVVView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
     private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
@@ -32,6 +33,8 @@ class CardFlowViewController: UIViewController {
         cvvView.isEnabled = false
         spinner.startAnimating()
         
+        let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
+        
         let cardDetails = CardDetailsBuilder().pan(pan)
             .expiryDate(month: expiryMonth.description, year: expiryYear.description)
             .cvv(cvv)
@@ -42,13 +45,26 @@ class CardFlowViewController: UIViewController {
             .merchantId(CI.merchantId)
             .build()
         
-        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.verifiedTokens]) { result in
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
                 switch result {
                 case .success(let sessions):
-                    AlertView.display(using: self, title: "Session", message: sessions[SessionType.verifiedTokens], closeHandler: {
+                    var titleToDisplay: String, messageToDisplay: String
+                    
+                    if sessionTypes.count > 1 {
+                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
+                        messageToDisplay = """
+                        \(sessions[SessionType.verifiedTokens]!)
+                        \(sessions[SessionType.paymentsCvc]!)
+                        """
+                    } else {
+                        titleToDisplay = "Verified Tokens Session"
+                        messageToDisplay = "\(sessions[SessionType.verifiedTokens]!)"
+                    }
+                    
+                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
                         self.resetCard(preserveContent: false, validationErrors: nil)
                     })
                 case .failure(let error):
