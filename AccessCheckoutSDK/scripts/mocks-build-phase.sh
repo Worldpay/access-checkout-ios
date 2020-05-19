@@ -23,7 +23,7 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 --no-header \
 --file-prefix "Mock" \
 --output "${OUTPUT_DIR}" \
-"${INPUT_SOURCE_DIR}/CardView.swift" \
-"${INPUT_SOURCE_DIR}/CVVValidator.swift" \
-"${INPUT_SOURCE_DIR}/cvvOnly/CVVOnlyDelegate.swift"
+"${INPUT_SOURCE_DIR}/api/SingleLinkDiscoveryFactory.swift" \
+"${INPUT_SOURCE_DIR}/validation/cvv/CVVValidator.swift" \
+"${INPUT_SOURCE_DIR}/client/cvv/CVVOnlyDelegate.swift"
 # all lines of this command must end with a \ apart from the last line

@@ -15,6 +15,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
 
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -30,6 +31,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -45,12 +47,13 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
         XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.panFailedLuhnCheck(message: nil, jsonPath: nil).errorName))
-        XCTAssert(alert.title.contains(VerifiedTokenRequest.Key.cardNumber.rawValue))
+        XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
     
     func testResponse_bodyDoesNotMatchSchema_fieldIsMissing_cardNumber() {
@@ -62,12 +65,13 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
         XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.fieldIsMissing(message: nil, jsonPath: nil).errorName))
-        XCTAssert(alert.title.contains(VerifiedTokenRequest.Key.cardNumber.rawValue))
+        XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
 
     func testResponse_unknown_variation1() {
@@ -79,6 +83,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -95,6 +100,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -111,6 +117,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -127,6 +134,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         
         fillUpFormWithValidValues(using: view)
         view.submit()
+        waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
@@ -139,5 +147,10 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         view.typeTextIntoExpiryMonth("01")
         view.typeTextIntoExpiryYear("99")
         view.typeTextIntoCvv("123")
+    }
+    
+    private func waitFor(timeoutInSeconds:Double) {
+        let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
+        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
 }
