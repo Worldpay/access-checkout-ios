@@ -69,6 +69,24 @@ class CardPaymentFlowViewPageObject {
         }
     }
     
+    var sessionsToggleLabel:XCUIElement {
+        get {
+            return app.staticTexts["sessionsToggleLabel"]
+        }
+    }
+    
+    var sessionsToggleHintLabel:XCUIElement {
+        get {
+            return app.staticTexts["sessionsToggleHintLabel"]
+        }
+    }
+    
+    var sessionsToggle:SwitchViewPageObject {
+        get {
+            return SwitchViewPageObject(element: app.switches["sessionsToggle"])
+        }
+    }
+    
     var alert:AlertViewPageObject {
         get {
             return AlertViewPageObject(element: app.alerts.firstMatch)

@@ -14,27 +14,6 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         app.launch()
         view = CardPaymentFlowViewPageObject(app)
     }
-
-    // MARK: Fields existance
-    func testCardNumberTextField_exists() {
-        XCTAssertTrue(view!.panField.exists)
-    }
-    
-    func testExpiryDateView_exists() {
-        XCTAssertTrue(view!.expiryDateField.exists)
-    }
-    
-    func testCVVTextField_exists() {
-        XCTAssertTrue(view!.cvvField.exists)
-    }
-    
-    func testCVVTextFieldPlaceholder_exists() {
-        XCTAssertTrue(view!.cvvField.placeholderValue == "CVV")
-    }
-    
-    func testCardNumberImageView_exists() {
-        XCTAssertTrue(view!.cardBrandImage.exists)
-    }
     
     // MARK: PAN validation
     func testPAN_alpha() {
