@@ -49,7 +49,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
     public func validate(pan: PAN) -> (valid: ValidationResult, brand: CardConfiguration.CardBrand?) {
         
         let cardBrand = cardConfiguration?.cardBrand(forPAN: pan)
-        let panRule = cardBrand?.cardValidationRule(forPAN: pan) ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
+        let panRule = cardBrand?.panValidationRule() ?? cardConfiguration?.defaults?.pan ?? baseCardDefaults.pan!
         var validationResult = textValidator.validate(text: pan, againstValidationRule: panRule)
 
         if validationResult.complete {
@@ -77,7 +77,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
         var panRule: CardConfiguration.CardValidationRule?
         if let currentPan = pan, let range = Range(range, in: currentPan) {
             expectedPan = currentPan.replacingCharacters(in: range, with: text)
-            panRule = cardConfiguration?.cardBrand(forPAN: currentPan)?.cardValidationRule(forPAN: currentPan)
+            panRule = cardConfiguration?.cardBrand(forPAN: currentPan)?.panValidationRule()
         } else {
             expectedPan = text
         }
@@ -97,7 +97,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
     public func validate(cvv: CVV, withPAN pan: PAN?) -> ValidationResult {
         var cvvRule: CardConfiguration.CardValidationRule?
         if let pan = pan {
-            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv
+            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvvRule()
         }
         let rule = cvvRule ?? cardConfiguration?.defaults?.cvv ?? baseCardDefaults.cvv!
         return cvvValidator.validate(cvv: cvv, againstValidationRule: rule)
@@ -121,7 +121,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
         
         var cvvRule: CardConfiguration.CardValidationRule?
         if let pan = pan {
-            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvv
+            cvvRule = cardConfiguration?.cardBrand(forPAN: pan)?.cvvRule()
         }
         let rule = cvvRule ?? cardConfiguration?.defaults?.cvv ?? baseCardDefaults.cvv!
         
