@@ -27,13 +27,13 @@ class CvvFlowViewController: UIViewController {
             .merchantId(CI.merchantId)
             .build()
         
-        try? accessCheckoutClient?.generateSession(cardDetails: cardDetails, sessionType: .paymentsCvc) { result in
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.paymentsCvc]) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
                 switch result {
-                    case .success(let session):
-                        AlertView.display(using: self, title: "Session", message: session, closeHandler: {
+                    case .success(let sessions):
+                        AlertView.display(using: self, title: "Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
                             self.cvvField.clear()
                             self.cvvField.isEnabled = true
                             self.submitButton.isEnabled = self.cvvOnly!.isValid()

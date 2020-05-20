@@ -12,9 +12,16 @@ class AccessCheckoutClientImpl: AccessCheckoutClient {
         self.retrieveSessionHandlerDispatcher = retrieveSessionHandlerDispatcher
     }
     
-    public func generateSession(cardDetails: CardDetails, sessionType: SessionType, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) throws {
-        try cardDetailsForSessionTypeValidator.validate(cardDetails: cardDetails, for: sessionType)
+    public func generateSessions(cardDetails: CardDetails, sessionTypes: Set<SessionType>, completionHandler: @escaping (Result<[SessionType: String], AccessCheckoutClientError>) -> Void) throws {
+        try sessionTypes.forEach {
+            try cardDetailsForSessionTypeValidator.validate(cardDetails: cardDetails, for: $0)
+        }
         
-        retrieveSessionHandlerDispatcher.dispatch(merchantId, baseUrl, cardDetails, sessionType, completionHandler: completionHandler)
+        let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(numberOfExpectedResults: sessionTypes.count, completeWith: completionHandler)
+        sessionTypes.forEach { sessionType in
+            retrieveSessionHandlerDispatcher.dispatch(merchantId, baseUrl, cardDetails, sessionType) { result in
+                resultsHandler.handle(result, for: sessionType)
+            }
+        }
     }
 }

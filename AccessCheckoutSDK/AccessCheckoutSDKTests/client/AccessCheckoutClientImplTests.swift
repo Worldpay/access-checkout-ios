@@ -6,91 +6,274 @@ class AccessCheckoutClientImplTests: XCTestCase {
     let baseUrl = "http://localhost"
     let verifiedTokensServicePath = "/verifiedTokens"
     let verifiedTokensServiceSessionsPath = "/verifiedTokens/sessions"
-    let sessionsPath = "/sessions"
-    let sessionsPaymentsCvcPath = "/sessions/paymentsCvc"
-
-    func testRetrievesAVerifiedTokensSession() throws {
-        stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
-        stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
-        stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), successfulVerifiedTokensSessionResponse(session: "expected-verified-tokens-session"))
-
-        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
-            .accessBaseUrl(baseUrl)
-            .build()
+    let sessionsServicePath = "/sessions"
+    let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
+    
+    func testGeneratesAVerifiedTokensSession() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens]) { result in
+            switch result {
+                case .success(let sessions):
+                    XCTAssertEqual("expected-verified-tokens-session", sessions[.verifiedTokens])
+                case .failure:
+                    XCTFail("got an error back from services")
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testGeneratesAPaymentsCvcSession() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        
+        stubServicesRootDiscoverySuccess()
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { result in
+            switch result {
+                case .success(let sessions):
+                    XCTAssertEqual("expected-payments-cvc-session", sessions[.paymentsCvc])
+                case .failure:
+                    XCTFail("got an error back from services")
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testGeneratesAVerifiedTokensSessionAndAPaymentsCvcSession() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success(let sessions):
+                    XCTAssertEqual("expected-verified-tokens-session", sessions[.verifiedTokens])
+                    XCTAssertEqual("expected-payments-cvc-session", sessions[.paymentsCvc])
+                case .failure:
+                    XCTFail("got an error back from services")
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndOneOfTheServicesResponsesWithAnError() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an error")
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionFailure(error: expectedError)
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-verified-tokens-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual(expectedError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndOneOfTheServicesIsNotReachable() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "Could not connect to the server.")
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
+        stubSessionsEndPointsDiscoverySuccess()
+        // Payments Cvc Session end point is not stubbed to mimic the service not being reachable
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual(expectedError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndAServiceDiscoveryResponsesWithAnError() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
+        stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual(expectedError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndBothServicesRespondWithAnError() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionFailure(error: expectedError)
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionFailure(error: expectedError)
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual(expectedError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndAllDiscoveriesRespondWithAnError() throws {
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
+        stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
+        stubSessionsEndPointDiscoveryFailure(error: expectedError)
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual(expectedError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
+    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Month is mandatory to retrieve a Verified Tokens session")
+        let client = createAccessCheckoutClient()
         let cardDetails = CardDetailsBuilder().pan("pan")
+            .cvv("123")
+            .build()
+        
+        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc, .verifiedTokens]) { _ in }) { error in
+            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+        }
+    }
+    
+    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
+        let client = createAccessCheckoutClient()
+        let cardDetails = CardDetailsBuilder().build()
+        
+        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { _ in }) { error in
+            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+        }
+    }
+    
+    private func validCardDetails() -> CardDetails {
+        return CardDetailsBuilder().pan("pan")
             .expiryDate(month: "12", year: "20")
             .cvv("123")
             .build()
-        let sessionExpectation = expectation(description: "Session retrieved")
-
-        try client.generateSession(cardDetails: cardDetails, sessionType: SessionType.verifiedTokens) { result in
-            switch result {
-                case .success(let session):
-                    XCTAssertEqual("expected-verified-tokens-session", session)
-                    sessionExpectation.fulfill()
-                case .failure:
-                    XCTFail("got an error back from services")
-            }
-        }
-
-        wait(for: [sessionExpectation], timeout: 1)
     }
-
-    func testRetrievesAPaymentsCvcSession() throws {
+    
+    private func createAccessCheckoutClient() -> AccessCheckoutClient {
+        return try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+            .accessBaseUrl(baseUrl)
+            .build()
+    }
+    
+    private func stubServicesRootDiscoverySuccess() {
         stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
-        stub(http(.get, uri: "\(baseUrl)\(sessionsPath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
-        stub(http(.post, uri: "\(baseUrl)\(sessionsPaymentsCvcPath)"), successfulPaymentsCvcSessionResponse(session: "expected-payments-cvc-session"))
-
-        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
-            .accessBaseUrl(baseUrl)
-            .build()
-        let cardDetails = CardDetailsBuilder().cvv("123")
-            .build()
-        let sessionExpectation = expectation(description: "Session retrieved")
-
-        try client.generateSession(cardDetails: cardDetails, sessionType: SessionType.paymentsCvc) { result in
-            switch result {
-                case .success(let session):
-                    XCTAssertEqual("expected-payments-cvc-session", session)
-                    sessionExpectation.fulfill()
-                case .failure:
-                    XCTFail("got an error back from services")
-            }
-        }
-
-        wait(for: [sessionExpectation], timeout: 1)
     }
-
-    func testDoesNotRetrieveVerifiedTokensSessionWhenCardDetailsAreIncomplete() {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Month is mandatory to retrieve a Verified Tokens session")
-        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
-            .accessBaseUrl(baseUrl)
-            .build()
-        let cardDetails = CardDetailsBuilder().pan("pan")
-            .cvv("123")
-            .build()
-
-        XCTAssertThrowsError(try client.generateSession(cardDetails: cardDetails, sessionType: .verifiedTokens) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
-        }
+    
+    private func stubVerifiedTokensEndPointsDiscoverySuccess() {
+        stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
-
-    func testDoesNotRetrieveVPaymentsCvcSessionWhenCardDetailsAreIncomplete() {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
-        let client = try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
-            .accessBaseUrl(baseUrl)
-            .build()
-        let cardDetails = CardDetailsBuilder().build()
-
-        XCTAssertThrowsError(try client.generateSession(cardDetails: cardDetails, sessionType: .paymentsCvc) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
-        }
+    
+    private func stubVerifiedTokensEndPointDiscoveryFailure(error: AccessCheckoutClientError) {
+        stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), failedResponse(error: error))
     }
-
-    private func toData(_ stringData: String) -> Data {
-        return stringData.data(using: .utf8)!
+    
+    private func stubVerifiedTokensSessionSuccess(session: String) {
+        stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), successfulVerifiedTokensSessionResponse(session: session))
     }
-
+    
+    private func stubVerifiedTokensSessionFailure(error: AccessCheckoutClientError) {
+        stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), failedResponse(error: error))
+    }
+    
+    private func stubSessionsEndPointsDiscoverySuccess() {
+        stub(http(.get, uri: "\(baseUrl)\(sessionsServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
+    }
+    
+    private func stubSessionsEndPointDiscoveryFailure(error: AccessCheckoutClientError) {
+        stub(http(.get, uri: "\(baseUrl)\(sessionsServicePath)"), failedResponse(error: error))
+    }
+    
+    private func stubSessionsPaymentsCvcSessionSuccess(session: String) {
+        stub(http(.post, uri: "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"), successfulPaymentsCvcSessionResponse(session: session))
+    }
+    
+    private func stubSessionsPaymentsCvcSessionFailure(error: AccessCheckoutClientError) {
+        stub(http(.post, uri: "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"), failedResponse(error: error))
+    }
+    
     private func successfulDiscoveryResponse(baseUrl: String) -> (URLRequest) -> Response {
         return jsonData(toData("""
         {
@@ -102,16 +285,16 @@ class AccessCheckoutClientImplTests: XCTestCase {
                     "href": "\(baseUrl)\(verifiedTokensServiceSessionsPath)"
                 },
                 "service:sessions": {
-                    "href": "\(baseUrl)\(sessionsPath)"
+                    "href": "\(baseUrl)\(sessionsServicePath)"
                 },
                 "sessions:paymentsCvc": {
-                    "href": "\(baseUrl)\(sessionsPaymentsCvcPath)"
+                    "href": "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"
                 }
             }
         }
         """), status: 200)
     }
-
+    
     private func successfulVerifiedTokensSessionResponse(session: String) -> (URLRequest) -> Response {
         return jsonData(toData("""
         {
@@ -123,7 +306,13 @@ class AccessCheckoutClientImplTests: XCTestCase {
         }
         """), status: 201)
     }
-
+    
+    private func failedResponse(error: AccessCheckoutClientError) -> (URLRequest) -> Response {
+        let errorAsData = try! JSONEncoder().encode(error)
+        
+        return jsonData(errorAsData, status: 400)
+    }
+    
     private func successfulPaymentsCvcSessionResponse(session: String) -> (URLRequest) -> Response {
         return jsonData(toData("""
         {
@@ -134,5 +323,9 @@ class AccessCheckoutClientImplTests: XCTestCase {
             }
         }
         """), status: 201)
+    }
+    
+    private func toData(_ stringData: String) -> Data {
+        return stringData.data(using: .utf8)!
     }
 }

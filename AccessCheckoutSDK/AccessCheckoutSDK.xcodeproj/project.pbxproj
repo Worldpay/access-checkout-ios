@@ -58,6 +58,8 @@
 		E72D9E5D2411424500C94D5B /* SessionsApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */; };
 		E739464F2420D1BC0007D7B3 /* CVVValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E739464E2420D1BC0007D7B3 /* CVVValidator.swift */; };
 		E73946512420D1CE0007D7B3 /* CVVValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73946502420D1CE0007D7B3 /* CVVValidatorTests.swift */; };
+		E760196B246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */; };
+		E760196D246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */; };
 		E77B8B96245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */; };
 		E77B8B99245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */; };
 		E77B8B9B245C2BF700564C19 /* RetrieveSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */; };
@@ -207,6 +209,8 @@
 		E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiClient.swift; sourceTree = "<group>"; };
 		E739464E2420D1BC0007D7B3 /* CVVValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVValidator.swift; sourceTree = "<group>"; };
 		E73946502420D1CE0007D7B3 /* CVVValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVValidatorTests.swift; sourceTree = "<group>"; };
+		E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetrieveSessionResultsHandler.swift; sourceTree = "<group>"; };
+		E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetrieveSessionResultsHandlerTests.swift; sourceTree = "<group>"; };
 		E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandlerDispatcher.swift; sourceTree = "<group>"; };
 		E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandlerDispatcherTests.swift; sourceTree = "<group>"; };
 		E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandler.swift; sourceTree = "<group>"; };
@@ -509,6 +513,7 @@
 				E77B8B9E245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift */,
 				E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */,
 				E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */,
+				E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */,
 				E77B8B9C245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift */,
 			);
 			path = workflow;
@@ -520,6 +525,7 @@
 				E7D19F632462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift */,
 				E77B8BAA245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift */,
 				E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */,
+				E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */,
 				E77B8BA8245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift */,
 			);
 			path = workflow;
@@ -1032,6 +1038,7 @@
 				C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */,
 				E7A4AB66245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift in Sources */,
 				E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */,
+				E760196B246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift in Sources */,
 				C9AFE46122B7AA4800943B3E /* AccessCheckoutView.swift in Sources */,
 				683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */,
 				E7821A8B24586AF9003F7231 /* AccessCheckoutCard.swift in Sources */,
@@ -1082,6 +1089,7 @@
 				E73946512420D1CE0007D7B3 /* CVVValidatorTests.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,
 				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
+				E760196D246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift in Sources */,
 				1BCBFEC522B8EB4400A65FAA /* CardValidatorTests.swift in Sources */,
 				E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */,
 			);
