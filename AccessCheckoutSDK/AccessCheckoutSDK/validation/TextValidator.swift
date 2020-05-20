@@ -11,8 +11,9 @@ class TextValidator {
         
         let partiallyValid: Bool
         let completelyValid: Bool
+        let validLengths = validationRule.validLengths
         
-        if let validLengths = validationRule.validLengths {
+        if !validLengths.isEmpty {
             partiallyValid = text.count <= validLengths.max()!
             completelyValid = validLengths.contains(text.count)
         } else {

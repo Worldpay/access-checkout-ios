@@ -9,7 +9,7 @@ PODS:
     - URITemplate (~> 3.0)
   - Mockingjay/XCTest (3.0.0-alpha.1):
     - Mockingjay/Core
-  - Nimble (8.0.7)
+  - Nimble (8.0.9)
   - PactConsumerSwift (0.8.1):
     - Nimble (~> 8.0)
   - URITemplate (3.0.0)
@@ -30,7 +30,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Cuckoo: 57f71c6616b6b08cd9fe27f803da056fb619ff3e
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
-  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
+  Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
   PactConsumerSwift: b7eafe230643a309f65f5e0bbda1f21d068cc8aa
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 

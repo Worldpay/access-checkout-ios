@@ -21,8 +21,9 @@ class CVVValidator {
         
         var partiallyValid = true
         var completelyValid = true
+        let validLengths = validationRule.validLengths
         
-        if let validLengths = validationRule.validLengths {
+        if !validLengths.isEmpty {
             partiallyValid = cvv.count <= validLengths.max()!
             completelyValid = validLengths.contains(cvv.count)
         }

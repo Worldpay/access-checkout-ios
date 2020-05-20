@@ -67,7 +67,7 @@ public struct CardConfiguration: Decodable {
     
     struct CardValidationRule: Decodable, Equatable {
         var matcher: String?
-        var validLengths: Array<Int>?
+        var validLengths: Array<Int> = [Int]()
     }
     
     public struct CardDefaults: Decodable {

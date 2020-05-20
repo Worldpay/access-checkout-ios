@@ -6,7 +6,7 @@ class CardValidatorTests: XCTestCase {
     private let yearDateFormatter = DateFormatter()
     private let monthDateFormatter = DateFormatter()
     private let emptyCardValidationRule = CardConfiguration.CardValidationRule(matcher: nil,
-                                                                               validLengths: nil)
+                                                                               validLengths: [])
     
     
     override func setUp() {
@@ -140,8 +140,7 @@ class CardValidatorTests: XCTestCase {
     }
     
     func testValidatePAN_badMatcher() {
-        let panRule = CardConfiguration.CardValidationRule(matcher: "",
-                                                           validLengths: nil)
+        let panRule = CardConfiguration.CardValidationRule(matcher: "", validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: panRule,
                                                       cvv: nil,
                                                       month: nil,
@@ -184,7 +183,7 @@ class CardValidatorTests: XCTestCase {
     
     func testValidatePAN_matcher_alpha() {
         let panRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,19}$",
-                                                           validLengths: nil)
+                                                           validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: panRule,
                                                       cvv: nil,
                                                       month: nil,
@@ -639,8 +638,8 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_empty() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [2])
+
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -654,8 +653,8 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_alpha() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [2])
+
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -670,7 +669,7 @@ class CardValidatorTests: XCTestCase {
 
     func testValidateExpiryMonth_matcherValid() {
         let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+                                                             validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -684,8 +683,7 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_matcherInvalid() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -699,8 +697,7 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_singleDigit() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                            validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -714,8 +711,7 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_zero() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -729,8 +725,7 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiry_monthZero_validYear() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -744,8 +739,8 @@ class CardValidatorTests: XCTestCase {
     }
 
     func testValidateExpiryMonth_tooLong() {
-        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+        let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$", validLengths: [2])
+
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -760,7 +755,7 @@ class CardValidatorTests: XCTestCase {
 
     func testValidateExpiryMonth_zeroZero() {
         let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                            validLengths: nil)
+                                                            validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -1087,9 +1082,9 @@ class CardValidatorTests: XCTestCase {
 
     func testValidateExpiryMonthAndYear_empty() {
         let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+                                                             validLengths: [])
         let yearRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
-                                                            validLengths: nil)
+                                                            validLengths: [])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
                                                       cvv: nil,
                                                       month: monthRule,
@@ -1104,7 +1099,7 @@ class CardValidatorTests: XCTestCase {
 
     func testValidateExpiryMonthAndYear_alphaMonth() {
         let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+                                                             validLengths: [])
         let yearRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
                                                             validLengths: [2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
@@ -1121,7 +1116,7 @@ class CardValidatorTests: XCTestCase {
 
     func testValidateExpiryMonthAndYear_alphaYear() {
         let monthRule = CardConfiguration.CardValidationRule(matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-                                                             validLengths: nil)
+                                                             validLengths: [])
         let yearRule = CardConfiguration.CardValidationRule(matcher: "^\\d{0,2}$",
                                                             validLengths: [2])
         let defaults = CardConfiguration.CardDefaults(pan: nil,
