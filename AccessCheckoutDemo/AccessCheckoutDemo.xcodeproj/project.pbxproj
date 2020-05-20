@@ -36,6 +36,7 @@
 		C9AFE4B722B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */; };
 		C9AFE4B822B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
 		CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1BD93A2448BB9200A4C745 /* CIVariables.swift */; };
+		D737A08524752E0B00D4E872 /* cardTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = D737A08424752E0B00D4E872 /* cardTypes.json */; };
 		E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D362437AE3900DD842F /* AppLauncher.swift */; };
 		E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D382437B1BA00DD842F /* XCTestExtension.swift */; };
 		E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
@@ -102,6 +103,7 @@
 		C9AFE4AD22B7EE5900943B3E /* VerifiedTokens-unknown-variation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-unknown-variation3.json"; sourceTree = "<group>"; };
 		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
 		CC1BD93A2448BB9200A4C745 /* CIVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIVariables.swift; sourceTree = "<group>"; };
+		D737A08424752E0B00D4E872 /* cardTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardTypes.json; sourceTree = "<group>"; };
 		E7134D362437AE3900DD842F /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
 		E7134D382437B1BA00DD842F /* XCTestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtension.swift; sourceTree = "<group>"; };
 		E72152832437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentFlowViewPageObject.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				1BD0EE9822CBB01C00147A71 /* mastercard.png */,
 				1BD0EE9A22CBB01C00147A71 /* visa.png */,
 				1BD0EE9622CBA44B00147A71 /* CardConfiguration.json */,
+				D737A08424752E0B00D4E872 /* cardTypes.json */,
 				C9AFE4A822B7EE5800943B3E /* Discovery-success.json */,
 				C9AFE4A922B7EE5800943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json */,
 				C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */,
@@ -369,6 +372,7 @@
 				1BCBFED622B8F63300A65FAA /* LICENSE in Resources */,
 				E7CFBA3C2436663B009FA24A /* sessions-success.json in Resources */,
 				1BCBFED722B8F63300A65FAA /* README.md in Resources */,
+				D737A08524752E0B00D4E872 /* cardTypes.json in Resources */,
 				C9AFE47122B7C5A600943B3E /* Assets.xcassets in Resources */,
 				C9AFE4B322B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber.json in Resources */,
 				1BD0EE9D22CBB01C00147A71 /* visa.png in Resources */,
@@ -663,7 +667,7 @@
 			baseConfigurationReference = 8BA50193BD557BCBB2DE4933 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
 				ACCESS_BASE_URL = "https://try.access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardTypes.json";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -686,7 +690,7 @@
 			baseConfigurationReference = 6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
 				ACCESS_BASE_URL = "https://try.access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardConfiguration.json";
+				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardTypes.json";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

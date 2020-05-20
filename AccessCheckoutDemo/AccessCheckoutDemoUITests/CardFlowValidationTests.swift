@@ -86,7 +86,7 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
     
     func testBrandImage_mastercard() {
         let brandName = "mastercard"
-        view!.typeTextIntoPan("5")
+        view!.typeTextIntoPan("55")
         XCTAssertEqual(app.images["cardBrandImage"].label, imageLabel(of: brandName))
     }
     
