@@ -18,16 +18,16 @@ class CVVValidator {
         if let matcher = validationRule.matcher, matcher.regexMatches(text: cvv) == false {
             return ValidationResult(partial: false, complete: false)
         }
-        
-        var partiallyValid = true
-        var completelyValid = true
+
         let validLengths = validationRule.validLengths
-        
-        if !validLengths.isEmpty {
-            partiallyValid = cvv.count <= validLengths.max()!
-            completelyValid = validLengths.contains(cvv.count)
+
+        if validLengths.isEmpty {
+            return ValidationResult(partial: true, complete: true)
         }
         
+        let partiallyValid = cvv.count <= validLengths.max()!
+        let completelyValid = validLengths.contains(cvv.count)
+      
         return ValidationResult(partial: partiallyValid, complete: completelyValid)
     }
     

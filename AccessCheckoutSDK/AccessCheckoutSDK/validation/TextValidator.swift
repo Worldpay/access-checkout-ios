@@ -8,18 +8,15 @@ class TextValidator {
         if let matcher = validationRule.matcher, matcher.regexMatches(text: text) == false {
             return ValidationResult(partial: false, complete: false)
         }
-        
-        let partiallyValid: Bool
-        let completelyValid: Bool
+
         let validLengths = validationRule.validLengths
         
-        if !validLengths.isEmpty {
-            partiallyValid = text.count <= validLengths.max()!
-            completelyValid = validLengths.contains(text.count)
-        } else {
-            partiallyValid = true
-            completelyValid = true
+        if validLengths.isEmpty {
+            return ValidationResult(partial: true, complete: true)
         }
+        
+        let partiallyValid = text.count <= validLengths.max()!
+        let completelyValid = validLengths.contains(text.count)
         return ValidationResult(partial: partiallyValid, complete: completelyValid)
     }
 }
