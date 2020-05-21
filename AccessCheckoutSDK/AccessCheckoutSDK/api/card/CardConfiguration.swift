@@ -80,7 +80,7 @@ public struct CardConfiguration: Decodable {
         public static func baseDefaults() -> CardDefaults {
             let panValidationRule = CardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,19}$",
-                validLengths: [13,15,16,18,19]
+                validLengths: [12,13,14,15,16,17,18,19]
             )
             let cvvValidationRule = CardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,4}$",
