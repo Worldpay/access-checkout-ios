@@ -12,31 +12,32 @@ public struct CardConfiguration: Decodable {
      - Parameter fromUrl: The `URL` of a JSON configuration file
      */
     public init?(fromURL url: URL) {
-        guard let data = try? Data(contentsOf: url),
-            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [Dictionary<String, Any>] else {
-                return nil
-            }
-        var brandsFromJson: [CardBrand] = []
-        for brand in json {
-            guard let name = brand["name"],
-                let matcher = brand["pattern"],
-                let pans = brand["panLengths"]
-                else {
-                    return nil
-                }
-
-                brandsFromJson.append(
-                    CardBrand(
-                        name: name as! String,
-                        images: getBrandImages(brand: brand),
-                        matcher: matcher as! String,
-                        cvv: brand["cvvLength"] as? Int,
-                        pans: pans as! [Int]
-                    )
-                )
-        }
         defaults = CardDefaults.baseDefaults()
-        brands = brandsFromJson
+
+        if let data = try? Data(contentsOf: url),
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [Dictionary<String, Any>] {
+                var brandsFromJson: [CardBrand] = []
+                for brand in json {
+                    guard let name = brand["name"],
+                        let matcher = brand["pattern"],
+                        let pans = brand["panLengths"]
+                        else {
+                            return nil
+                        }
+
+                        brandsFromJson.append(
+                            CardBrand(
+                                name: name as! String,
+                                images: getBrandImages(brand: brand),
+                                matcher: matcher as! String,
+                                cvv: brand["cvvLength"] as? Int,
+                                pans: pans as! [Int]
+                            )
+                        )
+                }
+            brands = brandsFromJson
+        }
+        
     }
 
     init(defaults: CardDefaults?, brands: [CardBrand]?) {
