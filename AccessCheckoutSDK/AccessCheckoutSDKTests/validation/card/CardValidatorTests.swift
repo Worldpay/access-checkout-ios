@@ -282,7 +282,7 @@ class CardValidatorTests: XCTestCase {
         let invalidPan = "456756789654"
         let cardValidator = AccessCheckoutCardValidator()
         let valid = cardValidator.validate(pan: invalidPan).valid
-        XCTAssertTrue(valid.partial)
+        XCTAssertFalse(valid.partial)
         XCTAssertFalse(valid.complete)
     }
 

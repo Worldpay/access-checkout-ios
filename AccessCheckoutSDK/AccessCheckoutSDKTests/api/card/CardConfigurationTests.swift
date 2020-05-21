@@ -11,8 +11,10 @@ class CardConfigurationTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testInit_badUrl() {
-        XCTAssertNil(CardConfiguration(fromURL: URL(fileURLWithPath: "")))
+    func testInit_badUrl_returns_base_defaults() {
+        let cardConfiguration = CardConfiguration(fromURL: URL(fileURLWithPath: ""))
+        XCTAssertNotNil(cardConfiguration?.defaults)
+        XCTAssertNil(cardConfiguration?.brands)
     }
     
     func testInitFromURL() {

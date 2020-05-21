@@ -12,31 +12,32 @@ public struct CardConfiguration: Decodable {
      - Parameter fromUrl: The `URL` of a JSON configuration file
      */
     public init?(fromURL url: URL) {
-        guard let data = try? Data(contentsOf: url),
-            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [Dictionary<String, Any>] else {
-                return nil
-            }
-        var brandsFromJson: [CardBrand] = []
-        for brand in json {
-            guard let name = brand["name"],
-                let matcher = brand["pattern"],
-                let pans = brand["panLengths"]
-                else {
-                    return nil
-                }
-
-                brandsFromJson.append(
-                    CardBrand(
-                        name: name as! String,
-                        images: getBrandImages(brand: brand),
-                        matcher: matcher as! String,
-                        cvv: brand["cvvLength"] as? Int,
-                        pans: pans as! [Int]
-                    )
-                )
-        }
         defaults = CardDefaults.baseDefaults()
-        brands = brandsFromJson
+
+        if let data = try? Data(contentsOf: url),
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [Dictionary<String, Any>] {
+                var brandsFromJson: [CardBrand] = []
+                for brand in json {
+                    guard let name = brand["name"],
+                        let matcher = brand["pattern"],
+                        let pans = brand["panLengths"]
+                        else {
+                            return nil
+                        }
+
+                        brandsFromJson.append(
+                            CardBrand(
+                                name: name as! String,
+                                images: getBrandImages(brand: brand),
+                                matcher: matcher as! String,
+                                cvv: brand["cvvLength"] as? Int,
+                                pans: pans as! [Int]
+                            )
+                        )
+                }
+            brands = brandsFromJson
+        }
+        
     }
 
     init(defaults: CardDefaults?, brands: [CardBrand]?) {
@@ -79,7 +80,7 @@ public struct CardConfiguration: Decodable {
         public static func baseDefaults() -> CardDefaults {
             let panValidationRule = CardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,19}$",
-                validLengths: [13,15,16,18,19]
+                validLengths: [12,13,14,15,16,17,18,19]
             )
             let cvvValidationRule = CardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,4}$",
