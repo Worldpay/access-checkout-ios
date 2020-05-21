@@ -1,25 +1,53 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
-class CardPaymentFlowRetrieveSessionTests: XCTestCase {
+class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
     }
-
-    func testResponseSuccess() {
+    
+    func testRetrievesAVerifiedTokensSession_whenPaymentsCvcSessionToggleIsOff() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokensSession-success")
             .launch()
+        let expectedTitle = "Verified Tokens Session"
+        let expectedMessage = formatStringAsStaticTextLabel("https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session")
         let view = CardPaymentFlowViewPageObject(app)
-
+        
         fillUpFormWithValidValues(using: view)
         view.submit()
         waitFor(timeoutInSeconds: 0.05)
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssertEqual(alert.title, "Session")
+        XCTAssertEqual(alert.title, expectedTitle)
+        XCTAssertEqual(alert.message, expectedMessage)
+    }
+    
+    func testRetrievesAVerifiedTokensSessionAndAPaymentsCvcSessionToken_whenPaymentsCvcSessionToggleIsOn() {
+        let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
+            .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
+            .verifiedTokensSessionStub(respondsWith: "VerifiedTokensSession-success")
+            .sessionsStub(respondsWith: "sessions-success")
+            .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
+            .launch()
+        let view = CardPaymentFlowViewPageObject(app)
+        let expectedTitle = "Verified Tokens & Payments CVC Sessions"
+        let expectedMessage = formatStringAsStaticTextLabel("""
+        https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session
+        https://try.access.worldpay.com/sessions/some-payments-cvc-session
+        """)
+        
+        fillUpFormWithValidValues(using: view)
+        view.paymentsCvcSessionToggle.toggleOn()
+        view.submit()
+        waitFor(timeoutInSeconds: 0.05)
+        
+        let alert = view.alert
+        XCTAssertTrue(alert.exists)
+        XCTAssertEqual(alert.title, expectedTitle)
+        XCTAssertEqual(alert.message, expectedMessage)
     }
     
     func testResponse_internalServerError() {
@@ -73,7 +101,7 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.fieldIsMissing(message: nil, jsonPath: nil).errorName))
         XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
-
+    
     func testResponse_unknown_variation1() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
@@ -142,15 +170,21 @@ class CardPaymentFlowRetrieveSessionTests: XCTestCase {
         XCTAssert(alert.title.contains("variation4"))
     }
     
-    private func fillUpFormWithValidValues(using view:CardPaymentFlowViewPageObject) {
+    private func fillUpFormWithValidValues(using view: CardPaymentFlowViewPageObject) {
         view.typeTextIntoPan("4111111111111111")
         view.typeTextIntoExpiryMonth("01")
         view.typeTextIntoExpiryYear("99")
         view.typeTextIntoCvv("123")
     }
     
-    private func waitFor(timeoutInSeconds:Double) {
+    private func waitFor(timeoutInSeconds: Double) {
         let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
         _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
+    }
+    
+    private func formatStringAsStaticTextLabel(_ string: String) -> String {
+        // The XCUI framework seems to replace carriage returns by spaces for alert labels
+        // This function is designed to format strings the same way so that we can search staticTexts accordingly
+        return string.replacingOccurrences(of: "\n", with: " ")
     }
 }

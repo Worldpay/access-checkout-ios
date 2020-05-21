@@ -2,12 +2,11 @@ import AccessCheckoutSDK
 import UIKit
 
 class CvvFlowViewController: UIViewController {
-
     @IBOutlet weak var cvvField: CVVView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var cvvOnly:AccessCheckoutCVVOnly?
+    private var cvvOnly: AccessCheckoutCVVOnly?
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         guard let cvv = cvvField.text else {
@@ -33,7 +32,7 @@ class CvvFlowViewController: UIViewController {
                 
                 switch result {
                     case .success(let sessions):
-                        AlertView.display(using: self, title: "Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
+                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
                             self.cvvField.clear()
                             self.cvvField.isEnabled = true
                             self.submitButton.isEnabled = self.cvvOnly!.isValid()

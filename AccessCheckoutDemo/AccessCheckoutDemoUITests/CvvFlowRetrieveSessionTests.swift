@@ -1,17 +1,17 @@
-import XCTest
-import Foundation
 @testable import AccessCheckoutSDK
+import Foundation
+import XCTest
 
 class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
-    var view:CvvOnlyFlowViewPageObject?
+    var view: CvvOnlyFlowViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
     }
     
     func testSuccessfullyCreatesAndDisplaysACvvSession() {
-        let expectedTitle = "Session"
-        let expectedMessage = "https://try.access.worldpay.com/sessions/some-uri"
+        let expectedTitle = "Payments CVC Session"
+        let expectedMessage = "https://try.access.worldpay.com/sessions/some-payments-cvc-session"
         
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
@@ -92,10 +92,10 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
     private func formatStringAsStaticTextLabel(_ string: String) -> String {
         // The XCUI framework seems to replace carriage returns by spaces for alert labels
         // This function is designed to format strings the same way so that we can search staticTexts accordingly
-        return string.replacingOccurrences(of:"\n", with:" ")
+        return string.replacingOccurrences(of: "\n", with: " ")
     }
     
-    private func waitFor(timeoutInSeconds:Double) {
+    private func waitFor(timeoutInSeconds: Double) {
         let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
         _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }

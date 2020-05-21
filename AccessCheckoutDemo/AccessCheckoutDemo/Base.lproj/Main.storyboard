@@ -20,53 +20,77 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gc-ER-g0x" customClass="PANView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="40" y="60" width="295" height="44"/>
+                                <rect key="frame" x="35" y="60" width="305" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="lg0-kG-hJF"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5El-kB-xnl" customClass="ExpiryDateView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="40" y="136" width="88.5" height="44"/>
+                                <rect key="frame" x="35" y="136" width="91.5" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="SRm-gC-IMq"/>
                                 </constraints>
                             </view>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyH-be-DH8" customClass="CVVView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="40" y="212" width="59" height="44"/>
+                                <rect key="frame" x="166.5" y="136" width="61" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="0bx-cV-rmM"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
+                                <rect key="frame" x="261" y="274" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                <rect key="frame" x="35" y="212" width="168.5" height="19.5"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
+                                <rect key="frame" x="291" y="206.5" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                                <rect key="frame" x="35" y="235.5" width="244.5" height="12"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="286" y="219" width="49" height="30"/>
+                                <rect key="frame" x="291" y="269" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
-                                <rect key="frame" x="262" y="224" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="4" id="2Xc-0j-Cl6"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.3" id="2lh-yf-px9"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="40" id="5oD-DE-ecu"/>
+                            <constraint firstItem="8gc-ER-g0x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="35" id="5oD-DE-ecu"/>
                             <constraint firstItem="JyH-be-DH8" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.2" id="CjK-XF-tNB"/>
+                            <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Dha-7J-gEf"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="top" secondItem="8gc-ER-g0x" secondAttribute="bottom" constant="32" id="EYt-N1-sAU"/>
-                            <constraint firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" constant="40" id="Jpu-J7-tg7"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="bottom" constant="32" id="YkC-nL-0wk" userLabel="Cvv View.top = Expiry Date View.bottom + 40"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="leading" secondItem="8gc-ER-g0x" secondAttribute="leading" id="e4N-5H-bFx"/>
+                            <constraint firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" constant="35" id="Jpu-J7-tg7"/>
+                            <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="bottom" constant="32" id="OJK-w6-y7c"/>
+                            <constraint firstItem="V3W-HP-wPE" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="QHc-kM-Pcq"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="10" id="YFQ-CO-GMa"/>
+                            <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="top" id="YkC-nL-0wk" userLabel="Cvv View.top = Expiry Date View.bottom + 40"/>
+                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="4" id="amx-XS-qWo"/>
+                            <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="5El-kB-xnl" secondAttribute="leading" id="bK2-sd-FBr"/>
+                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="ccP-WQ-FS3"/>
+                            <constraint firstItem="V3W-HP-wPE" firstAttribute="centerY" secondItem="gxk-b1-dMa" secondAttribute="centerY" id="d4j-kH-kbk"/>
+                            <constraint firstItem="JyH-be-DH8" firstAttribute="leading" secondItem="5El-kB-xnl" secondAttribute="trailing" constant="40" id="e4N-5H-bFx"/>
                             <constraint firstItem="5El-kB-xnl" firstAttribute="leading" secondItem="8gc-ER-g0x" secondAttribute="leading" id="m3w-o4-bLi"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="JyH-be-DH8" secondAttribute="centerY" id="pfH-bB-QAT"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="NXi-qk-FE5" secondAttribute="centerY" id="rcL-4k-KqU"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="tS1-UK-467"/>
                             <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="tff-uB-MuP"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="top" secondItem="V3W-HP-wPE" secondAttribute="bottom" constant="31.5" id="vyv-ea-JG9"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
@@ -74,6 +98,7 @@
                         <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
                         <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
                         <outlet property="panView" destination="8gc-ER-g0x" id="axR-fD-Koc"/>
+                        <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
                     </connections>
