@@ -20,57 +20,68 @@ class PanValidatorTests : XCTestCase {
     )
     
     let baseDefaults = AccessCardConfiguration.CardDefaults.baseDefaults()
+
     
     func testShouldReturnFalseWithCardBrandWhenKnownPanIsShorterThanValidLength() {
         let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
-        let result = PanValidator(
+        let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
-        ).validatePan(pan: "4111")
+        )
         
-        XCTAssertFalse(result.0)
-        XCTAssertEqual(result.1?.name, "visa")
+        let result = panValidator.validate(pan: "4111")
+        
+        XCTAssertFalse(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "visa")
     }
     
-    func testShouldReturnFalseAndNilCardBrandWhenUnknownPanIsShorterThanValidLength() {
+    func testShouldReturnFalseAndNilCardBrandWhenUnknownPanIsShorterThanMinValidLength() {
         let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
-        let result = PanValidator(
+        let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
-        ).validatePan(pan: "5111")
+        )
+            
+        let result = panValidator.validate(pan: "5111")
         
-        XCTAssertFalse(result.0)
-        XCTAssertNil(result.1)
+        XCTAssertFalse(result.isValid)
+        XCTAssertNil(result.cardBrand)
     }
     
     func testShouldReturnFalseWhenAMaxLengthInvalidLuhnPanIsEntered() {
         let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
-        let result = PanValidator(
+        let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
-        ).validatePan(pan: "44444444444444444444")
+        )
         
-        XCTAssertFalse(result.0)
-        XCTAssertEqual(result.1?.name, "visa")
+        let result = panValidator.validate(pan: "44444444444444444444")
+        
+        XCTAssertFalse(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "visa")
 
     }
     
     func testShouldReturnTrueWhenALuhnValidMinLengthKnownPanIsEntered() {
         let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
-        let result = PanValidator(
+        let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
-        ).validatePan(pan: "4111111111111111")
+        )
+            
+        let result = panValidator.validate(pan: "4111111111111111")
         
-        XCTAssertTrue(result.0)
-        XCTAssertEqual(result.1?.name, "visa")
+        XCTAssertTrue(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "visa")
 
     }
     
     func testShouldReturnTrueWhenALuhnValidUnknownPanIsEntered() {
         let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
-        let result = PanValidator(
+        let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
-        ).validatePan(pan: "8888888888888888")
+        )
+            
+        let result = panValidator.validate(pan: "8888888888888888")
         
-        XCTAssertTrue(result.0)
-        XCTAssertNil(result.1)
+        XCTAssertTrue(result.isValid)
+        XCTAssertNil(result.cardBrand)
     }
     
     func testShouldChangeFromVisaToMaestroWhenNewPatternIsMatched() {
@@ -78,15 +89,15 @@ class PanValidatorTests : XCTestCase {
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
-        var result = panValidator.validatePan(pan: "49369")
+        var result = panValidator.validate(pan: "49369")
         
-        XCTAssertFalse(result.0)
-        XCTAssertEqual(result.1?.name, "visa")
+        XCTAssertFalse(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "visa")
         
-        result = panValidator.validatePan(pan: "493698")
+        result = panValidator.validate(pan: "493698")
         
-        XCTAssertFalse(result.0)
-        XCTAssertEqual(result.1?.name, "maestro")
+        XCTAssertFalse(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "maestro")
         
     }
 }

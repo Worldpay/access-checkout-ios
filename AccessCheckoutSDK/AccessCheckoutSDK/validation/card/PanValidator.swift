@@ -1,17 +1,14 @@
 import Foundation
 
 struct PanValidator {
-    
     private var lengthValidator:LengthValidator = LengthValidator()
     private var cardConfiguration: AccessCardConfiguration
     
-    public init(cardConfiguration: AccessCardConfiguration) {
+    init(cardConfiguration: AccessCardConfiguration) {
         self.cardConfiguration = cardConfiguration
     }
       
-    
-    func validatePan(pan: PAN) -> (isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
-        
+    func validate(pan: PAN) -> (isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
         let cardBrand = cardConfiguration.cardBrand(forPAN: pan)
         let panRule = cardBrand?.panValidationRule() ?? cardConfiguration.defaults.pan
         

@@ -75,7 +75,7 @@ public struct AccessCardConfiguration {
         var validLengths: Array<Int> = [Int]()
     }
     
-    public struct CardDefaults: Decodable {
+    struct CardDefaults: Decodable {
         var pan: CardValidationRule
         var cvv: CardValidationRule
         var month: CardValidationRule
@@ -106,7 +106,7 @@ public struct AccessCardConfiguration {
     }
     
     /// The brand identity of a card, e.g Visa
-    public struct CardBrand: Equatable {
+    struct CardBrand: Equatable {
         
         public struct CardBrandImage {
             public var type: String?
