@@ -1,10 +1,10 @@
 import Foundation
 
 /// Representation of a payment card's brands, defaults and validation rules
-public struct CardConfiguration: Decodable {
+public struct AccessCardConfiguration {
     
     var defaults: CardDefaults
-    var brands: [CardBrand]?
+    var brands: [CardBrand] = []
     
     /**
      Initialises a configuration from JSON at a specified location.
@@ -40,7 +40,7 @@ public struct CardConfiguration: Decodable {
         
     }
 
-    init(defaults: CardDefaults, brands: [CardBrand]?) {
+    init(defaults: CardDefaults, brands: [CardBrand]) {
         self.defaults = defaults
         self.brands = brands
     }
@@ -63,7 +63,11 @@ public struct CardConfiguration: Decodable {
     }
     
     func cardBrand(forPAN pan: PAN) -> CardBrand? {
-        return brands?.first { $0.matcher.regexMatches(text: pan) == true }
+        if brands.isEmpty {
+            return nil
+        } else {
+            return brands.first { $0.matcher.regexMatches(text: pan) == true }
+        }
     }
     
     struct CardValidationRule: Decodable, Equatable {
@@ -72,25 +76,25 @@ public struct CardConfiguration: Decodable {
     }
     
     public struct CardDefaults: Decodable {
-        let pan: CardValidationRule?
-        var cvv: CardValidationRule?
-        var month: CardValidationRule?
-        var year: CardValidationRule?
+        var pan: CardValidationRule
+        var cvv: CardValidationRule
+        var month: CardValidationRule
+        var year: CardValidationRule
         
         public static func baseDefaults() -> CardDefaults {
-            let panValidationRule = CardConfiguration.CardValidationRule(
+            let panValidationRule = AccessCardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,19}$",
                 validLengths: [12,13,14,15,16,17,18,19]
             )
-            let cvvValidationRule = CardConfiguration.CardValidationRule(
+            let cvvValidationRule = AccessCardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,4}$",
                 validLengths: [3,4]
             )
-            let monthValidationRule = CardConfiguration.CardValidationRule(
+            let monthValidationRule = AccessCardConfiguration.CardValidationRule(
                 matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
                 validLengths: [2]
             )
-            let yearValidationRule = CardConfiguration.CardValidationRule(
+            let yearValidationRule = AccessCardConfiguration.CardValidationRule(
                 matcher: "^\\d{0,2}$",
                 validLengths: [2]
             )
@@ -102,9 +106,9 @@ public struct CardConfiguration: Decodable {
     }
     
     /// The brand identity of a card, e.g Visa
-    public struct CardBrand: Decodable, Equatable {
+    public struct CardBrand: Equatable {
         
-        public struct CardBrandImage: Decodable {
+        public struct CardBrandImage {
             public var type: String?
             public var url: String?
         }
@@ -132,7 +136,7 @@ public struct CardConfiguration: Decodable {
         }
         
         /// Equatable operator
-        public static func == (lhs: CardConfiguration.CardBrand, rhs: CardConfiguration.CardBrand) -> Bool {
+        public static func == (lhs: AccessCardConfiguration.CardBrand, rhs: AccessCardConfiguration.CardBrand) -> Bool {
             return lhs.name == rhs.name
         }
     }
