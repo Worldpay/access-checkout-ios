@@ -7,7 +7,10 @@ class CardValidatorTests: XCTestCase {
     private let monthDateFormatter = DateFormatter()
     private let emptyCardValidationRule = CardConfiguration.CardValidationRule(matcher: nil,
                                                                                validLengths: [])
-    
+    private let defaultCvvRule = CardConfiguration.CardValidationRule(matcher: nil, validLengths: [3,4])
+    private let defaultMonthRule = CardConfiguration.CardDefaults.baseDefaults().month
+    private let defaultYearRule = CardConfiguration.CardDefaults.baseDefaults().month
+
     
     override func setUp() {
     }
@@ -240,7 +243,9 @@ class CardValidatorTests: XCTestCase {
     func testValidatePANBrand_matcherAmex() {
         let validPan = "340000000000009"
         let cardBrand = CardConfiguration.CardBrand(name: "amex", images: nil, matcher: "^3[47]\\d{0,13}$", cvv: nil, pans: [15])
-        let cardConfiguration = CardConfiguration(defaults: nil,
+        let defaults = CardConfiguration.CardDefaults.baseDefaults()
+
+        let cardConfiguration = CardConfiguration(defaults: defaults,
                                                   brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -254,7 +259,9 @@ class CardValidatorTests: XCTestCase {
         let validPan = "3400000000000091"
 
         let cardBrand = CardConfiguration.CardBrand(name: "amex", images: nil, matcher: "^3[47]\\d{0,13}$", cvv: nil, pans: [15])
-        let cardConfiguration = CardConfiguration(defaults: nil,
+        let defaults = CardConfiguration.CardDefaults.baseDefaults()
+
+        let cardConfiguration = CardConfiguration(defaults: defaults,
                                                   brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
@@ -374,7 +381,9 @@ class CardValidatorTests: XCTestCase {
     func testCanUpdateCVV_withPAN_brandSuccess() {
         let text = "1"
         let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, matcher: "^4\\d{0,15}", cvv: 4, pans: [16])
-        let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
+        let defaults = CardConfiguration.CardDefaults.baseDefaults()
+
+        let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
         let canUpdate = cardValidator.canUpdate(cvv: "12",
@@ -387,7 +396,9 @@ class CardValidatorTests: XCTestCase {
     func testCanUpdateCVV_withPAN_fail() {
         let text = "1"
         let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, matcher: "^4\\d{0,15}", cvv: 4, pans: [16])
-        let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
+        let defaults = CardConfiguration.CardDefaults.baseDefaults()
+
+        let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
         let cardValidator = AccessCheckoutCardValidator()
         cardValidator.cardConfiguration = cardConfiguration
         let canUpdate = cardValidator.canUpdate(cvv: "1234",
@@ -1426,7 +1437,9 @@ class CardValidatorTests: XCTestCase {
     func testCardIsValid_brand() {
 
         let cardBrand = CardConfiguration.CardBrand(name: "visa", images: nil, matcher: "^4\\d{0,15}", cvv: 3, pans: [16])
-        let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
+        let defaults = CardConfiguration.CardDefaults.baseDefaults()
+
+        let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
 
         let now = Date()
         guard let futureDate = Calendar.current.date(byAdding: .year, value: 1, to: now) else {

@@ -2,6 +2,8 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CardConfigurationTests: XCTestCase {
+    
+    let defaults = CardConfiguration.CardDefaults.baseDefaults()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -34,7 +36,7 @@ class CardConfigurationTests: XCTestCase {
     
     func testCardBrandForPAN() {
         let cardBrand = CardConfiguration.CardBrand(name: "", images: nil, matcher: "^4\\d{0,15}", cvv: nil, pans: [16])
-        let cardConfiguration = CardConfiguration(defaults: nil, brands: [cardBrand])
+        let cardConfiguration = CardConfiguration(defaults: defaults, brands: [cardBrand])
         XCTAssertEqual(cardConfiguration.cardBrand(forPAN: "4000"), cardBrand)
     }
     
