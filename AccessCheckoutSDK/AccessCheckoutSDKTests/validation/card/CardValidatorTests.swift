@@ -74,7 +74,7 @@ class CardValidatorTests: XCTestCase {
         let cardValidator = AccessCheckoutCardValidator()
         XCTAssertFalse(cardValidator.canUpdate(pan: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
     
     func testCanUpdatePAN_success() {
@@ -118,7 +118,7 @@ class CardValidatorTests: XCTestCase {
         cardValidator.cardConfiguration = CardConfiguration(defaults: defaults, brands: nil)
         let canUpdate = cardValidator.canUpdate(pan: "",
                                                 withText: text,
-                                                inRange: NSRange(location: 0, length: text.count))
+                                                inRange: NSRange(location: 0, length: 0))
         XCTAssertFalse(canUpdate)
     }
     
@@ -298,7 +298,7 @@ class CardValidatorTests: XCTestCase {
         XCTAssertFalse(cardValidator.canUpdate(cvv: "",
                                                withPAN: nil,
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateCVV_success() {
@@ -315,7 +315,7 @@ class CardValidatorTests: XCTestCase {
         XCTAssertTrue(cardValidator.canUpdate(cvv: "",
                                               withPAN: nil,
                                               withText: text,
-                                              inRange: NSRange(location: 0, length: text.count)))
+                                              inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateCVV_alpha() {
@@ -332,7 +332,7 @@ class CardValidatorTests: XCTestCase {
         let canUpdate = cardValidator.canUpdate(cvv: "",
                                                 withPAN: nil,
                                                 withText: text,
-                                                inRange: NSRange(location: 0, length: text.count))
+                                                inRange: NSRange(location: 0, length: 0))
         XCTAssertFalse(canUpdate)
     }
 
@@ -564,7 +564,7 @@ class CardValidatorTests: XCTestCase {
         let cardValidator = AccessCheckoutCardValidator()
         XCTAssertFalse(cardValidator.canUpdate(expiryMonth: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryMonth_success() {
@@ -596,7 +596,7 @@ class CardValidatorTests: XCTestCase {
         cardValidator.cardConfiguration = cardConfiguration
         XCTAssertFalse(cardValidator.canUpdate(expiryMonth: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryMonth_alpha() {
@@ -612,7 +612,7 @@ class CardValidatorTests: XCTestCase {
         cardValidator.cardConfiguration = cardConfiguration
         XCTAssertFalse(cardValidator.canUpdate(expiryMonth: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryMonth_delete() {
@@ -789,7 +789,7 @@ class CardValidatorTests: XCTestCase {
         let cardValidator = AccessCheckoutCardValidator()
         XCTAssertFalse(cardValidator.canUpdate(expiryMonth: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryYear_success() {
@@ -821,7 +821,7 @@ class CardValidatorTests: XCTestCase {
         cardValidator.cardConfiguration = cardConfiguration
         XCTAssertFalse(cardValidator.canUpdate(expiryYear: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryYear_alpha() {
@@ -837,7 +837,7 @@ class CardValidatorTests: XCTestCase {
         cardValidator.cardConfiguration = cardConfiguration
         XCTAssertFalse(cardValidator.canUpdate(expiryYear: "",
                                                withText: text,
-                                               inRange: NSRange(location: 0, length: text.count)))
+                                               inRange: NSRange(location: 0, length: 0)))
     }
 
     func testCanUpdateExpiryYear_delete() {
