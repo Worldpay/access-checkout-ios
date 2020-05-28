@@ -32,7 +32,7 @@ class CvvValidatorTests : XCTestCase {
         XCTAssertFalse(cvvValidator().validate(cvv: "12", pan: nil))
     }
 
-    func testShouldReturnFalseIfCvvIsNonNumeric() {
+    func testShouldReturnFalseIfCvvIsInvalidAgainstMatcher() {
         XCTAssertFalse(cvvValidator().validate(cvv: "aaa", pan: nil))
     }
     
