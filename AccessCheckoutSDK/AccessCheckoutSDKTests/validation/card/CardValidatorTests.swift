@@ -7,10 +7,6 @@ class CardValidatorTests: XCTestCase {
     private let monthDateFormatter = DateFormatter()
     private let emptyCardValidationRule = CardConfiguration.CardValidationRule(matcher: nil,
                                                                                validLengths: [])
-    private let defaultCvvRule = CardConfiguration.CardValidationRule(matcher: nil, validLengths: [3,4])
-    private let defaultMonthRule = CardConfiguration.CardDefaults.baseDefaults().month
-    private let defaultYearRule = CardConfiguration.CardDefaults.baseDefaults().month
-
     
     override func setUp() {
     }
