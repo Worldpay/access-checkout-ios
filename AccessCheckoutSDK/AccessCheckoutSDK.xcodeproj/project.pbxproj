@@ -47,6 +47,8 @@
 		D7D6D5D0247EA3C600D57D7A /* AccessCardConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5CF247EA3C600D57D7A /* AccessCardConfigurationTests.swift */; };
 		D7D6D5D2247EBA0600D57D7A /* ExpiryDateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5D1247EBA0600D57D7A /* ExpiryDateValidatorTests.swift */; };
 		D7D6D5D4247EBA1F00D57D7A /* ExpiryDateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5D3247EBA1F00D57D7A /* ExpiryDateValidator.swift */; };
+		D7D6D5D6247FC94900D57D7A /* CvvValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5D5247FC94900D57D7A /* CvvValidator.swift */; };
+		D7D6D5D8247FC96100D57D7A /* CvvValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5D7247FC96100D57D7A /* CvvValidatorTests.swift */; };
 		E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70A5E842420C8B200F8B73E /* RestClientTests.swift */; };
 		E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */; };
 		E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08724642EF80037DED4 /* CuckooExtension.swift */; };
@@ -209,6 +211,8 @@
 		D7D6D5CF247EA3C600D57D7A /* AccessCardConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCardConfigurationTests.swift; sourceTree = "<group>"; };
 		D7D6D5D1247EBA0600D57D7A /* ExpiryDateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateValidatorTests.swift; sourceTree = "<group>"; };
 		D7D6D5D3247EBA1F00D57D7A /* ExpiryDateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateValidator.swift; sourceTree = "<group>"; };
+		D7D6D5D5247FC94900D57D7A /* CvvValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvValidator.swift; sourceTree = "<group>"; };
+		D7D6D5D7247FC96100D57D7A /* CvvValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvValidatorTests.swift; sourceTree = "<group>"; };
 		E70A5E842420C8B200F8B73E /* RestClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientTests.swift; sourceTree = "<group>"; };
 		E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryMock.swift; sourceTree = "<group>"; };
 		E719B08724642EF80037DED4 /* CuckooExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuckooExtension.swift; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 				1BCBFEC122B8EB4400A65FAA /* CardValidatorTests.swift */,
 				D7D6D5D1247EBA0600D57D7A /* ExpiryDateValidatorTests.swift */,
 				D76E404F247D62A1002FAA39 /* PanValidatorTests.swift */,
+				D7D6D5D7247FC96100D57D7A /* CvvValidatorTests.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -677,6 +682,7 @@
 				C9AFE45322B7AA4700943B3E /* CardValidator.swift */,
 				D76E404D247D6291002FAA39 /* PanValidator.swift */,
 				D7D6D5D3247EBA1F00D57D7A /* ExpiryDateValidator.swift */,
+				D7D6D5D5247FC94900D57D7A /* CvvValidator.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -1047,6 +1053,7 @@
 				E7821A9D24586CC5003F7231 /* PAN.swift in Sources */,
 				E739464F2420D1BC0007D7B3 /* CVVValidator.swift in Sources */,
 				E719B09A24647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift in Sources */,
+				D7D6D5D6247FC94900D57D7A /* CvvValidator.swift in Sources */,
 				E79EAC7724589BD300A8DDA6 /* PANValidationDelegate.swift in Sources */,
 				E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */,
 				E719B08A24643C350037DED4 /* VerifiedTokensApiDiscovery.swift in Sources */,
@@ -1107,6 +1114,7 @@
 				E719B0AE2464A4B90037DED4 /* SessionsApiClientTests.swift in Sources */,
 				E7D19F74246328EA001EA13A /* SingleLinkDiscoveryTests.swift in Sources */,
 				D7D6D5D2247EBA0600D57D7A /* ExpiryDateValidatorTests.swift in Sources */,
+				D7D6D5D8247FC96100D57D7A /* CvvValidatorTests.swift in Sources */,
 				E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */,
 				D76E4050247D62A1002FAA39 /* PanValidatorTests.swift in Sources */,
 				E79EAC6324588D5C00A8DDA6 /* MockCVVValidator.swift in Sources */,
