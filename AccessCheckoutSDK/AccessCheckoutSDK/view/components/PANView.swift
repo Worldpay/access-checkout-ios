@@ -2,12 +2,11 @@ import UIKit
 
 /// A view representing a card's Primary Account Number
 @IBDesignable public class PANView: UIView {
-    
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet public weak var imageView: UIImageView!
+    @IBOutlet var textField: UITextField!
+    @IBOutlet public var imageView: UIImageView!
     
     /// The delegate to handle view events
-    weak public var validationDelegate: ValidationDelegate?
+    public weak var validationDelegate: ValidationDelegate?
     
     /// The card number represented by the view
     public var text: PAN? {
@@ -20,6 +19,8 @@ import UIKit
         return text
     }
     
+    var presenter: Presenter?
+    
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,7 +28,7 @@ import UIKit
     }
     
     /// Initializer override
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViewFromNib()
     }
@@ -58,7 +59,6 @@ import UIKit
 }
 
 extension PANView: AccessCheckoutTextView {
-    
     /// View is enabled for editing
     public var isEnabled: Bool {
         get {
@@ -86,7 +86,6 @@ extension PANView: AccessCheckoutTextView {
 }
 
 extension PANView: UITextFieldDelegate {
-    
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if let pan = textField.text {
             (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
