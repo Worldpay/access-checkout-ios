@@ -18,7 +18,6 @@ class AccessCardValidationStateHandler : PanValidationStateHandler {
         self.cardBrand = cardBrand
     }
     
-    
     public func handle(result: (isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)) {
         if result.isValid != panValidationState {
             panValidationState = result.isValid

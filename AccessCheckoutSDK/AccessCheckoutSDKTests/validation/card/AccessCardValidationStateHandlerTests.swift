@@ -21,7 +21,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
     
     let accessCardDelegate = AccessCardDelegateMock()
     
-    func testShouldNotNotifyDelegateIfValidationDoesNotChangeFromFalse() {
+    func testShouldNotNotifyMerchantDelegateIfValidationDoesNotChangeFromFalse() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
@@ -40,7 +40,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
 
     }
     
-    func testShouldNotNotifyDelegateIfValidationDoesNotChangeFromTrue() {
+    func testShouldNotNotifyMerchantDelegateIfValidationDoesNotChangeFromTrue() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
@@ -60,7 +60,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
 
     }
    
-    func testShouldNotifyDelegateIfValidationChangesToFalse() {
+    func testShouldNotifyMerchantDelegateIfValidationChangesToFalse() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
@@ -80,7 +80,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
 
     }
     
-    func testShouldNotifyDelegateIfValidationChangesToTrue() {
+    func testShouldNotifyMerchantDelegateIfValidationChangesToTrue() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
@@ -97,7 +97,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
 
     }
     
-    func testShouldNotifyDelegateWithCardBrandIfCardBrandChanges() {
+    func testShouldNotifyMerchantDelegateWithCardBrandIfCardBrandChanges() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
@@ -115,7 +115,7 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
 
     }
     
-    func testShouldNotNotifyDelegateIfCardBrandDoesNotChange() {
+    func testShouldNotNotifyMerchantDelegateIfCardBrandDoesNotChange() {
         let accessCardDelegate = AccessCardDelegateMock()
 
         let validationStateHandler = AccessCardValidationStateHandler(
