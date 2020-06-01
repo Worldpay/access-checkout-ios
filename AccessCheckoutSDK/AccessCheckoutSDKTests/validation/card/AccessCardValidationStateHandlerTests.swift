@@ -9,21 +9,33 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
             cvv: 3,
             pans: [16,18,19]
         )
-
+    
+    
+    let amexBrand = AccessCardConfiguration.CardBrand(
+            name: "amex",
+            images: nil,
+            matcher: "",
+            cvv: 4,
+            pans: [15]
+        )
+    
+    let accessCardDelegate = AccessCardDelegateMock()
     
     func testShouldNotNotifyDelegateIfValidationDoesNotChangeFromFalse() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
-            accessCardDelegate: accessCardDelegate
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: false,
+            cardBrand: nil
         )
         
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
-        XCTAssertFalse(panValidationHandler.panValidationState)
+        XCTAssertFalse(validationStateHandler.panValidationState)
 
-        panValidationHandler.handle(result: (isValid: false, cardBrand: nil))
+        validationStateHandler.handle(result: (isValid: false, cardBrand: nil))
         
-        XCTAssertFalse(panValidationHandler.panValidationState)
+        XCTAssertFalse(validationStateHandler.panValidationState)
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
 
     }
@@ -31,18 +43,19 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
     func testShouldNotNotifyDelegateIfValidationDoesNotChangeFromTrue() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
-            accessCardDelegate: accessCardDelegate
-        )
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: true,
+            cardBrand: nil
 
-        panValidationHandler.panValidationState = true
+        )
         
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
-        XCTAssertTrue(panValidationHandler.panValidationState)
+        XCTAssertTrue(validationStateHandler.panValidationState)
 
-        panValidationHandler.handle(result: (isValid: true, cardBrand: nil))
+        validationStateHandler.handle(result: (isValid: true, cardBrand: nil))
 
-        XCTAssertTrue(panValidationHandler.panValidationState)
+        XCTAssertTrue(validationStateHandler.panValidationState)
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
 
     }
@@ -50,18 +63,19 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
     func testShouldNotifyDelegateIfValidationChangesToFalse() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
-            accessCardDelegate: accessCardDelegate
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: true,
+            cardBrand: nil
+
         )
-        
-        panValidationHandler.panValidationState = true
-        
+                
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
-        XCTAssertTrue(panValidationHandler.panValidationState)
+        XCTAssertTrue(validationStateHandler.panValidationState)
 
-        panValidationHandler.handle(result: (isValid: false, cardBrand: nil))
+        validationStateHandler.handle(result: (isValid: false, cardBrand: nil))
 
-        XCTAssertFalse(panValidationHandler.panValidationState)
+        XCTAssertFalse(validationStateHandler.panValidationState)
         XCTAssertTrue(accessCardDelegate.panValidationCalled)
 
     }
@@ -69,33 +83,33 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
     func testShouldNotifyDelegateIfValidationChangesToTrue() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
+        let validationStateHandler = AccessCardValidationStateHandler(
             accessCardDelegate: accessCardDelegate
         )
                 
         XCTAssertFalse(accessCardDelegate.panValidationCalled)
-        XCTAssertFalse(panValidationHandler.panValidationState)
+        XCTAssertFalse(validationStateHandler.panValidationState)
 
-        panValidationHandler.handle(result: (isValid: true, cardBrand: nil))
+        validationStateHandler.handle(result: (isValid: true, cardBrand: nil))
 
         XCTAssertTrue(accessCardDelegate.panValidationCalled)
-        XCTAssertTrue(panValidationHandler.panValidationState)
+        XCTAssertTrue(validationStateHandler.panValidationState)
 
     }
     
     func testShouldNotifyDelegateWithCardBrandIfCardBrandChanges() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
+        let validationStateHandler = AccessCardValidationStateHandler(
             accessCardDelegate: accessCardDelegate
         )
         
-        XCTAssertNil(panValidationHandler.cardBrand)
+        XCTAssertNil(validationStateHandler.cardBrand)
         XCTAssertFalse(accessCardDelegate.cardBrandCalled)
         
-        panValidationHandler.handle(result: (isValid: false, cardBrand: visaBrand))
+        validationStateHandler.handle(result: (isValid: false, cardBrand: visaBrand))
 
-        XCTAssertEqual(panValidationHandler.cardBrand?.name, "visa")
+        XCTAssertEqual(validationStateHandler.cardBrand?.name, "visa")
         XCTAssertEqual(accessCardDelegate.cardBrand?.name, "visa")
         XCTAssertTrue(accessCardDelegate.cardBrandCalled)
 
@@ -104,30 +118,68 @@ class AccessCardValidationStateHandlerTests: XCTestCase {
     func testShouldNotNotifyDelegateIfCardBrandDoesNotChange() {
         let accessCardDelegate = AccessCardDelegateMock()
 
-        let panValidationHandler = AccessCardValidationStateHandler(
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: false,
+            cardBrand: visaBrand
+        )
+                
+        XCTAssertEqual(validationStateHandler.cardBrand?.name, "visa")
+        XCTAssertFalse(accessCardDelegate.cardBrandCalled)
+        
+        validationStateHandler.handle(result: (isValid: false, cardBrand: visaBrand))
+
+        XCTAssertEqual(validationStateHandler.cardBrand?.name, "visa")
+        XCTAssertFalse(accessCardDelegate.cardBrandCalled)
+    }
+    
+    func testShouldReturnFalseIfCardBrandDidNotChange() {
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: false,
+            cardBrand: visaBrand
+        )
+                
+        XCTAssertFalse(validationStateHandler.cardBrandChanged(cardBrand: visaBrand))
+    }
+    
+    func testShouldReturnTrueIfCardBrandDidChangeFromNil() {
+        let validationStateHandler = AccessCardValidationStateHandler(
             accessCardDelegate: accessCardDelegate
         )
         
-        panValidationHandler.cardBrand = visaBrand
-        
-        XCTAssertEqual(panValidationHandler.cardBrand?.name, "visa")
-        XCTAssertFalse(accessCardDelegate.cardBrandCalled)
-        
-        panValidationHandler.handle(result: (isValid: false, cardBrand: visaBrand))
-
-        XCTAssertEqual(panValidationHandler.cardBrand?.name, "visa")
-        XCTAssertFalse(accessCardDelegate.cardBrandCalled)
-
+        XCTAssertNil(validationStateHandler.cardBrand)
+                
+        XCTAssertTrue(validationStateHandler.cardBrandChanged(cardBrand: visaBrand))
     }
     
-    private func mockValidator(valid: Bool, brand: AccessCardConfiguration.CardBrand?) -> PanValidator {
-        return PanValidatorMock(
-            cardConfiguration: AccessCardConfiguration(
-                defaults: AccessCardConfiguration.CardDefaults.baseDefaults(),
-                brands: []
-            ),
-            validation: valid,
-            brand: brand
+    func testShouldReturnTrueIfCardBrandDidChangeFromAnotherBrand() {
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: false,
+            cardBrand: visaBrand
         )
+        
+        XCTAssertTrue(validationStateHandler.cardBrandChanged(cardBrand: amexBrand))
     }
+    
+    func testShouldReturnTrueIfCardBrandDidChangeFromABrandToNil() {
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            panValidationState: false,
+            cardBrand: visaBrand
+        )
+
+        XCTAssertTrue(validationStateHandler.cardBrandChanged(cardBrand: nil))
+    }
+    
+    func testShouldReturnFalseIfCardBrandRemainsNil() {
+        let validationStateHandler = AccessCardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate
+        )
+        
+        XCTAssertNil(validationStateHandler.cardBrand)
+        XCTAssertFalse(validationStateHandler.cardBrandChanged(cardBrand: nil))
+    }
+    
 }

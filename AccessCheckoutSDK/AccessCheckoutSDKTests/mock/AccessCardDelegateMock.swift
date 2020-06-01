@@ -1,9 +1,26 @@
-//
-//  AccessCardDelegateMock.swift
-//  AccessCheckoutSDKTests
-//
-//  Created by Charlie Whight on 29/05/2020.
-//  Copyright © 2020 Worldpay. All rights reserved.
-//
+@testable import AccessCheckoutSDK
 
-import Foundation
+class AccessCardDelegateMock : AccessCardDelegate {
+    
+    var panValidationCalled = false
+    var cardBrand: AccessCardConfiguration.CardBrand?
+    var cardBrandCalled = false
+
+    func handleCardBrandChange(cardBrand: AccessCardConfiguration.CardBrand) {
+        cardBrandCalled = true
+        self.cardBrand = cardBrand
+    }
+    
+    func handlePanValidationChange(isValid: Bool) {
+        panValidationCalled = true
+    }
+    
+    func handleCvvValidationChange(isValid: Bool) {
+        
+    }
+    
+    func handleExpiryDateValidationChange(isValid: Bool) {
+        
+    }
+    
+}

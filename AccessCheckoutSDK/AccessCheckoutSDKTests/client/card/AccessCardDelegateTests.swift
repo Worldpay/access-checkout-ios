@@ -1,9 +1,6 @@
-//
-//  AccessCardDelegateTests.swift
-//  AccessCheckoutSDKTests
-//
-//  Created by Charlie Whight on 29/05/2020.
-//  Copyright © 2020 Worldpay. All rights reserved.
-//
+@testable import AccessCheckoutSDK
+import XCTest
 
-import Foundation
+class AccessCardDelegateTests: XCTestCase {
+    
+}

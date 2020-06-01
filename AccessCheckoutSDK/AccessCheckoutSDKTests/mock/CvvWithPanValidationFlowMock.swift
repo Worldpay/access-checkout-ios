@@ -1,9 +1,12 @@
-//
-//  CvvWithPanValidationFlowMock.swift
-//  AccessCheckoutSDKTests
-//
-//  Created by Charlie Whight on 01/06/2020.
-//  Copyright © 2020 Worldpay. All rights reserved.
-//
+@testable import AccessCheckoutSDK
 
-import Foundation
+class CvvWithPanValidationFlowMock : CvvWithPanValidationFlow {
+    var validationRetriggered: Bool = false
+    var newCardBrand: AccessCardConfiguration.CardBrand?
+    
+    override func checkValidationState(cardBrand: AccessCardConfiguration.CardBrand?) {
+        newCardBrand = cardBrand
+        validationRetriggered = true
+    }
+}
+

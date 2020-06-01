@@ -1,6 +1,6 @@
 import Foundation
 
-struct PanValidator {
+class PanValidator {
     private var lengthValidator:LengthValidator = LengthValidator()
     private var cardConfiguration: AccessCardConfiguration
     
