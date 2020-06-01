@@ -13,6 +13,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
     /// The validor used to validate a CVV against a validation rule
     private var cvvValidator = CVVValidator()
     
+    private var textChangeHandler = TextChangeHandler()
+    
     /// Initializes the validator with basic card configuration defaults
     public init(cardDefaults: CardConfiguration.CardDefaults = CardConfiguration.CardDefaults.baseDefaults()) {
         baseCardDefaults = cardDefaults
@@ -73,14 +75,14 @@ final public class AccessCheckoutCardValidator: CardValidator {
         guard text.isEmpty == false else {
             return true // Always allow deletion
         }
-        let expectedPan: String
+ 
+        let expectedPan = textChangeHandler.change(originalText: pan, textChange: text, usingSelection: range)
+        
         var panRule: CardConfiguration.CardValidationRule?
-        if let currentPan = pan, let range = Range(range, in: currentPan) {
-            expectedPan = currentPan.replacingCharacters(in: range, with: text)
+        if let currentPan = pan {
             panRule = cardConfiguration?.cardBrand(forPAN: currentPan)?.panValidationRule()
-        } else {
-            expectedPan = text
         }
+        
         let rule = panRule ?? cardConfiguration?.defaults.pan ?? baseCardDefaults.pan
         return textValidator.validate(text: expectedPan, againstValidationRule: rule!).partial
     }
@@ -125,12 +127,8 @@ final public class AccessCheckoutCardValidator: CardValidator {
         }
         let rule = cvvRule ?? cardConfiguration?.defaults.cvv ?? baseCardDefaults.cvv
         
-        let expectedCVV: String
-        if let cvv = cvv, let range = Range(range, in: cvv) {
-            expectedCVV = cvv.replacingCharacters(in: range, with: text)
-        } else {
-            expectedCVV = text
-        }
+        let expectedCVV = textChangeHandler.change(originalText: cvv, textChange: text, usingSelection: range)
+        
         return cvvValidator.validate(cvv: expectedCVV, againstValidationRule: rule!).partial
     }
     
@@ -151,12 +149,9 @@ final public class AccessCheckoutCardValidator: CardValidator {
         guard let month = expiryMonth else {
             return true
         }
-        let expectedMonth: String
-        if let range = Range(range, in: month) {
-            expectedMonth = month.replacingCharacters(in: range, with: text)
-        } else {
-            expectedMonth = text
-        }
+        
+        let expectedMonth = textChangeHandler.change(originalText: month, textChange: text, usingSelection: range)
+        
         let rule = cardConfiguration?.defaults.month ?? baseCardDefaults.month
         return textValidator.validate(text: expectedMonth, againstValidationRule: rule!).partial
     }
@@ -248,12 +243,9 @@ final public class AccessCheckoutCardValidator: CardValidator {
         guard let year = expiryYear else {
             return true
         }
-        let expectedYear: String
-        if let range = Range(range, in: year) {
-            expectedYear = year.replacingCharacters(in: range, with: text)
-        } else {
-            expectedYear = text
-        }
+        
+        let expectedYear = textChangeHandler.change(originalText: year, textChange: text, usingSelection: range)
+        
         let rule = cardConfiguration?.defaults.year ?? baseCardDefaults.year
         return textValidator.validate(text: expectedYear, againstValidationRule: rule!).partial
     }

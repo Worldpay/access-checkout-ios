@@ -5,6 +5,7 @@ public class AccessCheckoutCVVOnly {
     private let cvvView:AccessCheckoutTextView
     private let cvvValidator:CVVValidator?
     private let cvvOnlyDelegate:CVVOnlyDelegate?
+    private let textChangeHandler:TextChangeHandler
 
     /**
      Creates an instance of AccessCheckoutCVVOnly with validation of the CVV field text enabled.
@@ -17,6 +18,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvView = cvvView
         self.cvvValidator = CVVValidator()
         self.cvvOnlyDelegate = cvvOnlyDelegate
+        self.textChangeHandler = TextChangeHandler()
         
         cvvView.validationDelegate = self
     }
@@ -28,6 +30,7 @@ public class AccessCheckoutCVVOnly {
         self.cvvView = cvvView
         self.cvvValidator = cvvValidator
         self.cvvOnlyDelegate = cvvOnlyDelegate
+        self.textChangeHandler = TextChangeHandler()
         
         cvvView.validationDelegate = self
     }
@@ -51,7 +54,7 @@ extension AccessCheckoutCVVOnly : CVVValidationDelegate {
      - Returns: True if the resulting text is a partially valid CVV, False otherwise
     */
     public func canUpdate(cvv: CVV?, withText text: String, inRange range: NSRange) -> Bool {
-        let updatedText = applyTextUpdate(toText: cvv, usingRange: range, usingText: text)
+        let updatedText = textChangeHandler.change(originalText: cvv, textChange: text, usingSelection: range)
         return cvvValidator?.validate(cvv: updatedText).partial ?? true
     }
     
@@ -79,14 +82,6 @@ extension AccessCheckoutCVVOnly : CVVValidationDelegate {
         }
         
         cvvOnlyDelegate.handleValidationResult(cvvView: cvvView, isValid: cvvValidator.validate(cvv: cvv).complete)
-    }
-    
-    private func applyTextUpdate(toText originalText:String?, usingRange range:NSRange, usingText:String) -> String {
-        if let originalText = originalText, let range = Range(range, in: originalText) {
-            return originalText.replacingCharacters(in: range, with: usingText)
-        } else {
-            return usingText
-        }
     }
     
 }
