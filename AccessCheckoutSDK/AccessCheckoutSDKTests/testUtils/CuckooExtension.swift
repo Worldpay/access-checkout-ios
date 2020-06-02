@@ -3,6 +3,8 @@ import Cuckoo
 
 extension AccessCardConfiguration.CardBrand: Matchable, OptionalMatchable {}
 
-extension URLRequest: Matchable {}
+extension CardBrandDto: Matchable {}
 
 extension PanValidationResult: Matchable {}
+
+extension URLRequest: Matchable {}

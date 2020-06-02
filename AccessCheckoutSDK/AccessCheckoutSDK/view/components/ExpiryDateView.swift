@@ -2,12 +2,11 @@ import UIKit
 
 /// A view representing a card's expiry date
 @IBDesignable public class ExpiryDateView: UIView {
-    
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     
     /// The delegate to handle view events
-    weak public var validationDelegate: ValidationDelegate?
+    public weak var validationDelegate: ValidationDelegate?
     
     /// The expiry date month element
     public var month: ExpiryMonth? {
@@ -31,6 +30,8 @@ import UIKit
         return text
     }
     
+    var presenter: Presenter?
+    
     /// Initialize ExpiryDateView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,7 +39,7 @@ import UIKit
     }
     
     /// Initializer override
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViewFromNib()
     }
@@ -78,7 +79,6 @@ import UIKit
 }
 
 extension ExpiryDateView: AccessCheckoutDateView {
-    
     public var isEnabled: Bool {
         get {
             return monthTextField.isEnabled && yearTextField.isEnabled
@@ -108,7 +108,6 @@ extension ExpiryDateView: AccessCheckoutDateView {
 }
 
 extension ExpiryDateView: UITextFieldDelegate {
-    
     public func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else {
             return
@@ -124,7 +123,6 @@ extension ExpiryDateView: UITextFieldDelegate {
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         switch textField {
         case monthTextField:
             return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
