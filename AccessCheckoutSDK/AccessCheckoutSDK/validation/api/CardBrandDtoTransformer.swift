@@ -7,16 +7,6 @@ class CardBrandDtoTransformer {
         return CardBrand2(name: dto.name, images: images, panValidationRule: panRule, cvvValidationRule: cvvRule)
     }
     
-    private func transform(images: [CardBrandImageDto]) -> [CardBrandImage2] {
-        var result = [CardBrandImage2]()
-        
-        for image in images {
-            result.append(CardBrandImage2(type: image.type, url: image.url))
-        }
-        
-        return result
-    }
-    
     private func transform(image: CardBrandImageDto) -> CardBrandImage2 {
         return CardBrandImage2(type: image.type, url: image.url)
     }

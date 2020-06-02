@@ -74,24 +74,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
     }
     
     static func cardBrandDto() throws -> CardBrandDto {
-        let json = """
-        {
-            "name": "visa",
-            "pattern": "a-pattern",
-            "panLengths": [
-                16,
-                18,
-                19
-            ],
-            "cvvLength": 3,
-            "images": [
-                {
-                    "type": "image/png",
-                    "url": "png-url"
-                }
-            ]
-        }
-        """
+        let json = "{}"
         
         return try JSONDecoder().decode(CardBrandDto.self, from: json.data(using: .utf8)!)
     }

@@ -7,8 +7,8 @@ class CardBrandsConfigurationTests: XCTestCase {
         let cardBrandStartingWith4 = createCardBrand(panMatcherPattern: "^4\\d*?")
         let configuration = CardBrandsConfiguration([cardBrandStartingWith3, cardBrandStartingWith4], ValidationRulesDefaults.instance())
         
-        let resultForPanStartingWith3 = configuration.cardBrand(of: "3321")
-        let resultForPanStartingWith4 = configuration.cardBrand(of: "4321")
+        let resultForPanStartingWith3 = configuration.cardBrand(forPan: "3321")
+        let resultForPanStartingWith4 = configuration.cardBrand(forPan: "4321")
         
         XCTAssertEqual(cardBrandStartingWith3, resultForPanStartingWith3)
         XCTAssertEqual(cardBrandStartingWith4, resultForPanStartingWith4)
@@ -17,7 +17,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     func testReturnsNoCardBrandIfNoCardBrandsConfigured() {
         let configuration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
         
-        let result = configuration.cardBrand(of: "1234")
+        let result = configuration.cardBrand(forPan: "1234")
         
         XCTAssertNil(result)
     }
@@ -26,7 +26,7 @@ class CardBrandsConfigurationTests: XCTestCase {
         let cardBrand = createCardBrand(panMatcherPattern: "^3\\d*?")
         let configuration = CardBrandsConfiguration([cardBrand], ValidationRulesDefaults.instance())
         
-        let result = configuration.cardBrand(of: "1234")
+        let result = configuration.cardBrand(forPan: "1234")
         
         XCTAssertNil(result)
     }
@@ -39,7 +39,6 @@ class CardBrandsConfigurationTests: XCTestCase {
         let result = configuration.panValidationRule(using: cardBrand)
         
         XCTAssertEqual(expectedPanValidationRule, result)
-        XCTAssertNotEqual(ValidationRulesDefaults.instance().pan, result)
     }
     
     func testReturnsDefaultPanValidationRuleIfCardBrandIsNil() {

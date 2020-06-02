@@ -1,4 +1,4 @@
-class ValidationRule {
+struct ValidationRule {
     let matcher:String?
     let validLengths:[Int]
     

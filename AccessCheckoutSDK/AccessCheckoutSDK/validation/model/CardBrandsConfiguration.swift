@@ -7,7 +7,7 @@ struct CardBrandsConfiguration {
         self.validationRulesDefaults = validationRulesDefaults
     }
     
-    func cardBrand(of pan: PAN) -> CardBrand2? {
+    func cardBrand(forPan pan: PAN) -> CardBrand2? {
         if brands.isEmpty {
             return nil
         }
@@ -15,7 +15,11 @@ struct CardBrandsConfiguration {
         return brands.first { $0.panValidationRule.matcher?.regexMatches(text: pan) == true }
     }
     
-    func panValidationRule(using cardBrand: CardBrand2?) -> ValidationRule? {
-        return cardBrand != nil ? cardBrand?.panValidationRule : validationRulesDefaults.pan
+    func panValidationRule(using cardBrand: CardBrand2?) -> ValidationRule {
+        guard let cardBrand = cardBrand else {
+            return validationRulesDefaults.pan
+        }
+        
+        return cardBrand.panValidationRule
     }
 }

@@ -1,10 +1,12 @@
-class ValidationRulesDefaults {
-    let pan: ValidationRule?
-    let cvv: ValidationRule?
-    let expiryMonth: ValidationRule?
-    let expiryYear: ValidationRule?
+struct ValidationRulesDefaults {
+    let pan: ValidationRule
+    let cvv: ValidationRule
+    let expiryMonth: ValidationRule
+    let expiryYear: ValidationRule
     
-    fileprivate init() {
+    private static let defaults = ValidationRulesDefaults()
+    
+    private init() {
         self.pan = ValidationRule(
             matcher: "^\\d{0,19}$",
             validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
@@ -27,6 +29,6 @@ class ValidationRulesDefaults {
     }
     
     static func instance() -> ValidationRulesDefaults {
-        return ValidationRulesDefaults()
+        return defaults
     }
 }
