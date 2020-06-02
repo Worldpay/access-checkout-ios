@@ -1,24 +1,24 @@
 import Foundation
 
 class PanValidator {
-    private var lengthValidator:LengthValidator = LengthValidator()
+    private var lengthValidator: LengthValidator = LengthValidator()
     private var cardConfiguration: AccessCardConfiguration
     
     init(cardConfiguration: AccessCardConfiguration) {
         self.cardConfiguration = cardConfiguration
     }
-      
-    func validate(pan: PAN) -> (isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
+    
+    func validate(pan: PAN) -> PanValidationResult {
         let cardBrand = cardConfiguration.cardBrand(forPAN: pan)
         let panRule = cardBrand?.panValidationRule() ?? cardConfiguration.defaults.pan
         
-        var result: Bool
+        var isValid: Bool
         if lengthValidator.validate(text: pan, againstValidationRule: panRule) {
-            result = pan.isValidLuhn()
+            isValid = pan.isValidLuhn()
         } else {
-            result = false
+            isValid = false
         }
         
-        return (isValid: result, cardBrand: cardBrand)
+        return PanValidationResult(isValid, cardBrand)
     }
 }

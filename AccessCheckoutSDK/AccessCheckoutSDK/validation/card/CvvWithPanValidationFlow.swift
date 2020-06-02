@@ -1,7 +1,5 @@
 import Foundation
 
 class CvvWithPanValidationFlow {
-    func checkValidationState(cardBrand: AccessCardConfiguration.CardBrand?) {
-        
-    }
+    func validate(cardBrand: AccessCardConfiguration.CardBrand?) {}
 }
