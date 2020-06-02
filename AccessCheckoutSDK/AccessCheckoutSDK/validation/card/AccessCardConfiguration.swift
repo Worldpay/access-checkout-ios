@@ -106,7 +106,7 @@ public struct AccessCardConfiguration {
     }
     
     /// The brand identity of a card, e.g Visa
-    struct CardBrand: Equatable {
+    public struct CardBrand: Equatable {
         
         public struct CardBrandImage {
             public var type: String?

@@ -1,3 +1,8 @@
+@testable import AccessCheckoutSDK
 import Cuckoo
 
-extension URLRequest : Matchable {}
+extension AccessCardConfiguration.CardBrand: Matchable, OptionalMatchable {}
+
+extension URLRequest: Matchable {}
+
+extension PanValidationResult: Matchable {}
