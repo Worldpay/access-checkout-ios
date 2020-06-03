@@ -26,6 +26,7 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/api/SingleLinkDiscoveryFactory.swift" \
 "${INPUT_SOURCE_DIR}/client/card/AccessCardDelegate.swift" \
 "${INPUT_SOURCE_DIR}/client/cvv/CVVOnlyDelegate.swift" \
+"${INPUT_SOURCE_DIR}/validation/api/CardBrandDtoTransformer.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/CvvWithPanValidationFlow.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/ExpiryDateValidator.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/ExpiryDateValidationStateHandler.swift" \
