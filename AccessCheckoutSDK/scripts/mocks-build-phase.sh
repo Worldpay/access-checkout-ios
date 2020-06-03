@@ -25,12 +25,15 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 --output "${OUTPUT_DIR}" \
 "${INPUT_SOURCE_DIR}/api/SingleLinkDiscoveryFactory.swift" \
 "${INPUT_SOURCE_DIR}/client/card/AccessCardDelegate.swift" \
+"${INPUT_SOURCE_DIR}/client/cvv/AccessCvvOnlyDelegate.swift" \
 "${INPUT_SOURCE_DIR}/client/cvv/CVVOnlyDelegate.swift" \
 "${INPUT_SOURCE_DIR}/validation/api/CardBrandDtoTransformer.swift" \
-"${INPUT_SOURCE_DIR}/validation/card/CvvWithPanValidationFlow.swift" \
+"${INPUT_SOURCE_DIR}/validation/card/CvvValidator.swift" \
+"${INPUT_SOURCE_DIR}/validation/card/CvvValidationFlow.swift" \
+"${INPUT_SOURCE_DIR}/validation/card/CvvValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/ExpiryDateValidator.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/ExpiryDateValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/PanValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/PanValidator.swift" \
-"${INPUT_SOURCE_DIR}/validation/cvv/CVVValidator.swift"
+"${INPUT_SOURCE_DIR}/validation/cvv/CVVValidatorLegacy.swift"
 # all lines of this command must end with a \ apart from the last line

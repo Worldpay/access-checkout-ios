@@ -3,27 +3,28 @@ import XCTest
 
 class PanValidatorTests : XCTestCase {
     
-    let visaBrand = AccessCardConfiguration.CardBrand(
+    let visaBrand = CardBrand2(
         name: "visa",
-        images: nil,
-        matcher: "^(?!^493698\\d*$)4\\d*$",
-        cvv: 3,
-        pans: [16,18,19]
+        images: [],
+        panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16,18,19]),
+        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
-    
-    let maestroBrand = AccessCardConfiguration.CardBrand(
+
+    let maestroBrand = CardBrand2(
         name: "maestro",
-        images: nil,
-        matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
-        cvv: 3,
-        pans: [12,13,14,15,16,17,18,19]
+        images: [],
+        panValidationRule: ValidationRule(
+            matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
+            validLengths: [12,13,14,15,16,17,18,19]
+        ),
+        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
-    let baseDefaults = AccessCardConfiguration.CardDefaults.baseDefaults()
+    let baseDefaults = ValidationRulesDefaults.instance()
 
     
     func testShouldReturnFalseWithCardBrandWhenKnownPanIsShorterThanValidLength() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
@@ -35,7 +36,7 @@ class PanValidatorTests : XCTestCase {
     }
     
     func testShouldReturnFalseAndNilCardBrandWhenUnknownPanIsShorterThanMinValidLength() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
@@ -47,7 +48,7 @@ class PanValidatorTests : XCTestCase {
     }
     
     func testShouldReturnFalseWhenAMaxLengthInvalidLuhnPanIsEntered() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
@@ -60,7 +61,7 @@ class PanValidatorTests : XCTestCase {
     }
     
     func testShouldReturnTrueWhenALuhnValidMinLengthKnownPanIsEntered() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
@@ -73,7 +74,7 @@ class PanValidatorTests : XCTestCase {
     }
     
     func testShouldReturnTrueWhenALuhnValidUnknownPanIsEntered() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )
@@ -85,7 +86,7 @@ class PanValidatorTests : XCTestCase {
     }
     
     func testShouldChangeFromVisaToMaestroWhenNewPatternIsMatched() {
-        let cardConfiguration = AccessCardConfiguration(defaults: baseDefaults, brands: [visaBrand, maestroBrand])
+        let cardConfiguration = CardBrandsConfiguration([visaBrand, maestroBrand], baseDefaults)
         let panValidator = PanValidator(
             cardConfiguration: cardConfiguration
         )

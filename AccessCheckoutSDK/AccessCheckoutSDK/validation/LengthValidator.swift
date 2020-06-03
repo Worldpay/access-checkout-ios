@@ -1,7 +1,7 @@
 import Foundation
 
 class LengthValidator {
-    func validate(text: String, againstValidationRule validationRule: AccessCardConfiguration.CardValidationRule) -> Bool {
+    func validate(text: String, againstValidationRule validationRule: ValidationRule) -> Bool {
         guard !text.isEmpty else {
             return false
         }

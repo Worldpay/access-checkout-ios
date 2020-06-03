@@ -1,4 +1,4 @@
-class CVVValidator {
+class CVVValidatorLegacy {
     private var textValidator:TextValidator
     
     init(){

@@ -1,7 +1,5 @@
-import Foundation
-
 public protocol AccessCardDelegate {
-    func handleCardBrandChange(cardBrand: AccessCardConfiguration.CardBrand)
+    func handleCardBrandChange(cardBrand: CardBrand2?)
     
     func handlePanValidationChange(isValid: Bool)
     

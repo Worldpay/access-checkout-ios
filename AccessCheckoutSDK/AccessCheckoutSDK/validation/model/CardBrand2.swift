@@ -1,4 +1,4 @@
-struct CardBrand2 {
+public struct CardBrand2 {
     let name: String
     let images: [CardBrandImage2]
     let panValidationRule: ValidationRule

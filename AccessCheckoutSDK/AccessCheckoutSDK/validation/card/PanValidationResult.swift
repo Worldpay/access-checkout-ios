@@ -1,8 +1,8 @@
 class PanValidationResult {
     let isValid: Bool
-    let cardBrand: AccessCardConfiguration.CardBrand?
+    let cardBrand: CardBrand2?
 
-    init(_ isValid: Bool, _ cardBrand: AccessCardConfiguration.CardBrand?) {
+    init(_ isValid: Bool, _ cardBrand: CardBrand2?) {
         self.isValid = isValid
         self.cardBrand = cardBrand
     }

@@ -11,7 +11,7 @@ final public class AccessCheckoutCardValidator: CardValidator {
     private var textValidator = TextValidator()
     
     /// The validor used to validate a CVV against a validation rule
-    private var cvvValidator = CVVValidator()
+    private var cvvValidator = CVVValidatorLegacy()
     
     private var textChangeHandler = TextChangeHandler()
     

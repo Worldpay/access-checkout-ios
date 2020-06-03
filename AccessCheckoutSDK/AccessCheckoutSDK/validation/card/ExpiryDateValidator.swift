@@ -10,8 +10,8 @@ class ExpiryDateValidator {
             return false
         }
         
-        let monthRule = AccessCardConfiguration.CardDefaults.baseDefaults().month
-        let yearRule = AccessCardConfiguration.CardDefaults.baseDefaults().year
+        let monthRule = ValidationRulesDefaults.instance().expiryMonth
+        let yearRule = ValidationRulesDefaults.instance().expiryYear
         
         if !lengthValidator.validate(text: month, againstValidationRule: monthRule) {
             return false
