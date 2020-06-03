@@ -46,14 +46,15 @@ import UIKit
         
         textField.placeholder = NSLocalizedString("card_number_placeholder", comment: "")
         textField.delegate = self
-        textField.addTarget(self, action: #selector(cardNumberTextFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldDidEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
-    private func cardNumberTextFieldDidChange(_ textField: UITextField) {
+    func textFieldDidEditingChanged(_ textField: UITextField) {
         guard let pan = textField.text else {
             return
         }
+        presenter?.onEditing(text: textField.text)
         (validationDelegate as? PANValidationDelegate)?.notifyPartialMatchValidation(forPan: pan)
     }
 }

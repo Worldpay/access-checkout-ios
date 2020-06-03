@@ -43,7 +43,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func testSupportsBaseUrlWithTrailingSlash() throws {
+    func testCreatesConfigurationUsingARemoteConfigurationFileAndBaseUrlWithTrailingSlash() throws {
         let restClient = RestClientMock(replyWith: [dtoCardBrand])
         let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
         let expectationToFulfill = expectation(description: "")
@@ -58,7 +58,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func testSupportsBaseUrlWithoutTrailingSlash() throws {
+    func testCreatesConfigurationUsingARemoteConfigurationFileAndBaseUrlWithoutTrailingSlash() throws {
         let restClient = RestClientMock(replyWith: [dtoCardBrand])
         let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
         let expectationToFulfill = expectation(description: "")
@@ -71,6 +71,16 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         }
         
         wait(for: [expectationToFulfill], timeout: 0.5)
+    }
+    
+    func createsAConfigurationWithoutDefaultsOnly() {
+        let restClient = RestClient()
+        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
+        let expectedConfiguration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+        
+        let result = factory.createWithDefaultsOnly()
+        
+        XCTAssertEqual(expectedConfiguration, result)
     }
     
     static func cardBrandDto() throws -> CardBrandDto {

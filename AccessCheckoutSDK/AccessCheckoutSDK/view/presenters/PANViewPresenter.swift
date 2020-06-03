@@ -1,5 +1,13 @@
 class PANViewPresenter: Presenter {
-    func onEditing(text: String?) {}
+    private let validationFlow: PanValidationFlow
+    
+    init(_ validationFlow: PanValidationFlow) {
+        self.validationFlow = validationFlow
+    }
+    
+    func onEditing(text: String?) {
+        validationFlow.validate(pan: text!)
+    }
     
     func onEditEnd(text: String?) {}
     

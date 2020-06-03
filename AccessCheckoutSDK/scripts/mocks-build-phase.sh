@@ -35,5 +35,6 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/validation/card/ExpiryDateValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/PanValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/card/PanValidator.swift" \
-"${INPUT_SOURCE_DIR}/validation/cvv/CVVValidatorLegacy.swift"
+"${INPUT_SOURCE_DIR}/validation/cvv/CVVValidatorLegacy.swift" \
+"${INPUT_SOURCE_DIR}/validation/model/CardBrandsConfigurationProvider.swift"
 # all lines of this command must end with a \ apart from the last line

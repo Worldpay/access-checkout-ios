@@ -22,4 +22,8 @@ struct CardBrandsConfiguration {
         
         return cardBrand.panValidationRule
     }
+    
+    static func defaultConfiguration() {
+        
+    }
 }

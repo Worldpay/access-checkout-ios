@@ -43,6 +43,22 @@ extension CardBrandImageDto: Equatable {
     }
 }
 
+extension CardBrandsConfiguration: Equatable {
+    public static func == (lhs: CardBrandsConfiguration, rhs: CardBrandsConfiguration) -> Bool {
+        return lhs.brands == rhs.brands
+            && lhs.validationRulesDefaults == rhs.validationRulesDefaults
+    }
+}
+
+extension ValidationRulesDefaults: Equatable {
+    public static func == (lhs: ValidationRulesDefaults, rhs: ValidationRulesDefaults) -> Bool {
+        return lhs.cvv == rhs.cvv
+            && lhs.expiryMonth == rhs.expiryMonth
+            && lhs.expiryYear == rhs.expiryYear
+            && lhs.pan == rhs.pan
+    }
+}
+
 extension PanValidationResult: Equatable {
     public static func == (lhs: PanValidationResult, rhs: PanValidationResult) -> Bool {
         return lhs.isValid == rhs.isValid

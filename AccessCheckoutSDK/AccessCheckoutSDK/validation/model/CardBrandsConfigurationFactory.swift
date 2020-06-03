@@ -27,4 +27,8 @@ class CardBrandsConfigurationFactory {
             completionHandler(configuration)
         }
     }
+    
+    func createWithDefaultsOnly() -> CardBrandsConfiguration {
+        return CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+    }
 }
