@@ -25,13 +25,14 @@ class CardValidationStateHandlerTests: XCTestCase {
         Cuckoo.stub(accessCardDelegate) { stub in
             when(stub).handlePanValidationChange(isValid: any()).thenDoNothing()
             when(stub).handleCardBrandChange(cardBrand: any()).thenDoNothing()
+            when(stub).handleExpiryDateValidationChange(isValid: any()).thenDoNothing()
         }
     }
     
     func testShouldNotNotifyMerchantDelegateWhenValidationDoesNotChangeFromFalse() {
         let validationStateHandler = CardValidationStateHandler(accessCardDelegate: accessCardDelegate, panValidationState: false)
         
-        validationStateHandler.handle(isValid: false, cardBrand: nil)
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
         
         verify(accessCardDelegate, never()).handlePanValidationChange(isValid: any())
     }
@@ -39,7 +40,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     func testShouldNotNotifyMerchantDelegateWhenValidationDoesNotChangeFromTrue() {
         let validationStateHandler = CardValidationStateHandler(accessCardDelegate: accessCardDelegate, panValidationState: true)
         
-        validationStateHandler.handle(isValid: true, cardBrand: nil)
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         
         verify(accessCardDelegate, never()).handlePanValidationChange(isValid: any())
     }
@@ -47,7 +48,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     func testShouldNotifyMerchantDelegateWhenValidationChangesToFalse() {
         let validationStateHandler = CardValidationStateHandler(accessCardDelegate: accessCardDelegate, panValidationState: true)
         
-        validationStateHandler.handle(isValid: false, cardBrand: nil)
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
         
         verify(accessCardDelegate).handlePanValidationChange(isValid: false)
     }
@@ -55,7 +56,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     func testShouldNotifyMerchantDelegateWhenValidationChangesToTrue() {
         let validationStateHandler = CardValidationStateHandler(accessCardDelegate: accessCardDelegate, panValidationState: false)
         
-        validationStateHandler.handle(isValid: true, cardBrand: nil)
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         
         verify(accessCardDelegate).handlePanValidationChange(isValid: true)
     }
@@ -67,7 +68,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrand: nil
         )
         
-        validationStateHandler.handle(isValid: true, cardBrand: visaBrand)
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: visaBrand)
         
         verify(accessCardDelegate).handleCardBrandChange(cardBrand: visaBrand)
     }
@@ -79,7 +80,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrand: visaBrand
         )
         
-        validationStateHandler.handle(isValid: false, cardBrand: visaBrand)
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: visaBrand)
         
         verify(accessCardDelegate, never()).handleCardBrandChange(cardBrand: any())
     }
@@ -132,5 +133,46 @@ class CardValidationStateHandlerTests: XCTestCase {
         )
         
         XCTAssertFalse(validationStateHandler.isCardBrandDifferentFrom(cardBrand: nil))
+    }
+    
+    // ExpiryDate Validation
+    func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse() {
+        let validationStateHandler = CardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            expiryDateValidationState: false
+        )
+        
+        validationStateHandler.handleExpiryDateValidation(isValid: false)
+        verify(accessCardDelegate, never()).handleExpiryDateValidationChange(isValid: any())
+    }
+    
+    func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromTrue() {
+        let validationStateHandler = CardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            expiryDateValidationState: true
+        )
+        
+        validationStateHandler.handleExpiryDateValidation(isValid: true)
+        verify(accessCardDelegate, never()).handleExpiryDateValidationChange(isValid: any())
+    }
+    
+    func testShouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromFalse() {
+        let validationStateHandler = CardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            expiryDateValidationState: false
+        )
+        
+        validationStateHandler.handleExpiryDateValidation(isValid: true)
+        verify(accessCardDelegate).handleExpiryDateValidationChange(isValid: true)
+    }
+    
+    func testShouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromTrue() {
+        let validationStateHandler = CardValidationStateHandler(
+            accessCardDelegate: accessCardDelegate,
+            expiryDateValidationState: true
+        )
+        
+        validationStateHandler.handleExpiryDateValidation(isValid: false)
+        verify(accessCardDelegate).handleExpiryDateValidationChange(isValid: false)
     }
 }

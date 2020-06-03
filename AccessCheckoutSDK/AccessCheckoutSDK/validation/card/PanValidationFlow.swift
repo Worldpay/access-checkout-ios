@@ -17,6 +17,6 @@ struct PanValidationFlow {
             cvvFlow.validate(cardBrand: result.cardBrand)
         }
         
-        panValidationStateHandler.handle(isValid: result.isValid, cardBrand: result.cardBrand)
+        panValidationStateHandler.handlePanValidation(isValid: result.isValid, cardBrand: result.cardBrand)
     }
 }
