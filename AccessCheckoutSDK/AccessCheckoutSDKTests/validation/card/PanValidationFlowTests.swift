@@ -15,7 +15,7 @@ class PanValidationFlowTests: XCTestCase {
     private let cvvFlow = MockCvvWithPanValidationFlow()
     
     override func setUp() {
-        panValidationStateHandler.getStubbingProxy().handle(isValid: any(), cardBrand: any()).thenDoNothing()
+        panValidationStateHandler.getStubbingProxy().handlePanValidation(isValid: any(), cardBrand: any()).thenDoNothing()
         cvvFlow.getStubbingProxy().validate(cardBrand: any()).thenDoNothing()
     }
     
@@ -28,7 +28,7 @@ class PanValidationFlowTests: XCTestCase {
         panValidationFlow.validate(pan: "1234")
         
         verify(panValidator).validate(pan: "1234")
-        verify(panValidationStateHandler).handle(isValid: expectedResult.isValid, cardBrand: expectedResult.cardBrand)
+        verify(panValidationStateHandler).handlePanValidation(isValid: expectedResult.isValid, cardBrand: expectedResult.cardBrand)
     }
     
     func testShouldTriggerCvvValidationIfCardBrandHasChanged() {

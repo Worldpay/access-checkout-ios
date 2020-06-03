@@ -1,16 +1,15 @@
-import Foundation
-
-class CardValidationStateHandler: PanValidationStateHandler {
+class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidationStateHandler {
     private(set) var accessCardDelegate: AccessCardDelegate
     private(set) var panValidationState = false
     private(set) var cardBrand: AccessCardConfiguration.CardBrand?
+    private(set) var expiryDateValidationState = false
     
     init(accessCardDelegate: AccessCardDelegate) {
         self.accessCardDelegate = accessCardDelegate
     }
     
     /**
-     Convenience constructor used by unit tests
+     Convenience constructors used by unit tests
      */
     init(accessCardDelegate: AccessCardDelegate, panValidationState: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
         self.accessCardDelegate = accessCardDelegate
@@ -23,7 +22,12 @@ class CardValidationStateHandler: PanValidationStateHandler {
         self.panValidationState = panValidationState
     }
     
-    public func handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
+    init(accessCardDelegate: AccessCardDelegate, expiryDateValidationState: Bool) {
+        self.accessCardDelegate = accessCardDelegate
+        self.expiryDateValidationState = expiryDateValidationState
+    }
+    
+    func handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?) {
         if isValid != panValidationState {
             panValidationState = isValid
             accessCardDelegate.handlePanValidationChange(isValid: isValid)
@@ -41,6 +45,13 @@ class CardValidationStateHandler: PanValidationStateHandler {
             return true
         } else {
             return false
+        }
+    }
+    
+    func handleExpiryDateValidation(isValid: Bool) {
+        if isValid != expiryDateValidationState {
+            expiryDateValidationState = isValid
+            accessCardDelegate.handleExpiryDateValidationChange(isValid: isValid)
         }
     }
 }

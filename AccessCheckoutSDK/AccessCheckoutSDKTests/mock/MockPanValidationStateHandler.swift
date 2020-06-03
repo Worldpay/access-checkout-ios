@@ -1,8 +1,6 @@
 import Cuckoo
 @testable import AccessCheckoutSDK
 
-import Foundation
-
 
  class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolMock {
     
@@ -29,16 +27,16 @@ import Foundation
     
     
     
-     func handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)  {
+     func handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)  {
         
-    return cuckoo_manager.call("handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)",
+    return cuckoo_manager.call("handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)",
             parameters: (isValid, cardBrand),
             escapingParameters: (isValid, cardBrand),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handle(isValid: isValid, cardBrand: cardBrand))
+            defaultCall: __defaultImplStub!.handlePanValidation(isValid: isValid, cardBrand: cardBrand))
         
     }
     
@@ -66,9 +64,9 @@ import Foundation
 	    }
 	    
 	    
-	    func handle<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool, AccessCardConfiguration.CardBrand?)> where M1.MatchedType == Bool, M2.OptionalMatchedType == AccessCardConfiguration.CardBrand {
+	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool, AccessCardConfiguration.CardBrand?)> where M1.MatchedType == Bool, M2.OptionalMatchedType == AccessCardConfiguration.CardBrand {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool, AccessCardConfiguration.CardBrand?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)", parameterMatchers: matchers))
 	    }
 	    
 	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubFunction<(AccessCardConfiguration.CardBrand?), Bool> where M1.OptionalMatchedType == AccessCardConfiguration.CardBrand {
@@ -93,9 +91,9 @@ import Foundation
 	
 	    
 	    @discardableResult
-	    func handle<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.__DoNotUse<(Bool, AccessCardConfiguration.CardBrand?), Void> where M1.MatchedType == Bool, M2.OptionalMatchedType == AccessCardConfiguration.CardBrand {
+	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.__DoNotUse<(Bool, AccessCardConfiguration.CardBrand?), Void> where M1.MatchedType == Bool, M2.OptionalMatchedType == AccessCardConfiguration.CardBrand {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool, AccessCardConfiguration.CardBrand?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
-	        return cuckoo_manager.verify("handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -113,7 +111,7 @@ import Foundation
     
 
     
-     func handle(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)   {
+     func handlePanValidation(isValid: Bool, cardBrand: AccessCardConfiguration.CardBrand?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

@@ -1,9 +1,6 @@
-import Foundation
-
-struct ExpiryDateValidator {
-    
+class ExpiryDateValidator {
     let lengthValidator = LengthValidator()
-
+    
     func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) -> Bool {
         guard let month = expiryMonth, let year = expiryYear else {
             return false
@@ -29,16 +26,16 @@ struct ExpiryDateValidator {
             let targetYear = dateComponents.year,
             let intMonth = Int(month),
             let fourDigitYear = year.toFourDigitFormat() {
-                if intMonth == 0 {
-                    return false
-                } else if fourDigitYear < targetYear {
-                    return false
-                } else if fourDigitYear == targetYear && intMonth < targetMonth {
-                    return false
-                } else {
-                    return true
-                }
+            if intMonth == 0 {
+                return false
+            } else if fourDigitYear < targetYear {
+                return false
+            } else if fourDigitYear == targetYear, intMonth < targetMonth {
+                return false
+            } else {
+                return true
             }
+        }
         return false
     }
 }
