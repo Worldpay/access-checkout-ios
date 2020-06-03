@@ -1,5 +1,3 @@
-import Foundation
-
 class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidationStateHandler {
     private(set) var accessCardDelegate: AccessCardDelegate
     private(set) var panValidationState = false

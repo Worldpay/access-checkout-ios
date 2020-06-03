@@ -1,5 +1,3 @@
-import Foundation
-
 class ExpiryDateValidator {
     let lengthValidator = LengthValidator()
     

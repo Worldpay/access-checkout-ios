@@ -6,7 +6,7 @@ class ExpiryDateValidationFlowTests: XCTestCase {
     private let expiryDateValidationStateHandler = MockExpiryDateValidationStateHandler()
     
     override func setUp() {
-        expiryDateValidationStateHandler.getStubbingProxy().handleExpiryValidation(isValid: any()).thenDoNothing()
+        expiryDateValidationStateHandler.getStubbingProxy().handleExpiryDateValidation(isValid: any()).thenDoNothing()
     }
     
     func testShouldCallExpiryDateValidatorThenCallStateHandlerWithResult() {
@@ -16,7 +16,7 @@ class ExpiryDateValidationFlowTests: XCTestCase {
         
         expiryDateValidationFlow.validate(expiryMonth: "12", expiryYear: "19")
         verify(expiryDateValidator).validate(expiryMonth: "12", expiryYear: "19")
-        verify(expiryDateValidationStateHandler).handleExpiryValidation(isValid: expectedResult)
+        verify(expiryDateValidationStateHandler).handleExpiryDateValidation(isValid: expectedResult)
     }
     
     private func createMockExpiryDateValidator(thatReturns result: Bool) -> MockExpiryDateValidator {

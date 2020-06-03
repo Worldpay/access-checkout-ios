@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class CardValidationStateHandlerTests: XCTestCase {
+class PanValidationStateHandlerTests: XCTestCase {
     private let visaBrand = AccessCardConfiguration.CardBrand(
         name: "visa",
         images: nil,
@@ -134,8 +134,20 @@ class CardValidationStateHandlerTests: XCTestCase {
         
         XCTAssertFalse(validationStateHandler.isCardBrandDifferentFrom(cardBrand: nil))
     }
+}
+
+class ExpiryDateValidationStateHandlerTests : XCTestCase {
     
-    // ExpiryDate Validation
+    private let accessCardDelegate = MockAccessCardDelegate()
+    
+    override func setUp() {
+        Cuckoo.stub(accessCardDelegate) { stub in
+            when(stub).handlePanValidationChange(isValid: any()).thenDoNothing()
+            when(stub).handleCardBrandChange(cardBrand: any()).thenDoNothing()
+            when(stub).handleExpiryDateValidationChange(isValid: any()).thenDoNothing()
+        }
+    }
+    
     func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse() {
         let validationStateHandler = CardValidationStateHandler(
             accessCardDelegate: accessCardDelegate,

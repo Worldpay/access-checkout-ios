@@ -1,5 +1,3 @@
-import Foundation
-
 struct ExpiryDateValidationFlow {
     private var expiryDateValidator: ExpiryDateValidator
     private var expiryValidationStateHandler: ExpiryDateValidationStateHandler

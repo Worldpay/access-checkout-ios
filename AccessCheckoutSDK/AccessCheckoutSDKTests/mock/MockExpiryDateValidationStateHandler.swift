@@ -1,8 +1,6 @@
 import Cuckoo
 @testable import AccessCheckoutSDK
 
-import Foundation
-
 
  class MockExpiryDateValidationStateHandler: ExpiryDateValidationStateHandler, Cuckoo.ProtocolMock {
     
@@ -31,7 +29,7 @@ import Foundation
     
      func handleExpiryDateValidation(isValid: Bool)  {
         
-    return cuckoo_manager.call("handleExpiryValidation(isValid: Bool)",
+    return cuckoo_manager.call("handleExpiryDateValidation(isValid: Bool)",
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
@@ -51,9 +49,9 @@ import Foundation
 	    }
 	    
 	    
-	    func handleExpiryValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+	    func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method: "handleExpiryValidation(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method: "handleExpiryDateValidation(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -73,9 +71,9 @@ import Foundation
 	
 	    
 	    @discardableResult
-	    func handleExpiryValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+	    func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handleExpiryValidation(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("handleExpiryDateValidation(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}

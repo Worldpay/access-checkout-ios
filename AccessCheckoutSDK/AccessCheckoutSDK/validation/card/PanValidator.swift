@@ -1,5 +1,3 @@
-import Foundation
-
 class PanValidator {
     private var lengthValidator: LengthValidator = LengthValidator()
     private var cardConfiguration: AccessCardConfiguration

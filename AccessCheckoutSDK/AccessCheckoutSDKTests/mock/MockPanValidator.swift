@@ -1,8 +1,6 @@
 import Cuckoo
 @testable import AccessCheckoutSDK
 
-import Foundation
-
 
  class MockPanValidator: PanValidator, Cuckoo.ClassMock {
     
