@@ -2,11 +2,10 @@ import UIKit
 
 /// A view representing a card's Card Verification Value
 @IBDesignable public class CVVView: UIView {
-
     @IBOutlet weak var textField: UITextField!
     
     /// The delegate to handle view events
-    weak public var validationDelegate: ValidationDelegate?
+    public weak var validationDelegate: ValidationDelegate?
     
     /// The CVV represented by the view
     public var text: CVV? {
@@ -18,7 +17,9 @@ import UIKit
         }
         return text
     }
-
+    
+    var presenter: Presenter?
+    
     /// Initialize CVVView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -26,7 +27,7 @@ import UIKit
     }
     
     /// Initializer override
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViewFromNib()
     }
@@ -56,7 +57,6 @@ import UIKit
 }
 
 extension CVVView: AccessCheckoutTextView {
-    
     /// View is enabled for editing
     public var isEnabled: Bool {
         get {
@@ -89,7 +89,7 @@ extension CVVView: UITextFieldDelegate {
             (validationDelegate as? CVVValidationDelegate)?.notifyCompleteMatchValidation(forCvv: cvv)
         }
     }
-
+    
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return (validationDelegate as? CVVValidationDelegate)?.canUpdate(cvv: textField.text, withText: string, inRange: range) ?? false
     }
