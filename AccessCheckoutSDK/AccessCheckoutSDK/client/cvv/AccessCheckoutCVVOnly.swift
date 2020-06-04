@@ -3,7 +3,7 @@ import Foundation
 public class AccessCheckoutCVVOnly {
     
     private let cvvView:AccessCheckoutTextView
-    private let cvvValidator:CVVValidator?
+    private let cvvValidator:CVVValidatorLegacy?
     private let cvvOnlyDelegate:CVVOnlyDelegate?
     private let textChangeHandler:TextChangeHandler
 
@@ -16,7 +16,7 @@ public class AccessCheckoutCVVOnly {
     */
     public init (cvvView:AccessCheckoutTextView, cvvOnlyDelegate:CVVOnlyDelegate?) {
         self.cvvView = cvvView
-        self.cvvValidator = CVVValidator()
+        self.cvvValidator = CVVValidatorLegacy()
         self.cvvOnlyDelegate = cvvOnlyDelegate
         self.textChangeHandler = TextChangeHandler()
         
@@ -26,7 +26,7 @@ public class AccessCheckoutCVVOnly {
     /**
      Convenience constructor used by unit tests
      */
-    init (cvvView:AccessCheckoutTextView, cvvOnlyDelegate:CVVOnlyDelegate?, cvvValidator:CVVValidator?) {
+    init (cvvView:AccessCheckoutTextView, cvvOnlyDelegate:CVVOnlyDelegate?, cvvValidator:CVVValidatorLegacy?) {
         self.cvvView = cvvView
         self.cvvValidator = cvvValidator
         self.cvvOnlyDelegate = cvvOnlyDelegate

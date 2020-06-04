@@ -13,7 +13,7 @@ class AccessCheckoutCVVOnlyTests : XCTestCase {
     
     func testIsNotValidWhenTextFieldIsEmpty() {
         let cvvView = CVVView()
-        let cvvValidator = CVVValidator()
+        let cvvValidator = CVVValidatorLegacy()
         cvvView.textField.text = ""
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: cvvValidator)
         
@@ -25,7 +25,7 @@ class AccessCheckoutCVVOnlyTests : XCTestCase {
     func testIsValidWhenCvvFieldIsCompletelyValid() {
         let cvvView = CVVView()
         cvvView.textField.text = "123"
-        let cvvValidator = MockCVVValidator()
+        let cvvValidator = MockCVVValidatorLegacy()
         when(cvvValidator.getStubbingProxy().validate(cvv: any())).thenReturn(ValidationResult(partial: false, complete: true))
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: cvvValidator)
         
@@ -37,7 +37,7 @@ class AccessCheckoutCVVOnlyTests : XCTestCase {
     
     func testIsNotValidWhenCvvFieldIsNotCompletelyValid() {
         let cvvView = CVVView()
-        let cvvValidator = MockCVVValidator()
+        let cvvValidator = MockCVVValidatorLegacy()
         cvvView.textField.text = "12"
         when(cvvValidator.getStubbingProxy().validate(cvv: any())).thenReturn(ValidationResult(partial: false, complete: false))
         let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: cvvValidator)
@@ -62,7 +62,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testCanUpdateCvvWithTextWhenResultingCvvIsPartiallyValid() {
         let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidator())
+        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidatorLegacy())
         let textForUpdate = "2"
         
         let result = checkoutCvvOnly.canUpdate(cvv: "1",
@@ -74,7 +74,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testCannotUpdateCvvWithTextWhenResultingCvvIsNotValid() {
         let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidator())
+        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidatorLegacy())
         let textForUpdate = "A"
         
         let result = checkoutCvvOnly.canUpdate(cvv: "1",
@@ -86,7 +86,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testCanUpdateCvvWhenDeletingDigit() {
         let cvvView = CVVView()
-        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidator())
+        let checkoutCvvOnly = AccessCheckoutCVVOnly(cvvView: cvvView, cvvOnlyDelegate: nil, cvvValidator: CVVValidatorLegacy())
         let textForUpdate = ""
         
         let result = checkoutCvvOnly.canUpdate(cvv: "123",
@@ -98,7 +98,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testNotifyPartialMatchValidationNotifiesDelegateWithPartialValidationResult() {
         let cvvView = CVVView()
-        let cvvValidator = MockCVVValidator()
+        let cvvValidator = MockCVVValidatorLegacy()
         let expectedValidationResult: ValidationResult = ValidationResult(partial: true, complete: false)
         when(cvvValidator.getStubbingProxy().validate(cvv: any())).thenReturn(expectedValidationResult)
         let cvvOnlyDelegate = MockCVVOnlyDelegate()
@@ -114,7 +114,7 @@ class AccessCheckoutCVVOnly_CVVViewDelegateImplementation_Tests : XCTestCase {
     
     func testNotifyCompleteMatchValidationNotifiesDelegateWithCompleteValidationResult() {
         let cvvView = CVVView()
-        let cvvValidator = MockCVVValidator()
+        let cvvValidator = MockCVVValidatorLegacy()
         let expectedValidationResult: ValidationResult = ValidationResult(partial: false, complete: true)
         when(cvvValidator.getStubbingProxy().validate(cvv: any())).thenReturn(expectedValidationResult)
         let cvvOnlyDelegate = MockCVVOnlyDelegate()

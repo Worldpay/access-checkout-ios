@@ -4,7 +4,7 @@ import XCTest
 class LengthValidatorTests : XCTestCase {
     
     let lengthValidator = LengthValidator()
-    let cardValidationRule = AccessCardConfiguration.CardValidationRule(matcher: "^\\d*$", validLengths: [16,18])
+    let cardValidationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16,18])
     
     func testShouldReturnFalseIfTextIsEmpty() {
         XCTAssertFalse(lengthValidator.validate(text: "", againstValidationRule: cardValidationRule))
@@ -15,7 +15,7 @@ class LengthValidatorTests : XCTestCase {
     }
     
     func testShouldReturnTrueIfTextMatchesRegexAndValidLengthsIsEmpty() {
-        XCTAssertTrue(lengthValidator.validate(text: "123", againstValidationRule: AccessCardConfiguration.CardValidationRule(matcher: "^\\d*$", validLengths: [])))
+        XCTAssertTrue(lengthValidator.validate(text: "123", againstValidationRule: ValidationRule(matcher: "^\\d*$", validLengths: [])))
     }
     
     func testShouldReturnTrueIfTextMatchesRegexAndIsEqualToAValidLength() {

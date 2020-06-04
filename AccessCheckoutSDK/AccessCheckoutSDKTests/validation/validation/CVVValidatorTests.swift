@@ -3,49 +3,49 @@ import XCTest
 
 class CVVValidatorTests : XCTestCase {
     func testByDefaultAlphabeticCvvIsNotValid() {
-        let result = CVVValidator().validate(cvv: "abc")
+        let result = CVVValidatorLegacy().validate(cvv: "abc")
         
         XCTAssertFalse(result.partial)
         XCTAssertFalse(result.complete)
     }
     
     func testByDefaultAlphanumericCvvIsNotValid() {
-        let result = CVVValidator().validate(cvv: "a1c")
+        let result = CVVValidatorLegacy().validate(cvv: "a1c")
         
         XCTAssertFalse(result.partial)
         XCTAssertFalse(result.complete)
     }
     
     func testByDefaultNumericCvvShorterThan3DigitsIsOnlyPartiallyValid() {
-        let result = CVVValidator().validate(cvv: "12")
+        let result = CVVValidatorLegacy().validate(cvv: "12")
         
         XCTAssertTrue(result.partial)
         XCTAssertFalse(result.complete)
     }
     
     func testByDefaultNumericCvvWithTo3DigitsIsPartiallyValidAndCompletelyValid() {
-        let result = CVVValidator().validate(cvv: "123")
+        let result = CVVValidatorLegacy().validate(cvv: "123")
         
         XCTAssertTrue(result.partial)
         XCTAssertTrue(result.complete)
     }
     
     func testByDefaultNumericCvvWith4DigitsIsPartiallyValidAndCompletelyValid() {
-        let result = CVVValidator().validate(cvv: "1234")
+        let result = CVVValidatorLegacy().validate(cvv: "1234")
         
         XCTAssertTrue(result.partial)
         XCTAssertTrue(result.complete)
     }
     
     func testByDefaultNumericCvvLongerThan4DigitsIsNotValid() {
-        let result = CVVValidator().validate(cvv: "12345")
+        let result = CVVValidatorLegacy().validate(cvv: "12345")
         
         XCTAssertFalse(result.partial)
         XCTAssertFalse(result.complete)
     }
     
     func testByDefaultEmptyCvvIsOnlyPartiallyValid() {
-        let result = CVVValidator().validate(cvv: "")
+        let result = CVVValidatorLegacy().validate(cvv: "")
         
         XCTAssertTrue(result.partial)
         XCTAssertFalse(result.complete)
@@ -55,7 +55,7 @@ class CVVValidatorTests : XCTestCase {
         let expectedValidationResult = ValidationResult(partial: false, complete: true)
         let textValidatorMock = TextValidatorMock()
         textValidatorMock.validationResultToReturn = expectedValidationResult
-        let cvvValidator = CVVValidator(textValidatorMock)
+        let cvvValidator = CVVValidatorLegacy(textValidatorMock)
         let validationRule = CardConfiguration.CardValidationRule()
     
         let result = cvvValidator.validate(cvv: "some text", againstValidationRule: validationRule)
