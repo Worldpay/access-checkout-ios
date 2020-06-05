@@ -4,7 +4,7 @@ class CvvValidationFlow {
     private(set) var cvvRule: ValidationRule = ValidationRulesDefaults.instance().cvv
     private(set) var cvv: CVV?
     
-    init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler) {
+    init(_ cvvValidator: CvvValidator, _ cvvValidationStateHandler: CvvValidationStateHandler) {
         self.cvvValidator = cvvValidator
         self.cvvValidationStateHandler = cvvValidationStateHandler
     }

@@ -27,9 +27,9 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
     
     
     
-    public func handleCardBrandChange(cardBrand: CardBrand2?)  {
+    public func handleCardBrandChange(cardBrand: CardBrandClient?)  {
         
-    return cuckoo_manager.call("handleCardBrandChange(cardBrand: CardBrand2?)",
+    return cuckoo_manager.call("handleCardBrandChange(cardBrand: CardBrandClient?)",
             parameters: (cardBrand),
             escapingParameters: (cardBrand),
             superclassCall:
@@ -94,9 +94,9 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
 	    }
 	    
 	    
-	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(CardBrand2?)> where M1.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardBrand2?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handleCardBrandChange(cardBrand: CardBrand2?)", parameterMatchers: matchers))
+	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(CardBrandClient?)> where M1.OptionalMatchedType == CardBrandClient {
+	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandClient?)>] = [wrap(matchable: cardBrand) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handleCardBrandChange(cardBrand: CardBrandClient?)", parameterMatchers: matchers))
 	    }
 	    
 	    func handlePanValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
@@ -131,9 +131,9 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
 	
 	    
 	    @discardableResult
-	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrand2?), Void> where M1.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardBrand2?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return cuckoo_manager.verify("handleCardBrandChange(cardBrand: CardBrand2?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrandClient?), Void> where M1.OptionalMatchedType == CardBrandClient {
+	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandClient?)>] = [wrap(matchable: cardBrand) { $0 }]
+	        return cuckoo_manager.verify("handleCardBrandChange(cardBrand: CardBrandClient?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -163,7 +163,7 @@ public class AccessCardDelegateStub: AccessCardDelegate {
     
 
     
-    public func handleCardBrandChange(cardBrand: CardBrand2?)   {
+    public func handleCardBrandChange(cardBrand: CardBrandClient?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

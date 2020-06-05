@@ -3,12 +3,14 @@ import Cuckoo
 
 extension AccessCardConfiguration.CardBrand: Matchable, OptionalMatchable {}
 
+extension CardBrandClient: Matchable, OptionalMatchable {}
+
 extension CardBrandDto: Matchable {}
+
+extension CardBrandModel: Matchable, OptionalMatchable {}
 
 extension PanValidationResult: Matchable {}
 
 extension URLRequest: Matchable {}
-
-extension CardBrand2: Matchable, OptionalMatchable {}
 
 extension ValidationRule: Matchable, OptionalMatchable {}

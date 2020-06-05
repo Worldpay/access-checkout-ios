@@ -1,4 +1,4 @@
-protocol Presenter {
+protocol CVVViewPresenter {
     func onEditing(text: String?)
     
     func onEditEnd(text: String?)

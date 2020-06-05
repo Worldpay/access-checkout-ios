@@ -19,7 +19,7 @@ import UIKit
         return text
     }
     
-    var presenter: Presenter?
+    var presenter: PanViewPresenter?
     
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -46,11 +46,11 @@ import UIKit
         
         textField.placeholder = NSLocalizedString("card_number_placeholder", comment: "")
         textField.delegate = self
-        textField.addTarget(self, action: #selector(textFieldDidEditingChanged(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
-    func textFieldDidEditingChanged(_ textField: UITextField) {
+    func textFieldEditingChanged(_ textField: UITextField) {
         guard let pan = textField.text else {
             return
         }

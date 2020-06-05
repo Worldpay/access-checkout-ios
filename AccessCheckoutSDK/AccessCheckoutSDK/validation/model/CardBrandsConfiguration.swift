@@ -1,13 +1,13 @@
 struct CardBrandsConfiguration {
-    let brands: [CardBrand2]
+    let brands: [CardBrandModel]
     let validationRulesDefaults: ValidationRulesDefaults
     
-    init(_ brands: [CardBrand2], _ validationRulesDefaults: ValidationRulesDefaults) {
+    init(_ brands: [CardBrandModel], _ validationRulesDefaults: ValidationRulesDefaults) {
         self.brands = brands
         self.validationRulesDefaults = validationRulesDefaults
     }
     
-    func cardBrand(forPan pan: PAN) -> CardBrand2? {
+    func cardBrand(forPan pan: PAN) -> CardBrandModel? {
         if brands.isEmpty {
             return nil
         }
@@ -15,15 +15,11 @@ struct CardBrandsConfiguration {
         return brands.first { $0.panValidationRule.matcher?.regexMatches(text: pan) == true }
     }
     
-    func panValidationRule(using cardBrand: CardBrand2?) -> ValidationRule {
+    func panValidationRule(using cardBrand: CardBrandModel?) -> ValidationRule {
         guard let cardBrand = cardBrand else {
             return validationRulesDefaults.pan
         }
         
         return cardBrand.panValidationRule
-    }
-    
-    static func defaultConfiguration() {
-        
     }
 }

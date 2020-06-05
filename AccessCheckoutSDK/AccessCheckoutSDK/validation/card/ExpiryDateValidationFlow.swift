@@ -1,4 +1,4 @@
-struct ExpiryDateValidationFlow {
+class ExpiryDateValidationFlow {
     private var expiryDateValidator: ExpiryDateValidator
     private var expiryValidationStateHandler: ExpiryDateValidationStateHandler
 

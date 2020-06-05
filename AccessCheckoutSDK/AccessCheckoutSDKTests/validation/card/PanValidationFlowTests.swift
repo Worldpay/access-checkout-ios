@@ -3,7 +3,7 @@ import Cuckoo
 import XCTest
 
 class PanValidationFlowTests: XCTestCase {
-    let visaBrand = CardBrand2(
+    let visaBrand = CardBrandModel(
         name: "visa",
         images: [],
         panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
@@ -17,7 +17,7 @@ class PanValidationFlowTests: XCTestCase {
     }
     
     func testShouldCallPanValidatorAndCallHandlerWithResult() {
-        let cvvFlow = mockCvvFlow()
+        let cvvFlow = CvvValidationFlowMock()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
@@ -66,10 +66,11 @@ class PanValidationFlowTests: XCTestCase {
         return CardBrandsConfiguration([visaBrand], ValidationRulesDefaults.instance())
     }
     
+    // TODO: Can we use the CvvValidationFlowMock instead?
     private func mockCvvFlow() -> MockCvvValidationFlow {
         let cvvFlow = MockCvvValidationFlow(
-            cvvValidator: MockCvvValidator(),
-            cvvValidationStateHandler: MockCvvValidationStateHandler()
+            MockCvvValidator(),
+            MockCvvValidationStateHandler()
         )
         cvvFlow.getStubbingProxy().reValidate(cvvRule: any()).thenDoNothing()
         return cvvFlow

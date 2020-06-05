@@ -3,14 +3,14 @@ import Cuckoo
 import XCTest
 
 class PanValidatorTests: XCTestCase {
-    private let visaBrand = CardBrand2(
+    private let visaBrand = CardBrandModel(
         name: "visa",
         images: [],
         panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
         cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
-    let maestroBrand = CardBrand2(
+    let maestroBrand = CardBrandModel(
         name: "maestro",
         images: [],
         panValidationRule: ValidationRule(
@@ -85,11 +85,11 @@ class PanValidatorTests: XCTestCase {
         XCTAssertEqual(result.cardBrand?.name, "maestro")
     }
     
-    func createConfiguration(withBrand brand: CardBrand2) -> CardBrandsConfiguration {
+    func createConfiguration(withBrand brand: CardBrandModel) -> CardBrandsConfiguration {
         return CardBrandsConfiguration([brand], ValidationRulesDefaults.instance())
     }
     
-    func createConfiguration(withBrands brands: [CardBrand2]) -> CardBrandsConfiguration {
+    func createConfiguration(withBrands brands: [CardBrandModel]) -> CardBrandsConfiguration {
         return CardBrandsConfiguration(brands, ValidationRulesDefaults.instance())
     }
 }

@@ -1,51 +1,61 @@
 class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidationStateHandler, CvvValidationStateHandler {
-
-    private(set) var accessCardDelegate: AccessCardDelegate
+    private(set) var merchantDelegate: AccessCardDelegate
     private(set) var panValidationState = false
-    private(set) var cardBrand: CardBrand2?
+    private(set) var cardBrand: CardBrandModel?
     private(set) var expiryDateValidationState = false
     private(set) var cvvValidationState = false
-
-    init(accessCardDelegate: AccessCardDelegate) {
-        self.accessCardDelegate = accessCardDelegate
+    private let cardBrandModelTransformer: CardBrandModelTransformer
+    
+    init(_ merchantDelegate: AccessCardDelegate) {
+        self.merchantDelegate = merchantDelegate
+        self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
     /**
      Convenience constructors used by unit tests
      */
-    init(accessCardDelegate: AccessCardDelegate, panValidationState: Bool, cardBrand: CardBrand2?) {
-        self.accessCardDelegate = accessCardDelegate
+    init(merchantDelegate: AccessCardDelegate, panValidationState: Bool, cardBrand: CardBrandModel?) {
+        self.merchantDelegate = merchantDelegate
         self.panValidationState = panValidationState
         self.cardBrand = cardBrand
+        self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(accessCardDelegate: AccessCardDelegate, panValidationState: Bool) {
-        self.accessCardDelegate = accessCardDelegate
+    init(merchantDelegate: AccessCardDelegate, panValidationState: Bool) {
+        self.merchantDelegate = merchantDelegate
         self.panValidationState = panValidationState
+        self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(accessCardDelegate: AccessCardDelegate, expiryDateValidationState: Bool) {
-        self.accessCardDelegate = accessCardDelegate
+    init(merchantDelegate: AccessCardDelegate, expiryDateValidationState: Bool) {
+        self.merchantDelegate = merchantDelegate
         self.expiryDateValidationState = expiryDateValidationState
+        self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(accessCardDelegate: AccessCardDelegate, cvvValidationState: Bool) {
-        self.accessCardDelegate = accessCardDelegate
+    init(merchantDelegate: AccessCardDelegate, cvvValidationState: Bool) {
+        self.merchantDelegate = merchantDelegate
         self.cvvValidationState = cvvValidationState
+        self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    func handlePanValidation(isValid: Bool, cardBrand: CardBrand2?) {
+    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
         if isValid != panValidationState {
             panValidationState = isValid
-            accessCardDelegate.handlePanValidationChange(isValid: isValid)
+            merchantDelegate.handlePanValidationChange(isValid: isValid)
         }
         if self.cardBrand?.name != cardBrand?.name {
             self.cardBrand = cardBrand
-            accessCardDelegate.handleCardBrandChange(cardBrand: cardBrand)
+            
+            if let cardBrand = cardBrand {
+                merchantDelegate.handleCardBrandChange(cardBrand: cardBrandModelTransformer.transform(cardBrand))
+            } else {
+                merchantDelegate.handleCardBrandChange(cardBrand: nil)
+            }
         }
     }
     
-    func isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool {
+    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
         if let currentBrand = self.cardBrand, let newBrand = cardBrand {
             return currentBrand.name != newBrand.name
         } else if cardBrand != nil || self.cardBrand != nil {
@@ -58,15 +68,14 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
     func handleExpiryDateValidation(isValid: Bool) {
         if isValid != expiryDateValidationState {
             expiryDateValidationState = isValid
-            accessCardDelegate.handleExpiryDateValidationChange(isValid: isValid)
+            merchantDelegate.handleExpiryDateValidationChange(isValid: isValid)
         }
     }
     
     func handleCvvValidation(isValid: Bool) {
         if isValid != cvvValidationState {
             cvvValidationState = isValid
-            accessCardDelegate.handleCvvValidationChange(isValid: isValid)
+            merchantDelegate.handleCvvValidationChange(isValid: isValid)
         }
     }
-    
 }

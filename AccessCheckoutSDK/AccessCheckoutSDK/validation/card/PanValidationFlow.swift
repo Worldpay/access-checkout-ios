@@ -1,6 +1,6 @@
 import Foundation
 
-struct PanValidationFlow {
+class PanValidationFlow {
     private let panValidator: PanValidator
     private let panValidationStateHandler: PanValidationStateHandler
     private let cvvFlow: CvvValidationFlow

@@ -1,11 +1,11 @@
-class CvvOnlyValidationStateHandler : CvvValidationStateHandler {
+class CvvOnlyValidationStateHandler: CvvValidationStateHandler {
     private(set) var accessCvvOnlyDelegate: AccessCvvOnlyDelegate
     private(set) var cvvValidationState = false
 
-    init(accessCvvOnlyDelegate: AccessCvvOnlyDelegate) {
-        self.accessCvvOnlyDelegate = accessCvvOnlyDelegate
+    init(_ merchantDelegate: AccessCvvOnlyDelegate) {
+        self.accessCvvOnlyDelegate = merchantDelegate
     }
-    
+
     /**
      Convenience constructors used by unit tests
      */
@@ -13,7 +13,7 @@ class CvvOnlyValidationStateHandler : CvvValidationStateHandler {
         self.accessCvvOnlyDelegate = accessCvvOnlyDelegate
         self.cvvValidationState = cvvValidationState
     }
-    
+
     func handleCvvValidation(isValid: Bool) {
         if isValid != cvvValidationState {
             cvvValidationState = isValid

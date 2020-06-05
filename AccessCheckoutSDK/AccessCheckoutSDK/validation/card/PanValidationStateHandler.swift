@@ -1,5 +1,5 @@
 protocol PanValidationStateHandler {
-    func handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)
+    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)
 
-    func isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool
+    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool
 }

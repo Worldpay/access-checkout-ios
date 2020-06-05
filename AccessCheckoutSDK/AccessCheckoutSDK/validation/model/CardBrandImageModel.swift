@@ -1,4 +1,4 @@
-struct CardBrandImage2 {
+struct CardBrandImageModel {
     let type: String
     let url: String
 

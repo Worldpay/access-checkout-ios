@@ -89,9 +89,9 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         return try JSONDecoder().decode(CardBrandDto.self, from: json.data(using: .utf8)!)
     }
     
-    static func aCardBrand() -> CardBrand2 {
-        return CardBrand2(name: "", images: [],
-                          panValidationRule: ValidationRule(matcher: "", validLengths: []),
-                          cvvValidationRule: ValidationRule(matcher: "", validLengths: []))
+    static func aCardBrand() -> CardBrandModel {
+        return CardBrandModel(name: "", images: [],
+                              panValidationRule: ValidationRule(matcher: "", validLengths: []),
+                              cvvValidationRule: ValidationRule(matcher: "", validLengths: []))
     }
 }

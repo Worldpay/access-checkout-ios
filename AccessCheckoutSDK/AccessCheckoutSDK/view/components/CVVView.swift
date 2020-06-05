@@ -18,7 +18,7 @@ import UIKit
         return text
     }
     
-    var presenter: Presenter?
+    var presenter: CVVViewPresenter?
     
     /// Initialize CVVView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -44,15 +44,16 @@ import UIKit
         addSubview(view)
         
         textField.delegate = self
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
-    private func textFieldDidChange(_ textField: UITextField) {
+    func textFieldEditingChanged(_ textField: UITextField) {
         guard let cvv = textField.text else {
             return
         }
         (validationDelegate as? CVVValidationDelegate)?.notifyPartialMatchValidation(forCvv: cvv)
+        presenter?.onEditing(text: cvv)
     }
 }
 

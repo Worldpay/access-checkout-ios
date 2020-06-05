@@ -3,8 +3,8 @@ import XCTest
 
 class CardBrandsConfigurationProviderTests: XCTestCase {
     let factory = CardBrandsConfigurationFactoryMock()
-    var expectedConfiguration:CardBrandsConfiguration?
-    var configurationProvider:CardBrandsConfigurationProvider?
+    var expectedConfiguration: CardBrandsConfiguration?
+    var configurationProvider: CardBrandsConfigurationProvider?
     
     override func setUp() {
         configurationProvider = CardBrandsConfigurationProvider(factory)
@@ -30,9 +30,9 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
     }
     
     func testReturnsConfigurationWithBrandsAndDefaultsWhenSuccessfullyProcessedRemoteConfiguration() {
-        let cardBrand = CardBrand2(name: "a-brand", images: [],
-                                    panValidationRule: ValidationRule(matcher: "rule-1", validLengths: []),
-                                    cvvValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
+        let cardBrand = CardBrandModel(name: "a-brand", images: [],
+                                       panValidationRule: ValidationRule(matcher: "rule-1", validLengths: []),
+                                       cvvValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
         expectedConfiguration = CardBrandsConfiguration([cardBrand], ValidationRulesDefaults.instance())
         factory.willReturn(expectedConfiguration!)
         

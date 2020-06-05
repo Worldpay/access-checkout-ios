@@ -27,9 +27,9 @@ import Cuckoo
     
     
     
-     override func transform(_ dto: CardBrandDto) -> CardBrand2 {
+     override func transform(_ dto: CardBrandDto) -> CardBrandModel {
         
-    return cuckoo_manager.call("transform(_: CardBrandDto) -> CardBrand2",
+    return cuckoo_manager.call("transform(_: CardBrandDto) -> CardBrandModel",
             parameters: (dto),
             escapingParameters: (dto),
             superclassCall:
@@ -49,9 +49,9 @@ import Cuckoo
 	    }
 	    
 	    
-	    func transform<M1: Cuckoo.Matchable>(_ dto: M1) -> Cuckoo.ClassStubFunction<(CardBrandDto), CardBrand2> where M1.MatchedType == CardBrandDto {
+	    func transform<M1: Cuckoo.Matchable>(_ dto: M1) -> Cuckoo.ClassStubFunction<(CardBrandDto), CardBrandModel> where M1.MatchedType == CardBrandDto {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandDto)>] = [wrap(matchable: dto) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCardBrandDtoTransformer.self, method: "transform(_: CardBrandDto) -> CardBrand2", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockCardBrandDtoTransformer.self, method: "transform(_: CardBrandDto) -> CardBrandModel", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -71,9 +71,9 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func transform<M1: Cuckoo.Matchable>(_ dto: M1) -> Cuckoo.__DoNotUse<(CardBrandDto), CardBrand2> where M1.MatchedType == CardBrandDto {
+	    func transform<M1: Cuckoo.Matchable>(_ dto: M1) -> Cuckoo.__DoNotUse<(CardBrandDto), CardBrandModel> where M1.MatchedType == CardBrandDto {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandDto)>] = [wrap(matchable: dto) { $0 }]
-	        return cuckoo_manager.verify("transform(_: CardBrandDto) -> CardBrand2", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("transform(_: CardBrandDto) -> CardBrandModel", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -85,8 +85,8 @@ import Cuckoo
     
 
     
-     override func transform(_ dto: CardBrandDto) -> CardBrand2  {
-        return DefaultValueRegistry.defaultValue(for: (CardBrand2).self)
+     override func transform(_ dto: CardBrandDto) -> CardBrandModel  {
+        return DefaultValueRegistry.defaultValue(for: (CardBrandModel).self)
     }
     
 }

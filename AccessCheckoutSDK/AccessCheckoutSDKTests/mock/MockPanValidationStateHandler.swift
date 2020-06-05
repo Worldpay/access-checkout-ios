@@ -27,9 +27,9 @@ import Cuckoo
     
     
     
-     func handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)  {
+     func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)  {
         
-    return cuckoo_manager.call("handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)",
+    return cuckoo_manager.call("handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)",
             parameters: (isValid, cardBrand),
             escapingParameters: (isValid, cardBrand),
             superclassCall:
@@ -42,9 +42,9 @@ import Cuckoo
     
     
     
-     func isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool {
+     func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
         
-    return cuckoo_manager.call("isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool",
+    return cuckoo_manager.call("isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool",
             parameters: (cardBrand),
             escapingParameters: (cardBrand),
             superclassCall:
@@ -64,14 +64,14 @@ import Cuckoo
 	    }
 	    
 	    
-	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool, CardBrand2?)> where M1.MatchedType == Bool, M2.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(Bool, CardBrand2?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)", parameterMatchers: matchers))
+	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool, CardBrandModel?)> where M1.MatchedType == Bool, M2.OptionalMatchedType == CardBrandModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(Bool, CardBrandModel?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)", parameterMatchers: matchers))
 	    }
 	    
-	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubFunction<(CardBrand2?), Bool> where M1.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardBrand2?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool", parameterMatchers: matchers))
+	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubFunction<(CardBrandModel?), Bool> where M1.OptionalMatchedType == CardBrandModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandModel?)>] = [wrap(matchable: cardBrand) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -91,15 +91,15 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.__DoNotUse<(Bool, CardBrand2?), Void> where M1.MatchedType == Bool, M2.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(Bool, CardBrand2?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
-	        return cuckoo_manager.verify("handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.__DoNotUse<(Bool, CardBrandModel?), Void> where M1.MatchedType == Bool, M2.OptionalMatchedType == CardBrandModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(Bool, CardBrandModel?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
+	        return cuckoo_manager.verify("handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrand2?), Bool> where M1.OptionalMatchedType == CardBrand2 {
-	        let matchers: [Cuckoo.ParameterMatcher<(CardBrand2?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return cuckoo_manager.verify("isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrandModel?), Bool> where M1.OptionalMatchedType == CardBrandModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandModel?)>] = [wrap(matchable: cardBrand) { $0 }]
+	        return cuckoo_manager.verify("isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -111,11 +111,11 @@ import Cuckoo
     
 
     
-     func handlePanValidation(isValid: Bool, cardBrand: CardBrand2?)   {
+     func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-     func isCardBrandDifferentFrom(cardBrand: CardBrand2?) -> Bool  {
+     func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool  {
         return DefaultValueRegistry.defaultValue(for: (Bool).self)
     }
     

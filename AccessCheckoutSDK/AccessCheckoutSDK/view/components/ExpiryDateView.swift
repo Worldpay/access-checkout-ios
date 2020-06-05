@@ -30,7 +30,7 @@ import UIKit
         return text
     }
     
-    var presenter: Presenter?
+    var presenter: ExpiryDateViewPresenter?
     
     /// Initialize ExpiryDateView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -58,12 +58,12 @@ import UIKit
         monthTextField.delegate = self
         yearTextField.delegate = self
         
-        monthTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        yearTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        monthTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        yearTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
-    private func textFieldDidChange(_ textField: UITextField) {
+    func textFieldEditingChanged(_ textField: UITextField) {
         guard let text = textField.text else {
             return
         }
@@ -75,6 +75,9 @@ import UIKit
         default:
             return
         }
+        
+        // ToDo - should not force unwrap
+        presenter?.onEditing(monthText: monthTextField.text!, yearText: yearTextField.text!)
     }
 }
 

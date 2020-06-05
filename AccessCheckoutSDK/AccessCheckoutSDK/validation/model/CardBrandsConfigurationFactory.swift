@@ -14,7 +14,7 @@ class CardBrandsConfigurationFactory {
         let request = URLRequest(url: URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)")!)
         
         restClient.send(urlSession: URLSession.shared, request: request, responseType: [CardBrandDto].self) { result in
-            let brands: [CardBrand2]
+            let brands: [CardBrandModel]
             
             switch result {
             case .success(let dtos):

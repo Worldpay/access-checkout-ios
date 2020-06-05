@@ -5,7 +5,7 @@ import XCTest
 class CvvValidationFlowTests: XCTestCase {
     private let cvvValidationStateHandler = MockCvvValidationStateHandler()
 
-    let cardBrand = CardBrand2(
+    let cardBrand = CardBrandModel(
         name: "",
         images: [],
         panValidationRule: ValidationRule(matcher: "", validLengths: []),
@@ -20,8 +20,8 @@ class CvvValidationFlowTests: XCTestCase {
         let expectedResult = false
         let cvvValidator = createMockCvvValidator(thatReturns: expectedResult)
         let cvvValidationFlow = CvvValidationFlow(
-            cvvValidator: cvvValidator,
-            cvvValidationStateHandler: cvvValidationStateHandler
+            cvvValidator,
+            cvvValidationStateHandler
         )
 
         cvvValidationFlow.validate(cvv: "123", cvvRule: ValidationRule(matcher: nil, validLengths: []))
@@ -56,8 +56,8 @@ class CvvValidationFlowTests: XCTestCase {
 
     func testShouldUpdateCvvRuleToNewRuleWhenRevalidateIsCalled() {
         let cvvValidationFlow = CvvValidationFlow(
-            cvvValidator: CvvValidator(),
-            cvvValidationStateHandler: cvvValidationStateHandler
+            CvvValidator(),
+            cvvValidationStateHandler
         )
 
         cvvValidationFlow.reValidate(cvvRule: cardBrand.cvvValidationRule)
@@ -72,6 +72,8 @@ class CvvValidationFlowTests: XCTestCase {
         )
 
         cvvValidationFlow.reValidate(cvvRule: nil)
+
+        // ToDo - why do we have this test? Do we need to store that rule?
         XCTAssertEqual(cvvValidationFlow.cvvRule, ValidationRulesDefaults.instance().cvv)
     }
 

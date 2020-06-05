@@ -49,16 +49,16 @@ class CardBrandsConfigurationTests: XCTestCase {
         XCTAssertEqual(ValidationRulesDefaults.instance().pan, result)
     }
     
-    private func createCardBrand(panMatcherPattern: String) -> CardBrand2 {
+    private func createCardBrand(panMatcherPattern: String) -> CardBrandModel {
         let panValidationRule = ValidationRule(matcher: panMatcherPattern, validLengths: [])
         let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [])
         
-        return CardBrand2(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
+        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
     }
     
-    private func createCardBrand(panValidationRule: ValidationRule) -> CardBrand2 {
+    private func createCardBrand(panValidationRule: ValidationRule) -> CardBrandModel {
         let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [])
         
-        return CardBrand2(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
+        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
     }
 }
