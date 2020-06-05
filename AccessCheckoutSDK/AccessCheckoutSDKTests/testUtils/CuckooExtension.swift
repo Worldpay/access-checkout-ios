@@ -1,8 +1,6 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-extension AccessCardConfiguration.CardBrand: Matchable, OptionalMatchable {}
-
 extension CardBrandClient: Matchable, OptionalMatchable {}
 
 extension CardBrandDto: Matchable {}

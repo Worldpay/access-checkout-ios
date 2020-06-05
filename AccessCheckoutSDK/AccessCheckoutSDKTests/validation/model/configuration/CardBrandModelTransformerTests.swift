@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class CardBrandTransformerTests: XCTestCase {
+class CardBrandModelTransformerTests: XCTestCase {
     func testTransformsIntoACardBrand() {
         let model = CardBrandModel(name: "a card brand",
                                    images: [

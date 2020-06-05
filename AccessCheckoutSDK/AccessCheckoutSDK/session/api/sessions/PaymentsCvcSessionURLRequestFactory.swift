@@ -1,5 +1,3 @@
-import Foundation
-
 class PaymentsCvcSessionURLRequestFactory {
     func create(url: String, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)
