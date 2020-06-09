@@ -1,7 +1,17 @@
-class ExpiryDateViewPresenter: Presenter {
-    func onEditing(text: String?) {}
+class ExpiryDateViewPresenter {
+    private let validationFlow: ExpiryDateValidationFlow
     
-    func onEditEnd(text: String?) {}
+    init(_ validationFlow: ExpiryDateValidationFlow) {
+        self.validationFlow = validationFlow
+    }
+    
+    func onEditing(monthText: String, yearText: String) {
+        validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
+    }
+    
+    func onEditEnd(monthText: String, yearText: String) {
+        validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
+    }
     
     func canChangeText(text: String?, with: String, using range: NSRange) {}
 }

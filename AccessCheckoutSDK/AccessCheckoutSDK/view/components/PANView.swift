@@ -19,7 +19,7 @@ import UIKit
         return text
     }
     
-    var presenter: Presenter?
+    var presenter: PanViewPresenter?
     
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -46,14 +46,15 @@ import UIKit
         
         textField.placeholder = NSLocalizedString("card_number_placeholder", comment: "")
         textField.delegate = self
-        textField.addTarget(self, action: #selector(cardNumberTextFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
-    private func cardNumberTextFieldDidChange(_ textField: UITextField) {
+    func textFieldEditingChanged(_ textField: UITextField) {
         guard let pan = textField.text else {
             return
         }
+        presenter?.onEditing(text: textField.text)
         (validationDelegate as? PANValidationDelegate)?.notifyPartialMatchValidation(forPan: pan)
     }
 }
@@ -87,9 +88,12 @@ extension PANView: AccessCheckoutTextView {
 
 extension PANView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if let pan = textField.text {
-            (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
+        guard let pan = textField.text else {
+            return
         }
+        
+        (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
+        presenter?.onEditEnd(text: pan)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
