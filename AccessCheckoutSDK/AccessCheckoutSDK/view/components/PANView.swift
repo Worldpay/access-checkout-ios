@@ -21,6 +21,8 @@ import UIKit
     
     var presenter: PanViewPresenter?
     
+    private var textChangeHandler = TextChangeHandler()
+    
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,7 +35,15 @@ import UIKit
         setupViewFromNib()
     }
     
-    private func setupViewFromNib() {
+    /// Constructor for tests
+    init(_ textChangeHandler:TextChangeHandler, _ presenter:PanViewPresenter) {
+        super.init(frame: CGRect())
+        setupViewFromNib()
+        self.textChangeHandler = textChangeHandler
+        self.presenter = presenter
+    }
+    
+    func setupViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
@@ -97,6 +107,11 @@ extension PANView: UITextFieldDelegate {
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let presenter = self.presenter {
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+            return presenter.canChangeText(with: resultingText)
+        }
+        
         return (validationDelegate as? PANValidationDelegate)?.canUpdate(pan: textField.text, withText: string, inRange: range) ?? false
     }
 }

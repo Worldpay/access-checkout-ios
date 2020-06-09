@@ -7,6 +7,8 @@ extension CardBrandDto: Matchable {}
 
 extension CardBrandModel: Matchable, OptionalMatchable {}
 
+extension NSRange: Matchable {}
+
 extension PanValidationResult: Matchable {}
 
 extension URLRequest: Matchable {}

@@ -44,7 +44,7 @@ public struct AccessCheckoutValidationInitialiser {
                                   _ validationStateHandler: PanValidationStateHandler) -> PanViewPresenter {
         let panValidator = PanValidator(configurationProvider)
         let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
-        return PanViewPresenter(panValidationFlow)
+        return PanViewPresenter(panValidationFlow, panValidator)
     }
     
     private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {
