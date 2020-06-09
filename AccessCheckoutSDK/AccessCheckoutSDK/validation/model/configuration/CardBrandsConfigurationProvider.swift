@@ -4,7 +4,7 @@ class CardBrandsConfigurationProvider {
     
     init (_ cardBrandsConfigurationFactory:CardBrandsConfigurationFactory) {
         factory = cardBrandsConfigurationFactory
-        configuration = cardBrandsConfigurationFactory.createWithDefaultsOnly()
+        configuration = cardBrandsConfigurationFactory.emptyConfiguration()
     }
     
     func retrieveRemoteConfiguration(baseUrl:String) {

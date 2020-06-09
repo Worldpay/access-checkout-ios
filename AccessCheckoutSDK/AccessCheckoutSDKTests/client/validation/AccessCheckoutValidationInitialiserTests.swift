@@ -4,62 +4,52 @@ import XCTest
 
 class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
-    let cardDelegateMock = MockAccessCardDelegate()
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
+    
+    let panView = PANView()
+    let expiryDateView = ExpiryDateView()
+    let cvvView = CVVView()
+    let baseUrl = "some-url"
+    let cardValidationDelegateMock = MockAccessCheckoutCardValidationDelegate()
+    let cvvOnlyValidationDelegateMock = MockAccessCheckoutCvvOnlyValidationDelegate()
     
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
-        cardDelegateMock.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
+        cardValidationDelegateMock.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
     }
     
-    func testSupportsInitialisationForCardPaymentFlow() {
-        let panView = PANView()
-        let expiryDateView = ExpiryDateView()
-        let cvvView = CVVView()
+    func testInitialisationForCardPaymentFlowRetrievesConfiguration() {
+        let validationConfig = CardValidationConfig(panView: panView,
+                                                    expiryDateView: expiryDateView,
+                                                    cvvView: cvvView,
+                                                    accessBaseUrl: baseUrl,
+                                                    validationDelegate: cardValidationDelegateMock)
         
-        accessCheckoutValidationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                                        baseUrl: "some-url", cardDelegate: cardDelegateMock)
-    }
-    
-    func testRetrievesConfigurationWhenInitialisingForCardPaymentFlow() {
-        let panView = PANView()
-        let expiryDateView = ExpiryDateView()
-        let cvvView = CVVView()
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
-        accessCheckoutValidationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                                        baseUrl: "some-url", cardDelegate: cardDelegateMock)
         verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url")
     }
     
     func testInitialisationForCardPaymentFlowSetsPresentersOnViews() {
-        let panView = PANView()
-        let expiryDateView = ExpiryDateView()
-        let cvvView = CVVView()
+        let validationConfig = CardValidationConfig(panView: panView,
+                                                    expiryDateView: expiryDateView,
+                                                    cvvView: cvvView,
+                                                    accessBaseUrl: baseUrl,
+                                                    validationDelegate: cardValidationDelegateMock)
         
-        accessCheckoutValidationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                                        baseUrl: "some-url", cardDelegate: cardDelegateMock)
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
         XCTAssertNotNil(panView.presenter)
         XCTAssertNotNil(expiryDateView.presenter)
         XCTAssertNotNil(cvvView.presenter)
-        XCTAssertTrue(cvvView.presenter is CVVViewForCardPaymentFlowPresenter)
-    }
-    
-    func testSupportsInitialisingForCvvOnlyFlow() {
-        let cvvView = CVVView()
-        let merchantDelegate = MockAccessCvvOnlyDelegate()
-        
-        accessCheckoutValidationInitialiser!.initialise(cvvView: cvvView, cvvOnlyDelegate: merchantDelegate)
     }
     
     func testInitialisationForCvvOnlyFlowSetsPresenterOnView() {
-        let cvvView = CVVView()
-        let merchantDelegate = MockAccessCvvOnlyDelegate()
+        let validationConfig = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: cvvOnlyValidationDelegateMock)
         
-        accessCheckoutValidationInitialiser!.initialise(cvvView: cvvView, cvvOnlyDelegate: merchantDelegate)
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
         XCTAssertNotNil(cvvView.presenter)
-        XCTAssertTrue(cvvView.presenter is CVVViewForCvvOnlyFlowPresenter)
     }
 }

@@ -16,12 +16,11 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         let restClient = RestClientMock(replyWith: [dtoCardBrand])
         let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
         let expectedRequest = URLRequest(url: URL(string: "http://localhost/access-checkout/cardTypes.json")!)
+        let expectedConfiguration = CardBrandsConfiguration([self.expectedCardBrand])
         
         factory.create(baseUrl: "http://localhost") { configuration in
             XCTAssertEqual(expectedRequest, restClient.requestSent)
-            
-            XCTAssertEqual([self.expectedCardBrand], configuration.brands)
-            XCTAssertNotNil(configuration.validationRulesDefaults)
+            XCTAssertEqual(expectedConfiguration, configuration)
             
             expectationToFulfill.fulfill()
         }
@@ -29,14 +28,13 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func testCreatesConfigurationWithOnlyDefaultsWhenFailingToRetrieveRemoteConfigurationFile() throws {
+    func testCreatesConfigurationWithEmptyBrandsWhenFailingToRetrieveRemoteConfigurationFile() throws {
         let expectationToFulfill = expectation(description: "")
         let restClient = RestClientMock<[CardBrandDto]>(errorWith: AccessCheckoutClientError.unknown(message: ""))
         let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
         
         factory.create(baseUrl: "http://localhost") { configuration in
             XCTAssertTrue(configuration.brands.isEmpty)
-            XCTAssertNotNil(configuration.validationRulesDefaults)
             expectationToFulfill.fulfill()
         }
         
@@ -73,12 +71,12 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func createsAConfigurationWithoutDefaultsOnly() {
+    func createsAnEmptyConfiguration() {
         let restClient = RestClient()
         let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
-        let expectedConfiguration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+        let expectedConfiguration = CardBrandsConfiguration([])
         
-        let result = factory.createWithDefaultsOnly()
+        let result = factory.emptyConfiguration()
         
         XCTAssertEqual(expectedConfiguration, result)
     }

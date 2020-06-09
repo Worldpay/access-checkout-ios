@@ -9,7 +9,9 @@ class ExpiryDateViewPresenter {
         validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
     }
     
-    func onEditEnd(text: String?) {}
+    func onEditEnd(monthText: String, yearText: String) {
+        validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
+    }
     
     func canChangeText(text: String?, with: String, using range: NSRange) {}
 }

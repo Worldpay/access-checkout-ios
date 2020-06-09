@@ -88,9 +88,12 @@ extension PANView: AccessCheckoutTextView {
 
 extension PANView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if let pan = textField.text {
-            (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
+        guard let pan = textField.text else {
+            return
         }
+        
+        (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
+        presenter?.onEditEnd(text: pan)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

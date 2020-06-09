@@ -2,19 +2,19 @@ import Cuckoo
 @testable import AccessCheckoutSDK
 
 
-public class MockAccessCvvOnlyDelegate: AccessCvvOnlyDelegate, Cuckoo.ProtocolMock {
+public class MockAccessCheckoutCvvOnlyValidationDelegate: AccessCheckoutCvvOnlyValidationDelegate, Cuckoo.ProtocolMock {
     
-    public typealias MocksType = AccessCvvOnlyDelegate
+    public typealias MocksType = AccessCheckoutCvvOnlyValidationDelegate
     
-    public typealias Stubbing = __StubbingProxy_AccessCvvOnlyDelegate
-    public typealias Verification = __VerificationProxy_AccessCvvOnlyDelegate
+    public typealias Stubbing = __StubbingProxy_AccessCheckoutCvvOnlyValidationDelegate
+    public typealias Verification = __VerificationProxy_AccessCheckoutCvvOnlyValidationDelegate
 
     public let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
 
     
-    private var __defaultImplStub: AccessCvvOnlyDelegate?
+    private var __defaultImplStub: AccessCheckoutCvvOnlyValidationDelegate?
 
-    public func enableDefaultImplementation(_ stub: AccessCvvOnlyDelegate) {
+    public func enableDefaultImplementation(_ stub: AccessCheckoutCvvOnlyValidationDelegate) {
         __defaultImplStub = stub
         cuckoo_manager.enableDefaultStubImplementation()
     }
@@ -41,7 +41,7 @@ public class MockAccessCvvOnlyDelegate: AccessCvvOnlyDelegate, Cuckoo.ProtocolMo
     }
     
 
-	public struct __StubbingProxy_AccessCvvOnlyDelegate: Cuckoo.StubbingProxy {
+	public struct __StubbingProxy_AccessCheckoutCvvOnlyValidationDelegate: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	
 	    public init(manager: Cuckoo.MockManager) {
@@ -51,12 +51,12 @@ public class MockAccessCvvOnlyDelegate: AccessCvvOnlyDelegate, Cuckoo.ProtocolMo
 	    
 	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCvvOnlyDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCvvOnlyValidationDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	}
 
-	public struct __VerificationProxy_AccessCvvOnlyDelegate: Cuckoo.VerificationProxy {
+	public struct __VerificationProxy_AccessCheckoutCvvOnlyValidationDelegate: Cuckoo.VerificationProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	    private let callMatcher: Cuckoo.CallMatcher
 	    private let sourceLocation: Cuckoo.SourceLocation
@@ -79,7 +79,7 @@ public class MockAccessCvvOnlyDelegate: AccessCvvOnlyDelegate, Cuckoo.ProtocolMo
 	}
 }
 
-public class AccessCvvOnlyDelegateStub: AccessCvvOnlyDelegate {
+public class AccessCheckoutCvvOnlyValidationDelegateStub: AccessCheckoutCvvOnlyValidationDelegate {
     
 
     

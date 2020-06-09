@@ -3,7 +3,7 @@
 class CardBrandsConfigurationFactoryMock: CardBrandsConfigurationFactory {
     private(set) var baseUrlPassed: String?
     private(set) var createCalled: Bool = false
-    private var cardBrandsConfigurationToReturn = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+    private var cardBrandsConfigurationToReturn = CardBrandsConfiguration([])
     
     init() {
         super.init(RestClientMock<String>(replyWith: ""), MockCardBrandDtoTransformer())

@@ -14,7 +14,13 @@ class PanValidationFlow {
     func validate(pan: PAN) {
         let result = panValidator.validate(pan: pan)
         if panValidationStateHandler.isCardBrandDifferentFrom(cardBrand: result.cardBrand) {
-            cvvFlow.reValidate(cvvRule: result.cardBrand?.cvvValidationRule)
+            if let cardBrand = result.cardBrand {
+                cvvFlow.updateValidationRule(with: cardBrand.cvvValidationRule)
+            } else {
+                cvvFlow.resetValidationRule()
+            }
+            
+            cvvFlow.revalidate()
         }
         
         panValidationStateHandler.handlePanValidation(isValid: result.isValid, cardBrand: result.cardBrand)

@@ -1,5 +1,4 @@
-// TODO: rename into AccessCheckoutCardValidationDelegate
-public protocol AccessCardDelegate {
+public protocol AccessCheckoutCardValidationDelegate {
     func handleCardBrandChange(cardBrand: CardBrandClient?)
     
     func handlePanValidationChange(isValid: Bool)

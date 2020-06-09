@@ -123,6 +123,8 @@ extension ExpiryDateView: UITextFieldDelegate {
         default:
             return
         }
+        
+        presenter?.onEditEnd(monthText: monthTextField.text!, yearText: yearTextField.text!)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

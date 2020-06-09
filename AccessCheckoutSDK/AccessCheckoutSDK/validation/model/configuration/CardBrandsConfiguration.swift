@@ -1,10 +1,8 @@
 struct CardBrandsConfiguration {
     let brands: [CardBrandModel]
-    let validationRulesDefaults: ValidationRulesDefaults
     
-    init(_ brands: [CardBrandModel], _ validationRulesDefaults: ValidationRulesDefaults) {
+    init(_ brands: [CardBrandModel]) {
         self.brands = brands
-        self.validationRulesDefaults = validationRulesDefaults
     }
     
     func cardBrand(forPan pan: PAN) -> CardBrandModel? {
@@ -17,7 +15,7 @@ struct CardBrandsConfiguration {
     
     func panValidationRule(using cardBrand: CardBrandModel?) -> ValidationRule {
         guard let cardBrand = cardBrand else {
-            return validationRulesDefaults.pan
+            return ValidationRulesDefaults.instance().pan
         }
         
         return cardBrand.panValidationRule

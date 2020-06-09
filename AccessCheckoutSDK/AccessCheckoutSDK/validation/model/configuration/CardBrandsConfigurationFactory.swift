@@ -23,12 +23,11 @@ class CardBrandsConfigurationFactory {
                 brands = []
             }
             
-            let configuration = CardBrandsConfiguration(brands, ValidationRulesDefaults.instance())
-            completionHandler(configuration)
+            completionHandler(CardBrandsConfiguration(brands))
         }
     }
     
-    func createWithDefaultsOnly() -> CardBrandsConfiguration {
-        return CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+    func emptyConfiguration() -> CardBrandsConfiguration {
+        return CardBrandsConfiguration([])
     }
 }

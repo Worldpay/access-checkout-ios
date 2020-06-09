@@ -2,14 +2,14 @@
 import Cuckoo
 import XCTest
 
-class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
+class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
     private let expiryDateView = ExpiryDateView()
     private let cvvView = CVVView()
     private let baseUrl = "a-url"
-    private let merchantDelegate = MockAccessCardDelegate()
+    private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
     private let visaBrand = CardBrandModel(
         name: "visa",
@@ -56,10 +56,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     // MARK: PAN validation tests
     
     func testMerchantDelegateIsNotifiedOfPANValidationStateChange() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: visaPan1)
         
@@ -67,10 +69,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButValidationStateDoesNotChange() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: visaPan1)
         editPan(text: visaPan2)
@@ -80,10 +84,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     
     func testMerchantDelegateIsNotifiedOfACardBrandChange() {
         let expectedCardBrand = createCardBrand(from: visaBrand)
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4")
         
@@ -91,10 +97,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButBrandRemainsTheSame() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4")
         editPan(text: "49")
@@ -106,10 +114,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
         let expectedVisaCardBrand = createCardBrand(from: visaBrand)
         let expectedMaestroCardBrand = createCardBrand(from: maestroBrand)
         
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "49369")
         verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedVisaCardBrand)
@@ -121,10 +131,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     // MARK: Expiry Date validation tests
     
     func testMerchantDelegateIsNotifiedOfExpiryDateValidationStateChange() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editExpiryDate(month: "11", year: "32")
         
@@ -132,10 +144,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     func testMerchantDelegateIsNotNotifiedWhenExpiryDateChangesButValidationStateDoesNotChange() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editExpiryDate(month: "11", year: "32")
         editExpiryDate(month: "11", year: "33")
@@ -146,10 +160,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     // MARK: Cvv validation tests
     
     func testMerchantDelegateIsNotifiedOfCvvValidationStateChanges() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editCvv(text: "123")
         
@@ -157,10 +173,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editCvv(text: "456")
         editCvv(text: "123")
@@ -169,10 +187,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     func testMerchantDelegateIsNotifiedOfAnInvalidCvvWhenThePanIsChangedAndRequiresACvvOfADifferentLength() {
-        let configuration = createConfiguration(brands: [visaBrand, amexBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, amexBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "456")
         editCvv(text: "123")
@@ -186,10 +206,12 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
         let expectedVisaCardBrand = createCardBrand(from: visaBrand)
         let expectedMaestroCardBrand = createCardBrand(from: maestroBrand)
         
-        let configuration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                          baseUrl: baseUrl, cardDelegate: merchantDelegate)
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "49369")
         editCvv(text: "123")
@@ -202,7 +224,7 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
     }
     
     private func createConfiguration(brands: [CardBrandModel]) -> CardBrandsConfiguration {
-        return CardBrandsConfiguration(brands, ValidationRulesDefaults.instance())
+        return CardBrandsConfiguration(brands)
     }
     
     private func editPan(text: String) {
@@ -232,47 +254,5 @@ class AccessCardDelegate_CardPaymentFlow_Tests: XCTestCase {
         }
         
         return CardBrandClient(name: cardBrandModel.name, images: images)
-    }
-}
-
-// TODO: put in a separate file with a different name since we're testing a different delegate
-class AccessCardDelegate_CvvOnlyFlow_Tests: XCTestCase {
-    private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
-    private var validationInitialiser: AccessCheckoutValidationInitialiser?
-    private let cvvView = CVVView()
-    private let merchantDelegate = MockAccessCvvOnlyDelegate()
-    private let configuration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
-    
-    override func setUp() {
-        validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
-        
-        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        
-        merchantDelegate.getStubbingProxy().handleCvvValidationChange(isValid: any()).thenDoNothing()
-    }
-    
-    func testMerchantDelegateIsNotifiedOfCvvValidationStateChanges() {
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(cvvView: cvvView, cvvOnlyDelegate: merchantDelegate)
-        
-        editCvv(text: "123")
-        
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
-    }
-    
-    func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        validationInitialiser!.initialise(cvvView: cvvView, cvvOnlyDelegate: merchantDelegate)
-        
-        editCvv(text: "456")
-        editCvv(text: "123")
-        
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
-    }
-    
-    private func editCvv(text: String) {
-        cvvView.textField.text = text
-        cvvView.textFieldEditingChanged(cvvView.textField)
     }
 }

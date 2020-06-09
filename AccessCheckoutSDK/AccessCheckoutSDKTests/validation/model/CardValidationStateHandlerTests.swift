@@ -20,7 +20,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
-    private let merchantDelegate = MockAccessCardDelegate()
+    private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
     override func setUp() {
         Cuckoo.stub(merchantDelegate) { stub in

@@ -1,5 +1,4 @@
 class PanValidator {
-    private var lengthValidator: LengthValidator = LengthValidator()
     private var cardBrandsConfigurationProvider: CardBrandsConfigurationProvider
     
     init(_ cardBrandsConfigurationProvider: CardBrandsConfigurationProvider) {
@@ -8,10 +7,10 @@ class PanValidator {
     
     func validate(pan: PAN) -> PanValidationResult {
         let cardBrand = cardBrandsConfigurationProvider.get().cardBrand(forPan: pan)
-        let panRule = cardBrand?.panValidationRule ?? cardBrandsConfigurationProvider.get().validationRulesDefaults.pan
+        let validationRule = cardBrand?.panValidationRule ?? ValidationRulesDefaults.instance().pan
         
         var isValid: Bool
-        if lengthValidator.validate(text: pan, againstValidationRule: panRule) {
+        if validationRule.validate(text: pan) {
             isValid = pan.isValidLuhn()
         } else {
             isValid = false

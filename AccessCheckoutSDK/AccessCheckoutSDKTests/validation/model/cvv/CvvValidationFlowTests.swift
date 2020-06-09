@@ -4,8 +4,9 @@ import XCTest
 
 class CvvValidationFlowTests: XCTestCase {
     private let cvvValidationStateHandler = MockCvvValidationStateHandler()
+    private let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [])
 
-    let cardBrand = CardBrandModel(
+    private let cardBrand = CardBrandModel(
         name: "",
         images: [],
         panValidationRule: ValidationRule(matcher: "", validLengths: []),
@@ -16,71 +17,80 @@ class CvvValidationFlowTests: XCTestCase {
         cvvValidationStateHandler.getStubbingProxy().handleCvvValidation(isValid: any()).thenDoNothing()
     }
 
-    func testShouldCallCvvValidatorThenCallStateHandlerWithResult() {
+    func testValidateValidatesCvvWithStoredValidationRuleAndCallsValidationStateHandlerWithResult() {
         let expectedResult = false
         let cvvValidator = createMockCvvValidator(thatReturns: expectedResult)
-        let cvvValidationFlow = CvvValidationFlow(
-            cvvValidator,
-            cvvValidationStateHandler
-        )
+        let cvvValidationFlow = CvvValidationFlow(cvvValidator: cvvValidator,
+                                                  cvvValidationStateHandler: cvvValidationStateHandler,
+                                                  validationRule: cvvValidationRule)
 
-        cvvValidationFlow.validate(cvv: "123", cvvRule: ValidationRule(matcher: nil, validLengths: []))
-        verify(cvvValidator).validate(cvv: "123", cvvRule: any())
+        cvvValidationFlow.validate(cvv: "123")
+
+        verify(cvvValidator).validate(cvv: "123", validationRule: cvvValidationRule)
         verify(cvvValidationStateHandler).handleCvvValidation(isValid: expectedResult)
     }
+    
+    func testValidateStoresCvv() {
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), cvvValidationStateHandler)
+        
+        cvvValidationFlow.validate(cvv: "123")
 
-    func testUpdateCvvValueWhenValidateIsCalled() {
-        let cvvValidationFlow = CvvValidationFlow(
-            cvvValidator: CvvValidator(),
-            cvvValidationStateHandler: cvvValidationStateHandler,
-            cvv: ""
-        )
-
-        cvvValidationFlow.validate(cvv: "123", cvvRule: ValidationRule(matcher: nil, validLengths: []))
         XCTAssertEqual(cvvValidationFlow.cvv, "123")
     }
 
-    func testShouldCallCvvValidatorThenCallStateHandlerWithResultAfterReValidateCalled() {
+    func testValidateUsesDefaultValidationRuleByDefault() {
+        let cvvValidator = createMockCvvValidator(thatReturns: true)
+        let cvvValidationFlow = CvvValidationFlow(cvvValidator, cvvValidationStateHandler)
+
+        cvvValidationFlow.validate(cvv: "123")
+
+        verify(cvvValidator).validate(cvv: "123", validationRule: ValidationRulesDefaults.instance().cvv)
+    }
+
+    func testUpdateValidationRuleStoresValidationRule() {
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), cvvValidationStateHandler)
+        let expectedRule = cardBrand.cvvValidationRule
+
+        cvvValidationFlow.updateValidationRule(with: expectedRule)
+
+        XCTAssertEqual(cvvValidationFlow.validationRule, expectedRule)
+    }
+
+    func testResetValidationRuleSetsValidationRuleToDefault() {
+        let cvvValidationFlow = CvvValidationFlow(
+            cvvValidator: CvvValidator(),
+            cvvValidationStateHandler: cvvValidationStateHandler,
+            validationRule: cvvValidationRule
+        )
+        let expectedRule = ValidationRulesDefaults.instance().cvv
+
+        cvvValidationFlow.resetValidationRule()
+
+        XCTAssertEqual(expectedRule, cvvValidationFlow.validationRule)
+    }
+
+    func testRevalidateValidatesUsingStoredCvvAndValidationRuleAndThenCallStateHandlerWithResult() {
         let expectedResult = false
+        let expectedCvv = "123"
+        let expectedRule = cardBrand.cvvValidationRule
         let cvvValidator = createMockCvvValidator(thatReturns: expectedResult)
         let cvvValidationFlow = CvvValidationFlow(
             cvvValidator: cvvValidator,
             cvvValidationStateHandler: cvvValidationStateHandler,
-            cvv: "123"
+            cvv: expectedCvv,
+            validationRule: expectedRule
         )
 
-        cvvValidationFlow.reValidate(cvvRule: cardBrand.cvvValidationRule)
-        verify(cvvValidator).validate(cvv: "123", cvvRule: any())
+        cvvValidationFlow.revalidate()
+
+        verify(cvvValidator).validate(cvv: expectedCvv, validationRule: expectedRule)
         verify(cvvValidationStateHandler).handleCvvValidation(isValid: expectedResult)
-    }
-
-    func testShouldUpdateCvvRuleToNewRuleWhenRevalidateIsCalled() {
-        let cvvValidationFlow = CvvValidationFlow(
-            CvvValidator(),
-            cvvValidationStateHandler
-        )
-
-        cvvValidationFlow.reValidate(cvvRule: cardBrand.cvvValidationRule)
-        XCTAssertEqual(cvvValidationFlow.cvvRule, cardBrand.cvvValidationRule)
-    }
-
-    func testShouldSetCvvRuleToDefaultIfNoNewRulePassedWhenRevalidateIsCalled() {
-        let cvvValidationFlow = CvvValidationFlow(
-            cvvValidator: CvvValidator(),
-            cvvValidationStateHandler: cvvValidationStateHandler,
-            cvvRule: cardBrand.cvvValidationRule
-        )
-
-        cvvValidationFlow.reValidate(cvvRule: nil)
-
-        // ToDo - why do we have this test? Do we need to store that rule?
-        XCTAssertEqual(cvvValidationFlow.cvvRule, ValidationRulesDefaults.instance().cvv)
     }
 
     private func createMockCvvValidator(thatReturns result: Bool) -> MockCvvValidator {
         let mock = MockCvvValidator()
 
-        mock.getStubbingProxy().validate(cvv: any(), cvvRule: any()).thenReturn(result)
+        mock.getStubbingProxy().validate(cvv: any(), validationRule: any()).thenReturn(result)
 
         return mock
     }

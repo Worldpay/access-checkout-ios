@@ -4,7 +4,7 @@ import XCTest
 
 class CvvOnlyValidationStateHandlerTests : XCTestCase {
     
-    private let accessCvvOnlyDelegate = MockAccessCvvOnlyDelegate()
+    private let accessCvvOnlyDelegate = MockAccessCheckoutCvvOnlyValidationDelegate()
     
     override func setUp() {
         Cuckoo.stub(accessCvvOnlyDelegate) { stub in

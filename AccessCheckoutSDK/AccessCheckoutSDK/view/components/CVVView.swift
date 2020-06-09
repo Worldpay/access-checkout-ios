@@ -86,9 +86,12 @@ extension CVVView: AccessCheckoutTextView {
 
 extension CVVView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if let cvv = textField.text {
-            (validationDelegate as? CVVValidationDelegate)?.notifyCompleteMatchValidation(forCvv: cvv)
+        guard let cvv = textField.text else {
+            return
         }
+        
+        (validationDelegate as? CVVValidationDelegate)?.notifyCompleteMatchValidation(forCvv: cvv)
+        presenter?.onEditing(text: cvv)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

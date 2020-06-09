@@ -16,8 +16,8 @@ class PanValidationFlowTests: XCTestCase {
         panValidationStateHandler.getStubbingProxy().handlePanValidation(isValid: any(), cardBrand: any()).thenDoNothing()
     }
     
-    func testShouldCallPanValidatorAndCallHandlerWithResult() {
-        let cvvFlow = CvvValidationFlowMock()
+    func testValidateValidatesPanAndCallsValidationStateHandlerWithResult() {
+        let cvvFlow = mockCvvFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
@@ -29,19 +29,37 @@ class PanValidationFlowTests: XCTestCase {
         verify(panValidationStateHandler).handlePanValidation(isValid: expectedResult.isValid, cardBrand: expectedResult.cardBrand)
     }
     
-    func testShouldTriggerCvvValidationIfCardBrandHasChanged() {
+    func testValidateUpdatesCvvValidationRuleAndRevalidatesCvvWhenCardBrandHasChanged() {
         let cvvFlow = mockCvvFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any()).thenReturn(true)
+        cvvFlow.getStubbingProxy().updateValidationRule(with: any()).thenDoNothing()
+        cvvFlow.getStubbingProxy().revalidate().thenDoNothing()
         
         panValidationFlow.validate(pan: "1234")
         
-        verify(cvvFlow).reValidate(cvvRule: visaBrand.cvvValidationRule)
+        verify(cvvFlow).updateValidationRule(with: visaBrand.cvvValidationRule)
+        verify(cvvFlow).revalidate()
     }
     
-    func testShouldNotTriggerCvvValidationIfCardBrandHasNotChanged() {
+    func testValidateResetsCvvValidationRuleAndRevalidatesCvvWhenCardBrandHasChangedAndNoBrandHasBeenIdentified() {
+        let cvvFlow = mockCvvFlow()
+        let expectedResult = PanValidationResult(true, nil)
+        let panValidator = createMockPanValidator(thatReturns: expectedResult)
+        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
+        panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any()).thenReturn(true)
+        cvvFlow.getStubbingProxy().resetValidationRule().thenDoNothing()
+        cvvFlow.getStubbingProxy().revalidate().thenDoNothing()
+        
+        panValidationFlow.validate(pan: "1234")
+        
+        verify(cvvFlow).resetValidationRule()
+        verify(cvvFlow).revalidate()
+    }
+    
+    func testValidateDoesNotAffectCvvValidationWhenCardBrandHasNotChanged() {
         let cvvFlow = mockCvvFlow()
         
         let expectedResult = PanValidationResult(true, visaBrand)
@@ -50,7 +68,7 @@ class PanValidationFlowTests: XCTestCase {
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any()).thenReturn(false)
         
         panValidationFlow.validate(pan: "1234")
-        verify(cvvFlow, never()).reValidate(cvvRule: any())
+        verifyNoMoreInteractions(cvvFlow)
     }
     
     private func createMockPanValidator(thatReturns result: PanValidationResult) -> MockPanValidator {
@@ -63,16 +81,13 @@ class PanValidationFlowTests: XCTestCase {
     }
     
     private func mockCardConfiguration() -> CardBrandsConfiguration {
-        return CardBrandsConfiguration([visaBrand], ValidationRulesDefaults.instance())
+        return CardBrandsConfiguration([visaBrand])
     }
     
-    // TODO: Can we use the CvvValidationFlowMock instead?
     private func mockCvvFlow() -> MockCvvValidationFlow {
-        let cvvFlow = MockCvvValidationFlow(
-            MockCvvValidator(),
-            MockCvvValidationStateHandler()
-        )
-        cvvFlow.getStubbingProxy().reValidate(cvvRule: any()).thenDoNothing()
+        let cvvFlow = MockCvvValidationFlow(MockCvvValidator(),
+                                            MockCvvValidationStateHandler())
+        cvvFlow.getStubbingProxy().revalidate().thenDoNothing()
         return cvvFlow
     }
 }

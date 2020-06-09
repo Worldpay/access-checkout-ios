@@ -23,14 +23,14 @@ import Cuckoo
     
     
     
-     override var cvvRule: ValidationRule {
+     override var validationRule: ValidationRule {
         get {
-            return cuckoo_manager.getter("cvvRule",
+            return cuckoo_manager.getter("validationRule",
                 superclassCall:
                     
-                    super.cvvRule
+                    super.validationRule
                     ,
-                defaultCall: __defaultImplStub!.cvvRule)
+                defaultCall: __defaultImplStub!.validationRule)
         }
         
     }
@@ -55,31 +55,61 @@ import Cuckoo
     
     
     
-     override func validate(cvv: CVV?, cvvRule: ValidationRule)  {
+     override func validate(cvv: CVV?)  {
         
-    return cuckoo_manager.call("validate(cvv: CVV?, cvvRule: ValidationRule)",
-            parameters: (cvv, cvvRule),
-            escapingParameters: (cvv, cvvRule),
+    return cuckoo_manager.call("validate(cvv: CVV?)",
+            parameters: (cvv),
+            escapingParameters: (cvv),
             superclassCall:
                 
-                super.validate(cvv: cvv, cvvRule: cvvRule)
+                super.validate(cvv: cvv)
                 ,
-            defaultCall: __defaultImplStub!.validate(cvv: cvv, cvvRule: cvvRule))
+            defaultCall: __defaultImplStub!.validate(cvv: cvv))
         
     }
     
     
     
-     override func reValidate(cvvRule: ValidationRule?)  {
+     override func resetValidationRule()  {
         
-    return cuckoo_manager.call("reValidate(cvvRule: ValidationRule?)",
-            parameters: (cvvRule),
-            escapingParameters: (cvvRule),
+    return cuckoo_manager.call("resetValidationRule()",
+            parameters: (),
+            escapingParameters: (),
             superclassCall:
                 
-                super.reValidate(cvvRule: cvvRule)
+                super.resetValidationRule()
                 ,
-            defaultCall: __defaultImplStub!.reValidate(cvvRule: cvvRule))
+            defaultCall: __defaultImplStub!.resetValidationRule())
+        
+    }
+    
+    
+    
+     override func revalidate()  {
+        
+    return cuckoo_manager.call("revalidate()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.revalidate()
+                ,
+            defaultCall: __defaultImplStub!.revalidate())
+        
+    }
+    
+    
+    
+     override func updateValidationRule(with rule: ValidationRule)  {
+        
+    return cuckoo_manager.call("updateValidationRule(with: ValidationRule)",
+            parameters: (rule),
+            escapingParameters: (rule),
+            superclassCall:
+                
+                super.updateValidationRule(with: rule)
+                ,
+            defaultCall: __defaultImplStub!.updateValidationRule(with: rule))
         
     }
     
@@ -92,8 +122,8 @@ import Cuckoo
 	    }
 	    
 	    
-	    var cvvRule: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockCvvValidationFlow, ValidationRule> {
-	        return .init(manager: cuckoo_manager, name: "cvvRule")
+	    var validationRule: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockCvvValidationFlow, ValidationRule> {
+	        return .init(manager: cuckoo_manager, name: "validationRule")
 	    }
 	    
 	    
@@ -102,14 +132,24 @@ import Cuckoo
 	    }
 	    
 	    
-	    func validate<M1: Cuckoo.OptionalMatchable, M2: Cuckoo.Matchable>(cvv: M1, cvvRule: M2) -> Cuckoo.ClassStubNoReturnFunction<(CVV?, ValidationRule)> where M1.OptionalMatchedType == CVV, M2.MatchedType == ValidationRule {
-	        let matchers: [Cuckoo.ParameterMatcher<(CVV?, ValidationRule)>] = [wrap(matchable: cvv) { $0.0 }, wrap(matchable: cvvRule) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "validate(cvv: CVV?, cvvRule: ValidationRule)", parameterMatchers: matchers))
+	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.ClassStubNoReturnFunction<(CVV?)> where M1.OptionalMatchedType == CVV {
+	        let matchers: [Cuckoo.ParameterMatcher<(CVV?)>] = [wrap(matchable: cvv) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "validate(cvv: CVV?)", parameterMatchers: matchers))
 	    }
 	    
-	    func reValidate<M1: Cuckoo.OptionalMatchable>(cvvRule: M1) -> Cuckoo.ClassStubNoReturnFunction<(ValidationRule?)> where M1.OptionalMatchedType == ValidationRule {
-	        let matchers: [Cuckoo.ParameterMatcher<(ValidationRule?)>] = [wrap(matchable: cvvRule) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "reValidate(cvvRule: ValidationRule?)", parameterMatchers: matchers))
+	    func resetValidationRule() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "resetValidationRule()", parameterMatchers: matchers))
+	    }
+	    
+	    func revalidate() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "revalidate()", parameterMatchers: matchers))
+	    }
+	    
+	    func updateValidationRule<M1: Cuckoo.Matchable>(with rule: M1) -> Cuckoo.ClassStubNoReturnFunction<(ValidationRule)> where M1.MatchedType == ValidationRule {
+	        let matchers: [Cuckoo.ParameterMatcher<(ValidationRule)>] = [wrap(matchable: rule) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "updateValidationRule(with: ValidationRule)", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -127,8 +167,8 @@ import Cuckoo
 	
 	    
 	    
-	    var cvvRule: Cuckoo.VerifyReadOnlyProperty<ValidationRule> {
-	        return .init(manager: cuckoo_manager, name: "cvvRule", callMatcher: callMatcher, sourceLocation: sourceLocation)
+	    var validationRule: Cuckoo.VerifyReadOnlyProperty<ValidationRule> {
+	        return .init(manager: cuckoo_manager, name: "validationRule", callMatcher: callMatcher, sourceLocation: sourceLocation)
 	    }
 	    
 	    
@@ -139,15 +179,27 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func validate<M1: Cuckoo.OptionalMatchable, M2: Cuckoo.Matchable>(cvv: M1, cvvRule: M2) -> Cuckoo.__DoNotUse<(CVV?, ValidationRule), Void> where M1.OptionalMatchedType == CVV, M2.MatchedType == ValidationRule {
-	        let matchers: [Cuckoo.ParameterMatcher<(CVV?, ValidationRule)>] = [wrap(matchable: cvv) { $0.0 }, wrap(matchable: cvvRule) { $0.1 }]
-	        return cuckoo_manager.verify("validate(cvv: CVV?, cvvRule: ValidationRule)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.__DoNotUse<(CVV?), Void> where M1.OptionalMatchedType == CVV {
+	        let matchers: [Cuckoo.ParameterMatcher<(CVV?)>] = [wrap(matchable: cvv) { $0 }]
+	        return cuckoo_manager.verify("validate(cvv: CVV?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func reValidate<M1: Cuckoo.OptionalMatchable>(cvvRule: M1) -> Cuckoo.__DoNotUse<(ValidationRule?), Void> where M1.OptionalMatchedType == ValidationRule {
-	        let matchers: [Cuckoo.ParameterMatcher<(ValidationRule?)>] = [wrap(matchable: cvvRule) { $0 }]
-	        return cuckoo_manager.verify("reValidate(cvvRule: ValidationRule?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func resetValidationRule() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("resetValidationRule()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func revalidate() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("revalidate()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func updateValidationRule<M1: Cuckoo.Matchable>(with rule: M1) -> Cuckoo.__DoNotUse<(ValidationRule), Void> where M1.MatchedType == ValidationRule {
+	        let matchers: [Cuckoo.ParameterMatcher<(ValidationRule)>] = [wrap(matchable: rule) { $0 }]
+	        return cuckoo_manager.verify("updateValidationRule(with: ValidationRule)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -156,7 +208,7 @@ import Cuckoo
  class CvvValidationFlowStub: CvvValidationFlow {
     
     
-     override var cvvRule: ValidationRule {
+     override var validationRule: ValidationRule {
         get {
             return DefaultValueRegistry.defaultValue(for: (ValidationRule).self)
         }
@@ -175,11 +227,19 @@ import Cuckoo
     
 
     
-     override func validate(cvv: CVV?, cvvRule: ValidationRule)   {
+     override func validate(cvv: CVV?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-     override func reValidate(cvvRule: ValidationRule?)   {
+     override func resetValidationRule()   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func revalidate()   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func updateValidationRule(with rule: ValidationRule)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

@@ -1,12 +1,12 @@
 class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidationStateHandler, CvvValidationStateHandler {
-    private(set) var merchantDelegate: AccessCardDelegate
+    private(set) var merchantDelegate: AccessCheckoutCardValidationDelegate
     private(set) var panValidationState = false
     private(set) var cardBrand: CardBrandModel?
     private(set) var expiryDateValidationState = false
     private(set) var cvvValidationState = false
     private let cardBrandModelTransformer: CardBrandModelTransformer
     
-    init(_ merchantDelegate: AccessCardDelegate) {
+    init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
@@ -14,26 +14,26 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
     /**
      Convenience constructors used by unit tests
      */
-    init(merchantDelegate: AccessCardDelegate, panValidationState: Bool, cardBrand: CardBrandModel?) {
+    init(merchantDelegate: AccessCheckoutCardValidationDelegate, panValidationState: Bool, cardBrand: CardBrandModel?) {
         self.merchantDelegate = merchantDelegate
         self.panValidationState = panValidationState
         self.cardBrand = cardBrand
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(merchantDelegate: AccessCardDelegate, panValidationState: Bool) {
+    init(merchantDelegate: AccessCheckoutCardValidationDelegate, panValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.panValidationState = panValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(merchantDelegate: AccessCardDelegate, expiryDateValidationState: Bool) {
+    init(merchantDelegate: AccessCheckoutCardValidationDelegate, expiryDateValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.expiryDateValidationState = expiryDateValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(merchantDelegate: AccessCardDelegate, cvvValidationState: Bool) {
+    init(merchantDelegate: AccessCheckoutCardValidationDelegate, cvvValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.cvvValidationState = cvvValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()

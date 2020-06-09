@@ -10,16 +10,17 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
         configurationProvider = CardBrandsConfigurationProvider(factory)
     }
     
-    func testReturnsConfigurationWithDefaultsOnlyWhenRemoteConfigurationIsNotNeeded() {
-        expectedConfiguration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+    // TODO - Do we need this???
+    func testReturnsEmptyConfigurationWhenRemoteConfigurationIsNotNeeded() {
+        expectedConfiguration = CardBrandsConfiguration([])
         
         let result = configurationProvider!.get()
         
         XCTAssertEqual(expectedConfiguration, result)
     }
     
-    func testReturnsConfigurationWithDefaultsOnlyWhenRemoteConfigurationHasBeenRequestedButNotYetProcessed() {
-        expectedConfiguration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+    func testReturnsEmptyConfigurationWhenRemoteConfigurationHasBeenRequestedButNotYetProcessed() {
+        expectedConfiguration = CardBrandsConfiguration([])
         
         configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url")
         let result = configurationProvider!.get()
@@ -29,11 +30,11 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
         XCTAssertEqual(expectedConfiguration, result)
     }
     
-    func testReturnsConfigurationWithBrandsAndDefaultsWhenSuccessfullyProcessedRemoteConfiguration() {
+    func testReturnsConfigurationWithBrandsWhenSuccessfullyProcessedRemoteConfiguration() {
         let cardBrand = CardBrandModel(name: "a-brand", images: [],
                                        panValidationRule: ValidationRule(matcher: "rule-1", validLengths: []),
                                        cvvValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
-        expectedConfiguration = CardBrandsConfiguration([cardBrand], ValidationRulesDefaults.instance())
+        expectedConfiguration = CardBrandsConfiguration([cardBrand])
         factory.willReturn(expectedConfiguration!)
         
         configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url")

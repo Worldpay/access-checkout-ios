@@ -13,27 +13,43 @@ public struct AccessCheckoutValidationInitialiser {
         self.configurationProvider = cardBrandsConfigurationProvider
     }
     
-    public func initialise(panView: PANView, expiryDateView: ExpiryDateView, cvvView: CVVView, baseUrl: String, cardDelegate merchantDelegate: AccessCardDelegate) {
-        configurationProvider.retrieveRemoteConfiguration(baseUrl: baseUrl)
-        
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
-        
-        let cvvFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
-        cvvView.presenter = CVVViewForCardPaymentFlowPresenter(cvvFlow)
-        
-        let panValidator = PanValidator(configurationProvider)
-        let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvvFlow)
-        panView.presenter = PanViewPresenter(panValidationFlow)
-        
-        let expiryDateValidator = ExpiryDateValidator()
-        let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
-        expiryDateView.presenter = ExpiryDateViewPresenter(expiryDateValidationFlow)
+    public func initialise(_ validationConfiguration: ValidationConfig) {
+        if validationConfiguration is CardValidationConfig {
+            initialiseForCardPaymentFlow(validationConfiguration as! CardValidationConfig)
+        } else if validationConfiguration is CvvOnlyValidationConfig {
+            initialiseForCvvOnlyFlow(validationConfiguration as! CvvOnlyValidationConfig)
+        }
     }
     
-    public func initialise(cvvView: CVVView, cvvOnlyDelegate merchantDelegate: AccessCvvOnlyDelegate) {
-        // Rename merchant delegate anywhere where possible
-        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate)
-        let cvvFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
-        cvvView.presenter = CVVViewForCvvOnlyFlowPresenter(cvvFlow)
+    private func initialiseForCardPaymentFlow(_ config: CardValidationConfig) {
+        configurationProvider.retrieveRemoteConfiguration(baseUrl: config.accessBaseUrl)
+        
+        let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
+        
+        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow)
+        config.panView.presenter = panViewPresenter(configurationProvider, cvvValidationFlow, validationStateHandler)
+        config.expiryDateView.presenter = expiryDateViewPresenter(validationStateHandler)
+    }
+    
+    private func initialiseForCvvOnlyFlow(_ config: CvvOnlyValidationConfig) {
+        let validationStateHandler = CvvOnlyValidationStateHandler(config.validationDelegate)
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
+        
+        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow)
+    }
+    
+    private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
+                                  _ cvvValidationFlow: CvvValidationFlow,
+                                  _ validationStateHandler: PanValidationStateHandler) -> PanViewPresenter {
+        let panValidator = PanValidator(configurationProvider)
+        let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
+        return PanViewPresenter(panValidationFlow)
+    }
+    
+    private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {
+        let expiryDateValidator = ExpiryDateValidator()
+        let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
+        return ExpiryDateViewPresenter(expiryDateValidationFlow)
     }
 }

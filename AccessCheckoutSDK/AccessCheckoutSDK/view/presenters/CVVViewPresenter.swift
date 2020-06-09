@@ -1,7 +1,18 @@
-protocol CVVViewPresenter {
-    func onEditing(text: String?)
+class CVVViewPresenter {
+    private let validationFlow: CvvValidationFlow
     
-    func onEditEnd(text: String?)
+    // TODO: tidy up in various initialisers
+    init(_ validationFlow: CvvValidationFlow) {
+        self.validationFlow = validationFlow
+    }
     
-    func canChangeText(text: String?, with: String, using range: NSRange)
+    func onEditing(text: String?) {
+        validationFlow.validate(cvv: text)
+    }
+    
+    func onEditEnd(text: String?) {
+        validationFlow.validate(cvv: text)
+    }
+    
+    func canChangeText(text: String?, with: String, using range: NSRange) {}
 }

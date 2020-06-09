@@ -1,7 +1,8 @@
 class CvvValidationFlow {
     private let cvvValidator: CvvValidator
     private let cvvValidationStateHandler: CvvValidationStateHandler
-    private(set) var cvvRule: ValidationRule = ValidationRulesDefaults.instance().cvv
+    
+    private(set) var validationRule: ValidationRule = ValidationRulesDefaults.instance().cvv
     private(set) var cvv: CVV?
     
     init(_ cvvValidator: CvvValidator, _ cvvValidationStateHandler: CvvValidationStateHandler) {
@@ -18,20 +19,35 @@ class CvvValidationFlow {
         self.cvv = cvv
     }
     
-    init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler, cvvRule: ValidationRule) {
+    init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler, validationRule: ValidationRule) {
         self.cvvValidator = cvvValidator
         self.cvvValidationStateHandler = cvvValidationStateHandler
-        self.cvvRule = cvvRule
+        self.validationRule = validationRule
     }
     
-    func validate(cvv: CVV?, cvvRule: ValidationRule) {
+    init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler, cvv: CVV, validationRule: ValidationRule) {
+        self.cvvValidator = cvvValidator
+        self.cvvValidationStateHandler = cvvValidationStateHandler
         self.cvv = cvv
-        let result = cvvValidator.validate(cvv: cvv, cvvRule: cvvRule)
+        self.validationRule = validationRule
+    }
+    
+    func validate(cvv: CVV?) {
+        self.cvv = cvv
+        let result = cvvValidator.validate(cvv: cvv, validationRule: validationRule)
         cvvValidationStateHandler.handleCvvValidation(isValid: result)
     }
     
-    func reValidate(cvvRule: ValidationRule?) {
-        self.cvvRule = cvvRule ?? ValidationRulesDefaults.instance().cvv
-        validate(cvv: cvv, cvvRule: self.cvvRule)
+    func resetValidationRule() {
+        self.validationRule = ValidationRulesDefaults.instance().cvv
+    }
+    
+    func revalidate() {
+        let result = cvvValidator.validate(cvv: cvv, validationRule: validationRule)
+        cvvValidationStateHandler.handleCvvValidation(isValid: result)
+    }
+    
+    func updateValidationRule(with rule: ValidationRule) {
+        validationRule = rule
     }
 }

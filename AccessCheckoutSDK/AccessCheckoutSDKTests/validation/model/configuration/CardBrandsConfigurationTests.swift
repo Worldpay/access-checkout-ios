@@ -5,7 +5,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     func testReturnsCardBrandMatchingPan() {
         let cardBrandStartingWith3 = createCardBrand(panMatcherPattern: "^3\\d*?")
         let cardBrandStartingWith4 = createCardBrand(panMatcherPattern: "^4\\d*?")
-        let configuration = CardBrandsConfiguration([cardBrandStartingWith3, cardBrandStartingWith4], ValidationRulesDefaults.instance())
+        let configuration = CardBrandsConfiguration([cardBrandStartingWith3, cardBrandStartingWith4])
         
         let resultForPanStartingWith3 = configuration.cardBrand(forPan: "3321")
         let resultForPanStartingWith4 = configuration.cardBrand(forPan: "4321")
@@ -15,7 +15,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     }
     
     func testReturnsNoCardBrandIfNoCardBrandsConfigured() {
-        let configuration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+        let configuration = CardBrandsConfiguration([])
         
         let result = configuration.cardBrand(forPan: "1234")
         
@@ -24,7 +24,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     
     func testReturnsNoCardBrandIfNoMatchingValidationRuleFound() {
         let cardBrand = createCardBrand(panMatcherPattern: "^3\\d*?")
-        let configuration = CardBrandsConfiguration([cardBrand], ValidationRulesDefaults.instance())
+        let configuration = CardBrandsConfiguration([cardBrand])
         
         let result = configuration.cardBrand(forPan: "1234")
         
@@ -34,7 +34,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     func testReturnsPanValidationRuleCorrespondingToCardBrand() {
         let expectedPanValidationRule = ValidationRule(matcher: "1234", validLengths: [1, 2])
         let cardBrand = createCardBrand(panValidationRule: expectedPanValidationRule)
-        let configuration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+        let configuration = CardBrandsConfiguration([])
         
         let result = configuration.panValidationRule(using: cardBrand)
         
@@ -42,7 +42,7 @@ class CardBrandsConfigurationTests: XCTestCase {
     }
     
     func testReturnsDefaultPanValidationRuleIfCardBrandIsNil() {
-        let configuration = CardBrandsConfiguration([], ValidationRulesDefaults.instance())
+        let configuration = CardBrandsConfiguration([])
         
         let result = configuration.panValidationRule(using: nil)
         

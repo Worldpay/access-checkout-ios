@@ -1,6 +1,4 @@
 class ExpiryDateValidator {
-    let lengthValidator = LengthValidator()
-    
     func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) -> Bool {
         guard let month = expiryMonth, let year = expiryYear else {
             return false
@@ -13,11 +11,7 @@ class ExpiryDateValidator {
         let monthRule = ValidationRulesDefaults.instance().expiryMonth
         let yearRule = ValidationRulesDefaults.instance().expiryYear
         
-        if !lengthValidator.validate(text: month, againstValidationRule: monthRule) {
-            return false
-        }
-        
-        if !lengthValidator.validate(text: year, againstValidationRule: yearRule) {
+        if !monthRule.validate(text: month) || !yearRule.validate(text: year) {
             return false
         }
         

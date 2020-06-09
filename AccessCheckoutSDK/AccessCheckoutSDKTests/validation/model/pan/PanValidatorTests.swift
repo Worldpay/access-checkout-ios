@@ -86,10 +86,10 @@ class PanValidatorTests: XCTestCase {
     }
     
     func createConfiguration(withBrand brand: CardBrandModel) -> CardBrandsConfiguration {
-        return CardBrandsConfiguration([brand], ValidationRulesDefaults.instance())
+        return CardBrandsConfiguration([brand])
     }
     
     func createConfiguration(withBrands brands: [CardBrandModel]) -> CardBrandsConfiguration {
-        return CardBrandsConfiguration(brands, ValidationRulesDefaults.instance())
+        return CardBrandsConfiguration(brands)
     }
 }

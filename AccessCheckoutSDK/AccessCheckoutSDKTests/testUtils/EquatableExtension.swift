@@ -67,7 +67,6 @@ extension CardBrandImageDto: Equatable {
 extension CardBrandsConfiguration: Equatable {
     public static func == (lhs: CardBrandsConfiguration, rhs: CardBrandsConfiguration) -> Bool {
         return lhs.brands == rhs.brands
-            && lhs.validationRulesDefaults == rhs.validationRulesDefaults
     }
 }
 

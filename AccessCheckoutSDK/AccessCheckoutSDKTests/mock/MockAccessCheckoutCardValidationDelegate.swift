@@ -2,19 +2,19 @@ import Cuckoo
 @testable import AccessCheckoutSDK
 
 
-public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
+public class MockAccessCheckoutCardValidationDelegate: AccessCheckoutCardValidationDelegate, Cuckoo.ProtocolMock {
     
-    public typealias MocksType = AccessCardDelegate
+    public typealias MocksType = AccessCheckoutCardValidationDelegate
     
-    public typealias Stubbing = __StubbingProxy_AccessCardDelegate
-    public typealias Verification = __VerificationProxy_AccessCardDelegate
+    public typealias Stubbing = __StubbingProxy_AccessCheckoutCardValidationDelegate
+    public typealias Verification = __VerificationProxy_AccessCheckoutCardValidationDelegate
 
     public let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
 
     
-    private var __defaultImplStub: AccessCardDelegate?
+    private var __defaultImplStub: AccessCheckoutCardValidationDelegate?
 
-    public func enableDefaultImplementation(_ stub: AccessCardDelegate) {
+    public func enableDefaultImplementation(_ stub: AccessCheckoutCardValidationDelegate) {
         __defaultImplStub = stub
         cuckoo_manager.enableDefaultStubImplementation()
     }
@@ -86,7 +86,7 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
     }
     
 
-	public struct __StubbingProxy_AccessCardDelegate: Cuckoo.StubbingProxy {
+	public struct __StubbingProxy_AccessCheckoutCardValidationDelegate: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	
 	    public init(manager: Cuckoo.MockManager) {
@@ -96,27 +96,27 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
 	    
 	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(CardBrandClient?)> where M1.OptionalMatchedType == CardBrandClient {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandClient?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handleCardBrandChange(cardBrand: CardBrandClient?)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleCardBrandChange(cardBrand: CardBrandClient?)", parameterMatchers: matchers))
 	    }
 	    
 	    func handlePanValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handlePanValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handlePanValidationChange(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	    func handleExpiryDateValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCardDelegate.self, method: "handleExpiryDateValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleExpiryDateValidationChange(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
 	}
 
-	public struct __VerificationProxy_AccessCardDelegate: Cuckoo.VerificationProxy {
+	public struct __VerificationProxy_AccessCheckoutCardValidationDelegate: Cuckoo.VerificationProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	    private let callMatcher: Cuckoo.CallMatcher
 	    private let sourceLocation: Cuckoo.SourceLocation
@@ -157,7 +157,7 @@ public class MockAccessCardDelegate: AccessCardDelegate, Cuckoo.ProtocolMock {
 	}
 }
 
-public class AccessCardDelegateStub: AccessCardDelegate {
+public class AccessCheckoutCardValidationDelegateStub: AccessCheckoutCardValidationDelegate {
     
 
     
