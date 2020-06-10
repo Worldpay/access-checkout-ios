@@ -20,6 +20,6 @@ class PanViewPresenter {
         if text.isEmpty {
             return true
         }
-        return validator.canValidate(pan: text)
+        return validator.canValidate(text)
     }
 }

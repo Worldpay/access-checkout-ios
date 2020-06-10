@@ -4,64 +4,76 @@ import XCTest
 class ValidationRuleTests: XCTestCase {
     // MARK: validate()
     
-    func testValidateShouldReturnFalseIfTextIsEmpty() {
+    func testValidateReturnsFalseIfTextIsEmpty() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
         XCTAssertFalse(validationRule.validate(text: ""))
     }
     
-    func testValidateShouldReturnFalseIfTextDoesNotMatchRegex() {
+    func testValidateReturnsFalseIfTextDoesNotMatchRegex() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
         XCTAssertFalse(validationRule.validate(text: "abc"))
     }
     
-    func testValidateShouldReturnTrueIfTextMatchesRegexAndValidLengthsIsEmpty() {
+    func testValidateReturnsTrueIfTextMatchesRegexAndValidLengthsIsEmpty() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [])
         
         XCTAssertTrue(validationRule.validate(text: "123"))
     }
     
-    func testValidateShouldReturnTrueIfTextMatchesRegexAndIsEqualToAValidLength() {
+    func testValidateReturnsTrueIfTextMatchesRegexAndIsEqualToAValidLength() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
         XCTAssertTrue(validationRule.validate(text: "4111111111111111"))
     }
     
-    func testValidateShouldReturnFalseIfTextMatchesRegexAndIsShorterThanAValidLength() {
+    func testValidateReturnsFalseIfTextMatchesRegexAndIsShorterThanAValidLength() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
         XCTAssertFalse(validationRule.validate(text: "41111111"))
     }
     
-    // MARK: textIsMatched()
-    
-    func testTextIsMatchedReturnTrueWhenTextIsMatchedByMatcher() {
-        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
+    func testValidateReturnsFalseIfMatcherIsEmptyAndTextIsEqualToAValidLength() {
+        let validationRule = ValidationRule(matcher: "", validLengths: [3])
         
-        XCTAssertTrue(validationRule.textIsMatched("123"))
+        XCTAssertFalse(validationRule.validate(text: "123"))
     }
     
-    func testTextIsMatchedReturnFalseWhenTextIsNotMatchedByMatcher() {
-        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
+    func testValidateReturnsFalseIfMatcherIsNilAndTextIsShorterThanAValidLength() {
+        let validationRule = ValidationRule(matcher: nil, validLengths: [3, 4])
+        
+        XCTAssertFalse(validationRule.validate(text: "12"))
+    }
+    
+    func testValidateReturnsTrueIfMatcherIsNilAndTextIsEqualToAValidLength() {
+        let validationRule = ValidationRule(matcher: nil, validLengths: [3, 4])
+        
+        XCTAssertTrue(validationRule.validate(text: "123"))
+    }
+    
+    // MARK: textIsMatched()
+    
+    func testTextIsMatchedReturnsTrueWhenTextIsMatchedByMatcherButNotAsLongAsOneOfTheValidLengths() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3])
+        
+        XCTAssertTrue(validationRule.textIsMatched("12"))
+    }
+    
+    func testTextIsMatchedReturnsFalseWhenTextIsNotMatchedByMatcher() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3])
         
         XCTAssertFalse(validationRule.textIsMatched("abc"))
     }
     
-    func testTextIsMatchedReturnFalseWhenTextIsEmpty() {
-        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
+    func testTextIsMatchedReturnsTrueWhenThereIsNoMatcher() {
+        let validationRule = ValidationRule(matcher: nil, validLengths: [3])
         
-        XCTAssertFalse(validationRule.textIsMatched(""))
+        XCTAssertTrue(validationRule.textIsMatched("12"))
     }
     
-    func testTextIsMatchedReturnFalseWhenThereIsNoMatcher() {
-        let validationRule = ValidationRule(matcher: nil, validLengths: [16, 18])
-        
-        XCTAssertFalse(validationRule.textIsMatched("123"))
-    }
-    
-    func testTextIsMatchedReturnFalseWhenMatcherIsEmpty() {
-        let validationRule = ValidationRule(matcher: "", validLengths: [16, 18])
+    func testTextIsMatchedReturnsFalseWhenMatcherIsEmptyAndTextIsNotEmpty() {
+        let validationRule = ValidationRule(matcher: "", validLengths: [3])
         
         XCTAssertFalse(validationRule.textIsMatched("123"))
     }

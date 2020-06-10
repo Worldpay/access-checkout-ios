@@ -2,59 +2,95 @@
 import XCTest
 
 class CvvValidatorTests: XCTestCase {
-    private let cvvValidator = CvvValidator()
-    let cvvValidationRule = ValidationRulesDefaults.instance().cvv
+    private let validator = CvvValidator()
+    private let defaultCvvValidationRule = ValidationRulesDefaults.instance().cvv
 
-    func testShouldReturnFalseIfCvvIsEmpty() {
-        XCTAssertFalse(cvvValidator.validate(cvv: "", validationRule: cvvValidationRule))
+    // MARK: validate()
+
+    func testValidateReturnsFalseIfCvvIsEmpty() {
+        XCTAssertFalse(validator.validate(cvv: "", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsNil() {
-        XCTAssertFalse(cvvValidator.validate(cvv: nil, validationRule: cvvValidationRule))
+    func testValidateReturnsFalseIfCvvIsNil() {
+        XCTAssertFalse(validator.validate(cvv: nil, validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsLessThan3Digits() {
-        XCTAssertFalse(cvvValidator.validate(cvv: "12", validationRule: cvvValidationRule))
+    func testValidateReturnsFalseIfCvvIsLessThan3Digits() {
+        XCTAssertFalse(validator.validate(cvv: "12", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsInvalidAgainstMatcher() {
-        XCTAssertFalse(cvvValidator.validate(cvv: "aaa", validationRule: cvvValidationRule))
+    func testValidateReturnsFalseIfCvvIsInvalidAgainstMatcher() {
+        XCTAssertFalse(validator.validate(cvv: "aaa", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnTrueIfCvvIsThreeDigitsWithNoPan() {
-        XCTAssertTrue(cvvValidator.validate(cvv: "123", validationRule: cvvValidationRule))
+    func testValidateReturnsTrueIfCvvIsThreeDigitsWithNoPan() {
+        XCTAssertTrue(validator.validate(cvv: "123", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnTrueIfCvvIsFourDigitsWithNoPan() {
-        XCTAssertTrue(cvvValidator.validate(cvv: "123", validationRule: cvvValidationRule))
+    func testValidateReturnsTrueIfCvvIsFourDigitsWithNoPan() {
+        XCTAssertTrue(validator.validate(cvv: "123", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsThreeDigitsWithAmexPan() {
+    func testValidateReturnsFalseIfCvvIsThreeDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvvLength: 4)
 
-        XCTAssertFalse(cvvValidator.validate(cvv: "123", validationRule: cardBrandWith4Digits.cvvValidationRule))
+        XCTAssertFalse(validator.validate(cvv: "123", validationRule: cardBrandWith4Digits.cvvValidationRule))
     }
 
-    func testShouldReturntrueIfCvvIsThreeDigitsWithVisaPan() {
+    func testValidateReturnstrueIfCvvIsThreeDigitsWithVisaPan() {
         let cardBrandWith3Digits = createCardBrand(cvvLength: 3)
 
-        XCTAssertTrue(cvvValidator.validate(cvv: "123", validationRule: cardBrandWith3Digits.cvvValidationRule))
+        XCTAssertTrue(validator.validate(cvv: "123", validationRule: cardBrandWith3Digits.cvvValidationRule))
     }
 
-    func testShouldReturnTrueIfCvvIsFourDigitsWithAmexPan() {
+    func testValidateReturnsTrueIfCvvIsFourDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvvLength: 4)
 
-        XCTAssertTrue(cvvValidator.validate(cvv: "1234", validationRule: cardBrandWith4Digits.cvvValidationRule))
+        XCTAssertTrue(validator.validate(cvv: "1234", validationRule: cardBrandWith4Digits.cvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsLongerThanFourDigitsWithEmptyPan() {
-        XCTAssertFalse(cvvValidator.validate(cvv: "12345", validationRule: cvvValidationRule))
+    func testValidateReturnsFalseIfCvvIsLongerThanFourDigitsWithEmptyPan() {
+        XCTAssertFalse(validator.validate(cvv: "12345", validationRule: defaultCvvValidationRule))
     }
 
-    func testShouldReturnFalseIfCvvIsLongerThanFourDigitsWithAmexPan() {
+    func testValidateReturnsFalseIfCvvIsLongerThanFourDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvvLength: 4)
 
-        XCTAssertFalse(cvvValidator.validate(cvv: "12345", validationRule: cardBrandWith4Digits.cvvValidationRule))
+        XCTAssertFalse(validator.validate(cvv: "12345", validationRule: cardBrandWith4Digits.cvvValidationRule))
+    }
+
+    // MARK: canValidate()
+
+    func testCanValidateDoesNotAllowsTextThatDoesNotMatchPattern() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3, 4])
+
+        let result = validator.canValidate("abc", using: validationRule)
+
+        XCTAssertFalse(result)
+    }
+
+    func testCanValidateAllowsPartialCvvMatchingPattern() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3, 4])
+
+        let result = validator.canValidate("12", using: validationRule)
+
+        XCTAssertTrue(result)
+    }
+
+    func testCanValidateAllowsCvvAsLongAsMaxLength() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3, 4])
+
+        let result = validator.canValidate("1234", using: validationRule)
+
+        XCTAssertTrue(result)
+    }
+
+    func testCanValidateDoesNotAllowPanLongerThanMaxLength() {
+        let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3, 4])
+
+        let result = validator.canValidate("12345", using: validationRule)
+
+        XCTAssertFalse(result)
     }
 
     private func createCardBrand(cvvLength: Int) -> CardBrandModel {

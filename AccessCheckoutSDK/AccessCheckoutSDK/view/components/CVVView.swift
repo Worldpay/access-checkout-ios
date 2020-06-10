@@ -20,6 +20,8 @@ import UIKit
     
     var presenter: CVVViewPresenter?
     
+    private let textChangeHandler:TextChangeHandler = TextChangeHandler()
+    
     /// Initialize CVVView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -95,6 +97,11 @@ extension CVVView: UITextFieldDelegate {
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let presenter = presenter {
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+            return presenter.canChangeText(with: resultingText)
+        }
+        
         return (validationDelegate as? CVVValidationDelegate)?.canUpdate(cvv: textField.text, withText: string, inRange: range) ?? false
     }
 }

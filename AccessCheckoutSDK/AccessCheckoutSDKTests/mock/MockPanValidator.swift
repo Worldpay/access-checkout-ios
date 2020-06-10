@@ -42,16 +42,16 @@ import Cuckoo
     
     
     
-     override func canValidate(pan: PAN) -> Bool {
+     override func canValidate(_ pan: PAN) -> Bool {
         
-    return cuckoo_manager.call("canValidate(pan: PAN) -> Bool",
+    return cuckoo_manager.call("canValidate(_: PAN) -> Bool",
             parameters: (pan),
             escapingParameters: (pan),
             superclassCall:
                 
-                super.canValidate(pan: pan)
+                super.canValidate(pan)
                 ,
-            defaultCall: __defaultImplStub!.canValidate(pan: pan))
+            defaultCall: __defaultImplStub!.canValidate(pan))
         
     }
     
@@ -69,9 +69,9 @@ import Cuckoo
 	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidator.self, method: "validate(pan: PAN) -> PanValidationResult", parameterMatchers: matchers))
 	    }
 	    
-	    func canValidate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.ClassStubFunction<(PAN), Bool> where M1.MatchedType == PAN {
+	    func canValidate<M1: Cuckoo.Matchable>(_ pan: M1) -> Cuckoo.ClassStubFunction<(PAN), Bool> where M1.MatchedType == PAN {
 	        let matchers: [Cuckoo.ParameterMatcher<(PAN)>] = [wrap(matchable: pan) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidator.self, method: "canValidate(pan: PAN) -> Bool", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidator.self, method: "canValidate(_: PAN) -> Bool", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -97,9 +97,9 @@ import Cuckoo
 	    }
 	    
 	    @discardableResult
-	    func canValidate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.__DoNotUse<(PAN), Bool> where M1.MatchedType == PAN {
+	    func canValidate<M1: Cuckoo.Matchable>(_ pan: M1) -> Cuckoo.__DoNotUse<(PAN), Bool> where M1.MatchedType == PAN {
 	        let matchers: [Cuckoo.ParameterMatcher<(PAN)>] = [wrap(matchable: pan) { $0 }]
-	        return cuckoo_manager.verify("canValidate(pan: PAN) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("canValidate(_: PAN) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -115,7 +115,7 @@ import Cuckoo
         return DefaultValueRegistry.defaultValue(for: (PanValidationResult).self)
     }
     
-     override func canValidate(pan: PAN) -> Bool  {
+     override func canValidate(_ pan: PAN) -> Bool  {
         return DefaultValueRegistry.defaultValue(for: (Bool).self)
     }
     

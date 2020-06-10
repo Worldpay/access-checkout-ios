@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
-import XCTest
 import Cuckoo
+import XCTest
 
 class ExpiryDateViewTests: XCTestCase {
     private let visaBrand = CardBrandModel(
@@ -13,6 +13,7 @@ class ExpiryDateViewTests: XCTestCase {
     let expiryDateView = ExpiryDateView()
     
     // MARK: Month
+    
     func testCanClearMonth() {
         initialiseValidation(expiryDateView: expiryDateView)
         XCTAssertTrue(typeMonth("", into: expiryDateView))
@@ -27,7 +28,7 @@ class ExpiryDateViewTests: XCTestCase {
     
     func testCanTypeStartOfMonth() {
         initialiseValidation(expiryDateView: expiryDateView)
-                let result = typeMonth("1", into: expiryDateView)
+        let result = typeMonth("1", into: expiryDateView)
         
         XCTAssertTrue(result)
     }
@@ -49,6 +50,7 @@ class ExpiryDateViewTests: XCTestCase {
     }
     
     // MARK: Year
+    
     func testCanClearYear() {
         initialiseValidation(expiryDateView: expiryDateView)
         XCTAssertTrue(typeYear("", into: expiryDateView))
@@ -94,13 +96,13 @@ class ExpiryDateViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func typeMonth(_ text: String, into view: ExpiryDateView) -> Bool {
+    private func typeMonth(_ text: String, into view: ExpiryDateView) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
         return view.textField(view.monthTextField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
-    func typeYear(_ text: String, into view: ExpiryDateView) -> Bool {
+    private func typeYear(_ text: String, into view: ExpiryDateView) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
         return view.textField(view.yearTextField, shouldChangeCharactersIn: range, replacementString: text)
@@ -111,7 +113,7 @@ class ExpiryDateViewTests: XCTestCase {
         let configurationProvider = createConfigurationProvider(with: [visaBrand])
         
         let validationConfig = CardValidationConfig(panView: PANView(),
-                                                    expiryDateView:expiryDateView,
+                                                    expiryDateView: expiryDateView,
                                                     cvvView: CVVView(),
                                                     accessBaseUrl: "http://localhost",
                                                     validationDelegate: merchantDelegate)

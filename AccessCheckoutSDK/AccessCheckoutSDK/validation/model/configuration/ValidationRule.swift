@@ -19,19 +19,16 @@ struct ValidationRule {
         if validLengths.isEmpty {
             return true
         }
+        
         return validLengths.contains(text.count)
     }
     
     func textIsMatched(_ text: String) -> Bool {
-        guard !text.isEmpty else {
-            return false
+        guard let matcher = matcher else {
+            return true
         }
         
-        if let matcher = matcher, !matcher.isEmpty {
-            return matcher.regexMatches(text: text)
-        } else {
-            return false
-        }
+        return matcher.regexMatches(text: text)
     }
     
     func textIsShorterOrAsLongAsMaxLength(_ text: String) -> Bool {

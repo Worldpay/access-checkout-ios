@@ -8,9 +8,9 @@ class PanViewPresenterTests: XCTestCase {
 
     override func setUp() {
         panValidationFlow.getStubbingProxy().validate(pan: any()).thenDoNothing()
-        panValidator.getStubbingProxy().canValidate(pan: any()).thenReturn(true)
+        panValidator.getStubbingProxy().canValidate(any()).thenReturn(true)
     }
-    
+
     func testOnEditingValidatesPan() {
         let pan = "123"
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
@@ -35,7 +35,7 @@ class PanViewPresenterTests: XCTestCase {
 
         _ = presenter.canChangeText(with: text)
 
-        verify(panValidator).canValidate(pan: text)
+        verify(panValidator).canValidate(text)
         verifyNoMoreInteractions(panValidationFlow)
     }
 

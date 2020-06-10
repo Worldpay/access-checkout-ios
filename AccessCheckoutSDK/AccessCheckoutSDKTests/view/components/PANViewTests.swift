@@ -13,19 +13,19 @@ class PANViewTests: XCTestCase {
     let panView = PANView()
     
     func testCanClearText() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         XCTAssertTrue(type("", into: panView))
     }
     
     func testCannotTypeNonNumericalCharacters() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         
         XCTAssertFalse(type("abc", into: panView))
         XCTAssertFalse(type("+*-", into: panView))
     }
     
     func testCanTypeValidVisaPan() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         
         let result = type("4111111111111111", into: panView)
         
@@ -33,7 +33,7 @@ class PANViewTests: XCTestCase {
     }
     
     func testCanTypeVisaPanThatFailsLuhnCheck() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         
         let result = type("4111111111111112", into: panView)
         
@@ -41,7 +41,7 @@ class PANViewTests: XCTestCase {
     }
     
     func testCanTypeVisaPanAsLongAsMaxLengthAllowed() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         
         let result = type("4111111111111111111", into: panView)
         
@@ -49,7 +49,7 @@ class PANViewTests: XCTestCase {
     }
     
     func testCannotTypeVisaPanThatExceedsMaximiumLength() {
-        setUp(cardBrands: [visaBrand], panView: panView)
+        initialiseValidation(cardBrands: [visaBrand], panView: panView)
         
         let result = type("41111111111111111111", into: panView)
         
@@ -57,7 +57,7 @@ class PANViewTests: XCTestCase {
     }
     
     func testCanTypePanOfUnknownBrandAsLongAsMaxLengthAllowed() {
-        setUp(cardBrands: [], panView: panView)
+        initialiseValidation(cardBrands: [], panView: panView)
         
         let result = type("1234567890123456789", into: panView)
         
@@ -65,20 +65,20 @@ class PANViewTests: XCTestCase {
     }
     
     func testCannotTypePanOfUnknownBrandThatExceedsMaximiumLength() {
-        setUp(cardBrands: [], panView: panView)
+        initialiseValidation(cardBrands: [], panView: panView)
         
         let result = type("12345678901234567890", into: panView)
         
         XCTAssertFalse(result)
     }
     
-    func type(_ text: String, into view: PANView) -> Bool {
+    private func type(_ text: String, into view: PANView) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
         return view.textField(view.textField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
-    func setUp(cardBrands: [CardBrandModel], panView: PANView) {
+    private func initialiseValidation(cardBrands: [CardBrandModel], panView: PANView) {
         let expiryDateview = ExpiryDateView()
         let cvvView = CVVView()
         let merchantDelegate = createMerchantDelegate()
@@ -94,7 +94,7 @@ class PANViewTests: XCTestCase {
         AccessCheckoutValidationInitialiser(configurationProvider).initialise(validationConfig)
     }
     
-    func createConfigurationProvider(with cardBrands: [CardBrandModel]) -> CardBrandsConfigurationProvider {
+    private func createConfigurationProvider(with cardBrands: [CardBrandModel]) -> CardBrandsConfigurationProvider {
         let configurationFactory = CardBrandsConfigurationFactoryMock()
         
         let configurationProvider: MockCardBrandsConfigurationProvider = MockCardBrandsConfigurationProvider(configurationFactory)
@@ -104,7 +104,7 @@ class PANViewTests: XCTestCase {
         return configurationProvider
     }
     
-    func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
+    private func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().handleCardBrandChange(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
