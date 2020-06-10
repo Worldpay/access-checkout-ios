@@ -1,10 +1,10 @@
 class PanViewPresenter {
     private let validationFlow: PanValidationFlow
-    private let panValidator: PanValidator
+    private let validator: PanValidator
     
     init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator) {
         self.validationFlow = validationFlow
-        self.panValidator = panValidator
+        self.validator = panValidator
     }
     
     // TODO: - what do we do when text is null or empty?
@@ -20,6 +20,6 @@ class PanViewPresenter {
         if text.isEmpty {
             return true
         }
-        return panValidator.canValidate(pan: text)
+        return validator.canValidate(pan: text)
     }
 }

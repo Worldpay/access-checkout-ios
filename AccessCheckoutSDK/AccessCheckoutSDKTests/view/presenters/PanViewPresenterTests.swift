@@ -3,11 +3,16 @@ import Cuckoo
 import XCTest
 
 class PanViewPresenterTests: XCTestCase {
+    private let panValidator = mockPanValidator()
+    private let panValidationFlow = mockPanValidationFlow()
+
+    override func setUp() {
+        panValidationFlow.getStubbingProxy().validate(pan: any()).thenDoNothing()
+        panValidator.getStubbingProxy().canValidate(pan: any()).thenReturn(true)
+    }
+    
     func testOnEditingValidatesPan() {
         let pan = "123"
-        let panValidator = mockPanValidator()
-        let panValidationFlow = mockPanValidationFlow()
-        panValidationFlow.getStubbingProxy().validate(pan: any()).thenDoNothing()
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
 
         presenter.onEditing(text: pan)
@@ -17,9 +22,6 @@ class PanViewPresenterTests: XCTestCase {
 
     func testOnEditEndValidatesPan() {
         let pan = "123"
-        let panValidator = mockPanValidator()
-        let panValidationFlow = mockPanValidationFlow()
-        panValidationFlow.getStubbingProxy().validate(pan: any()).thenDoNothing()
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
 
         presenter.onEditEnd(text: pan)
@@ -27,22 +29,17 @@ class PanViewPresenterTests: XCTestCase {
         verify(panValidationFlow).validate(pan: pan)
     }
 
-    func testCanChangeValidatesPartialPanAndDoesNotTriggerValidationFlow() {
-        let pan = "123"
-        let panValidator = mockPanValidator()
-        panValidator.getStubbingProxy().canValidate(pan: any()).thenReturn(true)
-        let panValidationFlow = mockPanValidationFlow()
+    func testCanChangeTextChecksIfTheTextCanBeEnteredAndDoesNotTriggerValidationFlow() {
+        let text = "123"
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
 
-        _ = presenter.canChangeText(with: pan)
+        _ = presenter.canChangeText(with: text)
 
-        verify(panValidator).canValidate(pan: pan)
+        verify(panValidator).canValidate(pan: text)
         verifyNoMoreInteractions(panValidationFlow)
     }
-    
-    func testCanChangeWithEmptyText() {
-        let panValidator = mockPanValidator()
-        let panValidationFlow = mockPanValidationFlow()
+
+    func testCanChangeTextWithEmptyText() {
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
 
         let result = presenter.canChangeText(with: "")
@@ -50,7 +47,7 @@ class PanViewPresenterTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    private func mockPanValidationFlow() -> MockPanValidationFlow {
+    private static func mockPanValidationFlow() -> MockPanValidationFlow {
         let validationStateHandler = CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate())
         let cvvValidationFlow = MockCvvValidationFlow(CvvValidator(), validationStateHandler)
         let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
@@ -59,7 +56,7 @@ class PanViewPresenterTests: XCTestCase {
         return MockPanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
     }
 
-    func mockPanValidator() -> MockPanValidator {
+    static func mockPanValidator() -> MockPanValidator {
         let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
         let panValidator = MockPanValidator(configurationProvider)
 

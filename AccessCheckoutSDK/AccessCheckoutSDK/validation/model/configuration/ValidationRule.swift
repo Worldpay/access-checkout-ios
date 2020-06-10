@@ -22,7 +22,7 @@ struct ValidationRule {
         return validLengths.contains(text.count)
     }
     
-    func textIsMatched(text: String) -> Bool {
+    func textIsMatched(_ text: String) -> Bool {
         guard !text.isEmpty else {
             return false
         }
@@ -34,7 +34,7 @@ struct ValidationRule {
         }
     }
     
-    func textIsShorterOrAsLongAsMaxLength(text: String) -> Bool {
+    func textIsShorterOrAsLongAsMaxLength(_ text: String) -> Bool {
         guard let maxLength = validLengths.max() else {
             return true
         }

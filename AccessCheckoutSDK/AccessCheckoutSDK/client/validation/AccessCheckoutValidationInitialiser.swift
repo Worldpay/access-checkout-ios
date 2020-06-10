@@ -50,6 +50,6 @@ public struct AccessCheckoutValidationInitialiser {
     private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {
         let expiryDateValidator = ExpiryDateValidator()
         let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
-        return ExpiryDateViewPresenter(expiryDateValidationFlow)
+        return ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
     }
 }

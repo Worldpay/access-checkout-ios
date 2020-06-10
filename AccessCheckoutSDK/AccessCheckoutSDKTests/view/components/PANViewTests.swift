@@ -12,12 +12,16 @@ class PANViewTests: XCTestCase {
     
     let panView = PANView()
     
+    func testCanClearText() {
+        setUp(cardBrands: [visaBrand], panView: panView)
+        XCTAssertTrue(type("", into: panView))
+    }
+    
     func testCannotTypeNonNumericalCharacters() {
         setUp(cardBrands: [visaBrand], panView: panView)
         
-        let result = type("abc", into: panView)
-        
-        XCTAssertFalse(result)
+        XCTAssertFalse(type("abc", into: panView))
+        XCTAssertFalse(type("+*-", into: panView))
     }
     
     func testCanTypeValidVisaPan() {

@@ -39,31 +39,31 @@ class ValidationRuleTests: XCTestCase {
     func testTextIsMatchedReturnTrueWhenTextIsMatchedByMatcher() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
-        XCTAssertTrue(validationRule.textIsMatched(text: "123"))
+        XCTAssertTrue(validationRule.textIsMatched("123"))
     }
     
     func testTextIsMatchedReturnFalseWhenTextIsNotMatchedByMatcher() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
-        XCTAssertFalse(validationRule.textIsMatched(text: "abc"))
+        XCTAssertFalse(validationRule.textIsMatched("abc"))
     }
     
     func testTextIsMatchedReturnFalseWhenTextIsEmpty() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [16, 18])
         
-        XCTAssertFalse(validationRule.textIsMatched(text: ""))
+        XCTAssertFalse(validationRule.textIsMatched(""))
     }
     
     func testTextIsMatchedReturnFalseWhenThereIsNoMatcher() {
         let validationRule = ValidationRule(matcher: nil, validLengths: [16, 18])
         
-        XCTAssertFalse(validationRule.textIsMatched(text: "123"))
+        XCTAssertFalse(validationRule.textIsMatched("123"))
     }
     
     func testTextIsMatchedReturnFalseWhenMatcherIsEmpty() {
         let validationRule = ValidationRule(matcher: "", validLengths: [16, 18])
         
-        XCTAssertFalse(validationRule.textIsMatched(text: "123"))
+        XCTAssertFalse(validationRule.textIsMatched("123"))
     }
     
     // MARK: textIsShorterOrAsLongAsMaxLength()
@@ -71,24 +71,24 @@ class ValidationRuleTests: XCTestCase {
     func testTextIsShorterOrAsLongAsMaxLengthReturnsTrueWhenTextIsShorter() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [4, 5])
         
-        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength(text: "123"))
+        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength("123"))
     }
     
     func testTextIsShorterOrAsLongAsMaxLengthReturnsTrueWhenTextIsAsLongAsMaxLength() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [2, 3])
         
-        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength(text: "123"))
+        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength("123"))
     }
     
     func testTextIsShorterOrAsLongAsMaxLengthReturnsFalseWhenTextIsLongerThanMaxLength() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3])
         
-        XCTAssertFalse(validationRule.textIsShorterOrAsLongAsMaxLength(text: "1234"))
+        XCTAssertFalse(validationRule.textIsShorterOrAsLongAsMaxLength("1234"))
     }
     
     func testTextIsShorterOrAsLongAsMaxLengthReturnsTrueWhenValidLengthsIsEmpty() {
         let validationRule = ValidationRule(matcher: "^\\d*$", validLengths: [])
         
-        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength(text: "1234"))
+        XCTAssertTrue(validationRule.textIsShorterOrAsLongAsMaxLength("1234"))
     }
 }

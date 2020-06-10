@@ -35,15 +35,7 @@ import UIKit
         setupViewFromNib()
     }
     
-    /// Constructor for tests
-    init(_ textChangeHandler:TextChangeHandler, _ presenter:PanViewPresenter) {
-        super.init(frame: CGRect())
-        setupViewFromNib()
-        self.textChangeHandler = textChangeHandler
-        self.presenter = presenter
-    }
-    
-    func setupViewFromNib() {
+    private func setupViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
