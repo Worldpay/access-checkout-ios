@@ -1,9 +1,11 @@
 public protocol AccessCheckoutCardValidationDelegate {
-    func handleCardBrandChange(cardBrand: CardBrandClient?)
+    func cardBrandChanged(cardBrand: CardBrandClient?)
     
-    func handlePanValidationChange(isValid: Bool)
+    func panValidChanged(isValid: Bool)
     
-    func handleCvvValidationChange(isValid: Bool)
+    func expiryDateValidChanged(isValid: Bool)
     
-    func handleExpiryDateValidationChange(isValid: Bool)
+    func cvvValidChanged(isValid: Bool)
+    
+    func validationSuccess()
 }

@@ -23,12 +23,11 @@ class PanValidationStateHandlerTests: XCTestCase {
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
     override func setUp() {
-        Cuckoo.stub(merchantDelegate) { stub in
-            when(stub).handlePanValidationChange(isValid: any()).thenDoNothing()
-            when(stub).handleCardBrandChange(cardBrand: any()).thenDoNothing()
-            when(stub).handleExpiryDateValidationChange(isValid: any()).thenDoNothing()
-            when(stub).handleCvvValidationChange(isValid: any()).thenDoNothing()
-        }
+        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
     
     func testShouldNotNotifyMerchantDelegateWhenPanValidationDoesNotChangeFromFalse() {
@@ -36,7 +35,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
         
-        verify(merchantDelegate, never()).handlePanValidationChange(isValid: any())
+        verify(merchantDelegate, never()).panValidChanged(isValid: any())
     }
     
     func testShouldNotNotifyMerchantDelegateWhenPanValidationDoesNotChangeFromTrue() {
@@ -44,7 +43,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         
-        verify(merchantDelegate, never()).handlePanValidationChange(isValid: any())
+        verify(merchantDelegate, never()).panValidChanged(isValid: any())
     }
     
     func testShouldNotifyMerchantDelegateWhenPanValidationChangesToFalse() {
@@ -52,7 +51,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
         
-        verify(merchantDelegate).handlePanValidationChange(isValid: false)
+        verify(merchantDelegate).panValidChanged(isValid: false)
     }
     
     func testShouldNotifyMerchantDelegateWhenPanValidationChangesToTrue() {
@@ -60,7 +59,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         
-        verify(merchantDelegate).handlePanValidationChange(isValid: true)
+        verify(merchantDelegate).panValidChanged(isValid: true)
     }
     
     func testShouldNotifyMerchantDelegateWhenCardBrandChanges() {
@@ -73,7 +72,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: visaBrand)
         
-        verify(merchantDelegate).handleCardBrandChange(cardBrand: expectedCardBrand)
+        verify(merchantDelegate).cardBrandChanged(cardBrand: expectedCardBrand)
     }
     
     func testShouldNotNotifyMerchantDelegateWhenCardBrandDoesNotChange() {
@@ -85,7 +84,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: false, cardBrand: visaBrand)
         
-        verify(merchantDelegate, never()).handleCardBrandChange(cardBrand: any())
+        verify(merchantDelegate, never()).cardBrandChanged(cardBrand: any())
     }
     
     func testShouldReturnFalseWhenCardBrandInStateIsSameAsCardBrandInParameter() {
@@ -147,7 +146,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleExpiryDateValidation(isValid: false)
-        verify(merchantDelegate, never()).handleExpiryDateValidationChange(isValid: any())
+        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
     }
     
     func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromTrue() {
@@ -157,7 +156,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleExpiryDateValidation(isValid: true)
-        verify(merchantDelegate, never()).handleExpiryDateValidationChange(isValid: any())
+        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
     }
     
     func testShouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromFalse() {
@@ -167,7 +166,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleExpiryDateValidation(isValid: true)
-        verify(merchantDelegate).handleExpiryDateValidationChange(isValid: true)
+        verify(merchantDelegate).expiryDateValidChanged(isValid: true)
     }
     
     func testShouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromTrue() {
@@ -177,7 +176,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleExpiryDateValidation(isValid: false)
-        verify(merchantDelegate).handleExpiryDateValidationChange(isValid: false)
+        verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
     
     // MARK: CvvValidationStateHandler
@@ -189,7 +188,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleCvvValidation(isValid: false)
-        verify(merchantDelegate, never()).handleCvvValidationChange(isValid: any())
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
     }
     
     func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromTrue() {
@@ -199,7 +198,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleCvvValidation(isValid: true)
-        verify(merchantDelegate, never()).handleCvvValidationChange(isValid: any())
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
     }
     
     func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromFalse() {
@@ -209,7 +208,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleCvvValidation(isValid: true)
-        verify(merchantDelegate).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate).cvvValidChanged(isValid: true)
     }
     
     func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromTrue() {
@@ -219,7 +218,30 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleCvvValidation(isValid: false)
-        verify(merchantDelegate).handleCvvValidationChange(isValid: false)
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+    
+    // MARK: Tests for notification that all fields are valid
+    
+    func testShouldNotifyMerchantDelegateWhenAllFieldsAreValid() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
+        validationStateHandler.handleExpiryDateValidation(isValid: true)
+        validationStateHandler.handleCvvValidation(isValid: true)
+        
+        verify(merchantDelegate).validationSuccess()
+    }
+    
+    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValid() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
+        validationStateHandler.handleExpiryDateValidation(isValid: true)
+        validationStateHandler.handleCvvValidation(isValid: true)
+        validationStateHandler.handleCvvValidation(isValid: true)
+        
+        verify(merchantDelegate, times(1)).validationSuccess()
     }
     
     private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrandClient? {

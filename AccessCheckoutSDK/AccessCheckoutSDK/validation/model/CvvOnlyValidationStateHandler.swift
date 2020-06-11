@@ -1,23 +1,27 @@
 class CvvOnlyValidationStateHandler: CvvValidationStateHandler {
-    private(set) var accessCvvOnlyDelegate: AccessCheckoutCvvOnlyValidationDelegate
-    private(set) var cvvValidationState = false
+    private(set) var merchantDelegate: AccessCheckoutCvvOnlyValidationDelegate
+    private(set) var cvvIsValid = false
 
     init(_ merchantDelegate: AccessCheckoutCvvOnlyValidationDelegate) {
-        self.accessCvvOnlyDelegate = merchantDelegate
+        self.merchantDelegate = merchantDelegate
     }
 
     /**
      Convenience constructors used by unit tests
      */
-    init(accessCvvOnlyDelegate: AccessCheckoutCvvOnlyValidationDelegate, cvvValidationState: Bool) {
-        self.accessCvvOnlyDelegate = accessCvvOnlyDelegate
-        self.cvvValidationState = cvvValidationState
+    init(_ merchantDelegate: AccessCheckoutCvvOnlyValidationDelegate, cvvValidationState: Bool) {
+        self.merchantDelegate = merchantDelegate
+        self.cvvIsValid = cvvValidationState
     }
 
     func handleCvvValidation(isValid: Bool) {
-        if isValid != cvvValidationState {
-            cvvValidationState = isValid
-            accessCvvOnlyDelegate.handleCvvValidationChange(isValid: isValid)
+        if isValid != cvvIsValid {
+            cvvIsValid = isValid
+            merchantDelegate.cvvValidChanged(isValid: isValid)
+
+            if cvvIsValid {
+                merchantDelegate.validationSuccess()
+            }
         }
     }
 }

@@ -27,61 +27,76 @@ public class MockAccessCheckoutCardValidationDelegate: AccessCheckoutCardValidat
     
     
     
-    public func handleCardBrandChange(cardBrand: CardBrandClient?)  {
+    public func cardBrandChanged(cardBrand: CardBrandClient?)  {
         
-    return cuckoo_manager.call("handleCardBrandChange(cardBrand: CardBrandClient?)",
+    return cuckoo_manager.call("cardBrandChanged(cardBrand: CardBrandClient?)",
             parameters: (cardBrand),
             escapingParameters: (cardBrand),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handleCardBrandChange(cardBrand: cardBrand))
+            defaultCall: __defaultImplStub!.cardBrandChanged(cardBrand: cardBrand))
         
     }
     
     
     
-    public func handlePanValidationChange(isValid: Bool)  {
+    public func panValidChanged(isValid: Bool)  {
         
-    return cuckoo_manager.call("handlePanValidationChange(isValid: Bool)",
+    return cuckoo_manager.call("panValidChanged(isValid: Bool)",
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handlePanValidationChange(isValid: isValid))
+            defaultCall: __defaultImplStub!.panValidChanged(isValid: isValid))
         
     }
     
     
     
-    public func handleCvvValidationChange(isValid: Bool)  {
+    public func expiryDateValidChanged(isValid: Bool)  {
         
-    return cuckoo_manager.call("handleCvvValidationChange(isValid: Bool)",
+    return cuckoo_manager.call("expiryDateValidChanged(isValid: Bool)",
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handleCvvValidationChange(isValid: isValid))
+            defaultCall: __defaultImplStub!.expiryDateValidChanged(isValid: isValid))
         
     }
     
     
     
-    public func handleExpiryDateValidationChange(isValid: Bool)  {
+    public func cvvValidChanged(isValid: Bool)  {
         
-    return cuckoo_manager.call("handleExpiryDateValidationChange(isValid: Bool)",
+    return cuckoo_manager.call("cvvValidChanged(isValid: Bool)",
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handleExpiryDateValidationChange(isValid: isValid))
+            defaultCall: __defaultImplStub!.cvvValidChanged(isValid: isValid))
+        
+    }
+    
+    
+    
+    public func validationSuccess()  {
+        
+    return cuckoo_manager.call("validationSuccess()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.validationSuccess())
         
     }
     
@@ -94,24 +109,29 @@ public class MockAccessCheckoutCardValidationDelegate: AccessCheckoutCardValidat
 	    }
 	    
 	    
-	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(CardBrandClient?)> where M1.OptionalMatchedType == CardBrandClient {
+	    func cardBrandChanged<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(CardBrandClient?)> where M1.OptionalMatchedType == CardBrandClient {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandClient?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleCardBrandChange(cardBrand: CardBrandClient?)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "cardBrandChanged(cardBrand: CardBrandClient?)", parameterMatchers: matchers))
 	    }
 	    
-	    func handlePanValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+	    func panValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handlePanValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "panValidChanged(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
-	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+	    func expiryDateValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "expiryDateValidChanged(isValid: Bool)", parameterMatchers: matchers))
 	    }
 	    
-	    func handleExpiryDateValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+	    func cvvValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "handleExpiryDateValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "cvvValidChanged(isValid: Bool)", parameterMatchers: matchers))
+	    }
+	    
+	    func validationSuccess() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCardValidationDelegate.self, method: "validationSuccess()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -131,27 +151,33 @@ public class MockAccessCheckoutCardValidationDelegate: AccessCheckoutCardValidat
 	
 	    
 	    @discardableResult
-	    func handleCardBrandChange<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrandClient?), Void> where M1.OptionalMatchedType == CardBrandClient {
+	    func cardBrandChanged<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.__DoNotUse<(CardBrandClient?), Void> where M1.OptionalMatchedType == CardBrandClient {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandClient?)>] = [wrap(matchable: cardBrand) { $0 }]
-	        return cuckoo_manager.verify("handleCardBrandChange(cardBrand: CardBrandClient?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("cardBrandChanged(cardBrand: CardBrandClient?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func handlePanValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+	    func panValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handlePanValidationChange(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("panValidChanged(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+	    func expiryDateValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handleCvvValidationChange(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("expiryDateValidChanged(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func handleExpiryDateValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+	    func cvvValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handleExpiryDateValidationChange(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("cvvValidChanged(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func validationSuccess() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("validationSuccess()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -163,19 +189,23 @@ public class AccessCheckoutCardValidationDelegateStub: AccessCheckoutCardValidat
     
 
     
-    public func handleCardBrandChange(cardBrand: CardBrandClient?)   {
+    public func cardBrandChanged(cardBrand: CardBrandClient?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-    public func handlePanValidationChange(isValid: Bool)   {
+    public func panValidChanged(isValid: Bool)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-    public func handleCvvValidationChange(isValid: Bool)   {
+    public func expiryDateValidChanged(isValid: Bool)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-    public func handleExpiryDateValidationChange(isValid: Bool)   {
+    public func cvvValidChanged(isValid: Bool)   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    public func validationSuccess()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
