@@ -21,6 +21,8 @@ import UIKit
     
     var presenter: PanViewPresenter?
     
+    private var textChangeHandler = TextChangeHandler()
+    
     /// Initialize PANView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -97,6 +99,11 @@ extension PANView: UITextFieldDelegate {
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let presenter = self.presenter {
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+            return presenter.canChangeText(with: resultingText)
+        }
+        
         return (validationDelegate as? PANValidationDelegate)?.canUpdate(pan: textField.text, withText: string, inRange: range) ?? false
     }
 }

@@ -25,18 +25,20 @@ public struct AccessCheckoutValidationInitialiser {
         configurationProvider.retrieveRemoteConfiguration(baseUrl: config.accessBaseUrl)
         
         let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
-        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
+        let cvvValidator = CvvValidator()
+        let cvvValidationFlow = CvvValidationFlow(cvvValidator, validationStateHandler)
         
-        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow)
+        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow, cvvValidator)
         config.panView.presenter = panViewPresenter(configurationProvider, cvvValidationFlow, validationStateHandler)
         config.expiryDateView.presenter = expiryDateViewPresenter(validationStateHandler)
     }
     
     private func initialiseForCvvOnlyFlow(_ config: CvvOnlyValidationConfig) {
         let validationStateHandler = CvvOnlyValidationStateHandler(config.validationDelegate)
-        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), validationStateHandler)
+        let cvvValidator = CvvValidator()
+        let cvvValidationFlow = CvvValidationFlow(cvvValidator, validationStateHandler)
         
-        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow)
+        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow, cvvValidator)
     }
     
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
@@ -44,12 +46,12 @@ public struct AccessCheckoutValidationInitialiser {
                                   _ validationStateHandler: PanValidationStateHandler) -> PanViewPresenter {
         let panValidator = PanValidator(configurationProvider)
         let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
-        return PanViewPresenter(panValidationFlow)
+        return PanViewPresenter(panValidationFlow, panValidator)
     }
     
     private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {
         let expiryDateValidator = ExpiryDateValidator()
         let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
-        return ExpiryDateViewPresenter(expiryDateValidationFlow)
+        return ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
     }
 }

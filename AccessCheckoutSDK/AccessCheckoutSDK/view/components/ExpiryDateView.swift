@@ -32,6 +32,8 @@ import UIKit
     
     var presenter: ExpiryDateViewPresenter?
     
+    private var textChangeHandler = TextChangeHandler()
+    
     /// Initialize ExpiryDateView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -130,8 +132,16 @@ extension ExpiryDateView: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
         case monthTextField:
+            if let presenter = presenter {
+                let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+                return presenter.canChangeMonthText(with: resultingText)
+            }
             return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
         case yearTextField:
+            if let presenter = presenter {
+                let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+                return presenter.canChangeYearText(with: resultingText)
+            }
             return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
         default:
             return false

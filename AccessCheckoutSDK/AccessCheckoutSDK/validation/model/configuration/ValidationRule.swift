@@ -22,4 +22,20 @@ struct ValidationRule {
         
         return validLengths.contains(text.count)
     }
+    
+    func textIsMatched(_ text: String) -> Bool {
+        guard let matcher = matcher else {
+            return true
+        }
+        
+        return matcher.regexMatches(text: text)
+    }
+    
+    func textIsShorterOrAsLongAsMaxLength(_ text: String) -> Bool {
+        guard let maxLength = validLengths.max() else {
+            return true
+        }
+        
+        return text.count <= maxLength
+    }
 }

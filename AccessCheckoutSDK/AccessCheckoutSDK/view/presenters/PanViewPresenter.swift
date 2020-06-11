@@ -1,11 +1,13 @@
 class PanViewPresenter {
     private let validationFlow: PanValidationFlow
+    private let validator: PanValidator
     
-    init(_ validationFlow: PanValidationFlow) {
+    init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator) {
         self.validationFlow = validationFlow
+        self.validator = panValidator
     }
     
-    // TODO - what do we do when text is null?
+    // TODO: - what do we do when text is null or empty?
     func onEditing(text: String?) {
         validationFlow.validate(pan: text!)
     }
@@ -14,5 +16,10 @@ class PanViewPresenter {
         validationFlow.validate(pan: text!)
     }
     
-    func canChangeText(text: String?, with: String, using range: NSRange) {}
+    func canChangeText(with text: String) -> Bool {
+        if text.isEmpty {
+            return true
+        }
+        return validator.canValidate(text)
+    }
 }

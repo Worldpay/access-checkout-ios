@@ -1,9 +1,10 @@
 class CVVViewPresenter {
     private let validationFlow: CvvValidationFlow
+    private let validator:CvvValidator
     
-    // TODO: tidy up in various initialisers
-    init(_ validationFlow: CvvValidationFlow) {
+    init(_ validationFlow: CvvValidationFlow, _ validator:CvvValidator) {
         self.validationFlow = validationFlow
+        self.validator = validator
     }
     
     func onEditing(text: String?) {
@@ -14,5 +15,11 @@ class CVVViewPresenter {
         validationFlow.validate(cvv: text)
     }
     
-    func canChangeText(text: String?, with: String, using range: NSRange) {}
+    func canChangeText(with text: String) -> Bool {
+        if text.isEmpty {
+            return true
+        }
+        
+        return validator.canValidate(text, using: validationFlow.validationRule)
+    }
 }

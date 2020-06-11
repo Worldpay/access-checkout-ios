@@ -40,6 +40,36 @@ import Cuckoo
         
     }
     
+    
+    
+     override func canValidateMonth(_ text: String) -> Bool {
+        
+    return cuckoo_manager.call("canValidateMonth(_: String) -> Bool",
+            parameters: (text),
+            escapingParameters: (text),
+            superclassCall:
+                
+                super.canValidateMonth(text)
+                ,
+            defaultCall: __defaultImplStub!.canValidateMonth(text))
+        
+    }
+    
+    
+    
+     override func canValidateYear(_ text: String) -> Bool {
+        
+    return cuckoo_manager.call("canValidateYear(_: String) -> Bool",
+            parameters: (text),
+            escapingParameters: (text),
+            superclassCall:
+                
+                super.canValidateYear(text)
+                ,
+            defaultCall: __defaultImplStub!.canValidateYear(text))
+        
+    }
+    
 
 	 struct __StubbingProxy_ExpiryDateValidator: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -52,6 +82,16 @@ import Cuckoo
 	    func validate<M1: Cuckoo.OptionalMatchable, M2: Cuckoo.OptionalMatchable>(expiryMonth: M1, expiryYear: M2) -> Cuckoo.ClassStubFunction<(ExpiryMonth?, ExpiryYear?), Bool> where M1.OptionalMatchedType == ExpiryMonth, M2.OptionalMatchedType == ExpiryYear {
 	        let matchers: [Cuckoo.ParameterMatcher<(ExpiryMonth?, ExpiryYear?)>] = [wrap(matchable: expiryMonth) { $0.0 }, wrap(matchable: expiryYear) { $0.1 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidator.self, method: "validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) -> Bool", parameterMatchers: matchers))
+	    }
+	    
+	    func canValidateMonth<M1: Cuckoo.Matchable>(_ text: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidator.self, method: "canValidateMonth(_: String) -> Bool", parameterMatchers: matchers))
+	    }
+	    
+	    func canValidateYear<M1: Cuckoo.Matchable>(_ text: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidator.self, method: "canValidateYear(_: String) -> Bool", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -76,6 +116,18 @@ import Cuckoo
 	        return cuckoo_manager.verify("validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func canValidateMonth<M1: Cuckoo.Matchable>(_ text: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return cuckoo_manager.verify("canValidateMonth(_: String) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func canValidateYear<M1: Cuckoo.Matchable>(_ text: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return cuckoo_manager.verify("canValidateYear(_: String) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -86,6 +138,14 @@ import Cuckoo
 
     
      override func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+     override func canValidateMonth(_ text: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+     override func canValidateYear(_ text: String) -> Bool  {
         return DefaultValueRegistry.defaultValue(for: (Bool).self)
     }
     

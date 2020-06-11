@@ -18,4 +18,11 @@ class PanValidator {
         
         return PanValidationResult(isValid, cardBrand)
     }
+    
+    func canValidate(_ pan: PAN) -> Bool {
+        let cardBrand = cardBrandsConfigurationProvider.get().cardBrand(forPan: pan)
+        let validationRule = cardBrand?.panValidationRule ?? ValidationRulesDefaults.instance().pan
+        
+        return validationRule.textIsMatched(pan) && validationRule.textIsShorterOrAsLongAsMaxLength(pan)
+    }
 }

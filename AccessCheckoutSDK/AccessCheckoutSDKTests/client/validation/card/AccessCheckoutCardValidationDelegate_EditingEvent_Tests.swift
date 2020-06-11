@@ -11,32 +11,20 @@ class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
     private let baseUrl = "a-url"
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
-    private let visaBrand = CardBrandModel(
-        name: "visa",
-        images: [],
-        panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+    private let visaBrand = TextFixtures.createCardBrandModel(name: "visa",
+                                                                                 panPattern: "^(?!^493698\\d*$)4\\d*$",
+                                                                                 panValidLengths: [16, 18, 19],
+                                                                                 cvcValidLength: 3)
     
-    private let maestroBrand = CardBrandModel(
-        name: "maestro",
-        images: [],
-        panValidationRule: ValidationRule(
-            matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
-            validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
-        ),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+    private let maestroBrand = TextFixtures.createCardBrandModel(name: "maestro",
+                                                                                    panPattern: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
+                                                                                    panValidLengths: [12, 13, 14, 15, 16, 17, 18, 19],
+                                                                                    cvcValidLength: 3)
     
-    private let amexBrand = CardBrandModel(
-        name: "amex",
-        images: [],
-        panValidationRule: ValidationRule(
-            matcher: "^3[47]\\d*$",
-            validLengths: [15]
-        ),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [4])
-    )
+    private let amexBrand = TextFixtures.createCardBrandModel(name: "amex",
+                                                                                 panPattern: "^3[47]\\d*$",
+                                                                                 panValidLengths: [15],
+                                                                                 cvcValidLength: 4)
     
     private let visaPan1 = "4111111111111111"
     private let visaPan2 = "4563648800001000"

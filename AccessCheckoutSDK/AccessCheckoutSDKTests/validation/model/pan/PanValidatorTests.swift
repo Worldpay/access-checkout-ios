@@ -27,7 +27,9 @@ class PanValidatorTests: XCTestCase {
         panValidator = PanValidator(configurationProvider)
     }
     
-    func testShouldReturnFalseWithCardBrandWhenKnownPanIsShorterThanValidLength() {
+    // MARK: validate()
+    
+    func testValidateShouldReturnFalseWithCardBrandWhenKnownPanIsShorterThanValidLength() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
         let result = panValidator!.validate(pan: "4111")
@@ -36,7 +38,7 @@ class PanValidatorTests: XCTestCase {
         XCTAssertEqual(result.cardBrand?.name, "visa")
     }
     
-    func testShouldReturnFalseAndNilCardBrandWhenUnknownPanIsShorterThanMinValidLength() {
+    func testValidateReturnsFalseAndNilCardBrandWhenUnknownPanIsShorterThanMinValidLength() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
         let result = panValidator!.validate(pan: "5111")
@@ -45,7 +47,7 @@ class PanValidatorTests: XCTestCase {
         XCTAssertNil(result.cardBrand)
     }
     
-    func testShouldReturnFalseWhenAMaxLengthInvalidLuhnPanIsEntered() {
+    func testValidateReturnsFalseWhenAMaxLengthInvalidLuhnPanIsEntered() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         let result = panValidator!.validate(pan: "44444444444444444444")
         
@@ -53,7 +55,7 @@ class PanValidatorTests: XCTestCase {
         XCTAssertEqual(result.cardBrand?.name, "visa")
     }
     
-    func testShouldReturnTrueWhenALuhnValidMinLengthKnownPanIsEntered() {
+    func testValidateReturnsTrueWhenALuhnValidMinLengthKnownPanIsEntered() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
         let result = panValidator!.validate(pan: "4111111111111111")
@@ -62,7 +64,7 @@ class PanValidatorTests: XCTestCase {
         XCTAssertEqual(result.cardBrand?.name, "visa")
     }
     
-    func testShouldReturnTrueWhenALuhnValidUnknownPanIsEntered() {
+    func testValidateReturnsTrueWhenALuhnValidUnknownPanIsEntered() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
         let result = panValidator!.validate(pan: "8888888888888888")
@@ -71,7 +73,7 @@ class PanValidatorTests: XCTestCase {
         XCTAssertNil(result.cardBrand)
     }
     
-    func testShouldChangeFromVisaToMaestroWhenNewPatternIsMatched() {
+    func testValidateChangesFromVisaToMaestroWhenNewPatternIsMatched() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand, maestroBrand]))
         
         var result = panValidator!.validate(pan: "49369")
@@ -85,11 +87,73 @@ class PanValidatorTests: XCTestCase {
         XCTAssertEqual(result.cardBrand?.name, "maestro")
     }
     
-    func createConfiguration(withBrand brand: CardBrandModel) -> CardBrandsConfiguration {
+    // MARK: canValidate()
+    
+    func testCanValidateAllowsPanMatchingPatternAndShorterThanMaxLengthForABrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
+        
+        let result = panValidator!.canValidate("49369")
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testCanValidateAllowsPanAsLongAsMaxLengthForABrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
+        let panWith19Digits = "4123456789012345678"
+        
+        let result = panValidator!.canValidate(panWith19Digits)
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testCanValidateDoesNotAllowPanLongerThanMaxLengthForABrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
+        let panWith20Digits = "41234567890123456789"
+        
+        let result = panValidator!.canValidate(panWith20Digits)
+        
+        XCTAssertFalse(result)
+    }
+    
+    func testCanValidateAllowsPanMatchingPatternAndShorterThanMaxLengthForUnknownBrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: []))
+        
+        let result = panValidator!.canValidate("12345")
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testCanValidateAllowsPanAsLongAsMaxLengthForUnknownBrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: []))
+        let panWith19Digits = "1234567890123456789"
+        
+        let result = panValidator!.canValidate(panWith19Digits)
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testCanValidateDoesNotAllowPanLongerThanMaxLengthForUnknownBrand() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: []))
+        let panWith20Digits = "12345678901234567890"
+        
+        let result = panValidator!.canValidate(panWith20Digits)
+        
+        XCTAssertFalse(result)
+    }
+    
+    func testCanValidateDoesNotAllowPanThatDoesNotMatchAnyBrandAndDoesNotMatchDefaultPattern() {
+        configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
+        
+        let result = panValidator!.canValidate("abc")
+        
+        XCTAssertFalse(result)
+    }
+    
+    private func createConfiguration(withBrand brand: CardBrandModel) -> CardBrandsConfiguration {
         return CardBrandsConfiguration([brand])
     }
     
-    func createConfiguration(withBrands brands: [CardBrandModel]) -> CardBrandsConfiguration {
+    private func createConfiguration(withBrands brands: [CardBrandModel]) -> CardBrandsConfiguration {
         return CardBrandsConfiguration(brands)
     }
 }

@@ -32,4 +32,18 @@ class ExpiryDateValidator {
         }
         return false
     }
+    
+    func canValidateMonth(_ text: String) -> Bool {
+        let validationRule = ValidationRulesDefaults.instance().expiryMonth
+        
+        return validationRule.textIsMatched(text)
+            && validationRule.textIsShorterOrAsLongAsMaxLength(text)
+    }
+    
+    func canValidateYear(_ text: String) -> Bool {
+        let validationRule = ValidationRulesDefaults.instance().expiryYear
+        
+        return validationRule.textIsMatched(text)
+            && validationRule.textIsShorterOrAsLongAsMaxLength(text)
+    }
 }
