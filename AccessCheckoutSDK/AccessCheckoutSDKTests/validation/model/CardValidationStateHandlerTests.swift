@@ -233,7 +233,7 @@ class PanValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).validationSuccess()
     }
     
-    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValid() {
+    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValidAFieldIsChangedToAnotherValidValue() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate)
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)

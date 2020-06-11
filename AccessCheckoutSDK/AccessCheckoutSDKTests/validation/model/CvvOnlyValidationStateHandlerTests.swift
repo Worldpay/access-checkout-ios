@@ -48,7 +48,7 @@ class CvvOnlyValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).validationSuccess()
     }
     
-    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValid() {
+    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValidAndCvvIsChangedToAnotherValidValue() {
         let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate)
         
         validationStateHandler.handleCvvValidation(isValid: true)

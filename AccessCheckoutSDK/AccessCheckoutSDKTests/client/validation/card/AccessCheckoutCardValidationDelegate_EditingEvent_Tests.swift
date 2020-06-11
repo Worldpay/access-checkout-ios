@@ -214,7 +214,7 @@ class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
     
     // MARK: validation success tests
     
-    public func testMerchantIsNotifiedOfValidationSuccess() {
+    func testMerchantIsNotifiedOfValidationSuccess() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -229,7 +229,7 @@ class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenPanIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenPanIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -244,7 +244,7 @@ class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, never()).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenExpiryDateIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenExpiryDateIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -259,7 +259,7 @@ class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, never()).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         

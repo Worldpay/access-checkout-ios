@@ -40,7 +40,7 @@ class AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
     }
     
-    public func testMerchantIsNotifiedOfValidationSuccess() {
+    func testMerchantIsNotifiedOfValidationSuccess() {
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
         let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
@@ -50,7 +50,7 @@ class AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
         let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
