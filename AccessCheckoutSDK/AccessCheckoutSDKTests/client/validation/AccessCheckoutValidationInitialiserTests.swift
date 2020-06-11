@@ -15,7 +15,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
-        cardValidationDelegateMock.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
+        cardValidationDelegateMock.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
     }
     

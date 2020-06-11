@@ -27,16 +27,31 @@ public class MockAccessCheckoutCvvOnlyValidationDelegate: AccessCheckoutCvvOnlyV
     
     
     
-    public func handleCvvValidationChange(isValid: Bool)  {
+    public func cvvValidChanged(isValid: Bool)  {
         
-    return cuckoo_manager.call("handleCvvValidationChange(isValid: Bool)",
+    return cuckoo_manager.call("cvvValidChanged(isValid: Bool)",
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.handleCvvValidationChange(isValid: isValid))
+            defaultCall: __defaultImplStub!.cvvValidChanged(isValid: isValid))
+        
+    }
+    
+    
+    
+    public func validationSuccess()  {
+        
+    return cuckoo_manager.call("validationSuccess()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.validationSuccess())
         
     }
     
@@ -49,9 +64,14 @@ public class MockAccessCheckoutCvvOnlyValidationDelegate: AccessCheckoutCvvOnlyV
 	    }
 	    
 	    
-	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+	    func cvvValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCvvOnlyValidationDelegate.self, method: "handleCvvValidationChange(isValid: Bool)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCvvOnlyValidationDelegate.self, method: "cvvValidChanged(isValid: Bool)", parameterMatchers: matchers))
+	    }
+	    
+	    func validationSuccess() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockAccessCheckoutCvvOnlyValidationDelegate.self, method: "validationSuccess()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -71,9 +91,15 @@ public class MockAccessCheckoutCvvOnlyValidationDelegate: AccessCheckoutCvvOnlyV
 	
 	    
 	    @discardableResult
-	    func handleCvvValidationChange<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+	    func cvvValidChanged<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
 	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handleCvvValidationChange(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("cvvValidChanged(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func validationSuccess() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("validationSuccess()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -85,7 +111,11 @@ public class AccessCheckoutCvvOnlyValidationDelegateStub: AccessCheckoutCvvOnlyV
     
 
     
-    public func handleCvvValidationChange(isValid: Bool)   {
+    public func cvvValidChanged(isValid: Bool)   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    public func validationSuccess()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

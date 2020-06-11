@@ -2,54 +2,58 @@
 import Cuckoo
 import XCTest
 
-class CvvOnlyValidationStateHandlerTests : XCTestCase {
-    
-    private let accessCvvOnlyDelegate = MockAccessCheckoutCvvOnlyValidationDelegate()
+class CvvOnlyValidationStateHandlerTests: XCTestCase {
+    private let merchantDelegate = MockAccessCheckoutCvvOnlyValidationDelegate()
     
     override func setUp() {
-        Cuckoo.stub(accessCvvOnlyDelegate) { stub in
-            when(stub).handleCvvValidationChange(isValid: any()).thenDoNothing()
-        }
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
     
-
     func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromFalse() {
-        let validationStateHandler = CvvOnlyValidationStateHandler(
-            accessCvvOnlyDelegate: accessCvvOnlyDelegate,
-            cvvValidationState: false
-        )
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate, cvvValidationState: false)
         
         validationStateHandler.handleCvvValidation(isValid: false)
-        verify(accessCvvOnlyDelegate, never()).handleCvvValidationChange(isValid: any())
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
     }
-
+    
     func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromTrue() {
-        let validationStateHandler = CvvOnlyValidationStateHandler(
-            accessCvvOnlyDelegate: accessCvvOnlyDelegate,
-            cvvValidationState: true
-        )
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate, cvvValidationState: true)
         
         validationStateHandler.handleCvvValidation(isValid: true)
-        verify(accessCvvOnlyDelegate, never()).handleCvvValidationChange(isValid: any())
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
     }
-
+    
     func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromFalse() {
-        let validationStateHandler = CvvOnlyValidationStateHandler(
-            accessCvvOnlyDelegate: accessCvvOnlyDelegate,
-            cvvValidationState: false
-        )
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate, cvvValidationState: false)
         
         validationStateHandler.handleCvvValidation(isValid: true)
-        verify(accessCvvOnlyDelegate).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate).cvvValidChanged(isValid: true)
     }
-
+    
     func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromTrue() {
-        let validationStateHandler = CvvOnlyValidationStateHandler(
-            accessCvvOnlyDelegate: accessCvvOnlyDelegate,
-            cvvValidationState: true
-        )
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate, cvvValidationState: true)
         
         validationStateHandler.handleCvvValidation(isValid: false)
-        verify(accessCvvOnlyDelegate).handleCvvValidationChange(isValid: false)
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+    
+    // MARK: Tests for notification that all fields are valid
+    
+    func testShouldNotifyMerchantDelegateWhenAllFieldsAreValid() {
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.handleCvvValidation(isValid: true)
+        
+        verify(merchantDelegate).validationSuccess()
+    }
+    
+    func testShouldNotifyMerchantDelegateOnlyOnceWhenAllFieldsAreValidAndCvvIsChangedToAnotherValidValue() {
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.handleCvvValidation(isValid: true)
+        validationStateHandler.handleCvvValidation(isValid: true)
+        
+        verify(merchantDelegate, times(1)).validationSuccess()
     }
 }

@@ -128,10 +128,10 @@ class CVVViewTests: XCTestCase {
     
     private func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
-        merchantDelegate.getStubbingProxy().handleCardBrandChange(cardBrand: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handleExpiryDateValidationChange(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handleCvvValidationChange(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
         
         return merchantDelegate
     }

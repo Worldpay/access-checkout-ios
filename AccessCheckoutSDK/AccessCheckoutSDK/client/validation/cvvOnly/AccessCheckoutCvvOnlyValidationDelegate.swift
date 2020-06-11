@@ -1,3 +1,5 @@
 public protocol AccessCheckoutCvvOnlyValidationDelegate {
-    func handleCvvValidationChange(isValid: Bool)
+    func cvvValidChanged(isValid: Bool)
+
+    func validationSuccess()
 }

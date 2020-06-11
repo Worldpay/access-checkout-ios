@@ -12,19 +12,19 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
     private let visaBrand = TextFixtures.createCardBrandModel(name: "visa",
-                                                                                 panPattern: "^(?!^493698\\d*$)4\\d*$",
-                                                                                 panValidLengths: [16, 18, 19],
-                                                                                 cvcValidLength: 3)
+                                                              panPattern: "^(?!^493698\\d*$)4\\d*$",
+                                                              panValidLengths: [16, 18, 19],
+                                                              cvcValidLength: 3)
     
     private let maestroBrand = TextFixtures.createCardBrandModel(name: "maestro",
-                                                                                    panPattern: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
-                                                                                    panValidLengths: [12, 13, 14, 15, 16, 17, 18, 19],
-                                                                                    cvcValidLength: 3)
+                                                                 panPattern: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
+                                                                 panValidLengths: [12, 13, 14, 15, 16, 17, 18, 19],
+                                                                 cvcValidLength: 3)
     
     private let amexBrand = TextFixtures.createCardBrandModel(name: "amex",
-                                                                                 panPattern: "^3[47]\\d*$",
-                                                                                 panValidLengths: [15],
-                                                                                 cvcValidLength: 4)
+                                                              panPattern: "^3[47]\\d*$",
+                                                              panValidLengths: [15],
+                                                              cvcValidLength: 4)
     
     private let visaPan1 = "4111111111111111"
     private let visaPan2 = "4563648800001000"
@@ -35,10 +35,11 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
         
-        merchantDelegate.getStubbingProxy().handlePanValidationChange(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handleCvvValidationChange(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handleExpiryDateValidationChange(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().handleCardBrandChange(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
     
     // MARK: PAN validation tests
@@ -53,7 +54,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: visaPan1)
         
-        verify(merchantDelegate, times(1)).handlePanValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButValidationStateDoesNotChange() {
@@ -67,7 +68,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         editPan(text: visaPan1)
         editPan(text: visaPan2)
         
-        verify(merchantDelegate, times(1)).handlePanValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotifiedOfACardBrandChange() {
@@ -81,7 +82,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "4")
         
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedCardBrand)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButBrandRemainsTheSame() {
@@ -95,7 +96,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         editPan(text: "4")
         editPan(text: "49")
         
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: any())
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: any())
     }
     
     func testMerchantDelegateIsNotifiedOfAVisaToMaestroCardBrandChange() {
@@ -110,10 +111,10 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "49369")
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedVisaCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaCardBrand)
         
         editPan(text: "493698")
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedMaestroCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedMaestroCardBrand)
     }
     
     // MARK: Expiry Date validation tests
@@ -128,7 +129,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editExpiryDate(month: "11", year: "32")
         
-        verify(merchantDelegate, times(1)).handleExpiryDateValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenExpiryDateChangesButValidationStateDoesNotChange() {
@@ -142,7 +143,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         editExpiryDate(month: "11", year: "32")
         editExpiryDate(month: "11", year: "33")
         
-        verify(merchantDelegate, times(1)).handleExpiryDateValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
     
     // MARK: Cvv validation tests
@@ -157,7 +158,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editCvv(text: "123")
         
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
@@ -171,7 +172,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         editCvv(text: "456")
         editCvv(text: "123")
         
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotifiedOfAnInvalidCvvWhenThePanIsChangedAndRequiresACvvOfADifferentLength() {
@@ -184,10 +185,10 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "456")
         editCvv(text: "123")
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
         
         editPan(text: "345")
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: false)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenThePanIsChangedAndRequiresACvvOfTheSameLength() {
@@ -203,12 +204,74 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "49369")
         editCvv(text: "123")
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedVisaCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaCardBrand)
         
         editPan(text: "493698")
-        verify(merchantDelegate, times(1)).handleCardBrandChange(cardBrand: expectedMaestroCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedMaestroCardBrand)
         
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+    }
+    
+    // MARK: validation success tests
+    
+    public func testMerchantIsNotifiedOfValidationSuccess() {
+        let cardBrandsConfiguration = createConfiguration(brands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editPan(text: "4111111111111111")
+        editCvv(text: "123")
+        editExpiryDate(month: "12", year: "35")
+        
+        verify(merchantDelegate, times(1)).validationSuccess()
+    }
+    
+    public func testMerchantIsNotNotifiedOfValidationSuccessWhenPanIsNotValid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editPan(text: "4111")
+        editCvv(text: "123")
+        editExpiryDate(month: "12", year: "35")
+        
+        verify(merchantDelegate, never()).validationSuccess()
+    }
+    
+    public func testMerchantIsNotNotifiedOfValidationSuccessWhenExpiryDateIsNotValid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editPan(text: "4111111111111111")
+        editCvv(text: "123")
+        editExpiryDate(month: "12", year: "19")
+        
+        verify(merchantDelegate, never()).validationSuccess()
+    }
+    
+    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editPan(text: "4111111111111111")
+        editCvv(text: "12")
+        editExpiryDate(month: "12", year: "35")
+        
+        verify(merchantDelegate, never()).validationSuccess()
     }
     
     private func createConfiguration(brands: [CardBrandModel]) -> CardBrandsConfiguration {

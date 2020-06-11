@@ -15,7 +15,8 @@ class AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests: XCTestCase 
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
         
-        merchantDelegate.getStubbingProxy().handleCvvValidationChange(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
     
     func testMerchantDelegateIsNotifiedOfCvvValidationStateChanges() {
@@ -25,7 +26,7 @@ class AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests: XCTestCase 
         
         editCvv(text: "123")
         
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
@@ -36,7 +37,27 @@ class AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests: XCTestCase 
         editCvv(text: "456")
         editCvv(text: "123")
         
-        verify(merchantDelegate, times(1)).handleCvvValidationChange(isValid: true)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+    }
+    
+    public func testMerchantIsNotifiedOfValidationSuccess() {
+        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
+        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editCvv(text: "123")
+        
+        verify(merchantDelegate, times(1)).validationSuccess()
+    }
+    
+    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
+        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editCvv(text: "12")
+        
+        verify(merchantDelegate, never()).validationSuccess()
     }
     
     private func editCvv(text: String) {
