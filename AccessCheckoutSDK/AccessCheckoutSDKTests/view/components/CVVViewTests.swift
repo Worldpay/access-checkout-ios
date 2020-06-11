@@ -3,11 +3,11 @@ import Cuckoo
 import XCTest
 
 class CVVViewTests: XCTestCase {
-    private let brandsStartingWith4AndCvv2DigitsLong = CardBrandModel(
+    private let brandsStartingWith4AndCvv2DigitsLong = TextFixtures.createCardBrandModel(
         name: "a-brand",
-        images: [],
-        panValidationRule: ValidationRule(matcher: "^4\\d*$", validLengths: [16]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [2])
+        panPattern: "^4\\d*$",
+        panValidLengths: [16],
+        cvcValidLength: 2
     )
     
     private let cvvView = CVVView()
@@ -55,6 +55,14 @@ class CVVViewTests: XCTestCase {
         let result = type("12345", into: cvvView)
         
         XCTAssertFalse(result)
+    }
+    
+    func testCannotTypeNonNumericalCharactersForABrand() {
+        initialiseValidation(cardBrands: [brandsStartingWith4AndCvv2DigitsLong], cvvView: cvvView, panView: panView)
+        type("4111111", into: panView)
+        
+        XCTAssertFalse(type("ab", into: cvvView))
+        XCTAssertFalse(type("+*", into: cvvView))
     }
     
     func testCanTypePartialCvvForABrand() {

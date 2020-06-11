@@ -5,7 +5,7 @@ class CardBrandDtoTransformerTests: XCTestCase {
     func testTransformsToCardBrand() throws {
         let expectedImages = [CardBrandImageModel(type: "image/png", url: "png-url"), CardBrandImageModel(type: "image/svg+xml", url: "svg-url")]
         let expectedPanValidationRule = ValidationRule(matcher: "a-pattern", validLengths: [16, 18, 19])
-        let expectedCvvValidationRule = ValidationRule(matcher: nil, validLengths: [3])
+        let expectedCvvValidationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3])
         let transformer = CardBrandDtoTransformer()
         let decoder = JSONDecoder()
         let json = """

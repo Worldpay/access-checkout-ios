@@ -94,8 +94,10 @@ class CvvValidatorTests: XCTestCase {
     }
 
     private func createCardBrand(cvvLength: Int) -> CardBrandModel {
-        let panValidationRule = ValidationRule(matcher: nil, validLengths: [])
-        let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [cvvLength])
-        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
+        return TextFixtures.createCardBrandModel(
+            name: "",
+            panPattern: "",
+            panValidLengths: [],
+            cvcValidLength: cvvLength)
     }
 }

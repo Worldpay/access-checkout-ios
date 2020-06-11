@@ -1,17 +1,17 @@
 @testable import AccessCheckoutSDK
-import XCTest
 import Cuckoo
+import XCTest
 
 class ExpiryDateViewPresenterTests: XCTestCase {
     private let expiryDateValidator = MockExpiryDateValidator()
     private let expiryDateValidationFlow = mockExpiryDateValidationFlow()
-    
+
     override func setUp() {
         expiryDateValidationFlow.getStubbingProxy().validate(expiryMonth: any(), expiryYear: any()).thenDoNothing()
         expiryDateValidator.getStubbingProxy().canValidateMonth(any()).thenReturn(true)
         expiryDateValidator.getStubbingProxy().canValidateYear(any()).thenReturn(true)
     }
-    
+
     func testOnEditingValidatesExpiryDate() {
         let expiryMonth = "11"
         let expiryYear = "22"
@@ -21,7 +21,7 @@ class ExpiryDateViewPresenterTests: XCTestCase {
 
         verify(expiryDateValidationFlow).validate(expiryMonth: expiryMonth, expiryYear: expiryYear)
     }
-    
+
     func testOnEditEndValidatesExpiryDate() {
         let expiryMonth = "11"
         let expiryYear = "22"
@@ -29,9 +29,9 @@ class ExpiryDateViewPresenterTests: XCTestCase {
 
         presenter.onEditEnd(monthText: expiryMonth, yearText: expiryYear)
 
-       verify(expiryDateValidationFlow).validate(expiryMonth: expiryMonth, expiryYear: expiryYear)
+        verify(expiryDateValidationFlow).validate(expiryMonth: expiryMonth, expiryYear: expiryYear)
     }
-    
+
     func testCanChangeMonthTextWithEmptyText() {
         let text = ""
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
@@ -40,9 +40,9 @@ class ExpiryDateViewPresenterTests: XCTestCase {
 
         XCTAssertTrue(result)
     }
-    
+
     func testCanChangeMonthTextChecksIfTheTextCanBeEnteredAndDoesNotTriggerValidationFlow() {
-        let text = "123"
+        let text = "12"
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
 
         _ = presenter.canChangeMonthText(with: text)
@@ -50,7 +50,7 @@ class ExpiryDateViewPresenterTests: XCTestCase {
         verify(expiryDateValidator).canValidateMonth(text)
         verifyNoMoreInteractions(expiryDateValidationFlow)
     }
-    
+
     func testCanChangeYearTextWithEmptyText() {
         let text = ""
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
@@ -59,9 +59,9 @@ class ExpiryDateViewPresenterTests: XCTestCase {
 
         XCTAssertTrue(result)
     }
-    
+
     func testCanChangeYearTextChecksIfTheTextCanBeEnteredAndDoesNotTriggerValidationFlow() {
-        let text = "123"
+        let text = "35"
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
 
         _ = presenter.canChangeYearText(with: text)
@@ -69,11 +69,11 @@ class ExpiryDateViewPresenterTests: XCTestCase {
         verify(expiryDateValidator).canValidateYear(text)
         verifyNoMoreInteractions(expiryDateValidationFlow)
     }
-    
-    static private func mockExpiryDateValidationFlow() -> MockExpiryDateValidationFlow {
+
+    private static func mockExpiryDateValidationFlow() -> MockExpiryDateValidationFlow {
         let validator = ExpiryDateValidator()
         let validationStateHandler = CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate())
-        
+
         return MockExpiryDateValidationFlow(validator, validationStateHandler)
     }
 }

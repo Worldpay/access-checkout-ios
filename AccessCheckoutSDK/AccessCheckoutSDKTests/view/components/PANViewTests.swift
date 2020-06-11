@@ -3,12 +3,16 @@ import Cuckoo
 import XCTest
 
 class PANViewTests: XCTestCase {
-    private let visaBrand = CardBrandModel(
+    private let visaBrand = TextFixtures.createCardBrandModel(
         name: "visa",
-        images: [],
-        panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+        panPattern: "^(?!^493698\\d*$)4\\d*$",
+        panValidLengths: [16, 18, 19],
+        cvcValidLength: 3)
+    private let maestroBrand = TextFixtures.createCardBrandModel(
+        name: "maestro",
+        panPattern: "^493698\\d*$",
+        panValidLengths: [16, 18, 19],
+        cvcValidLength: 3)
     
     let panView = PANView()
     
@@ -56,6 +60,14 @@ class PANViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
+    func testCanTypeStartOfMaestroPan_ie_ThisPatternIsExplicitlyExcludedFromTheVisaPattern() {
+        initialiseValidation(cardBrands: [visaBrand, maestroBrand], panView: panView)
+        
+        let result = type("493698123", into: panView)
+        
+        XCTAssertTrue(result)
+    }
+    
     func testCanTypePanOfUnknownBrandAsLongAsMaxLengthAllowed() {
         initialiseValidation(cardBrands: [], panView: panView)
         
@@ -83,7 +95,7 @@ class PANViewTests: XCTestCase {
         let cvvView = CVVView()
         let merchantDelegate = createMerchantDelegate()
         
-        let configurationProvider = createConfigurationProvider(with: [visaBrand])
+        let configurationProvider = createConfigurationProvider(with: cardBrands)
         
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateview,

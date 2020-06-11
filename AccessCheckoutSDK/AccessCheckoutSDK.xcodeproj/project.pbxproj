@@ -65,6 +65,7 @@
 		D7D6D5F3248154B900D57D7A /* PanValidationFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F2248154B900D57D7A /* PanValidationFlowTests.swift */; };
 		D7D6D5F52481550200D57D7A /* PanValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F42481550200D57D7A /* PanValidationFlow.swift */; };
 		D7D6D5F92484FE0E00D57D7A /* CvvValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F82484FE0E00D57D7A /* CvvValidationFlow.swift */; };
+		E70305A124924AAA00802AF1 /* TextFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70305A024924AAA00802AF1 /* TextFixtures.swift */; };
 		E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70A5E842420C8B200F8B73E /* RestClientTests.swift */; };
 		E7167EF2248E2ECC0045158E /* ValidationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7167EF1248E2ECC0045158E /* ValidationConfig.swift */; };
 		E7167EF8248E2F330045158E /* CardValidationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7167EF7248E2F330045158E /* CardValidationConfig.swift */; };
@@ -296,6 +297,7 @@
 		D7D6D5F2248154B900D57D7A /* PanValidationFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationFlowTests.swift; sourceTree = "<group>"; };
 		D7D6D5F42481550200D57D7A /* PanValidationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationFlow.swift; sourceTree = "<group>"; };
 		D7D6D5F82484FE0E00D57D7A /* CvvValidationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvValidationFlow.swift; sourceTree = "<group>"; };
+		E70305A024924AAA00802AF1 /* TextFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFixtures.swift; sourceTree = "<group>"; };
 		E70A5E842420C8B200F8B73E /* RestClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientTests.swift; sourceTree = "<group>"; };
 		E7167EF1248E2ECC0045158E /* ValidationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationConfig.swift; sourceTree = "<group>"; };
 		E7167EF7248E2F330045158E /* CardValidationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfig.swift; sourceTree = "<group>"; };
@@ -1118,6 +1120,7 @@
 		E7D19F7D2463FEE3001EA13A /* testUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E70305A024924AAA00802AF1 /* TextFixtures.swift */,
 				E719B08724642EF80037DED4 /* CuckooExtension.swift */,
 				E72C3EE324866F6D00284A31 /* EquatableExtension.swift */,
 				E7D19F8024640008001EA13A /* StubUtils.swift */,
@@ -1603,6 +1606,7 @@
 				E7D37F7E248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift in Sources */,
 				E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */,
 				E7409D52248F9DE200016AEB /* PANViewTests.swift in Sources */,
+				E70305A124924AAA00802AF1 /* TextFixtures.swift in Sources */,
 				E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift in Sources */,
 				E75C5E6C248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift in Sources */,
 				D76E4050247D62A1002FAA39 /* PanValidatorTests.swift in Sources */,

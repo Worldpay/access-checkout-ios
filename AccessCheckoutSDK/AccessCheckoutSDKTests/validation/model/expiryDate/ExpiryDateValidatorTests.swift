@@ -1,12 +1,12 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
-class ExpiryDateValidatorTests : XCTestCase {
-    
+class ExpiryDateValidatorTests: XCTestCase {
     let expiryDateValidator = ExpiryDateValidator()
     let targetDate = Date()
-
+    
     // MARK: validate()
+    
     func testValidateReturnsFalseIfMonthAndYearAreEmpty() {
         XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "", expiryYear: ""))
     }
@@ -26,7 +26,7 @@ class ExpiryDateValidatorTests : XCTestCase {
     func testValidateReturnsFalseIfYearIsEmpty() {
         XCTAssertFalse(expiryDateValidator.validate(expiryMonth: getMonth(dateModifier: 0), expiryYear: ""))
     }
-
+    
     func testValidateReturnsFalseIfYearIsNil() {
         XCTAssertFalse(expiryDateValidator.validate(expiryMonth: getMonth(dateModifier: 0), expiryYear: nil))
     }
@@ -61,7 +61,7 @@ class ExpiryDateValidatorTests : XCTestCase {
     func testValidateReturnsTrueIfDateIsCurrentMonthOfCurrentYear() {
         let currentMonth = getMonth(dateModifier: 0)
         let currentYear = getYear(dateModifier: 0)
-
+        
         XCTAssertTrue(expiryDateValidator.validate(expiryMonth: currentMonth, expiryYear: currentYear))
     }
     
@@ -73,6 +73,7 @@ class ExpiryDateValidatorTests : XCTestCase {
     }
     
     // MARK: canValidate(month)
+    
     func testCanValidateMonthReturnsTrueIfTextIsTheStartOfAMonth() {
         let text = "1"
         
@@ -104,14 +105,15 @@ class ExpiryDateValidatorTests : XCTestCase {
     }
     
     // MARK: canValidate(year)
+    
     func testCanValidateYearReturnsTrueIfTextIsTheStartOfAYear() {
         let text = "1"
         
         XCTAssertTrue(expiryDateValidator.canValidateYear(text))
     }
     
-    func testCanValidateYearReturnsTrueIfTextIsACompleteYear() {
-        let text = "12"
+    func testCanValidateYearReturnsTrueIfTextIsACompleteFutureYear() {
+        let text = "35"
         
         XCTAssertTrue(expiryDateValidator.canValidateYear(text))
     }
@@ -123,7 +125,7 @@ class ExpiryDateValidatorTests : XCTestCase {
     }
     
     func testCanValidateYearReturnsFalseIfTextIsLongerThan2Digits() {
-        let text = "123"
+        let text = "203"
         
         XCTAssertFalse(expiryDateValidator.canValidateYear(text))
     }
@@ -149,5 +151,4 @@ class ExpiryDateValidatorTests : XCTestCase {
         
         return dateFormatter.string(from: yearDate!)
     }
-
 }
