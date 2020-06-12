@@ -13,6 +13,9 @@ class ExpiryDateViewTests: XCTestCase {
     let expiryDateView = ExpiryDateView()
     
     // MARK: Month
+    func testCanEnterAnyTextInMonthWhenNoPresenter() {
+        XCTAssertTrue(typeMonth("abc", into: expiryDateView))
+    }
     
     func testCanClearMonth() {
         initialiseValidation(expiryDateView: expiryDateView)
@@ -50,6 +53,9 @@ class ExpiryDateViewTests: XCTestCase {
     }
     
     // MARK: Year
+    func testCanEnterAnyTextInYearWhenNoPresenter() {
+        XCTAssertTrue(typeYear("abc", into: expiryDateView))
+    }
     
     func testCanClearYear() {
         initialiseValidation(expiryDateView: expiryDateView)

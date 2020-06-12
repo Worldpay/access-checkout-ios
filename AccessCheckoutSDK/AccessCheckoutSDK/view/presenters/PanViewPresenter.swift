@@ -1,4 +1,4 @@
-class PanViewPresenter {
+class PanViewPresenter : Presenter {
     private let validationFlow: PanValidationFlow
     private let validator: PanValidator
     

@@ -16,6 +16,10 @@ class PANViewTests: XCTestCase {
     
     let panView = PANView()
     
+    func testCanEnterAnyTextWhenNoPresenter() {
+        XCTAssertTrue(type("abc", into: panView))
+    }
+    
     func testCanClearText() {
         initialiseValidation(cardBrands: [visaBrand], panView: panView)
         XCTAssertTrue(type("", into: panView))
