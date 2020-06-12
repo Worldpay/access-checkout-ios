@@ -26,7 +26,6 @@ class CardFlowViewController: UIViewController {
             return
         }
         
-        submitButton.isEnabled = false
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
@@ -91,17 +90,17 @@ class CardFlowViewController: UIViewController {
         validationErrors?.forEach { error in
             switch error {
             case .panFailedLuhnCheck:
-                panView?.isValid(valid: false)
+                changePanValidIndicator(isValid: false)
             case .dateHasInvalidFormat(_, let jsonPath):
                 switch jsonPath {
                 case "$.cardNumber":
-                    panView?.isValid(valid: false)
+                    changePanValidIndicator(isValid: false)
                 case "$.cardExpiryDate.month":
-                    expiryDateView.isValid(valid: false)
+                    changeExpiryDateValidIndicator(isValid: false)
                 case "$.cardExpiryDate.year":
-                    expiryDateView.isValid(valid: false)
+                    changeExpiryDateValidIndicator(isValid: false)
                 case "$.cvv":
-                    cvvView.isValid(valid: false)
+                    changeCvvValidIndicator(isValid: false)
                 default:
                     print("Unrecognized jsonPath")
                 }
@@ -151,6 +150,18 @@ class CardFlowViewController: UIViewController {
             }
         }
     }
+    
+    private func changePanValidIndicator(isValid: Bool) {
+        panView.textColor = isValid ? nil : UIColor.red
+    }
+    
+    private func changeExpiryDateValidIndicator(isValid: Bool) {
+        expiryDateView.textColor = isValid ? nil : UIColor.red
+    }
+    
+    private func changeCvvValidIndicator(isValid: Bool) {
+        cvvView.textColor = isValid ? nil : UIColor.red
+    }
 }
 
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
@@ -165,17 +176,17 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     }
     
     func panValidChanged(isValid: Bool) {
-        panView.isValid(valid: isValid)
+        changePanValidIndicator(isValid: isValid)
         submitButton.isEnabled = false
     }
     
     func cvvValidChanged(isValid: Bool) {
-        cvvView.isValid(valid: isValid)
+        changeCvvValidIndicator(isValid: isValid)
         submitButton.isEnabled = false
     }
     
     func expiryDateValidChanged(isValid: Bool) {
-        expiryDateView.isValid(valid: isValid)
+        changeExpiryDateValidIndicator(isValid: isValid)
         submitButton.isEnabled = false
     }
     

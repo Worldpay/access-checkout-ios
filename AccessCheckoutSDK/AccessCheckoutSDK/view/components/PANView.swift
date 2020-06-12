@@ -69,14 +69,14 @@ extension PANView: AccessCheckoutTextView {
         }
     }
     
-    /**
-     The validity of the PAN has updated.
-     
-     - Parameters:
-        - valid: View represents a valid card number
-     */
-    public func isValid(valid: Bool) {
-        textField.textColor = valid ? UIColor.black : UIColor.red
+    /// Colour of the text displayed in the textField
+    public var textColor: UIColor? {
+        get {
+            return textField.textColor
+        }
+        set {
+            textField.textColor = newValue
+        }
     }
     
     /// Clears any text input.

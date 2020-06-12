@@ -83,15 +83,15 @@ extension ExpiryDateView: AccessCheckoutDateView {
         }
     }
     
-    /**
-     The validity of the expiry date has updated.
-     
-     - Parameters:
-        - valid: View represents a valid expiry date
-     */
-    public func isValid(valid: Bool) {
-        monthTextField.textColor = valid ? UIColor.black : UIColor.red
-        yearTextField.textColor = valid ? UIColor.black : UIColor.red
+    /// Colour of the text displayed in the textFields
+    public var textColor: UIColor? {
+        get {
+            return monthTextField.textColor
+        }
+        set {
+            monthTextField.textColor = newValue
+            yearTextField.textColor = newValue
+        }
     }
     
     /// Clears any text input.

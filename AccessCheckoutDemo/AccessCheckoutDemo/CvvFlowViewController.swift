@@ -55,13 +55,13 @@ class CvvFlowViewController: UIViewController {
         let validationConfig = CvvOnlyValidationConfig(cvvView: cvvField, validationDelegate: self)
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
-        cvvField.isValid(valid: false)
+        cvvValidChanged(isValid: false)
         submitButton.isEnabled = false
     }
     
     private func highlightCvvField(error: AccessCheckoutClientError) {
         if extractFieldThatCausedError(from: error) == "$.cvv" {
-            cvvField.isValid(valid: false)
+            changeCvvValidIndicator(isValid: false)
         }
     }
     
@@ -91,11 +91,16 @@ class CvvFlowViewController: UIViewController {
         
         return fieldToReturn
     }
+    
+    private func changeCvvValidIndicator(isValid: Bool) {
+        cvvField.textColor = isValid ? nil : UIColor.red
+    }
 }
 
 extension CvvFlowViewController: AccessCheckoutCvvOnlyValidationDelegate {
     public func cvvValidChanged(isValid: Bool) {
-        cvvField.isValid(valid: isValid)
+        changeCvvValidIndicator(isValid: isValid)
+        submitButton.isEnabled = isValid
     }
 
     public func validationSuccess() {
