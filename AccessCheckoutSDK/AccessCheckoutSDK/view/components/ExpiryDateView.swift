@@ -107,8 +107,10 @@ extension ExpiryDateView: AccessCheckoutDateView {
     
     /// Clears any text input.
     public func clear() {
-        monthTextField.text = nil
-        yearTextField.text = nil
+        monthTextField.text = ""
+        yearTextField.text = ""
+        
+        presenter?.onEditEnd(monthText: "", yearText: "")
     }
 }
 

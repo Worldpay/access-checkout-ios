@@ -60,7 +60,9 @@ class PANViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testCanTypeStartOfMaestroPan_ie_ThisPatternIsExplicitlyExcludedFromTheVisaPattern() {
+    //  This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
+    // to make sure that it does not prevent the user from typing a maestro PAN
+    func testCanTypeStartOfMaestroPan() {
         initialiseValidation(cardBrands: [visaBrand, maestroBrand], panView: panView)
         
         let result = type("493698123", into: panView)
