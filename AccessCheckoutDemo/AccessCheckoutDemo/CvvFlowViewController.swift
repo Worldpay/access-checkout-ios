@@ -6,8 +6,6 @@ class CvvFlowViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    private var cvvOnly: AccessCheckoutCVVOnly?
-    
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         guard let cvv = cvvField.text else {
             return

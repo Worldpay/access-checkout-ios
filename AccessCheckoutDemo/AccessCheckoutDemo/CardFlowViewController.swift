@@ -9,7 +9,6 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
-    private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
     @IBAction func submit(_ sender: Any) {

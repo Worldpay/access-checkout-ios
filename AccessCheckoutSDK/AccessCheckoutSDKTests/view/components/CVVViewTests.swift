@@ -13,6 +13,10 @@ class CVVViewTests: XCTestCase {
     private let cvvView = CVVView()
     private let panView = PANView()
     
+    func testCanEnterAnyTextWhenNoPresenter() {
+        XCTAssertTrue(type("abc", into: cvvView))
+    }
+    
     func testCanClearText() {
         initialiseValidation(cardBrands: [], cvvView: cvvView, panView: panView)
         XCTAssertTrue(type("", into: cvvView))

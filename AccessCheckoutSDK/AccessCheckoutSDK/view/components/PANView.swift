@@ -5,9 +5,6 @@ import UIKit
     @IBOutlet weak var textField: UITextField!
     @IBOutlet public weak var imageView: UIImageView!
     
-    /// The delegate to handle view events
-    public weak var validationDelegate: ValidationDelegate?
-    
     /// The card number represented by the view
     public var text: PAN? {
         guard let text = textField.text else {
@@ -19,7 +16,8 @@ import UIKit
         return text
     }
     
-    var presenter: PanViewPresenter?
+    /// The delegate to handle view events
+    var presenter: Presenter?
     
     private var textChangeHandler = TextChangeHandler()
     
@@ -56,8 +54,7 @@ import UIKit
         guard let pan = textField.text else {
             return
         }
-        presenter?.onEditing(text: textField.text)
-        (validationDelegate as? PANValidationDelegate)?.notifyPartialMatchValidation(forPan: pan)
+        (presenter as? PanViewPresenter)?.onEditing(text: pan)
     }
 }
 
@@ -85,7 +82,7 @@ extension PANView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        presenter?.onEditEnd(text: "")
+        (presenter as? PanViewPresenter)?.onEditEnd(text: "")
     }
 }
 
@@ -95,16 +92,15 @@ extension PANView: UITextFieldDelegate {
             return
         }
         
-        (validationDelegate as? PANValidationDelegate)?.notifyCompleteMatchValidation(forPan: pan)
-        presenter?.onEditEnd(text: pan)
+        (presenter as? PanViewPresenter)?.onEditEnd(text: pan)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let presenter = self.presenter {
-            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-            return presenter.canChangeText(with: resultingText)
+        guard let presenter = (presenter as? PanViewPresenter) else {
+            return true
         }
         
-        return (validationDelegate as? PANValidationDelegate)?.canUpdate(pan: textField.text, withText: string, inRange: range) ?? false
+        let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+        return presenter.canChangeText(with: resultingText)
     }
 }

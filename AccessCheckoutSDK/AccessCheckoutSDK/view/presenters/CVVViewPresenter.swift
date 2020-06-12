@@ -1,4 +1,4 @@
-class CVVViewPresenter {
+class CVVViewPresenter : Presenter {
     private let validationFlow: CvvValidationFlow
     private let validator:CvvValidator
     

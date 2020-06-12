@@ -4,9 +4,6 @@ import UIKit
 @IBDesignable public class CVVView: UIView {
     @IBOutlet weak var textField: UITextField!
     
-    /// The delegate to handle view events
-    public weak var validationDelegate: ValidationDelegate?
-    
     /// The CVV represented by the view
     public var text: CVV? {
         guard let text = textField.text else {
@@ -18,7 +15,8 @@ import UIKit
         return text
     }
     
-    var presenter: CVVViewPresenter?
+    /// The delegate to handle view events
+    var presenter: Presenter?
     
     private let textChangeHandler:TextChangeHandler = TextChangeHandler()
     
@@ -54,8 +52,7 @@ import UIKit
         guard let cvv = textField.text else {
             return
         }
-        (validationDelegate as? CVVValidationDelegate)?.notifyPartialMatchValidation(forCvv: cvv)
-        presenter?.onEditing(text: cvv)
+        (presenter as? CVVViewPresenter)?.onEditing(text: cvv)
     }
 }
 
@@ -83,7 +80,7 @@ extension CVVView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        presenter?.onEditEnd(text: "")
+        (presenter as? CVVViewPresenter)?.onEditEnd(text: "")
     }
 }
 
@@ -93,16 +90,15 @@ extension CVVView: UITextFieldDelegate {
             return
         }
         
-        (validationDelegate as? CVVValidationDelegate)?.notifyCompleteMatchValidation(forCvv: cvv)
-        presenter?.onEditing(text: cvv)
+        (presenter as? CVVViewPresenter)?.onEditing(text: cvv)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let presenter = presenter {
-            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-            return presenter.canChangeText(with: resultingText)
+        guard let presenter = presenter as? CVVViewPresenter else {
+            return true
         }
         
-        return (validationDelegate as? CVVValidationDelegate)?.canUpdate(cvv: textField.text, withText: string, inRange: range) ?? false
+        let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+        return presenter.canChangeText(with: resultingText)
     }
 }

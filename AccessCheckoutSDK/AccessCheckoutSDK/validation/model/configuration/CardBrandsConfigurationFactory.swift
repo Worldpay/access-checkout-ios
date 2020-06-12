@@ -11,15 +11,18 @@ class CardBrandsConfigurationFactory {
     
     func create(baseUrl: String, completionHandler: @escaping (CardBrandsConfiguration) -> Void) {
         let baseUrlWithTrailingSlash = baseUrl.last == "/" ? baseUrl : baseUrl + "/"
-        let request = URLRequest(url: URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)")!)
+        guard let url = URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)") else {
+            completionHandler(CardBrandsConfiguration([]))
+            return
+        }
         
-        restClient.send(urlSession: URLSession.shared, request: request, responseType: [CardBrandDto].self) { result in
+        restClient.send(urlSession: URLSession.shared, request: URLRequest(url: url), responseType: [CardBrandDto].self) { result in
             let brands: [CardBrandModel]
             
             switch result {
             case .success(let dtos):
                 brands = dtos.map { self.transformer.transform($0) }
-            case .failure:
+            case .failure(_):
                 brands = []
             }
             
@@ -29,5 +32,11 @@ class CardBrandsConfigurationFactory {
     
     func emptyConfiguration() -> CardBrandsConfiguration {
         return CardBrandsConfiguration([])
+    }
+    
+    private func configurationFileUrl(baseUrl:String) -> URL? {
+        let baseUrlWithTrailingSlash = baseUrl.last == "/" ? baseUrl : baseUrl + "/"
+        
+        return URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)")
     }
 }

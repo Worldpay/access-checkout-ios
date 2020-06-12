@@ -5,9 +5,6 @@ import UIKit
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     
-    /// The delegate to handle view events
-    public weak var validationDelegate: ValidationDelegate?
-    
     /// The expiry date month element
     public var month: ExpiryMonth? {
         guard let text = monthTextField.text else {
@@ -30,7 +27,8 @@ import UIKit
         return text
     }
     
-    var presenter: ExpiryDateViewPresenter?
+    /// The delegate to handle view events
+    var presenter: Presenter?
     
     private var textChangeHandler = TextChangeHandler()
     
@@ -66,20 +64,11 @@ import UIKit
     
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        guard let text = textField.text else {
+        guard let _ = textField.text else {
             return
         }
-        switch textField {
-        case monthTextField:
-            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyPartialMatchValidation(forExpiryMonth: text, andExpiryYear: nil)
-        case yearTextField:
-            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyPartialMatchValidation(forExpiryMonth: nil, andExpiryYear: text)
-        default:
-            return
-        }
-        
         // ToDo - should not force unwrap
-        presenter?.onEditing(monthText: monthTextField.text!, yearText: yearTextField.text!)
+        (presenter as? ExpiryDateViewPresenter)?.onEditing(monthText: monthTextField.text!, yearText: yearTextField.text!)
     }
 }
 
@@ -110,43 +99,33 @@ extension ExpiryDateView: AccessCheckoutDateView {
         monthTextField.text = ""
         yearTextField.text = ""
         
-        presenter?.onEditEnd(monthText: "", yearText: "")
+        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(monthText: "", yearText: "")
     }
 }
 
 extension ExpiryDateView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let text = textField.text else {
-            return
-        }
-        switch textField {
-        case monthTextField:
-            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyCompleteMatchValidation(forExpiryMonth: text, andExpiryYear: nil)
-        case yearTextField:
-            (validationDelegate as? ExpiryDateValidationDelegate)?.notifyCompleteMatchValidation(forExpiryMonth: nil, andExpiryYear: text)
-        default:
+        guard let _ = textField.text else {
             return
         }
         
-        presenter?.onEditEnd(monthText: monthTextField.text!, yearText: yearTextField.text!)
+        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(monthText: monthTextField.text!, yearText: yearTextField.text!)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let presenter = presenter as? ExpiryDateViewPresenter else {
+            return true
+        }
+        
         switch textField {
         case monthTextField:
-            if let presenter = presenter {
-                let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-                return presenter.canChangeMonthText(with: resultingText)
-            }
-            return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryMonth: textField.text, withText: string, inRange: range) ?? true
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+            return presenter.canChangeMonthText(with: resultingText)
         case yearTextField:
-            if let presenter = presenter {
-                let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-                return presenter.canChangeYearText(with: resultingText)
-            }
-            return (validationDelegate as? ExpiryDateValidationDelegate)?.canUpdate(expiryYear: textField.text, withText: string, inRange: range) ?? true
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+            return presenter.canChangeYearText(with: resultingText)
         default:
-            return false
+            return true
         }
     }
 }
