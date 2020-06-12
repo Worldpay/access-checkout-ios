@@ -15,8 +15,6 @@ class CvvFlowViewController: UIViewController {
         
         spinner.startAnimating()
         
-        cvvField.isEnabled = false
-        
         let cardDetails = CardDetailsBuilder()
             .cvv(cvv)
             .build()
@@ -34,15 +32,13 @@ class CvvFlowViewController: UIViewController {
                     case .success(let sessions):
                         AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
                             self.cvvField.clear()
-                            self.cvvField.isEnabled = true
-                            self.submitButton.isEnabled = self.cvvOnly!.isValid()
+                            self.submitButton.isEnabled = false
                     })
                     case .failure(let error):
                         self.highlightCvvField(error: error)
                         
                         AlertView.display(using: self, title: "Error", message: error.localizedDescription, closeHandler: {
-                            self.cvvField.isEnabled = true
-                            self.submitButton.isEnabled = self.cvvOnly!.isValid()
+                            self.submitButton.isEnabled = true
                     })
                 }
             }
@@ -58,7 +54,11 @@ class CvvFlowViewController: UIViewController {
         
         submitButton.isEnabled = false
         
-        cvvOnly = AccessCheckoutCVVOnly(cvvView: cvvField, cvvOnlyDelegate: self)
+        let validationConfig = CvvOnlyValidationConfig(cvvView: cvvField, validationDelegate: self)
+        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+        
+        cvvField.isValid(valid: false)
+        submitButton.isEnabled = false
     }
     
     private func highlightCvvField(error: AccessCheckoutClientError) {
@@ -95,10 +95,12 @@ class CvvFlowViewController: UIViewController {
     }
 }
 
-extension CvvFlowViewController: CVVOnlyDelegate {
-    public func handleValidationResult(cvvView: AccessCheckoutView, isValid: Bool) {
-        cvvView.isValid(valid: isValid)
-        
-        submitButton.isEnabled = cvvOnly!.isValid()
+extension CvvFlowViewController: AccessCheckoutCvvOnlyValidationDelegate {
+    public func cvvValidChanged(isValid: Bool) {
+        cvvField.isValid(valid: isValid)
+    }
+
+    public func validationSuccess() {
+        submitButton.isEnabled = true
     }
 }

@@ -82,7 +82,8 @@ extension CVVView: AccessCheckoutTextView {
     
     /// Clears any text input.
     public func clear() {
-        textField.text = nil
+        textField.text = ""
+        presenter?.onEditEnd(text: "")
     }
 }
 
