@@ -24,11 +24,9 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 --file-prefix "Mock" \
 --output "${OUTPUT_DIR}" \
 "${INPUT_SOURCE_DIR}/api/SingleLinkDiscoveryFactory.swift" \
-"${INPUT_SOURCE_DIR}/client/legacy/cvv/CVVOnlyDelegate.swift" \
 "${INPUT_SOURCE_DIR}/client/validation/card/AccessCheckoutCardValidationDelegate.swift" \
 "${INPUT_SOURCE_DIR}/client/validation/cvvOnly/AccessCheckoutCvvOnlyValidationDelegate.swift" \
 "${INPUT_SOURCE_DIR}/validation/api/CardBrandDtoTransformer.swift" \
-"${INPUT_SOURCE_DIR}/validation/legacy/cvv/CVVValidatorLegacy.swift" \
 "${INPUT_SOURCE_DIR}/validation/model/configuration/CardBrandsConfigurationProvider.swift" \
 "${INPUT_SOURCE_DIR}/validation/model/cvv/CvvValidator.swift" \
 "${INPUT_SOURCE_DIR}/validation/model/cvv/CvvValidationFlow.swift" \

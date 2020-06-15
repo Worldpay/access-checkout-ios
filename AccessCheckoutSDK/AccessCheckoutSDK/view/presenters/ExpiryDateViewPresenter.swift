@@ -1,4 +1,4 @@
-class ExpiryDateViewPresenter {
+class ExpiryDateViewPresenter : Presenter {
     private let validationFlow: ExpiryDateValidationFlow
     private let validator: ExpiryDateValidator
     

@@ -13,6 +13,11 @@ class CVVViewTests: XCTestCase {
     private let cvvView = CVVView()
     private let panView = PANView()
     
+    // MARK: testing what the end user can and cannot type
+    func testCanEnterAnyTextWhenNoPresenter() {
+        XCTAssertTrue(type("abc", into: cvvView))
+    }
+    
     func testCanClearText() {
         initialiseValidation(cardBrands: [], cvvView: cvvView, panView: panView)
         XCTAssertTrue(type("", into: cvvView))
@@ -90,6 +95,19 @@ class CVVViewTests: XCTestCase {
         let result = type("123", into: cvvView)
         
         XCTAssertFalse(result)
+    }
+    
+    // MARK: testing the text colour feature
+    func testCanSetColourOfText() {
+        cvvView.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, cvvView.textField.textColor)
+    }
+    
+    func testUnsetColourOfTextSetsColourToDefault() {
+        cvvView.textColor = nil
+        
+        XCTAssertEqual(UIColor.black, cvvView.textField.textColor)
     }
     
     private func type(_ text: String, into view: PANView) {

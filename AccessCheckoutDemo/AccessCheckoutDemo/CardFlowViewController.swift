@@ -9,8 +9,8 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
-    private var card: Card?
     private let unknownBrandImage = UIImage(named: "card_unknown")
+    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
@@ -27,10 +27,6 @@ class CardFlowViewController: UIViewController {
             return
         }
         
-        submitButton.isEnabled = false
-        panView.isEnabled = false
-        expiryDateView.isEnabled = false
-        cvvView.isEnabled = false
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
@@ -40,7 +36,6 @@ class CardFlowViewController: UIViewController {
             .cvv(cvv)
             .build()
         
-        let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
             .merchantId(CI.merchantId)
             .build()
@@ -77,45 +72,35 @@ class CardFlowViewController: UIViewController {
                         break
                     }
                     
-                    self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-                    AlertView.display(using: self, title: title, message: nil)
+                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
+                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
+                    })
                 }
             }
         }
     }
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
-        panView.isEnabled = true
-        panView.isValid(valid: true)
-        
-        expiryDateView.isEnabled = true
-        expiryDateView.isValid(valid: true)
-        
-        cvvView.isEnabled = true
-        cvvView.isValid(valid: true)
-        
-        submitButton.isEnabled = false
-        
         if !preserveContent {
             panView.clear()
             expiryDateView.clear()
             cvvView.clear()
-            panView.imageView.image = unknownBrandImage
         }
+        
         validationErrors?.forEach { error in
             switch error {
             case .panFailedLuhnCheck:
-                panView?.isValid(valid: false)
+                changePanValidIndicator(isValid: false)
             case .dateHasInvalidFormat(_, let jsonPath):
                 switch jsonPath {
                 case "$.cardNumber":
-                    panView?.isValid(valid: false)
+                    changePanValidIndicator(isValid: false)
                 case "$.cardExpiryDate.month":
-                    expiryDateView.isValid(valid: false)
+                    changeExpiryDateValidIndicator(isValid: false)
                 case "$.cardExpiryDate.year":
-                    expiryDateView.isValid(valid: false)
+                    changeExpiryDateValidIndicator(isValid: false)
                 case "$.cvv":
-                    cvvView.isValid(valid: false)
+                    changeCvvValidIndicator(isValid: false)
                 default:
                     print("Unrecognized jsonPath")
                 }
@@ -142,17 +127,18 @@ class CardFlowViewController: UIViewController {
         
         resetCard(preserveContent: false, validationErrors: nil)
         
-        // Card setup
-        let cardValidator = AccessCheckoutCardValidator()
-        if let configUrl = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String,
-            let url = URL(string: configUrl) {
-            cardValidator.cardConfiguration = CardConfiguration(fromURL: url)
-        }
+        let validationConfig = CardValidationConfig(panView: panView,
+                                                    expiryDateView: expiryDateView,
+                                                    cvvView: cvvView,
+                                                    accessBaseUrl: accessBaseUrl,
+                                                    validationDelegate: self)
         
-        let card = AccessCheckoutCard(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView)
-        card.cardDelegate = self
-        card.cardValidator = cardValidator
-        self.card = card
+        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+        
+        panValidChanged(isValid: false)
+        expiryDateValidChanged(isValid: false)
+        cvvValidChanged(isValid: false)
+        cardBrandChanged(cardBrand: nil)
     }
     
     private func updateCardBrandImage(url: URL) {
@@ -164,23 +150,53 @@ class CardFlowViewController: UIViewController {
             }
         }
     }
-}
-
-extension CardFlowViewController: CardDelegate {
-    func handleValidationResult(_ accessCheckoutView: AccessCheckoutView, isValid valid: Bool) {
-        accessCheckoutView.isValid(valid: valid)
-        if let valid = card?.isValid() {
-            submitButton.isEnabled = valid
-        }
+    
+    private func changePanValidIndicator(isValid: Bool) {
+        panView.textColor = isValid ? nil : UIColor.red
     }
     
-    func didChangeCardBrand(_ cardBrand: CardConfiguration.CardBrand?) {
-        if let imageUrl = cardBrand?.images?.filter({ $0.type == "image/png" }).first?.url,
+    private func changeExpiryDateValidIndicator(isValid: Bool) {
+        expiryDateView.textColor = isValid ? nil : UIColor.red
+    }
+    
+    private func changeCvvValidIndicator(isValid: Bool) {
+        cvvView.textColor = isValid ? nil : UIColor.red
+    }
+}
+
+extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
+    func cardBrandChanged(cardBrand: CardBrandClient?) {
+        if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
             let url = URL(string: imageUrl) {
             updateCardBrandImage(url: url)
         } else {
             panView.imageView.image = unknownBrandImage
         }
         panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
+    }
+    
+    func panValidChanged(isValid: Bool) {
+        changePanValidIndicator(isValid: isValid)
+        disableSubmitIfNotValid(valid: isValid)
+    }
+    
+    func cvvValidChanged(isValid: Bool) {
+        changeCvvValidIndicator(isValid: isValid)
+        disableSubmitIfNotValid(valid: isValid)
+    }
+    
+    func expiryDateValidChanged(isValid: Bool) {
+        changeExpiryDateValidIndicator(isValid: isValid)
+        disableSubmitIfNotValid(valid: isValid)
+    }
+    
+    func validationSuccess() {
+        submitButton.isEnabled = true
+    }
+    
+    private func disableSubmitIfNotValid(valid: Bool) {
+        if !valid {
+            submitButton.isEnabled = false
+        }
     }
 }

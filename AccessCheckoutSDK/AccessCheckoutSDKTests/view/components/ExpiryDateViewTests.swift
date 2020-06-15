@@ -12,7 +12,10 @@ class ExpiryDateViewTests: XCTestCase {
     
     let expiryDateView = ExpiryDateView()
     
-    // MARK: Month
+    // MARK: testing what the end user can and cannot type in Month
+    func testCanEnterAnyTextInMonthWhenNoPresenter() {
+        XCTAssertTrue(typeMonth("abc", into: expiryDateView))
+    }
     
     func testCanClearMonth() {
         initialiseValidation(expiryDateView: expiryDateView)
@@ -49,7 +52,10 @@ class ExpiryDateViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    // MARK: Year
+    // MARK: testing what the end user can and cannot type in Year
+    func testCanEnterAnyTextInYearWhenNoPresenter() {
+        XCTAssertTrue(typeYear("abc", into: expiryDateView))
+    }
     
     func testCanClearYear() {
         initialiseValidation(expiryDateView: expiryDateView)
@@ -94,6 +100,21 @@ class ExpiryDateViewTests: XCTestCase {
         let result = typeYear("123", into: expiryDateView)
         
         XCTAssertFalse(result)
+    }
+    
+    // MARK: testing the text colour feature
+    func testCanSetColourOfText() {
+        expiryDateView.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, expiryDateView.monthTextField.textColor)
+        XCTAssertEqual(UIColor.red, expiryDateView.yearTextField.textColor)
+    }
+    
+    func testUnsetColourOfTextSetsColourToDefault() {
+        expiryDateView.textColor = nil
+        
+        XCTAssertEqual(UIColor.black, expiryDateView.monthTextField.textColor)
+        XCTAssertEqual(UIColor.black, expiryDateView.yearTextField.textColor)
     }
     
     private func typeMonth(_ text: String, into view: ExpiryDateView) -> Bool {

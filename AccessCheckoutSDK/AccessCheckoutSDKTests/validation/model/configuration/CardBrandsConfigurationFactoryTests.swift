@@ -1,26 +1,28 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
+import Mockingjay
 import XCTest
 
 class CardBrandsConfigurationFactoryTests: XCTestCase {
-    let dtoTransformer = MockCardBrandDtoTransformer()
-    let dtoCardBrand = try! cardBrandDto()
-    let expectedCardBrand = aCardBrand()
+    private let successfulResponse = """
+    [{
+        "name": "visa",
+        "pattern": "a-pattern",
+        "panLengths": [3],
+        "cvvLength": 3,
+        "images": []
     
-    override func setUp() {
-        dtoTransformer.getStubbingProxy().transform(dtoCardBrand).thenReturn(expectedCardBrand)
-    }
+    }]
+    """
+    private let factory = CardBrandsConfigurationFactory(RestClient(), CardBrandDtoTransformer())
     
-    func testCreatesConfigurationUsingARemoteConfigurationFile() throws {
+    func testCreatesConfigurationByRequestingRemoteConfigurationFileForBaseUrlWithoutTrailingSlash() throws {
         let expectationToFulfill = expectation(description: "")
-        let restClient = RestClientMock(replyWith: [dtoCardBrand])
-        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
-        let expectedRequest = URLRequest(url: URL(string: "http://localhost/access-checkout/cardTypes.json")!)
-        let expectedConfiguration = CardBrandsConfiguration([self.expectedCardBrand])
+        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: successfulResponse, status: 200)
         
         factory.create(baseUrl: "http://localhost") { configuration in
-            XCTAssertEqual(expectedRequest, restClient.requestSent)
-            XCTAssertEqual(expectedConfiguration, configuration)
+            XCTAssertEqual(1, configuration.brands.count)
+            XCTAssertEqual("visa", configuration.brands[0].name)
             
             expectationToFulfill.fulfill()
         }
@@ -28,10 +30,33 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func testCreatesConfigurationWithEmptyBrandsWhenFailingToRetrieveRemoteConfigurationFile() throws {
+    func testCreatesConfigurationByRequestingRemoteConfigurationFileForBaseUrlWithTrailingSlash() throws {
         let expectationToFulfill = expectation(description: "")
-        let restClient = RestClientMock<[CardBrandDto]>(errorWith: AccessCheckoutClientError.unknown(message: ""))
-        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
+        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: successfulResponse, status: 200)
+        
+        factory.create(baseUrl: "http://localhost/") { configuration in
+            XCTAssertEqual(1, configuration.brands.count)
+            XCTAssertEqual("visa", configuration.brands[0].name)
+            
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 0.5)
+    }
+    
+    func testCreatesConfigurationWithEmptyBrandsWhenInvalidUrlIsPassed() throws {
+        let expectationToFulfill = expectation(description: "")
+        
+        factory.create(baseUrl: "some invalid URL") { configuration in
+            XCTAssertTrue(configuration.brands.isEmpty)
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 2)
+    }
+    
+    func testCreatesConfigurationWithEmptyBrandsWhenFailingToConnectToUrl() throws {
+        let expectationToFulfill = expectation(description: "")
         
         factory.create(baseUrl: "http://localhost") { configuration in
             XCTAssertTrue(configuration.brands.isEmpty)
@@ -41,30 +66,12 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 0.5)
     }
     
-    func testCreatesConfigurationUsingARemoteConfigurationFileAndBaseUrlWithTrailingSlash() throws {
-        let restClient = RestClientMock(replyWith: [dtoCardBrand])
-        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
+    func testCreatesConfigurationWithEmptyBrandsWhenReceivingErrorInResponse() throws {
         let expectationToFulfill = expectation(description: "")
-        let expectedRequest = URLRequest(url: URL(string: "http://localhost/access-checkout/cardTypes.json")!)
+        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: "some invalid response", status: 400)
         
-        factory.create(baseUrl: "http://localhost/") { _ in
-            XCTAssertEqual(expectedRequest, restClient.requestSent)
-            
-            expectationToFulfill.fulfill()
-        }
-        
-        wait(for: [expectationToFulfill], timeout: 0.5)
-    }
-    
-    func testCreatesConfigurationUsingARemoteConfigurationFileAndBaseUrlWithoutTrailingSlash() throws {
-        let restClient = RestClientMock(replyWith: [dtoCardBrand])
-        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
-        let expectationToFulfill = expectation(description: "")
-        let expectedRequest = URLRequest(url: URL(string: "http://localhost/access-checkout/cardTypes.json")!)
-        
-        factory.create(baseUrl: "http://localhost") { _ in
-            XCTAssertEqual(expectedRequest, restClient.requestSent)
-            
+        factory.create(baseUrl: "http://localhost") { configuration in
+            XCTAssertTrue(configuration.brands.isEmpty)
             expectationToFulfill.fulfill()
         }
         
@@ -72,8 +79,6 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
     }
     
     func createsAnEmptyConfiguration() {
-        let restClient = RestClient()
-        let factory = CardBrandsConfigurationFactory(restClient, dtoTransformer)
         let expectedConfiguration = CardBrandsConfiguration([])
         
         let result = factory.emptyConfiguration()
@@ -81,15 +86,9 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         XCTAssertEqual(expectedConfiguration, result)
     }
     
-    static func cardBrandDto() throws -> CardBrandDto {
-        let json = "{}"
+    private func stubResponse(forUrl url: String, response: String, status: Int) {
+        let data = response.data(using: .utf8)!
         
-        return try JSONDecoder().decode(CardBrandDto.self, from: json.data(using: .utf8)!)
-    }
-    
-    static func aCardBrand() -> CardBrandModel {
-        return CardBrandModel(name: "", images: [],
-                              panValidationRule: ValidationRule(matcher: "", validLengths: []),
-                              cvvValidationRule: ValidationRule(matcher: "", validLengths: []))
+        stub(http(.get, uri: url), jsonData(data, status: status))
     }
 }

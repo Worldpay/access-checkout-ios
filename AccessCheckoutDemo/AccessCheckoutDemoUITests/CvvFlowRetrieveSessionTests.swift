@@ -44,7 +44,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         alert.close()
         XCTAssertFalse(alert.exists)
         
-        waitFor(timeoutInSeconds: 0.05)
+        waitFor(timeoutInSeconds: 0.5)
         XCTAssertEqual(view.cvvField.placeholderValue, view.cvvText)
     }
     

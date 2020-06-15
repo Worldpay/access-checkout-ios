@@ -16,6 +16,11 @@ class PANViewTests: XCTestCase {
     
     let panView = PANView()
     
+    // MARK: testing what the end user can and cannot type
+    func testCanEnterAnyTextWhenNoPresenter() {
+        XCTAssertTrue(type("abc", into: panView))
+    }
+    
     func testCanClearText() {
         initialiseValidation(cardBrands: [visaBrand], panView: panView)
         XCTAssertTrue(type("", into: panView))
@@ -60,7 +65,9 @@ class PANViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testCanTypeStartOfMaestroPan_ie_ThisPatternIsExplicitlyExcludedFromTheVisaPattern() {
+    //  This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
+    // to make sure that it does not prevent the user from typing a maestro PAN
+    func testCanTypeStartOfMaestroPan() {
         initialiseValidation(cardBrands: [visaBrand, maestroBrand], panView: panView)
         
         let result = type("493698123", into: panView)
@@ -82,6 +89,19 @@ class PANViewTests: XCTestCase {
         let result = type("12345678901234567890", into: panView)
         
         XCTAssertFalse(result)
+    }
+    
+    // MARK: testing the text colour feature
+    func testCanSetColourOfText() {
+        panView.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, panView.textField.textColor)
+    }
+    
+    func testUnsetColourOfTextSetsColourToDefault() {
+        panView.textColor = nil
+        
+        XCTAssertEqual(UIColor.black, panView.textField.textColor)
     }
     
     private func type(_ text: String, into view: PANView) -> Bool {

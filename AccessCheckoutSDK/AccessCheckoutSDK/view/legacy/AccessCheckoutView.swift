@@ -1,17 +1,17 @@
 import Foundation
 
-/// A view managed by a `Card`
-public protocol AccessCheckoutView : class {
+/// A view subject to validation
+protocol AccessCheckoutView {
     
     /// Is enabled for editing
     var isEnabled: Bool { get set }
     
-    /// A delegate property
-    var validationDelegate: ValidationDelegate? { get set }
-    
-    /// Called when a `CardView` validity changes
-    func isValid(valid: Bool)
+    /// Colour of the text displayed
+    var textColor: UIColor? { get set }
     
     /// Clear the contents of any view input
     func clear()
+    
+    /// Presenter instance used by the view to interact with the business layer
+    var presenter: Presenter? { get set }
 }
