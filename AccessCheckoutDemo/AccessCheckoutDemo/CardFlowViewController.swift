@@ -10,6 +10,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
     private let unknownBrandImage = UIImage(named: "card_unknown")
+    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
@@ -35,7 +36,6 @@ class CardFlowViewController: UIViewController {
             .cvv(cvv)
             .build()
         
-        let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
             .merchantId(CI.merchantId)
             .build()
@@ -130,7 +130,7 @@ class CardFlowViewController: UIViewController {
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateView,
                                                     cvvView: cvvView,
-                                                    accessBaseUrl: "https://try.access.worldpay.com",
+                                                    accessBaseUrl: accessBaseUrl,
                                                     validationDelegate: self)
         
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
@@ -177,20 +177,26 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     
     func panValidChanged(isValid: Bool) {
         changePanValidIndicator(isValid: isValid)
-        submitButton.isEnabled = false
+        disableSubmitIfNotValid(valid: isValid)
     }
     
     func cvvValidChanged(isValid: Bool) {
         changeCvvValidIndicator(isValid: isValid)
-        submitButton.isEnabled = false
+        disableSubmitIfNotValid(valid: isValid)
     }
     
     func expiryDateValidChanged(isValid: Bool) {
         changeExpiryDateValidIndicator(isValid: isValid)
-        submitButton.isEnabled = false
+        disableSubmitIfNotValid(valid: isValid)
     }
     
     func validationSuccess() {
         submitButton.isEnabled = true
+    }
+    
+    private func disableSubmitIfNotValid(valid: Bool) {
+        if !valid {
+            submitButton.isEnabled = false
+        }
     }
 }
