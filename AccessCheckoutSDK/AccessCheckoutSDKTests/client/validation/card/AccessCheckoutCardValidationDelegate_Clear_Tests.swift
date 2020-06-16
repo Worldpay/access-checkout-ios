@@ -65,7 +65,7 @@ class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editExpiryDate(month: "12", year: "35")
+        editExpiryDate(text: "12/35")
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
         
         expiryDateView.clear()
@@ -96,12 +96,9 @@ class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
         panView.textFieldEditingChanged(panView.textField)
     }
     
-    private func editExpiryDate(month: String, year: String) {
-        expiryDateView.monthTextField.text = month
-        expiryDateView.textFieldEditingChanged(expiryDateView.monthTextField)
-        
-        expiryDateView.yearTextField.text = year
-        expiryDateView.textFieldEditingChanged(expiryDateView.yearTextField)
+    private func editExpiryDate(text: String) {
+        expiryDateView.textField.text = text
+        expiryDateView.textFieldEditingChanged(expiryDateView.textField)
     }
     
     private func editCvv(text: String) {

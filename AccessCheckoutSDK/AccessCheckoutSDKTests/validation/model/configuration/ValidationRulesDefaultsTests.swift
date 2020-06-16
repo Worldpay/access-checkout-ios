@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class ValidationRuleDefaultsTests: XCTestCase {
+class ValidationRulesDefaultsTests: XCTestCase {
     let defaults = ValidationRulesDefaults.instance()
     
     func testPanValidationRule() {
@@ -14,13 +14,13 @@ class ValidationRuleDefaultsTests: XCTestCase {
         XCTAssertEqual([3, 4], defaults.cvv.validLengths)
     }
     
-    func testExpiryMonthValidationRule() {
-        XCTAssertEqual("^0[1-9]{0,1}$|^1[0-2]{0,1}$", defaults.expiryMonth.matcher)
-        XCTAssertEqual([2], defaults.expiryMonth.validLengths)
+    func testExpiryDateValidationRule() {
+        XCTAssertEqual("^((0[1-9])|(1[0-2]))\\/(\\d{2})$", defaults.expiryDate.matcher)
+        XCTAssertEqual([5], defaults.expiryDate.validLengths)
     }
     
-    func testExpiryYearValidationRule() {
-        XCTAssertEqual("^\\d{0,2}$", defaults.expiryYear.matcher)
-        XCTAssertEqual([2], defaults.expiryYear.validLengths)
+    func testExpiryDateInputValidationRule() {
+        XCTAssertEqual("^(\\d{0,4})?\\/?(\\d{0,4})?$", defaults.expiryDateInput.matcher)
+        XCTAssertEqual([5], defaults.expiryDateInput.validLengths)
     }
 }

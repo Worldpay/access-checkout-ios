@@ -73,8 +73,8 @@ extension CardBrandsConfiguration: Equatable {
 extension ValidationRulesDefaults: Equatable {
     public static func == (lhs: ValidationRulesDefaults, rhs: ValidationRulesDefaults) -> Bool {
         return lhs.cvv == rhs.cvv
-            && lhs.expiryMonth == rhs.expiryMonth
-            && lhs.expiryYear == rhs.expiryYear
+            && lhs.expiryDate == rhs.expiryDate
+            && lhs.expiryDateInput == rhs.expiryDateInput
             && lhs.pan == rhs.pan
     }
 }

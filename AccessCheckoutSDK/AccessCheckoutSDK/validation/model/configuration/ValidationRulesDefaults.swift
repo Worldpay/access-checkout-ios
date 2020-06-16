@@ -1,8 +1,8 @@
 struct ValidationRulesDefaults {
     let pan: ValidationRule
     let cvv: ValidationRule
-    let expiryMonth: ValidationRule
-    let expiryYear: ValidationRule
+    let expiryDate: ValidationRule
+    let expiryDateInput: ValidationRule
     
     private static let defaults = ValidationRulesDefaults()
     
@@ -17,14 +17,14 @@ struct ValidationRulesDefaults {
             validLengths: [3, 4]
         )
         
-        self.expiryMonth = ValidationRule(
-            matcher: "^0[1-9]{0,1}$|^1[0-2]{0,1}$",
-            validLengths: [2]
+        self.expiryDate = ValidationRule(
+            matcher: "^((0[1-9])|(1[0-2]))\\/(\\d{2})$",
+            validLengths: [5]
         )
         
-        self.expiryYear = ValidationRule(
-            matcher: "^\\d{0,2}$",
-            validLengths: [2]
+        self.expiryDateInput = ValidationRule(
+            matcher: "^(\\d{0,4})?\\/?(\\d{0,4})?$",
+            validLengths: [5]
         )
     }
     

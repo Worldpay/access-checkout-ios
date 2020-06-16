@@ -127,7 +127,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editExpiryDate(month: "11", year: "32")
+        editExpiryDate(text: "11/32")
         
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
@@ -140,8 +140,8 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editExpiryDate(month: "11", year: "32")
-        editExpiryDate(month: "11", year: "33")
+        editExpiryDate(text: "11/32")
+        editExpiryDate(text: "11/33")
         
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
@@ -224,7 +224,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "4111111111111111")
         editCvv(text: "123")
-        editExpiryDate(month: "12", year: "35")
+        editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, times(1)).validationSuccess()
     }
@@ -239,7 +239,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "4111")
         editCvv(text: "123")
-        editExpiryDate(month: "12", year: "35")
+        editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, never()).validationSuccess()
     }
@@ -254,7 +254,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "4111111111111111")
         editCvv(text: "123")
-        editExpiryDate(month: "12", year: "19")
+        editExpiryDate(text: "12/19")
         
         verify(merchantDelegate, never()).validationSuccess()
     }
@@ -269,7 +269,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         
         editPan(text: "4111111111111111")
         editCvv(text: "12")
-        editExpiryDate(month: "12", year: "35")
+        editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, never()).validationSuccess()
     }
@@ -283,12 +283,9 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         panView.textFieldDidEndEditing(panView.textField)
     }
     
-    private func editExpiryDate(month: String, year: String) {
-        expiryDateView.monthTextField.text = month
-        expiryDateView.textFieldDidEndEditing(expiryDateView.monthTextField)
-        
-        expiryDateView.yearTextField.text = year
-        expiryDateView.textFieldDidEndEditing(expiryDateView.yearTextField)
+    private func editExpiryDate(text: String) {
+        expiryDateView.textField.text = text
+        expiryDateView.textFieldDidEndEditing(expiryDateView.textField)
     }
     
     private func editCvv(text: String) {

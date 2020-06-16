@@ -2,153 +2,114 @@
 import XCTest
 
 class ExpiryDateValidatorTests: XCTestCase {
-    let expiryDateValidator = ExpiryDateValidator()
-    let targetDate = Date()
+    private let expiryDateValidator = ExpiryDateValidator()
+    private let targetDate = Date()
     
     // MARK: validate()
     
-    func testValidateReturnsFalseIfMonthAndYearAreEmpty() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "", expiryYear: ""))
-    }
-    
-    func testValidateReturnsFalseIfMonthAndYearAreNil() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: nil, expiryYear: nil))
+    func testValidateReturnsFalseIfEmpty() {
+        XCTAssertFalse(expiryDateValidator.validate(""))
     }
     
     func testValidateReturnsFalseIfMonthIsEmpty() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "", expiryYear: getYear(dateModifier: 1)))
-    }
-    
-    func testValidateReturnsFalseIfMonthIsNil() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: nil, expiryYear: getYear(dateModifier: 1)))
+        XCTAssertFalse(expiryDateValidator.validate("/34"))
     }
     
     func testValidateReturnsFalseIfYearIsEmpty() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: getMonth(dateModifier: 0), expiryYear: ""))
+        XCTAssertFalse(expiryDateValidator.validate("10/"))
     }
     
-    func testValidateReturnsFalseIfYearIsNil() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: getMonth(dateModifier: 0), expiryYear: nil))
+    func testValidateReturnsFalseIfMonthIsNotANumber() {
+        XCTAssertFalse(expiryDateValidator.validate("aa/34"))
     }
     
-    func testValidateReturnsFalseIfMonthIsInvalidAgainstMatcher() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "13", expiryYear: getYear(dateModifier: 1)))
+    func testValidateReturnsFalseIfMonthIsGreaterThan13() {
+        XCTAssertFalse(expiryDateValidator.validate("13/34"))
     }
     
-    func testValidateReturnsFalseIfYearIsInvalidAgainstMatcher() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "11", expiryYear: "aa"))
+    func testValidateReturnsFalseIfYearIsNotANumber() {
+        XCTAssertFalse(expiryDateValidator.validate("11/aa"))
     }
     
-    func testValidateReturnsFalseIfMonthIsShorterThanMinLength() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "1", expiryYear: getYear(dateModifier: 1)))
+    func testValidateReturnsFalseIfMonthIsOneDigit() {
+        XCTAssertFalse(expiryDateValidator.validate("1/34"))
     }
     
-    func testValidateReturnsFalseIfYearIsShorterThanMinLength() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: "12", expiryYear: "2"))
+    func testValidateReturnsFalseIfYearIsOneDigit() {
+        XCTAssertFalse(expiryDateValidator.validate("12/3"))
     }
     
-    func testValidateReturnsFalseIfMonthIsInThePastOfCurrentYear() {
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: getMonth(dateModifier: -1), expiryYear: getYear(dateModifier: 0)))
-    }
-    
-    func testValidateReturnsFalseIfYearIsInThePast() {
-        let currentMonth = getMonth(dateModifier: 0)
-        let pastYear = getYear(dateModifier: -1)
-        
-        XCTAssertFalse(expiryDateValidator.validate(expiryMonth: currentMonth, expiryYear: pastYear))
+    func testValidateReturnsFalseIfDateIsInThePast() {
+        XCTAssertFalse(expiryDateValidator.validate("03/20"))
     }
     
     func testValidateReturnsTrueIfDateIsCurrentMonthOfCurrentYear() {
-        let currentMonth = getMonth(dateModifier: 0)
-        let currentYear = getYear(dateModifier: 0)
-        
-        XCTAssertTrue(expiryDateValidator.validate(expiryMonth: currentMonth, expiryYear: currentYear))
+        XCTAssertTrue(expiryDateValidator.validate(expiryDateOfCurrentMonthAndYear()))
     }
     
     func testValidateReturnsTrueIfDateIsInTheFuture() {
-        let currentMonth = getMonth(dateModifier: 0)
-        let futureYear = getYear(dateModifier: 1)
-        
-        XCTAssertTrue(expiryDateValidator.validate(expiryMonth: currentMonth, expiryYear: futureYear))
+        XCTAssertTrue(expiryDateValidator.validate("03/34"))
     }
     
-    // MARK: canValidate(month)
+    // MARK: canValidate
     
-    func testCanValidateMonthReturnsTrueIfTextIsTheStartOfAMonth() {
-        let text = "1"
+    func testCanValidateReturnsFalseIfTextIsNonNumericalCharacters() {
+        XCTAssertFalse(expiryDateValidator.canValidate("ab"))
+        XCTAssertFalse(expiryDateValidator.canValidate("?&"))
         
-        XCTAssertTrue(expiryDateValidator.canValidateMonth(text))
+        XCTAssertFalse(expiryDateValidator.canValidate("abcd"))
+        XCTAssertFalse(expiryDateValidator.canValidate("?&*%"))
+        
+        XCTAssertFalse(expiryDateValidator.canValidate("ab/cd"))
+        XCTAssertFalse(expiryDateValidator.canValidate("?&/*%"))
     }
     
-    func testCanValidateMonthReturnsTrueIfTextIsACompleteMonth() {
-        let text = "12"
-        
-        XCTAssertTrue(expiryDateValidator.canValidateMonth(text))
+    func testCanValidateReturnsTrueIfTextIsDigitsOnlyAndUpTo4CharactersLong() {
+        XCTAssertTrue(expiryDateValidator.canValidate("9"))
+        XCTAssertTrue(expiryDateValidator.canValidate("99"))
+        XCTAssertTrue(expiryDateValidator.canValidate("999"))
+        XCTAssertTrue(expiryDateValidator.canValidate("9999"))
     }
     
-    func testCanValidateMonthReturnsFalseIfTextIsLongerThan2Digits() {
-        let text = "123"
-        
-        XCTAssertFalse(expiryDateValidator.canValidateMonth(text))
+    func testCanValidateReturnsTrueIfTextIsDigitsOnlyAnd5CharactersLong() {
+        XCTAssertTrue(expiryDateValidator.canValidate("99999"))
     }
     
-    func testCanValidateMonthReturnsFalseIfTextIs2DigitsButAnInvalidMonth() {
-        let text = "13"
-        
-        XCTAssertFalse(expiryDateValidator.canValidateMonth(text))
+    func testCanValidateReturnsFalseIfTextIsDigitsOnlyAndLongerThan5Characters() {
+        XCTAssertFalse(expiryDateValidator.canValidate("999999"))
     }
     
-    func testCanValidateMonthReturnsFalseIfTextIsSomethingElseThanDigits() {
-        let text = "ab"
+    func testCanValidateReturnsTrueIfTextContainsASlashAndAnyNumberOfDigitsOnEachSideAndUpTo5CharactersLong() {
+        XCTAssertTrue(expiryDateValidator.canValidate("/"))
+        XCTAssertTrue(expiryDateValidator.canValidate("9/"))
+        XCTAssertTrue(expiryDateValidator.canValidate("9/9"))
+        XCTAssertTrue(expiryDateValidator.canValidate("9/99"))
+        XCTAssertTrue(expiryDateValidator.canValidate("9/999"))
         
-        XCTAssertFalse(expiryDateValidator.canValidateMonth(text))
+        XCTAssertTrue(expiryDateValidator.canValidate("99/"))
+        XCTAssertTrue(expiryDateValidator.canValidate("99/9"))
+        XCTAssertTrue(expiryDateValidator.canValidate("99/99"))
+        
+        XCTAssertTrue(expiryDateValidator.canValidate("999/"))
+        XCTAssertTrue(expiryDateValidator.canValidate("999/9"))
+        
+        XCTAssertTrue(expiryDateValidator.canValidate("/9"))
+        XCTAssertTrue(expiryDateValidator.canValidate("/99"))
+        XCTAssertTrue(expiryDateValidator.canValidate("/999"))
+        
+        XCTAssertTrue(expiryDateValidator.canValidate("9999/"))
+        XCTAssertTrue(expiryDateValidator.canValidate("/9999"))
     }
     
-    // MARK: canValidate(year)
-    
-    func testCanValidateYearReturnsTrueIfTextIsTheStartOfAYear() {
-        let text = "1"
-        
-        XCTAssertTrue(expiryDateValidator.canValidateYear(text))
+    func testCanValidateReturnsTrueIfTextIsAValidExpiryDate() {
+        XCTAssertTrue(expiryDateValidator.canValidate("12/34"))
     }
     
-    func testCanValidateYearReturnsTrueIfTextIsACompleteFutureYear() {
-        let text = "35"
-        
-        XCTAssertTrue(expiryDateValidator.canValidateYear(text))
-    }
-    
-    func testCanValidateYearReturnsTrueIfTextIsAPastYear() {
-        let text = "19"
-        
-        XCTAssertTrue(expiryDateValidator.canValidateYear(text))
-    }
-    
-    func testCanValidateYearReturnsFalseIfTextIsLongerThan2Digits() {
-        let text = "203"
-        
-        XCTAssertFalse(expiryDateValidator.canValidateYear(text))
-    }
-    
-    func testCanValidateYearReturnsFalseIfTextIsSomethingElseThanDigits() {
-        let text = "ab"
-        
-        XCTAssertFalse(expiryDateValidator.canValidateYear(text))
-    }
-    
-    private func getMonth(dateModifier: Int) -> String {
-        let monthDate = Calendar.current.date(byAdding: .month, value: dateModifier, to: targetDate)
+    private func expiryDateOfCurrentMonthAndYear() -> String {
+        let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM"
+        dateFormatter.dateFormat = "MM/yy"
         
-        return dateFormatter.string(from: monthDate!)
-    }
-    
-    private func getYear(dateModifier: Int) -> String {
-        let yearDate = Calendar.current.date(byAdding: .year, value: dateModifier, to: targetDate)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy"
-        
-        return dateFormatter.string(from: yearDate!)
+        return dateFormatter.string(from: date)
     }
 }
