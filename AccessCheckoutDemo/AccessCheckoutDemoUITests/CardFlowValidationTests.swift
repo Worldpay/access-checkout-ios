@@ -22,13 +22,8 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
     }
     
     func testExpiryMonth_alpha() {
-        view!.typeTextIntoExpiryMonth("A")
-        XCTAssertEqual(view!.expiryMonthField.placeholderValue, view!.expiryMonthText)
-    }
-    
-    func testExpiryYear_alpha() {
-        view!.typeTextIntoExpiryYear("A")
-        XCTAssertEqual(view!.expiryYearField.placeholderValue, view!.expiryYearText)
+        view!.typeTextIntoExpiryDate("A")
+        XCTAssertEqual(view!.expiryDateField.placeholderValue, view!.expiryDateText)
     }
     
     func testCVV_alpha() {
@@ -41,14 +36,9 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.panText!.count, 19)
     }
     
-    func testExpiryMonth_maxLength() {
-        view!.typeTextIntoExpiryMonth("1212")
-        XCTAssertEqual(view!.expiryMonthText?.count, 2)
-    }
-    
-    func testExpiryYear_maxLength() {
-        view!.typeTextIntoExpiryYear("1212")
-        XCTAssertEqual(view!.expiryYearText?.count, 2)
+    func testExpiryDate_maxLength() {
+        view!.typeTextIntoExpiryDate("12/999")
+        XCTAssertEqual(view!.expiryDateText?.count, 5)
     }
     
     func testCVV_maxLength() {
@@ -100,20 +90,13 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.panText, "1")
     }
     
-    func testExpiryMonth_removeDigits() {
-        view!.typeTextIntoExpiryMonth("12")
-        view!.typeTextIntoExpiryMonth(backspace)
+    func testExpiryDate_removeDigits() {
+        view!.typeTextIntoExpiryDate("12/99")
+        view!.typeTextIntoExpiryDate(backspace)
         
-        XCTAssertEqual(view!.expiryMonthText, "1")
+        XCTAssertEqual(view!.expiryDateText, "12/9")
     }
     
-    func testExpiryYear_removeDigits() {
-        view!.typeTextIntoExpiryYear("42")
-        view!.typeTextIntoExpiryYear(backspace)
-        
-        XCTAssertEqual(view!.expiryYearText, "4")
-    }
-
     func testCVV_removeDigits() {
         view!.typeTextIntoCvv("1234")
         view!.typeTextIntoCvv(backspace)
@@ -127,8 +110,7 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertFalse(view!.submitButton.isEnabled)
         
         view!.typeTextIntoPan("4111111111111111")
-        view!.typeTextIntoExpiryMonth("01")
-        view!.typeTextIntoExpiryYear("99")
+        view!.typeTextIntoExpiryDate("01/34")
         view!.typeTextIntoCvv("123")
         
         // Valid state

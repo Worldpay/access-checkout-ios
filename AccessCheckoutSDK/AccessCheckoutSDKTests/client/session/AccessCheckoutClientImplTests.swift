@@ -203,10 +203,10 @@ class AccessCheckoutClientImplTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 1)
     }
     
-    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Month is mandatory to retrieve a Verified Tokens session")
+    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() throws {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
         let client = createAccessCheckoutClient()
-        let cardDetails = CardDetailsBuilder().pan("pan")
+        let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvv("123")
             .build()
         
@@ -215,10 +215,10 @@ class AccessCheckoutClientImplTests: XCTestCase {
         }
     }
     
-    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() {
+    func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() throws {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
         let client = createAccessCheckoutClient()
-        let cardDetails = CardDetailsBuilder().build()
+        let cardDetails = try CardDetailsBuilder().build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { _ in }) { error in
             XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
@@ -226,8 +226,8 @@ class AccessCheckoutClientImplTests: XCTestCase {
     }
     
     private func validCardDetails() -> CardDetails {
-        return CardDetailsBuilder().pan("pan")
-            .expiryDate(month: "12", year: "20")
+        return try! CardDetailsBuilder().pan("pan")
+            .expiryDate("12/20")
             .cvv("123")
             .build()
     }

@@ -24,7 +24,6 @@
 		C9AFE45C22B7AA4800943B3E /* CVVView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44922B7AA4700943B3E /* CVVView.xib */; };
 		C9AFE45D22B7AA4800943B3E /* PANView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44A22B7AA4700943B3E /* PANView.xib */; };
 		C9AFE46022B7AA4800943B3E /* ExpiryDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */; };
-		C9AFE46122B7AA4800943B3E /* AccessCheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44E22B7AA4700943B3E /* AccessCheckoutView.swift */; };
 		C9AFE46222B7AA4800943B3E /* CVVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44F22B7AA4700943B3E /* CVVView.swift */; };
 		C9AFE46422B7AA4800943B3E /* PANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45122B7AA4700943B3E /* PANView.swift */; };
 		C9AFE46522B7AA4800943B3E /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45222B7AA4700943B3E /* amex.png */; };
@@ -108,9 +107,11 @@
 		E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC2324857616000390CA /* CardBrandDtoTransformerTests.swift */; };
 		E745CC28248585E9000390CA /* MockCardBrandDtoTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */; };
 		E745CC2C24859C18000390CA /* ValidationRulesDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC2B24859C18000390CA /* ValidationRulesDefaults.swift */; };
-		E745CC2E24859DD6000390CA /* ValidationRuleDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC2D24859DD6000390CA /* ValidationRuleDefaultsTests.swift */; };
+		E745CC2E24859DD6000390CA /* ValidationRulesDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC2D24859DD6000390CA /* ValidationRulesDefaultsTests.swift */; };
 		E749024B247FEE3C00889AAA /* TextChangeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E749024A247FEE3C00889AAA /* TextChangeHandlerTests.swift */; };
 		E749024D247FEEB600889AAA /* TextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E749024C247FEEB600889AAA /* TextChangeHandler.swift */; };
+		E74EB7432497A77C008743E7 /* ExpiryDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74EB7422497A77C008743E7 /* ExpiryDateFormatter.swift */; };
+		E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */; };
 		E75C5E66248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E64248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift */; };
 		E75C5E67248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */; };
 		E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift */; };
@@ -134,13 +135,10 @@
 		E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A8224586961003F7231 /* VerifiedTokensSessionRequest.swift */; };
 		E7821A85245869A3003F7231 /* ApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A84245869A3003F7231 /* ApiLinks.swift */; };
 		E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A86245869DB003F7231 /* ApiHeaders.swift */; };
-		E7821A8F24586B45003F7231 /* ExpiryYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A8E24586B45003F7231 /* ExpiryYear.swift */; };
 		E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */; };
-		E7821A9724586C03003F7231 /* AccessCheckoutDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9624586C03003F7231 /* AccessCheckoutDateView.swift */; };
 		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
 		E7821A9D24586CC5003F7231 /* PAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9C24586CC5003F7231 /* PAN.swift */; };
 		E7821A9F24586CE3003F7231 /* CVV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9E24586CE3003F7231 /* CVV.swift */; };
-		E7821AA124586CF5003F7231 /* ExpiryMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821AA024586CF5003F7231 /* ExpiryMonth.swift */; };
 		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift */; };
 		E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift */; };
 		E798B69F24913E8100A6A9AD /* CVVViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798B69E24913E8100A6A9AD /* CVVViewTests.swift */; };
@@ -236,7 +234,6 @@
 		C9AFE44922B7AA4700943B3E /* CVVView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVVView.xib; sourceTree = "<group>"; };
 		C9AFE44A22B7AA4700943B3E /* PANView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PANView.xib; sourceTree = "<group>"; };
 		C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpiryDateView.xib; sourceTree = "<group>"; };
-		C9AFE44E22B7AA4700943B3E /* AccessCheckoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessCheckoutView.swift; path = ../legacy/AccessCheckoutView.swift; sourceTree = "<group>"; };
 		C9AFE44F22B7AA4700943B3E /* CVVView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVVView.swift; sourceTree = "<group>"; };
 		C9AFE45122B7AA4700943B3E /* PANView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANView.swift; sourceTree = "<group>"; };
 		C9AFE45222B7AA4700943B3E /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
@@ -320,9 +317,11 @@
 		E745CC2324857616000390CA /* CardBrandDtoTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandDtoTransformerTests.swift; sourceTree = "<group>"; };
 		E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCardBrandDtoTransformer.swift; sourceTree = "<group>"; };
 		E745CC2B24859C18000390CA /* ValidationRulesDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRulesDefaults.swift; sourceTree = "<group>"; };
-		E745CC2D24859DD6000390CA /* ValidationRuleDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRuleDefaultsTests.swift; sourceTree = "<group>"; };
+		E745CC2D24859DD6000390CA /* ValidationRulesDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRulesDefaultsTests.swift; sourceTree = "<group>"; };
 		E749024A247FEE3C00889AAA /* TextChangeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChangeHandlerTests.swift; sourceTree = "<group>"; };
 		E749024C247FEEB600889AAA /* TextChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChangeHandler.swift; sourceTree = "<group>"; };
+		E74EB7422497A77C008743E7 /* ExpiryDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateFormatter.swift; sourceTree = "<group>"; };
+		E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateFormatterTests.swift; sourceTree = "<group>"; };
 		E75C5E64248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAccessCheckoutCvvOnlyValidationDelegate.swift; sourceTree = "<group>"; };
 		E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAccessCheckoutCardValidationDelegate.swift; sourceTree = "<group>"; };
 		E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift; sourceTree = "<group>"; };
@@ -346,13 +345,10 @@
 		E7821A8224586961003F7231 /* VerifiedTokensSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensSessionRequest.swift; sourceTree = "<group>"; };
 		E7821A84245869A3003F7231 /* ApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiLinks.swift; sourceTree = "<group>"; };
 		E7821A86245869DB003F7231 /* ApiHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeaders.swift; sourceTree = "<group>"; };
-		E7821A8E24586B45003F7231 /* ExpiryYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryYear.swift; sourceTree = "<group>"; };
 		E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutTextView.swift; sourceTree = "<group>"; };
-		E7821A9624586C03003F7231 /* AccessCheckoutDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutDateView.swift; sourceTree = "<group>"; };
 		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
 		E7821A9C24586CC5003F7231 /* PAN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAN.swift; sourceTree = "<group>"; };
 		E7821A9E24586CE3003F7231 /* CVV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVV.swift; sourceTree = "<group>"; };
-		E7821AA024586CF5003F7231 /* ExpiryMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryMonth.swift; sourceTree = "<group>"; };
 		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_Clear_Tests.swift; sourceTree = "<group>"; };
 		E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift; sourceTree = "<group>"; };
 		E798B69E24913E8100A6A9AD /* CVVViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVViewTests.swift; sourceTree = "<group>"; };
@@ -795,6 +791,7 @@
 			isa = PBXGroup;
 			children = (
 				E798B69E24913E8100A6A9AD /* CVVViewTests.swift */,
+				E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */,
 				E79DAF1624911DB60043CD46 /* ExpiryDateViewTests.swift */,
 				E7409D51248F9DE200016AEB /* PANViewTests.swift */,
 			);
@@ -839,7 +836,7 @@
 				E72C3EF224893C6400284A31 /* CardBrandsConfigurationProviderTests.swift */,
 				E745CC1924856B52000390CA /* CardBrandsConfigurationTests.swift */,
 				E72C3F0C248AB84900284A31 /* CardBrandModelTransformerTests.swift */,
-				E745CC2D24859DD6000390CA /* ValidationRuleDefaultsTests.swift */,
+				E745CC2D24859DD6000390CA /* ValidationRulesDefaultsTests.swift */,
 				E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */,
 			);
 			path = configuration;
@@ -946,8 +943,6 @@
 			isa = PBXGroup;
 			children = (
 				E7821A9E24586CE3003F7231 /* CVV.swift */,
-				E7821AA024586CF5003F7231 /* ExpiryMonth.swift */,
-				E7821A8E24586B45003F7231 /* ExpiryYear.swift */,
 				E7821A9C24586CC5003F7231 /* PAN.swift */,
 			);
 			path = model;
@@ -956,11 +951,10 @@
 		E79EAC5724587DC200A8DDA6 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				E7821A9624586C03003F7231 /* AccessCheckoutDateView.swift */,
 				E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */,
-				C9AFE44E22B7AA4700943B3E /* AccessCheckoutView.swift */,
 				C9AFE44F22B7AA4700943B3E /* CVVView.swift */,
 				C9AFE44922B7AA4700943B3E /* CVVView.xib */,
+				E74EB7422497A77C008743E7 /* ExpiryDateFormatter.swift */,
 				C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */,
 				C9AFE44D22B7AA4700943B3E /* ExpiryDateView.xib */,
 				C9AFE45122B7AA4700943B3E /* PANView.swift */,
@@ -1331,7 +1325,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7821A9724586C03003F7231 /* AccessCheckoutDateView.swift in Sources */,
 				E7821A7F245864C4003F7231 /* VerifiedTokensApiClient.swift in Sources */,
 				E7D19F6E24632208001EA13A /* ApiResponseLinkLookup.swift in Sources */,
 				E7167EF8248E2F330045158E /* CardValidationConfig.swift in Sources */,
@@ -1355,7 +1348,6 @@
 				E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */,
 				E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */,
 				E72C3EEA24879C1C00284A31 /* CardBrandClient.swift in Sources */,
-				E7821A8F24586B45003F7231 /* ExpiryYear.swift in Sources */,
 				E77B8B9D245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift in Sources */,
 				C9AFE46422B7AA4800943B3E /* PANView.swift in Sources */,
 				E7E6758F241AA57A0022292F /* RestClient.swift in Sources */,
@@ -1385,7 +1377,6 @@
 				D7851B302489010900461377 /* AccessCheckoutCvvOnlyValidationDelegate.swift in Sources */,
 				D7851B2C2488EC2800461377 /* CvvOnlyValidationStateHandler.swift in Sources */,
 				C9AFE46722B7AA4800943B3E /* AccessCheckoutClientValidationError.swift in Sources */,
-				E7821AA124586CF5003F7231 /* ExpiryMonth.swift in Sources */,
 				C9AFE45B22B7AA4800943B3E /* ApiResponse.swift in Sources */,
 				D7C6EE1D24869D1800170B92 /* ExpiryDateValidationStateHandler.swift in Sources */,
 				E72C3EE224866ED200284A31 /* PanValidationResult.swift in Sources */,
@@ -1398,13 +1389,13 @@
 				E7D37F8024815E0C0039DD98 /* CardBrandsConfigurationFactory.swift in Sources */,
 				D7D6D5F52481550200D57D7A /* PanValidationFlow.swift in Sources */,
 				E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */,
+				E74EB7432497A77C008743E7 /* ExpiryDateFormatter.swift in Sources */,
 				C9AFE45A22B7AA4800943B3E /* AccessCheckoutClientError.swift in Sources */,
 				E7A4AB66245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift in Sources */,
 				D7D6D5D4247EBA1F00D57D7A /* ExpiryDateValidator.swift in Sources */,
 				E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */,
 				E760196B246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift in Sources */,
 				E745CC1E24856EAB000390CA /* CardBrandImageModel.swift in Sources */,
-				C9AFE46122B7AA4800943B3E /* AccessCheckoutView.swift in Sources */,
 				683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1464,12 +1455,13 @@
 				D7D6D5EB248117FB00D57D7A /* CardValidationStateHandlerTests.swift in Sources */,
 				E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift in Sources */,
 				E72C3F02248A78DA00284A31 /* CVVViewPresenterTests.swift in Sources */,
+				E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */,
 				E7D19F7A24637237001EA13A /* SessionsApiDiscoveryTests.swift in Sources */,
 				E72C3EF324893C6400284A31 /* CardBrandsConfigurationProviderTests.swift in Sources */,
 				E7FC447C245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift in Sources */,
 				E77B8BAD245C5A8D00564C19 /* AccessCheckoutClientImplTests.swift in Sources */,
 				E745CC1A24856B52000390CA /* CardBrandsConfigurationTests.swift in Sources */,
-				E745CC2E24859DD6000390CA /* ValidationRuleDefaultsTests.swift in Sources */,
+				E745CC2E24859DD6000390CA /* ValidationRulesDefaultsTests.swift in Sources */,
 				E745CC28248585E9000390CA /* MockCardBrandDtoTransformer.swift in Sources */,
 				E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */,
 				E7D19F642462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift in Sources */,

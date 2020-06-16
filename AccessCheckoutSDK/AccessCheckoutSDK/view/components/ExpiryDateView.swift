@@ -2,35 +2,16 @@ import UIKit
 
 /// A view representing a card's expiry date
 @IBDesignable public class ExpiryDateView: UIView {
-    @IBOutlet weak var monthTextField: UITextField!
-    @IBOutlet weak var yearTextField: UITextField!
-    
-    /// The expiry date month element
-    public var month: ExpiryMonth? {
-        guard let text = monthTextField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
-    
-    /// The expiry date year element
-    public var year: ExpiryYear? {
-        guard let text = yearTextField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
+    @IBOutlet weak var textField: UITextField!
     
     /// The delegate to handle view events
     var presenter: Presenter?
     
     private var textChangeHandler = TextChangeHandler()
+    
+    private var textBeforeEditingChanged = ""
+    
+    private var expiryDateFormatter = ExpiryDateFormatter()
     
     /// Initialize ExpiryDateView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -55,61 +36,90 @@ import UIKit
         ]
         addSubview(view)
         
-        monthTextField.delegate = self
-        yearTextField.delegate = self
+        textField.delegate = self
         
-        monthTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
-        yearTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
     
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        guard let _ = textField.text else {
-            return
+        var text = textField.text ?? ""
+        
+        if !text.isEmpty {
+            let isNotDeletingSeparator = !attemptingToDeleteSeparator(textBefore: textBeforeEditingChanged, textAfter: text)
+            let hasNoSeparator = !text.contains(expiryDateFormatter.separator)
+            
+            if hasNoSeparator, isNotDeletingSeparator {
+                let newText = expiryDateFormatter.format(text)
+                if text != newText {
+                    updateText(with: newText)
+                    text = newText
+                }
+            }
         }
-        // ToDo - should not force unwrap
-        (presenter as? ExpiryDateViewPresenter)?.onEditing(monthText: monthTextField.text!, yearText: yearTextField.text!)
+        
+        (presenter as? ExpiryDateViewPresenter)?.onEditing(text: text)
+    }
+    
+    private func attemptingToDeleteSeparator(textBefore: String, textAfter: String) -> Bool {
+        if textBefore.hasSuffix(expiryDateFormatter.separator), !textAfter.hasSuffix(expiryDateFormatter.separator) {
+            return textAfter + expiryDateFormatter.separator == textBefore
+        }
+        
+        return false
+    }
+    
+    private func updateText(with text: String) {
+        textField.text = text
+        textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
     }
 }
 
-extension ExpiryDateView: AccessCheckoutDateView {
+extension ExpiryDateView: AccessCheckoutTextView {
+    /// The Expiry Date represented by the view
+    public var text: String? {
+        guard let text = textField.text else {
+            return nil
+        }
+        guard !text.isEmpty else {
+            return nil
+        }
+        return text
+    }
+    
     public var isEnabled: Bool {
         get {
-            return monthTextField.isEnabled && yearTextField.isEnabled
+            return textField.isEnabled
         }
         set {
-            monthTextField.isEnabled = newValue
-            yearTextField.isEnabled = newValue
+            textField.isEnabled = newValue
         }
     }
     
     /// Colour of the text displayed in the textFields
     public var textColor: UIColor? {
         get {
-            return monthTextField.textColor
+            return textField.textColor
         }
         set {
-            monthTextField.textColor = newValue
-            yearTextField.textColor = newValue
+            textField.textColor = newValue
         }
     }
     
     /// Clears any text input.
     public func clear() {
-        monthTextField.text = ""
-        yearTextField.text = ""
+        textField.text = ""
+        textBeforeEditingChanged = ""
         
-        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(monthText: "", yearText: "")
+        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(text: "")
     }
 }
 
 extension ExpiryDateView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let _ = textField.text else {
-            return
-        }
+        let text = textField.text ?? ""
         
-        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(monthText: monthTextField.text!, yearText: yearTextField.text!)
+        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(text: text)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -117,15 +127,9 @@ extension ExpiryDateView: UITextFieldDelegate {
             return true
         }
         
-        switch textField {
-        case monthTextField:
-            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-            return presenter.canChangeMonthText(with: resultingText)
-        case yearTextField:
-            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-            return presenter.canChangeYearText(with: resultingText)
-        default:
-            return true
-        }
+        textBeforeEditingChanged = textField.text ?? ""
+        
+        let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+        return presenter.canChangeText(with: resultingText)
     }
 }

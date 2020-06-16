@@ -11,24 +11,12 @@ class CardPaymentFlowViewPageObject {
         return panField.value as? String
     }
     
-    var expiryMonthField: XCUIElement {
-        return app.textFields["expiryMonth"]
-    }
-    
-    var expiryMonthText: String? {
-        return expiryMonthField.value as? String
-    }
-    
-    var expiryYearField: XCUIElement {
-        return app.textFields["expiryYear"]
-    }
-    
-    var expiryYearText: String? {
-        return expiryYearField.value as? String
+    var expiryDateText: String? {
+        return expiryDateField.value as? String
     }
     
     var expiryDateField: XCUIElement {
-        return app.otherElements["expiryDate"]
+        return app.textFields["expiryDate"]
     }
     
     var cvvField: XCUIElement {
@@ -72,14 +60,9 @@ class CardPaymentFlowViewPageObject {
         panField.typeText(text)
     }
     
-    func typeTextIntoExpiryMonth(_ text: String) {
-        expiryMonthField.tap()
-        expiryMonthField.typeText(text)
-    }
-    
-    func typeTextIntoExpiryYear(_ text: String) {
-        expiryYearField.tap()
-        expiryYearField.typeText(text)
+    func typeTextIntoExpiryDate(_ text: String) {
+        expiryDateField.tap()
+        expiryDateField.typeText(text)
     }
     
     func typeTextIntoCvv(_ text: String) {

@@ -7,8 +7,8 @@ class ExpiryDateValidationFlow {
         self.expiryValidationStateHandler = expiryValidationStateHandler
     }
 
-    func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?) {
-        let result = expiryDateValidator.validate(expiryMonth: expiryMonth, expiryYear: expiryYear)
+    func validate(expiryDate: String) {
+        let result = expiryDateValidator.validate(expiryDate)
         expiryValidationStateHandler.handleExpiryDateValidation(isValid: result)
     }
 }

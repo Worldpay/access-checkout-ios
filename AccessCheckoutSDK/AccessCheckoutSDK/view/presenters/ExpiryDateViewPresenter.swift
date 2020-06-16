@@ -1,4 +1,4 @@
-class ExpiryDateViewPresenter : Presenter {
+class ExpiryDateViewPresenter: Presenter {
     private let validationFlow: ExpiryDateValidationFlow
     private let validator: ExpiryDateValidator
     
@@ -7,25 +7,18 @@ class ExpiryDateViewPresenter : Presenter {
         self.validator = validator
     }
     
-    func onEditing(monthText: String, yearText: String) {
-        validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
+    func onEditing(text: String) {
+        validationFlow.validate(expiryDate: text)
     }
     
-    func onEditEnd(monthText: String, yearText: String) {
-        validationFlow.validate(expiryMonth: monthText, expiryYear: yearText)
+    func onEditEnd(text: String) {
+        validationFlow.validate(expiryDate: text)
     }
     
-    func canChangeMonthText(with text: String) -> Bool {
+    func canChangeText(with text: String) -> Bool {
         if text.isEmpty {
             return true
         }
-        return validator.canValidateMonth(text)
-    }
-    
-    func canChangeYearText(with text: String) -> Bool {
-        if text.isEmpty {
-            return true
-        }
-        return validator.canValidateYear(text)
+        return validator.canValidate(text)
     }
 }

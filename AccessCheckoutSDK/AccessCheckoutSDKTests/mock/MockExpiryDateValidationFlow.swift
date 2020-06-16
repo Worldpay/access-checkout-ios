@@ -27,16 +27,16 @@ import Cuckoo
     
     
     
-     override func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?)  {
+     override func validate(expiryDate: String)  {
         
-    return cuckoo_manager.call("validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?)",
-            parameters: (expiryMonth, expiryYear),
-            escapingParameters: (expiryMonth, expiryYear),
+    return cuckoo_manager.call("validate(expiryDate: String)",
+            parameters: (expiryDate),
+            escapingParameters: (expiryDate),
             superclassCall:
                 
-                super.validate(expiryMonth: expiryMonth, expiryYear: expiryYear)
+                super.validate(expiryDate: expiryDate)
                 ,
-            defaultCall: __defaultImplStub!.validate(expiryMonth: expiryMonth, expiryYear: expiryYear))
+            defaultCall: __defaultImplStub!.validate(expiryDate: expiryDate))
         
     }
     
@@ -49,9 +49,9 @@ import Cuckoo
 	    }
 	    
 	    
-	    func validate<M1: Cuckoo.OptionalMatchable, M2: Cuckoo.OptionalMatchable>(expiryMonth: M1, expiryYear: M2) -> Cuckoo.ClassStubNoReturnFunction<(ExpiryMonth?, ExpiryYear?)> where M1.OptionalMatchedType == ExpiryMonth, M2.OptionalMatchedType == ExpiryYear {
-	        let matchers: [Cuckoo.ParameterMatcher<(ExpiryMonth?, ExpiryYear?)>] = [wrap(matchable: expiryMonth) { $0.0 }, wrap(matchable: expiryYear) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationFlow.self, method: "validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?)", parameterMatchers: matchers))
+	    func validate<M1: Cuckoo.Matchable>(expiryDate: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: expiryDate) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationFlow.self, method: "validate(expiryDate: String)", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -71,9 +71,9 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func validate<M1: Cuckoo.OptionalMatchable, M2: Cuckoo.OptionalMatchable>(expiryMonth: M1, expiryYear: M2) -> Cuckoo.__DoNotUse<(ExpiryMonth?, ExpiryYear?), Void> where M1.OptionalMatchedType == ExpiryMonth, M2.OptionalMatchedType == ExpiryYear {
-	        let matchers: [Cuckoo.ParameterMatcher<(ExpiryMonth?, ExpiryYear?)>] = [wrap(matchable: expiryMonth) { $0.0 }, wrap(matchable: expiryYear) { $0.1 }]
-	        return cuckoo_manager.verify("validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func validate<M1: Cuckoo.Matchable>(expiryDate: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: expiryDate) { $0 }]
+	        return cuckoo_manager.verify("validate(expiryDate: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -85,7 +85,7 @@ import Cuckoo
     
 
     
-     override func validate(expiryMonth: ExpiryMonth?, expiryYear: ExpiryYear?)   {
+     override func validate(expiryDate: String)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

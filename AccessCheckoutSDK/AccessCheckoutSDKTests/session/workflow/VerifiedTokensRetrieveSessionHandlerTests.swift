@@ -14,12 +14,12 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         XCTAssertFalse(sessionHandler.canHandle(sessionType: SessionType.paymentsCvc))
     }
 
-    func testRetrievesAVerifiedTokensSession() {
+    func testRetrievesAVerifiedTokensSession() throws {
         let expectationToFulfill = expectation(description: "session retrieved")
         let apiClient = VerifiedTokensApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryDate(month: "12", year: "20")
+        let cardDetails = try CardDetailsBuilder().pan("pan")
+            .expiryDate("12/20")
             .cvv("123")
             .build()
         
@@ -36,13 +36,13 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 1)
     }
     
-    func testReturnsErrorWhenApiCallErrorsOut() {
+    func testReturnsErrorWhenApiCallErrorsOut() throws {
         let expectationToFulfill = expectation(description: "")
         let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an-error")
         let apiClient = VerifiedTokensApiClientMock(error: expectedError)
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryDate(month: "12", year: "20")
+        let cardDetails = try CardDetailsBuilder().pan("pan")
+            .expiryDate("12/20")
             .cvv("123")
             .build()
 

@@ -3,18 +3,7 @@ import UIKit
 /// A view representing a card's Primary Account Number
 @IBDesignable public class PANView: UIView {
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet public weak var imageView: UIImageView!
-    
-    /// The card number represented by the view
-    public var text: PAN? {
-        guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
+    @IBOutlet weak public var imageView: UIImageView!
     
     /// The delegate to handle view events
     var presenter: Presenter?
@@ -59,6 +48,17 @@ import UIKit
 }
 
 extension PANView: AccessCheckoutTextView {
+    /// The card number represented by the view
+    public var text: PAN? {
+        guard let text = textField.text else {
+            return nil
+        }
+        guard !text.isEmpty else {
+            return nil
+        }
+        return text
+    }
+    
     /// View is enabled for editing
     public var isEnabled: Bool {
         get {
