@@ -15,7 +15,7 @@ class CvvFlowViewController: UIViewController {
         
         spinner.startAnimating()
         
-        let cardDetails = CardDetailsBuilder()
+        let cardDetails = try! CardDetailsBuilder()
             .cvv(cvv)
             .build()
         

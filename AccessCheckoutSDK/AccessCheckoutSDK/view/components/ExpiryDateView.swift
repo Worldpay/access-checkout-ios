@@ -4,28 +4,6 @@ import UIKit
 @IBDesignable public class ExpiryDateView: UIView {
     @IBOutlet weak var textField: UITextField!
     
-    /// The expiry date month element
-    public var month: ExpiryMonth? {
-        guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
-    
-    /// The expiry date year element
-    public var year: ExpiryYear? {
-        guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
-    
     /// The delegate to handle view events
     var presenter: Presenter?
     
@@ -97,7 +75,18 @@ import UIKit
     }
 }
 
-extension ExpiryDateView: AccessCheckoutDateView {
+extension ExpiryDateView: AccessCheckoutTextView {
+    /// The Expiry Date represented by the view
+    public var text: String? {
+        guard let text = textField.text else {
+            return nil
+        }
+        guard !text.isEmpty else {
+            return nil
+        }
+        return text
+    }
+    
     public var isEnabled: Bool {
         get {
             return textField.isEnabled

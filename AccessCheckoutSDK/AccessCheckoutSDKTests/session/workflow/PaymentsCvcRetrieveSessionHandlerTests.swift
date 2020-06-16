@@ -14,11 +14,11 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
         XCTAssertTrue(sessionHandler.canHandle(sessionType: SessionType.paymentsCvc))
     }
 
-    func testRetrievesAPaymentsCvcSession() {
+    func testRetrievesAPaymentsCvcSession() throws {
         let expectationToFulfill = expectation(description: "")
         let apiClient = SessionsApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetailsBuilder().cvv("123")
+        let cardDetails = try CardDetailsBuilder().cvv("123")
             .build()
 
         sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
@@ -33,18 +33,18 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
 
         wait(for: [expectationToFulfill], timeout: 1)
     }
-    
-    func testReturnsErrorWhenApiCallErrorsOut() {
+
+    func testReturnsErrorWhenApiCallErrorsOut() throws {
         let expectationToFulfill = expectation(description: "")
         let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an-error")
         let apiClient = SessionsApiClientMock(error: expectedError)
         let sessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: apiClient)
-        let cardDetails = CardDetailsBuilder().cvv("123")
+        let cardDetails = try CardDetailsBuilder().cvv("123")
             .build()
 
         sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
             switch result {
-                case .success(_):
+                case .success:
                     XCTFail("should have failed to retrieve a session")
                     expectationToFulfill.fulfill()
                 case .failure(let error):

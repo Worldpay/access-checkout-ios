@@ -13,10 +13,10 @@ class CardDetailsForSessionTypeValidator {
             throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_PanIsMandatory
         }
         guard cardDetails.expiryMonth != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryMonthIsMandatory
+            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         }
         guard cardDetails.expiryYear != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryYearIsMandatory
+            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         }
         guard cardDetails.cvv != nil else {
             throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_CvcIsMandatory

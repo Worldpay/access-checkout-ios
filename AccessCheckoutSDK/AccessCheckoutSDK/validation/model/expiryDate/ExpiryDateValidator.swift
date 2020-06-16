@@ -13,7 +13,7 @@ class ExpiryDateValidator {
         if let targetMonth = dateComponents.month,
             let targetYear = dateComponents.year,
             let intMonth = Int(expiryDate.prefix(2)),
-            let fourDigitYear = ExpiryYear(expiryDate.suffix(2)).toFourDigitFormat() {
+            let fourDigitYear = toFourDigitFormat(expiryDate.suffix(2)) {
             if intMonth == 0 {
                 return false
             } else if fourDigitYear < targetYear {
@@ -32,5 +32,16 @@ class ExpiryDateValidator {
         
         return validationRule.textIsMatched(text)
             && validationRule.textIsShorterOrAsLongAsMaxLength(text)
+    }
+    
+    private func toFourDigitFormat(_ string: Substring?) -> UInt? {
+        guard let string = string else {
+            return nil
+        }
+        guard let number = UInt(string) else {
+            return nil
+        }
+        
+        return number < 100 ? number + 2000 : number
     }
 }

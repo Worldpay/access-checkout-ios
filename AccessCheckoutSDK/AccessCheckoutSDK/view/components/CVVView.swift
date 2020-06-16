@@ -4,21 +4,10 @@ import UIKit
 @IBDesignable public class CVVView: UIView {
     @IBOutlet weak var textField: UITextField!
     
-    /// The CVV represented by the view
-    public var text: CVV? {
-        guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
-        }
-        return text
-    }
-    
     /// The delegate to handle view events
     var presenter: Presenter?
     
-    private let textChangeHandler:TextChangeHandler = TextChangeHandler()
+    private let textChangeHandler: TextChangeHandler = TextChangeHandler()
     
     /// Initialize CVVView from storyboard
     public required init?(coder aDecoder: NSCoder) {
@@ -57,6 +46,17 @@ import UIKit
 }
 
 extension CVVView: AccessCheckoutTextView {
+    /// The CVV represented by the view
+    public var text: CVV? {
+        guard let text = textField.text else {
+            return nil
+        }
+        guard !text.isEmpty else {
+            return nil
+        }
+        return text
+    }
+    
     /// View is enabled for editing
     public var isEnabled: Bool {
         get {

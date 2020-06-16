@@ -4,10 +4,10 @@ import XCTest
 class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     let validator = CardDetailsForSessionTypeValidator()
 
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() {
+    func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() throws {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_PanIsMandatory
         let sessionType = SessionType.verifiedTokens
-        let cardDetails = CardDetailsBuilder().expiryDate(month: "12", year: "20")
+        let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
             .cvv("123")
             .build()
 
@@ -16,10 +16,10 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         }
     }
 
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryMonthIsMandatory
+    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() throws {
+        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         let sessionType = SessionType.verifiedTokens
-        let cardDetails = CardDetailsBuilder().pan("pan")
+        let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvv("123")
             .build()
 
@@ -28,11 +28,11 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         }
     }
 
-    func testFailsToRetrieveSessionIfCvcIsNotProvided() {
+    func testFailsToRetrieveSessionIfCvcIsNotProvided() throws {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_CvcIsMandatory
         let sessionType = SessionType.verifiedTokens
-        let cardDetails = CardDetailsBuilder().pan("pan")
-            .expiryDate(month: "12", year: "20")
+        let cardDetails = try CardDetailsBuilder().pan("pan")
+            .expiryDate("12/20")
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
@@ -40,10 +40,10 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         }
     }
 
-    func testThrowsExceptionForCvcSessionTypeWhenCvcIsNotProvided() {
+    func testThrowsExceptionForCvcSessionTypeWhenCvcIsNotProvided() throws {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_CvcSession_CvcIsMandatory
         let sessionType = SessionType.paymentsCvc
-        let cardDetails = CardDetailsBuilder().build()
+        let cardDetails = try CardDetailsBuilder().build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
             XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)

@@ -14,25 +14,20 @@ class CardFlowViewController: UIViewController {
     
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
-            let month = expiryDateView.month,
-            let year = expiryDateView.year,
+            let expiryDate = expiryDateView.text,
             let cvv = cvvView.text else {
             return
         }
-        submitCard(pan: pan, month: month, year: year, cvv: cvv)
+        submitCard(pan: pan, expiryDate: expiryDate, cvv: cvv)
     }
     
-    private func submitCard(pan: PAN, month: ExpiryMonth, year: ExpiryYear, cvv: CVV) {
-        guard let expiryMonth = UInt(month), let expiryYear = year.toFourDigitFormat() else {
-            return
-        }
-        
+    private func submitCard(pan: PAN, expiryDate: String, cvv: CVV) {
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
         
-        let cardDetails = CardDetailsBuilder().pan(pan)
-            .expiryDate(month: expiryMonth.description, year: expiryYear.description)
+        let cardDetails = try! CardDetailsBuilder().pan(pan)
+            .expiryDate(expiryDate)
             .cvv(cvv)
             .build()
         

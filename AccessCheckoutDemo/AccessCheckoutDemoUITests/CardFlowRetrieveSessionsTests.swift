@@ -172,8 +172,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
     
     private func fillUpFormWithValidValues(using view: CardPaymentFlowViewPageObject) {
         view.typeTextIntoPan("4111111111111111")
-        view.typeTextIntoExpiryMonth("01")
-        view.typeTextIntoExpiryYear("99")
+        view.typeTextIntoExpiryDate("01/99")
         view.typeTextIntoCvv("123")
     }
     

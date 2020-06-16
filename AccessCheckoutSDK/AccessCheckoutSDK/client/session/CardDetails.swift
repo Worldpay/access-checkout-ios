@@ -14,10 +14,11 @@ public struct CardDetails {
 }
 
 public final class CardDetailsBuilder {
+    private let expiryDateValidationPattern = "^((0[1-9])|(1[0-2]))\\/?(\\d{2})$"
+    
     private var pan: String?
-    private var expiryMonth: String?
-    private var expiryYear: String?
     private var cvv: String?
+    private var expiryDate: String?
     
     public init() {}
     
@@ -26,9 +27,8 @@ public final class CardDetailsBuilder {
         return self
     }
     
-    public func expiryDate(month: String, year:String) -> CardDetailsBuilder {
-        self.expiryMonth = month
-        self.expiryYear = year
+    public func expiryDate(_ expiryDate: String) -> CardDetailsBuilder {
+        self.expiryDate = expiryDate
         return self
     }
     
@@ -37,15 +37,41 @@ public final class CardDetailsBuilder {
         return self
     }
     
-    public func build() -> CardDetails {
-        return CardDetails(pan: self.pan, expiryMonth: self.toUInt(self.expiryMonth), expiryYear: self.toUInt(self.expiryYear), cvv: self.cvv)
+    public func build() throws -> CardDetails {
+        if let expiryDateForTest = expiryDate, !expiryDateForTest.isEmpty, !isValidExpiryDate(expiryDateForTest) {
+            throw AccessCheckoutClientInitialisationError.invalidExpiryDateFormat_message
+        }
+        
+        return CardDetails(pan: pan,
+                           expiryMonth: expiryMonth(of: expiryDate),
+                           expiryYear: expiryYearOn4Digits(of: expiryDate),
+                           cvv: cvv)
     }
     
-    private func toUInt(_ string: String?) -> UInt? {
-        guard let string = string else {
+    private func expiryMonth(of expiryDate: String?) -> UInt? {
+        guard let expiryDate = expiryDate else {
             return nil
         }
         
-        return UInt(string)
+        return UInt(expiryDate.prefix(2))
+    }
+    
+    private func expiryYearOn4Digits(of expiryDate: String?) -> UInt? {
+        guard let expiryDate = expiryDate else {
+            return nil
+        }
+        
+        return toFourDigitFormat(UInt(expiryDate.suffix(2)))
+    }
+    
+    private func isValidExpiryDate(_ text: String) -> Bool {
+        return text.range(of: expiryDateValidationPattern, options: .regularExpression) != nil
+    }
+    
+    private func toFourDigitFormat(_ number: UInt?) -> UInt? {
+        guard let number = number else {
+            return nil
+        }
+        return number < 100 ? number + 2000 : number
     }
 }
