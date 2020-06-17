@@ -16,17 +16,17 @@ class CVVViewPresenterTests: XCTestCase {
         verify(validationFlow).validate(cvv: "123")
     }
 
-    func testOnEditingEndValidatesCvv() {
-        let cvv = "123"
+    func testOnEditEndNotifiesMerchantOfValidationStateIfNotAlreadyNotified() {
+        let cvv = "12"
         let cvvValidator = CvvValidator()
         let validationFlow: MockCvvValidationFlow = MockCvvValidationFlow(cvvValidator,
                                                                           CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
-        validationFlow.getStubbingProxy().validate(cvv: any()).thenDoNothing()
+        validationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
         let presenter = CVVViewPresenter(validationFlow, cvvValidator)
 
         presenter.onEditEnd(text: cvv)
 
-        verify(validationFlow).validate(cvv: "123")
+        verify(validationFlow).notifyMerchantIfNotAlreadyNotified()
     }
 
     func testCanChangeTextChecksIfTheTextCanBeEnteredUsingTheCurrentCvvValidationRuleAndDoesNotTriggerValidationFlow() {

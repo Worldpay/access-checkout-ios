@@ -21,6 +21,20 @@ import Cuckoo
     
 
     
+    
+    
+     var alreadyNotifiedMerchantOfPanValidationState: Bool {
+        get {
+            return cuckoo_manager.getter("alreadyNotifiedMerchantOfPanValidationState",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.alreadyNotifiedMerchantOfPanValidationState)
+        }
+        
+    }
+    
 
     
 
@@ -55,12 +69,32 @@ import Cuckoo
         
     }
     
+    
+    
+     func notifyMerchantOfPanValidationState()  {
+        
+    return cuckoo_manager.call("notifyMerchantOfPanValidationState()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.notifyMerchantOfPanValidationState())
+        
+    }
+    
 
 	 struct __StubbingProxy_PanValidationStateHandler: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	
 	     init(manager: Cuckoo.MockManager) {
 	        self.cuckoo_manager = manager
+	    }
+	    
+	    
+	    var alreadyNotifiedMerchantOfPanValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockPanValidationStateHandler, Bool> {
+	        return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfPanValidationState")
 	    }
 	    
 	    
@@ -72,6 +106,11 @@ import Cuckoo
 	    func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1) -> Cuckoo.ProtocolStubFunction<(CardBrandModel?), Bool> where M1.OptionalMatchedType == CardBrandModel {
 	        let matchers: [Cuckoo.ParameterMatcher<(CardBrandModel?)>] = [wrap(matchable: cardBrand) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool", parameterMatchers: matchers))
+	    }
+	    
+	    func notifyMerchantOfPanValidationState() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "notifyMerchantOfPanValidationState()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -88,6 +127,11 @@ import Cuckoo
 	    }
 	
 	    
+	    
+	    var alreadyNotifiedMerchantOfPanValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
+	        return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfPanValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
+	    }
+	    
 	
 	    
 	    @discardableResult
@@ -102,10 +146,24 @@ import Cuckoo
 	        return cuckoo_manager.verify("isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func notifyMerchantOfPanValidationState() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("notifyMerchantOfPanValidationState()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
  class PanValidationStateHandlerStub: PanValidationStateHandler {
+    
+    
+     var alreadyNotifiedMerchantOfPanValidationState: Bool {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Bool).self)
+        }
+        
+    }
     
 
     
@@ -117,6 +175,10 @@ import Cuckoo
     
      func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool  {
         return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+     func notifyMerchantOfPanValidationState()   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
 }

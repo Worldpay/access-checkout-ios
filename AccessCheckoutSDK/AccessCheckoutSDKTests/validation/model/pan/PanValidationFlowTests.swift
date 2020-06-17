@@ -71,6 +71,36 @@ class PanValidationFlowTests: XCTestCase {
         verifyNoMoreInteractions(cvvFlow)
     }
     
+    func testCanNotifyMerchantIfNotAlreadyNotified() {
+        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
+        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        let cvvFlow = mockCvvFlow()
+        let panValidator = PanValidator(CardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock()))
+        let panValidationStateHandler = CardValidationStateHandler(merchantDelegate)
+        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
+        
+        panValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        
+        verify(merchantDelegate).panValidChanged(isValid: false)
+    }
+    
+    func testCannotNotifyMerchantIfAlreadyNotified() {
+        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
+        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        let cvvFlow = mockCvvFlow()
+        let panValidator = PanValidator(CardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock()))
+        let panValidationStateHandler = CardValidationStateHandler(merchantDelegate)
+        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvvFlow)
+        
+        panValidationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
+        verify(merchantDelegate).panValidChanged(isValid: true)
+        clearInvocations(merchantDelegate)
+        
+        panValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        
+        verify(merchantDelegate, never()).panValidChanged(isValid: any())
+    }
+    
     private func createMockPanValidator(thatReturns result: PanValidationResult) -> MockPanValidator {
         let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
         let mock = MockPanValidator(configurationProvider)

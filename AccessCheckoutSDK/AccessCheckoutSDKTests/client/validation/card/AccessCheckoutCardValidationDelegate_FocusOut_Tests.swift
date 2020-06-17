@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
+class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
@@ -26,9 +26,10 @@ class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
                                                               panValidLengths: [15],
                                                               cvcValidLength: 4)
     
-    private let visaPan1 = "4111111111111111"
-    private let visaPan2 = "4563648800001000"
-    private let masterCardPan = "5500000000000004"
+    private let validVisaPan1 = "4111111111111111"
+    private let validVisaPan2 = "4563648800001000"
+    private let validMasterCardPan = "5500000000000004"
+    private let invalidVisaPan = "123"
     
     override func setUp() {
         validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
@@ -40,51 +41,103 @@ class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
-    }
-    
-    func testMerchantDelegateIsNotifiedOfValidationStateChangeWhenPanIsCleared() {
+        
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
         let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
+    }
+    
+    // MARK: PAN validation tests
+    
+    func testMerchantDelegateIsNotNotifiedWhenPanComponentWithValidPanLosesFocus() {
+        editPan(text: validVisaPan1)
+        clearInvocations(merchantDelegate)
         
-        editPan(text: visaPan1)
-        verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
+        removeFocusFromPan()
         
-        panView.clear()
+        verify(merchantDelegate, never()).panValidChanged(isValid: true)
+    }
+    
+    func testMerchantDelegateIsNotifiedWhenPanComponentWithInvalidPanLosesFocusAndMerchantHasNeverBeenNotified() {
+        editPan(text: invalidVisaPan)
+        clearInvocations(merchantDelegate)
+        
+        removeFocusFromPan()
+        
         verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotifiedOfValidationStateChangeWhenExpiryDateIsCleared() {
-        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+    func testMerchantDelegateIsNotNotifiedWhenPanComponentWithInvalidPanLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidPan() {
+        editPan(text: validVisaPan1)
+        editPan(text: invalidVisaPan)
+        clearInvocations(merchantDelegate)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
-        validationInitialiser!.initialise(validationConfiguration)
+        removeFocusFromPan()
         
-        editExpiryDate(text: "12/35")
-        verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
+        verify(merchantDelegate, never()).panValidChanged(isValid: false)
+    }
+    
+    // MARK: Expiry Date validation tests
+    
+    func testMerchantDelegateIsNotNotifiedWhenExpiryDateComponentWithValidExpiryDateLosesFocus() {
+        editExpiryDate(text: "11/32")
+        clearInvocations(merchantDelegate)
         
-        expiryDateView.clear()
+        removeFocusFromExpiryDate()
+        
+        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: true)
+    }
+    
+    func testMerchantDelegateIsNotifiedWhenExpiryDateComponentWithInvalidExpiryDateLosesFocusAndMerchantHasNeverBeenNotified() {
+        editExpiryDate(text: "11/3")
+        clearInvocations(merchantDelegate)
+        
+        removeFocusFromExpiryDate()
+        
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotifiedOfValidationStateChangeWhenCvvIsCleared() {
-        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
-        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+    func testMerchantDelegateIsNotNotifiedWhenExpiryDateComponentWithInvalidExpiryDateLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidExpiryDate() {
+        editExpiryDate(text: "11/33")
+        editExpiryDate(text: "11/3")
+        clearInvocations(merchantDelegate)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
-                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
-        validationInitialiser!.initialise(validationConfiguration)
+        removeFocusFromExpiryDate()
         
+        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: false)
+    }
+    
+    // MARK: Cvv validation tests
+    
+    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithValidCvvLosesFocus() {
         editCvv(text: "123")
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        clearInvocations(merchantDelegate)
         
-        cvvView.clear()
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: true)
+    }
+    
+    func testMerchantDelegateIsNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasNeverBeenNotified() {
+        editCvv(text: "12")
+        clearInvocations(merchantDelegate)
+        
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidCvv() {
+        editCvv(text: "123")
+        editCvv(text: "12")
+        clearInvocations(merchantDelegate)
+        
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: false)
     }
     
     private func createConfiguration(brands: [CardBrandModel]) -> CardBrandsConfiguration {
@@ -104,6 +157,18 @@ class AccessCheckoutCardValidationDelegate_Clear_Tests: XCTestCase {
     private func editCvv(text: String) {
         cvvView.textField.text = text
         cvvView.textFieldEditingChanged(cvvView.textField)
+    }
+    
+    private func removeFocusFromPan() {
+        panView.textFieldDidEndEditing(panView.textField)
+    }
+    
+    private func removeFocusFromExpiryDate() {
+        expiryDateView.textFieldDidEndEditing(expiryDateView.textField)
+    }
+    
+    private func removeFocusFromCvv() {
+        cvvView.textFieldDidEndEditing(cvvView.textField)
     }
     
     private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrandClient? {

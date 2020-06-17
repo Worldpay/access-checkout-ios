@@ -42,6 +42,21 @@ import Foundation
         
     }
     
+    
+    
+     override func notifyMerchantIfNotAlreadyNotified()  {
+        
+    return cuckoo_manager.call("notifyMerchantIfNotAlreadyNotified()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.notifyMerchantIfNotAlreadyNotified()
+                ,
+            defaultCall: __defaultImplStub!.notifyMerchantIfNotAlreadyNotified())
+        
+    }
+    
 
 	 struct __StubbingProxy_PanValidationFlow: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -54,6 +69,11 @@ import Foundation
 	    func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.ClassStubNoReturnFunction<(PAN)> where M1.MatchedType == PAN {
 	        let matchers: [Cuckoo.ParameterMatcher<(PAN)>] = [wrap(matchable: pan) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "validate(pan: PAN)", parameterMatchers: matchers))
+	    }
+	    
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "notifyMerchantIfNotAlreadyNotified()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -78,6 +98,12 @@ import Foundation
 	        return cuckoo_manager.verify("validate(pan: PAN)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("notifyMerchantIfNotAlreadyNotified()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -88,6 +114,10 @@ import Foundation
 
     
      override func validate(pan: PAN)   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func notifyMerchantIfNotAlreadyNotified()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

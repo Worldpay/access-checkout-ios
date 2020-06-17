@@ -109,9 +109,8 @@ extension ExpiryDateView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        textBeforeEditingChanged = ""
         
-        (presenter as? ExpiryDateViewPresenter)?.onEditEnd(text: "")
+        (presenter as? ExpiryDateViewPresenter)?.onEditing(text: "")
     }
 }
 

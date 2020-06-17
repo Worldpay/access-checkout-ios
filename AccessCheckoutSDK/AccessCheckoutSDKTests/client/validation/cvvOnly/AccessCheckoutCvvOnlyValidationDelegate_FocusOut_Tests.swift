@@ -17,51 +17,46 @@ class AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests: XCTestCase 
         
         merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
-    }
-    
-    func testMerchantDelegateIsNotifiedOfCvvValidationStateChanges() {
+        
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
         let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
-        
+    }
+    
+    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithValidCvvLosesFocus() {
         editCvv(text: "123")
+        clearInvocations(merchantDelegate)
         
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
-        validationInitialiser!.initialise(validationConfiguration)
-        
-        editCvv(text: "456")
-        editCvv(text: "123")
-        
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
-    }
-    
-    public func testMerchantIsNotifiedOfValidationSuccess() {
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
-        validationInitialiser!.initialise(validationConfiguration)
-        
-        editCvv(text: "123")
-        
-        verify(merchantDelegate, times(1)).validationSuccess()
-    }
-    
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
-        configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
-        validationInitialiser!.initialise(validationConfiguration)
-        
+    func testMerchantDelegateIsNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasNeverBeenNotified() {
         editCvv(text: "12")
+        clearInvocations(merchantDelegate)
         
-        verify(merchantDelegate, never()).validationSuccess()
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidCvv() {
+        editCvv(text: "123")
+        editCvv(text: "12")
+        clearInvocations(merchantDelegate)
+        
+        removeFocusFromCvv()
+        
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: false)
     }
     
     private func editCvv(text: String) {
         cvvView.textField.text = text
+        cvvView.textFieldEditingChanged(cvvView.textField)
+    }
+    
+    private func removeFocusFromCvv() {
         cvvView.textFieldDidEndEditing(cvvView.textField)
     }
 }

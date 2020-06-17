@@ -114,9 +114,9 @@
 		E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */; };
 		E75C5E66248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E64248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift */; };
 		E75C5E67248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */; };
-		E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift */; };
-		E75C5E6C248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift */; };
-		E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift */; };
+		E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift */; };
+		E75C5E6C248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift */; };
+		E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift */; };
 		E760196B246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */; };
 		E760196D246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */; };
 		E7723572249397F800018DCB /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7723571249397F800018DCB /* Presenter.swift */; };
@@ -139,13 +139,13 @@
 		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
 		E7821A9D24586CC5003F7231 /* PAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9C24586CC5003F7231 /* PAN.swift */; };
 		E7821A9F24586CE3003F7231 /* CVV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9E24586CE3003F7231 /* CVV.swift */; };
-		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift */; };
-		E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift */; };
+		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */; };
+		E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift */; };
 		E798B69F24913E8100A6A9AD /* CVVViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798B69E24913E8100A6A9AD /* CVVViewTests.swift */; };
 		E79DAF1724911DB60043CD46 /* ExpiryDateViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79DAF1624911DB60043CD46 /* ExpiryDateViewTests.swift */; };
 		E79EAC6324588D5C00A8DDA6 /* MockCvvValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79EAC6024588D5C00A8DDA6 /* MockCvvValidator.swift */; };
 		E7A4AB66245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A4AB65245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift */; };
-		E7AC80AA248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift */; };
+		E7AC80AA248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift */; };
 		E7AC80AC248EB58300E28D76 /* MockPanValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */; };
 		E7AC80AE248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */; };
 		E7AC80B0248EBA3F00E28D76 /* ValidationRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */; };
@@ -324,9 +324,9 @@
 		E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateFormatterTests.swift; sourceTree = "<group>"; };
 		E75C5E64248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAccessCheckoutCvvOnlyValidationDelegate.swift; sourceTree = "<group>"; };
 		E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAccessCheckoutCardValidationDelegate.swift; sourceTree = "<group>"; };
-		E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift; sourceTree = "<group>"; };
-		E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift; sourceTree = "<group>"; };
-		E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift; sourceTree = "<group>"; };
+		E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_EditText_Tests.swift; sourceTree = "<group>"; };
+		E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift; sourceTree = "<group>"; };
+		E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift; sourceTree = "<group>"; };
 		E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetrieveSessionResultsHandler.swift; sourceTree = "<group>"; };
 		E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetrieveSessionResultsHandlerTests.swift; sourceTree = "<group>"; };
 		E7723571249397F800018DCB /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
@@ -349,13 +349,13 @@
 		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
 		E7821A9C24586CC5003F7231 /* PAN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAN.swift; sourceTree = "<group>"; };
 		E7821A9E24586CE3003F7231 /* CVV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVV.swift; sourceTree = "<group>"; };
-		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_Clear_Tests.swift; sourceTree = "<group>"; };
-		E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift; sourceTree = "<group>"; };
+		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
+		E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E798B69E24913E8100A6A9AD /* CVVViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVViewTests.swift; sourceTree = "<group>"; };
 		E79DAF1624911DB60043CD46 /* ExpiryDateViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateViewTests.swift; sourceTree = "<group>"; };
 		E79EAC6024588D5C00A8DDA6 /* MockCvvValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCvvValidator.swift; sourceTree = "<group>"; };
 		E7A4AB65245B37F6009D586E /* AccessCheckoutClientInitialisationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientInitialisationError.swift; sourceTree = "<group>"; };
-		E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift; sourceTree = "<group>"; };
+		E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift; sourceTree = "<group>"; };
 		E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPanValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockExpiryDateValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRuleTests.swift; sourceTree = "<group>"; };
@@ -572,9 +572,9 @@
 		E7167EFD248E30140045158E /* card */ = {
 			isa = PBXGroup;
 			children = (
-				E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift */,
-				E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift */,
-				E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift */,
+				E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */,
+				E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift */,
+				E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -822,9 +822,9 @@
 		E75C5E68248E6FF6003A1BDE /* cvvOnly */ = {
 			isa = PBXGroup;
 			children = (
-				E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift */,
-				E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift */,
-				E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift */,
+				E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift */,
+				E75C5E6B248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift */,
+				E7AC80A9248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift */,
 			);
 			path = cvvOnly;
 			sourceTree = "<group>";
@@ -1434,8 +1434,8 @@
 				E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */,
 				E7409D52248F9DE200016AEB /* PANViewTests.swift in Sources */,
 				E70305A124924AAA00802AF1 /* TextFixtures.swift in Sources */,
-				E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests.swift in Sources */,
-				E75C5E6C248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests.swift in Sources */,
+				E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift in Sources */,
+				E75C5E6C248E7041003A1BDE /* AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests.swift in Sources */,
 				D76E4050247D62A1002FAA39 /* PanValidatorTests.swift in Sources */,
 				D7C6EE292486A8E500170B92 /* MockExpiryDateValidator.swift in Sources */,
 				E7AC80B0248EBA3F00E28D76 /* ValidationRuleTests.swift in Sources */,
@@ -1446,14 +1446,14 @@
 				E719B08E246449B70037DED4 /* SessionsApiDiscoveryMock.swift in Sources */,
 				E7AFC3F6241FEBCB00C0E432 /* BundleMock.swift in Sources */,
 				E7D19F7024632243001EA13A /* ApiResponseLinkLookupTests.swift in Sources */,
-				E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests.swift in Sources */,
+				E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */,
 				E7AE68C724195050002380AF /* RestClientMock.swift in Sources */,
 				E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */,
 				E719B0A2246483FF0037DED4 /* VerifiedTokensApiClientTests.swift in Sources */,
 				E719B0A4246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift in Sources */,
 				D7D6D5EB248117FB00D57D7A /* CardValidationStateHandlerTests.swift in Sources */,
-				E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_Clear_Tests.swift in Sources */,
+				E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72C3F02248A78DA00284A31 /* CVVViewPresenterTests.swift in Sources */,
 				E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */,
 				E7D19F7A24637237001EA13A /* SessionsApiDiscoveryTests.swift in Sources */,
@@ -1475,12 +1475,12 @@
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
 				1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */,
 				D7C6EE232486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift in Sources */,
-				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditingEvent_Tests.swift in Sources */,
+				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,
 				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
 				D7851B212487B21600461377 /* CvvValidationFlowTests.swift in Sources */,
 				E72C3EF8248A57C300284A31 /* PanViewPresenterTests.swift in Sources */,
-				E7AC80AA248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_EndEditingEvent_Tests.swift in Sources */,
+				E7AC80AA248E741800E28D76 /* AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests.swift in Sources */,
 				D7851B232487B36400461377 /* MockCvvValidationStateHandler.swift in Sources */,
 				E760196D246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift in Sources */,
 				E7AC80AE248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift in Sources */,

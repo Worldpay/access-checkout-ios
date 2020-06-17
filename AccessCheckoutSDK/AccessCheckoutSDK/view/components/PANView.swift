@@ -82,7 +82,7 @@ extension PANView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        (presenter as? PanViewPresenter)?.onEditEnd(text: "")
+        (presenter as? PanViewPresenter)?.onEditing(text: "")
     }
 }
 

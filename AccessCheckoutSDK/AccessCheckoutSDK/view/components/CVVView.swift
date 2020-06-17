@@ -80,7 +80,7 @@ extension CVVView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        (presenter as? CVVViewPresenter)?.onEditEnd(text: "")
+        (presenter as? CVVViewPresenter)?.onEditing(text: "")
     }
 }
 
@@ -90,7 +90,7 @@ extension CVVView: UITextFieldDelegate {
             return
         }
         
-        (presenter as? CVVViewPresenter)?.onEditing(text: cvv)
+        (presenter as? CVVViewPresenter)?.onEditEnd(text: cvv)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

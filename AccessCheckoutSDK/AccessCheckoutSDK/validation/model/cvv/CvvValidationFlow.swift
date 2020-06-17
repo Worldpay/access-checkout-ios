@@ -13,12 +13,6 @@ class CvvValidationFlow {
     /**
      Convenience constructor used by unit tests
      */
-    init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler, cvv: CVV) {
-        self.cvvValidator = cvvValidator
-        self.cvvValidationStateHandler = cvvValidationStateHandler
-        self.cvv = cvv
-    }
-    
     init(cvvValidator: CvvValidator, cvvValidationStateHandler: CvvValidationStateHandler, validationRule: ValidationRule) {
         self.cvvValidator = cvvValidator
         self.cvvValidationStateHandler = cvvValidationStateHandler
@@ -39,7 +33,7 @@ class CvvValidationFlow {
     }
     
     func resetValidationRule() {
-        self.validationRule = ValidationRulesDefaults.instance().cvv
+        validationRule = ValidationRulesDefaults.instance().cvv
     }
     
     func revalidate() {
@@ -49,5 +43,11 @@ class CvvValidationFlow {
     
     func updateValidationRule(with rule: ValidationRule) {
         validationRule = rule
+    }
+    
+    func notifyMerchantIfNotAlreadyNotified() {
+        if !cvvValidationStateHandler.alreadyNotifiedMerchantOfCvvValidationState {
+            cvvValidationStateHandler.notifyMerchantOfCvvValidationState()
+        }
     }
 }

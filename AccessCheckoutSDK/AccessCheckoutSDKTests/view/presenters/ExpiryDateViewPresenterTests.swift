@@ -8,6 +8,7 @@ class ExpiryDateViewPresenterTests: XCTestCase {
 
     override func setUp() {
         expiryDateValidationFlow.getStubbingProxy().validate(expiryDate: any()).thenDoNothing()
+        expiryDateValidationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
         expiryDateValidator.getStubbingProxy().canValidate(any()).thenReturn(true)
     }
 
@@ -20,13 +21,13 @@ class ExpiryDateViewPresenterTests: XCTestCase {
         verify(expiryDateValidationFlow).validate(expiryDate: expiryDate)
     }
 
-    func testOnEditEndValidatesExpiryDate() {
-        let expiryDate = "11/22"
+    func testOnEditEndNotifiesMerchantOfValidationStateIfNotAlreadyNotified() {
+        let expiryDate = "11/2"
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
 
         presenter.onEditEnd(text: expiryDate)
 
-        verify(expiryDateValidationFlow).validate(expiryDate: expiryDate)
+        verify(expiryDateValidationFlow).notifyMerchantIfNotAlreadyNotified()
     }
 
     func testCanChangeTextWithEmptyText() {

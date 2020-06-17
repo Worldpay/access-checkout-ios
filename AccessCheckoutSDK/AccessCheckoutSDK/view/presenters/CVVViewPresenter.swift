@@ -1,8 +1,8 @@
-class CVVViewPresenter : Presenter {
+class CVVViewPresenter: Presenter {
     private let validationFlow: CvvValidationFlow
-    private let validator:CvvValidator
+    private let validator: CvvValidator
     
-    init(_ validationFlow: CvvValidationFlow, _ validator:CvvValidator) {
+    init(_ validationFlow: CvvValidationFlow, _ validator: CvvValidator) {
         self.validationFlow = validationFlow
         self.validator = validator
     }
@@ -12,7 +12,7 @@ class CVVViewPresenter : Presenter {
     }
     
     func onEditEnd(text: String?) {
-        validationFlow.validate(cvv: text)
+        validationFlow.notifyMerchantIfNotAlreadyNotified()
     }
     
     func canChangeText(with text: String) -> Bool {
