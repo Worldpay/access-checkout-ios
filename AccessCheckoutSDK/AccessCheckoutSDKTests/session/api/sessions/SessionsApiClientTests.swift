@@ -4,7 +4,7 @@ import XCTest
 
 class SessionsApiClientTests: XCTestCase {
     private let baseUrl = "http://localhost"
-    private let cvv = "123"
+    private let cvc = "123"
     
     private let mockDiscovery = SessionsApiDiscoveryMock()
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
@@ -26,12 +26,12 @@ class SessionsApiClientTests: XCTestCase {
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
                 XCTAssertEqual(self.urlRequestFactoryResult, mockRestClient.requestSent)
-                XCTAssertEqual(self.cvv, self.mockURLRequestFactory.cvvPassed)
+                XCTAssertEqual(self.cvc, self.mockURLRequestFactory.cvcPassed)
                 XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlStringPassed)
             case .failure:
                 XCTFail("Creation of session shoul have succeeded")
@@ -49,7 +49,7 @@ class SessionsApiClientTests: XCTestCase {
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -68,7 +68,7 @@ class SessionsApiClientTests: XCTestCase {
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -88,7 +88,7 @@ class SessionsApiClientTests: XCTestCase {
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")

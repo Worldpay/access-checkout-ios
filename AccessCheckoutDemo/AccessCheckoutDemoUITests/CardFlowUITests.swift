@@ -25,12 +25,12 @@ class CardPaymentFlowUITests: XCTestCase {
         XCTAssertTrue(view!.expiryDateField.exists)
     }
     
-    func testCVVTextField_exists() {
-        XCTAssertTrue(view!.cvvField.exists)
+    func testCvcTextField_exists() {
+        XCTAssertTrue(view!.cvcField.exists)
     }
     
-    func testCVVTextFieldPlaceholder_exists() {
-        XCTAssertTrue(view!.cvvField.placeholderValue == "CVV")
+    func testCvcTextFieldPlaceholder_exists() {
+        XCTAssertTrue(view!.cvcField.placeholderValue == "CVC")
     }
     
     func testCardNumberImageView_exists() {

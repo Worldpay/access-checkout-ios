@@ -7,7 +7,7 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
     private let expiryDateView = ExpiryDateView()
-    private let cvvView = CVVView()
+    private let cvcView = CvcView()
     private let baseUrl = "a-url"
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
@@ -37,7 +37,7 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
         
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
@@ -45,7 +45,7 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
     }
@@ -110,34 +110,34 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
         verify(merchantDelegate, never()).expiryDateValidChanged(isValid: false)
     }
     
-    // MARK: Cvv validation tests
+    // MARK: Cvc validation tests
     
-    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithValidCvvLosesFocus() {
-        editCvv(text: "123")
+    func testMerchantDelegateIsNotNotifiedWhenCvcComponentWithValidCvcLosesFocus() {
+        editCvc(text: "123")
         clearInvocations(merchantDelegate)
         
-        removeFocusFromCvv()
+        removeFocusFromCvc()
         
-        verify(merchantDelegate, never()).cvvValidChanged(isValid: true)
+        verify(merchantDelegate, never()).cvcValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasNeverBeenNotified() {
-        editCvv(text: "12")
+    func testMerchantDelegateIsNotifiedWhenCvcComponentWithInvalidCvcLosesFocusAndMerchantHasNeverBeenNotified() {
+        editCvc(text: "12")
         clearInvocations(merchantDelegate)
         
-        removeFocusFromCvv()
+        removeFocusFromCvc()
         
-        verify(merchantDelegate).cvvValidChanged(isValid: false)
+        verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidCvv() {
-        editCvv(text: "123")
-        editCvv(text: "12")
+    func testMerchantDelegateIsNotNotifiedWhenCvcComponentWithInvalidCvcLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidCvc() {
+        editCvc(text: "123")
+        editCvc(text: "12")
         clearInvocations(merchantDelegate)
         
-        removeFocusFromCvv()
+        removeFocusFromCvc()
         
-        verify(merchantDelegate, never()).cvvValidChanged(isValid: false)
+        verify(merchantDelegate, never()).cvcValidChanged(isValid: false)
     }
     
     private func createConfiguration(brands: [CardBrandModel]) -> CardBrandsConfiguration {
@@ -154,9 +154,9 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
         expiryDateView.textFieldEditingChanged(expiryDateView.textField)
     }
     
-    private func editCvv(text: String) {
-        cvvView.textField.text = text
-        cvvView.textFieldEditingChanged(cvvView.textField)
+    private func editCvc(text: String) {
+        cvcView.textField.text = text
+        cvcView.textFieldEditingChanged(cvcView.textField)
     }
     
     private func removeFocusFromPan() {
@@ -167,8 +167,8 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: XCTestCase {
         expiryDateView.textFieldDidEndEditing(expiryDateView.textField)
     }
     
-    private func removeFocusFromCvv() {
-        cvvView.textFieldDidEndEditing(cvvView.textField)
+    private func removeFocusFromCvc() {
+        cvcView.textFieldDidEndEditing(cvcView.textField)
     }
     
     private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {

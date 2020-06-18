@@ -15,7 +15,7 @@ public class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvv: String,
+    public override func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
                                        completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         createSessionCalled = true
         

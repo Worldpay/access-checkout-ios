@@ -1,14 +1,14 @@
-class CVVViewPresenter: Presenter {
-    private let validationFlow: CvvValidationFlow
-    private let validator: CvvValidator
+class CvcViewPresenter: Presenter {
+    private let validationFlow: CvcValidationFlow
+    private let validator: CvcValidator
     
-    init(_ validationFlow: CvvValidationFlow, _ validator: CvvValidator) {
+    init(_ validationFlow: CvcValidationFlow, _ validator: CvcValidator) {
         self.validationFlow = validationFlow
         self.validator = validator
     }
     
     func onEditing(text: String?) {
-        validationFlow.validate(cvv: text)
+        validationFlow.validate(cvc: text)
     }
     
     func onEditEnd(text: String?) {

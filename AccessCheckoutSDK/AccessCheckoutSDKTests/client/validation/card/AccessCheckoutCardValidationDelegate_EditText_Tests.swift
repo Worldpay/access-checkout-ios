@@ -7,7 +7,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
     private let expiryDateView = ExpiryDateView()
-    private let cvvView = CVVView()
+    private let cvcView = CvcView()
     private let baseUrl = "a-url"
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
     
@@ -36,7 +36,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
         
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
@@ -48,7 +48,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -61,7 +61,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -75,7 +75,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -92,7 +92,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -105,7 +105,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -122,7 +122,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -139,7 +139,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -152,7 +152,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -166,7 +166,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
@@ -176,84 +176,84 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
     
-    // MARK: Cvv validation tests
+    // MARK: Cvc validation tests
     
     func testMerchantDelegateIsNotifiedWhenCvcBecomesValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editCvv(text: "123")
+        editCvc(text: "123")
         
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: true)
     }
     
     func testMerchantDelegateIsNotifiedWhenCvcBecomesInvalid() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editCvv(text: "123")
-        editCvv(text: "12")
+        editCvc(text: "123")
+        editCvc(text: "12")
         
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidCvvsAreEntered() {
+    func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidCvcsAreEntered() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
-        editCvv(text: "456")
-        editCvv(text: "123")
+        editCvc(text: "456")
+        editCvc(text: "123")
         
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotifiedOfAnInvalidCvvWhenThePanIsChangedAndRequiresACvvOfADifferentLength() {
+    func testMerchantDelegateIsNotifiedOfAnInvalidCvcWhenThePanIsChangedAndRequiresACvcOfADifferentLength() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, amexBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "456")
-        editCvv(text: "123")
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        editCvc(text: "123")
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: true)
         
         editPan(text: "345")
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenThePanIsChangedAndRequiresACvvOfTheSameLength() {
+    func testMerchantDelegateIsNotNotifiedWhenThePanIsChangedAndRequiresACvcOfTheSameLength() {
         let expectedVisaCardBrand = createCardBrand(from: visaBrand)
         let expectedMaestroCardBrand = createCardBrand(from: maestroBrand)
         
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "49369")
-        editCvv(text: "123")
+        editCvc(text: "123")
         verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaCardBrand)
         
         editPan(text: "493698")
         verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedMaestroCardBrand)
         
-        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
+        verify(merchantDelegate, times(1)).cvcValidChanged(isValid: true)
     }
     
     // MARK: validation success tests
@@ -262,12 +262,12 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4111111111111111")
-        editCvv(text: "123")
+        editCvc(text: "123")
         editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, times(1)).validationSuccess()
@@ -277,12 +277,12 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4111")
-        editCvv(text: "123")
+        editCvc(text: "123")
         editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, never()).validationSuccess()
@@ -292,27 +292,27 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4111111111111111")
-        editCvv(text: "123")
+        editCvc(text: "123")
         editExpiryDate(text: "12/19")
         
         verify(merchantDelegate, never()).validationSuccess()
     }
     
-    func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenCvcIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvcView: cvcView,
                                                            accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
         
         editPan(text: "4111111111111111")
-        editCvv(text: "12")
+        editCvc(text: "12")
         editExpiryDate(text: "12/35")
         
         verify(merchantDelegate, never()).validationSuccess()
@@ -332,9 +332,9 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
         expiryDateView.textFieldEditingChanged(expiryDateView.textField)
     }
     
-    private func editCvv(text: String) {
-        cvvView.textField.text = text
-        cvvView.textFieldEditingChanged(cvvView.textField)
+    private func editCvc(text: String) {
+        cvcView.textField.text = text
+        cvcView.textFieldEditingChanged(cvcView.textField)
     }
     
     private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {

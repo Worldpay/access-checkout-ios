@@ -33,7 +33,7 @@ class AccessCheckoutSDKTests: XCTestCase {
         XCTAssertEqual("visa", result.name)
         XCTAssertEqual("a-pattern", result.pattern)
         XCTAssertEqual([16, 18, 19], result.panLengths)
-        XCTAssertEqual(3, result.cvvLength)
+        XCTAssertEqual(3, result.cvcLength)
         
         XCTAssertEqual(result.images[0].type, "image/png")
         XCTAssertEqual(result.images[0].url, "png-url")
@@ -54,7 +54,7 @@ class AccessCheckoutSDKTests: XCTestCase {
         XCTAssertEqual("", result.name)
         XCTAssertEqual("", result.pattern)
         XCTAssertEqual([], result.panLengths)
-        XCTAssertEqual(0, result.cvvLength)
+        XCTAssertEqual(0, result.cvcLength)
         XCTAssertEqual([], result.images)
     }
 }

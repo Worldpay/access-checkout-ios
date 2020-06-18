@@ -207,7 +207,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().pan("pan")
-            .cvv("123")
+            .cvc("123")
             .build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc, .verifiedTokens]) { _ in }) { error in
@@ -228,7 +228,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
     private func validCardDetails() -> CardDetails {
         return try! CardDetailsBuilder().pan("pan")
             .expiryDate("12/20")
-            .cvv("123")
+            .cvc("123")
             .build()
     }
     

@@ -8,7 +8,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_PanIsMandatory
         let sessionType = SessionType.verifiedTokens
         let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
-            .cvv("123")
+            .cvc("123")
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
@@ -20,7 +20,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         let sessionType = SessionType.verifiedTokens
         let cardDetails = try CardDetailsBuilder().pan("pan")
-            .cvv("123")
+            .cvc("123")
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in

@@ -19,12 +19,12 @@ class CardPaymentFlowViewPageObject {
         return app.textFields["expiryDate"]
     }
     
-    var cvvField: XCUIElement {
-        return app.textFields["cvv"]
+    var cvcField: XCUIElement {
+        return app.textFields["cvc"]
     }
     
-    var cvvText: String? {
-        return cvvField.value as? String
+    var cvcText: String? {
+        return cvcField.value as? String
     }
     
     var cardBrandImage: XCUIElement {
@@ -65,9 +65,9 @@ class CardPaymentFlowViewPageObject {
         expiryDateField.typeText(text)
     }
     
-    func typeTextIntoCvv(_ text: String) {
-        cvvField.tap()
-        cvvField.typeText(text)
+    func typeTextIntoCvc(_ text: String) {
+        cvcField.tap()
+        cvcField.typeText(text)
     }
     
     func submit() {

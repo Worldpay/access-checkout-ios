@@ -2,10 +2,10 @@
 import Cuckoo
 import XCTest
 
-class AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests: XCTestCase {
+class AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
-    private let cvvView = CVVView()
+    private let cvvView = CvcView()
     private let merchantDelegate = MockAccessCheckoutCvvOnlyValidationDelegate()
     private let configuration = CardBrandsConfiguration([])
     
@@ -19,44 +19,27 @@ class AccessCheckoutCvvOnlyValidationDelegate_FocusOut_Tests: XCTestCase {
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
         
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
-        let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
+        let validationConfiguration = CvcOnlyValidationConfig(cvcView: cvvView, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithValidCvvLosesFocus() {
+    func testMerchantDelegateIsNotifiedWhenValidCvvIsCleared() {
         editCvv(text: "123")
-        clearInvocations(merchantDelegate)
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
         
-        removeFocusFromCvv()
-        
-        verify(merchantDelegate, never()).cvvValidChanged(isValid: true)
+        cvvView.clear()
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
     }
     
-    func testMerchantDelegateIsNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasNeverBeenNotified() {
+    func testMerchantDelegateIsNotNotifiedWhenInvalidCvvIsCleared() {
         editCvv(text: "12")
-        clearInvocations(merchantDelegate)
         
-        removeFocusFromCvv()
-        
-        verify(merchantDelegate).cvvValidChanged(isValid: false)
-    }
-    
-    func testMerchantDelegateIsNotNotifiedWhenCvvComponentWithInvalidCvvLosesFocusAndMerchantHasAlreadyBeenNotifiedOfTheInvalidCvv() {
-        editCvv(text: "123")
-        editCvv(text: "12")
-        clearInvocations(merchantDelegate)
-        
-        removeFocusFromCvv()
-        
+        cvvView.clear()
         verify(merchantDelegate, never()).cvvValidChanged(isValid: false)
     }
     
     private func editCvv(text: String) {
         cvvView.textField.text = text
         cvvView.textFieldEditingChanged(cvvView.textField)
-    }
-    
-    private func removeFocusFromCvv() {
-        cvvView.textFieldDidEndEditing(cvvView.textField)
     }
 }

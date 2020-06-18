@@ -1,7 +1,7 @@
 import UIKit
 
 /// A view representing a card's Card Verification Value
-@IBDesignable public class CVVView: UIView {
+@IBDesignable public class CvcView: UIView {
     @IBOutlet weak var textField: UITextField!
     
     /// The delegate to handle view events
@@ -9,7 +9,7 @@ import UIKit
     
     private let textChangeHandler: TextChangeHandler = TextChangeHandler()
     
-    /// Initialize CVVView from storyboard
+    /// Initialize CvcView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViewFromNib()
@@ -38,15 +38,15 @@ import UIKit
     
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        guard let cvv = textField.text else {
+        guard let cvc = textField.text else {
             return
         }
-        (presenter as? CVVViewPresenter)?.onEditing(text: cvv)
+        (presenter as? CvcViewPresenter)?.onEditing(text: cvc)
     }
 }
 
-extension CVVView: AccessCheckoutTextView {
-    /// The CVV represented by the view
+extension CvcView: AccessCheckoutTextView {
+    /// The Cvc represented by the view
     public var text: String? {
         guard let text = textField.text else {
             return nil
@@ -80,21 +80,21 @@ extension CVVView: AccessCheckoutTextView {
     /// Clears any text input.
     public func clear() {
         textField.text = ""
-        (presenter as? CVVViewPresenter)?.onEditing(text: "")
+        (presenter as? CvcViewPresenter)?.onEditing(text: "")
     }
 }
 
-extension CVVView: UITextFieldDelegate {
+extension CvcView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let cvv = textField.text else {
+        guard let cvc = textField.text else {
             return
         }
         
-        (presenter as? CVVViewPresenter)?.onEditEnd(text: cvv)
+        (presenter as? CvcViewPresenter)?.onEditEnd(text: cvc)
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let presenter = presenter as? CVVViewPresenter else {
+        guard let presenter = presenter as? CvcViewPresenter else {
             return true
         }
         

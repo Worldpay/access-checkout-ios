@@ -15,7 +15,7 @@ extension CardBrandModel: Equatable {
         }
 
         return lhs.panValidationRule == rhs.panValidationRule
-            && lhs.cvvValidationRule == rhs.cvvValidationRule
+            && lhs.cvcValidationRule == rhs.cvcValidationRule
     }
 }
 
@@ -38,7 +38,7 @@ extension CardBrandDto: Equatable {
         return lhs.name == rhs.name
             && lhs.pattern == rhs.pattern
             && lhs.panLengths == rhs.panLengths
-            && lhs.cvvLength == rhs.cvvLength
+            && lhs.cvcLength == rhs.cvcLength
             && lhs.images == rhs.images
     }
 }
@@ -72,7 +72,7 @@ extension CardBrandsConfiguration: Equatable {
 
 extension ValidationRulesDefaults: Equatable {
     public static func == (lhs: ValidationRulesDefaults, rhs: ValidationRulesDefaults) -> Bool {
-        return lhs.cvv == rhs.cvv
+        return lhs.cvc == rhs.cvc
             && lhs.expiryDate == rhs.expiryDate
             && lhs.expiryDateInput == rhs.expiryDateInput
             && lhs.pan == rhs.pan

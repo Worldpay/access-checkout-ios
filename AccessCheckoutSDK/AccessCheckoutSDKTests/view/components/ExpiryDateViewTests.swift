@@ -7,7 +7,7 @@ class ExpiryDateViewTests: XCTestCase {
         name: "visa",
         images: [],
         panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
+        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
     let expiryDateView = ExpiryDateView()
@@ -235,7 +235,7 @@ class ExpiryDateViewTests: XCTestCase {
         
         let validationConfig = CardValidationConfig(panView: PANView(),
                                                     expiryDateView: expiryDateView,
-                                                    cvvView: CVVView(),
+                                                    cvcView: CvcView(),
                                                     accessBaseUrl: "http://localhost",
                                                     validationDelegate: merchantDelegate)
         
@@ -257,7 +257,7 @@ class ExpiryDateViewTests: XCTestCase {
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         
         return merchantDelegate
     }

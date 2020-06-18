@@ -15,7 +15,7 @@ class SessionsApiClientMock: SessionsApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId: String, cvv: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    public override func createSession(baseUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         createSessionCalled = true
         
         if let sessionToReturn = self.sessionToReturn {

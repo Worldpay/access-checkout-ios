@@ -18,13 +18,13 @@ class CardDetailsForSessionTypeValidator {
         guard cardDetails.expiryYear != nil else {
             throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         }
-        guard cardDetails.cvv != nil else {
+        guard cardDetails.cvc != nil else {
             throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_CvcIsMandatory
         }
     }
     
     private func validateForCvcSession(_ cardDetails: CardDetails) throws {
-        guard cardDetails.cvv != nil else {
+        guard cardDetails.cvc != nil else {
             throw AccessCheckoutClientInitialisationError.incompleteCardDetails_CvcSession_CvcIsMandatory
         }
     }

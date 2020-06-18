@@ -1,10 +1,10 @@
-class CvvValidator {
-    func validate(cvv: String?, validationRule: ValidationRule) -> Bool {
-        guard let cvv = cvv else {
+class CvcValidator {
+    func validate(cvc: String?, validationRule: ValidationRule) -> Bool {
+        guard let cvc = cvc else {
             return false
         }
         
-        return validationRule.validate(text: cvv)
+        return validationRule.validate(text: cvc)
     }
     
     func canValidate(_ text: String, using validationRule: ValidationRule) -> Bool {

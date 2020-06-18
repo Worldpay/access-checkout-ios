@@ -7,7 +7,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
     private let pan = "a-pan"
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
-    private let cvv = "123"
+    private let cvc = "123"
     
     private let mockDiscovery = VerifiedTokensApiDiscoveryMock()
     private let mockURLRequestFactory = VerifiedTokensSessionURLRequestFactoryMock()
@@ -29,7 +29,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
         
         let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
@@ -37,7 +37,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
                 XCTAssertEqual(self.pan, self.mockURLRequestFactory.panPassed)
                 XCTAssertEqual(self.expiryMonth, self.mockURLRequestFactory.expiryMonthPassed)
                 XCTAssertEqual(self.expiryYear, self.mockURLRequestFactory.expiryYearPassed)
-                XCTAssertEqual(self.cvv, self.mockURLRequestFactory.cvvPassed)
+                XCTAssertEqual(self.cvc, self.mockURLRequestFactory.cvcPassed)
                 XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlPassed)
             case .failure:
                 XCTFail("Creation of session shoul have succeeded")
@@ -55,7 +55,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
         
         let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -74,7 +74,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
         
         let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -94,7 +94,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
         
         let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")

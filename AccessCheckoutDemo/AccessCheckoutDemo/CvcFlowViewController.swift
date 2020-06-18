@@ -1,22 +1,22 @@
 import AccessCheckoutSDK
 import UIKit
 
-class CvvFlowViewController: UIViewController {
-    @IBOutlet weak var cvvField: CVVView!
+class CvcFlowViewController: UIViewController {
+    @IBOutlet weak var cvcView: CvcView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
-        guard let cvv = cvvField.text else {
+        guard let cvc = cvcView.text else {
             return
         }
         
         spinner.startAnimating()
         
         let cardDetails = try! CardDetailsBuilder()
-            .cvv(cvv)
+            .cvc(cvc)
             .build()
         
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
@@ -30,10 +30,10 @@ class CvvFlowViewController: UIViewController {
                 switch result {
                     case .success(let sessions):
                         AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
-                            self.cvvField.clear()
+                            self.cvcView.clear()
                     })
                     case .failure(let error):
-                        self.highlightCvvField(error: error)
+                        self.highlightCvcField(error: error)
                         
                         AlertView.display(using: self, title: "Error", message: error.localizedDescription)
                 }
@@ -44,19 +44,19 @@ class CvvFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cvvField.layer.borderWidth = 1
-        cvvField.layer.borderColor = UIColor.lightText.cgColor
-        cvvField.layer.cornerRadius = 8
+        cvcView.layer.borderWidth = 1
+        cvcView.layer.borderColor = UIColor.lightText.cgColor
+        cvcView.layer.cornerRadius = 8
         
-        let validationConfig = CvvOnlyValidationConfig(cvvView: cvvField, validationDelegate: self)
+        let validationConfig = CvcOnlyValidationConfig(cvcView: cvcView, validationDelegate: self)
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
-        cvvValidChanged(isValid: false)
+        cvcValidChanged(isValid: false)
     }
     
-    private func highlightCvvField(error: AccessCheckoutClientError) {
+    private func highlightCvcField(error: AccessCheckoutClientError) {
         if extractFieldThatCausedError(from: error) == "$.cvv" {
-            changeCvvValidIndicator(isValid: false)
+            changeCvcValidIndicator(isValid: false)
         }
     }
     
@@ -87,14 +87,14 @@ class CvvFlowViewController: UIViewController {
         return fieldToReturn
     }
     
-    private func changeCvvValidIndicator(isValid: Bool) {
-        cvvField.textColor = isValid ? nil : UIColor.red
+    private func changeCvcValidIndicator(isValid: Bool) {
+        cvcView.textColor = isValid ? nil : UIColor.red
     }
 }
 
-extension CvvFlowViewController: AccessCheckoutCvvOnlyValidationDelegate {
-    public func cvvValidChanged(isValid: Bool) {
-        changeCvvValidIndicator(isValid: isValid)
+extension CvcFlowViewController: AccessCheckoutCvcOnlyValidationDelegate {
+    public func cvcValidChanged(isValid: Bool) {
+        changeCvcValidIndicator(isValid: isValid)
         
         if !isValid {
             submitButton.isEnabled = false

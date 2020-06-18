@@ -9,9 +9,9 @@ class ValidationRulesDefaultsTests: XCTestCase {
         XCTAssertEqual([12, 13, 14, 15, 16, 17, 18, 19], defaults.pan.validLengths)
     }
     
-    func testCvvValidationRule() {
-        XCTAssertEqual("^\\d{0,4}$", defaults.cvv.matcher)
-        XCTAssertEqual([3, 4], defaults.cvv.validLengths)
+    func testCvcValidationRule() {
+        XCTAssertEqual("^\\d{0,4}$", defaults.cvc.matcher)
+        XCTAssertEqual([3, 4], defaults.cvc.validLengths)
     }
     
     func testExpiryDateValidationRule() {

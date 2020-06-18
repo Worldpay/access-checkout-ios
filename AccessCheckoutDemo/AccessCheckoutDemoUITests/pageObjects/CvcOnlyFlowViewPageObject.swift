@@ -1,17 +1,17 @@
 import XCTest
 
-class CvvOnlyFlowViewPageObject {
+class CvcFlowViewPageObject {
     private let app:XCUIApplication
 
-    var cvvField:XCUIElement {
+    var cvcField:XCUIElement {
         get {
-            return app.textFields["cvv"]
+            return app.textFields["cvc"]
         }
     }
     
-    var cvvText:String? {
+    var cvcText:String? {
         get {
-            return cvvField.value as? String
+            return cvcField.value as? String
         }
     }
     
@@ -31,9 +31,9 @@ class CvvOnlyFlowViewPageObject {
         self.app = app
     }
     
-    func typeTextIntoCvv(_ text: String) {
-        cvvField.tap()
-        cvvField.typeText(text)
+    func typeTextIntoCvc(_ text: String) {
+        cvcField.tap()
+        cvcField.typeText(text)
     }
     
     func submit() {

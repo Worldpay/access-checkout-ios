@@ -32,7 +32,7 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
     func testReturnsConfigurationWithBrandsWhenSuccessfullyProcessedRemoteConfiguration() {
         let cardBrand = CardBrandModel(name: "a-brand", images: [],
                                        panValidationRule: ValidationRule(matcher: "rule-1", validLengths: []),
-                                       cvvValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
+                                       cvcValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
         expectedConfiguration = CardBrandsConfiguration([cardBrand])
         factory.willReturn(expectedConfiguration!)
         

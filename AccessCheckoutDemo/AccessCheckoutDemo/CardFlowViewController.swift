@@ -4,7 +4,7 @@ import UIKit
 class CardFlowViewController: UIViewController {
     @IBOutlet weak var panView: PANView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
-    @IBOutlet weak var cvvView: CVVView!
+    @IBOutlet weak var cvcView: CvcView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
@@ -15,20 +15,20 @@ class CardFlowViewController: UIViewController {
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
             let expiryDate = expiryDateView.text,
-            let cvv = cvvView.text else {
+            let cvc = cvcView.text else {
             return
         }
-        submitCard(pan: pan, expiryDate: expiryDate, cvv: cvv)
+        submitCard(pan: pan, expiryDate: expiryDate, cvc: cvc)
     }
     
-    private func submitCard(pan: String, expiryDate: String, cvv: String) {
+    private func submitCard(pan: String, expiryDate: String, cvc: String) {
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
         
         let cardDetails = try! CardDetailsBuilder().pan(pan)
             .expiryDate(expiryDate)
-            .cvv(cvv)
+            .cvc(cvc)
             .build()
         
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
@@ -79,7 +79,7 @@ class CardFlowViewController: UIViewController {
         if !preserveContent {
             panView.clear()
             expiryDateView.clear()
-            cvvView.clear()
+            cvcView.clear()
         }
         
         validationErrors?.forEach { error in
@@ -95,7 +95,7 @@ class CardFlowViewController: UIViewController {
                 case "$.cardExpiryDate.year":
                     changeExpiryDateValidIndicator(isValid: false)
                 case "$.cvv":
-                    changeCvvValidIndicator(isValid: false)
+                    changeCvcValidIndicator(isValid: false)
                 default:
                     print("Unrecognized jsonPath")
                 }
@@ -116,15 +116,15 @@ class CardFlowViewController: UIViewController {
         expiryDateView.layer.borderColor = UIColor.lightText.cgColor
         expiryDateView.layer.cornerRadius = 8
         
-        cvvView.layer.borderWidth = 1
-        cvvView.layer.borderColor = UIColor.lightText.cgColor
-        cvvView.layer.cornerRadius = 8
+        cvcView.layer.borderWidth = 1
+        cvcView.layer.borderColor = UIColor.lightText.cgColor
+        cvcView.layer.cornerRadius = 8
         
         resetCard(preserveContent: false, validationErrors: nil)
         
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateView,
-                                                    cvvView: cvvView,
+                                                    cvcView: cvcView,
                                                     accessBaseUrl: accessBaseUrl,
                                                     validationDelegate: self)
         
@@ -132,7 +132,7 @@ class CardFlowViewController: UIViewController {
         
         panValidChanged(isValid: false)
         expiryDateValidChanged(isValid: false)
-        cvvValidChanged(isValid: false)
+        cvcValidChanged(isValid: false)
         cardBrandChanged(cardBrand: nil)
     }
     
@@ -154,8 +154,8 @@ class CardFlowViewController: UIViewController {
         expiryDateView.textColor = isValid ? nil : UIColor.red
     }
     
-    private func changeCvvValidIndicator(isValid: Bool) {
-        cvvView.textColor = isValid ? nil : UIColor.red
+    private func changeCvcValidIndicator(isValid: Bool) {
+        cvcView.textColor = isValid ? nil : UIColor.red
     }
 }
 
@@ -175,8 +175,8 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
         disableSubmitIfNotValid(valid: isValid)
     }
     
-    func cvvValidChanged(isValid: Bool) {
-        changeCvvValidIndicator(isValid: isValid)
+    func cvcValidChanged(isValid: Bool) {
+        changeCvcValidIndicator(isValid: isValid)
         disableSubmitIfNotValid(valid: isValid)
     }
     

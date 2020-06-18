@@ -1,6 +1,6 @@
 struct ValidationRulesDefaults {
     let pan: ValidationRule
-    let cvv: ValidationRule
+    let cvc: ValidationRule
     let expiryDate: ValidationRule
     let expiryDateInput: ValidationRule
     
@@ -12,7 +12,7 @@ struct ValidationRulesDefaults {
             validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
         )
         
-        self.cvv = ValidationRule(
+        self.cvc = ValidationRule(
             matcher: "^\\d{0,4}$",
             validLengths: [3, 4]
         )

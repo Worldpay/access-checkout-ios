@@ -5,7 +5,7 @@ public protocol AccessCheckoutCardValidationDelegate {
     
     func expiryDateValidChanged(isValid: Bool)
     
-    func cvvValidChanged(isValid: Bool)
+    func cvcValidChanged(isValid: Bool)
     
     func validationSuccess()
 }

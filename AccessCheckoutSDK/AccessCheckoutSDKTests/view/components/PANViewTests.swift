@@ -112,14 +112,14 @@ class PANViewTests: XCTestCase {
     
     private func initialiseValidation(cardBrands: [CardBrandModel], panView: PANView) {
         let expiryDateview = ExpiryDateView()
-        let cvvView = CVVView()
+        let cvcView = CvcView()
         let merchantDelegate = createMerchantDelegate()
         
         let configurationProvider = createConfigurationProvider(with: cardBrands)
         
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateview,
-                                                    cvvView: cvvView,
+                                                    cvcView: cvcView,
                                                     accessBaseUrl: "http://localhost",
                                                     validationDelegate: merchantDelegate)
         
@@ -141,7 +141,7 @@ class PANViewTests: XCTestCase {
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         
         return merchantDelegate
     }

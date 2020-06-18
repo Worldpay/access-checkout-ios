@@ -20,7 +20,7 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .expiryDate("12/20")
-            .cvv("123")
+            .cvc("123")
             .build()
         
         sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in
@@ -43,7 +43,7 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .expiryDate("12/20")
-            .cvv("123")
+            .cvc("123")
             .build()
 
         sessionHandler.handle("a-merchant-id", "some-url", cardDetails) { result in

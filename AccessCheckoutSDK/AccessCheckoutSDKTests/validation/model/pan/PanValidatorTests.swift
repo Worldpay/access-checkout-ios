@@ -7,7 +7,7 @@ class PanValidatorTests: XCTestCase {
         name: "visa",
         images: [],
         panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
+        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
     let maestroBrand = CardBrandModel(
@@ -17,7 +17,7 @@ class PanValidatorTests: XCTestCase {
             matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
             validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
         ),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
+        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
