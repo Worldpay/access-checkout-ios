@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class AccessCheckoutCvvOnlyValidationDelegate_EditingEvent_Tests: XCTestCase {
+class AccessCheckoutCvvOnlyValidationDelegate_EditText_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let cvvView = CVVView()

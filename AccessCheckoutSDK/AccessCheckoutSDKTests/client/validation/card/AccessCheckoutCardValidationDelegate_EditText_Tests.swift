@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
+class AccessCheckoutCardValidationDelegate_EditText_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
