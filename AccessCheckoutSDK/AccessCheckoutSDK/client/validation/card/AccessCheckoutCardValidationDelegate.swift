@@ -1,5 +1,5 @@
 public protocol AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrandClient?)
+    func cardBrandChanged(cardBrand: CardBrand?)
     
     func panValidChanged(isValid: Bool)
     

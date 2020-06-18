@@ -171,14 +171,14 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         cvvView.textFieldDidEndEditing(cvvView.textField)
     }
     
-    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrandClient? {
-        var images = [CardBrandImageClient]()
+    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {
+        var images = [CardBrandImage]()
         
         for imageToConvert in cardBrandModel.images {
-            let image = CardBrandImageClient(type: imageToConvert.type, url: imageToConvert.url)
+            let image = CardBrandImage(type: imageToConvert.type, url: imageToConvert.url)
             images.append(image)
         }
         
-        return CardBrandClient(name: cardBrandModel.name, images: images)
+        return CardBrand(name: cardBrandModel.name, images: images)
     }
 }

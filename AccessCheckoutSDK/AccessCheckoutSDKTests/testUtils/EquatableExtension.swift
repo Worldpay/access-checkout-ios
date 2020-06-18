@@ -19,8 +19,8 @@ extension CardBrandModel: Equatable {
     }
 }
 
-extension CardBrandClient: Equatable {
-    public static func == (lhs: CardBrandClient, rhs: CardBrandClient) -> Bool {
+extension CardBrand: Equatable {
+    public static func == (lhs: CardBrand, rhs: CardBrand) -> Bool {
         if !lhs.images.isEmpty {
             for i in 0...lhs.images.count - 1 {
                 if lhs.images[i] != rhs.images[i] {
@@ -50,8 +50,8 @@ extension CardBrandImageModel: Equatable {
     }
 }
 
-extension CardBrandImageClient: Equatable {
-    public static func == (lhs: CardBrandImageClient, rhs: CardBrandImageClient) -> Bool {
+extension CardBrandImage: Equatable {
+    public static func == (lhs: CardBrandImage, rhs: CardBrandImage) -> Bool {
         return lhs.type == rhs.type
             && lhs.url == rhs.url
     }

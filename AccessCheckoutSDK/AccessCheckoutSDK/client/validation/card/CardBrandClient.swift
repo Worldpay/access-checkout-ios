@@ -1,4 +1,4 @@
-public struct CardBrandClient {
+public struct CardBrand {
     public let name: String
-    public let images: [CardBrandImageClient]
+    public let images: [CardBrandImage]
 }
