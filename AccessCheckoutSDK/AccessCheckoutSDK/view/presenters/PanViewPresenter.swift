@@ -7,12 +7,11 @@ class PanViewPresenter: Presenter {
         self.validator = panValidator
     }
     
-    // TODO: - what do we do when text is null or empty?
-    func onEditing(text: String?) {
-        validationFlow.validate(pan: text!)
+    func onEditing(text: String) {
+        validationFlow.validate(pan: text)
     }
     
-    func onEditEnd(text: String?) {
+    func onEditEnd(text: String) {
         validationFlow.notifyMerchantIfNotAlreadyNotified()
     }
     

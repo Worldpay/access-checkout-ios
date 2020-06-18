@@ -10,7 +10,6 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
         configurationProvider = CardBrandsConfigurationProvider(factory)
     }
     
-    // TODO - Do we need this???
     func testReturnsEmptyConfigurationWhenRemoteConfigurationIsNotNeeded() {
         expectedConfiguration = CardBrandsConfiguration([])
         

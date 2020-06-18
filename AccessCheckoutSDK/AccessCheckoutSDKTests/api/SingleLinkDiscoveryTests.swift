@@ -85,7 +85,6 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenResponseIsAnError() {
         let expectationToFulfill = expectation(description: "")
-        // ToDo - The Rest client does not go through the "error" branch but still fails on decoding. This needs fixing, we should receive as an error what the response contains
         let expectedError = AccessCheckoutClientError.unknown(message: "Failed to decode response data")
         StubUtils.stubGetResponse(url: "http://localhost", responseAsString: "An error", responseCode: 400)
         let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
