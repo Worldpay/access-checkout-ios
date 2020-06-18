@@ -1,9 +1,9 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
 class PaymentsCvcSessionURLRequestFactoryTests: XCTestCase {
     private let urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
-    private let cvv: CVV = "123"
+    private let cvv: String = "123"
     private let bundle = BundleMock()
     private let appVersion = BundleMock.appVersion
     private let expectedBodyAsString = "{\"cvc\":\"123\",\"identity\":\"some-identity\"}"

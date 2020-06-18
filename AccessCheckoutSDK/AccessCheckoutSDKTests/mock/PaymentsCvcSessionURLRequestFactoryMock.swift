@@ -7,7 +7,7 @@ class PaymentsCvcSessionURLRequestFactoryMock: PaymentsCvcSessionURLRequestFacto
     var cvvPassed = ""
     private var requestToReturn:URLRequest?
     
-    override func create(url: String, cvv: CVV, merchantIdentity: String, bundle: Bundle) -> URLRequest {
+    override func create(url: String, cvv: String, merchantIdentity: String, bundle: Bundle) -> URLRequest {
         createCalled = true
         urlStringPassed = url
         cvvPassed = cvv

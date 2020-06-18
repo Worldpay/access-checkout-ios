@@ -29,9 +29,9 @@ import Foundation
     
     
     
-     override func validate(pan: PAN)  {
+     override func validate(pan: String)  {
         
-    return cuckoo_manager.call("validate(pan: PAN)",
+    return cuckoo_manager.call("validate(pan: String)",
             parameters: (pan),
             escapingParameters: (pan),
             superclassCall:
@@ -66,9 +66,9 @@ import Foundation
 	    }
 	    
 	    
-	    func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.ClassStubNoReturnFunction<(PAN)> where M1.MatchedType == PAN {
-	        let matchers: [Cuckoo.ParameterMatcher<(PAN)>] = [wrap(matchable: pan) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "validate(pan: PAN)", parameterMatchers: matchers))
+	    func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: pan) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "validate(pan: String)", parameterMatchers: matchers))
 	    }
 	    
 	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
@@ -93,9 +93,9 @@ import Foundation
 	
 	    
 	    @discardableResult
-	    func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.__DoNotUse<(PAN), Void> where M1.MatchedType == PAN {
-	        let matchers: [Cuckoo.ParameterMatcher<(PAN)>] = [wrap(matchable: pan) { $0 }]
-	        return cuckoo_manager.verify("validate(pan: PAN)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: pan) { $0 }]
+	        return cuckoo_manager.verify("validate(pan: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -113,7 +113,7 @@ import Foundation
     
 
     
-     override func validate(pan: PAN)   {
+     override func validate(pan: String)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

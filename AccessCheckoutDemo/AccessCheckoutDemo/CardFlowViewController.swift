@@ -21,7 +21,7 @@ class CardFlowViewController: UIViewController {
         submitCard(pan: pan, expiryDate: expiryDate, cvv: cvv)
     }
     
-    private func submitCard(pan: PAN, expiryDate: String, cvv: CVV) {
+    private func submitCard(pan: String, expiryDate: String, cvv: String) {
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]

@@ -9,7 +9,7 @@ class VerifiedTokensSessionURLRequestFactoryMock: VerifiedTokensSessionURLReques
     private(set) var cvvPassed:String?
     private var requestToReturn:URLRequest?
     
-    override func create(url: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV, bundle: Bundle) -> URLRequest {
+    override func create(url: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvv: String, bundle: Bundle) -> URLRequest {
         createCalled = true
         urlPassed = url
         panPassed = pan

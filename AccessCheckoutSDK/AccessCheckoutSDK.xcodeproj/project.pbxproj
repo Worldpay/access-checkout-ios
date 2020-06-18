@@ -137,8 +137,6 @@
 		E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A86245869DB003F7231 /* ApiHeaders.swift */; };
 		E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */; };
 		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
-		E7821A9D24586CC5003F7231 /* PAN.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9C24586CC5003F7231 /* PAN.swift */; };
-		E7821A9F24586CE3003F7231 /* CVV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9E24586CE3003F7231 /* CVV.swift */; };
 		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */; };
 		E78C9AEC24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift */; };
 		E798B69F24913E8100A6A9AD /* CVVViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798B69E24913E8100A6A9AD /* CVVViewTests.swift */; };
@@ -347,8 +345,6 @@
 		E7821A86245869DB003F7231 /* ApiHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeaders.swift; sourceTree = "<group>"; };
 		E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutTextView.swift; sourceTree = "<group>"; };
 		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
-		E7821A9C24586CC5003F7231 /* PAN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAN.swift; sourceTree = "<group>"; };
-		E7821A9E24586CE3003F7231 /* CVV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVV.swift; sourceTree = "<group>"; };
 		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E78C9AEB24928CD700381214 /* AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvvOnlyValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E798B69E24913E8100A6A9AD /* CVVViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVViewTests.swift; sourceTree = "<group>"; };
@@ -511,7 +507,6 @@
 			children = (
 				E7821AA2245875C1003F7231 /* api */,
 				E79EAC4A24587A6A00A8DDA6 /* client */,
-				E79EAC5524587C9200A8DDA6 /* model */,
 				E72C3F18248B00CA00284A31 /* session */,
 				E79EAC4F24587B8B00A8DDA6 /* validation */,
 				E79EAC4D24587B5300A8DDA6 /* view */,
@@ -939,15 +934,6 @@
 			path = validation;
 			sourceTree = "<group>";
 		};
-		E79EAC5524587C9200A8DDA6 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				E7821A9E24586CE3003F7231 /* CVV.swift */,
-				E7821A9C24586CC5003F7231 /* PAN.swift */,
-			);
-			path = model;
-			sourceTree = "<group>";
-		};
 		E79EAC5724587DC200A8DDA6 /* components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1337,7 +1323,6 @@
 				E72D9E5D2411424500C94D5B /* SessionsApiClient.swift in Sources */,
 				E7FC4475245B218900CD3675 /* AccessCheckoutClient.swift in Sources */,
 				E7FC447A245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift in Sources */,
-				E7821A9D24586CC5003F7231 /* PAN.swift in Sources */,
 				E719B09A24647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift in Sources */,
 				D7D6D5D6247FC94900D57D7A /* CvvValidator.swift in Sources */,
 				E7D37F7B248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift in Sources */,
@@ -1364,7 +1349,6 @@
 				E7D19F72246328BA001EA13A /* SingleLinkDiscovery.swift in Sources */,
 				E7723572249397F800018DCB /* Presenter.swift in Sources */,
 				D76E404E247D6291002FAA39 /* PanValidator.swift in Sources */,
-				E7821A9F24586CE3003F7231 /* CVV.swift in Sources */,
 				E745CC2C24859C18000390CA /* ValidationRulesDefaults.swift in Sources */,
 				C9AFE46822B7AA4800943B3E /* ExpiryDateView.swift in Sources */,
 				E72C3ED62485B0F500284A31 /* ExpiryDateViewPresenter.swift in Sources */,

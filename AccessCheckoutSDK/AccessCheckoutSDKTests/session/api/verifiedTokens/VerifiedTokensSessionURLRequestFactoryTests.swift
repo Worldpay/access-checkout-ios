@@ -2,10 +2,10 @@
 import XCTest
 
 class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
-    private let pan: PAN = "a-pan"
+    private let pan: String = "a-pan"
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
-    private let cvv: CVV = "123"
+    private let cvv: String = "123"
     private let merchantId: String = "a-merchant-id"
 
     private let urlRequestFactory = VerifiedTokensSessionURLRequestFactory()

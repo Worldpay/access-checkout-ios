@@ -5,12 +5,12 @@ struct CardBrandsConfiguration {
         self.brands = brands
     }
     
-    func cardBrand(forPan pan: PAN) -> CardBrandModel? {
+    func cardBrand(forPan pan: String) -> CardBrandModel? {
         if brands.isEmpty {
             return nil
         }
         
-        return brands.first { $0.panValidationRule.matcher?.regexMatches(text: pan) == true }
+        return brands.first { $0.panValidationRule.textIsMatched(pan) == true }
     }
     
     func panValidationRule(using cardBrand: CardBrandModel?) -> ValidationRule {

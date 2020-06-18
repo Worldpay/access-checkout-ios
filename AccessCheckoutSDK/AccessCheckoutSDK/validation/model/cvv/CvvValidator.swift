@@ -1,5 +1,5 @@
 class CvvValidator {
-    func validate(cvv: CVV?, validationRule: ValidationRule) -> Bool {
+    func validate(cvv: String?, validationRule: ValidationRule) -> Bool {
         guard let cvv = cvv else {
             return false
         }

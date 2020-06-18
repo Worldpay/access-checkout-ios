@@ -27,7 +27,7 @@ class VerifiedTokensApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV,
+    func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvv: String,
                        completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         discovery.discover(baseUrl: baseUrl) { result in
             switch result {
@@ -55,7 +55,7 @@ class VerifiedTokensApiClient {
         }
     }
 
-    private func fireRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV,
+    private func fireRequest(endPointUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvv: String,
                              completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
         let request = createRequest(endPointUrl: endPointUrl,
                                     merchantId: merchantId,
@@ -68,7 +68,7 @@ class VerifiedTokensApiClient {
         }
     }
 
-    private func createRequest(endPointUrl: String, merchantId: String, pan: PAN, expiryMonth: UInt, expiryYear: UInt, cvv: CVV) -> URLRequest {
+    private func createRequest(endPointUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvv: String) -> URLRequest {
         return urlRequestFactory.create(url: endPointUrl,
                                         merchantId: merchantId,
                                         pan: pan,

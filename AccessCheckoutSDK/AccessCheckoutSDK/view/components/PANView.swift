@@ -49,7 +49,7 @@ import UIKit
 
 extension PANView: AccessCheckoutTextView {
     /// The card number represented by the view
-    public var text: PAN? {
+    public var text: String? {
         guard let text = textField.text else {
             return nil
         }

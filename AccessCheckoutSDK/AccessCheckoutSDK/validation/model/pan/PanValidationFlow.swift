@@ -11,7 +11,7 @@ class PanValidationFlow {
         self.cvvFlow = cvvFlow
     }
     
-    func validate(pan: PAN) {
+    func validate(pan: String) {
         let result = panValidator.validate(pan: pan)
         if panValidationStateHandler.isCardBrandDifferentFrom(cardBrand: result.cardBrand) {
             if let cardBrand = result.cardBrand {

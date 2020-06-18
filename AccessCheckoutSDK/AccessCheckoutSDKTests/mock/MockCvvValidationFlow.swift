@@ -37,7 +37,7 @@ import Cuckoo
     
     
     
-     override var cvv: CVV? {
+     override var cvv: String? {
         get {
             return cuckoo_manager.getter("cvv",
                 superclassCall:
@@ -55,9 +55,9 @@ import Cuckoo
     
     
     
-     override func validate(cvv: CVV?)  {
+     override func validate(cvv: String?)  {
         
-    return cuckoo_manager.call("validate(cvv: CVV?)",
+    return cuckoo_manager.call("validate(cvv: String?)",
             parameters: (cvv),
             escapingParameters: (cvv),
             superclassCall:
@@ -142,14 +142,14 @@ import Cuckoo
 	    }
 	    
 	    
-	    var cvv: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockCvvValidationFlow, CVV?> {
+	    var cvv: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockCvvValidationFlow, String?> {
 	        return .init(manager: cuckoo_manager, name: "cvv")
 	    }
 	    
 	    
-	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.ClassStubNoReturnFunction<(CVV?)> where M1.OptionalMatchedType == CVV {
-	        let matchers: [Cuckoo.ParameterMatcher<(CVV?)>] = [wrap(matchable: cvv) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "validate(cvv: CVV?)", parameterMatchers: matchers))
+	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.ClassStubNoReturnFunction<(String?)> where M1.OptionalMatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: cvv) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "validate(cvv: String?)", parameterMatchers: matchers))
 	    }
 	    
 	    func resetValidationRule() -> Cuckoo.ClassStubNoReturnFunction<()> {
@@ -192,16 +192,16 @@ import Cuckoo
 	    }
 	    
 	    
-	    var cvv: Cuckoo.VerifyReadOnlyProperty<CVV?> {
+	    var cvv: Cuckoo.VerifyReadOnlyProperty<String?> {
 	        return .init(manager: cuckoo_manager, name: "cvv", callMatcher: callMatcher, sourceLocation: sourceLocation)
 	    }
 	    
 	
 	    
 	    @discardableResult
-	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.__DoNotUse<(CVV?), Void> where M1.OptionalMatchedType == CVV {
-	        let matchers: [Cuckoo.ParameterMatcher<(CVV?)>] = [wrap(matchable: cvv) { $0 }]
-	        return cuckoo_manager.verify("validate(cvv: CVV?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func validate<M1: Cuckoo.OptionalMatchable>(cvv: M1) -> Cuckoo.__DoNotUse<(String?), Void> where M1.OptionalMatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: cvv) { $0 }]
+	        return cuckoo_manager.verify("validate(cvv: String?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -242,9 +242,9 @@ import Cuckoo
     }
     
     
-     override var cvv: CVV? {
+     override var cvv: String? {
         get {
-            return DefaultValueRegistry.defaultValue(for: (CVV?).self)
+            return DefaultValueRegistry.defaultValue(for: (String?).self)
         }
         
     }
@@ -253,7 +253,7 @@ import Cuckoo
     
 
     
-     override func validate(cvv: CVV?)   {
+     override func validate(cvv: String?)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

@@ -27,7 +27,7 @@ class SessionsApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, cvv: CVV, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    func createSession(baseUrl: String, merchantId: String, cvv: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
         discovery.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success(let endPointUrl):
@@ -49,7 +49,7 @@ class SessionsApiClient {
         }
     }
 
-    private func fireRequest(endPointUrl: String, merchantId: String, cvv: CVV, completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
+    private func fireRequest(endPointUrl: String, merchantId: String, cvv: String, completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
         let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvv: cvv)
 
         restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self) { result in
@@ -57,7 +57,7 @@ class SessionsApiClient {
         }
     }
 
-    private func createRequest(endPointUrl: String, merchantId: String, cvv: CVV) -> URLRequest {
+    private func createRequest(endPointUrl: String, merchantId: String, cvv: String) -> URLRequest {
         return urlRequestFactory.create(url: endPointUrl, cvv: cvv, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
     }
 }

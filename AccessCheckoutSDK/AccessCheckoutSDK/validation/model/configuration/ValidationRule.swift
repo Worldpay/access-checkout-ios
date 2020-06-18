@@ -12,7 +12,7 @@ struct ValidationRule {
             return false
         }
         
-        if let matcher = matcher, matcher.regexMatches(text: text) == false {
+        if let matcher = matcher, regexMatches(regExPattern: matcher, text: text) == false {
             return false
         }
         
@@ -28,7 +28,7 @@ struct ValidationRule {
             return true
         }
         
-        return matcher.regexMatches(text: text)
+        return regexMatches(regExPattern: matcher, text: text)
     }
     
     func textIsShorterOrAsLongAsMaxLength(_ text: String) -> Bool {
@@ -37,5 +37,12 @@ struct ValidationRule {
         }
         
         return text.count <= maxLength
+    }
+    
+    private func regexMatches(regExPattern: String, text: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: regExPattern) else {
+            return false
+        }
+        return regex.firstMatch(in: text, range: NSRange(location: 0, length: text.count)) != nil
     }
 }

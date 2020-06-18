@@ -47,7 +47,7 @@ import UIKit
 
 extension CVVView: AccessCheckoutTextView {
     /// The CVV represented by the view
-    public var text: CVV? {
+    public var text: String? {
         guard let text = textField.text else {
             return nil
         }
