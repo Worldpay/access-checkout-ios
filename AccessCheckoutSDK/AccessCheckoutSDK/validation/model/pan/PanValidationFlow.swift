@@ -25,4 +25,10 @@ class PanValidationFlow {
         
         panValidationStateHandler.handlePanValidation(isValid: result.isValid, cardBrand: result.cardBrand)
     }
+    
+    func notifyMerchantIfNotAlreadyNotified() {
+        if !panValidationStateHandler.alreadyNotifiedMerchantOfPanValidationState {
+            panValidationStateHandler.notifyMerchantOfPanValidationState()
+        }
+    }
 }

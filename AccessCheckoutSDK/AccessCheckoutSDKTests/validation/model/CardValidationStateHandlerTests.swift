@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class PanValidationStateHandlerTests: XCTestCase {
+class CardValidationStateHandlerTests: XCTestCase {
     let visaBrand = CardBrandModel(
         name: "visa",
         images: [],
@@ -29,6 +29,8 @@ class PanValidationStateHandlerTests: XCTestCase {
         merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
+    
+    // MARK: PanValidationStateHandler
     
     func testShouldNotNotifyMerchantDelegateWhenPanValidationDoesNotChangeFromFalse() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, panValidationState: false)
@@ -137,6 +139,30 @@ class PanValidationStateHandlerTests: XCTestCase {
         XCTAssertFalse(validationStateHandler.isCardBrandDifferentFrom(cardBrand: nil))
     }
     
+    func testNotifyMerchantOfPanValidationStateSetsNotificationState() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.notifyMerchantOfPanValidationState()
+        
+        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfPanValidationState)
+    }
+    
+    func testNotifyMerchantOfPanValidationStateNotifiesMerchantOfValidPan() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, panValidationState: true)
+        
+        validationStateHandler.notifyMerchantOfPanValidationState()
+        
+        verify(merchantDelegate).panValidChanged(isValid: true)
+    }
+    
+    func testNotifyMerchantOfPanValidationStateNotifiesMerchantOfInvalidPan() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, panValidationState: false)
+        
+        validationStateHandler.notifyMerchantOfPanValidationState()
+        
+        verify(merchantDelegate).panValidChanged(isValid: false)
+    }
+    
     // MARK: ExpiryDateValidationStateHandler
     
     func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse() {
@@ -179,6 +205,30 @@ class PanValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
     
+    func testNotifyMerchantOfExpiryDateValidationStateSetsNotificationState() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.notifyMerchantOfExpiryDateValidationState()
+        
+        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfExpiryDateValidationState)
+    }
+    
+    func testNotifyMerchantOfExpiryDateValidationStateNotifiesMerchantOfValidExpiryDate() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, expiryDateValidationState: true)
+        
+        validationStateHandler.notifyMerchantOfExpiryDateValidationState()
+        
+        verify(merchantDelegate).expiryDateValidChanged(isValid: true)
+    }
+    
+    func testNotifyMerchantOfExpiryDateValidationStateNotifiesMerchantOfInvalidExpiryDate() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, expiryDateValidationState: false)
+        
+        validationStateHandler.notifyMerchantOfExpiryDateValidationState()
+        
+        verify(merchantDelegate).expiryDateValidChanged(isValid: false)
+    }
+    
     // MARK: CvvValidationStateHandler
     
     func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromFalse() {
@@ -218,6 +268,30 @@ class PanValidationStateHandlerTests: XCTestCase {
         )
         
         validationStateHandler.handleCvvValidation(isValid: false)
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+    
+    func testNotifyMerchantOfCvvValidationStateSetsNotificationState() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.notifyMerchantOfCvvValidationState()
+        
+        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvvValidationState)
+    }
+    
+    func testNotifyMerchantOfCvvValidationStateNotifiesMerchantOfValidCvv() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvvValidationState: true)
+        
+        validationStateHandler.notifyMerchantOfCvvValidationState()
+        
+        verify(merchantDelegate).cvvValidChanged(isValid: true)
+    }
+    
+    func testNotifyMerchantOfCvvValidationStateNotifiesMerchantOfInvalidCvv() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvvValidationState: false)
+        
+        validationStateHandler.notifyMerchantOfCvvValidationState()
+        
         verify(merchantDelegate).cvvValidChanged(isValid: false)
     }
     

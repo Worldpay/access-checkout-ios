@@ -38,6 +38,14 @@ class CvvOnlyValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).cvvValidChanged(isValid: false)
     }
     
+    func testNotifyMerchantOfCvvValidationStateSetsNotificationState() {
+        let validationStateHandler = CvvOnlyValidationStateHandler(merchantDelegate)
+        
+        validationStateHandler.notifyMerchantOfCvvValidationState()
+        
+        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvvValidationState)
+    }
+    
     // MARK: Tests for notification that all fields are valid
     
     func testShouldNotifyMerchantDelegateWhenAllFieldsAreValid() {

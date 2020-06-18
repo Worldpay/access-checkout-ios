@@ -17,18 +17,25 @@ class AccessCheckoutCvvOnlyValidationDelegate_Clear_Tests: XCTestCase {
         
         merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
-    }
-    
-    func testMerchantDelegateIsNotifiedOfValidationStateChangeWhenCvvIsCleared() {
+        
         configurationProvider.getStubbingProxy().get().thenReturn(configuration)
         let validationConfiguration = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: merchantDelegate)
         validationInitialiser!.initialise(validationConfiguration)
-        
+    }
+    
+    func testMerchantDelegateIsNotifiedWhenValidCvvIsCleared() {
         editCvv(text: "123")
         verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
         
         cvvView.clear()
         verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotNotifiedWhenInvalidCvvIsCleared() {
+        editCvv(text: "12")
+        
+        cvvView.clear()
+        verify(merchantDelegate, never()).cvvValidChanged(isValid: false)
     }
     
     private func editCvv(text: String) {

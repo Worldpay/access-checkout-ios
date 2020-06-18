@@ -40,6 +40,21 @@ import Cuckoo
         
     }
     
+    
+    
+     override func notifyMerchantIfNotAlreadyNotified()  {
+        
+    return cuckoo_manager.call("notifyMerchantIfNotAlreadyNotified()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.notifyMerchantIfNotAlreadyNotified()
+                ,
+            defaultCall: __defaultImplStub!.notifyMerchantIfNotAlreadyNotified())
+        
+    }
+    
 
 	 struct __StubbingProxy_ExpiryDateValidationFlow: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -52,6 +67,11 @@ import Cuckoo
 	    func validate<M1: Cuckoo.Matchable>(expiryDate: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
 	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: expiryDate) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationFlow.self, method: "validate(expiryDate: String)", parameterMatchers: matchers))
+	    }
+	    
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationFlow.self, method: "notifyMerchantIfNotAlreadyNotified()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -76,6 +96,12 @@ import Cuckoo
 	        return cuckoo_manager.verify("validate(expiryDate: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("notifyMerchantIfNotAlreadyNotified()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -86,6 +112,10 @@ import Cuckoo
 
     
      override func validate(expiryDate: String)   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func notifyMerchantIfNotAlreadyNotified()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

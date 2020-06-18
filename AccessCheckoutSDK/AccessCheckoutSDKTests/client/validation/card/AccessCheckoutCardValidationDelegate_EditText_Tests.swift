@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
+class AccessCheckoutCardValidationDelegate_EditingEvent_Tests: XCTestCase {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var validationInitialiser: AccessCheckoutValidationInitialiser?
     private let panView = PANView()
@@ -44,7 +44,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     
     // MARK: PAN validation tests
     
-    func testMerchantDelegateIsNotifiedOfPANValidationStateChange() {
+    func testMerchantDelegateIsNotifiedWhenPANBecomesValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -57,7 +57,21 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenPanChangesButValidationStateDoesNotChange() {
+    func testMerchantDelegateIsNotifiedWhenPANBecomesInvalid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editPan(text: visaPan1)
+        editPan(text: "123")
+        
+        verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidPANsAreEntered() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -71,7 +85,9 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotifiedOfACardBrandChange() {
+    // MARK: Card brand changes
+    
+    func testMerchantDelegateIsNotifiedWhenCardBrandChanges() {
         let expectedCardBrand = createCardBrand(from: visaBrand)
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
@@ -119,7 +135,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     
     // MARK: Expiry Date validation tests
     
-    func testMerchantDelegateIsNotifiedOfExpiryDateValidationStateChange() {
+    func testMerchantDelegateIsNotifiedWhenExpiryDateBecomesValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -132,7 +148,21 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenExpiryDateChangesButValidationStateDoesNotChange() {
+    func testMerchantDelegateIsNotifiedWhenExpiryDateBecomesInvalid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editExpiryDate(text: "11/32")
+        editExpiryDate(text: "11/3")
+        
+        verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidExpiryDatesAreEntered() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -148,7 +178,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     
     // MARK: Cvv validation tests
     
-    func testMerchantDelegateIsNotifiedOfCvvValidationStateChanges() {
+    func testMerchantDelegateIsNotifiedWhenCvcBecomesValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -161,7 +191,21 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).cvvValidChanged(isValid: true)
     }
     
-    func testMerchantDelegateIsNotNotifiedWhenCvvChangesButValidationStatesDoesNotChange() {
+    func testMerchantDelegateIsNotifiedWhenCvcBecomesInvalid() {
+        let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        
+        let validationConfiguration = CardValidationConfig(panView: panView, expiryDateView: expiryDateView, cvvView: cvvView,
+                                                           accessBaseUrl: baseUrl, validationDelegate: merchantDelegate)
+        validationInitialiser!.initialise(validationConfiguration)
+        
+        editCvv(text: "123")
+        editCvv(text: "12")
+        
+        verify(merchantDelegate, times(1)).cvvValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidCvvsAreEntered() {
         let cardBrandsConfiguration = createConfiguration(brands: [visaBrand, maestroBrand])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -214,7 +258,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     
     // MARK: validation success tests
     
-    public func testMerchantIsNotifiedOfValidationSuccess() {
+    func testMerchantIsNotifiedOfValidationSuccess() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -229,7 +273,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, times(1)).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenPanIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenPanIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -244,7 +288,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, never()).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenExpiryDateIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenExpiryDateIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -259,7 +303,7 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
         verify(merchantDelegate, never()).validationSuccess()
     }
     
-    public func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
+    func testMerchantIsNotNotifiedOfValidationSuccessWhenCvvIsNotValid() {
         let cardBrandsConfiguration = createConfiguration(brands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
@@ -280,17 +324,17 @@ class AccessCheckoutCardValidationDelegate_EndEditingEvent_Tests: XCTestCase {
     
     private func editPan(text: String) {
         panView.textField.text = text
-        panView.textFieldDidEndEditing(panView.textField)
+        panView.textFieldEditingChanged(panView.textField)
     }
     
     private func editExpiryDate(text: String) {
         expiryDateView.textField.text = text
-        expiryDateView.textFieldDidEndEditing(expiryDateView.textField)
+        expiryDateView.textFieldEditingChanged(expiryDateView.textField)
     }
     
     private func editCvv(text: String) {
         cvvView.textField.text = text
-        cvvView.textFieldDidEndEditing(cvvView.textField)
+        cvvView.textFieldEditingChanged(cvvView.textField)
     }
     
     private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrandClient? {

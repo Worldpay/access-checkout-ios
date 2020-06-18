@@ -1,4 +1,4 @@
-class PanViewPresenter : Presenter {
+class PanViewPresenter: Presenter {
     private let validationFlow: PanValidationFlow
     private let validator: PanValidator
     
@@ -13,7 +13,7 @@ class PanViewPresenter : Presenter {
     }
     
     func onEditEnd(text: String?) {
-        validationFlow.validate(pan: text!)
+        validationFlow.notifyMerchantIfNotAlreadyNotified()
     }
     
     func canChangeText(with text: String) -> Bool {

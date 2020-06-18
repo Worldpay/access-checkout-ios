@@ -15,6 +15,7 @@ class CvvValidationFlowTests: XCTestCase {
 
     override func setUp() {
         cvvValidationStateHandler.getStubbingProxy().handleCvvValidation(isValid: any()).thenDoNothing()
+        cvvValidationStateHandler.getStubbingProxy().notifyMerchantOfCvvValidationState().thenDoNothing()
     }
 
     func testValidateValidatesCvvWithStoredValidationRuleAndCallsValidationStateHandlerWithResult() {
@@ -29,10 +30,10 @@ class CvvValidationFlowTests: XCTestCase {
         verify(cvvValidator).validate(cvv: "123", validationRule: cvvValidationRule)
         verify(cvvValidationStateHandler).handleCvvValidation(isValid: expectedResult)
     }
-    
+
     func testValidateStoresCvv() {
         let cvvValidationFlow = CvvValidationFlow(CvvValidator(), cvvValidationStateHandler)
-        
+
         cvvValidationFlow.validate(cvv: "123")
 
         XCTAssertEqual(cvvValidationFlow.cvv, "123")
@@ -85,6 +86,32 @@ class CvvValidationFlowTests: XCTestCase {
 
         verify(cvvValidator).validate(cvv: expectedCvv, validationRule: expectedRule)
         verify(cvvValidationStateHandler).handleCvvValidation(isValid: expectedResult)
+    }
+
+    func testCanNotifyMerchantIfNotAlreadyNotified() {
+        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        let cvvValidationStateHandler = CardValidationStateHandler(merchantDelegate)
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), cvvValidationStateHandler)
+
+        cvvValidationFlow.notifyMerchantIfNotAlreadyNotified()
+
+        verify(merchantDelegate).cvvValidChanged(isValid: false)
+    }
+
+    func testCannotNotifyMerchantIfAlreadyNotified() {
+        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
+        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        let cvvValidationStateHandler = CardValidationStateHandler(merchantDelegate)
+        let cvvValidationFlow = CvvValidationFlow(CvvValidator(), cvvValidationStateHandler)
+
+        cvvValidationStateHandler.handleCvvValidation(isValid: true)
+        verify(merchantDelegate).cvvValidChanged(isValid: true)
+        clearInvocations(merchantDelegate)
+
+        cvvValidationFlow.notifyMerchantIfNotAlreadyNotified()
+
+        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
     }
 
     private func createMockCvvValidator(thatReturns result: Bool) -> MockCvvValidator {

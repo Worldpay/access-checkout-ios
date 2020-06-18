@@ -8,6 +8,7 @@ class PanViewPresenterTests: XCTestCase {
 
     override func setUp() {
         panValidationFlow.getStubbingProxy().validate(pan: any()).thenDoNothing()
+        panValidationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
         panValidator.getStubbingProxy().canValidate(any()).thenReturn(true)
     }
 
@@ -20,13 +21,13 @@ class PanViewPresenterTests: XCTestCase {
         verify(panValidationFlow).validate(pan: pan)
     }
 
-    func testOnEditEndValidatesPan() {
+    func testOnEditEndNotifiesMerchantOfValidationStateIfNotAlreadyNotified() {
         let pan = "123"
         let presenter = PanViewPresenter(panValidationFlow, panValidator)
 
         presenter.onEditEnd(text: pan)
 
-        verify(panValidationFlow).validate(pan: pan)
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
     }
 
     func testCanChangeTextChecksIfTheTextCanBeEnteredAndDoesNotTriggerValidationFlow() {

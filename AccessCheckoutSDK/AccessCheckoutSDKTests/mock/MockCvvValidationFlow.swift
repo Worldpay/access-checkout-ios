@@ -113,6 +113,21 @@ import Cuckoo
         
     }
     
+    
+    
+     override func notifyMerchantIfNotAlreadyNotified()  {
+        
+    return cuckoo_manager.call("notifyMerchantIfNotAlreadyNotified()",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.notifyMerchantIfNotAlreadyNotified()
+                ,
+            defaultCall: __defaultImplStub!.notifyMerchantIfNotAlreadyNotified())
+        
+    }
+    
 
 	 struct __StubbingProxy_CvvValidationFlow: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -150,6 +165,11 @@ import Cuckoo
 	    func updateValidationRule<M1: Cuckoo.Matchable>(with rule: M1) -> Cuckoo.ClassStubNoReturnFunction<(ValidationRule)> where M1.MatchedType == ValidationRule {
 	        let matchers: [Cuckoo.ParameterMatcher<(ValidationRule)>] = [wrap(matchable: rule) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "updateValidationRule(with: ValidationRule)", parameterMatchers: matchers))
+	    }
+	    
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCvvValidationFlow.self, method: "notifyMerchantIfNotAlreadyNotified()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -202,6 +222,12 @@ import Cuckoo
 	        return cuckoo_manager.verify("updateValidationRule(with: ValidationRule)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.__DoNotUse<(), Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("notifyMerchantIfNotAlreadyNotified()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -240,6 +266,10 @@ import Cuckoo
     }
     
      override func updateValidationRule(with rule: ValidationRule)   {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func notifyMerchantIfNotAlreadyNotified()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

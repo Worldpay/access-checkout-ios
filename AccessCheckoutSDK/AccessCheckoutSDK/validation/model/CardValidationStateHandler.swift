@@ -1,10 +1,14 @@
-class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidationStateHandler, CvvValidationStateHandler {
+class CardValidationStateHandler {
     private(set) var merchantDelegate: AccessCheckoutCardValidationDelegate
     private(set) var panIsValid = false
     private(set) var cardBrand: CardBrandModel?
     private(set) var expiryDateIsValid = false
     private(set) var cvvIsValid = false
     private let cardBrandModelTransformer: CardBrandModelTransformer
+    
+    private(set) var alreadyNotifiedMerchantOfPanValidationState = false
+    private(set) var alreadyNotifiedMerchantOfExpiryDateValidationState = false
+    private(set) var alreadyNotifiedMerchantOfCvvValidationState = false
     
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
@@ -39,10 +43,16 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
+    private func allFieldsValid() -> Bool {
+        return panIsValid && expiryDateIsValid && cvvIsValid
+    }
+}
+
+extension CardValidationStateHandler: PanValidationStateHandler {
     func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
         if isValid != panIsValid {
             panIsValid = isValid
-            merchantDelegate.panValidChanged(isValid: isValid)
+            notifyMerchantOfPanValidationState()
             
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
@@ -60,6 +70,11 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
         }
     }
     
+    func notifyMerchantOfPanValidationState() {
+        merchantDelegate.panValidChanged(isValid: panIsValid)
+        alreadyNotifiedMerchantOfPanValidationState = true
+    }
+    
     func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
         if let currentBrand = self.cardBrand, let newBrand = cardBrand {
             return currentBrand.name != newBrand.name
@@ -69,11 +84,13 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
             return false
         }
     }
-    
+}
+
+extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     func handleExpiryDateValidation(isValid: Bool) {
         if isValid != expiryDateIsValid {
             expiryDateIsValid = isValid
-            merchantDelegate.expiryDateValidChanged(isValid: isValid)
+            notifyMerchantOfExpiryDateValidationState()
             
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
@@ -81,10 +98,17 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
         }
     }
     
+    func notifyMerchantOfExpiryDateValidationState() {
+        merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
+        alreadyNotifiedMerchantOfExpiryDateValidationState = true
+    }
+}
+
+extension CardValidationStateHandler: CvvValidationStateHandler {
     func handleCvvValidation(isValid: Bool) {
         if isValid != cvvIsValid {
             cvvIsValid = isValid
-            merchantDelegate.cvvValidChanged(isValid: isValid)
+            notifyMerchantOfCvvValidationState()
             
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
@@ -92,7 +116,8 @@ class CardValidationStateHandler: ExpiryDateValidationStateHandler, PanValidatio
         }
     }
     
-    private func allFieldsValid() -> Bool {
-        return panIsValid && expiryDateIsValid && cvvIsValid
+    func notifyMerchantOfCvvValidationState() {
+        merchantDelegate.cvvValidChanged(isValid: cvvIsValid)
+        alreadyNotifiedMerchantOfCvvValidationState = true
     }
 }
