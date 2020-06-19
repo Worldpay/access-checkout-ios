@@ -10,21 +10,19 @@ class ExpiryDateValidator {
         }
         
         let dateComponents = Calendar.current.dateComponents([.month, .year], from: Date())
-        if let targetMonth = dateComponents.month,
-            let targetYear = dateComponents.year,
-            let intMonth = Int(expiryDate.prefix(2)),
-            let fourDigitYear = toFourDigitFormat(expiryDate.suffix(2)) {
-            if intMonth == 0 {
-                return false
-            } else if fourDigitYear < targetYear {
-                return false
-            } else if fourDigitYear == targetYear, intMonth < targetMonth {
-                return false
-            } else {
-                return true
-            }
+        let currentMonth = dateComponents.month!
+        let currentYear = dateComponents.year!
+        
+        let monthToValidate = Int(expiryDate.prefix(2))!
+        let fourDigitYearToValidate = toFourDigitFormat(expiryDate.suffix(2))
+        
+        if fourDigitYearToValidate < currentYear {
+            return false
+        } else if fourDigitYearToValidate == currentYear, monthToValidate < currentMonth {
+            return false
         }
-        return false
+        
+        return true
     }
     
     func canValidate(_ text: String) -> Bool {
@@ -34,13 +32,8 @@ class ExpiryDateValidator {
             && validationRule.textIsShorterOrAsLongAsMaxLength(text)
     }
     
-    private func toFourDigitFormat(_ string: Substring?) -> UInt? {
-        guard let string = string else {
-            return nil
-        }
-        guard let number = UInt(string) else {
-            return nil
-        }
+    private func toFourDigitFormat(_ string: Substring?) -> Int {
+        let number = Int(string!)!
         
         return number < 100 ? number + 2000 : number
     }

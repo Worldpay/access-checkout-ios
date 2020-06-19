@@ -200,7 +200,30 @@ class ExpiryDateViewTests: XCTestCase {
         XCTAssertTrue(canType("1234/", into: expiryDateView))
     }
     
-    // MARK: testing the text colour feature
+    // MARK: text feature
+    
+    func testCanGetText() {
+        expiryDateView.textField.text = "some text"
+        
+        XCTAssertEqual("some text", expiryDateView.text)
+    }
+    
+    // MARK: enabled feature
+    
+    func testCanGetTextFieldEnabledState() {
+        expiryDateView.textField.isEnabled = false
+        
+        XCTAssertFalse(expiryDateView.isEnabled)
+    }
+    
+    func testCanSetTextFieldEnabledState() {
+        expiryDateView.textField.isEnabled = true
+        expiryDateView.isEnabled = false
+        
+        XCTAssertFalse(expiryDateView.textField.isEnabled)
+    }
+    
+    // MARK: text colour feature
     
     func testCanSetColourOfText() {
         expiryDateView.textColor = UIColor.red
@@ -212,6 +235,12 @@ class ExpiryDateViewTests: XCTestCase {
         expiryDateView.textColor = nil
         
         XCTAssertEqual(UIColor.black, expiryDateView.textField.textColor)
+    }
+    
+    func testCanGetColourOfText() {
+        expiryDateView.textField.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, expiryDateView.textColor)
     }
     
     private func typeAndGetText(_ text: String, into expiryDateView: ExpiryDateView) -> String {

@@ -17,6 +17,7 @@ class PANViewTests: XCTestCase {
     let panView = PANView()
     
     // MARK: testing what the end user can and cannot type
+    
     func testCanEnterAnyTextWhenNoPresenter() {
         XCTAssertTrue(type("abc", into: panView))
     }
@@ -91,7 +92,31 @@ class PANViewTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    // MARK: testing the text colour feature
+    // MARK: text feature
+    
+    func testCanGetText() {
+        panView.textField.text = "some text"
+        
+        XCTAssertEqual("some text", panView.text)
+    }
+    
+    // MARK: enabled feature
+    
+    func testCanGetTextFieldEnabledState() {
+        panView.textField.isEnabled = false
+        
+        XCTAssertFalse(panView.isEnabled)
+    }
+    
+    func testCanSetTextFieldEnabledState() {
+        panView.textField.isEnabled = true
+        panView.isEnabled = false
+        
+        XCTAssertFalse(panView.textField.isEnabled)
+    }
+    
+    // MARK: text colour feature
+    
     func testCanSetColourOfText() {
         panView.textColor = UIColor.red
         
@@ -102,6 +127,12 @@ class PANViewTests: XCTestCase {
         panView.textColor = nil
         
         XCTAssertEqual(UIColor.black, panView.textField.textColor)
+    }
+    
+    func testCanGetColourOfText() {
+        panView.textField.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, panView.textColor)
     }
     
     private func type(_ text: String, into view: PANView) -> Bool {

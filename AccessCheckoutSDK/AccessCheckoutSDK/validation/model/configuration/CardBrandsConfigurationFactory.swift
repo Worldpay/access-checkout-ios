@@ -10,8 +10,7 @@ class CardBrandsConfigurationFactory {
     }
     
     func create(baseUrl: String, completionHandler: @escaping (CardBrandsConfiguration) -> Void) {
-        let baseUrlWithTrailingSlash = baseUrl.last == "/" ? baseUrl : baseUrl + "/"
-        guard let url = URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)") else {
+        guard let url = configurationFileUrl(from: baseUrl) else {
             completionHandler(CardBrandsConfiguration([]))
             return
         }
@@ -22,7 +21,7 @@ class CardBrandsConfigurationFactory {
             switch result {
             case .success(let dtos):
                 brands = dtos.map { self.transformer.transform($0) }
-            case .failure(_):
+            case .failure:
                 brands = []
             }
             
@@ -34,7 +33,7 @@ class CardBrandsConfigurationFactory {
         return CardBrandsConfiguration([])
     }
     
-    private func configurationFileUrl(baseUrl:String) -> URL? {
+    private func configurationFileUrl(from baseUrl: String) -> URL? {
         let baseUrlWithTrailingSlash = baseUrl.last == "/" ? baseUrl : baseUrl + "/"
         
         return URL(string: "\(baseUrlWithTrailingSlash)\(configurationFileRelativePath)")
