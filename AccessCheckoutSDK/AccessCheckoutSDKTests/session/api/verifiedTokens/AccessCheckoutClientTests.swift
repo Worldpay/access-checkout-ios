@@ -20,7 +20,7 @@ class AccessCheckoutClientTests: XCTestCase {
     
     // Error tests
     
-    private func stubError(accessCheckoutClientError: AccessCheckoutClientError) {
+    private func stubError(accessCheckoutClientError: AccessCheckoutError) {
         let errorExpectation = expectation(description: "error")
         
         guard let data = try? JSONEncoder().encode(accessCheckoutClientError) else {
@@ -50,147 +50,16 @@ class AccessCheckoutClientTests: XCTestCase {
         wait(for: [errorExpectation], timeout: 1)
     }
     
-    func testCreateSession_bodyIsEmpty() {
-        let expectedError = AccessCheckoutClientError.bodyIsEmpty(message: "")
+    func testSuccessfullyReturnsASimpleApiErrorToTheMerchant() {
+        let expectedError = StubUtils.createApiError(errorName: "an error", message: "an error message")
         stubError(accessCheckoutClientError: expectedError)
     }
     
-    func testCreateSession_bodyIsNotJson() {
-        let expectedError = AccessCheckoutClientError.bodyIsNotJson(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_bodyDoesNotMatchSchema() {
-        let expectedError = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "",
-                                                                             validationErrors: nil)
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_validationErrors() {
-        let validationErrors: [AccessCheckoutClientValidationError] = [.unrecognizedField(message: "", jsonPath: ""),
-                                                                       .fieldHasInvalidValue(message: "", jsonPath: ""),
-                                                                       .fieldIsMissing(message: "", jsonPath: ""),
-                                                                       .stringIsTooShort(message: "", jsonPath: ""),
-                                                                       .stringIsTooLong(message: "", jsonPath: ""),
-                                                                       .panFailedLuhnCheck(message: "", jsonPath: ""),
-                                                                       .fieldMustBeInteger(message: "", jsonPath: ""),
-                                                                       .integerIsTooSmall(message: "", jsonPath: ""),
-                                                                       .integerIsTooLarge(message: "", jsonPath: ""),
-                                                                       .fieldMustBeNumber(message: "", jsonPath: ""),
-                                                                       .stringFailedRegexCheck(message: "", jsonPath: ""),
-                                                                       .dateHasInvalidFormat(message: "", jsonPath: "")]
-        let expectedError = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "",
-                                                                             validationErrors: validationErrors)
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_resourceNotFound() {
-        let expectedError = AccessCheckoutClientError.resourceNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_endpointNotFound() {
-        let expectedError = AccessCheckoutClientError.endpointNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_methodNotAllowed() {
-        let expectedError = AccessCheckoutClientError.methodNotAllowed(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unsupportedAcceptHeader() {
-        let expectedError = AccessCheckoutClientError.unsupportedAcceptHeader(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unsupportedContentType() {
-        let expectedError = AccessCheckoutClientError.unsupportedContentType(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_sessionNotFound() {
-        let expectedError = AccessCheckoutClientError.sessionNotFound(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_tooManyTokensForNamespace() {
-        let expectedError = AccessCheckoutClientError.tooManyTokensForNamespace(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unrecognizedCardBrand() {
-        let expectedError = AccessCheckoutClientError.unrecognizedCardBrand(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_tokenExpiryDateExceededMaximum() {
-        let expectedError = AccessCheckoutClientError.tokenExpiryDateExceededMaximum(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unsupportedCardBrand() {
-        let expectedError = AccessCheckoutClientError.unsupportedCardBrand(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_fieldHasInvalidValue() {
-        let expectedError = AccessCheckoutClientError.fieldHasInvalidValue(message: "", jsonPath: nil)
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unsupportedVerificationCurrency() {
-        let expectedError = AccessCheckoutClientError.unsupportedVerificationCurrency(message: "", jsonPath: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_maximumUpdatesExceeded() {
-        let expectedError = AccessCheckoutClientError.maximumUpdatesExceeded(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_apiRateLimitExceeded() {
-        let expectedError = AccessCheckoutClientError.apiRateLimitExceeded(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unauthorized() {
-        let expectedError = AccessCheckoutClientError.unauthorized(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_invalidCredentials() {
-        let expectedError = AccessCheckoutClientError.invalidCredentials(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_internalServerError() {
-        let expectedError = AccessCheckoutClientError.internalServerError(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_notTokenizable() {
-        let expectedError = AccessCheckoutClientError.notTokenizable(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_internalErrorTokenNotCreated() {
-        let expectedError = AccessCheckoutClientError.internalErrorTokenNotCreated(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_undiscoverable() {
-        let expectedError = AccessCheckoutClientError.undiscoverable(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_accessDenied() {
-        let expectedError = AccessCheckoutClientError.accessDenied(message: "")
-        stubError(accessCheckoutClientError: expectedError)
-    }
-    
-    func testCreateSession_unknown() {
-        let expectedError = AccessCheckoutClientError.unknown(message: "")
+    func testSuccessfullyReturnsAMoreComplexApiErrorToTheMerchant() {
+        let validationError1 = StubUtils.createApiValidationError(errorName: "validation error 1", message: "error message 1", jsonPath: "field 1")
+        let validationError2 = StubUtils.createApiValidationError(errorName: "validation error 2", message: "error message 2", jsonPath: "field 2")
+        let expectedError = StubUtils.createApiError(errorName: "an error", message: "an error message", validationErrors: [validationError1, validationError2])
+        
         stubError(accessCheckoutClientError: expectedError)
     }
     
@@ -202,7 +71,7 @@ class AccessCheckoutClientTests: XCTestCase {
         }
     }
     
-    fileprivate func getSampleResponseWith(href: String) -> Data {
+    private func getSampleResponseWith(href: String) -> Data {
         let responseAsString =
             """
                 {
@@ -224,7 +93,7 @@ class AccessCheckoutClientTests: XCTestCase {
         return responseAsString.data(using: .utf8)!
     }
     
-    fileprivate func getSampleResponse() -> Data {
+    private func getSampleResponse() -> Data {
         return getSampleResponseWith(href: "https://access.worldpay.com/verifiedTokens/sessions/session123456789")
     }
     

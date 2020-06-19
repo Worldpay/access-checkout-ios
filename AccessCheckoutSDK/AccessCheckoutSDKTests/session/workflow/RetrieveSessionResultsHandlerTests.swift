@@ -4,8 +4,8 @@ import XCTest
 class RetrieveSessionResultsCollatorTests: XCTestCase {
     func testCompletesWithAllResultsWhenAllSuccessfulResultsReceived() {
         let expectationToFulfill = expectation(description: "")
-        let verifiedTokensSession: Result<String, AccessCheckoutClientError> = .success("session verified tokens")
-        let paymentsCvcSession: Result<String, AccessCheckoutClientError> = .success("session payments cvc")
+        let verifiedTokensSession: Result<String, AccessCheckoutError> = .success("session verified tokens")
+        let paymentsCvcSession: Result<String, AccessCheckoutError> = .success("session payments cvc")
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
             case .success(let sessions):
@@ -27,9 +27,9 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
     
     func testCompletesWithAnErrorWhenOneOfTheResultsIsAFailure() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "an error")
-        let verifiedTokensSession: Result<String, AccessCheckoutClientError> = .success("session verified tokens")
-        let paymentsCvcSession: Result<String, AccessCheckoutClientError> = .failure(expectedError)
+        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let verifiedTokensSession: Result<String, AccessCheckoutError> = .success("session verified tokens")
+        let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
             case .success:
@@ -49,10 +49,10 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
     
     func testCompletesWithFirstErrorWhenAllResultsAreAFailure() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "an error")
-        let otherError = AccessCheckoutClientError.unknown(message: "another error")
-        let verifiedTokensSession: Result<String, AccessCheckoutClientError> = .failure(expectedError)
-        let paymentsCvcSession: Result<String, AccessCheckoutClientError> = .failure(otherError)
+        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let otherError = AccessCheckoutError(errorName: "another error", message: "another message")
+        let verifiedTokensSession: Result<String, AccessCheckoutError> = .failure(expectedError)
+        let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(otherError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
             case .success:

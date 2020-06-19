@@ -1,5 +1,5 @@
 class SessionsApiClient {
-    private let sessionNotFoundError = AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response")
+    private let sessionNotFoundError = AccessCheckoutError.sessionLinkNotFound(linkName: ApiLinks.sessions.result)
 
     private var discovery: SessionsApiDiscovery
     private var urlRequestFactory: PaymentsCvcSessionURLRequestFactory
@@ -27,7 +27,7 @@ class SessionsApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    func createSession(baseUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         discovery.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success(let endPointUrl):
@@ -49,7 +49,7 @@ class SessionsApiClient {
         }
     }
 
-    private func fireRequest(endPointUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
+    private func fireRequest(endPointUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutError>) -> Void) {
         let request = createRequest(endPointUrl: endPointUrl, merchantId: merchantId, cvc: cvc)
 
         restClient.send(urlSession: URLSession.shared, request: request, responseType: ApiResponse.self) { result in

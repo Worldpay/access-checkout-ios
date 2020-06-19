@@ -1,13 +1,13 @@
 import Foundation
 
-struct ApiResponse: Codable {
+struct ApiResponse: Decodable {
+    let links: Links
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case links = "_links"
     }
     
-    public struct Links: Codable {
-        
+    struct Links: Decodable {
         var curies: [Curie]?
         var endpoints: [String: Link]
         
@@ -25,16 +25,6 @@ struct ApiResponse: Codable {
             }
             
             self.endpoints = endpoints
-        }
-        
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encodeIfPresent(curies, forKey: CodingKeys(stringValue: "curies")!)
-            try endpoints.forEach { (key, value) in
-                if let codingKeys = CodingKeys(stringValue: key) {
-                    try container.encode(value, forKey: codingKeys)
-                }
-            }
         }
         
         private struct CodingKeys: CodingKey {
@@ -56,13 +46,14 @@ struct ApiResponse: Codable {
             }
         }
     }
-    public struct Link: Codable {
-        var href: String
+    
+    struct Link: Decodable {
+        let href: String
     }
-    public struct Curie: Codable {
-        var href: String
-        var name: String
-        var templated: Bool
+    
+    struct Curie: Decodable {
+        let href: String
+        let name: String
+        let templated: Bool
     }
-    var links: Links
 }

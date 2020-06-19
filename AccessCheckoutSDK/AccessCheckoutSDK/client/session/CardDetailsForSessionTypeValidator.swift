@@ -10,22 +10,22 @@ class CardDetailsForSessionTypeValidator {
     
     private func validateForVerifiedTokensSession(_ cardDetails: CardDetails) throws {
         guard cardDetails.pan != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_PanIsMandatory
+            throw AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_PanIsMandatory
         }
         guard cardDetails.expiryMonth != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
+            throw AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         }
         guard cardDetails.expiryYear != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
+            throw AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
         }
         guard cardDetails.cvc != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_VTSession_CvcIsMandatory
+            throw AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_CvcIsMandatory
         }
     }
     
     private func validateForCvcSession(_ cardDetails: CardDetails) throws {
         guard cardDetails.cvc != nil else {
-            throw AccessCheckoutClientInitialisationError.incompleteCardDetails_CvcSession_CvcIsMandatory
+            throw AccessCheckoutIllegalArgumentError.incompleteCardDetails_CvcSession_CvcIsMandatory
         }
     }
 }

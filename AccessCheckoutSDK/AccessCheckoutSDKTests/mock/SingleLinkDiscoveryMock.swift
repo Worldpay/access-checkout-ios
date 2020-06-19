@@ -2,13 +2,13 @@
 
 class SingleLinkDiscoveryMock: SingleLinkDiscovery {
     private var url: String?
-    private var error: AccessCheckoutClientError?
+    private var error: AccessCheckoutError?
     
     init() {
         super.init(linkToFind: "", urlRequest: URLRequest(url: URL(string: "http://localhost")!))
     }
     
-    override func discover(completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    override func discover(completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         if let url = url {
             completionHandler(.success(url))
         } else if let error = error {
@@ -20,7 +20,7 @@ class SingleLinkDiscoveryMock: SingleLinkDiscovery {
         self.url = url
     }
     
-    func willComplete(with error: AccessCheckoutClientError) {
+    func willComplete(with error: AccessCheckoutError) {
         self.error = error
     }
 }

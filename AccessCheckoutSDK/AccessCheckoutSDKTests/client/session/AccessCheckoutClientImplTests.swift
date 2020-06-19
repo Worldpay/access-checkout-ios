@@ -82,7 +82,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an error")
+        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -107,7 +107,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "Could not connect to the server.")
+        let expectedError = StubUtils.createApiError(errorName: "unexpectedApiError", message: "Could not connect to the server.")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -132,7 +132,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
@@ -157,7 +157,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -182,7 +182,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError: AccessCheckoutClientError = AccessCheckoutClientError.unknown(message: "an errorsss")
+        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
@@ -204,24 +204,24 @@ class AccessCheckoutClientImplTests: XCTestCase {
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() throws {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
+        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvc("123")
             .build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc, .verifiedTokens]) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+            XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
         }
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() throws {
-        let expectedError = AccessCheckoutClientInitialisationError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
+        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutClientInitialisationError)
+            XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
         }
     }
     
@@ -246,7 +246,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
     
-    private func stubVerifiedTokensEndPointDiscoveryFailure(error: AccessCheckoutClientError) {
+    private func stubVerifiedTokensEndPointDiscoveryFailure(error: AccessCheckoutError) {
         stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), failedResponse(error: error))
     }
     
@@ -254,7 +254,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), successfulVerifiedTokensSessionResponse(session: session))
     }
     
-    private func stubVerifiedTokensSessionFailure(error: AccessCheckoutClientError) {
+    private func stubVerifiedTokensSessionFailure(error: AccessCheckoutError) {
         stub(http(.post, uri: "\(baseUrl)\(verifiedTokensServiceSessionsPath)"), failedResponse(error: error))
     }
     
@@ -262,7 +262,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         stub(http(.get, uri: "\(baseUrl)\(sessionsServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
     
-    private func stubSessionsEndPointDiscoveryFailure(error: AccessCheckoutClientError) {
+    private func stubSessionsEndPointDiscoveryFailure(error: AccessCheckoutError) {
         stub(http(.get, uri: "\(baseUrl)\(sessionsServicePath)"), failedResponse(error: error))
     }
     
@@ -270,7 +270,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         stub(http(.post, uri: "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"), successfulPaymentsCvcSessionResponse(session: session))
     }
     
-    private func stubSessionsPaymentsCvcSessionFailure(error: AccessCheckoutClientError) {
+    private func stubSessionsPaymentsCvcSessionFailure(error: AccessCheckoutError) {
         stub(http(.post, uri: "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"), failedResponse(error: error))
     }
     
@@ -307,7 +307,7 @@ class AccessCheckoutClientImplTests: XCTestCase {
         """), status: 201)
     }
     
-    private func failedResponse(error: AccessCheckoutClientError) -> (URLRequest) -> Response {
+    private func failedResponse(error: AccessCheckoutError) -> (URLRequest) -> Response {
         let errorAsData = try! JSONEncoder().encode(error)
         
         return jsonData(errorAsData, status: 400)

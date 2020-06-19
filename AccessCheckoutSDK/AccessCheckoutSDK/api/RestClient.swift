@@ -1,15 +1,15 @@
 import Foundation
 
 class RestClient {
-    func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutClientError>) -> Void) {
+    func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutError>) -> Void) {
         urlSession.dataTask(with: request) { data, _, error in
             if let responseBody = data {
                 if let decodedResponse = try? JSONDecoder().decode(T.self, from: responseBody) {
                     completionHandler(.success(decodedResponse))
-                } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutClientError.self, from: responseBody) {
+                } else if let accessCheckoutClientError = try? JSONDecoder().decode(AccessCheckoutError.self, from: responseBody) {
                     completionHandler(.failure(accessCheckoutClientError))
                 } else {
-                    completionHandler(.failure(AccessCheckoutClientError.unknown(message: "Failed to decode response data")))
+                    completionHandler(.failure(AccessCheckoutError.responseDecodingFailed()))
                 }
             } else {
                 var errorMessage: String
@@ -18,7 +18,7 @@ class RestClient {
                 } else {
                     errorMessage = "Unexpected response: no data or error returned"
                 }
-                completionHandler(.failure(AccessCheckoutClientError.unknown(message: errorMessage)))
+                completionHandler(.failure(AccessCheckoutError.unexpectedApiError(message: errorMessage)))
             }
         }.resume()
     }

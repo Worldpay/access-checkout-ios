@@ -1,5 +1,5 @@
 class VerifiedTokensApiClient {
-    private let sessionNotFoundError = AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response")
+    private let sessionNotFoundError = AccessCheckoutError.sessionLinkNotFound(linkName: ApiLinks.sessions.result)
 
     private var discovery: VerifiedTokensApiDiscovery
     private var urlRequestFactory: VerifiedTokensSessionURLRequestFactory
@@ -28,7 +28,7 @@ class VerifiedTokensApiClient {
     }
 
     func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
-                       completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+                       completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         discovery.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success(let endPointUrl):
@@ -56,7 +56,7 @@ class VerifiedTokensApiClient {
     }
 
     private func fireRequest(endPointUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
-                             completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutClientError>) -> Void) {
+                             completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutError>) -> Void) {
         let request = createRequest(endPointUrl: endPointUrl,
                                     merchantId: merchantId,
                                     pan: pan, expiryMonth:

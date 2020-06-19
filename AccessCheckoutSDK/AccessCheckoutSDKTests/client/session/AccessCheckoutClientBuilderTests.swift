@@ -15,7 +15,7 @@ class AccessCheckoutClientBuilderTests: XCTestCase {
         let builder = AccessCheckoutClientBuilder().accessBaseUrl("some-url")
         
         XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(error as! AccessCheckoutClientInitialisationError, AccessCheckoutClientInitialisationError.missingMerchantId)
+            XCTAssertEqual(error as! AccessCheckoutIllegalArgumentError, AccessCheckoutIllegalArgumentError.missingMerchantId)
         }
     }
     
@@ -23,7 +23,7 @@ class AccessCheckoutClientBuilderTests: XCTestCase {
         let builder = AccessCheckoutClientBuilder().merchantId("123")
         
         XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(error as! AccessCheckoutClientInitialisationError, AccessCheckoutClientInitialisationError.missingAccessBaseUrl)
+            XCTAssertEqual(error as! AccessCheckoutIllegalArgumentError, AccessCheckoutIllegalArgumentError.missingAccessBaseUrl)
         }
     }
 }

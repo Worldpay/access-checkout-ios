@@ -3,9 +3,7 @@ public class AccessCheckoutClientBuilder {
     private var merchantId: String?
     private var accessBaseUrl: String?
     
-    public init() {
-        
-    }
+    public init() {}
     
     public func merchantId(_ merchantId: String) -> AccessCheckoutClientBuilder {
         self.merchantId = merchantId
@@ -19,11 +17,11 @@ public class AccessCheckoutClientBuilder {
     
     public func build() throws -> AccessCheckoutClient {
         guard let merchantId = self.merchantId else {
-            throw AccessCheckoutClientInitialisationError.missingMerchantId
+            throw AccessCheckoutIllegalArgumentError.missingMerchantId
         }
         
         guard let accessBaseUrl = self.accessBaseUrl else {
-            throw AccessCheckoutClientInitialisationError.missingAccessBaseUrl
+            throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl
         }
         
         let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()

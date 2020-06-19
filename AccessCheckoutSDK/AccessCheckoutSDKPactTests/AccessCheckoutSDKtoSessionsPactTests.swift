@@ -20,7 +20,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             super.init()
         }
         
-        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
             completionHandler(.success(discoveredUrl))
         }
     }

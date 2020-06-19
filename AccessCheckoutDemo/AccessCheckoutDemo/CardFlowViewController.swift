@@ -59,12 +59,9 @@ class CardFlowViewController: UIViewController {
                     })
                 case .failure(let error):
                     let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
-                    switch error {
-                    case .bodyDoesNotMatchSchema(_, let validationErrors):
-                        accessCheckoutClientValidationErrors = validationErrors
-                    default:
-                        break
+                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.ValidationError]?
+                    if error.errorName == "bodyDoesNotMatchSchema" {
+                        accessCheckoutClientValidationErrors = error.validationErrors
                     }
                     
                     AlertView.display(using: self, title: title, message: nil, closeHandler: {
@@ -75,7 +72,7 @@ class CardFlowViewController: UIViewController {
         }
     }
     
-    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
+    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.ValidationError]?) {
         if !preserveContent {
             panView.clear()
             expiryDateView.clear()
@@ -83,24 +80,18 @@ class CardFlowViewController: UIViewController {
         }
         
         validationErrors?.forEach { error in
-            switch error {
-            case .panFailedLuhnCheck:
+            if error.errorName == "panFailedLuhnCheck" {
                 changePanValidIndicator(isValid: false)
-            case .dateHasInvalidFormat(_, let jsonPath):
-                switch jsonPath {
-                case "$.cardNumber":
+            } else if error.errorName == "dateHasInvalidFormat" {
+                if error.jsonPath == "$.cardNumber" {
                     changePanValidIndicator(isValid: false)
-                case "$.cardExpiryDate.month":
+                } else if error.jsonPath == "$.cardExpiryDate.month" {
                     changeExpiryDateValidIndicator(isValid: false)
-                case "$.cardExpiryDate.year":
+                } else if error.jsonPath == "$.cardExpiryDate.year" {
                     changeExpiryDateValidIndicator(isValid: false)
-                case "$.cvv":
+                } else if error.jsonPath == "$.cvv" {
                     changeCvcValidIndicator(isValid: false)
-                default:
-                    print("Unrecognized jsonPath")
                 }
-            default:
-                break
             }
         }
     }

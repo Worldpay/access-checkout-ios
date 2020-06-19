@@ -54,33 +54,22 @@ class CvcFlowViewController: UIViewController {
         cvcValidChanged(isValid: false)
     }
     
-    private func highlightCvcField(error: AccessCheckoutClientError) {
+    private func highlightCvcField(error: AccessCheckoutError) {
         if extractFieldThatCausedError(from: error) == "$.cvv" {
             changeCvcValidIndicator(isValid: false)
         }
     }
     
-    private func extractFieldThatCausedError(from error: AccessCheckoutClientError) -> String? {
-        var validationErrors: [AccessCheckoutClientValidationError] = []
-        switch error {
-            case .bodyDoesNotMatchSchema(_, let errors):
-                validationErrors += errors!
-            default:
-                return nil
+    private func extractFieldThatCausedError(from error: AccessCheckoutError) -> String? {
+        var validationErrors = [AccessCheckoutError.ValidationError]()
+        if error.errorName == "bodyDoesNotMatchSchema" {
+            validationErrors += error.validationErrors
         }
         
         var fieldToReturn: String?
         validationErrors.forEach { validationError in
-            switch validationError {
-                case .stringFailedRegexCheck(_, let jsonPath):
-                    switch jsonPath {
-                        case "$.cvv":
-                            fieldToReturn = jsonPath
-                        default:
-                            print("Unrecognized jsonPath")
-                    }
-                default:
-                    break
+            if validationError.errorName == "stringFailedRegexCheck", validationError.jsonPath == "$.cvv" {
+                fieldToReturn = validationError.jsonPath
             }
         }
         
@@ -100,7 +89,7 @@ extension CvcFlowViewController: AccessCheckoutCvcOnlyValidationDelegate {
             submitButton.isEnabled = false
         }
     }
-
+    
     public func validationSuccess() {
         submitButton.isEnabled = true
     }
