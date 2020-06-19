@@ -115,7 +115,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains("unknown"))
         XCTAssert(alert.title.contains("variation1"))
     }
     
@@ -132,7 +131,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains("unknown"))
         XCTAssert(alert.title.contains("variation2"))
     }
     
@@ -149,7 +147,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains("unknown"))
         XCTAssert(alert.title.contains("variation3"))
     }
     
@@ -166,7 +163,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains("unknown"))
         XCTAssert(alert.title.contains("variation4"))
     }
     

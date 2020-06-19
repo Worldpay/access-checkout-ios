@@ -1,5 +1,7 @@
 class CardBrandsConfigurationProvider {
     private let factory:CardBrandsConfigurationFactory
+    private let concurrentQueue = DispatchQueue(label: "com.worldpay.access.checkout.CardBrandsConfigurationProvider")
+    
     private var configuration:CardBrandsConfiguration
     
     init (_ cardBrandsConfigurationFactory:CardBrandsConfigurationFactory) {
@@ -9,11 +11,19 @@ class CardBrandsConfigurationProvider {
     
     func retrieveRemoteConfiguration(baseUrl:String) {
         factory.create(baseUrl: baseUrl) { configuration in
-            self.configuration = configuration
+            self.concurrentQueue.async(flags: .barrier) { [weak self] in
+              guard let self = self else {
+                return
+              }
+
+              self.configuration = configuration
+            }
         }
     }
     
     func get() -> CardBrandsConfiguration {
-        return configuration
+        concurrentQueue.sync {
+            return configuration
+        }
     }
 }
