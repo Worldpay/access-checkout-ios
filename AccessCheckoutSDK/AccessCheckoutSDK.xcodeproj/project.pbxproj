@@ -177,7 +177,6 @@
 		E7D37F8E24818E210039DD98 /* CardBrandsConfigurationFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D37F8D24818E210039DD98 /* CardBrandsConfigurationFactoryMock.swift */; };
 		E7E6758F241AA57A0022292F /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E6758E241AA57A0022292F /* RestClient.swift */; };
 		E7FC4473245B1FD100CD3675 /* SessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FC4472245B1FD100CD3675 /* SessionType.swift */; };
-		E7FC4475245B218900CD3675 /* AccessCheckoutClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FC4474245B218900CD3675 /* AccessCheckoutClient.swift */; };
 		E7FC4478245B24A400CD3675 /* AccessCheckoutClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FC4477245B24A400CD3675 /* AccessCheckoutClientImpl.swift */; };
 		E7FC447A245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */; };
 		E7FC447C245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FC447B245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift */; };
@@ -383,7 +382,6 @@
 		E7D37F8D24818E210039DD98 /* CardBrandsConfigurationFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandsConfigurationFactoryMock.swift; sourceTree = "<group>"; };
 		E7E6758E241AA57A0022292F /* RestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		E7FC4472245B1FD100CD3675 /* SessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionType.swift; sourceTree = "<group>"; };
-		E7FC4474245B218900CD3675 /* AccessCheckoutClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClient.swift; sourceTree = "<group>"; };
 		E7FC4477245B24A400CD3675 /* AccessCheckoutClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientImpl.swift; sourceTree = "<group>"; };
 		E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientBuilder.swift; sourceTree = "<group>"; };
 		E7FC447B245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientBuilderTests.swift; sourceTree = "<group>"; };
@@ -707,7 +705,6 @@
 				E72A99E32459E385004FEAD5 /* CardDetails.swift */,
 				E7D19F612462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift */,
 				E7FC4472245B1FD100CD3675 /* SessionType.swift */,
-				E7FC4474245B218900CD3675 /* AccessCheckoutClient.swift */,
 				E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */,
 				E7FC4477245B24A400CD3675 /* AccessCheckoutClientImpl.swift */,
 			);
@@ -1323,7 +1320,6 @@
 				E77B8B9F245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift in Sources */,
 				D7D6D5F124814F5500D57D7A /* PanValidationStateHandler.swift in Sources */,
 				E72D9E5D2411424500C94D5B /* SessionsApiClient.swift in Sources */,
-				E7FC4475245B218900CD3675 /* AccessCheckoutClient.swift in Sources */,
 				E7FC447A245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift in Sources */,
 				E719B09A24647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift in Sources */,
 				D7D6D5D6247FC94900D57D7A /* CvcValidator.swift in Sources */,

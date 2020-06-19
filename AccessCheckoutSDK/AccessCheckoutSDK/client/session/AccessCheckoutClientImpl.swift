@@ -1,4 +1,4 @@
-class AccessCheckoutClientImpl: AccessCheckoutClient {
+public class AccessCheckoutClient {
     private let merchantId: String
     private let baseUrl: String
     private let cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator
