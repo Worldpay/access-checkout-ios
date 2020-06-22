@@ -1,95 +1,75 @@
 @testable import AccessCheckoutSDK
-import Cuckoo
 import XCTest
 
-class PANViewTests: XCTestCase {
-    private let visaBrand = TextFixtures.createCardBrandModel(
-        name: "visa",
-        panPattern: "^(?!^493698\\d*$)4\\d*$",
-        panValidLengths: [16, 18, 19],
-        cvcValidLength: 3)
-    private let maestroBrand = TextFixtures.createCardBrandModel(
-        name: "maestro",
-        panPattern: "^493698\\d*$",
-        panValidLengths: [16, 18, 19],
-        cvcValidLength: 3)
+class PANViewTests: ViewTestSuite {
+    private let visaBrand = TestFixtures.visaBrand()
+    private let maestroBrand = TestFixtures.maestroBrand()
     
-    let panView = PANView()
+    private let validVisaPan = TestFixtures.validVisaPan1
+    private let validVisaPanAsLongAsMaxLengthAllowed = TestFixtures.validVisaPanAsLongAsMaxLengthAllowed
+    private let visaPanThatFailsLuhnCheck = TestFixtures.visaPanThatFailsLuhnCheck
+    private let visaPanTooLong = TestFixtures.visaPanTooLong
     
     // MARK: testing what the end user can and cannot type
     
     func testCanEnterAnyTextWhenNoPresenter() {
-        XCTAssertTrue(type("abc", into: panView))
+        XCTAssertTrue(canEnterPan("abc"))
     }
     
     func testCanClearText() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
-        XCTAssertTrue(type("", into: panView))
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
+        XCTAssertTrue(canEnterPan(""))
     }
     
     func testCannotTypeNonNumericalCharacters() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
         
-        XCTAssertFalse(type("abc", into: panView))
-        XCTAssertFalse(type("+*-", into: panView))
+        XCTAssertFalse(canEnterPan("abc"))
+        XCTAssertFalse(canEnterPan("+*-"))
     }
     
     func testCanTypeValidVisaPan() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
         
-        let result = type("4111111111111111", into: panView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterPan(validVisaPan))
     }
     
     func testCanTypeVisaPanThatFailsLuhnCheck() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
         
-        let result = type("4111111111111112", into: panView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterPan(visaPanThatFailsLuhnCheck))
     }
     
     func testCanTypeVisaPanAsLongAsMaxLengthAllowed() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
         
-        let result = type("4111111111111111111", into: panView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterPan(validVisaPanAsLongAsMaxLengthAllowed))
     }
     
     func testCannotTypeVisaPanThatExceedsMaximiumLength() {
-        initialiseValidation(cardBrands: [visaBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand])
         
-        let result = type("41111111111111111111", into: panView)
-        
-        XCTAssertFalse(result)
+        XCTAssertFalse(canEnterPan(visaPanTooLong))
     }
     
     //  This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
     // to make sure that it does not prevent the user from typing a maestro PAN
     func testCanTypeStartOfMaestroPan() {
-        initialiseValidation(cardBrands: [visaBrand, maestroBrand], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
         
-        let result = type("493698123", into: panView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterPan("493698123"))
     }
     
     func testCanTypePanOfUnknownBrandAsLongAsMaxLengthAllowed() {
-        initialiseValidation(cardBrands: [], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [])
         
-        let result = type("1234567890123456789", into: panView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterPan("1234567890123456789"))
     }
     
     func testCannotTypePanOfUnknownBrandThatExceedsMaximiumLength() {
-        initialiseValidation(cardBrands: [], panView: panView)
+        _ = initialiseCardValidation(cardBrands: [])
         
-        let result = type("12345678901234567890", into: panView)
-        
-        XCTAssertFalse(result)
+        XCTAssertFalse(canEnterPan("12345678901234567890"))
     }
     
     // MARK: text feature
@@ -133,47 +113,5 @@ class PANViewTests: XCTestCase {
         panView.textField.textColor = UIColor.red
         
         XCTAssertEqual(UIColor.red, panView.textColor)
-    }
-    
-    private func type(_ text: String, into view: PANView) -> Bool {
-        let range = NSRange(location: 0, length: 0)
-        
-        return view.textField(view.textField, shouldChangeCharactersIn: range, replacementString: text)
-    }
-    
-    private func initialiseValidation(cardBrands: [CardBrandModel], panView: PANView) {
-        let expiryDateview = ExpiryDateView()
-        let cvcView = CvcView()
-        let merchantDelegate = createMerchantDelegate()
-        
-        let configurationProvider = createConfigurationProvider(with: cardBrands)
-        
-        let validationConfig = CardValidationConfig(panView: panView,
-                                                    expiryDateView: expiryDateview,
-                                                    cvcView: cvcView,
-                                                    accessBaseUrl: "http://localhost",
-                                                    validationDelegate: merchantDelegate)
-        
-        AccessCheckoutValidationInitialiser(configurationProvider).initialise(validationConfig)
-    }
-    
-    private func createConfigurationProvider(with cardBrands: [CardBrandModel]) -> CardBrandsConfigurationProvider {
-        let configurationFactory = CardBrandsConfigurationFactoryMock()
-        
-        let configurationProvider: MockCardBrandsConfigurationProvider = MockCardBrandsConfigurationProvider(configurationFactory)
-        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
-        configurationProvider.getStubbingProxy().get().thenReturn(CardBrandsConfiguration(cardBrands))
-        
-        return configurationProvider
-    }
-    
-    private func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
-        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
-        
-        return merchantDelegate
     }
 }

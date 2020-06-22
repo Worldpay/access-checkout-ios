@@ -1,101 +1,84 @@
 @testable import AccessCheckoutSDK
-import Cuckoo
 import XCTest
 
-class CvcViewTests: XCTestCase {
-    private let brandsStartingWith4AndCvc2DigitsLong = TextFixtures.createCardBrandModel(
+class CvcViewTests: ViewTestSuite {
+    private let brandsStartingWith4AndCvc2DigitsLong = TestFixtures.createCardBrandModel(
         name: "a-brand",
         panPattern: "^4\\d*$",
         panValidLengths: [16],
         cvcValidLength: 2
     )
     
-    private let cvcView = CvcView()
-    private let panView = PANView()
-    
     // MARK: testing what the end user can and cannot type
     
     func testCanEnterAnyTextWhenNoPresenter() {
-        XCTAssertTrue(type("abc", into: cvcView))
+        XCTAssertTrue(canEnterCvc("abc"))
     }
     
     func testCanClearText() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
-        XCTAssertTrue(type("", into: cvcView))
+        _ = initialiseCardValidation()
+        
+        XCTAssertTrue(canEnterCvc(""))
     }
     
     func testCannotTypeNonNumericalCharactersForUnknownBrand() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
+        _ = initialiseCardValidation()
         
-        XCTAssertFalse(type("abc", into: cvcView))
-        XCTAssertFalse(type("+*-", into: cvcView))
+        XCTAssertFalse(canEnterCvc("abc"))
+        XCTAssertFalse(canEnterCvc("+*-"))
     }
     
     func testCanTypePartialCvcForUnknownBrand() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
+        _ = initialiseCardValidation()
         
-        let result = type("12", into: cvcView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterCvc("12"))
     }
     
     func testCanTypeCvcAsLongAsMinLengthForUnknownBrand() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
+        _ = initialiseCardValidation()
         
-        let result = type("123", into: cvcView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterCvc("123"))
     }
     
     func testCanTypeCvcAsLongAsMaxLengthForUnknownBrand() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
+        _ = initialiseCardValidation()
         
-        let result = type("1234", into: cvcView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterCvc("1234"))
     }
     
     func testCannotTypeCvcThatExceedsMaximiumLengthForUnknownBrand() {
-        initialiseValidation(cardBrands: [], cvcView: cvcView, panView: panView)
+        _ = initialiseCardValidation()
         
-        let result = type("12345", into: cvcView)
-        
-        XCTAssertFalse(result)
+        XCTAssertFalse(canEnterCvc("12345"))
     }
     
     func testCannotTypeNonNumericalCharactersForABrand() {
-        initialiseValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong], cvcView: cvcView, panView: panView)
-        type("4111111", into: panView)
+        _ = initialiseCardValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong])
+        editPan(text: "4")
         
-        XCTAssertFalse(type("ab", into: cvcView))
-        XCTAssertFalse(type("+*", into: cvcView))
+        XCTAssertFalse(canEnterCvc("ab"))
+        XCTAssertFalse(canEnterCvc("+*"))
     }
     
     func testCanTypePartialCvcForABrand() {
-        initialiseValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong], cvcView: cvcView, panView: panView)
-        type("4111111", into: panView)
+        _ = initialiseCardValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong])
+        editPan(text: "4")
         
-        let result = type("1", into: cvcView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterCvc("1"))
     }
     
     func testCanTypeValidCvcForABrand() {
-        initialiseValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong], cvcView: cvcView, panView: panView)
-        type("4111111", into: panView)
+        _ = initialiseCardValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong])
+        editPan(text: "4")
         
-        let result = type("12", into: cvcView)
-        
-        XCTAssertTrue(result)
+        XCTAssertTrue(canEnterCvc("12"))
     }
     
     func testCannotTypeCvcThatExceedsMaximiumLengthForABrand() {
-        initialiseValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong], cvcView: cvcView, panView: panView)
-        type("4111111", into: panView)
+        _ = initialiseCardValidation(cardBrands: [brandsStartingWith4AndCvc2DigitsLong])
+        editPan(text: "4")
         
-        let result = type("123", into: cvcView)
-        
-        XCTAssertFalse(result)
+        XCTAssertFalse(canEnterCvc("123"))
     }
     
     // MARK: text feature
@@ -139,49 +122,5 @@ class CvcViewTests: XCTestCase {
         cvcView.textField.textColor = UIColor.red
         
         XCTAssertEqual(UIColor.red, cvcView.textColor)
-    }
-    
-    private func type(_ text: String, into view: PANView) {
-        view.textField.text = text
-        view.textFieldEditingChanged(view.textField)
-    }
-    
-    private func type(_ text: String, into view: CvcView) -> Bool {
-        let range = NSRange(location: 0, length: 0)
-        
-        return view.textField(view.textField, shouldChangeCharactersIn: range, replacementString: text)
-    }
-    
-    private func initialiseValidation(cardBrands: [CardBrandModel], cvcView: CvcView, panView: PANView) {
-        let merchantDelegate = createMerchantDelegate()
-        let configurationProvider = createConfigurationProvider(with: [brandsStartingWith4AndCvc2DigitsLong])
-        
-        let validationConfig = CardValidationConfig(panView: panView,
-                                                    expiryDateView: ExpiryDateView(),
-                                                    cvcView: cvcView,
-                                                    accessBaseUrl: "http://localhost",
-                                                    validationDelegate: merchantDelegate)
-        
-        AccessCheckoutValidationInitialiser(configurationProvider).initialise(validationConfig)
-    }
-    
-    private func createConfigurationProvider(with cardBrands: [CardBrandModel]) -> CardBrandsConfigurationProvider {
-        let configurationFactory = CardBrandsConfigurationFactoryMock()
-        
-        let configurationProvider: MockCardBrandsConfigurationProvider = MockCardBrandsConfigurationProvider(configurationFactory)
-        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
-        configurationProvider.getStubbingProxy().get().thenReturn(CardBrandsConfiguration(cardBrands))
-        
-        return configurationProvider
-    }
-    
-    private func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
-        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
-        
-        return merchantDelegate
     }
 }

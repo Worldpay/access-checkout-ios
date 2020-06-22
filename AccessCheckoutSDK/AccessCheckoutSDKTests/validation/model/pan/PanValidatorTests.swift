@@ -3,22 +3,13 @@ import Cuckoo
 import XCTest
 
 class PanValidatorTests: XCTestCase {
-    private let visaBrand = CardBrandModel(
-        name: "visa",
-        images: [],
-        panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+    private let visaBrand = TestFixtures.visaBrand()
+    private let maestroBrand = TestFixtures.maestroBrand()
     
-    let maestroBrand = CardBrandModel(
-        name: "maestro",
-        images: [],
-        panValidationRule: ValidationRule(
-            matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
-            validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
-        ),
-        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+    private let validVisaPan = TestFixtures.validVisaPan1
+    private let validVisaPanAsLongAsMaxLengthAllowed = TestFixtures.validVisaPanAsLongAsMaxLengthAllowed
+    private let visaPanTooLong = TestFixtures.visaPanTooLong
+    private let startOfVisaPan = "4111"
     
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     private var panValidator: PanValidator?
@@ -32,7 +23,7 @@ class PanValidatorTests: XCTestCase {
     func testValidateShouldReturnFalseWithCardBrandWhenKnownPanIsShorterThanValidLength() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
-        let result = panValidator!.validate(pan: "4111")
+        let result = panValidator!.validate(pan: startOfVisaPan)
         
         XCTAssertFalse(result.isValid)
         XCTAssertEqual(result.cardBrand?.name, "visa")
@@ -41,7 +32,7 @@ class PanValidatorTests: XCTestCase {
     func testValidateReturnsFalseAndNilCardBrandWhenUnknownPanIsShorterThanMinValidLength() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
-        let result = panValidator!.validate(pan: "5111")
+        let result = panValidator!.validate(pan: "1234")
         
         XCTAssertFalse(result.isValid)
         XCTAssertNil(result.cardBrand)
@@ -49,7 +40,7 @@ class PanValidatorTests: XCTestCase {
     
     func testValidateReturnsFalseWhenAMaxLengthInvalidLuhnPanIsEntered() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
-        let result = panValidator!.validate(pan: "44444444444444444444")
+        let result = panValidator!.validate(pan: "4444444444444444444")
         
         XCTAssertFalse(result.isValid)
         XCTAssertEqual(result.cardBrand?.name, "visa")
@@ -58,7 +49,7 @@ class PanValidatorTests: XCTestCase {
     func testValidateReturnsTrueWhenALuhnValidMinLengthKnownPanIsEntered() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrand: visaBrand))
         
-        let result = panValidator!.validate(pan: "4111111111111111")
+        let result = panValidator!.validate(pan: validVisaPan)
         
         XCTAssertTrue(result.isValid)
         XCTAssertEqual(result.cardBrand?.name, "visa")
@@ -99,7 +90,7 @@ class PanValidatorTests: XCTestCase {
     
     func testCanValidateAllowsPanAsLongAsMaxLengthForABrand() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
-        let panWith19Digits = "4123456789012345678"
+        let panWith19Digits = validVisaPanAsLongAsMaxLengthAllowed
         
         let result = panValidator!.canValidate(panWith19Digits)
         
@@ -108,7 +99,7 @@ class PanValidatorTests: XCTestCase {
     
     func testCanValidateDoesNotAllowPanLongerThanMaxLengthForABrand() {
         configurationProvider.getStubbingProxy().get().thenReturn(createConfiguration(withBrands: [visaBrand]))
-        let panWith20Digits = "41234567890123456789"
+        let panWith20Digits = visaPanTooLong
         
         let result = panValidator!.canValidate(panWith20Digits)
         

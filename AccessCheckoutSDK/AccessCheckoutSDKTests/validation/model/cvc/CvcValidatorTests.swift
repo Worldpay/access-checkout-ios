@@ -94,7 +94,7 @@ class CvcValidatorTests: XCTestCase {
     }
 
     private func createCardBrand(cvcLength: Int) -> CardBrandModel {
-        return TextFixtures.createCardBrandModel(
+        return TestFixtures.createCardBrandModel(
             name: "",
             panPattern: "",
             panValidLengths: [],
