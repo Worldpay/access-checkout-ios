@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-public class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
+class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
     var createSessionCalled: Bool = false
     var sessionToReturn: String?
     var error: AccessCheckoutError?
@@ -15,7 +15,7 @@ public class VerifiedTokensApiClientMock: VerifiedTokensApiClient {
         super.init()
     }
     
-    public override func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
+    override func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
                                        completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         createSessionCalled = true
         

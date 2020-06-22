@@ -2,7 +2,7 @@
 import Mockingjay
 import XCTest
 
-class AccessCheckoutClientImplTests: XCTestCase {
+class AccessCheckoutClientTests: XCTestCase {
     let baseUrl = "http://localhost"
     let verifiedTokensServicePath = "/verifiedTokens"
     let verifiedTokensServiceSessionsPath = "/verifiedTokens/sessions"
