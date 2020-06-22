@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift */; };
 		1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
-		1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */; };
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
@@ -204,7 +203,6 @@
 		1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKPactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKtoVTPactTests.swift; sourceTree = "<group>"; };
 		1BCBFEB922B8EA3C00A65FAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -756,7 +754,6 @@
 		E73A20182459D41D00D5EB4C /* verifiedTokens */ = {
 			isa = PBXGroup;
 			children = (
-				1BCBFEC022B8EB4400A65FAA /* AccessCheckoutClientTests.swift */,
 				E719B0A1246483FF0037DED4 /* VerifiedTokensApiClientTests.swift */,
 				E719B08B24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift */,
 				E719B09B24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift */,
@@ -1456,7 +1453,6 @@
 				E719B0AA2464A3B30037DED4 /* VerifiedTokensApiClientMock.swift in Sources */,
 				E719B09E246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
-				1BCBFEC422B8EB4400A65FAA /* AccessCheckoutClientTests.swift in Sources */,
 				D7C6EE232486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift in Sources */,
 				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
 				E7633D2D249D1F4800FFE190 /* AccessCheckoutErrorTests.swift in Sources */,

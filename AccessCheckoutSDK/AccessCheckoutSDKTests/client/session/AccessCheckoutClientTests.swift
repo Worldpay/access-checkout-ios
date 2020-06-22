@@ -203,6 +203,45 @@ class AccessCheckoutClientTests: XCTestCase {
         wait(for: [expectationToFulfill], timeout: 1)
     }
     
+    func testCanSendBackAnErrorWithValidationErrorDetails() throws {
+        let validationError1 = StubUtils.createApiValidationError(errorName: "validation error 1", message: "error message 1", jsonPath: "field 1")
+        let validationError2 = StubUtils.createApiValidationError(errorName: "validation error 2", message: "error message 2", jsonPath: "field 2")
+        let expectedError = StubUtils.createApiError(errorName: "an error", message: "an error message", validationErrors: [validationError1, validationError2])
+        
+        let expectationToFulfill = expectation(description: "Session retrieved")
+        let client = createAccessCheckoutClient()
+        let cardDetails = validCardDetails()
+        
+        stubServicesRootDiscoverySuccess()
+        stubVerifiedTokensEndPointsDiscoverySuccess()
+        stubVerifiedTokensSessionFailure(error: expectedError)
+        stubSessionsEndPointsDiscoverySuccess()
+        stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
+        
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+            switch result {
+                case .success:
+                    XCTFail("Should have received an error but received sessions")
+                case .failure(let error):
+                    XCTAssertEqual("an error", error.errorName)
+                    XCTAssertEqual("an error message", error.message)
+                    
+                    XCTAssertEqual(2, error.validationErrors.count)
+                    
+                    XCTAssertEqual("validation error 1", error.validationErrors[0].errorName)
+                    XCTAssertEqual("error message 1", error.validationErrors[0].message)
+                    XCTAssertEqual("field 1", error.validationErrors[0].jsonPath)
+                
+                    XCTAssertEqual("validation error 2", error.validationErrors[1].errorName)
+                    XCTAssertEqual("error message 2", error.validationErrors[1].message)
+                    XCTAssertEqual("field 2", error.validationErrors[1].jsonPath)
+            }
+            expectationToFulfill.fulfill()
+        }
+        
+        wait(for: [expectationToFulfill], timeout: 1)
+    }
+    
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() throws {
         let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
         let client = createAccessCheckoutClient()
@@ -241,7 +280,7 @@ class AccessCheckoutClientTests: XCTestCase {
     private func stubServicesRootDiscoverySuccess() {
         stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
-    
+
     private func stubVerifiedTokensEndPointsDiscoverySuccess() {
         stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
