@@ -242,7 +242,7 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails(message: "Expiry Date is mandatory to retrieve a Verified Tokens session")
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected expiry date to be provided but was not")
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvc("123")
@@ -254,7 +254,7 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails(message: "Cvc is mandatory to retrieve a Payments Cvc session")
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().build()
         

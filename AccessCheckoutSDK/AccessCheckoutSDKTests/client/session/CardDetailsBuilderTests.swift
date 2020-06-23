@@ -29,7 +29,7 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testThrowsErrorWhenExpiryDateIsInIncorrectFormat() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.invalidExpiryDateFormat(message: "Expiry date format is invalid. Formats supported are MM/YY or MMYY")
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected expiry date in format MM/YY or MMYY but found 102023")
         let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
             .expiryDate("102023")
             .cvc("123")

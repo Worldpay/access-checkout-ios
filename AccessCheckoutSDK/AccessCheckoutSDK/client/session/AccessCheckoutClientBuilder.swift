@@ -17,11 +17,11 @@ public class AccessCheckoutClientBuilder {
     
     public func build() throws -> AccessCheckoutClient {
         guard let merchantId = self.merchantId else {
-            throw AccessCheckoutIllegalArgumentError.missingMerchantId
+            throw AccessCheckoutIllegalArgumentError.missingMerchantId()
         }
         
         guard let accessBaseUrl = self.accessBaseUrl else {
-            throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl
+            throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl()
         }
         
         let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()

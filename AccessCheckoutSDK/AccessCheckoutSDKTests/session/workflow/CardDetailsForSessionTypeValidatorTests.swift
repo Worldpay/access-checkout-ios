@@ -5,7 +5,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     let validator = CardDetailsForSessionTypeValidator()
 
     func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_PanIsMandatory
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected pan to be provided but was not")
         let sessionType = SessionType.verifiedTokens
         let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
             .cvc("123")
@@ -17,7 +17,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     }
 
     func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_ExpiryDateIsMandatory
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected expiry date to be provided but was not")
         let sessionType = SessionType.verifiedTokens
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvc("123")
@@ -29,7 +29,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     }
 
     func testFailsToRetrieveSessionIfCvcIsNotProvided() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails_VTSession_CvcIsMandatory
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
         let sessionType = SessionType.verifiedTokens
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .expiryDate("12/20")
@@ -41,7 +41,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     }
 
     func testThrowsExceptionForCvcSessionTypeWhenCvcIsNotProvided() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError.incompleteCardDetails_CvcSession_CvcIsMandatory
+        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
         let sessionType = SessionType.paymentsCvc
         let cardDetails = try CardDetailsBuilder().build()
 

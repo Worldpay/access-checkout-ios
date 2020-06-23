@@ -39,7 +39,7 @@ public final class CardDetailsBuilder {
     
     public func build() throws -> CardDetails {
         if let expiryDateForTest = expiryDate, !expiryDateForTest.isEmpty, !isValidExpiryDate(expiryDateForTest) {
-            throw AccessCheckoutIllegalArgumentError.invalidExpiryDateFormat_message
+            throw AccessCheckoutIllegalArgumentError.invalidExpiryDateFormat(expiryDate: expiryDateForTest)
         }
         
         return CardDetails(pan: pan,
