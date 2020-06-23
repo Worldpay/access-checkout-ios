@@ -6,7 +6,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
     
-    let panView = PANView()
+    let panView = PanView()
     let expiryDateView = ExpiryDateView()
     let cvcView = CvcView()
     let baseUrl = "some-url"

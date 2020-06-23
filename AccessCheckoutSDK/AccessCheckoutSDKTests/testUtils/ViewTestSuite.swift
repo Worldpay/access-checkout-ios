@@ -3,7 +3,7 @@ import Cuckoo
 import XCTest
 
 class ViewTestSuite: XCTestCase {
-    let panView = PANView()
+    let panView = PanView()
     let expiryDateView = ExpiryDateView()
     let cvcView = CvcView()
     
@@ -15,7 +15,7 @@ class ViewTestSuite: XCTestCase {
         return initialiseCardValidation(cardBrands: [TestFixtures.visaBrand(), TestFixtures.maestroBrand()], panView, expiryDateView, cvcView)
     }
     
-    func initialiseCardValidation(cardBrands: [CardBrandModel], _ panView: PANView, _ expiryDateView: ExpiryDateView, _ cvcView: CvcView) -> MockAccessCheckoutCardValidationDelegate {
+    func initialiseCardValidation(cardBrands: [CardBrandModel], _ panView: PanView, _ expiryDateView: ExpiryDateView, _ cvcView: CvcView) -> MockAccessCheckoutCardValidationDelegate {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()

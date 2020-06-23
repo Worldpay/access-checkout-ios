@@ -1,11 +1,11 @@
 public struct CardValidationConfig: ValidationConfig {
-    public let panView: PANView
+    public let panView: PanView
     public let expiryDateView: ExpiryDateView
     public let cvcView: CvcView
     public let accessBaseUrl: String
     public let validationDelegate: AccessCheckoutCardValidationDelegate
 
-    public init(panView: PANView,
+    public init(panView: PanView,
                 expiryDateView: ExpiryDateView,
                 cvcView: CvcView,
                 accessBaseUrl: String,

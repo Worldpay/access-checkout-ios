@@ -2,7 +2,7 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panView: PANView!
+    @IBOutlet weak var panView: PanView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
     @IBOutlet weak var cvcView: CvcView!
     @IBOutlet weak var submitButton: UIButton!

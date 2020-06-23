@@ -1,7 +1,7 @@
 import UIKit
 
 /// A view representing a card's Primary Account Number
-@IBDesignable public class PANView: UIView {
+@IBDesignable public class PanView: UIView {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak public var imageView: UIImageView!
     
@@ -10,7 +10,7 @@ import UIKit
     
     private var textChangeHandler = TextChangeHandler()
     
-    /// Initialize PANView from storyboard
+    /// Initialize PanView from storyboard
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViewFromNib()
@@ -47,7 +47,7 @@ import UIKit
     }
 }
 
-extension PANView: AccessCheckoutTextView {
+extension PanView: AccessCheckoutTextView {
     /// The card number represented by the view
     public var text: String? {
         guard let text = textField.text else {
@@ -86,7 +86,7 @@ extension PANView: AccessCheckoutTextView {
     }
 }
 
-extension PANView: UITextFieldDelegate {
+extension PanView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         guard let pan = textField.text else {
             return

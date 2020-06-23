@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class PANViewTests: ViewTestSuite {
+class PanViewTests: ViewTestSuite {
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
     
