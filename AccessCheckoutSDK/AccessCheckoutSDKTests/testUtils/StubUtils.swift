@@ -11,12 +11,11 @@ class StubUtils {
         XCTestCase().stub(http(.get, uri: url), toResponse(responseAsString: responseAsString, responseCode: responseCode))
     }
     
-    static func createApiError(errorName: String, message: String) -> AccessCheckoutError {
+    static func createError(errorName: String, message: String) -> AccessCheckoutError {
         let json = """
         {
             "errorName": "\(errorName)",
-            "message": "\(message)",
-            "jsonPath": ""
+            "message": "\(message)"
         }
         """
         

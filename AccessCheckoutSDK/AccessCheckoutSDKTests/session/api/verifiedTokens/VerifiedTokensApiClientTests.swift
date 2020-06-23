@@ -49,7 +49,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
     }
     
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
-        let expectedError = AccessCheckoutError(errorName: "some error", message: "some message")
+        let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
         mockDiscovery.willComplete(with: expectedError)
         let mockRestClient = RestClientMock(replyWith: successResponse(withSession: expectedSession))
         
@@ -69,7 +69,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
     }
     
     func testReturnsSessionNotFound_whenExpectedSessionIsNotInResponse() {
-        let expectedError = AccessCheckoutError(errorName: "sessionLinkNotFound", message: "Failed to find link \(ApiLinks.sessions.result) in response")
+        let expectedError = StubUtils.createError(errorName: "sessionLinkNotFound", message: "Failed to find link \(ApiLinks.sessions.result) in response")
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
         
@@ -90,7 +90,7 @@ class VerifiedTokensApiClientTests: XCTestCase {
     
     func testReturnsServiceError_whenServiceErrorsOut() {
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
-        let expectedError = AccessCheckoutError(errorName: "some error", message: "some message")
+        let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
         let mockRestClient = RestClientMock<String>(errorWith: expectedError)
         
         let client = VerifiedTokensApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)

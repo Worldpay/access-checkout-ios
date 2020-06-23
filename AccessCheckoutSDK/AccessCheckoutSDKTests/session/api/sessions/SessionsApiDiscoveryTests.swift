@@ -50,7 +50,7 @@ class SessionsApiDiscoveryTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         mockDiscoveryService.willComplete(with: expectedError)
         mockDiscoveryEndPoint.willComplete(with: "http://localhost/an-end-point")
         
@@ -83,7 +83,7 @@ class SessionsApiDiscoveryTests: XCTestCase {
         mockDiscoveryService.willComplete(with: "http://localhost/a-service")
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         mockDiscoveryEndPoint.willComplete(with: expectedError)
         
         let discovery = SessionsApiDiscovery(discoveryFactory: discoveryFactory)

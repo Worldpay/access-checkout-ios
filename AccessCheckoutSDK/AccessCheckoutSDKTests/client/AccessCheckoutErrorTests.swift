@@ -5,7 +5,8 @@ import XCTest
 class AccessCheckoutErrorTests: XCTestCase {
     func testSuccessfullyDecodesAnAccessCheckoutError() throws {
         let expectedErrorName = "root error name"
-        let expectedMessage = "root error message"
+        let message = "root error message"
+        let expectedMessage = "\(expectedErrorName) : \(message)"
         
         let expectedValidationError1ErrorName = "validation error 1"
         let expectedValidationError1Message = "validation error 1 message"
@@ -18,7 +19,7 @@ class AccessCheckoutErrorTests: XCTestCase {
         let errorAsJsonString = """
         {
             "errorName": "\(expectedErrorName)",
-            "message": "\(expectedMessage)",
+            "message": "\(message)",
             "validationErrors": [
                 {
                     "errorName": "\(expectedValidationError1ErrorName)",
@@ -36,7 +37,6 @@ class AccessCheckoutErrorTests: XCTestCase {
         
         let error = try decode(errorAsJsonString, into: AccessCheckoutError.self)
         
-        XCTAssertEqual(expectedErrorName, error.errorName)
         XCTAssertEqual(expectedMessage, error.message)
         
         XCTAssertEqual(2, error.validationErrors.count)

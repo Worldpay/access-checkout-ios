@@ -60,7 +60,7 @@ class CardFlowViewController: UIViewController {
                 case .failure(let error):
                     let title = error.localizedDescription
                     var accessCheckoutClientValidationErrors: [AccessCheckoutError.ValidationError]?
-                    if error.errorName == "bodyDoesNotMatchSchema" {
+                    if error.message.contains("bodyDoesNotMatchSchema") {
                         accessCheckoutClientValidationErrors = error.validationErrors
                     }
                     

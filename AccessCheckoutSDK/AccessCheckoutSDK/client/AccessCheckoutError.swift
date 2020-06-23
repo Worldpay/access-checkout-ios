@@ -2,36 +2,30 @@ import Foundation
 
 /// Describes an Access Checkout error
 public struct AccessCheckoutError: Error, Equatable {
-    public let errorName: String
+    let errorName: String
     public let message: String
     public let validationErrors: [ValidationError]
 
-    init(errorName: String, message: String, validationErrors:[ValidationError]) {
+    private init(errorName: String, details: String) {
         self.errorName = errorName
-        self.message = message
-        self.validationErrors = validationErrors
-    }
-
-    init(errorName: String, message: String) {
-        self.errorName = errorName
-        self.message = message
+        self.message = "\(errorName) : \(details)"
         self.validationErrors = []
     }
 
     static func sessionLinkNotFound(linkName: String) -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "sessionLinkNotFound", message: "Failed to find link \(linkName) in response")
+        return AccessCheckoutError(errorName: "sessionLinkNotFound", details: "Failed to find link \(linkName) in response")
     }
 
     static func discoveryLinkNotFound(linkName: String) -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "discoveryLinkNotFound", message: "Failed to find link \(linkName) in response")
+        return AccessCheckoutError(errorName: "discoveryLinkNotFound", details: "Failed to find link \(linkName) in response")
     }
 
     static func responseDecodingFailed() -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
+        return AccessCheckoutError(errorName: "responseDecodingFailed", details: "Failed to decode response data")
     }
 
     static func unexpectedApiError(message: String) -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "unexpectedApiError", message: message)
+        return AccessCheckoutError(errorName: "unexpectedApiError", details: message)
     }
 
     public struct ValidationError: Error, Equatable {
@@ -51,8 +45,11 @@ extension AccessCheckoutError: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
 
-        self.errorName = try container.decodeIfPresent(String.self, forKey: .errorName) ?? ""
-        self.message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
+        let errorName = try container.decodeIfPresent(String.self, forKey: .errorName) ?? ""
+        let message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
+
+        self.errorName = errorName
+        self.message = "\(errorName) : \(message)"
         self.validationErrors = try container.decodeIfPresent([ValidationError].self, forKey: .validationErrors) ?? [ValidationError]()
     }
 }
@@ -62,7 +59,7 @@ extension AccessCheckoutError: LocalizedError {
         let validationErrorsDescription = validationErrors.map { $0.localizedDescription }
             .joined(separator: "\n")
 
-        return "Error: \(errorName) Message: \(message) \n Validation: \(validationErrorsDescription)"
+        return "Message: \(message)\n Validation: \(validationErrorsDescription)"
     }
 }
 

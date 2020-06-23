@@ -50,8 +50,19 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
     
     func testSuccessfullyDisplaysErrorFromService() {
         let expectedTitle = "Error"
-        let validationError = AccessCheckoutError.ValidationError(errorName: "stringFailedRegexCheck", message: "Some validation error message", jsonPath: "$.cvv")
-        let error = AccessCheckoutError(errorName: "bodyDoesNotMatchSchema", message: "Sessions paymentsCvc error", validationErrors: [validationError])
+        let jsonError = """
+        {
+            "errorName": "bodyDoesNotMatchSchema",
+            "message": "Sessions paymentsCvc error",
+            "validationErrors": [{
+                "errorName": "stringFailedRegexCheck",
+                "message": "Some validation error message",
+                "jsonPath": "$.cvv"
+            }]
+        }
+        """
+        
+        let error = try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonError.data(using: .utf8)!)
         let expectedMessage = formatStringAsStaticTextLabel(error.localizedDescription)
         
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")

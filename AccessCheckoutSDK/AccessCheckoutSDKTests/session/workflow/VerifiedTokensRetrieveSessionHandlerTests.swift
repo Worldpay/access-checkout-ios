@@ -38,7 +38,7 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
 
     func testReturnsErrorWhenApiCallErrorsOut() throws {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let apiClient = VerifiedTokensApiClientMock(error: expectedError)
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = try CardDetailsBuilder().pan("pan")

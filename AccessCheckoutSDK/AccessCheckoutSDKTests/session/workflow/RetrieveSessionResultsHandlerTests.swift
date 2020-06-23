@@ -27,7 +27,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
     
     func testCompletesWithAnErrorWhenOneOfTheResultsIsAFailure() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let verifiedTokensSession: Result<String, AccessCheckoutError> = .success("session verified tokens")
         let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
@@ -49,8 +49,8 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
     
     func testCompletesWithFirstErrorWhenAllResultsAreAFailure() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
-        let otherError = AccessCheckoutError(errorName: "another error", message: "another message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
+        let otherError = StubUtils.createError(errorName: "another error", message: "another message")
         let verifiedTokensSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(otherError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in

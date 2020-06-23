@@ -48,7 +48,7 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
     
     func testFailsToDiscoverIfServiceIsNotDiscoveredSuccessfully() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
         mockDiscoveryService.willComplete(with: expectedError)
@@ -78,7 +78,7 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
     
     func testFailsToDiscoverIfEndpointIsNotDiscoveredSuccessfully() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
         mockDiscoveryService.willComplete(with: "http://localhost/a-service")

@@ -37,7 +37,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenLinkNotFoundInResponse() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "discoveryLinkNotFound", message: "Failed to find link a:link in response")
+        let expectedError = StubUtils.createError(errorName: "discoveryLinkNotFound", message: "Failed to find link a:link in response")
         let jsonResponse = """
         {
             "_links": {
@@ -65,7 +65,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenFailsToDeserialiseResponse() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
         let jsonResponse = "some-content"
         StubUtils.stubSuccessfulGetResponse(url: "http://localhost", responseAsString: jsonResponse)
         let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
@@ -85,7 +85,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenResponseIsAnError() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
         StubUtils.stubGetResponse(url: "http://localhost", responseAsString: "An error", responseCode: 400)
         let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
         

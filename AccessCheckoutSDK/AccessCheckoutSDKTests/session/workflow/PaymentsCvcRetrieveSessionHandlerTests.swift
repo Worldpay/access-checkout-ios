@@ -36,7 +36,7 @@ class PaymentsCvcRetrieveSessionHandlerTests: XCTestCase {
 
     func testReturnsErrorWhenApiCallErrorsOut() throws {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError(errorName: "an error", message: "a message")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let apiClient = SessionsApiClientMock(error: expectedError)
         let sessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: apiClient)
         let cardDetails = try CardDetailsBuilder().cvc("123")

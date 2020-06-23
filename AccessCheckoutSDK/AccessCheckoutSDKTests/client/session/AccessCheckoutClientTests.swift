@@ -82,7 +82,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -107,7 +107,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError = StubUtils.createApiError(errorName: "unexpectedApiError", message: "Could not connect to the server.")
+        let expectedError = StubUtils.createError(errorName: "unexpectedApiError", message: "Could not connect to the server.")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -132,7 +132,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
@@ -157,7 +157,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointsDiscoverySuccess()
@@ -182,7 +182,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectationToFulfill = expectation(description: "Session retrieved")
         let client = createAccessCheckoutClient()
         let cardDetails = validCardDetails()
-        let expectedError = StubUtils.createApiError(errorName: "unknown", message: "an error")
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
         
         stubServicesRootDiscoverySuccess()
         stubVerifiedTokensEndPointDiscoveryFailure(error: expectedError)
@@ -223,15 +223,14 @@ class AccessCheckoutClientTests: XCTestCase {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
                 case .failure(let error):
-                    XCTAssertEqual("an error", error.errorName)
-                    XCTAssertEqual("an error message", error.message)
+                    XCTAssertEqual("an error : an error message", error.message)
                     
                     XCTAssertEqual(2, error.validationErrors.count)
                     
                     XCTAssertEqual("validation error 1", error.validationErrors[0].errorName)
                     XCTAssertEqual("error message 1", error.validationErrors[0].message)
                     XCTAssertEqual("field 1", error.validationErrors[0].jsonPath)
-                
+                    
                     XCTAssertEqual("validation error 2", error.validationErrors[1].errorName)
                     XCTAssertEqual("error message 2", error.validationErrors[1].message)
                     XCTAssertEqual("field 2", error.validationErrors[1].jsonPath)
@@ -280,7 +279,7 @@ class AccessCheckoutClientTests: XCTestCase {
     private func stubServicesRootDiscoverySuccess() {
         stub(http(.get, uri: baseUrl), successfulDiscoveryResponse(baseUrl: baseUrl))
     }
-
+    
     private func stubVerifiedTokensEndPointsDiscoverySuccess() {
         stub(http(.get, uri: "\(baseUrl)\(verifiedTokensServicePath)"), successfulDiscoveryResponse(baseUrl: baseUrl))
     }

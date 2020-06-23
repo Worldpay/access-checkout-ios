@@ -4,8 +4,10 @@ extension AccessCheckoutError: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
 
-        try container.encode(errorName, forKey: .errorName)
-        try container.encode(message, forKey: .message)
+        let splitMessage = self.message.components(separatedBy: " : ")
+
+        try container.encode(splitMessage[0], forKey: .errorName)
+        try container.encode(splitMessage[1], forKey: .message)
         try container.encode(validationErrors, forKey: .validationErrors)
     }
 }
