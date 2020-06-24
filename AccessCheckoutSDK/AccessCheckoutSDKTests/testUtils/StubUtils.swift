@@ -23,7 +23,7 @@ class StubUtils {
         return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
     }
     
-    static func createApiValidationError(errorName: String, message: String, jsonPath: String) -> AccessCheckoutError.ValidationError {
+    static func createApiValidationError(errorName: String, message: String, jsonPath: String) -> AccessCheckoutError.AccessCheckoutValidationError {
         let json = """
         {
             "errorName": "\(errorName)",
@@ -33,10 +33,10 @@ class StubUtils {
         """
         
         let jsonAsData = json.data(using: .utf8)!
-        return try! JSONDecoder().decode(AccessCheckoutError.ValidationError.self, from: jsonAsData)
+        return try! JSONDecoder().decode(AccessCheckoutError.AccessCheckoutValidationError.self, from: jsonAsData)
     }
     
-    static func createApiError(errorName: String, message: String, validationErrors: [AccessCheckoutError.ValidationError]) -> AccessCheckoutError {
+    static func createApiError(errorName: String, message: String, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]) -> AccessCheckoutError {
         var validationErrorsJson = [String]()
         
         for error in validationErrors {

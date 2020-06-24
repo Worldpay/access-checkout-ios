@@ -4,7 +4,7 @@ import Foundation
 public struct AccessCheckoutError: Error, Equatable {
     let errorName: String
     public let message: String
-    public let validationErrors: [ValidationError]
+    public let validationErrors: [AccessCheckoutValidationError]
 
     private init(errorName: String, details: String) {
         self.errorName = errorName
@@ -28,7 +28,7 @@ public struct AccessCheckoutError: Error, Equatable {
         return AccessCheckoutError(errorName: "unexpectedApiError", details: message)
     }
 
-    public struct ValidationError: Error, Equatable {
+    public struct AccessCheckoutValidationError: Error, Equatable {
         public let errorName: String
         public let message: String
         public let jsonPath: String
@@ -50,7 +50,7 @@ extension AccessCheckoutError: Decodable {
 
         self.errorName = errorName
         self.message = "\(errorName) : \(message)"
-        self.validationErrors = try container.decodeIfPresent([ValidationError].self, forKey: .validationErrors) ?? [ValidationError]()
+        self.validationErrors = try container.decodeIfPresent([AccessCheckoutValidationError].self, forKey: .validationErrors) ?? [AccessCheckoutValidationError]()
     }
 }
 
@@ -63,7 +63,7 @@ extension AccessCheckoutError: LocalizedError {
     }
 }
 
-extension AccessCheckoutError.ValidationError: Decodable {
+extension AccessCheckoutError.AccessCheckoutValidationError: Decodable {
     enum Key: CodingKey {
         case errorName
         case message
@@ -79,7 +79,7 @@ extension AccessCheckoutError.ValidationError: Decodable {
     }
 }
 
-extension AccessCheckoutError.ValidationError: LocalizedError {
+extension AccessCheckoutError.AccessCheckoutValidationError: LocalizedError {
     public var errorDescription: String? {
         return "Error: \(errorName) Message: \(message) JsonPath: \(jsonPath)"
     }
