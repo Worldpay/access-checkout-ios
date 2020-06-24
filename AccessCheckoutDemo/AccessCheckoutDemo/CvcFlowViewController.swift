@@ -61,7 +61,7 @@ class CvcFlowViewController: UIViewController {
     }
     
     private func extractFieldThatCausedError(from error: AccessCheckoutError) -> String? {
-        var validationErrors = [AccessCheckoutError.ValidationError]()
+        var validationErrors = [AccessCheckoutError.AccessCheckoutValidationError]()
         if error.message.contains("bodyDoesNotMatchSchema") {
             validationErrors += error.validationErrors
         }

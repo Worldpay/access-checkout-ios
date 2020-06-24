@@ -59,7 +59,7 @@ class CardFlowViewController: UIViewController {
                     })
                 case .failure(let error):
                     let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.ValidationError]?
+                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
                     if error.message.contains("bodyDoesNotMatchSchema") {
                         accessCheckoutClientValidationErrors = error.validationErrors
                     }
@@ -72,7 +72,7 @@ class CardFlowViewController: UIViewController {
         }
     }
     
-    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.ValidationError]?) {
+    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
             panView.clear()
             expiryDateView.clear()
