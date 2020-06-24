@@ -1,87 +1,77 @@
 @testable import AccessCheckoutSDK
-import Cuckoo
 import XCTest
 
-class ExpiryDateViewTests: XCTestCase {
-    private let visaBrand = CardBrandModel(
-        name: "visa",
-        images: [],
-        panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
-    
-    let expiryDateView = ExpiryDateView()
-    
+class ExpiryDateViewTests: ViewTestSuite {
     // MARK: tests for the text formatting
     
     func testShouldAppendForwardSlashAfterMonthisEntered() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("02/", typeAndGetText("02", into: expiryDateView))
+        XCTAssertEqual("02/", editExpiryDateAndGetResultingText("02"))
     }
     
     func testShouldBeAbleToEditMonthIndependentlyWithoutReformatting() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("01/29", typeAndGetText("01/29", into: expiryDateView))
-        XCTAssertEqual("0/29", typeAndGetText("0/29", into: expiryDateView))
-        XCTAssertEqual("/29", typeAndGetText("/29", into: expiryDateView))
-        XCTAssertEqual("1/29", typeAndGetText("1/29", into: expiryDateView))
+        XCTAssertEqual("01/29", editExpiryDateAndGetResultingText("01/29"))
+        XCTAssertEqual("0/29", editExpiryDateAndGetResultingText("0/29"))
+        XCTAssertEqual("/29", editExpiryDateAndGetResultingText("/29"))
+        XCTAssertEqual("1/29", editExpiryDateAndGetResultingText("1/29"))
     }
     
     func testShouldReformatPastedNewDateOverwritingAnExistingOne() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("01/19", typeAndGetText("01/19", into: expiryDateView))
-        XCTAssertEqual("12/99", typeAndGetText("1299", into: expiryDateView))
-        XCTAssertEqual("12/98", typeAndGetText("1298", into: expiryDateView))
-        XCTAssertEqual("12/98", typeAndGetText("12/98", into: expiryDateView))
-        XCTAssertEqual("12/", typeAndGetText("12", into: expiryDateView))
-        XCTAssertEqual("12", typeAndGetText("12", into: expiryDateView))
+        XCTAssertEqual("01/19", editExpiryDateAndGetResultingText("01/19"))
+        XCTAssertEqual("12/99", editExpiryDateAndGetResultingText("1299"))
+        XCTAssertEqual("12/98", editExpiryDateAndGetResultingText("1298"))
+        XCTAssertEqual("12/98", editExpiryDateAndGetResultingText("12/98"))
+        XCTAssertEqual("12/", editExpiryDateAndGetResultingText("12"))
+        XCTAssertEqual("12", editExpiryDateAndGetResultingText("12"))
     }
     
     func testShouldBeAbleToDeleteCharactersToEmptyFromValidExpiryDate() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("12/99", typeAndGetText("12/99", into: expiryDateView))
-        XCTAssertEqual("12/9", typeAndGetText("12/9", into: expiryDateView))
-        XCTAssertEqual("12/", typeAndGetText("12/", into: expiryDateView))
-        XCTAssertEqual("12", typeAndGetText("12", into: expiryDateView))
-        XCTAssertEqual("1", typeAndGetText("1", into: expiryDateView))
-        XCTAssertEqual("", typeAndGetText("", into: expiryDateView))
+        XCTAssertEqual("12/99", editExpiryDateAndGetResultingText("12/99"))
+        XCTAssertEqual("12/9", editExpiryDateAndGetResultingText("12/9"))
+        XCTAssertEqual("12/", editExpiryDateAndGetResultingText("12/"))
+        XCTAssertEqual("12", editExpiryDateAndGetResultingText("12"))
+        XCTAssertEqual("1", editExpiryDateAndGetResultingText("1"))
+        XCTAssertEqual("", editExpiryDateAndGetResultingText(""))
     }
     
     func testShouldBeAbleToDeleteCharactersToEmptyFromInvalidExpiryDate() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("13/99", typeAndGetText("13/99", into: expiryDateView))
-        XCTAssertEqual("13/9", typeAndGetText("13/9", into: expiryDateView))
-        XCTAssertEqual("13/", typeAndGetText("13/", into: expiryDateView))
-        XCTAssertEqual("13", typeAndGetText("13", into: expiryDateView))
-        XCTAssertEqual("1", typeAndGetText("1", into: expiryDateView))
-        XCTAssertEqual("", typeAndGetText("", into: expiryDateView))
+        XCTAssertEqual("13/99", editExpiryDateAndGetResultingText("13/99"))
+        XCTAssertEqual("13/9", editExpiryDateAndGetResultingText("13/9"))
+        XCTAssertEqual("13/", editExpiryDateAndGetResultingText("13/"))
+        XCTAssertEqual("13", editExpiryDateAndGetResultingText("13"))
+        XCTAssertEqual("1", editExpiryDateAndGetResultingText("1"))
+        XCTAssertEqual("", editExpiryDateAndGetResultingText(""))
     }
     
     func testShouldNotReformatPastedValueWhenPastedValueIsSameAsCurrentValue() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("12/", typeAndGetText("12/", into: expiryDateView))
-        XCTAssertEqual("12", typeAndGetText("12", into: expiryDateView))
+        XCTAssertEqual("12/", editExpiryDateAndGetResultingText("12/"))
+        XCTAssertEqual("12", editExpiryDateAndGetResultingText("12"))
     }
     
     func testShouldBeAbleToAddCharactersToComplete() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("", typeAndGetText("", into: expiryDateView))
-        XCTAssertEqual("1", typeAndGetText("1", into: expiryDateView))
-        XCTAssertEqual("12/", typeAndGetText("12", into: expiryDateView))
-        XCTAssertEqual("12/", typeAndGetText("12/", into: expiryDateView))
-        XCTAssertEqual("12/9", typeAndGetText("12/9", into: expiryDateView))
-        XCTAssertEqual("12/99", typeAndGetText("12/99", into: expiryDateView))
+        XCTAssertEqual("", editExpiryDateAndGetResultingText(""))
+        XCTAssertEqual("1", editExpiryDateAndGetResultingText("1"))
+        XCTAssertEqual("12/", editExpiryDateAndGetResultingText("12"))
+        XCTAssertEqual("12/", editExpiryDateAndGetResultingText("12/"))
+        XCTAssertEqual("12/9", editExpiryDateAndGetResultingText("12/9"))
+        XCTAssertEqual("12/99", editExpiryDateAndGetResultingText("12/99"))
     }
     
     func testShouldFormatSingleDigitsCorrectly_Overwrite() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
         let testDictionary = ["1": "1",
                               "2": "02/",
@@ -94,12 +84,12 @@ class ExpiryDateViewTests: XCTestCase {
                               "9": "09/"]
         
         for (key, value) in testDictionary {
-            XCTAssertEqual(value, typeAndGetText(key, into: expiryDateView))
+            XCTAssertEqual(value, editExpiryDateAndGetResultingText(key))
         }
     }
     
     func testShouldFormatSingleDigitsCorrectly_NewlyEntered() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
         let testDictionary = ["1": "1",
                               "2": "02/",
@@ -112,20 +102,20 @@ class ExpiryDateViewTests: XCTestCase {
                               "9": "09/"]
         
         for (key, value) in testDictionary {
-            _ = typeAndGetText("", into: expiryDateView)
-            XCTAssertEqual(value, typeAndGetText(key, into: expiryDateView))
+            _ = editExpiryDateAndGetResultingText("")
+            XCTAssertEqual(value, editExpiryDateAndGetResultingText(key))
         }
     }
     
     func testShouldReformatWhenMonthValueChangesDespiteTheSeparatorBeingDeleted() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertEqual("02/", typeAndGetText("02/", into: expiryDateView))
-        XCTAssertEqual("03/", typeAndGetText("03", into: expiryDateView))
+        XCTAssertEqual("02/", editExpiryDateAndGetResultingText("02/"))
+        XCTAssertEqual("03/", editExpiryDateAndGetResultingText("03"))
     }
     
     func testShouldFormatDoubleDigitsCorrectly() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
         let testDictionary = ["10": "10/",
                               "11": "11/",
@@ -135,13 +125,13 @@ class ExpiryDateViewTests: XCTestCase {
                               "24": "02/4"]
         
         for (key, value) in testDictionary {
-            _ = typeAndGetText("", into: expiryDateView)
-            XCTAssertEqual(value, typeAndGetText(key, into: expiryDateView))
+            _ = editExpiryDateAndGetResultingText("")
+            XCTAssertEqual(value, editExpiryDateAndGetResultingText(key))
         }
     }
     
     func testShouldFormatTripleDigitsCorrectly() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
         let testDictionary = ["100": "10/0",
                               "110": "11/0",
@@ -151,56 +141,79 @@ class ExpiryDateViewTests: XCTestCase {
                               "244": "02/44"]
         
         for (key, value) in testDictionary {
-            _ = typeAndGetText("", into: expiryDateView)
-            XCTAssertEqual(value, typeAndGetText(key, into: expiryDateView))
+            _ = editExpiryDateAndGetResultingText("")
+            XCTAssertEqual(value, editExpiryDateAndGetResultingText(key))
         }
     }
     
     // MARK: tests for clear
     
     func testCanClear() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertTrue(canType("", into: expiryDateView))
+        XCTAssertTrue(canEnterExpiryDate(""))
     }
     
     func testCanEnterAnyTextWhenNoPresenter() {
-        XCTAssertTrue(canType("abc", into: expiryDateView))
+        XCTAssertTrue(canEnterExpiryDate("abc"))
     }
     
     func testCannotTypeNonNumericalCharactersButCanTypeSlash() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertFalse(canType("abc", into: expiryDateView))
-        XCTAssertFalse(canType("+*-", into: expiryDateView))
-        XCTAssertTrue(canType("/", into: expiryDateView))
+        XCTAssertFalse(canEnterExpiryDate("abc"))
+        XCTAssertFalse(canEnterExpiryDate("+*-"))
+        XCTAssertTrue(canEnterExpiryDate("/"))
     }
     
     // MARK: tests for what the control allows the user to type
     
     func testCanTypeUpTo5Digits() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertTrue(canType("1", into: expiryDateView))
-        XCTAssertTrue(canType("12", into: expiryDateView))
-        XCTAssertTrue(canType("123", into: expiryDateView))
-        XCTAssertTrue(canType("1234", into: expiryDateView))
-        XCTAssertTrue(canType("12345", into: expiryDateView))
+        XCTAssertTrue(canEnterExpiryDate("1"))
+        XCTAssertTrue(canEnterExpiryDate("12"))
+        XCTAssertTrue(canEnterExpiryDate("123"))
+        XCTAssertTrue(canEnterExpiryDate("1234"))
+        XCTAssertTrue(canEnterExpiryDate("12345"))
     }
     
     func testCannotTypeMoreThan5Digits() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertFalse(canType("123456", into: expiryDateView))
+        XCTAssertFalse(canEnterExpiryDate("123456"))
     }
     
     func testCanTypeForwardSlashAtIncorrectPosition() {
-        initialiseValidation(expiryDateView: expiryDateView)
+        _ = initialiseCardValidation()
         
-        XCTAssertTrue(canType("1234/", into: expiryDateView))
+        XCTAssertTrue(canEnterExpiryDate("1234/"))
     }
     
-    // MARK: testing the text colour feature
+    // MARK: text feature
+    
+    func testCanGetText() {
+        expiryDateView.textField.text = "some text"
+        
+        XCTAssertEqual("some text", expiryDateView.text)
+    }
+    
+    // MARK: enabled feature
+    
+    func testCanGetTextFieldEnabledState() {
+        expiryDateView.textField.isEnabled = false
+        
+        XCTAssertFalse(expiryDateView.isEnabled)
+    }
+    
+    func testCanSetTextFieldEnabledState() {
+        expiryDateView.textField.isEnabled = true
+        expiryDateView.isEnabled = false
+        
+        XCTAssertFalse(expiryDateView.textField.isEnabled)
+    }
+    
+    // MARK: text colour feature
     
     func testCanSetColourOfText() {
         expiryDateView.textColor = UIColor.red
@@ -214,51 +227,17 @@ class ExpiryDateViewTests: XCTestCase {
         XCTAssertEqual(UIColor.black, expiryDateView.textField.textColor)
     }
     
-    private func typeAndGetText(_ text: String, into expiryDateView: ExpiryDateView) -> String {
-        // This line is here to reproduce the behaviour where the text before change would be saved by this call in production code when the text is being edited
+    func testCanGetColourOfText() {
+        expiryDateView.textField.textColor = UIColor.red
+        
+        XCTAssertEqual(UIColor.red, expiryDateView.textColor)
+    }
+    
+    private func editExpiryDateAndGetResultingText(_ text: String) -> String {
+        // This line is here to reproduce the behaviour where the state of the before applying the text to type would be saved by this call in production code when the text is being edited
         _ = expiryDateView.textField(expiryDateView.textField, shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "")
         
-        expiryDateView.textField.text = text
-        expiryDateView.textFieldEditingChanged(expiryDateView.textField)
+        editExpiryDate(text: text)
         return expiryDateView.textField!.text!
-    }
-    
-    private func canType(_ text: String, into view: ExpiryDateView) -> Bool {
-        let range = NSRange(location: 0, length: 0)
-        
-        return view.textField(view.textField, shouldChangeCharactersIn: range, replacementString: text)
-    }
-    
-    private func initialiseValidation(expiryDateView: ExpiryDateView) {
-        let merchantDelegate = createMerchantDelegate()
-        let configurationProvider = createConfigurationProvider(with: [visaBrand])
-        
-        let validationConfig = CardValidationConfig(panView: PANView(),
-                                                    expiryDateView: expiryDateView,
-                                                    cvvView: CVVView(),
-                                                    accessBaseUrl: "http://localhost",
-                                                    validationDelegate: merchantDelegate)
-        
-        AccessCheckoutValidationInitialiser(configurationProvider).initialise(validationConfig)
-    }
-    
-    private func createConfigurationProvider(with cardBrands: [CardBrandModel]) -> CardBrandsConfigurationProvider {
-        let configurationFactory = CardBrandsConfigurationFactoryMock()
-        
-        let configurationProvider: MockCardBrandsConfigurationProvider = MockCardBrandsConfigurationProvider(configurationFactory)
-        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
-        configurationProvider.getStubbingProxy().get().thenReturn(CardBrandsConfiguration(cardBrands))
-        
-        return configurationProvider
-    }
-    
-    private func createMerchantDelegate() -> AccessCheckoutCardValidationDelegate {
-        let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
-        
-        return merchantDelegate
     }
 }

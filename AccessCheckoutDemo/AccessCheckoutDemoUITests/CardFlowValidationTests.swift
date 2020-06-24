@@ -26,9 +26,9 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.expiryDateField.placeholderValue, view!.expiryDateText)
     }
     
-    func testCVV_alpha() {
-        view!.typeTextIntoCvv("A")
-        XCTAssertEqual(view!.cvvField.placeholderValue, view!.cvvText)
+    func testCvc_alpha() {
+        view!.typeTextIntoCvc("A")
+        XCTAssertEqual(view!.cvcField.placeholderValue, view!.cvcText)
     }
     
     func testPAN_maxLength() {
@@ -41,9 +41,9 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.expiryDateText?.count, 5)
     }
     
-    func testCVV_maxLength() {
-        view!.typeTextIntoCvv("123456")
-        XCTAssertEqual(view!.cvvText?.count, 4)
+    func testCvc_maxLength() {
+        view!.typeTextIntoCvc("123456")
+        XCTAssertEqual(view!.cvcText?.count, 4)
     }
 
     // MARK: Card brand images
@@ -71,14 +71,14 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(app.images["cardBrandImage"].label, imageLabel(of: brandName))
     }
     
-    // MARK: Dynamic CVV
-    func testCVV_brandValidLength() {
-        let insertedCVV = "123456789"
+    // MARK: Dynamic Cvc
+    func testCvc_brandValidLength() {
+        let insertedCvc = "123456789"
         
         view!.typeTextIntoPan("4")
-        view!.typeTextIntoCvv(insertedCVV)
+        view!.typeTextIntoCvc(insertedCvc)
         
-        XCTAssertEqual(view!.cvvText, String(insertedCVV.prefix(3)))
+        XCTAssertEqual(view!.cvcText, String(insertedCvc.prefix(3)))
     }
 
     func testPAN_removeDigits() {
@@ -97,13 +97,13 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.expiryDateText, "12/9")
     }
     
-    func testCVV_removeDigits() {
-        view!.typeTextIntoCvv("1234")
-        view!.typeTextIntoCvv(backspace)
-        view!.typeTextIntoCvv(backspace)
-        view!.typeTextIntoCvv(backspace)
+    func testCvc_removeDigits() {
+        view!.typeTextIntoCvc("1234")
+        view!.typeTextIntoCvc(backspace)
+        view!.typeTextIntoCvc(backspace)
+        view!.typeTextIntoCvc(backspace)
         
-        XCTAssertEqual(view!.cvvText, "1")
+        XCTAssertEqual(view!.cvcText, "1")
     }
     
     func testSubmit_isEnabled() {
@@ -111,12 +111,12 @@ class CardPaymentFlowCardValidationTests: XCTestCase {
         
         view!.typeTextIntoPan("4111111111111111")
         view!.typeTextIntoExpiryDate("01/34")
-        view!.typeTextIntoCvv("123")
+        view!.typeTextIntoCvc("123")
         
         // Valid state
         XCTAssertTrue(view!.submitButton.isEnabled)
         
-        view!.typeTextIntoCvv(backspace)
+        view!.typeTextIntoCvc(backspace)
         
         // Invalid state
         XCTAssertFalse(view!.submitButton.isEnabled)

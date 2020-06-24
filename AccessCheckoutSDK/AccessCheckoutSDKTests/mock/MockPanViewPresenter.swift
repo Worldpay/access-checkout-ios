@@ -27,9 +27,9 @@ import Cuckoo
     
     
     
-     override func onEditing(text: String?)  {
+     override func onEditing(text: String)  {
         
-    return cuckoo_manager.call("onEditing(text: String?)",
+    return cuckoo_manager.call("onEditing(text: String)",
             parameters: (text),
             escapingParameters: (text),
             superclassCall:
@@ -42,9 +42,9 @@ import Cuckoo
     
     
     
-     override func onEditEnd(text: String?)  {
+     override func onEditEnd(text: String)  {
         
-    return cuckoo_manager.call("onEditEnd(text: String?)",
+    return cuckoo_manager.call("onEditEnd(text: String)",
             parameters: (text),
             escapingParameters: (text),
             superclassCall:
@@ -79,14 +79,14 @@ import Cuckoo
 	    }
 	    
 	    
-	    func onEditing<M1: Cuckoo.OptionalMatchable>(text: M1) -> Cuckoo.ClassStubNoReturnFunction<(String?)> where M1.OptionalMatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: text) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanViewPresenter.self, method: "onEditing(text: String?)", parameterMatchers: matchers))
+	    func onEditing<M1: Cuckoo.Matchable>(text: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanViewPresenter.self, method: "onEditing(text: String)", parameterMatchers: matchers))
 	    }
 	    
-	    func onEditEnd<M1: Cuckoo.OptionalMatchable>(text: M1) -> Cuckoo.ClassStubNoReturnFunction<(String?)> where M1.OptionalMatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: text) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockPanViewPresenter.self, method: "onEditEnd(text: String?)", parameterMatchers: matchers))
+	    func onEditEnd<M1: Cuckoo.Matchable>(text: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanViewPresenter.self, method: "onEditEnd(text: String)", parameterMatchers: matchers))
 	    }
 	    
 	    func canChangeText<M1: Cuckoo.Matchable>(with text: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
@@ -111,15 +111,15 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func onEditing<M1: Cuckoo.OptionalMatchable>(text: M1) -> Cuckoo.__DoNotUse<(String?), Void> where M1.OptionalMatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: text) { $0 }]
-	        return cuckoo_manager.verify("onEditing(text: String?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func onEditing<M1: Cuckoo.Matchable>(text: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return cuckoo_manager.verify("onEditing(text: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
-	    func onEditEnd<M1: Cuckoo.OptionalMatchable>(text: M1) -> Cuckoo.__DoNotUse<(String?), Void> where M1.OptionalMatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String?)>] = [wrap(matchable: text) { $0 }]
-	        return cuckoo_manager.verify("onEditEnd(text: String?)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func onEditEnd<M1: Cuckoo.Matchable>(text: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: text) { $0 }]
+	        return cuckoo_manager.verify("onEditEnd(text: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -137,11 +137,11 @@ import Cuckoo
     
 
     
-     override func onEditing(text: String?)   {
+     override func onEditing(text: String)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
-     override func onEditEnd(text: String?)   {
+     override func onEditEnd(text: String)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

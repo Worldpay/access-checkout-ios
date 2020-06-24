@@ -6,12 +6,12 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
     
-    let panView = PANView()
+    let panView = PanView()
     let expiryDateView = ExpiryDateView()
-    let cvvView = CVVView()
+    let cvcView = CvcView()
     let baseUrl = "some-url"
     let cardValidationDelegateMock = MockAccessCheckoutCardValidationDelegate()
-    let cvvOnlyValidationDelegateMock = MockAccessCheckoutCvvOnlyValidationDelegate()
+    let cvcOnlyValidationDelegateMock = MockAccessCheckoutCvcOnlyValidationDelegate()
     
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
@@ -22,7 +22,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     func testInitialisationForCardPaymentFlowRetrievesConfiguration() {
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateView,
-                                                    cvvView: cvvView,
+                                                    cvcView: cvcView,
                                                     accessBaseUrl: baseUrl,
                                                     validationDelegate: cardValidationDelegateMock)
         
@@ -34,7 +34,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     func testInitialisationForCardPaymentFlowSetsPresentersOnViews() {
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateView,
-                                                    cvvView: cvvView,
+                                                    cvcView: cvcView,
                                                     accessBaseUrl: baseUrl,
                                                     validationDelegate: cardValidationDelegateMock)
         
@@ -42,14 +42,14 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         
         XCTAssertNotNil(panView.presenter)
         XCTAssertNotNil(expiryDateView.presenter)
-        XCTAssertNotNil(cvvView.presenter)
+        XCTAssertNotNil(cvcView.presenter)
     }
     
-    func testInitialisationForCvvOnlyFlowSetsPresenterOnView() {
-        let validationConfig = CvvOnlyValidationConfig(cvvView: cvvView, validationDelegate: cvvOnlyValidationDelegateMock)
+    func testInitialisationForCvcOnlyFlowSetsPresenterOnView() {
+        let validationConfig = CvcOnlyValidationConfig(cvcView: cvcView, validationDelegate: cvcOnlyValidationDelegateMock)
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
-        XCTAssertNotNil(cvvView.presenter)
+        XCTAssertNotNil(cvcView.presenter)
     }
 }

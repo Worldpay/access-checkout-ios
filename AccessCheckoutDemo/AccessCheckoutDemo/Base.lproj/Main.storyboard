@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gc-ER-g0x" customClass="PANView" customModule="AccessCheckoutSDK">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gc-ER-g0x" customClass="PanView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="35" y="60" width="305" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -33,7 +33,7 @@
                                     <constraint firstAttribute="height" constant="44" id="SRm-gC-IMq"/>
                                 </constraints>
                             </view>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyH-be-DH8" customClass="CVVView" customModule="AccessCheckoutSDK">
+                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyH-be-DH8" customClass="CvcView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="116" y="136" width="61" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -81,7 +81,7 @@
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="bottom" constant="32" id="OJK-w6-y7c"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="QHc-kM-Pcq"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="10" id="YFQ-CO-GMa"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="top" id="YkC-nL-0wk" userLabel="Cvv View.top = Expiry Date View.bottom + 40"/>
+                            <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="top" id="YkC-nL-0wk" userLabel="Cvc View.top = Expiry Date View.bottom + 40"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="4" id="amx-XS-qWo"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="5El-kB-xnl" secondAttribute="leading" id="bK2-sd-FBr"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="ccP-WQ-FS3"/>
@@ -95,7 +95,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Card flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
                     <connections>
-                        <outlet property="cvvView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
+                        <outlet property="cvcView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
                         <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
                         <outlet property="panView" destination="8gc-ER-g0x" id="axR-fD-Koc"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
@@ -107,10 +107,10 @@
             </objects>
             <point key="canvasLocation" x="-444" y="808"/>
         </scene>
-        <!--Cvv only flow-->
+        <!--CVC flow-->
         <scene sceneID="lPP-8k-MJs">
             <objects>
-                <viewController id="ZEX-QF-aID" userLabel="Cvv only flow" customClass="CvvFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZEX-QF-aID" customClass="CvcFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="og0-0P-fDP"/>
                         <viewControllerLayoutGuide type="bottom" id="OMc-0h-5O9"/>
@@ -119,7 +119,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuw-Kr-otx" userLabel="Cvv View" customClass="CVVView" customModule="AccessCheckoutSDK">
+                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuw-Kr-otx" customClass="CvcView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="40" y="60" width="59" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -151,9 +151,9 @@
                             <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="eAA-XG-Jrm"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="CVV flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
+                    <tabBarItem key="tabBarItem" title="CVC flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
                     <connections>
-                        <outlet property="cvvField" destination="zuw-Kr-otx" id="06k-Zx-spg"/>
+                        <outlet property="cvcView" destination="zuw-Kr-otx" id="fKO-b9-Nix"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
                         <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>
                     </connections>

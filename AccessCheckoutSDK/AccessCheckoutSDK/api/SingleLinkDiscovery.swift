@@ -11,14 +11,14 @@ class SingleLinkDiscovery {
         self.urlRequest = urlRequest
     }
 
-    func discover(completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    func discover(completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         restClient.send(urlSession: URLSession.shared, request: urlRequest, responseType: ApiResponse.self) { result in
             switch result {
                 case .success(let response):
                     if let linkValue = self.apiResponseLinkLookup.lookup(link: self.linkToFind, in: response) {
                         completionHandler(.success(linkValue))
                     } else {
-                        completionHandler(.failure(AccessCheckoutClientError.unknown(message: "Failed to find link \(self.linkToFind) in response")))
+                        completionHandler(.failure(AccessCheckoutError.discoveryLinkNotFound(linkName: self.linkToFind)))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))

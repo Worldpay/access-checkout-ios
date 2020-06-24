@@ -15,12 +15,12 @@ extension CardBrandModel: Equatable {
         }
 
         return lhs.panValidationRule == rhs.panValidationRule
-            && lhs.cvvValidationRule == rhs.cvvValidationRule
+            && lhs.cvcValidationRule == rhs.cvcValidationRule
     }
 }
 
-extension CardBrandClient: Equatable {
-    public static func == (lhs: CardBrandClient, rhs: CardBrandClient) -> Bool {
+extension CardBrand: Equatable {
+    public static func == (lhs: CardBrand, rhs: CardBrand) -> Bool {
         if !lhs.images.isEmpty {
             for i in 0...lhs.images.count - 1 {
                 if lhs.images[i] != rhs.images[i] {
@@ -38,7 +38,7 @@ extension CardBrandDto: Equatable {
         return lhs.name == rhs.name
             && lhs.pattern == rhs.pattern
             && lhs.panLengths == rhs.panLengths
-            && lhs.cvvLength == rhs.cvvLength
+            && lhs.cvcLength == rhs.cvcLength
             && lhs.images == rhs.images
     }
 }
@@ -50,8 +50,8 @@ extension CardBrandImageModel: Equatable {
     }
 }
 
-extension CardBrandImageClient: Equatable {
-    public static func == (lhs: CardBrandImageClient, rhs: CardBrandImageClient) -> Bool {
+extension CardBrandImage: Equatable {
+    public static func == (lhs: CardBrandImage, rhs: CardBrandImage) -> Bool {
         return lhs.type == rhs.type
             && lhs.url == rhs.url
     }
@@ -72,7 +72,7 @@ extension CardBrandsConfiguration: Equatable {
 
 extension ValidationRulesDefaults: Equatable {
     public static func == (lhs: ValidationRulesDefaults, rhs: ValidationRulesDefaults) -> Bool {
-        return lhs.cvv == rhs.cvv
+        return lhs.cvc == rhs.cvc
             && lhs.expiryDate == rhs.expiryDate
             && lhs.expiryDateInput == rhs.expiryDateInput
             && lhs.pan == rhs.pan

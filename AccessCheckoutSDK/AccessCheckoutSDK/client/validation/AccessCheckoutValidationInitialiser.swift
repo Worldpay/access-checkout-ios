@@ -16,8 +16,8 @@ public struct AccessCheckoutValidationInitialiser {
     public func initialise(_ validationConfiguration: ValidationConfig) {
         if validationConfiguration is CardValidationConfig {
             initialiseForCardPaymentFlow(validationConfiguration as! CardValidationConfig)
-        } else if validationConfiguration is CvvOnlyValidationConfig {
-            initialiseForCvvOnlyFlow(validationConfiguration as! CvvOnlyValidationConfig)
+        } else if validationConfiguration is CvcOnlyValidationConfig {
+            initialiseForCvcOnlyFlow(validationConfiguration as! CvcOnlyValidationConfig)
         }
     }
     
@@ -25,27 +25,27 @@ public struct AccessCheckoutValidationInitialiser {
         configurationProvider.retrieveRemoteConfiguration(baseUrl: config.accessBaseUrl)
         
         let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
-        let cvvValidator = CvvValidator()
-        let cvvValidationFlow = CvvValidationFlow(cvvValidator, validationStateHandler)
+        let cvcValidator = CvcValidator()
+        let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         
-        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow, cvvValidator)
-        config.panView.presenter = panViewPresenter(configurationProvider, cvvValidationFlow, validationStateHandler)
+        config.cvcView.presenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
+        config.panView.presenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler)
         config.expiryDateView.presenter = expiryDateViewPresenter(validationStateHandler)
     }
     
-    private func initialiseForCvvOnlyFlow(_ config: CvvOnlyValidationConfig) {
-        let validationStateHandler = CvvOnlyValidationStateHandler(config.validationDelegate)
-        let cvvValidator = CvvValidator()
-        let cvvValidationFlow = CvvValidationFlow(cvvValidator, validationStateHandler)
+    private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
+        let validationStateHandler = CvcOnlyValidationStateHandler(config.validationDelegate)
+        let cvcValidator = CvcValidator()
+        let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         
-        config.cvvView.presenter = CVVViewPresenter(cvvValidationFlow, cvvValidator)
+        config.cvcView.presenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
     }
     
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
-                                  _ cvvValidationFlow: CvvValidationFlow,
+                                  _ cvcValidationFlow: CvcValidationFlow,
                                   _ validationStateHandler: PanValidationStateHandler) -> PanViewPresenter {
         let panValidator = PanValidator(configurationProvider)
-        let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
+        let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
         return PanViewPresenter(panValidationFlow, panValidator)
     }
     

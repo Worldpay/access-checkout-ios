@@ -1,19 +1,29 @@
 class CardBrandsConfigurationProvider {
-    private let factory:CardBrandsConfigurationFactory
-    private var configuration:CardBrandsConfiguration
+    private let factory: CardBrandsConfigurationFactory
+    private let serialQueue = DispatchQueue(label: "com.worldpay.access.checkout.CardBrandsConfigurationProvider")
     
-    init (_ cardBrandsConfigurationFactory:CardBrandsConfigurationFactory) {
+    private var configuration: CardBrandsConfiguration
+    
+    init(_ cardBrandsConfigurationFactory: CardBrandsConfigurationFactory) {
         factory = cardBrandsConfigurationFactory
         configuration = cardBrandsConfigurationFactory.emptyConfiguration()
     }
     
-    func retrieveRemoteConfiguration(baseUrl:String) {
+    func retrieveRemoteConfiguration(baseUrl: String) {
         factory.create(baseUrl: baseUrl) { configuration in
-            self.configuration = configuration
+            self.serialQueue.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.configuration = configuration
+            }
         }
     }
     
     func get() -> CardBrandsConfiguration {
-        return configuration
+        serialQueue.sync {
+            configuration
+        }
     }
 }

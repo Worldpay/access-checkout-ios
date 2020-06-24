@@ -2,10 +2,10 @@
 import XCTest
 
 class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
-    private let pan: PAN = "a-pan"
+    private let pan: String = "a-pan"
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
-    private let cvv: CVV = "123"
+    private let cvc: String = "123"
     private let merchantId: String = "a-merchant-id"
 
     private let urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
@@ -28,7 +28,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvv: cvv,
+                                               cvc: cvc,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedRequest, request)
@@ -40,7 +40,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvv: cvv,
+                                               cvc: cvc,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedMethod, request.httpMethod)
@@ -55,7 +55,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvv: cvv,
+                                               cvc: cvc,
                                                bundle: bundle)
 
         XCTAssertEqual(expectedHeaderFields, request.allHTTPHeaderFields)

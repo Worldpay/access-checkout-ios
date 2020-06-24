@@ -20,7 +20,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
             super.init()
         }
         
-        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
             completionHandler(.success(discoveredUrl))
         }
     }
@@ -104,7 +104,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(baseUrl: "", merchantId: "identity", cvv: "1234") { result in
+            sessionsClient.createSession(baseUrl: "", merchantId: "identity", cvc: "1234") { result in
                 switch result {
                 case .success(let session):
                     XCTAssertEqual(session, expectedValue)
@@ -179,7 +179,7 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         let sessionsClient = SessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(baseUrl: "", merchantId: request.identity, cvv: request.cvc) { result in
+            sessionsClient.createSession(baseUrl: "", merchantId: request.identity, cvc: request.cvc) { result in
                 switch result {
                 case .success:
                     XCTFail("Service response expected to be unsuccessful")

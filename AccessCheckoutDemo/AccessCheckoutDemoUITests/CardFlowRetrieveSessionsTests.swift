@@ -63,7 +63,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.internalServerError(message: nil).errorName))
+        XCTAssert(alert.title.contains("internalServerError"))
     }
     
     func testResponse_bodyDoesNotMatchSchema_panFailedLuhnCheck() {
@@ -79,8 +79,8 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
-        XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.panFailedLuhnCheck(message: nil, jsonPath: nil).errorName))
+        XCTAssert(alert.title.contains("bodyDoesNotMatchSchema"))
+        XCTAssert(alert.title.contains("panFailedLuhnCheck"))
         XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
     
@@ -97,8 +97,8 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.bodyDoesNotMatchSchema(message: nil, validationErrors: nil).errorName))
-        XCTAssert(alert.title.contains(AccessCheckoutClientValidationError.fieldIsMissing(message: nil, jsonPath: nil).errorName))
+        XCTAssert(alert.title.contains("bodyDoesNotMatchSchema"))
+        XCTAssert(alert.title.contains("fieldIsMissing"))
         XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
     }
     
@@ -115,7 +115,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.unknown(message: nil).errorName))
         XCTAssert(alert.title.contains("variation1"))
     }
     
@@ -132,7 +131,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.unknown(message: nil).errorName))
         XCTAssert(alert.title.contains("variation2"))
     }
     
@@ -149,7 +147,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.unknown(message: nil).errorName))
         XCTAssert(alert.title.contains("variation3"))
     }
     
@@ -166,14 +163,13 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         
         let alert = view.alert
         XCTAssertTrue(alert.exists)
-        XCTAssert(alert.title.contains(AccessCheckoutClientError.unknown(message: nil).errorName))
         XCTAssert(alert.title.contains("variation4"))
     }
     
     private func fillUpFormWithValidValues(using view: CardPaymentFlowViewPageObject) {
         view.typeTextIntoPan("4111111111111111")
         view.typeTextIntoExpiryDate("01/99")
-        view.typeTextIntoCvv("123")
+        view.typeTextIntoCvc("123")
     }
     
     private func waitFor(timeoutInSeconds: Double) {

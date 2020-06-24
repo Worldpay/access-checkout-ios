@@ -1,17 +1,17 @@
 class RetrieveSessionResultsHandler {
     private let numberOfExpectedResults: Int
-    private let completionHandler: (Result<[SessionType: String], AccessCheckoutClientError>) -> Void
+    private let completionHandler: (Result<[SessionType: String], AccessCheckoutError>) -> Void
     private var sessions = [SessionType: String]()
     private var completionHandlerCalled = false
     
     private let serialQueue = DispatchQueue(label: "com.worldpay.access.checkout.RetrieveSessionResultsHandler")
     
-    init(numberOfExpectedResults: Int, completeWith completionHandler: @escaping (Result<[SessionType: String], AccessCheckoutClientError>) -> Void) {
+    init(numberOfExpectedResults: Int, completeWith completionHandler: @escaping (Result<[SessionType: String], AccessCheckoutError>) -> Void) {
         self.numberOfExpectedResults = numberOfExpectedResults
         self.completionHandler = completionHandler
     }
     
-    func handle(_ result: Result<String, AccessCheckoutClientError>, for sessionType: SessionType) {
+    func handle(_ result: Result<String, AccessCheckoutError>, for sessionType: SessionType) {
         switch result {
         case .success(let session):
             serialQueue.async {

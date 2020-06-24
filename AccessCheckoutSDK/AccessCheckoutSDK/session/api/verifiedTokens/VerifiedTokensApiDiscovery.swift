@@ -9,7 +9,7 @@ class VerifiedTokensApiDiscovery {
         self.discoveryFactory = discoveryFactory
     }
     
-    func discover(baseUrl: String, completionHandler: @escaping (Result<String, AccessCheckoutClientError>) -> Void) {
+    func discover(baseUrl: String, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         createServiceDiscovery(baseUrl).discover { result in
             switch result {
                 case .success(let serviceUrl):
@@ -40,4 +40,3 @@ class VerifiedTokensApiDiscovery {
         return discoveryFactory.create(toFindLink: ApiLinks.verifiedTokens.endpoint, usingRequest: request)
     }
 }
-

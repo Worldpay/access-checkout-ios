@@ -3,9 +3,9 @@ import XCTest
 class NavigationViewPageObject {
     private let app:XCUIApplication
     
-    var cvvFlowNavigationButton:XCUIElement {
+    var cvcFlowNavigationButton:XCUIElement {
         get {
-            return app.tabBars.buttons["CVV flow"]
+            return app.tabBars.buttons["CVC flow"]
         }
     }
     
@@ -25,9 +25,9 @@ class NavigationViewPageObject {
         return CardPaymentFlowViewPageObject(app)
     }
     
-    func navigateToCvvFlow() -> CvvOnlyFlowViewPageObject {
-        cvvFlowNavigationButton.tap()
+    func navigateToCvcFlow() -> CvcFlowViewPageObject {
+        cvcFlowNavigationButton.tap()
         
-        return CvvOnlyFlowViewPageObject(app)
+        return CvcFlowViewPageObject(app)
     }
 }

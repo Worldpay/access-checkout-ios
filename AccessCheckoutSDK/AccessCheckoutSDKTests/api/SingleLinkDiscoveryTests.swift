@@ -26,7 +26,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
             switch result {
                 case .success(let url):
                     XCTAssertEqual("http://www.a-service.co.uk", url)
-                case .failure(_):
+                case .failure:
                     XCTFail("Discovery should not have failed")
             }
             expectationToFulfill.fulfill()
@@ -37,7 +37,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenLinkNotFoundInResponse() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "Failed to find link a:link in response")
+        let expectedError = StubUtils.createError(errorName: "discoveryLinkNotFound", message: "Failed to find link a:link in response")
         let jsonResponse = """
         {
             "_links": {
@@ -52,7 +52,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
         
         discovery.discover { result in
             switch result {
-                case .success(_):
+                case .success:
                     XCTFail("Discovery should have failed")
                 case .failure(let error):
                     XCTAssertEqual(expectedError, error)
@@ -65,14 +65,14 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenFailsToDeserialiseResponse() {
         let expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
         let jsonResponse = "some-content"
         StubUtils.stubSuccessfulGetResponse(url: "http://localhost", responseAsString: jsonResponse)
         let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
         
         discovery.discover { result in
             switch result {
-                case .success(_):
+                case .success:
                     XCTFail("Discovery should have failed")
                 case .failure(let error):
                     XCTAssertEqual(expectedError, error)
@@ -85,14 +85,13 @@ class SingleLinkDiscoveryTests: XCTestCase {
     
     func testReturnsErrorWhenResponseIsAnError() {
         let expectationToFulfill = expectation(description: "")
-        // ToDo - The Rest client does not go through the "error" branch but still fails on decoding. This needs fixing, we should receive as an error what the response contains
-        let expectedError = AccessCheckoutClientError.unknown(message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
         StubUtils.stubGetResponse(url: "http://localhost", responseAsString: "An error", responseCode: 400)
         let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
         
         discovery.discover { result in
             switch result {
-                case .success(_):
+                case .success:
                     XCTFail("Discovery should have failed")
                 case .failure(let error):
                     XCTAssertEqual(expectedError, error)

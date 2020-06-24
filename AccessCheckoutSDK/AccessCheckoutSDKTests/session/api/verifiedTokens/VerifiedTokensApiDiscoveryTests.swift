@@ -48,9 +48,10 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
     
     func testFailsToDiscoverIfServiceIsNotDiscoveredSuccessfully() {
         let expectationToFulfill = expectation(description: "")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
-        mockDiscoveryService.willComplete(with: AccessCheckoutClientError.unknown(message: "an error"))
+        mockDiscoveryService.willComplete(with: expectedError)
         mockDiscoveryEndPoint.willComplete(with: "http://localhost/an-end-point")
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
@@ -60,7 +61,7 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
                 case .success:
                     XCTFail("Discovery should have failed")
                 case .failure(let error):
-                    XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error)
+                    XCTAssertEqual(expectedError, error)
                     
                     let argumentCaptorLinks = ArgumentCaptor<String>()
                     let argumentCaptorRequests = ArgumentCaptor<URLRequest>()
@@ -77,12 +78,13 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
     
     func testFailsToDiscoverIfEndpointIsNotDiscoveredSuccessfully() {
         let expectationToFulfill = expectation(description: "")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         
         let expectedRequestToFindService = createExpectedRequestToFindService(url: "http://localhost")
         mockDiscoveryService.willComplete(with: "http://localhost/a-service")
         
         let expectedRequestToFindEndPoint = createExpectedRequestToFindEndPoint(url: "http://localhost/a-service")
-        mockDiscoveryEndPoint.willComplete(with: AccessCheckoutClientError.unknown(message: "an error"))
+        mockDiscoveryEndPoint.willComplete(with: expectedError)
         
         let discovery = VerifiedTokensApiDiscovery(discoveryFactory: discoveryFactory)
         
@@ -91,7 +93,7 @@ class VerifiedTokensApiDiscoveryTests: XCTestCase {
                 case .success:
                     XCTFail("Discovery should have failed")
                 case .failure(let error):
-                    XCTAssertEqual(AccessCheckoutClientError.unknown(message: "an error"), error)
+                    XCTAssertEqual(expectedError, error)
                     
                     let argumentCaptorLinks = ArgumentCaptor<String>()
                     let argumentCaptorRequests = ArgumentCaptor<URLRequest>()

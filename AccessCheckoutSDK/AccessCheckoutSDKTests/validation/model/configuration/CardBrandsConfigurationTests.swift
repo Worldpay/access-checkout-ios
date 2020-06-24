@@ -51,14 +51,14 @@ class CardBrandsConfigurationTests: XCTestCase {
     
     private func createCardBrand(panMatcherPattern: String) -> CardBrandModel {
         let panValidationRule = ValidationRule(matcher: panMatcherPattern, validLengths: [])
-        let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [])
+        let cvcValidationRule = ValidationRule(matcher: nil, validLengths: [])
         
-        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
+        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvcValidationRule: cvcValidationRule)
     }
     
     private func createCardBrand(panValidationRule: ValidationRule) -> CardBrandModel {
-        let cvvValidationRule = ValidationRule(matcher: nil, validLengths: [])
+        let cvcValidationRule = ValidationRule(matcher: nil, validLengths: [])
         
-        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvvValidationRule: cvvValidationRule)
+        return CardBrandModel(name: "", images: [], panValidationRule: panValidationRule, cvcValidationRule: cvcValidationRule)
     }
 }

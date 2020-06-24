@@ -1,10 +1,10 @@
 @testable import AccessCheckoutSDK
 
-class SessionsApiDiscoveryMock : SessionsApiDiscovery {
+class SessionsApiDiscoveryMock: SessionsApiDiscovery {
     private var url: String?
-    private var error: AccessCheckoutClientError?
+    private var error: AccessCheckoutError?
     
-    override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+    override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
         if let url = url {
             completionHandler(.success(url))
         } else if let error = error {
@@ -16,7 +16,7 @@ class SessionsApiDiscoveryMock : SessionsApiDiscovery {
         self.url = url
     }
     
-    func willComplete(with error: AccessCheckoutClientError) {
+    func willComplete(with error: AccessCheckoutError) {
         self.error = error
     }
 }

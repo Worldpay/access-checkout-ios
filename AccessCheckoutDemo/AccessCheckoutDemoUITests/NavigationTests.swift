@@ -10,8 +10,8 @@ class NavigationTests: XCTestCase {
         app.launch()
     }
     
-    func testHasButtonsToNavigateToCvvFlow() {
-        let element:XCUIElement = NavigationViewPageObject(app).cvvFlowNavigationButton
+    func testHasButtonsToNavigateToCvcFlow() {
+        let element:XCUIElement = NavigationViewPageObject(app).cvcFlowNavigationButton
         
         XCTAssertTrue(element.exists)
     }

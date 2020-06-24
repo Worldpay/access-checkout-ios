@@ -7,7 +7,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         name: "visa",
         images: [],
         panValidationRule: ValidationRule(matcher: "^(?!^493698\\d*$)4\\d*$", validLengths: [16, 18, 19]),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
+        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
     let maestroBrand = CardBrandModel(
@@ -17,7 +17,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             matcher: "^(493698|(50[0-5][0-9]{2}|506[0-5][0-9]|5066[0-9])|(5067[7-9]|506[89][0-9]|50[78][0-9]{2})|5[6-9]|63|67)\\d*$",
             validLengths: [12, 13, 14, 15, 16, 17, 18, 19]
         ),
-        cvvValidationRule: ValidationRule(matcher: nil, validLengths: [3])
+        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
     
     private let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
@@ -26,7 +26,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
     
@@ -229,70 +229,70 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
     
-    // MARK: CvvValidationStateHandler
+    // MARK: CvcValidationStateHandler
     
-    func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromFalse() {
+    func testShouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChangeFromFalse() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
-            cvvValidationState: false
+            cvcValidationState: false
         )
         
-        validationStateHandler.handleCvvValidation(isValid: false)
-        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
+        validationStateHandler.handleCvcValidation(isValid: false)
+        verify(merchantDelegate, never()).cvcValidChanged(isValid: any())
     }
     
-    func testShouldNotNotifyMerchantDelegateWhenCvvValidationStateDoesNotChangeFromTrue() {
+    func testShouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChangeFromTrue() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
-            cvvValidationState: true
+            cvcValidationState: true
         )
         
-        validationStateHandler.handleCvvValidation(isValid: true)
-        verify(merchantDelegate, never()).cvvValidChanged(isValid: any())
+        validationStateHandler.handleCvcValidation(isValid: true)
+        verify(merchantDelegate, never()).cvcValidChanged(isValid: any())
     }
     
-    func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromFalse() {
+    func testShouldNotifyMerchantDelegateWhenCvcValidationStateChangesFromFalse() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
-            cvvValidationState: false
+            cvcValidationState: false
         )
         
-        validationStateHandler.handleCvvValidation(isValid: true)
-        verify(merchantDelegate).cvvValidChanged(isValid: true)
+        validationStateHandler.handleCvcValidation(isValid: true)
+        verify(merchantDelegate).cvcValidChanged(isValid: true)
     }
     
-    func testShouldNotifyMerchantDelegateWhenCvvValidationStateChangesFromTrue() {
+    func testShouldNotifyMerchantDelegateWhenCvcValidationStateChangesFromTrue() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
-            cvvValidationState: true
+            cvcValidationState: true
         )
         
-        validationStateHandler.handleCvvValidation(isValid: false)
-        verify(merchantDelegate).cvvValidChanged(isValid: false)
+        validationStateHandler.handleCvcValidation(isValid: false)
+        verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
     
-    func testNotifyMerchantOfCvvValidationStateSetsNotificationState() {
+    func testNotifyMerchantOfCvcValidationStateSetsNotificationState() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate)
         
-        validationStateHandler.notifyMerchantOfCvvValidationState()
+        validationStateHandler.notifyMerchantOfCvcValidationState()
         
-        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvvValidationState)
+        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvcValidationState)
     }
     
-    func testNotifyMerchantOfCvvValidationStateNotifiesMerchantOfValidCvv() {
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvvValidationState: true)
+    func testNotifyMerchantOfCvcValidationStateNotifiesMerchantOfValidCvc() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvcValidationState: true)
         
-        validationStateHandler.notifyMerchantOfCvvValidationState()
+        validationStateHandler.notifyMerchantOfCvcValidationState()
         
-        verify(merchantDelegate).cvvValidChanged(isValid: true)
+        verify(merchantDelegate).cvcValidChanged(isValid: true)
     }
     
-    func testNotifyMerchantOfCvvValidationStateNotifiesMerchantOfInvalidCvv() {
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvvValidationState: false)
+    func testNotifyMerchantOfCvcValidationStateNotifiesMerchantOfInvalidCvc() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvcValidationState: false)
         
-        validationStateHandler.notifyMerchantOfCvvValidationState()
+        validationStateHandler.notifyMerchantOfCvcValidationState()
         
-        verify(merchantDelegate).cvvValidChanged(isValid: false)
+        verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
     
     // MARK: Tests for notification that all fields are valid
@@ -302,7 +302,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         validationStateHandler.handleExpiryDateValidation(isValid: true)
-        validationStateHandler.handleCvvValidation(isValid: true)
+        validationStateHandler.handleCvcValidation(isValid: true)
         
         verify(merchantDelegate).validationSuccess()
     }
@@ -312,20 +312,20 @@ class CardValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         validationStateHandler.handleExpiryDateValidation(isValid: true)
-        validationStateHandler.handleCvvValidation(isValid: true)
-        validationStateHandler.handleCvvValidation(isValid: true)
+        validationStateHandler.handleCvcValidation(isValid: true)
+        validationStateHandler.handleCvcValidation(isValid: true)
         
         verify(merchantDelegate, times(1)).validationSuccess()
     }
     
-    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrandClient? {
-        var images = [CardBrandImageClient]()
+    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {
+        var images = [CardBrandImage]()
         
         for imageToConvert in cardBrandModel.images {
-            let image = CardBrandImageClient(type: imageToConvert.type, url: imageToConvert.url)
+            let image = CardBrandImage(type: imageToConvert.type, url: imageToConvert.url)
             images.append(image)
         }
         
-        return CardBrandClient(name: cardBrandModel.name, images: images)
+        return CardBrand(name: cardBrandModel.name, images: images)
     }
 }

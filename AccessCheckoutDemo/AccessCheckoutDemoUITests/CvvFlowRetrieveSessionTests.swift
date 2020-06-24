@@ -2,14 +2,14 @@
 import Foundation
 import XCTest
 
-class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
-    var view: CvvOnlyFlowViewPageObject?
+class CvcFlowRetrieveSessionTests: XCTestCase {
+    var view: CvcFlowViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
     }
     
-    func testSuccessfullyCreatesAndDisplaysACvvSession() {
+    func testSuccessfullyCreatesAndDisplaysACvcSession() {
         let expectedTitle = "Payments CVC Session"
         let expectedMessage = "https://try.access.worldpay.com/sessions/some-payments-cvc-session"
         
@@ -17,8 +17,8 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvFlow()
-        view.typeTextIntoCvv("123")
+        let view = NavigationViewPageObject(app).navigateToCvcFlow()
+        view.typeTextIntoCvc("123")
         view.submit()
         waitFor(timeoutInSeconds: 0.05)
         
@@ -28,13 +28,13 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         XCTAssertEqual(expectedMessage, alert.message)
     }
     
-    func testClearsCvvWhenAlertWithSessionIsClosed() {
+    func testClearsCvcWhenAlertWithSessionIsClosed() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvFlow()
-        view.typeTextIntoCvv("123")
+        let view = NavigationViewPageObject(app).navigateToCvcFlow()
+        view.typeTextIntoCvc("123")
         view.submit()
         waitFor(timeoutInSeconds: 0.05)
         
@@ -45,21 +45,32 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         XCTAssertFalse(alert.exists)
         
         waitFor(timeoutInSeconds: 0.5)
-        XCTAssertEqual(view.cvvField.placeholderValue, view.cvvText)
+        XCTAssertEqual(view.cvcField.placeholderValue, view.cvcText)
     }
     
     func testSuccessfullyDisplaysErrorFromService() {
         let expectedTitle = "Error"
-        let validationError = AccessCheckoutClientValidationError.stringFailedRegexCheck(message: "Some validation error message", jsonPath: "$.cvv")
-        let error = AccessCheckoutClientError.bodyDoesNotMatchSchema(message: "Sessions paymentsCvc error", validationErrors: [validationError])
+        let jsonError = """
+        {
+            "errorName": "bodyDoesNotMatchSchema",
+            "message": "Sessions paymentsCvc error",
+            "validationErrors": [{
+                "errorName": "stringFailedRegexCheck",
+                "message": "Some validation error message",
+                "jsonPath": "$.cvv"
+            }]
+        }
+        """
+        
+        let error = try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonError.data(using: .utf8)!)
         let expectedMessage = formatStringAsStaticTextLabel(error.localizedDescription)
         
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-error")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvFlow()
-        view.typeTextIntoCvv("123")
+        let view = NavigationViewPageObject(app).navigateToCvcFlow()
+        view.typeTextIntoCvc("123")
         view.submit()
         waitFor(timeoutInSeconds: 0.05)
         
@@ -69,13 +80,13 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         XCTAssertEqual(expectedMessage, alert.message)
     }
     
-    func testDoesNotClearCvvWhenAlertWithErrorIsClosed() {
+    func testDoesNotClearCvcWhenAlertWithErrorIsClosed() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-error")
             .launch()
-        let view = NavigationViewPageObject(app).navigateToCvvFlow()
-        view.typeTextIntoCvv("123")
+        let view = NavigationViewPageObject(app).navigateToCvcFlow()
+        view.typeTextIntoCvc("123")
         view.submit()
         waitFor(timeoutInSeconds: 0.05)
         
@@ -86,7 +97,7 @@ class CvvOnlyFlowRetrieveSessionTests: XCTestCase {
         XCTAssertFalse(alert.exists)
         
         waitFor(timeoutInSeconds: 0.05)
-        XCTAssertEqual("123", view.cvvText)
+        XCTAssertEqual("123", view.cvcText)
     }
     
     private func formatStringAsStaticTextLabel(_ string: String) -> String {

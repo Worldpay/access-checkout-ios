@@ -9,7 +9,7 @@ class PaymentsCvcRetrieveSessionHandler: RetrieveSessionHandler {
         return sessionType == SessionType.paymentsCvc
     }
 
-    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
-        apiClient.createSession(baseUrl: baseUrl, merchantId: merchantId, cvv: cardDetails.cvv!, completionHandler: completionHandler)
+    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
+        apiClient.createSession(baseUrl: baseUrl, merchantId: merchantId, cvc: cardDetails.cvc!, completionHandler: completionHandler)
     }
 }

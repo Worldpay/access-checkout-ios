@@ -20,7 +20,7 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
             super.init()
         }
         
-        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+        override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
             completionHandler(.success(discoveredUrl))
         }
     }
@@ -109,7 +109,7 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
             verifiedTokensClient.createSession(baseUrl: "", merchantId: "identity", pan: "4111111111111111",
-                                               expiryMonth: 12, expiryYear: 2099, cvv: "123") { result in
+                                               expiryMonth: 12, expiryYear: 2099, cvc: "123") { result in
                 switch result {
                 case .success(let session):
                     XCTAssertEqual(session, expectedValue)
@@ -250,7 +250,7 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
         
         verifiedTokensMockService.run(timeout: 10) { testComplete in
             verifiedTokensClient.createSession(baseUrl: "", merchantId: request.identity, pan: request.cardNumber,
-                                               expiryMonth: request.expiryMonth, expiryYear: request.expiryYear, cvv: request.cvc) { result in
+                                               expiryMonth: request.expiryMonth, expiryYear: request.expiryYear, cvc: request.cvc) { result in
                 switch result {
                 case .success:
                     XCTFail("Service response expected to be unsuccessful")

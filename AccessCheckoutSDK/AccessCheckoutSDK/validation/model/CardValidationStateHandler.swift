@@ -3,12 +3,12 @@ class CardValidationStateHandler {
     private(set) var panIsValid = false
     private(set) var cardBrand: CardBrandModel?
     private(set) var expiryDateIsValid = false
-    private(set) var cvvIsValid = false
+    private(set) var cvcIsValid = false
     private let cardBrandModelTransformer: CardBrandModelTransformer
     
     private(set) var alreadyNotifiedMerchantOfPanValidationState = false
     private(set) var alreadyNotifiedMerchantOfExpiryDateValidationState = false
-    private(set) var alreadyNotifiedMerchantOfCvvValidationState = false
+    private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
     
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
@@ -37,14 +37,14 @@ class CardValidationStateHandler {
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
-    init(merchantDelegate: AccessCheckoutCardValidationDelegate, cvvValidationState: Bool) {
+    init(merchantDelegate: AccessCheckoutCardValidationDelegate, cvcValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
-        self.cvvIsValid = cvvValidationState
+        self.cvcIsValid = cvcValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
     
     private func allFieldsValid() -> Bool {
-        return panIsValid && expiryDateIsValid && cvvIsValid
+        return panIsValid && expiryDateIsValid && cvcIsValid
     }
 }
 
@@ -104,11 +104,11 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     }
 }
 
-extension CardValidationStateHandler: CvvValidationStateHandler {
-    func handleCvvValidation(isValid: Bool) {
-        if isValid != cvvIsValid {
-            cvvIsValid = isValid
-            notifyMerchantOfCvvValidationState()
+extension CardValidationStateHandler: CvcValidationStateHandler {
+    func handleCvcValidation(isValid: Bool) {
+        if isValid != cvcIsValid {
+            cvcIsValid = isValid
+            notifyMerchantOfCvcValidationState()
             
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
@@ -116,8 +116,8 @@ extension CardValidationStateHandler: CvvValidationStateHandler {
         }
     }
     
-    func notifyMerchantOfCvvValidationState() {
-        merchantDelegate.cvvValidChanged(isValid: cvvIsValid)
-        alreadyNotifiedMerchantOfCvvValidationState = true
+    func notifyMerchantOfCvcValidationState() {
+        merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
+        alreadyNotifiedMerchantOfCvcValidationState = true
     }
 }

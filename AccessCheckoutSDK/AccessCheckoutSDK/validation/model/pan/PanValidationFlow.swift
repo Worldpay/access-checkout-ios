@@ -3,24 +3,24 @@ import Foundation
 class PanValidationFlow {
     private let panValidator: PanValidator
     private let panValidationStateHandler: PanValidationStateHandler
-    private let cvvFlow: CvvValidationFlow
+    private let cvcFlow: CvcValidationFlow
     
-    init(_ panValidator: PanValidator, _ panValidationStateHandler: PanValidationStateHandler, _ cvvFlow: CvvValidationFlow) {
+    init(_ panValidator: PanValidator, _ panValidationStateHandler: PanValidationStateHandler, _ cvcFlow: CvcValidationFlow) {
         self.panValidator = panValidator
         self.panValidationStateHandler = panValidationStateHandler
-        self.cvvFlow = cvvFlow
+        self.cvcFlow = cvcFlow
     }
     
-    func validate(pan: PAN) {
+    func validate(pan: String) {
         let result = panValidator.validate(pan: pan)
         if panValidationStateHandler.isCardBrandDifferentFrom(cardBrand: result.cardBrand) {
             if let cardBrand = result.cardBrand {
-                cvvFlow.updateValidationRule(with: cardBrand.cvvValidationRule)
+                cvcFlow.updateValidationRule(with: cardBrand.cvcValidationRule)
             } else {
-                cvvFlow.resetValidationRule()
+                cvcFlow.resetValidationRule()
             }
             
-            cvvFlow.revalidate()
+            cvcFlow.revalidate()
         }
         
         panValidationStateHandler.handlePanValidation(isValid: result.isValid, cardBrand: result.cardBrand)

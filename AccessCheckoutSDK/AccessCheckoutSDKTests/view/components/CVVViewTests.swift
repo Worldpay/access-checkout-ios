@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class CVVViewTests: XCTestCase {
+class CvcViewTests: XCTestCase {
     private let brandsStartingWith4AndCvv2DigitsLong = TextFixtures.createCardBrandModel(
         name: "a-brand",
         panPattern: "^4\\d*$",
@@ -10,7 +10,7 @@ class CVVViewTests: XCTestCase {
         cvcValidLength: 2
     )
     
-    private let cvvView = CVVView()
+    private let cvvView = CvcView()
     private let panView = PANView()
     
     // MARK: testing what the end user can and cannot type
@@ -115,13 +115,13 @@ class CVVViewTests: XCTestCase {
         view.textFieldEditingChanged(view.textField)
     }
     
-    private func type(_ text: String, into view: CVVView) -> Bool {
+    private func type(_ text: String, into view: CvcView) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
         return view.textField(view.textField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
-    private func initialiseValidation(cardBrands: [CardBrandModel], cvvView: CVVView, panView: PANView) {
+    private func initialiseValidation(cardBrands: [CardBrandModel], cvvView: CvcView, panView: PANView) {
         let merchantDelegate = createMerchantDelegate()
         let configurationProvider = createConfigurationProvider(with: [brandsStartingWith4AndCvv2DigitsLong])
         
@@ -149,7 +149,7 @@ class CVVViewTests: XCTestCase {
         merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cvvValidChanged(isValid: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         
         return merchantDelegate
     }

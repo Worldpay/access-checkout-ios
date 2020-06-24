@@ -22,7 +22,7 @@ class RestClientTests: XCTestCase {
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
     }
     
-    func testRestClientProvidesSuccessfulResponseToPromise() {
+    func testRestClientCanReturnSuccessfulResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("{\"id\":1, \"name\":\"some name\"}"), status: 200))
@@ -41,7 +41,7 @@ class RestClientTests: XCTestCase {
         wait(for: [expectationToWaitFor], timeout: 1)
     }
     
-    func testRestClientProvidesTranslatedErrorToPromise() {
+    func testRestClientCanReturnError() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("""
@@ -61,7 +61,7 @@ class RestClientTests: XCTestCase {
                 case .success:
                     XCTFail("Expected failed response but received successful response")
                 case .failure(let error):
-                    XCTAssertEqual("bodyDoesNotMatchSchema", error.errorName)
+                    XCTAssertEqual("bodyDoesNotMatchSchema : The json body provided does not match the expected schema", error.message)
             }
             expectationToWaitFor.fulfill()
         }
@@ -71,7 +71,7 @@ class RestClientTests: XCTestCase {
     
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("some data returned"), status: 200))
         
@@ -90,7 +90,7 @@ class RestClientTests: XCTestCase {
     
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToGetAResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
-        let expectedError = AccessCheckoutClientError.unknown(message: "Could not connect to the server.")
+        let expectedError = StubUtils.createError(errorName: "unexpectedApiError", message: "Could not connect to the server.")
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in

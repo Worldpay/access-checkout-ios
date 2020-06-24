@@ -2,9 +2,9 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panView: PANView!
+    @IBOutlet weak var panView: PanView!
     @IBOutlet weak var expiryDateView: ExpiryDateView!
-    @IBOutlet weak var cvvView: CVVView!
+    @IBOutlet weak var cvcView: CvcView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
@@ -15,20 +15,20 @@ class CardFlowViewController: UIViewController {
     @IBAction func submit(_ sender: Any) {
         guard let pan = panView.text,
             let expiryDate = expiryDateView.text,
-            let cvv = cvvView.text else {
+            let cvc = cvcView.text else {
             return
         }
-        submitCard(pan: pan, expiryDate: expiryDate, cvv: cvv)
+        submitCard(pan: pan, expiryDate: expiryDate, cvc: cvc)
     }
     
-    private func submitCard(pan: PAN, expiryDate: String, cvv: CVV) {
+    private func submitCard(pan: String, expiryDate: String, cvc: String) {
         spinner.startAnimating()
         
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
         
         let cardDetails = try! CardDetailsBuilder().pan(pan)
             .expiryDate(expiryDate)
-            .cvv(cvv)
+            .cvc(cvc)
             .build()
         
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
@@ -59,12 +59,9 @@ class CardFlowViewController: UIViewController {
                     })
                 case .failure(let error):
                     let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors: [AccessCheckoutClientValidationError]?
-                    switch error {
-                    case .bodyDoesNotMatchSchema(_, let validationErrors):
-                        accessCheckoutClientValidationErrors = validationErrors
-                    default:
-                        break
+                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.ValidationError]?
+                    if error.message.contains("bodyDoesNotMatchSchema") {
+                        accessCheckoutClientValidationErrors = error.validationErrors
                     }
                     
                     AlertView.display(using: self, title: title, message: nil, closeHandler: {
@@ -75,32 +72,26 @@ class CardFlowViewController: UIViewController {
         }
     }
     
-    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutClientValidationError]?) {
+    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.ValidationError]?) {
         if !preserveContent {
             panView.clear()
             expiryDateView.clear()
-            cvvView.clear()
+            cvcView.clear()
         }
         
         validationErrors?.forEach { error in
-            switch error {
-            case .panFailedLuhnCheck:
+            if error.errorName == "panFailedLuhnCheck" {
                 changePanValidIndicator(isValid: false)
-            case .dateHasInvalidFormat(_, let jsonPath):
-                switch jsonPath {
-                case "$.cardNumber":
+            } else if error.errorName == "dateHasInvalidFormat" {
+                if error.jsonPath == "$.cardNumber" {
                     changePanValidIndicator(isValid: false)
-                case "$.cardExpiryDate.month":
+                } else if error.jsonPath == "$.cardExpiryDate.month" {
                     changeExpiryDateValidIndicator(isValid: false)
-                case "$.cardExpiryDate.year":
+                } else if error.jsonPath == "$.cardExpiryDate.year" {
                     changeExpiryDateValidIndicator(isValid: false)
-                case "$.cvv":
-                    changeCvvValidIndicator(isValid: false)
-                default:
-                    print("Unrecognized jsonPath")
+                } else if error.jsonPath == "$.cvv" {
+                    changeCvcValidIndicator(isValid: false)
                 }
-            default:
-                break
             }
         }
     }
@@ -116,15 +107,15 @@ class CardFlowViewController: UIViewController {
         expiryDateView.layer.borderColor = UIColor.lightText.cgColor
         expiryDateView.layer.cornerRadius = 8
         
-        cvvView.layer.borderWidth = 1
-        cvvView.layer.borderColor = UIColor.lightText.cgColor
-        cvvView.layer.cornerRadius = 8
+        cvcView.layer.borderWidth = 1
+        cvcView.layer.borderColor = UIColor.lightText.cgColor
+        cvcView.layer.cornerRadius = 8
         
         resetCard(preserveContent: false, validationErrors: nil)
         
         let validationConfig = CardValidationConfig(panView: panView,
                                                     expiryDateView: expiryDateView,
-                                                    cvvView: cvvView,
+                                                    cvcView: cvcView,
                                                     accessBaseUrl: accessBaseUrl,
                                                     validationDelegate: self)
         
@@ -132,7 +123,7 @@ class CardFlowViewController: UIViewController {
         
         panValidChanged(isValid: false)
         expiryDateValidChanged(isValid: false)
-        cvvValidChanged(isValid: false)
+        cvcValidChanged(isValid: false)
         cardBrandChanged(cardBrand: nil)
     }
     
@@ -154,13 +145,13 @@ class CardFlowViewController: UIViewController {
         expiryDateView.textColor = isValid ? nil : UIColor.red
     }
     
-    private func changeCvvValidIndicator(isValid: Bool) {
-        cvvView.textColor = isValid ? nil : UIColor.red
+    private func changeCvcValidIndicator(isValid: Bool) {
+        cvcView.textColor = isValid ? nil : UIColor.red
     }
 }
 
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrandClient?) {
+    func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
             let url = URL(string: imageUrl) {
             updateCardBrandImage(url: url)
@@ -175,8 +166,8 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
         disableSubmitIfNotValid(valid: isValid)
     }
     
-    func cvvValidChanged(isValid: Bool) {
-        changeCvvValidIndicator(isValid: isValid)
+    func cvcValidChanged(isValid: Bool) {
+        changeCvcValidIndicator(isValid: isValid)
         disableSubmitIfNotValid(valid: isValid)
     }
     

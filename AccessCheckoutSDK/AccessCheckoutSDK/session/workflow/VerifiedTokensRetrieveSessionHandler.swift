@@ -9,13 +9,13 @@ class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
         return sessionType == SessionType.verifiedTokens
     }
 
-    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutClientError>) -> Void) {
+    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
         apiClient.createSession(baseUrl: baseUrl,
                                 merchantId: merchantId,
                                 pan: cardDetails.pan!,
                                 expiryMonth: cardDetails.expiryMonth!,
                                 expiryYear: cardDetails.expiryYear!,
-                                cvv: cardDetails.cvv!,
+                                cvc: cardDetails.cvc!,
                                 completionHandler: completionHandler)
     }
 }

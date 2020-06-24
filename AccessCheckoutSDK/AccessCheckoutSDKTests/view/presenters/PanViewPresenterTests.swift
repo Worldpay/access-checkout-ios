@@ -50,11 +50,11 @@ class PanViewPresenterTests: XCTestCase {
 
     private static func mockPanValidationFlow() -> MockPanValidationFlow {
         let validationStateHandler = CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate())
-        let cvvValidationFlow = MockCvvValidationFlow(CvvValidator(), validationStateHandler)
+        let cvcValidationFlow = MockCvcValidationFlow(CvcValidator(), validationStateHandler)
         let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
         let panValidator = PanValidator(configurationProvider)
 
-        return MockPanValidationFlow(panValidator, validationStateHandler, cvvValidationFlow)
+        return MockPanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
     }
 
     static func mockPanValidator() -> MockPanValidator {

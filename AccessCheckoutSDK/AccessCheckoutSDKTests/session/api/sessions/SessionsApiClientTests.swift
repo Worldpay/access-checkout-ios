@@ -4,7 +4,7 @@ import XCTest
 
 class SessionsApiClientTests: XCTestCase {
     private let baseUrl = "http://localhost"
-    private let cvv = "123"
+    private let cvc = "123"
     
     private let mockDiscovery = SessionsApiDiscoveryMock()
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
@@ -26,12 +26,12 @@ class SessionsApiClientTests: XCTestCase {
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
                 XCTAssertEqual(self.urlRequestFactoryResult, mockRestClient.requestSent)
-                XCTAssertEqual(self.cvv, self.mockURLRequestFactory.cvvPassed)
+                XCTAssertEqual(self.cvc, self.mockURLRequestFactory.cvcPassed)
                 XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlStringPassed)
             case .failure:
                 XCTFail("Creation of session shoul have succeeded")
@@ -43,13 +43,13 @@ class SessionsApiClientTests: XCTestCase {
     }
     
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
-        let expectedError = AccessCheckoutClientError.unknown(message: "an-error")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         mockDiscovery.willComplete(with: expectedError)
         let mockRestClient = RestClientMock(replyWith: successResponse(withSession: expectedSession))
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -65,15 +65,16 @@ class SessionsApiClientTests: XCTestCase {
     func testReturnsSessionNotFound_whenExpectedSessionIsNotInResponse() {
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
+        let expectedError = StubUtils.createError(errorName: "sessionLinkNotFound", message: "Failed to find link \(ApiLinks.sessions.result) in response")
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
             case .failure(let error):
-                XCTAssertEqual(AccessCheckoutClientError.sessionNotFound(message: "Failed to find link \(ApiLinks.sessions.result) in response"), error)
+                XCTAssertEqual(expectedError, error)
             }
             self.expectationToFulfill!.fulfill()
         }
@@ -83,12 +84,12 @@ class SessionsApiClientTests: XCTestCase {
     
     func testReturnsServiceError_whenServiceErrorsOut() {
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
-        let expectedError = AccessCheckoutClientError.unknown(message: "some-error")
+        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let mockRestClient = RestClientMock<String>(errorWith: expectedError)
         
         let client = SessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvv: cvv) { result in
+        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
