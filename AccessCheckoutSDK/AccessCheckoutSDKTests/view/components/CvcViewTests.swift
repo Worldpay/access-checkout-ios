@@ -89,6 +89,12 @@ class CvcViewTests: ViewTestSuite {
         XCTAssertEqual("some text", cvcView.text)
     }
     
+    func testTextIsReturnedAsEmptyWhenTextFieldTextIsNil() {
+        cvcView.textField.text = nil
+        
+        XCTAssertEqual("", cvcView.text)
+    }
+    
     // MARK: enabled feature
     
     func testCanGetTextFieldEnabledState() {

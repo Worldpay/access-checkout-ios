@@ -49,12 +49,9 @@ import UIKit
 
 extension PanView: AccessCheckoutTextView {
     /// The card number represented by the view
-    public var text: String? {
+    public var text: String {
         guard let text = textField.text else {
-            return nil
-        }
-        guard !text.isEmpty else {
-            return nil
+            return ""
         }
         return text
     }

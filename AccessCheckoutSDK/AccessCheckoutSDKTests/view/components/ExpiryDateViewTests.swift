@@ -198,6 +198,12 @@ class ExpiryDateViewTests: ViewTestSuite {
         XCTAssertEqual("some text", expiryDateView.text)
     }
     
+    func testTextIsReturnedAsEmptyWhenTextFieldTextIsNil() {
+        expiryDateView.textField.text = nil
+        
+        XCTAssertEqual("", expiryDateView.text)
+    }
+    
     // MARK: enabled feature
     
     func testCanGetTextFieldEnabledState() {

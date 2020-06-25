@@ -80,6 +80,12 @@ class PanViewTests: ViewTestSuite {
         XCTAssertEqual("some text", panView.text)
     }
     
+    func testTextIsReturnedAsEmptyWhenTextFieldTextIsNil() {
+        panView.textField.text = nil
+        
+        XCTAssertEqual("", panView.text)
+    }
+    
     // MARK: enabled feature
     
     func testCanGetTextFieldEnabledState() {

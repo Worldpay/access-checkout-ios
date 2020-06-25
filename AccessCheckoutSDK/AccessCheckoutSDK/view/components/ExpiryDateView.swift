@@ -77,13 +77,11 @@ import UIKit
 
 extension ExpiryDateView: AccessCheckoutTextView {
     /// The Expiry Date represented by the view
-    public var text: String? {
+    public var text: String {
         guard let text = textField.text else {
-            return nil
+            return ""
         }
-        guard !text.isEmpty else {
-            return nil
-        }
+        
         return text
     }
     

@@ -9,9 +9,7 @@ class CvcFlowViewController: UIViewController {
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
-        guard let cvc = cvcView.text else {
-            return
-        }
+        let cvc = cvcView.text
         
         spinner.startAnimating()
         

@@ -13,12 +13,9 @@ class CardFlowViewController: UIViewController {
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submit(_ sender: Any) {
-        guard let pan = panView.text,
-            let expiryDate = expiryDateView.text,
-            let cvc = cvcView.text else {
-            return
-        }
-        submitCard(pan: pan, expiryDate: expiryDate, cvc: cvc)
+        submitCard(pan: panView.text,
+                   expiryDate: expiryDateView.text,
+                   cvc: cvcView.text)
     }
     
     private func submitCard(pan: String, expiryDate: String, cvc: String) {
