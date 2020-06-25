@@ -14,5 +14,5 @@ protocol AccessCheckoutTextView {
     var presenter: Presenter? { get set }
     
     /// The text
-    var text: String? { get }
+    var text: String { get }
 }

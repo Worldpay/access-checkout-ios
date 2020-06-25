@@ -12,7 +12,7 @@ extension AccessCheckoutError: Encodable {
     }
 }
 
-extension AccessCheckoutError.ValidationError: Encodable {
+extension AccessCheckoutError.AccessCheckoutValidationError: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
 

@@ -47,13 +47,11 @@ import UIKit
 
 extension CvcView: AccessCheckoutTextView {
     /// The Cvc represented by the view
-    public var text: String? {
+    public var text: String {
         guard let text = textField.text else {
-            return nil
+            return ""
         }
-        guard !text.isEmpty else {
-            return nil
-        }
+        
         return text
     }
     
