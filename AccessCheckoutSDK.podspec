@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
   iOS SDK library for Worldpay Access Checkout.
                    DESC
 
-  spec.documentation_url = 'https://beta.developer.worldpay.com/docs/access-worldpay/checkout'
+  spec.documentation_url = 'https://developer.worldpay.com/docs/access-worldpay/checkout'
 
   spec.swift_version = '5.0'
   spec.platform = :ios
