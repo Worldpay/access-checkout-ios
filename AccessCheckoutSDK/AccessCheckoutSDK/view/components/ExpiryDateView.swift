@@ -1,10 +1,15 @@
 import UIKit
 
-/// A view representing a card's expiry date
+/**
+A view representing a card's Expiry Date
+- text: `String` representing the Expiry Date entered by the end user
+- isEnabled: `Boolean` allowing to enable or disable editing
+- textColor: `UIColor?` allowing to set the colour of the text displayed in the textinput
+- clear(): clears the text that was entered by the end user
+*/
 @IBDesignable public class ExpiryDateView: UIView {
     @IBOutlet weak var textField: UITextField!
     
-    /// The delegate to handle view events
     var presenter: Presenter?
     
     private var textChangeHandler = TextChangeHandler()
@@ -76,7 +81,9 @@ import UIKit
 }
 
 extension ExpiryDateView: AccessCheckoutTextView {
-    /// The Expiry Date represented by the view
+    /**
+    `String` representing the Expiry Date entered by the end user
+    */
     public var text: String {
         guard let text = textField.text else {
             return ""
@@ -85,6 +92,9 @@ extension ExpiryDateView: AccessCheckoutTextView {
         return text
     }
     
+    /**
+    `Boolean` allowing to enable or disable editing
+    */
     public var isEnabled: Bool {
         get {
             return textField.isEnabled
@@ -94,7 +104,9 @@ extension ExpiryDateView: AccessCheckoutTextView {
         }
     }
     
-    /// Colour of the text displayed in the textFields
+    /**
+    `UIColor?` allowing to get or change the colour of the text displayed in the textinput
+    */
     public var textColor: UIColor? {
         get {
             return textField.textColor
@@ -104,7 +116,9 @@ extension ExpiryDateView: AccessCheckoutTextView {
         }
     }
     
-    /// Clears any text input.
+    /**
+    Clears the text that was entered by the end user
+    */
     public func clear() {
         textField.text = ""
         

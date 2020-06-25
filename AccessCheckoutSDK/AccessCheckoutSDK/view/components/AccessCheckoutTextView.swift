@@ -1,18 +1,27 @@
 /// A view representing a text field
 protocol AccessCheckoutTextView {
-    
-    /// Is enabled for editing
+    /**
+     `Boolean` allowing to enable or disable editing
+     */
     var isEnabled: Bool { get set }
-    
-    /// Colour of the text displayed
+
+    /**
+     `UIColor?` allowing to set the colour of the text displayed in the textinput
+     */
     var textColor: UIColor? { get set }
-    
-    /// Clear the contents of any view input
+
+    /**
+     clears the text that was entered by the end user
+     */
     func clear()
-    
-    /// Presenter instance used by the view to interact with the business layer
+
+    /**
+     Presentation layer used by the view to interact with the validation feature
+     */
     var presenter: Presenter? { get set }
-    
-    /// The text
+
+    /**
+     `String` representing the CVC entered by the end user
+     */
     var text: String { get }
 }

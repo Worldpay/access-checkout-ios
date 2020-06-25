@@ -1,6 +1,12 @@
+/**
+ * Class that is responsible for initialising validation using a given `ValidationConfig`
+ */
 public struct AccessCheckoutValidationInitialiser {
     private var configurationProvider: CardBrandsConfigurationProvider
     
+    /**
+     This initialiser should be used to create an instance of `AccessCheckoutValidationInitialiser`
+     */
     public init() {
         let restClient = RestClient()
         let transformer = CardBrandDtoTransformer()
@@ -13,6 +19,10 @@ public struct AccessCheckoutValidationInitialiser {
         self.configurationProvider = cardBrandsConfigurationProvider
     }
     
+    /**
+     This function should be used to initialise the validation using a given `ValidationConfig` provided by the merchant
+     - Parameter validationConfig]: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     */
     public func initialise(_ validationConfiguration: ValidationConfig) {
         if validationConfiguration is CardValidationConfig {
             initialiseForCardPaymentFlow(validationConfiguration as! CardValidationConfig)
