@@ -47,7 +47,7 @@
 		E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85F82437CB440031F7AC /* ServiceStub.swift */; };
 		E75F85FB2437CDC80031F7AC /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
 		E7993C8A243730820082E2C2 /* sessions-paymentsCvc-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E7993C89243730820082E2C2 /* sessions-paymentsCvc-error.json */; };
-		E79A3F1524360C0D00A20555 /* CvvFlowRetrieveSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79A3F1424360C0D00A20555 /* CvvFlowRetrieveSessionTests.swift */; };
+		E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79A3F1424360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift */; };
 		E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A09297243CB24100BCABC8 /* AlertView.swift */; };
 		E7B7F4DB24350F4B00E2DDA6 /* CvcFlowValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4DA24350F4B00E2DDA6 /* CvcFlowValidationTests.swift */; };
 		E7B7F4DD2435125400E2DDA6 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */; };
@@ -114,7 +114,7 @@
 		E75F85F82437CB440031F7AC /* ServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStub.swift; sourceTree = "<group>"; };
 		E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
 		E7993C89243730820082E2C2 /* sessions-paymentsCvc-error.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sessions-paymentsCvc-error.json"; sourceTree = "<group>"; };
-		E79A3F1424360C0D00A20555 /* CvvFlowRetrieveSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvvFlowRetrieveSessionTests.swift; sourceTree = "<group>"; };
+		E79A3F1424360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcFlowRetrieveSessionTests.swift; sourceTree = "<group>"; };
 		E7A09297243CB24100BCABC8 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		E7B7F4DA24350F4B00E2DDA6 /* CvcFlowValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcFlowValidationTests.swift; sourceTree = "<group>"; };
 		E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 				E74F7C3B24741490005D40FE /* CardFlowUITests.swift */,
 				C9AFE47922B7C6DA00943B3E /* CardFlowValidationTests.swift */,
 				E7B7F4DA24350F4B00E2DDA6 /* CvcFlowValidationTests.swift */,
-				E79A3F1424360C0D00A20555 /* CvvFlowRetrieveSessionTests.swift */,
+				E79A3F1424360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift */,
 				E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */,
 				C9AFE41022B799AE00943B3E /* Info.plist */,
 			);
@@ -498,7 +498,7 @@
 				E74F7C3C24741490005D40FE /* CardFlowUITests.swift in Sources */,
 				E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */,
 				E72152842437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift in Sources */,
-				E79A3F1524360C0D00A20555 /* CvvFlowRetrieveSessionTests.swift in Sources */,
+				E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */,
 				E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */,
 				E7B7F4E22435EF5100E2DDA6 /* NavigationViewPageObject.swift in Sources */,
 				E7B7F4E02435EEB200E2DDA6 /* CvcOnlyFlowViewPageObject.swift in Sources */,
