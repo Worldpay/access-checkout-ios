@@ -1,10 +1,15 @@
 import UIKit
 
-/// A view representing a card's Card Verification Value
+/**
+ A view representing a card's Card Verification value Code
+ - text: `String` representing the CVC entered by the end user
+ - isEnabled: `Boolean` allowing to enable or disable editing
+ - textColor: `UIColor?` allowing to set the colour of the text displayed in the textinput
+ - clear(): clears the text that was entered by the end user
+ */
 @IBDesignable public class CvcView: UIView {
     @IBOutlet weak var textField: UITextField!
     
-    /// The delegate to handle view events
     var presenter: Presenter?
     
     private let textChangeHandler: TextChangeHandler = TextChangeHandler()
@@ -46,7 +51,9 @@ import UIKit
 }
 
 extension CvcView: AccessCheckoutTextView {
-    /// The Cvc represented by the view
+    /**
+     `String` representing the CVC entered by the end user
+     */
     public var text: String {
         guard let text = textField.text else {
             return ""
@@ -55,7 +62,9 @@ extension CvcView: AccessCheckoutTextView {
         return text
     }
     
-    /// View is enabled for editing
+    /**
+     `Boolean` allowing to enable or disable editing
+     */
     public var isEnabled: Bool {
         get {
             return textField.isEnabled
@@ -65,7 +74,9 @@ extension CvcView: AccessCheckoutTextView {
         }
     }
     
-    /// Colour of the text displayed in the textField
+    /**
+     `UIColor?` allowing to get or change the colour of the text displayed in the textinput
+     */
     public var textColor: UIColor? {
         get {
             return textField.textColor
@@ -75,7 +86,9 @@ extension CvcView: AccessCheckoutTextView {
         }
     }
     
-    /// Clears any text input.
+    /**
+     Clears the text that was entered by the end user
+     */
     public func clear() {
         textField.text = ""
         (presenter as? CvcViewPresenter)?.onEditing(text: "")

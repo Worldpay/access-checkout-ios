@@ -1,16 +1,30 @@
-# Access Checkout iOS
+# Access Checkout SDK for iOS
+
+## Table of Contents
+* [Project Structure](#project-structure)
+* [How to integrate the SDK in an iOS app](#how-to-integrate-the-sdk-in-an-ios-app)
+* [Getting started with SDK development](#getting-started-with-sdk-development)
 
 ## Project Structure
-Access Checkout is split into two projects:
 
-1. The framework, [AccessCheckoutSDK](/AccessCheckoutSDK), available as a [Cocoapods](https://cocoapods.org) pod
-2. A sample App, [AccessCheckoutDemo](/AccessCheckoutDemo), demonstrating a simple integration
+<div align="right">
+    <b><a href="#access-checkout-sdk-for-ios">↥ back to top</a></b>
+</div>
 
-## Using the SDK as a dependency to your project
+Access Checkout iOS is split into two projects:
 
-Simply add this SDK to your project using Cocoapods 
+1. The [AccessCheckoutSDK](/AccessCheckoutSDK), available as a [Cocoapods](https://cocoapods.org) pod
+2. A sample App, [AccessCheckoutDemo](/AccessCheckoutDemo), demonstrating how to integrate the different functionalities available in the SDK
+
+## How to integrate the SDK in an iOS app
+
+Refer to the Worldpay Developers documentation to find out how to integrate the SDK in your app - [https://developer.worldpay.com/docs/access-worldpay/checkout/ios](https://developer.worldpay.com/docs/access-worldpay/checkout/ios)
 
 ## Getting started with SDK development
+
+<div align="right">
+    <b><a href="#access-checkout-sdk-for-ios">↥ back to top</a></b>
+</div>
 
 ### Building the SDK project
 
@@ -71,18 +85,21 @@ Note: <access-checkout-ios-root> refers to the folder that contains your copy of
 
 6. When running the Pact tests to generate and upload new Pact versions - make sure you run each Pact test file separately one after the other. There is an issue with PactConsumerSwift not supporting multiple providers.
 
+### Generate a mock class using Cuckoo for an existing production code class or protocol
+
+See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
+
 ### Running the Demo App
 
 1. Install dependencies for the demo app
     ```
     cd <access-checkout-ios-root>/AccessCheckoutDemo
     pod install
-    pod update
     ```
 2. Open project in XCode
     1. Click on 'File > Open'
     2. Select the '<access-checkout-ios-root>/AccessCheckoutSDKDemo/' directory and click 'Open'
     
 3. Run the demo app
-    1. Click the `Play` button on the top-left corner of the screen will actually open the demo app in the simulated device of your choice.
+    1. Click the `Play` button on the top-left corner of the screen to open the demo app in the simulated device of your choice.
     

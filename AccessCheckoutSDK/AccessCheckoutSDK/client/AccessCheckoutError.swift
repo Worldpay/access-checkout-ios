@@ -1,6 +1,11 @@
 import Foundation
 
-/// Describes an Access Checkout error
+/**
+ Represents an error that occurred while attempting to retrieve one or multiple sessions
+
+ - message: `String` containing a description of the error that occured
+ - validationErrors: an `Array` of `AccessCheckoutValidationError` containing more details about the error that occurred
+ */
 public struct AccessCheckoutError: Error, Equatable {
     let errorName: String
     public let message: String
@@ -63,6 +68,13 @@ extension AccessCheckoutError: LocalizedError {
     }
 }
 
+/**
+ Represents the details of the failure of a validation in Worldpay API services
+
+ - errorName: `String` containing a descriptive name for an error as per Worldpay's internal API services implementation
+ - message: `String` containing more details about the error that occurred
+ - jsonPath: `String` that contains the field that provoked the validation failure
+ */
 extension AccessCheckoutError.AccessCheckoutValidationError: Decodable {
     enum Key: CodingKey {
         case errorName
