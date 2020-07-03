@@ -8,7 +8,7 @@
  - Attention: The the only way to create an instance of this class is by using the `AccessCheckoutClientBuilder`
  - SeeAlso: AccessCheckoutClientBuilder
  */
-public class AccessCheckoutClient {
+public struct AccessCheckoutClient {
     private let merchantId: String
     private let baseUrl: String
     private let cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator
