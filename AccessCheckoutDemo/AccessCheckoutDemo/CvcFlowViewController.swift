@@ -21,13 +21,13 @@ class CvcFlowViewController: UIViewController {
             .merchantId(CI.merchantId)
             .build()
         
-        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.paymentsCvc]) { result in
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.cvc]) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
                 
                 switch result {
                     case .success(let sessions):
-                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.paymentsCvc], closeHandler: {
+                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.cvc], closeHandler: {
                             self.cvcView.clear()
                     })
                     case .failure(let error):
