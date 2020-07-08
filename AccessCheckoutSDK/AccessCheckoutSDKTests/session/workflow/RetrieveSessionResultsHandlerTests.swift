@@ -10,8 +10,8 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             switch result {
             case .success(let sessions):
                 XCTAssertEqual(2, sessions.count)
-                XCTAssertEqual("session verified tokens", sessions[.verifiedTokens])
-                XCTAssertEqual("session payments cvc", sessions[.paymentsCvc])
+                XCTAssertEqual("session verified tokens", sessions[.card])
+                XCTAssertEqual("session payments cvc", sessions[.cvc])
             case .failure(let error):
                 XCTFail("Expected successful result but got error \(error)")
             }
@@ -19,8 +19,8 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.verifiedTokens)
-        handler.handle(paymentsCvcSession, for: SessionType.paymentsCvc)
+        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)
     }
@@ -41,8 +41,8 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.verifiedTokens)
-        handler.handle(paymentsCvcSession, for: SessionType.paymentsCvc)
+        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)
     }
@@ -64,8 +64,8 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.verifiedTokens)
-        handler.handle(paymentsCvcSession, for: SessionType.paymentsCvc)
+        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)
     }

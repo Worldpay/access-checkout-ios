@@ -5,13 +5,13 @@ class VerifiedTokensRetrieveSessionHandlerTests: XCTestCase {
     func testCanHandleVerifiedTokensSession() {
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: VerifiedTokensApiClientMock(sessionToReturn: ""))
 
-        XCTAssertTrue(sessionHandler.canHandle(sessionType: SessionType.verifiedTokens))
+        XCTAssertTrue(sessionHandler.canHandle(sessionType: SessionType.card))
     }
 
     func testCannotHandlePaymentsCvcSession() {
         let sessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: VerifiedTokensApiClientMock(sessionToReturn: ""))
 
-        XCTAssertFalse(sessionHandler.canHandle(sessionType: SessionType.paymentsCvc))
+        XCTAssertFalse(sessionHandler.canHandle(sessionType: SessionType.cvc))
     }
 
     func testRetrievesAVerifiedTokensSession() throws {

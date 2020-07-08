@@ -18,10 +18,10 @@ class AccessCheckoutClientTests: XCTestCase {
         stubVerifiedTokensEndPointsDiscoverySuccess()
         stubVerifiedTokensSessionSuccess(session: "expected-verified-tokens-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card]) { result in
             switch result {
                 case .success(let sessions):
-                    XCTAssertEqual("expected-verified-tokens-session", sessions[.verifiedTokens])
+                    XCTAssertEqual("expected-verified-tokens-session", sessions[.card])
                 case .failure:
                     XCTFail("got an error back from services")
             }
@@ -40,10 +40,10 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc]) { result in
             switch result {
                 case .success(let sessions):
-                    XCTAssertEqual("expected-payments-cvc-session", sessions[.paymentsCvc])
+                    XCTAssertEqual("expected-payments-cvc-session", sessions[.cvc])
                 case .failure:
                     XCTFail("got an error back from services")
             }
@@ -64,11 +64,11 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success(let sessions):
-                    XCTAssertEqual("expected-verified-tokens-session", sessions[.verifiedTokens])
-                    XCTAssertEqual("expected-payments-cvc-session", sessions[.paymentsCvc])
+                    XCTAssertEqual("expected-verified-tokens-session", sessions[.card])
+                    XCTAssertEqual("expected-payments-cvc-session", sessions[.cvc])
                 case .failure:
                     XCTFail("got an error back from services")
             }
@@ -90,7 +90,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-verified-tokens-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -115,7 +115,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         // Payments Cvc Session end point is not stubbed to mimic the service not being reachable
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -140,7 +140,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -165,7 +165,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionFailure(error: expectedError)
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -190,7 +190,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointDiscoveryFailure(error: expectedError)
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -218,7 +218,7 @@ class AccessCheckoutClientTests: XCTestCase {
         stubSessionsEndPointsDiscoverySuccess()
         stubSessionsPaymentsCvcSessionSuccess(session: "expected-payments-cvc-session")
         
-        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.verifiedTokens, .paymentsCvc]) { result in
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) { result in
             switch result {
                 case .success:
                     XCTFail("Should have received an error but received sessions")
@@ -248,7 +248,7 @@ class AccessCheckoutClientTests: XCTestCase {
             .cvc("123")
             .build()
         
-        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc, .verifiedTokens]) { _ in }) { error in
+        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc, .card]) { _ in }) { error in
             XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
         }
     }
@@ -258,7 +258,7 @@ class AccessCheckoutClientTests: XCTestCase {
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().build()
         
-        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.paymentsCvc]) { _ in }) { error in
+        XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc]) { _ in }) { error in
             XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
         }
     }

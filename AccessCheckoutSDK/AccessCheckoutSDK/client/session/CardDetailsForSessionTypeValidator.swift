@@ -1,9 +1,9 @@
 class CardDetailsForSessionTypeValidator {
     func validate(cardDetails: CardDetails, for sessionType: SessionType) throws {
         switch sessionType {
-            case .verifiedTokens:
+            case .card:
                 try validateForVerifiedTokensSession(cardDetails)
-            case .paymentsCvc:
+            case .cvc:
                 try validateForCvcSession(cardDetails)
         }
     }
