@@ -21,7 +21,7 @@ class CardFlowViewController: UIViewController {
     private func submitCard(pan: String, expiryDate: String, cvc: String) {
         spinner.startAnimating()
         
-        let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.verifiedTokens, SessionType.paymentsCvc] : [SessionType.verifiedTokens]
+        let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
         
         let cardDetails = try! CardDetailsBuilder().pan(pan)
             .expiryDate(expiryDate)
@@ -43,12 +43,12 @@ class CardFlowViewController: UIViewController {
                     if sessionTypes.count > 1 {
                         titleToDisplay = "Verified Tokens & Payments CVC Sessions"
                         messageToDisplay = """
-                        \(sessions[SessionType.verifiedTokens]!)
-                        \(sessions[SessionType.paymentsCvc]!)
+                        \(sessions[SessionType.card]!)
+                        \(sessions[SessionType.cvc]!)
                         """
                     } else {
                         titleToDisplay = "Verified Tokens Session"
-                        messageToDisplay = "\(sessions[SessionType.verifiedTokens]!)"
+                        messageToDisplay = "\(sessions[SessionType.card]!)"
                     }
                     
                     AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {

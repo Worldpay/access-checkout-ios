@@ -6,7 +6,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
 
     func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() throws {
         let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected pan to be provided but was not")
-        let sessionType = SessionType.verifiedTokens
+        let sessionType = SessionType.card
         let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
             .cvc("123")
             .build()
@@ -18,7 +18,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
 
     func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() throws {
         let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected expiry date to be provided but was not")
-        let sessionType = SessionType.verifiedTokens
+        let sessionType = SessionType.card
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvc("123")
             .build()
@@ -30,7 +30,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
 
     func testFailsToRetrieveSessionIfCvcIsNotProvided() throws {
         let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
-        let sessionType = SessionType.verifiedTokens
+        let sessionType = SessionType.card
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .expiryDate("12/20")
             .build()
@@ -42,7 +42,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
 
     func testThrowsExceptionForCvcSessionTypeWhenCvcIsNotProvided() throws {
         let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
-        let sessionType = SessionType.paymentsCvc
+        let sessionType = SessionType.cvc
         let cardDetails = try CardDetailsBuilder().build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in

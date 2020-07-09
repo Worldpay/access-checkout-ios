@@ -12,7 +12,7 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     func testDispatchesToRetrieveAVerifiedTokensSession() {
         let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, verifiedTokensSessionHandler])
         
-        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.verifiedTokens) { _ in }
+        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.card) { _ in }
         
         XCTAssertTrue(verifiedTokensSessionHandler.retrieveSessionCalled)
         XCTAssertFalse(paymentsCvcSessionHandler.retrieveSessionCalled)
@@ -21,7 +21,7 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     func testDispatchesToRetrieveAPaymentsCvcSession() {
         let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, verifiedTokensSessionHandler])
         
-        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.paymentsCvc) { _ in }
+        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.cvc) { _ in }
         
         XCTAssertFalse(verifiedTokensSessionHandler.retrieveSessionCalled)
         XCTAssertTrue(paymentsCvcSessionHandler.retrieveSessionCalled)

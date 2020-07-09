@@ -3,14 +3,14 @@
  */
 public enum SessionType {
     /**
-     Verified token session type that represents a card session
+     Session type that represents a session that represents the card details
      This token can be further used with the Worldpay verified token service.
      */
-    case verifiedTokens
+    case card
 
     /**
-     Payments cvc session type that represents a cvc session
+     Session type that represents a session that represents the cvc details
      This token can be further used with the Worldpay payments service.
      */
-    case paymentsCvc
+    case cvc
 }

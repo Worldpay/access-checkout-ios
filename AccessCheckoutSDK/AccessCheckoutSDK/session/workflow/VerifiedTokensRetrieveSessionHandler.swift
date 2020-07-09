@@ -6,7 +6,7 @@ class VerifiedTokensRetrieveSessionHandler: RetrieveSessionHandler {
     }
 
     func canHandle(sessionType: SessionType) -> Bool {
-        return sessionType == SessionType.verifiedTokens
+        return sessionType == SessionType.card
     }
 
     func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
