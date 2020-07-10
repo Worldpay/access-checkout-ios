@@ -17,5 +17,5 @@ curl --fail --show-error -v -XPUT \-H "Content-Type: application/json" \
 if [ $BITRISE_GIT_BRANCH == "master" ]
   then
     echo "Tagging broker with master..."
-    pact-broker create-version-tag --pacticipant access-checkout-iOS-sdk --version $CONTRACT_VERSION+$HASH_CODE --tag $BITRISE_GIT_BRANCH --broker-base-url https://$PACTBROKER_URL -u $PACTBROKER_URL -p $PACTBROKER_PASSWORD
+    pact-broker create-version-tag --pacticipant access-checkout-iOS-sdk --version $CONTRACT_VERSION+$HASH_CODE --tag $BITRISE_GIT_BRANCH --broker-base-url https://$PACTBROKER_URL -u $PACTBROKER_USERNAME -p $PACTBROKER_PASSWORD
 fi
