@@ -74,6 +74,11 @@ workflows:
         run_if: not .IsPR
         inputs:
           - file_path: scripts/apply_pact_fix.sh
+    - script@1.1.5:
+        title: Install pact client
+        run_if: not .IsPR
+        inputs:
+          - content: gem install pact_broker-client
     - script-runner@0.9.3:
         title: "Deploy pact file to pact broker"
         run_if: not .IsPR
