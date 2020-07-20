@@ -9,15 +9,14 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
     private let merchantId: String = "a-merchant-id"
 
     private let urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
-    private let bundle = BundleMock()
-    private let appVersion = BundleMock.appVersion
+    private let sdkVersion = UserAgent.sdkVersion
     private let expectedBodyAsString = "{\"cvc\":\"123\",\"identity\":\"some-identity\"}"
     private let expectedMethod = "POST"
 
     func testCreatesAVerifiedTokensSessionRequest() {
         let expectedHttpBody: Data = expectedBodyAsString.data(using: .utf8)!
         let expectedHeaderFields = ["Content-Type": ApiHeaders.verifiedTokensHeaderValue,
-                                    "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
+                                    "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
         var expectedRequest = URLRequest(url: URL(string: "some-url")!)
         expectedRequest.httpBody = expectedHttpBody
         expectedRequest.httpMethod = expectedMethod
@@ -28,8 +27,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
-                                               bundle: bundle)
+                                               cvc: cvc)
 
         XCTAssertEqual(expectedRequest, request)
     }
@@ -40,23 +38,21 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
-                                               bundle: bundle)
+                                               cvc: cvc)
 
         XCTAssertEqual(expectedMethod, request.httpMethod)
     }
 
     func testHeadersAreSetCorrectly() {
         let expectedHeaderFields = ["Content-Type": ApiHeaders.verifiedTokensHeaderValue,
-                                    "X-WP-SDK": "access-checkout-ios/\(appVersion)"]
+                                    "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
 
         let request = urlRequestFactory.create(url: "some-url",
                                                merchantId: merchantId,
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
-                                               cvc: cvc,
-                                               bundle: bundle)
+                                               cvc: cvc)
 
         XCTAssertEqual(expectedHeaderFields, request.allHTTPHeaderFields)
     }
