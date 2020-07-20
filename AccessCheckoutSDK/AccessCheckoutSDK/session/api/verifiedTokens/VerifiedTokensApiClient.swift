@@ -74,7 +74,6 @@ class VerifiedTokensApiClient {
                                         pan: pan,
                                         expiryMonth: expiryMonth,
                                         expiryYear: expiryYear,
-                                        cvc: cvc,
-                                        bundle: Bundle(for: VerifiedTokensApiClient.self))
+                                        cvc: cvc)
     }
 }

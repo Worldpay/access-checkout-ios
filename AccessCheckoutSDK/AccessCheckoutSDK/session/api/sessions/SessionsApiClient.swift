@@ -58,6 +58,6 @@ class SessionsApiClient {
     }
 
     private func createRequest(endPointUrl: String, merchantId: String, cvc: String) -> URLRequest {
-        return urlRequestFactory.create(url: endPointUrl, cvc: cvc, merchantIdentity: merchantId, bundle: Bundle(for: SessionsApiClient.self))
+        return urlRequestFactory.create(url: endPointUrl, cvc: cvc, merchantIdentity: merchantId)
     }
 }
