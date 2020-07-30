@@ -1,5 +1,5 @@
 struct UserAgent {
-    static let sdkVersion = "1.2.1"
+    static let sdkVersion = "2.0.0"
     static private let valueFormat = "access-checkout-ios/%@"
     
     static let headerName = "X-WP-SDK"
