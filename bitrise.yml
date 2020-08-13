@@ -98,6 +98,13 @@ workflows:
     - deploy-to-bitrise-io:
         inputs:
         - deploy_path: "${BITRISE_SOURCE_DIR}/coverage.html"
+    - slack@3.1.4:
+        run_if: |-
+          {{.IsBuildFailed | and (enveq "BITRISE_GIT_BRANCH" "master")}}
+        inputs:
+          - channel_on_error: "#access-checkout-build"
+          - text_on_error: "Primary build for Access Checkout iOS Failed"
+          - webhook_url: "$SLACK_ACO_BUILD_WEBHOOK_URL"
     - cache-push: {}
   release:
     steps:
