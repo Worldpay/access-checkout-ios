@@ -102,4 +102,7 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
     
 3. Run the demo app
     1. Click the `Play` button on the top-left corner of the screen to open the demo app in the simulated device of your choice.
-    
+
+## Security
+
+Checkmarx scans are triggered on push via a webhook set up in GitHub, and CRs for new releases must have a valid Checkmarx report attached to the CR
