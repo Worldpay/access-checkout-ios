@@ -105,4 +105,5 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
 
 ## Security
 
-Checkmarx scans are triggered on push via a webhook set up in GitHub, and CRs for new releases must have a valid Checkmarx report attached to the CR
+Checkmarx scans are triggered on push via a webhook set up in GitHub. Build statuses have been setup to only allow a merge to master if there is a successful build
+in Bitrise and also the Checkmarx scan results have not breached thresholds
