@@ -56,7 +56,7 @@ workflows:
         inputs:
         - test_devices: |-
             ipad5,12.0,en,portrait
-            iphonex,12.0,en,portrait
+            iphonex,11.4,en,portrait
     - script:
         inputs:
         - content: |-
