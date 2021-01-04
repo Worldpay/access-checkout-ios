@@ -30,7 +30,7 @@ class CardPaymentFlowUITests: XCTestCase {
     }
     
     func testCvcTextFieldPlaceholder_exists() {
-        XCTAssertTrue(view!.cvcField.placeholderValue == "CVC")
+        XCTAssertTrue(view!.cvcField.placeholderValue == "123")
     }
     
     func testCardNumberImageView_exists() {

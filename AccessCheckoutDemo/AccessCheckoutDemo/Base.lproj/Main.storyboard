@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,85 +20,119 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gc-ER-g0x" customClass="PanView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="35" y="60" width="305" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="lg0-kG-hJF"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5El-kB-xnl" customClass="ExpiryDateView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="35" y="136" width="61" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="SRm-gC-IMq"/>
-                                </constraints>
-                            </view>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyH-be-DH8" customClass="CvcView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="116" y="136" width="61" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0bx-cV-rmM"/>
-                                </constraints>
-                            </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
-                                <rect key="frame" x="261" y="274" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
+                                <rect key="frame" x="266" y="289" width="20" height="20"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                <rect key="frame" x="35" y="212" width="168.5" height="19.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
-                                <rect key="frame" x="291" y="206.5" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
+                                <rect key="frame" x="294" y="221" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="dXI-Tl-3bU"/>
+                                </constraints>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
-                                <rect key="frame" x="35" y="235.5" width="244.5" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                                <rect key="frame" x="16" y="254" width="244.5" height="12"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="291" y="269" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
+                                <rect key="frame" x="294" y="284" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8AE-e7-b1R">
+                                <rect key="frame" x="101" y="146" width="61" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="123" identifier="cvc" label="cvc"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="4Ie-oN-M89"/>
+                                    <constraint firstAttribute="height" constant="44" id="LF1-r3-zD4"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="loK-7K-PIt"/>
+                                </constraints>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mya-3f-hK8">
+                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="4444333322221111" identifier="pan" label="pan"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Cf0-qf-cGV"/>
+                                    <constraint firstAttribute="height" constant="44" id="h8n-62-6HN"/>
+                                </constraints>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8i-GI-0zO">
+                                <rect key="frame" x="16" y="146" width="61" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="12/30" identifier="expiryDate" label="Expiry Date"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="6EM-ft-nNk"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="qzS-NE-0Wd"/>
+                                    <constraint firstAttribute="height" constant="44" id="znX-4L-e4b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
+                                <rect key="frame" x="286" y="87" width="49" height="32"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="ubL-e4-xFO"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                <rect key="frame" x="16" y="226" width="168.5" height="20"/>
+                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="nHF-3V-PsR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="5El-kB-xnl" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.2" id="2lh-yf-px9"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="35" id="5oD-DE-ecu"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="width" secondItem="8gc-ER-g0x" secondAttribute="width" multiplier="0.2" id="CjK-XF-tNB"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="trailing" secondItem="PSJ-iT-v62" secondAttribute="trailing" id="1Wf-J7-u2Q"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-16" id="4h8-67-zcc"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="5D2-p8-agM"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Dha-7J-gEf"/>
-                            <constraint firstItem="5El-kB-xnl" firstAttribute="top" secondItem="8gc-ER-g0x" secondAttribute="bottom" constant="32" id="EYt-N1-sAU"/>
-                            <constraint firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" constant="35" id="Jpu-J7-tg7"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="bottom" constant="32" id="OJK-w6-y7c"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="QHc-kM-Pcq"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="10" id="YFQ-CO-GMa"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="top" secondItem="5El-kB-xnl" secondAttribute="top" id="YkC-nL-0wk" userLabel="Cvc View.top = Expiry Date View.bottom + 40"/>
-                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="4" id="amx-XS-qWo"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="5El-kB-xnl" secondAttribute="leading" id="bK2-sd-FBr"/>
+                            <constraint firstItem="V3W-HP-wPE" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="trailing" constant="109.5" id="Fle-uG-aDG"/>
+                            <constraint firstItem="a8i-GI-0zO" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="FyG-Tb-CtE"/>
+                            <constraint firstItem="a8i-GI-0zO" firstAttribute="baseline" secondItem="8AE-e7-b1R" secondAttribute="baseline" id="GYF-MR-6aI"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="Il5-lu-fip"/>
+                            <constraint firstItem="4gy-2k-boW" firstAttribute="trailing" secondItem="Mya-3f-hK8" secondAttribute="trailing" constant="-8" id="JSK-dY-Sgl"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="centerX" secondItem="8AE-e7-b1R" secondAttribute="centerX" constant="48" id="OLE-qG-hrm"/>
+                            <constraint firstItem="P4U-sM-I5g" firstAttribute="top" secondItem="NXi-qk-FE5" secondAttribute="bottom" constant="309" id="SJF-zA-ctu"/>
+                            <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="221" id="Ta3-Gn-V84"/>
+                            <constraint firstItem="8AE-e7-b1R" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="trailing" constant="24" id="UnK-Ag-5g9"/>
+                            <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="87" id="VKZ-Du-8YL"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="4gy-2k-boW" secondAttribute="bottom" constant="-38" id="XD4-so-Teu"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="8" id="YFQ-CO-GMa"/>
+                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="8" id="amx-XS-qWo"/>
+                            <constraint firstItem="8AE-e7-b1R" firstAttribute="centerX" secondItem="UzK-5d-eEZ" secondAttribute="centerX" constant="-6.75" id="amy-Vf-CLl"/>
+                            <constraint firstItem="a8i-GI-0zO" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="21" id="atF-wP-0Ib"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="ccP-WQ-FS3"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="centerY" secondItem="gxk-b1-dMa" secondAttribute="centerY" id="d4j-kH-kbk"/>
-                            <constraint firstItem="JyH-be-DH8" firstAttribute="leading" secondItem="5El-kB-xnl" secondAttribute="trailing" constant="20" id="e4N-5H-bFx"/>
-                            <constraint firstItem="5El-kB-xnl" firstAttribute="leading" secondItem="8gc-ER-g0x" secondAttribute="leading" id="m3w-o4-bLi"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="trailing" secondItem="8gc-ER-g0x" secondAttribute="trailing" id="tS1-UK-467"/>
-                            <constraint firstItem="8gc-ER-g0x" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="60" id="tff-uB-MuP"/>
+                            <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="a8i-GI-0zO" secondAttribute="bottom" constant="36" id="foe-oy-SVt"/>
+                            <constraint firstItem="Mya-3f-hK8" firstAttribute="trailing" secondItem="V3W-HP-wPE" secondAttribute="trailing" id="jp4-bu-yWq"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="top" secondItem="V3W-HP-wPE" secondAttribute="bottom" constant="31.5" id="vyv-ea-JG9"/>
+                            <constraint firstItem="P4U-sM-I5g" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="304" id="y6L-re-S4x"/>
+                            <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="23" id="zOT-Ug-cld"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
                     <connections>
-                        <outlet property="cvcView" destination="JyH-be-DH8" id="bfq-vz-3H1"/>
-                        <outlet property="expiryDateView" destination="5El-kB-xnl" id="n5k-6C-T0c"/>
-                        <outlet property="panView" destination="8gc-ER-g0x" id="axR-fD-Koc"/>
+                        <outlet property="cvcTextField" destination="8AE-e7-b1R" id="Dyk-Q4-XIZ"/>
+                        <outlet property="expiryDateTextField" destination="a8i-GI-0zO" id="ctL-po-sv5"/>
+                        <outlet property="imageView" destination="4gy-2k-boW" id="RJe-7W-H1o"/>
+                        <outlet property="panTextField" destination="Mya-3f-hK8" id="CtN-ZL-0db"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
@@ -105,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-444" y="808"/>
+            <point key="canvasLocation" x="-444" y="807.34632683658174"/>
         </scene>
         <!--CVC flow-->
         <scene sceneID="lPP-8k-MJs">
@@ -119,17 +154,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuw-Kr-otx" customClass="CvcView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="40" y="60" width="59" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="59" id="Anj-JH-PkA"/>
-                                    <constraint firstAttribute="height" constant="44" id="Zla-nE-qrU"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
-                                <rect key="frame" x="286" y="67" width="49" height="30"/>
-                                <accessibility key="accessibilityConfiguration">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
+                                <rect key="frame" x="286" y="72" width="49" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="submit">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                                 <state key="normal" title="Submit"/>
@@ -138,22 +165,32 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
-                                <rect key="frame" x="262" y="72" width="20" height="20"/>
+                                <rect key="frame" x="262" y="77" width="20" height="20"/>
                             </activityIndicatorView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5NE-TN-m7a">
+                                <rect key="frame" x="31" y="65" width="97" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="123" identifier="cvc" label="cvc"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="MiJ-iw-4qM"/>
+                                    <constraint firstAttribute="width" constant="97" id="rLi-bA-3Yq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.94820205479452058" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="zuw-Kr-otx" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leading" constant="40" id="7zB-vW-Jav"/>
-                            <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="zuw-Kr-otx" secondAttribute="centerY" id="AdL-Dh-VWH"/>
+                            <constraint firstItem="5NE-TN-m7a" firstAttribute="centerY" secondItem="tjE-oa-gkj" secondAttribute="centerY" id="5sK-K1-wwS"/>
+                            <constraint firstItem="5NE-TN-m7a" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leadingMargin" constant="15" id="8or-FP-1ip"/>
                             <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="xFk-y0-dUk" secondAttribute="centerY" id="H8K-dj-UoU"/>
                             <constraint firstAttribute="trailing" secondItem="xFk-y0-dUk" secondAttribute="trailing" constant="40" id="JQW-bv-woI"/>
-                            <constraint firstItem="zuw-Kr-otx" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="60" id="c2o-Rt-FAO"/>
+                            <constraint firstItem="5NE-TN-m7a" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="65" id="aY9-6h-TYL"/>
                             <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="eAA-XG-Jrm"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="CVC flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
                     <connections>
-                        <outlet property="cvcView" destination="zuw-Kr-otx" id="fKO-b9-Nix"/>
+                        <outlet property="cvcTextField" destination="5NE-TN-m7a" id="urH-5K-lPD"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
                         <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>
                     </connections>
@@ -183,7 +220,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="creditcard" catalog="system" width="128" height="91"/>
+        <image name="creditcard" catalog="system" width="128" height="88"/>
         <image name="macwindow" catalog="system" width="128" height="93"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

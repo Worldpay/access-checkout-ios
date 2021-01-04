@@ -2,19 +2,19 @@ import AccessCheckoutSDK
 import UIKit
 
 class CvcFlowViewController: UIViewController {
-    @IBOutlet weak var cvcView: CvcView!
+    @IBOutlet weak var cvcTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
-        let cvc = cvcView.text
+        let cvc = cvcTextField.text
         
         spinner.startAnimating()
         
         let cardDetails = try! CardDetailsBuilder()
-            .cvc(cvc)
+            .cvc(cvc ?? "")
             .build()
         
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
@@ -28,7 +28,7 @@ class CvcFlowViewController: UIViewController {
                 switch result {
                     case .success(let sessions):
                         AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.cvc], closeHandler: {
-                            self.cvcView.clear()
+                            self.cvcTextField.text = ""
                     })
                     case .failure(let error):
                         self.highlightCvcField(error: error)
@@ -42,11 +42,13 @@ class CvcFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cvcView.layer.borderWidth = 1
-        cvcView.layer.borderColor = UIColor.lightText.cgColor
-        cvcView.layer.cornerRadius = 8
+        cvcTextField.layer.borderWidth = 1
+        cvcTextField.layer.borderColor = UIColor.lightText.cgColor
+        cvcTextField.layer.cornerRadius = 8
+        cvcTextField.backgroundColor = UIColor.white
+        cvcTextField.placeholder = "123"
         
-        let validationConfig = CvcOnlyValidationConfig(cvcView: cvcView, validationDelegate: self)
+        let validationConfig = CvcOnlyValidationConfig(cvcTextField: cvcTextField, validationDelegate: self)
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
         cvcValidChanged(isValid: false)
@@ -75,7 +77,7 @@ class CvcFlowViewController: UIViewController {
     }
     
     private func changeCvcValidIndicator(isValid: Bool) {
-        cvcView.textColor = isValid ? nil : UIColor.red
+        cvcTextField.textColor = isValid ? nil : UIColor.red
     }
 }
 

@@ -2,7 +2,7 @@
 import Cuckoo
 import XCTest
 
-class CvcViewPresenterTests: XCTestCase {
+class CvcViewPresenterTests: PresenterTestSuite {
     func testOnEditingValidatesCvc() {
         let cvc = "123"
         let cvcValidator = CvcValidator()
@@ -59,4 +59,50 @@ class CvcViewPresenterTests: XCTestCase {
 
         XCTAssertTrue(result)
     }
+    
+    // MARK: Tests for presenter with UITextField
+    
+    func testCanTypeIfCvcValidatorReturnsTrue() {
+        _ = initialiseCustomCardValidation()
+        let cvcValidator = MockCvcValidator()
+        let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
+                                                                          CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
+        let expectedValidationRule = ValidationRule(matcher: "something", validLengths: [1, 2])
+
+        validationFlow.getStubbingProxy().validate(cvc: any()).thenDoNothing()
+        validationFlow.getStubbingProxy().validationRule.get.thenReturn(expectedValidationRule)
+
+        cvcValidator.getStubbingProxy().canValidate(any(), using: any()).thenReturn(true)
+        let presenter = CvcViewPresenter(validationFlow, cvcValidator)
+
+        XCTAssertTrue(canEnterCvc(presenter: presenter, uiTextField: cvcTextField, "123"))
+    }
+    
+    func testCannotTypeIfCvcValidatorReturnsFalse() {
+        let cvcValidator = MockCvcValidator()
+        let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
+                                                                          CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
+        let expectedValidationRule = ValidationRule(matcher: "something", validLengths: [1, 2])
+
+        validationFlow.getStubbingProxy().validate(cvc: any()).thenDoNothing()
+        validationFlow.getStubbingProxy().validationRule.get.thenReturn(expectedValidationRule)
+        cvcValidator.getStubbingProxy().canValidate(any(), using: any()).thenReturn(false)
+        
+        let presenter = CvcViewPresenter(validationFlow, cvcValidator)
+        XCTAssertFalse(canEnterCvc(presenter: presenter, uiTextField: cvcTextField, "123"))
+    }
+    
+    func testTextFieldDidEndEditingNotifiesMerchantOfValidationState() {
+        cvcTextField.text = "12"
+        let cvcValidator = CvcValidator()
+        let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
+                                                                          CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
+        validationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
+        let presenter = CvcViewPresenter(validationFlow, cvcValidator)
+
+        presenter.textFieldDidEndEditing(cvcTextField)
+
+        verify(validationFlow).notifyMerchantIfNotAlreadyNotified()
+    }
+    
 }
