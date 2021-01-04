@@ -2,7 +2,7 @@
  * Class that is responsible for initialising validation using a given `ValidationConfig`
  */
 public struct AccessCheckoutValidationInitialiser {
-    static var presenters = [Presenter]()
+    private static var presenters = [Presenter]()
     
     private var configurationProvider: CardBrandsConfigurationProvider
     
@@ -45,24 +45,14 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
         if config.textFieldMode {
-            AccessCheckoutValidationInitialiser.presenters.append(panPresenter)
-            AccessCheckoutValidationInitialiser.presenters.append(expiryDatePresenter)
-            AccessCheckoutValidationInitialiser.presenters.append(cvcPresenter)
-
-            config.panTextField!.delegate = panPresenter
-            config.panTextField!.addTarget(panPresenter, action: #selector(panPresenter.textFieldEditingChanged), for: .editingChanged)
-        
-            config.expiryDateTextField!.delegate = expiryDatePresenter
-            config.expiryDateTextField!.addTarget(expiryDatePresenter, action: #selector(expiryDatePresenter.textFieldEditingChanged), for: .editingChanged)
-
-            config.cvcTextField!.delegate = cvcPresenter
-            config.cvcTextField!.addTarget(cvcPresenter, action: #selector(cvcPresenter.textFieldEditingChanged), for: .editingChanged)
+            setTextFieldDelegate(textField: config.panTextField!, delegate: panPresenter)
+            setTextFieldDelegate(textField: config.expiryDateTextField!, delegate: expiryDatePresenter)
+            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
         } else {
             config.cvcView!.presenter = cvcPresenter
             config.panView!.presenter = panPresenter
             config.expiryDateView!.presenter = expiryDatePresenter
         }
-        
     }
     
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
@@ -72,10 +62,7 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
 
         if config.textFieldMode {
-            AccessCheckoutValidationInitialiser.presenters.append(cvcPresenter)
-            
-            config.cvcTextField!.delegate = cvcPresenter
-            config.cvcTextField!.addTarget(cvcPresenter, action: #selector(cvcPresenter.textFieldEditingChanged), for: .editingChanged)
+            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
         } else {
             config.cvcView!.presenter = cvcPresenter
         }
@@ -95,4 +82,21 @@ public struct AccessCheckoutValidationInitialiser {
         return ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
     }
 
+    private func setTextFieldDelegate(textField:UITextField, delegate:Presenter) {
+        clearExistingPresenter(from: textField)
+        
+        textField.delegate = delegate
+        textField.addTarget(delegate, action: #selector(delegate.textFieldEditingChanged), for: .editingChanged)
+        
+        AccessCheckoutValidationInitialiser.presenters.append(delegate)
+    }
+    
+    private func clearExistingPresenter(from uiTextField:UITextField) {
+        let existingPresenter:Presenter? = uiTextField.delegate as? Presenter
+        
+        if existingPresenter != nil {
+            uiTextField.removeTarget(existingPresenter, action: #selector(existingPresenter!.textFieldEditingChanged), for: .editingChanged)
+            AccessCheckoutValidationInitialiser.presenters.removeAll(where: { $0 === existingPresenter })
+        }
+    }
 }
