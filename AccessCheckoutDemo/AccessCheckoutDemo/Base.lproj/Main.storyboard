@@ -147,9 +147,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7S-id-eOg" customClass="PanView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="pan">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="0Wk-NC-st0"/>
                                 </constraints>
@@ -157,16 +154,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-km-Yur" customClass="ExpiryDateView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="146" width="63" height="45"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="expiryDate">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mm2-i6-Vta" customClass="CvcView" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="101" y="146" width="46" height="45"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGA-cc-zb6">
                                 <rect key="frame" x="294" y="278.5" width="49" height="35.5"/>
