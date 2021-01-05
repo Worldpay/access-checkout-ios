@@ -106,7 +106,6 @@ extension PanView: UITextFieldDelegate {
         guard let pan = textField.text else {
             return
         }
-        
         (presenter as? PanViewPresenter)?.onEditEnd(text: pan)
     }
     

@@ -1,6 +1,7 @@
 import XCTest
 
 class CardPaymentFlowViewPageObject {
+
     private let app: XCUIApplication
     
     var panField: XCUIElement {
@@ -56,21 +57,34 @@ class CardPaymentFlowViewPageObject {
     }
     
     func typeTextIntoPan(_ text: String) {
-        panField.tap()
+        if !panField.isFocused {
+            panField.tap()
+        }
         panField.typeText(text)
     }
     
     func typeTextIntoExpiryDate(_ text: String) {
-        expiryDateField.tap()
+        if !expiryDateField.isFocused {
+            expiryDateField.tap()
+        }
         expiryDateField.typeText(text)
     }
     
     func typeTextIntoCvc(_ text: String) {
-        cvcField.tap()
+        if !cvcField.isFocused {
+            cvcField.tap()
+        }
         cvcField.typeText(text)
     }
     
     func submit() {
         submitButton.tap()
+    }
+}
+
+extension XCUIElement {
+    var isFocused: Bool {
+        let isFocused = (self.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
+        return isFocused
     }
 }

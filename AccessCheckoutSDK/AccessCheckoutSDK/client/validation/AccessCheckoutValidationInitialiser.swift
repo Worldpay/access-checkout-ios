@@ -2,6 +2,8 @@
  * Class that is responsible for initialising validation using a given `ValidationConfig`
  */
 public struct AccessCheckoutValidationInitialiser {
+    private static var presenters = [Presenter]()
+    
     private var configurationProvider: CardBrandsConfigurationProvider
     
     /**
@@ -38,17 +40,32 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         
-        config.cvcView.presenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
-        config.panView.presenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler)
-        config.expiryDateView.presenter = expiryDateViewPresenter(validationStateHandler)
+        let panPresenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler)
+        let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
+        let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
+        
+        if config.textFieldMode {
+            setTextFieldDelegate(textField: config.panTextField!, delegate: panPresenter)
+            setTextFieldDelegate(textField: config.expiryDateTextField!, delegate: expiryDatePresenter)
+            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
+        } else {
+            config.cvcView!.presenter = cvcPresenter
+            config.panView!.presenter = panPresenter
+            config.expiryDateView!.presenter = expiryDatePresenter
+        }
     }
     
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
         let validationStateHandler = CvcOnlyValidationStateHandler(config.validationDelegate)
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
-        
-        config.cvcView.presenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
+        let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
+
+        if config.textFieldMode {
+            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
+        } else {
+            config.cvcView!.presenter = cvcPresenter
+        }
     }
     
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
@@ -63,5 +80,23 @@ public struct AccessCheckoutValidationInitialiser {
         let expiryDateValidator = ExpiryDateValidator()
         let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
         return ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
+    }
+
+    private func setTextFieldDelegate(textField:UITextField, delegate:Presenter) {
+        clearExistingPresenter(from: textField)
+        
+        textField.delegate = delegate
+        textField.addTarget(delegate, action: #selector(delegate.textFieldEditingChanged), for: .editingChanged)
+        
+        AccessCheckoutValidationInitialiser.presenters.append(delegate)
+    }
+    
+    private func clearExistingPresenter(from uiTextField:UITextField) {
+        let existingPresenter:Presenter? = uiTextField.delegate as? Presenter
+        
+        if existingPresenter != nil {
+            uiTextField.removeTarget(existingPresenter, action: #selector(existingPresenter!.textFieldEditingChanged), for: .editingChanged)
+            AccessCheckoutValidationInitialiser.presenters.removeAll(where: { $0 === existingPresenter })
+        }
     }
 }

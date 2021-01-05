@@ -221,16 +221,12 @@ class ExpiryDateViewTests: ViewTestSuite {
     
     // MARK: text colour feature
     
-    func testCanSetColourOfText() {
+    func testCanSetAndUnsetColourOfText() {
         expiryDateView.textColor = UIColor.red
-        
         XCTAssertEqual(UIColor.red, expiryDateView.textField.textColor)
-    }
-    
-    func testUnsetColourOfTextSetsColourToDefault() {
-        expiryDateView.textColor = nil
         
-        XCTAssertEqual(UIColor.black, expiryDateView.textField.textColor)
+        expiryDateView.textColor = nil
+        XCTAssertNotEqual(UIColor.red, expiryDateView.textField.textColor)
     }
     
     func testCanGetColourOfText() {

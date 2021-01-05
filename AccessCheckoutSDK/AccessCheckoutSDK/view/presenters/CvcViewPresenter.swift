@@ -1,6 +1,7 @@
-class CvcViewPresenter: Presenter {
+class CvcViewPresenter: NSObject, Presenter {
     private let validationFlow: CvcValidationFlow
     private let validator: CvcValidator
+    private let textChangeHandler = TextChangeHandler()
     
     init(_ validationFlow: CvcValidationFlow, _ validator: CvcValidator) {
         self.validationFlow = validationFlow
@@ -21,5 +22,28 @@ class CvcViewPresenter: Presenter {
         }
         
         return validator.canValidate(text, using: validationFlow.validationRule)
+    }
+    
+    @objc
+    func textFieldEditingChanged(_ textField: UITextField) {
+        guard let cvc = textField.text else {
+            return
+        }
+        onEditing(text: cvc)
+    }
+}
+
+extension CvcViewPresenter: UITextFieldDelegate {
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let cvc = textField.text else {
+            return
+        }
+        
+        onEditEnd(text: cvc)
+    }
+    
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
+        return canChangeText(with: resultingText)
     }
 }

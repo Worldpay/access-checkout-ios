@@ -103,16 +103,13 @@ class PanViewTests: ViewTestSuite {
     
     // MARK: text colour feature
     
-    func testCanSetColourOfText() {
+    func testCanSetAndUnsetColourOfText() {
         panView.textColor = UIColor.red
-        
         XCTAssertEqual(UIColor.red, panView.textField.textColor)
-    }
-    
-    func testUnsetColourOfTextSetsColourToDefault() {
-        panView.textColor = nil
         
-        XCTAssertEqual(UIColor.black, panView.textField.textColor)
+        panView.textColor = nil
+        XCTAssertNotEqual(UIColor.red, panView.textField.textColor)
+
     }
     
     func testCanGetColourOfText() {

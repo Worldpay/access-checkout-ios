@@ -52,4 +52,45 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         
         XCTAssertNotNil(cvcView.presenter)
     }
+    
+    // MARK: Tests for using UITextView to initialise
+    
+    let panTextField = UITextField()
+    let cvcTextField = UITextField()
+    let expiryDateTextField = UITextField()
+    
+    func testInitialisationForCardPaymentFlowWithTextFieldsRetrievesConfiguration() {
+        let validationConfig = CardValidationConfig(panTextField: panTextField,
+                                                    expiryDateTextField: expiryDateTextField,
+                                                    cvcTextField: cvcTextField,
+                                                    accessBaseUrl: baseUrl,
+                                                    validationDelegate: cardValidationDelegateMock)
+        
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        
+        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url")
+    }
+    
+    func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
+        let validationConfig = CardValidationConfig(panTextField: panTextField,
+                                                    expiryDateTextField: expiryDateTextField,
+                                                    cvcTextField: cvcTextField,
+                                                    accessBaseUrl: baseUrl,
+                                                    validationDelegate: cardValidationDelegateMock)
+        
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        
+        XCTAssertTrue(panTextField.delegate is PanViewPresenter)
+        XCTAssertTrue(expiryDateTextField.delegate is ExpiryDateViewPresenter)
+        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
+    }
+    
+    func testInitialisationForCvcOnlyPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
+        let validationConfig = CvcOnlyValidationConfig(
+                                                    cvcTextField: cvcTextField,
+                                                    validationDelegate: cvcOnlyValidationDelegateMock)
+        
+        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
+    }
 }

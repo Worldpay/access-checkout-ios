@@ -112,16 +112,12 @@ class CvcViewTests: ViewTestSuite {
     
     // MARK: text colour feature
     
-    func testCanSetColourOfText() {
+    func testCanSetAndUnsetColourOfText() {
         cvcView.textColor = UIColor.red
-        
         XCTAssertEqual(UIColor.red, cvcView.textField.textColor)
-    }
-    
-    func testUnsetColourOfTextSetsColourToDefault() {
-        cvcView.textColor = nil
         
-        XCTAssertEqual(UIColor.black, cvcView.textField.textColor)
+        cvcView.textColor = nil
+        XCTAssertNotEqual(UIColor.red, cvcView.textField.textColor)
     }
     
     func testCanGetColourOfText() {

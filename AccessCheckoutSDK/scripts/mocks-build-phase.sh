@@ -37,7 +37,6 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/validation/model/pan/PanValidationFlow.swift" \
 "${INPUT_SOURCE_DIR}/validation/model/pan/PanValidationStateHandler.swift" \
 "${INPUT_SOURCE_DIR}/validation/model/pan/PanValidator.swift" \
-"${INPUT_SOURCE_DIR}/view/TextChangeHandler.swift" \
-"${INPUT_SOURCE_DIR}/view/presenters/PanViewPresenter.swift"
+"${INPUT_SOURCE_DIR}/view/TextChangeHandler.swift"
 
 # all lines of this command must end with a \ apart from the last line

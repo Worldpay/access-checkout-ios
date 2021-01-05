@@ -2,20 +2,21 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panView: PanView!
-    @IBOutlet weak var expiryDateView: ExpiryDateView!
-    @IBOutlet weak var cvcView: CvcView!
+    @IBOutlet weak var panTextField: UITextField!
+    @IBOutlet weak var expiryDateTextField: UITextField!
+    @IBOutlet weak var cvcTextField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
     private let unknownBrandImage = UIImage(named: "card_unknown")
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
-    
+        
     @IBAction func submit(_ sender: Any) {
-        submitCard(pan: panView.text,
-                   expiryDate: expiryDateView.text,
-                   cvc: cvcView.text)
+        submitCard(pan: panTextField.text ?? "",
+                   expiryDate: expiryDateTextField.text ?? "",
+                   cvc: (cvcTextField.text ?? "") as String)
     }
     
     private func submitCard(pan: String, expiryDate: String, cvc: String) {
@@ -71,9 +72,9 @@ class CardFlowViewController: UIViewController {
     
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
-            panView.clear()
-            expiryDateView.clear()
-            cvcView.clear()
+            panTextField.text = ""
+            expiryDateTextField.text = ""
+            cvcTextField.text = ""
         }
         
         validationErrors?.forEach { error in
@@ -96,23 +97,30 @@ class CardFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        panView.layer.borderWidth = 1
-        panView.layer.borderColor = UIColor.lightText.cgColor
-        panView.layer.cornerRadius = 8
+        panTextField.layer.borderWidth = 1
+        panTextField.layer.borderColor = UIColor.lightText.cgColor
+        panTextField.layer.cornerRadius = 8
+        panTextField.backgroundColor = UIColor.white
+        panTextField.placeholder = "4444333322221111"
         
-        expiryDateView.layer.borderWidth = 1
-        expiryDateView.layer.borderColor = UIColor.lightText.cgColor
-        expiryDateView.layer.cornerRadius = 8
+        expiryDateTextField.layer.borderWidth = 1
+        expiryDateTextField.layer.borderColor = UIColor.lightText.cgColor
+        expiryDateTextField.layer.cornerRadius = 8
+        expiryDateTextField.backgroundColor = UIColor.white
+        expiryDateTextField.placeholder = "12/34"
+
         
-        cvcView.layer.borderWidth = 1
-        cvcView.layer.borderColor = UIColor.lightText.cgColor
-        cvcView.layer.cornerRadius = 8
+        cvcTextField.layer.borderWidth = 1
+        cvcTextField.layer.borderColor = UIColor.lightText.cgColor
+        cvcTextField.layer.cornerRadius = 8
+        cvcTextField.backgroundColor = UIColor.white
+        cvcTextField.placeholder = "123"
         
         resetCard(preserveContent: false, validationErrors: nil)
         
-        let validationConfig = CardValidationConfig(panView: panView,
-                                                    expiryDateView: expiryDateView,
-                                                    cvcView: cvcView,
+        let validationConfig = CardValidationConfig(panTextField: panTextField,
+                                                    expiryDateTextField: expiryDateTextField,
+                                                    cvcTextField: cvcTextField,
                                                     accessBaseUrl: accessBaseUrl,
                                                     validationDelegate: self)
         
@@ -128,22 +136,22 @@ class CardFlowViewController: UIViewController {
         DispatchQueue.global(qos: .userInteractive).async {
             if let data = try? Data(contentsOf: url) {
                 DispatchQueue.main.async {
-                    self.panView.imageView.image = UIImage(data: data)
+                    self.imageView.image = UIImage(data: data)
                 }
             }
         }
     }
     
     private func changePanValidIndicator(isValid: Bool) {
-        panView.textColor = isValid ? nil : UIColor.red
+        panTextField.textColor = isValid ? nil : UIColor.red
     }
     
     private func changeExpiryDateValidIndicator(isValid: Bool) {
-        expiryDateView.textColor = isValid ? nil : UIColor.red
+        expiryDateTextField.textColor = isValid ? nil : UIColor.red
     }
     
     private func changeCvcValidIndicator(isValid: Bool) {
-        cvcView.textColor = isValid ? nil : UIColor.red
+        cvcTextField.textColor = isValid ? nil : UIColor.red
     }
 }
 
@@ -153,9 +161,9 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
             let url = URL(string: imageUrl) {
             updateCardBrandImage(url: url)
         } else {
-            panView.imageView.image = unknownBrandImage
+            imageView.image = unknownBrandImage
         }
-        panView.imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
+        imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
     
     func panValidChanged(isValid: Bool) {
