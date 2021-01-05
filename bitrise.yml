@@ -55,8 +55,9 @@ workflows:
     - virtual-device-testing-for-ios:
         inputs:
         - test_devices: |-
-            ipad5,12.0,en,portrait
             iphonex,11.4,en,portrait
+            ipad5,12.0,en,portrait
+            iphone11,13.3,en,portrait
     - script:
         inputs:
         - content: |-
