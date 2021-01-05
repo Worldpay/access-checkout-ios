@@ -15,12 +15,24 @@ class NavigationViewPageObject {
         }
     }
     
+    var cardFlowDeprecatedNavigationButton:XCUIElement {
+        get {
+            return app.tabBars.buttons["Card flow (deprecated components)"]
+        }
+    }
+    
     init(_ app:XCUIApplication) {
         self.app = app
     }
     
     func navigateToCardFlow() -> CardPaymentFlowViewPageObject {
         cardFlowNavigationButton.tap()
+        
+        return CardPaymentFlowViewPageObject(app)
+    }
+    
+    func navigateToCardFlowDeprecated() -> CardPaymentFlowViewPageObject {
+        cardFlowDeprecatedNavigationButton.tap()
         
         return CardPaymentFlowViewPageObject(app)
     }

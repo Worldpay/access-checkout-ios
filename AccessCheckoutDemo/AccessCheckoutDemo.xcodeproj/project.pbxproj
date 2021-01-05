@@ -15,6 +15,10 @@
 		1BD0EE9C22CBB01C00147A71 /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BD0EE9922CBB01C00147A71 /* amex.png */; };
 		1BD0EE9D22CBB01C00147A71 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BD0EE9A22CBB01C00147A71 /* visa.png */; };
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
+		51CBC4A325A46F5A000D0363 /* CardFlowDeprecatedComponentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A225A46F5A000D0363 /* CardFlowDeprecatedComponentsViewController.swift */; };
+		51CBC4A525A47F7B000D0363 /* CardFlowDeprecatedRetrieveSessionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A425A47F7B000D0363 /* CardFlowDeprecatedRetrieveSessionsTests.swift */; };
+		51CBC4A725A480DC000D0363 /* CardFlowDeprecatedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A625A480DC000D0363 /* CardFlowDeprecatedUITests.swift */; };
+		51CBC4A925A480F0000D0363 /* CardFlowDeprecatedValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A825A480F0000D0363 /* CardFlowDeprecatedValidationTests.swift */; };
 		B9E2AA0C48294C91BA6E878D /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B46E6E24989CAB4DC75302 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
 		C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */; };
@@ -76,6 +80,10 @@
 		1BD0EE9922CBB01C00147A71 /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
 		1BD0EE9A22CBB01C00147A71 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51CBC4A225A46F5A000D0363 /* CardFlowDeprecatedComponentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowDeprecatedComponentsViewController.swift; sourceTree = "<group>"; };
+		51CBC4A425A47F7B000D0363 /* CardFlowDeprecatedRetrieveSessionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowDeprecatedRetrieveSessionsTests.swift; sourceTree = "<group>"; };
+		51CBC4A625A480DC000D0363 /* CardFlowDeprecatedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowDeprecatedUITests.swift; sourceTree = "<group>"; };
+		51CBC4A825A480F0000D0363 /* CardFlowDeprecatedValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowDeprecatedValidationTests.swift; sourceTree = "<group>"; };
 		5F532F45E152C8559DCC281F /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		63B46E6E24989CAB4DC75302 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +231,7 @@
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
+				51CBC4A225A46F5A000D0363 /* CardFlowDeprecatedComponentsViewController.swift */,
 				E7B9A349243393C400137BCF /* CvcFlowViewController.swift */,
 				CC1BD93A2448BB9200A4C745 /* CIVariables.swift */,
 				C9AFE47222B7C62700943B3E /* Main.storyboard */,
@@ -242,6 +251,9 @@
 				C9AFE47A22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift */,
 				E74F7C3B24741490005D40FE /* CardFlowUITests.swift */,
 				C9AFE47922B7C6DA00943B3E /* CardFlowValidationTests.swift */,
+				51CBC4A425A47F7B000D0363 /* CardFlowDeprecatedRetrieveSessionsTests.swift */,
+				51CBC4A625A480DC000D0363 /* CardFlowDeprecatedUITests.swift */,
+				51CBC4A825A480F0000D0363 /* CardFlowDeprecatedValidationTests.swift */,
 				E7B7F4DA24350F4B00E2DDA6 /* CvcFlowValidationTests.swift */,
 				E79A3F1424360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift */,
 				E7B7F4DC2435125400E2DDA6 /* NavigationTests.swift */,
@@ -480,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51CBC4A325A46F5A000D0363 /* CardFlowDeprecatedComponentsViewController.swift in Sources */,
 				E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */,
 				CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,
@@ -500,7 +513,9 @@
 				E72152842437D9E3009AAFB3 /* CardPaymentFlowViewPageObject.swift in Sources */,
 				E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */,
 				E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */,
+				51CBC4A925A480F0000D0363 /* CardFlowDeprecatedValidationTests.swift in Sources */,
 				E7B7F4E22435EF5100E2DDA6 /* NavigationViewPageObject.swift in Sources */,
+				51CBC4A525A47F7B000D0363 /* CardFlowDeprecatedRetrieveSessionsTests.swift in Sources */,
 				E7B7F4E02435EEB200E2DDA6 /* CvcOnlyFlowViewPageObject.swift in Sources */,
 				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
 				C9AFE47E22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift in Sources */,
@@ -508,6 +523,7 @@
 				E74F7C3E247416AE005D40FE /* SwitchViewPageObject.swift in Sources */,
 				E7B7F4DB24350F4B00E2DDA6 /* CvcFlowValidationTests.swift in Sources */,
 				E7B7F4DD2435125400E2DDA6 /* NavigationTests.swift in Sources */,
+				51CBC4A725A480DC000D0363 /* CardFlowDeprecatedUITests.swift in Sources */,
 				E72152862437DBAC009AAFB3 /* AlertViewPageObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
