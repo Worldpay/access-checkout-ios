@@ -1,6 +1,8 @@
 import UIKit
 
 /**
+ Deprecated
+ 
  A view representing a card's Card Number
  - text: `String` representing the Card Number entered by the end user
  - isEnabled: `Boolean` allowing to enable or disable editing
@@ -8,6 +10,7 @@ import UIKit
  - imageView: A `UIImageView`  to display the image of the card brand that was detected by the SDK using the Card Number entered in the textinput by the end user
  - clear(): clears the text that was entered by the end user
  */
+@available(*, deprecated, message: "This component is deprecated and will be removed in future major versions of the SDK. A standard `UITextField` should be used instead.")
 @IBDesignable public class PanView: UIView {
     @IBOutlet weak var textField: UITextField!
     

@@ -9,7 +9,7 @@
  - accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
  - validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation delegate that should be notified on validation changes
  
- Deprecated - using the Views below to initialise the validation is deprecated and will not be supported on future versions of the SDK. `UITextField`s should be used as above.
+ Deprecated - using the Views below to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used as above.
  
  - panView: `PanView` that represents the pan ui element
  - expiryDateView: `ExpiryDateView` that represents the expiry date ui element
@@ -72,6 +72,7 @@ public struct CardValidationConfig: ValidationConfig {
     - Parameter accessBaseUrl: `String` that represents the base url
     - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
     */
+    @available(*, deprecated, message: "Using PanView, ExpiryDateView and CvcView to initialize the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used instead.")
     public init(panView: PanView,
                 expiryDateView: ExpiryDateView,
                 cvcView: CvcView,

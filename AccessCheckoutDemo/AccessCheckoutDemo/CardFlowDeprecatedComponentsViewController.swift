@@ -3,7 +3,6 @@ import UIKit
 
 class CardFlowDeprecatedComponentsViewController: UIViewController {
     @IBOutlet var panView: PanView!
-
     @IBOutlet var expiryDateView: ExpiryDateView!
     @IBOutlet var cvcView: CvcView!
     @IBOutlet var submitButton: UIButton!

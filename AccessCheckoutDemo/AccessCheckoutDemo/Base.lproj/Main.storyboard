@@ -42,10 +42,10 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8AE-e7-b1R">
-                                <rect key="frame" x="101" y="145" width="61" height="44"/>
+                                <rect key="frame" x="103" y="145" width="62" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvc" label="cvc"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="61" id="T9O-hC-CAg"/>
+                                    <constraint firstAttribute="width" constant="62" id="T9O-hC-CAg"/>
                                 </constraints>
                                 <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -59,10 +59,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8i-GI-0zO">
-                                <rect key="frame" x="16" y="145" width="61" height="44"/>
+                                <rect key="frame" x="16" y="145" width="64" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry Date"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="61" id="6EM-ft-nNk"/>
+                                    <constraint firstAttribute="width" constant="64" id="6EM-ft-nNk"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="qzS-NE-0Wd"/>
                                     <constraint firstAttribute="height" constant="44" id="znX-4L-e4b"/>
                                 </constraints>
@@ -108,7 +108,7 @@
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="aIa-0m-NUn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="24" id="bQl-87-Tli"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="8" id="chq-il-XVd"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="trailing" constant="24" id="d4P-3N-Epg"/>
+                            <constraint firstItem="8AE-e7-b1R" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="trailing" constant="23" id="d4P-3N-Epg"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="96" id="g9c-2p-ZIo"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="lY1-Hn-FII"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="baseline" secondItem="a8i-GI-0zO" secondAttribute="firstBaseline" id="ln5-sL-V1h"/>
@@ -145,72 +145,77 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7S-id-eOg" customClass="PanView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <rect key="frame" x="16" y="82" width="327" height="42"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0Wk-NC-st0"/>
+                                    <constraint firstAttribute="height" constant="42" id="q7t-8u-7iz"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-km-Yur" customClass="ExpiryDateView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="146" width="63" height="45"/>
+                                <rect key="frame" x="16" y="146" width="63" height="42"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="Hya-xy-17J"/>
+                                    <constraint firstAttribute="width" constant="63" id="wEQ-5w-PYe"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mm2-i6-Vta" customClass="CvcView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="101" y="146" width="46" height="45"/>
+                                <rect key="frame" x="103" y="146" width="61" height="42"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="hGa-Gn-zEj"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGA-cc-zb6">
-                                <rect key="frame" x="294" y="278.5" width="49" height="35.5"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submit:" destination="JDj-My-e5H" eventType="touchUpInside" id="0sr-2J-oVO"/>
-                                </connections>
-                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Llf-1V-BZ8">
                                 <rect key="frame" x="294" y="221" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5v-vf-4Fb">
-                                <rect key="frame" x="16" y="227" width="168.5" height="19.5"/>
+                                <rect key="frame" x="16" y="227" width="168.5" height="19"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IAn-7r-sh0">
-                                <rect key="frame" x="266" y="286.5" width="20" height="20"/>
-                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KBY-uw-3ad">
-                                <rect key="frame" x="16" y="253.5" width="244.5" height="12"/>
+                                <rect key="frame" x="16" y="254" width="244.5" height="12"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGA-cc-zb6">
+                                <rect key="frame" x="294" y="282" width="49" height="30"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submit:" destination="JDj-My-e5H" eventType="touchUpInside" id="0sr-2J-oVO"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IAn-7r-sh0">
+                                <rect key="frame" x="266" y="287" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="UuZ-em-aoB" firstAttribute="top" secondItem="oGA-cc-zb6" secondAttribute="bottom" constant="304" id="0rZ-dB-BlT"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="top" id="3f8-TX-ylf"/>
-                            <constraint firstItem="KBY-uw-3ad" firstAttribute="top" secondItem="Z5v-vf-4Fb" secondAttribute="bottom" constant="7" id="ATK-8b-tRu"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="KBY-uw-3ad" secondAttribute="leading" id="DMk-wo-1KC"/>
-                            <constraint firstItem="oGA-cc-zb6" firstAttribute="leading" secondItem="IAn-7r-sh0" secondAttribute="trailing" constant="8" id="GNM-jL-4bz"/>
-                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="96" id="IGj-AT-hJl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="c7S-id-eOg" secondAttribute="trailing" constant="16" id="KV8-gJ-KdL"/>
-                            <constraint firstItem="lH5-km-Yur" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="21" id="L95-om-gOm"/>
-                            <constraint firstItem="IAn-7r-sh0" firstAttribute="centerY" secondItem="oGA-cc-zb6" secondAttribute="centerY" id="NwD-HJ-M9E"/>
-                            <constraint firstAttribute="trailing" secondItem="Mm2-i6-Vta" secondAttribute="trailing" constant="228" id="OVh-wD-gyS"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="leading" id="ShB-6l-bRe"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leading" constant="101" id="XIm-YS-JKb"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="leading" id="Ysk-2g-LyI"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="bottom" secondItem="lH5-km-Yur" secondAttribute="bottom" id="c5k-OR-EdK"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="centerY" secondItem="Llf-1V-BZ8" secondAttribute="centerY" id="fDG-wi-ua2"/>
-                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="leading" secondItem="oGA-cc-zb6" secondAttribute="leading" id="mtW-pV-gxV"/>
-                            <constraint firstItem="IAn-7r-sh0" firstAttribute="top" secondItem="KBY-uw-3ad" secondAttribute="bottom" constant="21" id="olM-IK-Yd8"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="pEm-Sd-kHa"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="trailing" secondItem="Llf-1V-BZ8" secondAttribute="trailing" id="r3g-Bk-D1q"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="bottom" constant="36" id="r8x-pD-Gv9"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="trY-fp-6k5"/>
+                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="trailing" secondItem="c7S-id-eOg" secondAttribute="trailing" id="4xO-dq-1WG"/>
+                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="centerY" secondItem="Llf-1V-BZ8" secondAttribute="centerY" id="6QB-Ie-EVz"/>
+                            <constraint firstItem="c7S-id-eOg" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="82" id="8go-LX-nsi"/>
+                            <constraint firstItem="lH5-km-Yur" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="22" id="ADX-jq-Gef"/>
+                            <constraint firstItem="IAn-7r-sh0" firstAttribute="top" secondItem="KBY-uw-3ad" secondAttribute="bottom" constant="21" id="KrH-8E-Eab"/>
+                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="leading" secondItem="oGA-cc-zb6" secondAttribute="leading" id="Mrl-Ga-Loz"/>
+                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="trailing" constant="24" id="Ni0-aZ-nYQ"/>
+                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="97" id="OKl-ei-CIR"/>
+                            <constraint firstItem="lH5-km-Yur" firstAttribute="leading" secondItem="c7S-id-eOg" secondAttribute="leading" id="Ple-HO-mx7"/>
+                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="bottom" secondItem="lH5-km-Yur" secondAttribute="bottom" id="Q8W-Uf-1an"/>
+                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="leading" id="TTk-po-oKp"/>
+                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="top" id="TVR-L2-a4s"/>
+                            <constraint firstItem="IAn-7r-sh0" firstAttribute="centerY" secondItem="oGA-cc-zb6" secondAttribute="centerY" id="Vin-wJ-Epe"/>
+                            <constraint firstItem="c7S-id-eOg" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="e9y-da-l5M"/>
+                            <constraint firstItem="KBY-uw-3ad" firstAttribute="top" secondItem="Z5v-vf-4Fb" secondAttribute="bottom" constant="8" id="h1L-Sn-Ya3"/>
+                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="bottom" constant="39" id="hCJ-gp-6lJ"/>
+                            <constraint firstItem="oGA-cc-zb6" firstAttribute="leading" secondItem="IAn-7r-sh0" secondAttribute="trailing" constant="8" id="j5B-8U-NL4"/>
+                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="KBY-uw-3ad" secondAttribute="leading" id="qlL-PK-ssl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c7S-id-eOg" secondAttribute="trailing" constant="16" id="x3u-bs-Q8m"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card flow (deprecated components)" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
