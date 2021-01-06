@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CONTRACT_VERSION="2.0.0"
+CONTRACT_VERSION="2.1.0"
 HASH_CODE=$(git rev-parse --short HEAD)
 
 curl --fail --show-error -v -XPUT \-H "Content-Type: application/json" \
