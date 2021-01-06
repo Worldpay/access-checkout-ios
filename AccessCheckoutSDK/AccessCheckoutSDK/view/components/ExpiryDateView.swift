@@ -1,12 +1,15 @@
 import UIKit
 
 /**
+Deprecated
+ 
 A view representing a card's Expiry Date
 - text: `String` representing the Expiry Date entered by the end user
 - isEnabled: `Boolean` allowing to enable or disable editing
 - textColor: `UIColor?` allowing to set the colour of the text displayed in the textinput
 - clear(): clears the text that was entered by the end user
 */
+@available(*, deprecated, message: "This component is deprecated and will be removed in future major versions of the SDK. A standard `UITextField` should be used instead.")
 @IBDesignable public class ExpiryDateView: UIView {
     @IBOutlet weak var textField: UITextField!
     
