@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class CardPaymentFlowUITests: XCTestCase {
+class CardFlowDeprecatedUITests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
     let app = XCUIApplication()
@@ -12,7 +12,7 @@ class CardPaymentFlowUITests: XCTestCase {
         continueAfterFailure = false
         
         app.launch()
-        view = CardPaymentFlowViewPageObject(app)
+        view = NavigationViewPageObject(app).navigateToCardFlowDeprecated()
     }
     
     // MARK: Fields existance
