@@ -28,7 +28,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         XCTAssertEqual(expectedMessage, alert.message)
     }
     
-    func testClearsCvcWhenAlertWithSessionIsClosed() {
+    func testClearsCvcAndDisablesButtonWhenAlertWithSessionIsClosed() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
@@ -46,6 +46,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         
         waitFor(timeoutInSeconds: 0.5)
         XCTAssertEqual(view.cvcField.placeholderValue, view.cvcText)
+        XCTAssertEqual(view.submitButton.isEnabled, false)
     }
     
     func testSuccessfullyDisplaysErrorFromService() {
