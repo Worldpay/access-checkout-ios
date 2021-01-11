@@ -50,6 +50,32 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         XCTAssertEqual(alert.message, expectedMessage)
     }
     
+    func testClearsFormAndDisablesButtonWhenAlertWithSessionIsClosed() {
+        let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
+            .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
+            .verifiedTokensSessionStub(respondsWith: "VerifiedTokensSession-success")
+            .launch()
+        let view = CardPaymentFlowViewPageObject(app)
+        let expectedTitle = "Verified Tokens Session"
+        
+        fillUpFormWithValidValues(using: view)
+        view.submit()
+        waitFor(timeoutInSeconds: 0.05)
+        
+        let alert = view.alert
+        XCTAssertTrue(alert.exists)
+        XCTAssertEqual(alert.title, expectedTitle)
+        
+        alert.close()
+        XCTAssertFalse(alert.exists)
+        
+        waitFor(timeoutInSeconds: 0.5)
+        XCTAssertEqual(view.panField.placeholderValue, view.panText)
+        XCTAssertEqual(view.expiryDateField.placeholderValue, view.expiryDateText)
+        XCTAssertEqual(view.cvcField.placeholderValue, view.cvcText)
+        XCTAssertEqual(view.submitButton.isEnabled, false)
+    }
+    
     func testResponse_internalServerError() {
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
