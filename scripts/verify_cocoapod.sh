@@ -37,7 +37,7 @@ do
 
     # check if the current version in question exists in cocoapod specs
     URL="https://raw.githubusercontent.com/CocoaPods/Specs/master/Specs/4/9/d/AccessCheckoutSDK/${version:1}/AccessCheckoutSDK.podspec.json"
-    curl -s -I "${URL}" | head -1 | grep "200 OK" > /dev/null 2>&1
+    curl -s -I --http2 "${URL}" | head -1 | grep "200" > /dev/null 2>&1
     status=$?
 
     # if found add it to the success array otherwise to the failed array
