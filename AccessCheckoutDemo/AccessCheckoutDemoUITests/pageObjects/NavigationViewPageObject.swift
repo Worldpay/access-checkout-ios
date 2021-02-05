@@ -1,40 +1,34 @@
 import XCTest
 
 class NavigationViewPageObject {
-    private let app:XCUIApplication
+    private let app: XCUIApplication
     
-    var cvcFlowNavigationButton:XCUIElement {
-        get {
-            return app.tabBars.buttons["CVC flow"]
-        }
+    var cvcFlowNavigationButton: XCUIElement {
+        return app.tabBars.buttons["CVC Flow"]
     }
     
-    var cardFlowNavigationButton:XCUIElement {
-        get {
-            return app.tabBars.buttons["Card flow"]
-        }
+    var cardFlowNavigationButton: XCUIElement {
+        return app.tabBars.buttons["Card Flow"]
     }
     
-    var cardFlowDeprecatedNavigationButton:XCUIElement {
-        get {
-            return app.tabBars.buttons["Card flow (deprecated components)"]
-        }
+    var restrictedCardFlowNavigationButton: XCUIElement {
+        return app.tabBars.buttons["Restricted Card Flow"]
     }
     
-    init(_ app:XCUIApplication) {
+    init(_ app: XCUIApplication) {
         self.app = app
     }
     
-    func navigateToCardFlow() -> CardPaymentFlowViewPageObject {
+    func navigateToCardFlow() -> CardFlowViewPageObject {
         cardFlowNavigationButton.tap()
         
-        return CardPaymentFlowViewPageObject(app)
+        return CardFlowViewPageObject(app)
     }
     
-    func navigateToCardFlowDeprecated() -> CardPaymentFlowViewPageObject {
-        cardFlowDeprecatedNavigationButton.tap()
+    func navigateToRestrictedCardFlow() -> RestrictedCardFlowViewPageObject {
+        restrictedCardFlowNavigationButton.tap()
         
-        return CardPaymentFlowViewPageObject(app)
+        return RestrictedCardFlowViewPageObject(app)
     }
     
     func navigateToCvcFlow() -> CvcFlowViewPageObject {

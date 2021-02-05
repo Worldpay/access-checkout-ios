@@ -10,9 +10,14 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
     
+    @IBOutlet weak var panIsValidLabel: UILabel!
+    @IBOutlet weak var expiryDateIsValidLabel: UILabel!
+    @IBOutlet weak var cvcIsValidLabel: UILabel!
+    
     private let unknownBrandImage = UIImage(named: "card_unknown")
+    
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
-        
+    
     @IBAction func submit(_ sender: Any) {
         submitCard(pan: panTextField.text ?? "",
                    expiryDate: expiryDateTextField.text ?? "",
@@ -113,7 +118,6 @@ class CardFlowViewController: UIViewController {
         expiryDateTextField.layer.cornerRadius = 8
         expiryDateTextField.backgroundColor = UIColor.white
         expiryDateTextField.placeholder = "MM/YY"
-
         
         cvcTextField.layer.borderWidth = 1
         cvcTextField.layer.borderColor = UIColor.lightText.cgColor
@@ -121,13 +125,19 @@ class CardFlowViewController: UIViewController {
         cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "CVC"
         
+        panIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        expiryDateIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        
         resetCard(preserveContent: false, validationErrors: nil)
         
-        let validationConfig = CardValidationConfig(panTextField: panTextField,
-                                                    expiryDateTextField: expiryDateTextField,
-                                                    cvcTextField: cvcTextField,
-                                                    accessBaseUrl: accessBaseUrl,
-                                                    validationDelegate: self)
+        let validationConfig = try! CardValidationConfig.builder()
+            .pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
+            .accessBaseUrl(accessBaseUrl)
+            .validationDelegate(self)
+            .build()
         
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
@@ -149,14 +159,17 @@ class CardFlowViewController: UIViewController {
     
     private func changePanValidIndicator(isValid: Bool) {
         panTextField.textColor = isValid ? nil : UIColor.red
+        panIsValidLabel.text = isValid ? "valid" : "invalid"
     }
     
     private func changeExpiryDateValidIndicator(isValid: Bool) {
         expiryDateTextField.textColor = isValid ? nil : UIColor.red
+        expiryDateIsValidLabel.text = isValid ? "valid" : "invalid"
     }
     
     private func changeCvcValidIndicator(isValid: Bool) {
         cvcTextField.textColor = isValid ? nil : UIColor.red
+        cvcIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 }
 
