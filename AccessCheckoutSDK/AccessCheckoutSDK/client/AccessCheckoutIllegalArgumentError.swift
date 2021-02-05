@@ -4,7 +4,7 @@
 public struct AccessCheckoutIllegalArgumentError: Error, Equatable {
     public let message: String
     
-    init(message: String) {
+    private init(message: String) {
         self.message = message
     }
     
@@ -30,5 +30,9 @@ public struct AccessCheckoutIllegalArgumentError: Error, Equatable {
     
     static func missingPan() -> AccessCheckoutIllegalArgumentError {
         return AccessCheckoutIllegalArgumentError(message: "Expected pan to be provided but was not")
+    }
+    
+    static func missingValidationDelegate() -> AccessCheckoutIllegalArgumentError {
+        return AccessCheckoutIllegalArgumentError(message: "Expected validation delegate to be provided but was not")
     }
 }

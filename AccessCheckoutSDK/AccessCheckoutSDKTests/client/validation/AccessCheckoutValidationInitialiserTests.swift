@@ -16,7 +16,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
         cardValidationDelegateMock.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any()).thenDoNothing()
+        configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any(), acceptedCardBrands: any()).thenDoNothing()
     }
     
     func testInitialisationForCardPaymentFlowRetrievesConfiguration() {
@@ -24,11 +24,12 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
                                                     expiryDateView: expiryDateView,
                                                     cvcView: cvcView,
                                                     accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock)
+                                                    validationDelegate: cardValidationDelegateMock,
+                                                    acceptedCardBrands: ["amex", "visa"])
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
-        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url")
+        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
     }
     
     func testInitialisationForCardPaymentFlowSetsPresentersOnViews() {
@@ -36,7 +37,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
                                                     expiryDateView: expiryDateView,
                                                     cvcView: cvcView,
                                                     accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock)
+                                                    validationDelegate: cardValidationDelegateMock,
+                                                    acceptedCardBrands: ["amex", "visa"])
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
@@ -64,11 +66,12 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
                                                     expiryDateTextField: expiryDateTextField,
                                                     cvcTextField: cvcTextField,
                                                     accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock)
+                                                    validationDelegate: cardValidationDelegateMock,
+                                                    acceptedCardBrands: ["amex", "visa"])
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
-        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url")
+        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
     }
     
     func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
@@ -76,7 +79,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
                                                     expiryDateTextField: expiryDateTextField,
                                                     cvcTextField: cvcTextField,
                                                     accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock)
+                                                    validationDelegate: cardValidationDelegateMock,
+                                                    acceptedCardBrands: ["amex", "visa"])
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
@@ -86,9 +90,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     }
     
     func testInitialisationForCvcOnlyPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
-        let validationConfig = CvcOnlyValidationConfig(
-                                                    cvcTextField: cvcTextField,
-                                                    validationDelegate: cvcOnlyValidationDelegateMock)
+        let validationConfig = CvcOnlyValidationConfig(cvcTextField: cvcTextField,
+                                                       validationDelegate: cvcOnlyValidationDelegateMock)
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)

@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class ExpiryDateViewTests: ViewTestSuite {
+class ExpiryDateViewTests: LegacyViewTestSuite {
     // MARK: tests for the text formatting
     
     func testShouldAppendForwardSlashAfterMonthisEntered() {

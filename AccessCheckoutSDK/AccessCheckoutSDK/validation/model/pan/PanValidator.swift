@@ -6,15 +6,17 @@ class PanValidator {
     }
     
     func validate(pan: String) -> PanValidationResult {
+        let config = cardBrandsConfigurationProvider.get()
         let cardBrand = cardBrandsConfigurationProvider.get().cardBrand(forPan: pan)
-        let validationRule = cardBrand?.panValidationRule ?? ValidationRulesDefaults.instance().pan
         
-        var isValid: Bool = false
-        if validationRule.validate(text: pan) {
-            isValid = isValidLuhn(pan)
+        if !isValidLuhn(pan) {
+            return PanValidationResult(false, cardBrand)
+        } else if cardBrand != nil, !isAcceptedBrand(config, cardBrand) {
+            return PanValidationResult(false, cardBrand)
         }
         
-        return PanValidationResult(isValid, cardBrand)
+        let validationRule = cardBrand?.panValidationRule ?? ValidationRulesDefaults.instance().pan
+        return PanValidationResult(validationRule.validate(text: pan), cardBrand)
     }
     
     func canValidate(_ pan: String) -> Bool {
@@ -40,5 +42,10 @@ class PanValidator {
             }
         }
         return sum % 10 == 0
+    }
+    
+    private func isAcceptedBrand(_ config: CardBrandsConfiguration, _ cardBrand: CardBrandModel?) -> Bool {
+        return config.acceptedCardBrands.isEmpty
+            || config.acceptedCardBrands.contains(where: { $0.lowercased() == cardBrand!.name.lowercased() })
     }
 }

@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class PanViewTests: ViewTestSuite {
+class PanViewTests: LegacyViewTestSuite {
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
     
@@ -109,7 +109,6 @@ class PanViewTests: ViewTestSuite {
         
         panView.textColor = nil
         XCTAssertNotEqual(UIColor.red, panView.textField.textColor)
-
     }
     
     func testCanGetColourOfText() {

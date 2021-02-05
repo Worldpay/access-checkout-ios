@@ -242,24 +242,24 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForVerifiedTokensSession() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected expiry date to be provided but was not")
+        let expectedMessage = "Expected expiry date to be provided but was not"
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().pan("pan")
             .cvc("123")
             .build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc, .card]) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
+            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
     
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForPaymentsCvcSession() throws {
-        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected cvc to be provided but was not")
+        let expectedMessage = "Expected cvc to be provided but was not"
         let client = createAccessCheckoutClient()
         let cardDetails = try CardDetailsBuilder().build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc]) { _ in }) { error in
-            XCTAssertEqual(expectedError, error as! AccessCheckoutIllegalArgumentError)
+            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
     

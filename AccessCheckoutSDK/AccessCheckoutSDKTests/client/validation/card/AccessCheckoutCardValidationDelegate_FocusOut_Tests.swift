@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-class AccessCheckoutCardValidationDelegate_FocusOut_Tests: ViewTestSuite {
+class AccessCheckoutCardValidationDelegate_FocusOut_Tests: AcceptanceTestSuite {
     private let validVisaPan1 = "4111111111111111"
     private let invalidVisaPan = "123"
     

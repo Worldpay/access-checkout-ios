@@ -27,16 +27,16 @@ import Cuckoo
     
     
     
-     override func retrieveRemoteConfiguration(baseUrl: String)  {
+     override func retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String])  {
         
-    return cuckoo_manager.call("retrieveRemoteConfiguration(baseUrl: String)",
-            parameters: (baseUrl),
-            escapingParameters: (baseUrl),
+    return cuckoo_manager.call("retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String])",
+            parameters: (baseUrl, acceptedCardBrands),
+            escapingParameters: (baseUrl, acceptedCardBrands),
             superclassCall:
                 
-                super.retrieveRemoteConfiguration(baseUrl: baseUrl)
+                super.retrieveRemoteConfiguration(baseUrl: baseUrl, acceptedCardBrands: acceptedCardBrands)
                 ,
-            defaultCall: __defaultImplStub!.retrieveRemoteConfiguration(baseUrl: baseUrl))
+            defaultCall: __defaultImplStub!.retrieveRemoteConfiguration(baseUrl: baseUrl, acceptedCardBrands: acceptedCardBrands))
         
     }
     
@@ -64,9 +64,9 @@ import Cuckoo
 	    }
 	    
 	    
-	    func retrieveRemoteConfiguration<M1: Cuckoo.Matchable>(baseUrl: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: baseUrl) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCardBrandsConfigurationProvider.self, method: "retrieveRemoteConfiguration(baseUrl: String)", parameterMatchers: matchers))
+	    func retrieveRemoteConfiguration<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(baseUrl: M1, acceptedCardBrands: M2) -> Cuckoo.ClassStubNoReturnFunction<(String, [String])> where M1.MatchedType == String, M2.MatchedType == [String] {
+	        let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: baseUrl) { $0.0 }, wrap(matchable: acceptedCardBrands) { $0.1 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCardBrandsConfigurationProvider.self, method: "retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String])", parameterMatchers: matchers))
 	    }
 	    
 	    func get() -> Cuckoo.ClassStubFunction<(), CardBrandsConfiguration> {
@@ -91,9 +91,9 @@ import Cuckoo
 	
 	    
 	    @discardableResult
-	    func retrieveRemoteConfiguration<M1: Cuckoo.Matchable>(baseUrl: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: baseUrl) { $0 }]
-	        return cuckoo_manager.verify("retrieveRemoteConfiguration(baseUrl: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func retrieveRemoteConfiguration<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(baseUrl: M1, acceptedCardBrands: M2) -> Cuckoo.__DoNotUse<(String, [String]), Void> where M1.MatchedType == String, M2.MatchedType == [String] {
+	        let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: baseUrl) { $0.0 }, wrap(matchable: acceptedCardBrands) { $0.1 }]
+	        return cuckoo_manager.verify("retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String])", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -111,7 +111,7 @@ import Cuckoo
     
 
     
-     override func retrieveRemoteConfiguration(baseUrl: String)   {
+     override func retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String])   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

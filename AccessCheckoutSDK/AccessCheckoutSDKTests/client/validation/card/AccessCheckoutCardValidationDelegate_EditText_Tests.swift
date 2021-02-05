@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-class AccessCheckoutCardValidationDelegate_EditText_Tests: ViewTestSuite {
+class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
     private let amexBrand = TestFixtures.amexBrand()
@@ -28,6 +28,21 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: ViewTestSuite {
         editPan(text: "123")
         
         verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
+    }
+    
+    func testMerchantDelegateIsNotifiedOfInvalidPANWhenPANIsValidButBrandIsNotAcceptedByMerchant() {
+        let expectedVisaBrand = createCardBrand(from: visaBrand)
+        let expectedAmexBrand = createCardBrand(from: amexBrand)
+        let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, amexBrand], acceptedCardBrands: ["visa"])
+        
+        editPan(text: validVisaPan1)
+        editPan(text: validAmexPan)
+        
+        verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaBrand)
+        
+        verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
+        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedAmexBrand)
     }
     
     func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidPANsAreEntered() {

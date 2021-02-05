@@ -111,7 +111,7 @@ class PanValidationFlowTests: XCTestCase {
     }
     
     private func mockCardConfiguration() -> CardBrandsConfiguration {
-        return CardBrandsConfiguration([visaBrand])
+        return CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
     }
     
     private func mockCvcFlow() -> MockCvcValidationFlow {

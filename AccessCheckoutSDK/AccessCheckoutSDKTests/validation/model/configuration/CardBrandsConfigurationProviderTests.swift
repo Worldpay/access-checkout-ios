@@ -3,7 +3,6 @@ import XCTest
 
 class CardBrandsConfigurationProviderTests: XCTestCase {
     let factory = CardBrandsConfigurationFactoryMock()
-    var expectedConfiguration: CardBrandsConfiguration?
     var configurationProvider: CardBrandsConfigurationProvider?
     
     override func setUp() {
@@ -11,7 +10,7 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
     }
     
     func testReturnsEmptyConfigurationWhenRemoteConfigurationIsNotNeeded() {
-        expectedConfiguration = CardBrandsConfiguration([])
+        let expectedConfiguration = CardBrandsConfiguration(allCardBrands: [], acceptedCardBrands: [])
         
         let result = configurationProvider!.get()
         
@@ -19,13 +18,14 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
     }
     
     func testReturnsEmptyConfigurationWhenRemoteConfigurationHasBeenRequestedButNotYetProcessed() {
-        expectedConfiguration = CardBrandsConfiguration([])
+        let expectedConfiguration = CardBrandsConfiguration(allCardBrands: [], acceptedCardBrands: [])
         
-        configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url")
+        configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url", acceptedCardBrands: ["amex", "visa"])
         let result = configurationProvider!.get()
         
-        XCTAssertEqual("a-url", factory.baseUrlPassed)
         XCTAssertTrue(factory.createCalled)
+        XCTAssertEqual("a-url", factory.baseUrlPassed)
+        XCTAssertEqual(["amex", "visa"], factory.acceptedBrandsPassed)
         XCTAssertEqual(expectedConfiguration, result)
     }
     
@@ -33,14 +33,15 @@ class CardBrandsConfigurationProviderTests: XCTestCase {
         let cardBrand = CardBrandModel(name: "a-brand", images: [],
                                        panValidationRule: ValidationRule(matcher: "rule-1", validLengths: []),
                                        cvcValidationRule: ValidationRule(matcher: "rule-2", validLengths: []))
-        expectedConfiguration = CardBrandsConfiguration([cardBrand])
-        factory.willReturn(expectedConfiguration!)
+        let expectedConfiguration = CardBrandsConfiguration(allCardBrands: [cardBrand], acceptedCardBrands: ["amex", "visa"])
+        factory.willReturn(expectedConfiguration)
         
-        configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url")
+        configurationProvider!.retrieveRemoteConfiguration(baseUrl: "a-url", acceptedCardBrands: ["amex", "visa"])
         let result = configurationProvider!.get()
         
-        XCTAssertEqual("a-url", factory.baseUrlPassed)
         XCTAssertTrue(factory.createCalled)
+        XCTAssertEqual("a-url", factory.baseUrlPassed)
+        XCTAssertEqual(["amex", "visa"], factory.acceptedBrandsPassed)
         XCTAssertEqual(expectedConfiguration, result)
     }
 }
