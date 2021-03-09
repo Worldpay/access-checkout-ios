@@ -5,6 +5,12 @@ project_type: ios
 workflows:
   primary:
     steps:
+    - build-router-start:
+        inputs:
+          - workflows: |-
+              ui-tests-ios-13
+              ui-tests-ios-14
+          - access_token: "$BITRISE_AUTHENTICATION_TOKEN_OLIVIER"
     - cache-pull: {}
     - certificate-and-profile-installer: {}
     - cocoapods-install:
@@ -13,11 +19,21 @@ workflows:
     - recreate-user-schemes:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
-    - swift-environment-variable-injector:
+    - script:
         inputs:
-        - variable_injector_version: 0.3.1
-        - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
-        - verbose: true
+          - content: |-
+              #!/usr/bin/env bash
+              # fail if any commands fails
+              set -e
+              # debug log
+              set -x
+
+              # Download and install Swift environment variable innjector
+              curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
+
+              # Replacing env variables
+              variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
+        title: Swift environment variable injection
     - script:
         inputs:
         - content: |-
@@ -56,8 +72,7 @@ workflows:
         inputs:
         - test_devices: |-
             iphonex,11.4,en,portrait
-            ipad5,12.0,en,portrait
-            iphone11,13.3,en,portrait
+            iphonexs,12.0,en,portrait
     - script:
         inputs:
         - content: |-
@@ -107,6 +122,85 @@ workflows:
           - text_on_error: "Primary build for Access Checkout iOS Failed"
           - webhook_url: "$SLACK_ACO_BUILD_WEBHOOK_URL"
     - cache-push: {}
+    - build-router-wait:
+        inputs:
+          - access_token: "$BITRISE_AUTHENTICATION_TOKEN_OLIVIER"
+  ui-tests-ios-13:
+    steps:
+      - cache-pull: {}
+      - certificate-and-profile-installer: {}
+      - cocoapods-install:
+          inputs:
+            - source_root_path: AccessCheckoutDemo
+      - recreate-user-schemes:
+          inputs:
+            - project_path: "$DEMO_PROJECT_PATH"
+      - script:
+          inputs:
+            - content: |-
+                #!/usr/bin/env bash
+                # fail if any commands fails
+                set -e
+                # debug log
+                set -x
+
+                # Download and install Swift environment variable innjector
+                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.2/scripts/install-binary.sh | sh
+
+                # Replacing env variables
+                variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
+          title: Swift environment variable injection
+      - xcode-build-for-test:
+          inputs:
+            - scheme: "$DEMO_SCHEME"
+            - project_path: "$DEMO_PROJECT_PATH"
+      - xcode-test:
+          inputs:
+            - project_path: "$DEMO_PROJECT_PATH"
+            - simulator_device: iPhone 11 Pro
+            - simulator_os_version: 13.4
+            - scheme: "$DEMO_SCHEME"
+            - generate_code_coverage_files: "yes"
+      - deploy-to-bitrise-io:
+      - cache-push: {}
+  ui-tests-ios-14:
+    steps:
+      - cache-pull: {}
+      - certificate-and-profile-installer: {}
+      - cocoapods-install:
+          inputs:
+            - source_root_path: AccessCheckoutDemo
+      - recreate-user-schemes:
+          inputs:
+            - project_path: "$DEMO_PROJECT_PATH"
+      - script:
+          inputs:
+            - content: |-
+                #!/usr/bin/env bash
+                # fail if any commands fails
+                set -e
+                # debug log
+                set -x
+
+                # Download and install Swift environment variable innjector
+                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
+
+                # Replacing env variables
+                variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
+          title: Swift environment variable injection
+      - xcode-build-for-test:
+          inputs:
+            - scheme: "$DEMO_SCHEME"
+            - project_path: "$DEMO_PROJECT_PATH"
+      - xcode-test:
+          inputs:
+            - project_path: "$DEMO_PROJECT_PATH"
+            - simulator_device: iPhone 11 Pro
+            - simulator_os_version: 14.4
+            - scheme: "$DEMO_SCHEME"
+            - generate_code_coverage_files: "yes"
+      - deploy-to-bitrise-io:
+      - cache-push: {}
   release:
     steps:
     - cache-pull: {}
