@@ -10,7 +10,7 @@ workflows:
           - workflows: |-
               ui-tests-ios-13
               ui-tests-ios-14
-          - access_token: "$BITRISE_AUTHENTICATION_TOKEN_OLIVIER"
+          - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
     - cache-pull: {}
     - certificate-and-profile-installer: {}
     - cocoapods-install:
@@ -124,7 +124,7 @@ workflows:
     - cache-push: {}
     - build-router-wait:
         inputs:
-          - access_token: "$BITRISE_AUTHENTICATION_TOKEN_OLIVIER"
+          - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
   ui-tests-ios-13:
     steps:
       - cache-pull: {}
