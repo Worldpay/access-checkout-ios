@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-class AccessCheckoutCvcOnlyValidationDelegate_EditText_Tests: ViewTestSuite {
+class AccessCheckoutCvcOnlyValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     func testMerchantDelegateIsNotifiedOfCvcValidationStateChanges() {
         let merchantDelegate = initialiseCvcOnlyValidation()
         

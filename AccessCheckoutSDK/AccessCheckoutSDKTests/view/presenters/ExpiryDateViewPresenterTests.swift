@@ -5,7 +5,7 @@ import XCTest
 class ExpiryDateViewPresenterTests: PresenterTestSuite {
     private let expiryDateValidatorMock = MockExpiryDateValidator()
     private let expiryDateValidationFlow = mockExpiryDateValidationFlow()
-    
+
     override func setUp() {
         expiryDateValidationFlow.getStubbingProxy().validate(expiryDate: any()).thenDoNothing()
         expiryDateValidationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
@@ -55,39 +55,38 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
 
         return MockExpiryDateValidationFlow(validator, validationStateHandler)
     }
-    
+
     // MARK: Tests for presenter with UITextField
-    
+
     func testTextFieldEndEditingValidatesExpiryDate() {
         let expiryDate = "11/22"
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
         expiryDateTextField.text = expiryDate
         presenter.textFieldEditingChanged(expiryDateTextField)
-        
+
         presenter.textFieldDidEndEditing(expiryDateTextField)
         verify(expiryDateValidationFlow).validate(expiryDate: expiryDate)
     }
 
     func testTextFieldDidEndEditingNotifiesMerchantOfValidationStateIfNotAlreadyNotified() {
         let expiryDate = "11/2"
-        
+
         expiryDateTextField.text = expiryDate
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         presenter.textFieldDidEndEditing(expiryDateTextField)
         verify(expiryDateValidationFlow).notifyMerchantIfNotAlreadyNotified()
     }
-    
+
     // MARK: tests for the text formatting
+
     func testShouldAppendForwardSlashAfterMonthisEntered() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
-        
+
         XCTAssertEqual("02/", editExpiryDateAndGetResultingText(presenter: presenter, "02"))
     }
-    
+
     func testShouldBeAbleToEditMonthIndependentlyWithoutReformatting() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("01/29", editExpiryDateAndGetResultingText(presenter: presenter, "01/29"))
@@ -97,7 +96,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldReformatPastedNewDateOverwritingAnExistingOne() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("01/19", editExpiryDateAndGetResultingText(presenter: presenter, "01/19"))
@@ -109,9 +107,7 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldBeAbleToDeleteCharactersToEmptyFromValidExpiryDate() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
-
 
         XCTAssertEqual("12/99", editExpiryDateAndGetResultingText(presenter: presenter, "12/99"))
         XCTAssertEqual("12/9", editExpiryDateAndGetResultingText(presenter: presenter, "12/9"))
@@ -122,7 +118,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldBeAbleToDeleteCharactersToEmptyFromInvalidExpiryDate() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("13/99", editExpiryDateAndGetResultingText(presenter: presenter, "13/99"))
@@ -134,7 +129,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldNotReformatPastedValueWhenPastedValueIsSameAsCurrentValue() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("12/", editExpiryDateAndGetResultingText(presenter: presenter, "12/"))
@@ -142,7 +136,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldBeAbleToAddCharactersToComplete() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("", editExpiryDateAndGetResultingText(presenter: presenter, ""))
@@ -154,7 +147,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldFormatSingleDigitsCorrectly_Overwrite() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         let testDictionary = ["1": "1",
@@ -173,7 +165,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldFormatSingleDigitsCorrectly_NewlyEntered() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         let testDictionary = ["1": "1",
@@ -193,7 +184,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldReformatWhenMonthValueChangesDespiteTheSeparatorBeingDeleted() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertEqual("02/", editExpiryDateAndGetResultingText(presenter: presenter, "02/"))
@@ -201,7 +191,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldFormatDoubleDigitsCorrectly() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         let testDictionary = ["10": "10/",
@@ -218,7 +207,6 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     func testShouldFormatTripleDigitsCorrectly() {
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         let testDictionary = ["100": "10/0",
@@ -235,18 +223,16 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     }
 
     // MARK: tests for what the control allows the user to type
-    
+
     func testCannotTypeIfValidatorReturnsFalse() {
         expiryDateValidatorMock.getStubbingProxy().canValidate(any()).thenReturn(false)
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertFalse(canEnterExpiryDate(presenter: presenter, uiTextField: expiryDateTextField, "12"))
     }
-    
+
     func testCanTypeIfValidatorReturnsFalse() {
         expiryDateValidatorMock.getStubbingProxy().canValidate(any()).thenReturn(true)
-        _ = initialiseCustomCardValidation()
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         XCTAssertTrue(canEnterExpiryDate(presenter: presenter, uiTextField: expiryDateTextField, "12"))
@@ -255,7 +241,7 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
     private func editExpiryDateAndGetResultingText(presenter: ExpiryDateViewPresenter, _ text: String) -> String {
         // This line is here to reproduce the behaviour where the state of the before applying the text to type would be saved by this call in production code when the text is being edited
         _ = presenter.textField(expiryDateTextField, shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "")
-        
+
         expiryDateTextField.text = text
         presenter.textFieldEditingChanged(expiryDateTextField)
         return expiryDateTextField.text!

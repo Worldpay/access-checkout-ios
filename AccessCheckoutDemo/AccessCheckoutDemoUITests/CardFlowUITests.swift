@@ -6,16 +6,14 @@ class CardPaymentFlowUITests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
     let app = XCUIApplication()
-    var view: CardPaymentFlowViewPageObject?
+    var view: CardFlowViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
         
         app.launch()
-        view = CardPaymentFlowViewPageObject(app)
+        view = CardFlowViewPageObject(app)
     }
-    
-    // MARK: Fields existance
     
     func testCardNumberTextField_exists() {
         XCTAssertTrue(view!.panField.exists)
@@ -33,7 +31,7 @@ class CardPaymentFlowUITests: XCTestCase {
         XCTAssertTrue(view!.cvcField.placeholderValue == "CVC")
     }
     
-    func testCardNumberImageView_exists() {
+    func testCardBrandImageView_exists() {
         XCTAssertTrue(view!.cardBrandImage.exists)
     }
     
@@ -49,7 +47,19 @@ class CardPaymentFlowUITests: XCTestCase {
         XCTAssertTrue(view!.paymentsCvcSessionToggle.exists)
     }
     
-    func testPaymentsCvcSessionToggleIsOffByDefault_exists() {
+    func testPaymentsCvcSessionToggleIsOffByDefault() {
         XCTAssertTrue(view!.paymentsCvcSessionToggle.isOff)
+    }
+    
+    func testPanIsValidLabel_exists() {
+        XCTAssertTrue(view!.panIsValidLabel.exists)
+    }
+    
+    func testExpiryDateIsValidLabel_exists() {
+        XCTAssertTrue(view!.expiryDateIsValidLabel.exists)
+    }
+    
+    func testCvcIsValidLabel_exists() {
+        XCTAssertTrue(view!.cvcIsValidLabel.exists)
     }
 }

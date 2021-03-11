@@ -59,11 +59,10 @@ class CvcViewPresenterTests: PresenterTestSuite {
 
         XCTAssertTrue(result)
     }
-    
+
     // MARK: Tests for presenter with UITextField
-    
+
     func testCanTypeIfCvcValidatorReturnsTrue() {
-        _ = initialiseCustomCardValidation()
         let cvcValidator = MockCvcValidator()
         let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
                                                                           CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
@@ -77,7 +76,7 @@ class CvcViewPresenterTests: PresenterTestSuite {
 
         XCTAssertTrue(canEnterCvc(presenter: presenter, uiTextField: cvcTextField, "123"))
     }
-    
+
     func testCannotTypeIfCvcValidatorReturnsFalse() {
         let cvcValidator = MockCvcValidator()
         let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
@@ -87,11 +86,11 @@ class CvcViewPresenterTests: PresenterTestSuite {
         validationFlow.getStubbingProxy().validate(cvc: any()).thenDoNothing()
         validationFlow.getStubbingProxy().validationRule.get.thenReturn(expectedValidationRule)
         cvcValidator.getStubbingProxy().canValidate(any(), using: any()).thenReturn(false)
-        
+
         let presenter = CvcViewPresenter(validationFlow, cvcValidator)
         XCTAssertFalse(canEnterCvc(presenter: presenter, uiTextField: cvcTextField, "123"))
     }
-    
+
     func testTextFieldDidEndEditingNotifiesMerchantOfValidationState() {
         cvcTextField.text = "12"
         let cvcValidator = CvcValidator()
@@ -104,5 +103,4 @@ class CvcViewPresenterTests: PresenterTestSuite {
 
         verify(validationFlow).notifyMerchantIfNotAlreadyNotified()
     }
-    
 }

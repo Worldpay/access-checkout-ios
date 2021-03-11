@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-class AccessCheckoutCvcOnlyValidationDelegate_FocusOut_Tests: ViewTestSuite {
+class AccessCheckoutCvcOnlyValidationDelegate_FocusOut_Tests: AcceptanceTestSuite {
     func testMerchantDelegateIsNotNotifiedWhenCvcComponentWithValidCvcLosesFocus() {
         let merchantDelegate = initialiseCvcOnlyValidation()
         

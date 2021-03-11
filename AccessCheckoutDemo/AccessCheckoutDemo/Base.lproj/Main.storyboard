@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Card flow-->
+        <!--Card Flow-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CardFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -70,11 +70,11 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
-                                <rect key="frame" x="286" y="87" width="49" height="32"/>
+                                <rect key="frame" x="283" y="84" width="57" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="oWu-Sm-NXt"/>
-                                    <constraint firstAttribute="width" constant="49" id="vka-X3-DAu"/>
+                                    <constraint firstAttribute="height" constant="38" id="oWu-Sm-NXt"/>
+                                    <constraint firstAttribute="width" constant="57" id="vka-X3-DAu"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
@@ -87,6 +87,30 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
                                 <rect key="frame" x="266" y="287" width="20" height="20"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
+                                <rect key="frame" x="16" y="0.0" width="119" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMM-PP-5OM">
+                                <rect key="frame" x="16" y="20" width="173" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="expiryDateIsValidLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-IN-v4K">
+                                <rect key="frame" x="16" y="41" width="118" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -97,7 +121,7 @@
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="firstBaseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="6Mp-Cb-ydu"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="8" id="Ec7-e5-MQQ"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="HGC-2s-NEA"/>
-                            <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="87" id="J9X-kf-fAJ"/>
+                            <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="N9a-eQ-gxn"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="top" secondItem="a8i-GI-0zO" secondAttribute="top" id="Obz-wv-4Uc"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="PHs-7U-Qyf"/>
@@ -106,7 +130,7 @@
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="bottom" secondItem="a8i-GI-0zO" secondAttribute="bottom" id="YAA-AS-D9n"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="centerY" secondItem="V3W-HP-wPE" secondAttribute="centerY" id="YOD-hy-WxO"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="aIa-0m-NUn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="24" id="bQl-87-Tli"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="19" id="bQl-87-Tli"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="8" id="chq-il-XVd"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="trailing" constant="23" id="d4P-3N-Epg"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="96" id="g9c-2p-ZIo"/>
@@ -116,11 +140,14 @@
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="zTy-uV-Q3K"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Card flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
+                    <tabBarItem key="tabBarItem" title="Card Flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
                     <connections>
+                        <outlet property="cvcIsValidLabel" destination="NxL-IN-v4K" id="3xq-OV-BPX"/>
                         <outlet property="cvcTextField" destination="8AE-e7-b1R" id="Dyk-Q4-XIZ"/>
+                        <outlet property="expiryDateIsValidLabel" destination="FMM-PP-5OM" id="EKv-Pa-JkQ"/>
                         <outlet property="expiryDateTextField" destination="a8i-GI-0zO" id="ctL-po-sv5"/>
                         <outlet property="imageView" destination="4gy-2k-boW" id="RJe-7W-H1o"/>
+                        <outlet property="panIsValidLabel" destination="MXa-G9-0FX" id="vI4-fM-Idp"/>
                         <outlet property="panTextField" destination="Mya-3f-hK8" id="CtN-ZL-0db"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
@@ -131,10 +158,10 @@
             </objects>
             <point key="canvasLocation" x="-698.39999999999998" y="831.63418290854577"/>
         </scene>
-        <!--Card flow (deprecated components)-->
+        <!--Restricted Card Flow-->
         <scene sceneID="QsL-lt-ywi">
             <objects>
-                <viewController id="JDj-My-e5H" customClass="CardFlowDeprecatedComponentsViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JDj-My-e5H" customClass="RestrictedCardFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SLT-ku-F2z"/>
                         <viewControllerLayoutGuide type="bottom" id="UuZ-em-aoB"/>
@@ -143,95 +170,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7S-id-eOg" customClass="PanView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="82" width="327" height="42"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DT4-6e-hWq">
+                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pan" label="pan"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
+                                <rect key="frame" x="283" y="84" width="57" height="38"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="q7t-8u-7iz"/>
+                                    <constraint firstAttribute="width" constant="57" id="APS-Uj-noq"/>
+                                    <constraint firstAttribute="height" constant="38" id="abL-ww-6yu"/>
                                 </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-km-Yur" customClass="ExpiryDateView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="146" width="63" height="42"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="Hya-xy-17J"/>
-                                    <constraint firstAttribute="width" constant="63" id="wEQ-5w-PYe"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mm2-i6-Vta" customClass="CvcView" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="103" y="146" width="61" height="42"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="61" id="hGa-Gn-zEj"/>
-                                </constraints>
-                            </view>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Llf-1V-BZ8">
-                                <rect key="frame" x="294" y="221" width="51" height="31"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5v-vf-4Fb">
-                                <rect key="frame" x="16" y="227" width="168.5" height="19"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KBY-uw-3ad">
-                                <rect key="frame" x="16" y="254" width="244.5" height="12"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
+                                <rect key="frame" x="56" y="135" width="262" height="14"/>
+                                <accessibility key="accessibilityConfiguration" identifier="restrictedCardBrandsLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGA-cc-zb6">
-                                <rect key="frame" x="294" y="282" width="49" height="30"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submit:" destination="JDj-My-e5H" eventType="touchUpInside" id="0sr-2J-oVO"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IAn-7r-sh0">
-                                <rect key="frame" x="266" y="287" width="20" height="20"/>
-                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-R3-jK5">
+                                <rect key="frame" x="16" y="0.0" width="126" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="trailing" secondItem="c7S-id-eOg" secondAttribute="trailing" id="4xO-dq-1WG"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="centerY" secondItem="Llf-1V-BZ8" secondAttribute="centerY" id="6QB-Ie-EVz"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="82" id="8go-LX-nsi"/>
-                            <constraint firstItem="lH5-km-Yur" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="22" id="ADX-jq-Gef"/>
-                            <constraint firstItem="IAn-7r-sh0" firstAttribute="top" secondItem="KBY-uw-3ad" secondAttribute="bottom" constant="21" id="KrH-8E-Eab"/>
-                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="leading" secondItem="oGA-cc-zb6" secondAttribute="leading" id="Mrl-Ga-Loz"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="trailing" constant="24" id="Ni0-aZ-nYQ"/>
-                            <constraint firstItem="Llf-1V-BZ8" firstAttribute="top" secondItem="c7S-id-eOg" secondAttribute="bottom" constant="97" id="OKl-ei-CIR"/>
-                            <constraint firstItem="lH5-km-Yur" firstAttribute="leading" secondItem="c7S-id-eOg" secondAttribute="leading" id="Ple-HO-mx7"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="bottom" secondItem="lH5-km-Yur" secondAttribute="bottom" id="Q8W-Uf-1an"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="lH5-km-Yur" secondAttribute="leading" id="TTk-po-oKp"/>
-                            <constraint firstItem="Mm2-i6-Vta" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="top" id="TVR-L2-a4s"/>
-                            <constraint firstItem="IAn-7r-sh0" firstAttribute="centerY" secondItem="oGA-cc-zb6" secondAttribute="centerY" id="Vin-wJ-Epe"/>
-                            <constraint firstItem="c7S-id-eOg" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="e9y-da-l5M"/>
-                            <constraint firstItem="KBY-uw-3ad" firstAttribute="top" secondItem="Z5v-vf-4Fb" secondAttribute="bottom" constant="8" id="h1L-Sn-Ya3"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="top" secondItem="lH5-km-Yur" secondAttribute="bottom" constant="39" id="hCJ-gp-6lJ"/>
-                            <constraint firstItem="oGA-cc-zb6" firstAttribute="leading" secondItem="IAn-7r-sh0" secondAttribute="trailing" constant="8" id="j5B-8U-NL4"/>
-                            <constraint firstItem="Z5v-vf-4Fb" firstAttribute="leading" secondItem="KBY-uw-3ad" secondAttribute="leading" id="qlL-PK-ssl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="c7S-id-eOg" secondAttribute="trailing" constant="16" id="x3u-bs-Q8m"/>
+                            <constraint firstItem="iUX-jl-sEW" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="84" id="4kh-kc-gek"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iUX-jl-sEW" secondAttribute="trailing" constant="19" id="6Xp-p5-ilF"/>
+                            <constraint firstItem="DT4-6e-hWq" firstAttribute="centerY" secondItem="iUX-jl-sEW" secondAttribute="centerY" id="OmC-1X-wmX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DT4-6e-hWq" secondAttribute="trailing" constant="16" id="Thb-hN-Sgd"/>
+                            <constraint firstItem="dTi-zG-nFA" firstAttribute="centerX" secondItem="Zvz-kn-Pea" secondAttribute="centerX" id="UL5-Ex-MmA"/>
+                            <constraint firstItem="DT4-6e-hWq" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="cl6-TE-lZY"/>
+                            <constraint firstItem="dTi-zG-nFA" firstAttribute="top" secondItem="DT4-6e-hWq" secondAttribute="bottom" constant="10" id="ndM-4W-0zD"/>
+                            <constraint firstItem="DT4-6e-hWq" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="ufL-Hu-yUV"/>
+                            <constraint firstItem="dTi-zG-nFA" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" constant="40" id="zx8-Mh-4X2"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Card flow (deprecated components)" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
+                    <tabBarItem key="tabBarItem" title="Restricted Card Flow" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
                     <connections>
-                        <outlet property="cvcView" destination="Mm2-i6-Vta" id="HSF-QT-oYf"/>
-                        <outlet property="expiryDateView" destination="lH5-km-Yur" id="oI7-Ds-Ruj"/>
-                        <outlet property="panView" destination="c7S-id-eOg" id="afs-ff-aDV"/>
-                        <outlet property="paymentsCvcSessionToggle" destination="Llf-1V-BZ8" id="R6E-dq-T8D"/>
-                        <outlet property="spinner" destination="IAn-7r-sh0" id="f1E-bC-98a"/>
-                        <outlet property="submitButton" destination="oGA-cc-zb6" id="jyw-us-Ood"/>
+                        <outlet property="imageView" destination="iUX-jl-sEW" id="9lP-kL-PiX"/>
+                        <outlet property="panIsValidLabel" destination="DcK-R3-jK5" id="3be-3n-4XV"/>
+                        <outlet property="panTextField" destination="DT4-6e-hWq" id="95m-NU-26K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfJ-C5-324" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-15.199999999999999" y="831.63418290854577"/>
         </scene>
-        <!--CVC flow-->
+        <!--CVC Flow-->
         <scene sceneID="lPP-8k-MJs">
             <objects>
                 <viewController id="ZEX-QF-aID" customClass="CvcFlowViewController" customModule="AccessCheckoutDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -265,6 +259,14 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
                                 <rect key="frame" x="267" y="93" width="20" height="20"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-RM-1YK">
+                                <rect key="frame" x="16" y="0.0" width="118" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -277,8 +279,9 @@
                             <constraint firstItem="5NE-TN-m7a" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="81" id="jg7-zw-0Ve"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="CVC flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
+                    <tabBarItem key="tabBarItem" title="CVC Flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
                     <connections>
+                        <outlet property="cvcIsValidLabel" destination="rhE-RM-1YK" id="8VX-Tu-dTh"/>
                         <outlet property="cvcTextField" destination="5NE-TN-m7a" id="urH-5K-lPD"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
                         <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>

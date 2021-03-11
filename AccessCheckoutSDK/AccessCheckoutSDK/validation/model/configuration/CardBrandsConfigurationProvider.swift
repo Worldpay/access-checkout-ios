@@ -9,8 +9,8 @@ class CardBrandsConfigurationProvider {
         configuration = cardBrandsConfigurationFactory.emptyConfiguration()
     }
     
-    func retrieveRemoteConfiguration(baseUrl: String) {
-        factory.create(baseUrl: baseUrl) { configuration in
+    func retrieveRemoteConfiguration(baseUrl: String, acceptedCardBrands: [String]) {
+        factory.create(baseUrl: baseUrl, acceptedCardBrands: acceptedCardBrands) { configuration in
             self.serialQueue.async { [weak self] in
                 guard let self = self else {
                     return

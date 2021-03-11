@@ -13,7 +13,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .launch()
         let expectedTitle = "Verified Tokens Session"
         let expectedMessage = formatStringAsStaticTextLabel("https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session")
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -32,7 +32,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .sessionsStub(respondsWith: "sessions-success")
             .sessionsPaymentsCvcStub(respondsWith: "sessions-paymentsCvc-success")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         let expectedTitle = "Verified Tokens & Payments CVC Sessions"
         let expectedMessage = formatStringAsStaticTextLabel("""
         https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session
@@ -55,7 +55,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokensSession-success")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         let expectedTitle = "Verified Tokens Session"
         
         fillUpFormWithValidValues(using: view)
@@ -81,7 +81,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-internalServerError")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -97,7 +97,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -115,7 +115,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-bodyDoesNotMatchSchema-fieldIsMissing-cardNumber")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -133,7 +133,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-unknown-variation1")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -149,7 +149,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-unknown-variation2")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -165,7 +165,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-unknown-variation3")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -181,7 +181,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensStub(respondsWith: "VerifiedTokens-success")
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokens-unknown-variation4")
             .launch()
-        let view = CardPaymentFlowViewPageObject(app)
+        let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -192,7 +192,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         XCTAssert(alert.title.contains("variation4"))
     }
     
-    private func fillUpFormWithValidValues(using view: CardPaymentFlowViewPageObject) {
+    private func fillUpFormWithValidValues(using view: CardFlowViewPageObject) {
         view.typeTextIntoPan("4111111111111111")
         view.typeTextIntoExpiryDate("01/99")
         view.typeTextIntoCvc("123")

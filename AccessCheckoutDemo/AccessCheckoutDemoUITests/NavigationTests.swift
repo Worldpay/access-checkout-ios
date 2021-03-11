@@ -1,5 +1,5 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
 class NavigationTests: XCTestCase {
     let app = XCUIApplication()
@@ -10,16 +10,21 @@ class NavigationTests: XCTestCase {
         app.launch()
     }
     
-    func testHasButtonsToNavigateToCvcFlow() {
-        let element:XCUIElement = NavigationViewPageObject(app).cvcFlowNavigationButton
+    func testHasButtonToNavigateToCardFlow() {
+        let element: XCUIElement = NavigationViewPageObject(app).cardFlowNavigationButton
         
         XCTAssertTrue(element.exists)
     }
     
-    func testHasButtonToNavigateToCardFlow() {
-        let element:XCUIElement = NavigationViewPageObject(app).cardFlowNavigationButton
+    func testHasButtonToNavigateToRestrictedCardFlow() {
+        let element: XCUIElement = NavigationViewPageObject(app).restrictedCardFlowNavigationButton
+        
+        XCTAssertTrue(element.exists)
+    }
+    
+    func testHasButtonsToNavigateToCvcFlow() {
+        let element: XCUIElement = NavigationViewPageObject(app).cvcFlowNavigationButton
         
         XCTAssertTrue(element.exists)
     }
 }
-

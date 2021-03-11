@@ -5,6 +5,7 @@ class CvcFlowViewController: UIViewController {
     @IBOutlet weak var cvcTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var cvcIsValidLabel: UILabel!
     
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
@@ -49,7 +50,12 @@ class CvcFlowViewController: UIViewController {
         cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "123"
         
-        let validationConfig = CvcOnlyValidationConfig(cvcTextField: cvcTextField, validationDelegate: self)
+        cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        
+        let validationConfig = try! CvcOnlyValidationConfig.builder()
+            .cvc(cvcTextField)
+            .validationDelegate(self)
+            .build()
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
         cvcValidChanged(isValid: false)
@@ -79,6 +85,7 @@ class CvcFlowViewController: UIViewController {
     
     private func changeCvcValidIndicator(isValid: Bool) {
         cvcTextField.textColor = isValid ? nil : UIColor.red
+        cvcIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 }
 

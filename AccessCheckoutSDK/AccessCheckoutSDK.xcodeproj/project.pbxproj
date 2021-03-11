@@ -12,6 +12,9 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
+		51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */; };
+		51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */; };
+		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
 		683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
@@ -138,7 +141,7 @@
 		E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A86245869DB003F7231 /* ApiHeaders.swift */; };
 		E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */; };
 		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
-		E782A6DC24A106EF005904B5 /* ViewTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782A6DB24A106EF005904B5 /* ViewTestSuite.swift */; };
+		E782A6DC24A106EF005904B5 /* LegacyViewTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782A6DB24A106EF005904B5 /* LegacyViewTestSuite.swift */; };
 		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */; };
 		E78C9AEC24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift */; };
 		E798B69F24913E8100A6A9AD /* CvcViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798B69E24913E8100A6A9AD /* CvcViewTests.swift */; };
@@ -208,6 +211,9 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
+		51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcOnlyValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
+		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
@@ -346,7 +352,7 @@
 		E7821A86245869DB003F7231 /* ApiHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeaders.swift; sourceTree = "<group>"; };
 		E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutTextView.swift; sourceTree = "<group>"; };
 		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
-		E782A6DB24A106EF005904B5 /* ViewTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTestSuite.swift; sourceTree = "<group>"; };
+		E782A6DB24A106EF005904B5 /* LegacyViewTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyViewTestSuite.swift; sourceTree = "<group>"; };
 		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E78C9AEB24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E798B69E24913E8100A6A9AD /* CvcViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcViewTests.swift; sourceTree = "<group>"; };
@@ -570,6 +576,7 @@
 				E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */,
 				E75C5E69248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift */,
 				E75C5E6D248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift */,
+				51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */,
 				D74028A425A360CB00104B32 /* CardValidationConfigTests.swift */,
 			);
 			path = card;
@@ -819,6 +826,7 @@
 				E78C9AEB24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift */,
 				E75C5E6B248E7041003A1BDE /* AccessCheckoutCvcOnlyValidationDelegate_EditText_Tests.swift */,
 				E7AC80A9248E741800E28D76 /* AccessCheckoutCvcOnlyValidationDelegate_FocusOut_Tests.swift */,
+				51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */,
 				D74028A925A362D100104B32 /* CvcOnlyValidationConfigTests.swift */,
 			);
 			path = cvcOnly;
@@ -952,13 +960,14 @@
 		E7D19F7D2463FEE3001EA13A /* testUtils */ = {
 			isa = PBXGroup;
 			children = (
+				51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */,
 				E719B08724642EF80037DED4 /* CuckooExtension.swift */,
 				E7C4D235249CF4D100D7B9F1 /* EncodableExtension.swift */,
 				E72C3EE324866F6D00284A31 /* EquatableExtension.swift */,
+				E782A6DB24A106EF005904B5 /* LegacyViewTestSuite.swift */,
+				D74028322592136700104B32 /* PresenterTestSuite.swift */,
 				E7D19F8024640008001EA13A /* StubUtils.swift */,
 				E70305A024924AAA00802AF1 /* TestFixtures.swift */,
-				E782A6DB24A106EF005904B5 /* ViewTestSuite.swift */,
-				D74028322592136700104B32 /* PresenterTestSuite.swift */,
 			);
 			path = testUtils;
 			sourceTree = "<group>";
@@ -1450,9 +1459,11 @@
 				E745CC2E24859DD6000390CA /* ValidationRulesDefaultsTests.swift in Sources */,
 				E745CC28248585E9000390CA /* MockCardBrandDtoTransformer.swift in Sources */,
 				E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */,
+				51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */,
 				E7D19F642462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
+				51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */,
 				E719B09C24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift in Sources */,
 				E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */,
 				E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */,
@@ -1461,10 +1472,11 @@
 				E719B09E246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
 				D7C6EE232486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift in Sources */,
+				51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */,
 				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
 				E7633D2D249D1F4800FFE190 /* AccessCheckoutErrorTests.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,
-				E782A6DC24A106EF005904B5 /* ViewTestSuite.swift in Sources */,
+				E782A6DC24A106EF005904B5 /* LegacyViewTestSuite.swift in Sources */,
 				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
 				D7851B212487B21600461377 /* CvcValidationFlowTests.swift in Sources */,
 				E72C3EF8248A57C300284A31 /* PanViewPresenterTests.swift in Sources */,

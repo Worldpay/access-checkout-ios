@@ -13,19 +13,19 @@ class AccessCheckoutClientBuilderTests: XCTestCase {
     
     func testCannotBuildAnAccessCheckoutClientWithoutMerchantId() throws {
         let builder = AccessCheckoutClientBuilder().accessBaseUrl("some-url")
-        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected merchant ID to be provided but was not")
+        let expectedMessage = "Expected merchant ID to be provided but was not"
         
         XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(error as! AccessCheckoutIllegalArgumentError, expectedError)
+            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
     
     func testCannotBuildAnAccessCheckoutClientWithoutAccessBaseUrl() throws {
         let builder = AccessCheckoutClientBuilder().merchantId("123")
-        let expectedError = AccessCheckoutIllegalArgumentError(message: "Expected base url to be provided but was not")
+        let expectedMessage = "Expected base url to be provided but was not"
         
         XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(error as! AccessCheckoutIllegalArgumentError, expectedError)
+            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
 }

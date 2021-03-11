@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
 
-class AccessCheckoutCardValidationDelegate_ClearText_Tests: ViewTestSuite {
+class AccessCheckoutCardValidationDelegate_ClearText_Tests: AcceptanceTestSuite {
     private let validVisaPan = TestFixtures.validVisaPan1
     
     func testMerchantDelegateIsNotifiedWhenValidPanIsCleared() {

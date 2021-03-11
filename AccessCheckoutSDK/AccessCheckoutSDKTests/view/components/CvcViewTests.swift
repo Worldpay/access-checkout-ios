@@ -1,7 +1,7 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class CvcViewTests: ViewTestSuite {
+class CvcViewTests: LegacyViewTestSuite {
     private let brandsStartingWith4AndCvc2DigitsLong = TestFixtures.createCardBrandModel(
         name: "a-brand",
         panPattern: "^4\\d*$",

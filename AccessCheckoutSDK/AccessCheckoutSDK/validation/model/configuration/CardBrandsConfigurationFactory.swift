@@ -9,9 +9,9 @@ class CardBrandsConfigurationFactory {
         self.transformer = transformer
     }
     
-    func create(baseUrl: String, completionHandler: @escaping (CardBrandsConfiguration) -> Void) {
+    func create(baseUrl: String, acceptedCardBrands: [String], completionHandler: @escaping (CardBrandsConfiguration) -> Void) {
         guard let url = configurationFileUrl(from: baseUrl) else {
-            completionHandler(CardBrandsConfiguration([]))
+            completionHandler(CardBrandsConfiguration(allCardBrands: [], acceptedCardBrands: acceptedCardBrands))
             return
         }
         
@@ -25,12 +25,12 @@ class CardBrandsConfigurationFactory {
                 brands = []
             }
             
-            completionHandler(CardBrandsConfiguration(brands))
+            completionHandler(CardBrandsConfiguration(allCardBrands: brands, acceptedCardBrands: acceptedCardBrands))
         }
     }
     
     func emptyConfiguration() -> CardBrandsConfiguration {
-        return CardBrandsConfiguration([])
+        return CardBrandsConfiguration(allCardBrands: [], acceptedCardBrands: [])
     }
     
     private func configurationFileUrl(from baseUrl: String) -> URL? {

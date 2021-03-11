@@ -34,7 +34,7 @@ public struct AccessCheckoutValidationInitialiser {
     }
     
     private func initialiseForCardPaymentFlow(_ config: CardValidationConfig) {
-        configurationProvider.retrieveRemoteConfiguration(baseUrl: config.accessBaseUrl)
+        configurationProvider.retrieveRemoteConfiguration(baseUrl: config.accessBaseUrl, acceptedCardBrands: config.acceptedCardBrands)
         
         let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
         let cvcValidator = CvcValidator()
@@ -60,7 +60,7 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
-
+        
         if config.textFieldMode {
             setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
         } else {
@@ -81,8 +81,8 @@ public struct AccessCheckoutValidationInitialiser {
         let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, validationStateHandler)
         return ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidator)
     }
-
-    private func setTextFieldDelegate(textField:UITextField, delegate:Presenter) {
+    
+    private func setTextFieldDelegate(textField: UITextField, delegate: Presenter) {
         clearExistingPresenter(from: textField)
         
         textField.delegate = delegate
@@ -91,8 +91,8 @@ public struct AccessCheckoutValidationInitialiser {
         AccessCheckoutValidationInitialiser.presenters.append(delegate)
     }
     
-    private func clearExistingPresenter(from uiTextField:UITextField) {
-        let existingPresenter:Presenter? = uiTextField.delegate as? Presenter
+    private func clearExistingPresenter(from uiTextField: UITextField) {
+        let existingPresenter: Presenter? = uiTextField.delegate as? Presenter
         
         if existingPresenter != nil {
             uiTextField.removeTarget(existingPresenter, action: #selector(existingPresenter!.textFieldEditingChanged), for: .editingChanged)

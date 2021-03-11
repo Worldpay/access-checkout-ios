@@ -1,16 +1,18 @@
 struct CardBrandsConfiguration {
-    let brands: [CardBrandModel]
+    let allCardBrands: [CardBrandModel]
+    let acceptedCardBrands: [String]
     
-    init(_ brands: [CardBrandModel]) {
-        self.brands = brands
+    init(allCardBrands: [CardBrandModel], acceptedCardBrands: [String]) {
+        self.allCardBrands = allCardBrands
+        self.acceptedCardBrands = acceptedCardBrands
     }
     
     func cardBrand(forPan pan: String) -> CardBrandModel? {
-        if brands.isEmpty {
+        if allCardBrands.isEmpty {
             return nil
         }
         
-        return brands.first { $0.panValidationRule.textIsMatched(pan) == true }
+        return allCardBrands.first { $0.panValidationRule.textIsMatched(pan) == true }
     }
     
     func panValidationRule(using cardBrand: CardBrandModel?) -> ValidationRule {
