@@ -244,7 +244,7 @@ workflows:
     - xcode-test:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
-        - simulator_device: iPhone XS
+        - simulator_device: iPhone 8
         - scheme: "$SDK_SCHEME"
     - script@1.1.5:
         title: Install pact client
