@@ -71,8 +71,8 @@ workflows:
     - virtual-device-testing-for-ios:
         inputs:
         - test_devices: |-
-            iphonex,11.4,en,portrait
-            iphonexs,12.0,en,portrait
+            iphone8,11.4,en,portrait
+            iphone8,12.4,en,portrait
     - script:
         inputs:
         - content: |-
