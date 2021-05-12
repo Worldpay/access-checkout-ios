@@ -4,6 +4,8 @@ protocol PanValidationStateHandler {
     func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool
 
     func notifyMerchantOfPanValidationState()
+    
+    func getCardBrand() -> CardBrandModel?
 
     var alreadyNotifiedMerchantOfPanValidationState: Bool { get }
 }

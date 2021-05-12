@@ -1,7 +1,7 @@
 PODS:
-  - Cuckoo (1.3.2):
-    - Cuckoo/Swift (= 1.3.2)
-  - Cuckoo/Swift (1.3.2)
+  - Cuckoo (1.5.0):
+    - Cuckoo/Swift (= 1.5.0)
+  - Cuckoo/Swift (1.5.0)
   - Mockingjay (3.0.0-alpha.1):
     - Mockingjay/Core (= 3.0.0-alpha.1)
     - Mockingjay/XCTest (= 3.0.0-alpha.1)
@@ -9,9 +9,7 @@ PODS:
     - URITemplate (~> 3.0)
   - Mockingjay/XCTest (3.0.0-alpha.1):
     - Mockingjay/Core
-  - Nimble (8.0.9)
-  - PactConsumerSwift (0.8.1):
-    - Nimble (~> 8.0)
+  - PactConsumerSwift (0.10.1)
   - URITemplate (3.0.0)
 
 DEPENDENCIES:
@@ -23,15 +21,13 @@ SPEC REPOS:
   trunk:
     - Cuckoo
     - Mockingjay
-    - Nimble
     - PactConsumerSwift
     - URITemplate
 
 SPEC CHECKSUMS:
-  Cuckoo: 57f71c6616b6b08cd9fe27f803da056fb619ff3e
+  Cuckoo: 09ff1b7c6613b9c27dafea90702ca32208fe59d3
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
-  Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
-  PactConsumerSwift: b7eafe230643a309f65f5e0bbda1f21d068cc8aa
+  PactConsumerSwift: 270ad8b4e83f9d5b2692d7bbed8fdd6ef39e56f3
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
 PODFILE CHECKSUM: 533bc3de53ecdc768b831ced07ef125060d68a8f

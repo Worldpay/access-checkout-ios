@@ -57,6 +57,21 @@ import Foundation
         
     }
     
+    
+    
+     override func getCardBrand() -> CardBrandModel? {
+        
+    return cuckoo_manager.call("getCardBrand() -> CardBrandModel?",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.getCardBrand()
+                ,
+            defaultCall: __defaultImplStub!.getCardBrand())
+        
+    }
+    
 
 	 struct __StubbingProxy_PanValidationFlow: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -74,6 +89,11 @@ import Foundation
 	    func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
 	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
 	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "notifyMerchantIfNotAlreadyNotified()", parameterMatchers: matchers))
+	    }
+	    
+	    func getCardBrand() -> Cuckoo.ClassStubFunction<(), CardBrandModel?> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method: "getCardBrand() -> CardBrandModel?", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -104,6 +124,12 @@ import Foundation
 	        return cuckoo_manager.verify("notifyMerchantIfNotAlreadyNotified()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func getCardBrand() -> Cuckoo.__DoNotUse<(), CardBrandModel?> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("getCardBrand() -> CardBrandModel?", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -119,6 +145,10 @@ import Foundation
     
      override func notifyMerchantIfNotAlreadyNotified()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     override func getCardBrand() -> CardBrandModel?  {
+        return DefaultValueRegistry.defaultValue(for: (CardBrandModel?).self)
     }
     
 }

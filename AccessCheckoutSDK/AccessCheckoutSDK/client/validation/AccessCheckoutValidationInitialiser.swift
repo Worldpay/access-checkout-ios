@@ -13,7 +13,6 @@ public struct AccessCheckoutValidationInitialiser {
         let restClient = RestClient()
         let transformer = CardBrandDtoTransformer()
         let configurationFactory = CardBrandsConfigurationFactory(restClient, transformer)
-        
         self.configurationProvider = CardBrandsConfigurationProvider(configurationFactory)
     }
     
@@ -40,7 +39,7 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         
-        let panPresenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler)
+        let panPresenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler, config.panFormattingDisabled)
         let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
@@ -70,10 +69,11 @@ public struct AccessCheckoutValidationInitialiser {
     
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
                                   _ cvcValidationFlow: CvcValidationFlow,
-                                  _ validationStateHandler: PanValidationStateHandler) -> PanViewPresenter {
+                                  _ validationStateHandler: PanValidationStateHandler,
+                                  _ panFormattingDisabled: Bool) -> PanViewPresenter {
         let panValidator = PanValidator(configurationProvider)
         let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
-        return PanViewPresenter(panValidationFlow, panValidator)
+        return PanViewPresenter(panValidationFlow, panValidator, panFormattingDisabled)
     }
     
     private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {

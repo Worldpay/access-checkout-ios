@@ -84,6 +84,21 @@ import Cuckoo
         
     }
     
+    
+    
+     func getCardBrand() -> CardBrandModel? {
+        
+    return cuckoo_manager.call("getCardBrand() -> CardBrandModel?",
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.getCardBrand())
+        
+    }
+    
 
 	 struct __StubbingProxy_PanValidationStateHandler: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -111,6 +126,11 @@ import Cuckoo
 	    func notifyMerchantOfPanValidationState() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
 	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
 	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "notifyMerchantOfPanValidationState()", parameterMatchers: matchers))
+	    }
+	    
+	    func getCardBrand() -> Cuckoo.ProtocolStubFunction<(), CardBrandModel?> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockPanValidationStateHandler.self, method: "getCardBrand() -> CardBrandModel?", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -152,6 +172,12 @@ import Cuckoo
 	        return cuckoo_manager.verify("notifyMerchantOfPanValidationState()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func getCardBrand() -> Cuckoo.__DoNotUse<(), CardBrandModel?> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("getCardBrand() -> CardBrandModel?", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 }
 
@@ -179,6 +205,10 @@ import Cuckoo
     
      func notifyMerchantOfPanValidationState()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+     func getCardBrand() -> CardBrandModel?  {
+        return DefaultValueRegistry.defaultValue(for: (CardBrandModel?).self)
     }
     
 }

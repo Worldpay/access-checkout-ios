@@ -106,10 +106,7 @@ extension PanView: AccessCheckoutTextView {
 
 extension PanView: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let pan = textField.text else {
-            return
-        }
-        (presenter as? PanViewPresenter)?.onEditEnd(text: pan)
+        (presenter as? PanViewPresenter)?.onEditEnd()
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

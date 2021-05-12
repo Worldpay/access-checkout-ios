@@ -1,18 +1,22 @@
 class PanViewPresenter: NSObject, Presenter {
     private let validationFlow: PanValidationFlow
     private let validator: PanValidator
-    private let textChangeHandler:TextChangeHandler = TextChangeHandler()
+    private let textChangeHandler:PanTextChangeHandler
+    let panFormatter: PanFormatter
+
     
-    init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator) {
+    init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator, _ disableFormatting: Bool) {
         self.validationFlow = validationFlow
         self.validator = panValidator
+        self.textChangeHandler = PanTextChangeHandler(disableFormatting: disableFormatting)
+        self.panFormatter = PanFormatter(disableFormatting: disableFormatting)
     }
     
     func onEditing(text: String) {
-        validationFlow.validate(pan: text)
+        validationFlow.validate(pan: text.replacingOccurrences(of: " ", with: ""))
     }
     
-    func onEditEnd(text: String) {
+    func onEditEnd() {
         validationFlow.notifyMerchantIfNotAlreadyNotified()
     }
     
@@ -20,7 +24,7 @@ class PanViewPresenter: NSObject, Presenter {
         if text.isEmpty {
             return true
         }
-        return validator.canValidate(text)
+        return true
     }
     
     @objc
@@ -29,20 +33,23 @@ class PanViewPresenter: NSObject, Presenter {
             return
         }
         onEditing(text: pan)
+//        textField.text = panFormatter.format(pan: pan, brand: validationFlow.getCardBrand())
     }
 }
 
 extension PanViewPresenter: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let pan = textField.text else {
-            return
-        }
-        
-        return onEditEnd(text: pan)
+        onEditEnd()
     }
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range)
-        return canChangeText(with: resultingText)
+//                let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range, brand: validationFlow.getCardBrand())
+//                if(canChangeText(with: resultingText)) {
+//                    textField.text = resultingText
+//                }
+//                return true
+            let resultingText = textChangeHandler.change(originalText: textField.text, textChange: string, usingSelection: range, brand: validationFlow.getCardBrand())
+            return canChangeText(with: resultingText)
     }
 }
+

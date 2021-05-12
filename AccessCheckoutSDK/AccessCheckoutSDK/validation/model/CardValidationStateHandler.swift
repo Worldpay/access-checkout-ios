@@ -84,6 +84,10 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             return false
         }
     }
+    
+    func getCardBrand() -> CardBrandModel? {
+        return self.cardBrand
+    }
 }
 
 extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
