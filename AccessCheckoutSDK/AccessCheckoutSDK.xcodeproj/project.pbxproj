@@ -593,9 +593,9 @@
 		E72C3ED02485B0BA00284A31 /* presenters */ = {
 			isa = PBXGroup;
 			children = (
+				E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */,
 				E72C3ED72485B2E100284A31 /* CvcViewPresenter.swift */,
 				E72C3ED52485B0F500284A31 /* ExpiryDateViewPresenter.swift */,
-				E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */,
 				E7723571249397F800018DCB /* Presenter.swift */,
 			);
 			path = presenters;

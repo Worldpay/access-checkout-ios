@@ -75,7 +75,7 @@ class CardFlowViewPageObject {
 
     }
     
-    func setCursorAndTypeInPanField(_ characters: [String]) {
+    func setCursorAtPosition3AndTypeInPanField(_ characters: [String]) {
         let button = app.buttons["moveCursorButton"]
         
         button.tap()

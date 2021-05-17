@@ -310,28 +310,28 @@ class CardFlowCardValidationTests: XCTestCase {
     
     func testCorrectlyFormatsWhenTypingInMiddleOfPan() {
         view!.typeTextIntoPan("4111")
-        view!.setCursorAndTypeInPanField(["4"])
+        view!.setCursorAtPosition3AndTypeInPanField(["4"])
         
         XCTAssertEqual(view!.panText!, "4114 1")
     }
     
     func testCorrectlyFormatsWhenPastingAndTypingInMiddleOfPan() {
         view!.typeTextIntoPan("4111")
-        view!.setCursorAndTypeInPanField(["123", "5"])
+        view!.setCursorAtPosition3AndTypeInPanField(["123", "5"])
         
         XCTAssertEqual(view!.panText!, "4111 2351")
     }
     
     func testCorrectlyFormatsWhenDeletingInMiddleOfPan() {
         view!.typeTextIntoPan("4321 4321")
-        view!.setCursorAndTypeInPanField([backspace])
+        view!.setCursorAtPosition3AndTypeInPanField([backspace])
         
         XCTAssertEqual(view!.panText!, "4314 321")
     }
     
     func testCorrectlyFormatsAndCursorIsCorrectWhenDeletingAndThenTypingInMiddleOfPan() {
         view!.typeTextIntoPan("4321 4321")
-        view!.setCursorAndTypeInPanField([backspace, backspace, "3", "1234", backspace])
+        view!.setCursorAtPosition3AndTypeInPanField([backspace, backspace, "3", "1234", backspace])
         
         XCTAssertEqual(view!.panText!, "4312 3143 21")
     }

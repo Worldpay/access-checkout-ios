@@ -16,7 +16,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
-            .disabledPanFormatting()
+            .disablePanFormatting()
             .build()
 
         XCTAssertTrue(config.panFormattingDisabled)

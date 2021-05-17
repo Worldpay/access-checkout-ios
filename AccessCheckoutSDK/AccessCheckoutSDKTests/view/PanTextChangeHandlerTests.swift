@@ -25,6 +25,26 @@ class PanTextChangeHandlerTests : XCTestCase {
         XCTAssertEqual("1235", result)
     }
 
+    func testReturnsSameStringWhenDeletingASpace() {
+        let originalText = "1234 5"
+        let textChange = ""
+        let selection:NSRange = NSRange(location: 4, length: 1)
+    
+        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        
+        XCTAssertEqual("1234 5", result)
+    }
+    
+    func testSupportsDeletingASpaceAndText() {
+        let originalText = "1234 5"
+        let textChange = ""
+        let selection:NSRange = NSRange(location: 3, length: 3)
+    
+        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        
+        XCTAssertEqual("123", result)
+    }
+    
     func testSupportsReplacingText() {
         let originalText = "abcd"
         let textChange = "123"

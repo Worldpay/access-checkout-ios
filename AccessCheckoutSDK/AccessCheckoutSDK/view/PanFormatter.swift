@@ -37,6 +37,6 @@ class PanFormatter {
     }
     
     private func isAmex(brand: CardBrandModel?) -> Bool {
-        return brand?.name == "amex";
+        return brand?.name.lowercased() == "amex";
     }
 }

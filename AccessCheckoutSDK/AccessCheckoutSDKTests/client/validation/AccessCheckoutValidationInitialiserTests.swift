@@ -105,7 +105,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
                 .accessBaseUrl(baseUrl)
                 .validationDelegate(cardValidationDelegateMock)
                 .acceptedCardBrands(["amex","visa"])
-                .disabledPanFormatting()
+                .disablePanFormatting()
                 .build();
         
         accessCheckoutValidationInitialiser!.initialise(config)
