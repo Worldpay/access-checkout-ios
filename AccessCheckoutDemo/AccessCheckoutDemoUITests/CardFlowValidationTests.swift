@@ -4,9 +4,6 @@ import XCTest
 
 class CardFlowCardValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
-    private let leftArrow = String(XCUIKeyboardKey.leftArrow.rawValue)
-    private let rightArrow = String(XCUIKeyboardKey.rightArrow.rawValue)
-
     
     let app = XCUIApplication()
     var view: CardFlowViewPageObject?
