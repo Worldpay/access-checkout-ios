@@ -84,10 +84,9 @@ public struct AccessCheckoutValidationInitialiser {
     
     private func setTextFieldDelegate(textField: UITextField, delegate: Presenter) {
         clearExistingPresenter(from: textField)
-        
         textField.delegate = delegate
         textField.addTarget(delegate, action: #selector(delegate.textFieldEditingChanged), for: .editingChanged)
-        
+
         AccessCheckoutValidationInitialiser.presenters.append(delegate)
     }
     

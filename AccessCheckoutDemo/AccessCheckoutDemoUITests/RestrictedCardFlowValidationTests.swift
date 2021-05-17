@@ -105,5 +105,14 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         
         XCTAssertTrue(view!.imageIs("jcb"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
+        
+    }
+    
+    // MARK: Testing formatting can be turned off
+    
+    func testDoesNotFormatPan() {
+        view!.typeTextIntoPan("4111111111111111")
+        
+        XCTAssertEqual(view!.panText, "4111111111111111")
     }
 }

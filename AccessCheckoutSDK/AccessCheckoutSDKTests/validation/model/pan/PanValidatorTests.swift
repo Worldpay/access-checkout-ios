@@ -8,7 +8,10 @@ class PanValidatorTests: XCTestCase {
     private let visaBrand = TestFixtures.visaBrand()
     
     private let validVisaPan = TestFixtures.validVisaPan1
+    private let validVisaPanWithSpaces = TestFixtures.validVisaPan1WithSpaces
     private let validVisaPanAsLongAsMaxLengthAllowed = TestFixtures.validVisaPanAsLongAsMaxLengthAllowed
+    private let validVisaPanAsLongAsMaxLengthAllowedWithSpaces = TestFixtures.validVisaPanAsLongAsMaxLengthAllowedWithSpaces
+
     private let visaPanTooLong = TestFixtures.visaPanTooLong
     private let startOfVisaPan = "4111"
     
@@ -66,6 +69,15 @@ class PanValidatorTests: XCTestCase {
         XCTAssertNil(result.cardBrand)
     }
     
+    func testValidate_returnsTrueAndNilCardBrand_whenUnknownBrandPanHasValidLuhnAndValidLength_andSpaces() {
+        givenConfigurationHas(brands: [visaBrand])
+        
+        let result = panValidator!.validate(pan: "8888 88888 88 88888")
+        
+        XCTAssertTrue(result.isValid)
+        XCTAssertNil(result.cardBrand)
+    }
+    
     func testValidate_returnsFirstVisaThenMaestro_whenVisaAndMaestroPatternsAreEntered() {
         givenConfigurationHas(brands: [visaBrand, maestroBrand])
         
@@ -93,6 +105,15 @@ class PanValidatorTests: XCTestCase {
         givenConfigurationHas(brands: [amexBrand, visaBrand], acceptedBrands: ["amex", "visa"])
         
         let result = panValidator!.validate(pan: validVisaPan)
+        
+        XCTAssertTrue(result.isValid)
+        XCTAssertEqual(result.cardBrand?.name, "visa")
+    }
+    
+    func testValidate_returnsTrueAndCardBrand_whenKnownBrandPanIsValid_andBrandIsPartOfMerchantRestrictions_andThereAreSpaces() {
+        givenConfigurationHas(brands: [amexBrand, visaBrand], acceptedBrands: ["amex", "visa"])
+        
+        let result = panValidator!.validate(pan: validVisaPanWithSpaces)
         
         XCTAssertTrue(result.isValid)
         XCTAssertEqual(result.cardBrand?.name, "visa")
@@ -144,6 +165,15 @@ class PanValidatorTests: XCTestCase {
         XCTAssertTrue(result)
     }
     
+    func testCanValidateAllowsPanAsLongAsMaxLengthForABrandWithSpaces() {
+        givenConfigurationHas(brands: [visaBrand])
+        let panWith19DigitsPlusSpaces = validVisaPanAsLongAsMaxLengthAllowedWithSpaces
+        
+        let result = panValidator!.canValidate(panWith19DigitsPlusSpaces)
+        
+        XCTAssertTrue(result)
+    }
+    
     func testCanValidateDoesNotAllowPanLongerThanMaxLengthForABrand() {
         givenConfigurationHas(brands: [visaBrand])
         let panWith20Digits = visaPanTooLong
@@ -164,6 +194,15 @@ class PanValidatorTests: XCTestCase {
     func testCanValidateAllowsPanAsLongAsMaxLengthForUnknownBrand() {
         givenConfigurationHas(brands: [])
         let panWith19Digits = "1234567890123456789"
+        
+        let result = panValidator!.canValidate(panWith19Digits)
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testCanValidateAllowsPanAsLongAsMaxLengthWithSpacesTrimmedForUnknownBrand() {
+        givenConfigurationHas(brands: [])
+        let panWith19Digits = "1234 5678 0123 4567 89"
         
         let result = panValidator!.canValidate(panWith19Digits)
         

@@ -42,6 +42,7 @@
 		CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1BD93A2448BB9200A4C745 /* CIVariables.swift */; };
 		D706483826011B6200C0DE85 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = D706483726011B6200C0DE85 /* visa.png */; };
 		D737A08524752E0B00D4E872 /* cardTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = D737A08424752E0B00D4E872 /* cardTypes.json */; };
+		D73A4287264D76FC00705BE6 /* FormattingDisabledCardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73A4286264D76FC00705BE6 /* FormattingDisabledCardFlowViewController.swift */; };
 		E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D362437AE3900DD842F /* AppLauncher.swift */; };
 		E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7134D382437B1BA00DD842F /* XCTestExtension.swift */; };
 		E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F85FA2437CDC80031F7AC /* LaunchArguments.swift */; };
@@ -116,6 +117,7 @@
 		CC1BD93A2448BB9200A4C745 /* CIVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIVariables.swift; sourceTree = "<group>"; };
 		D706483726011B6200C0DE85 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = visa.png; path = ../../../../../../Downloads/visa.png; sourceTree = "<group>"; };
 		D737A08424752E0B00D4E872 /* cardTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardTypes.json; sourceTree = "<group>"; };
+		D73A4286264D76FC00705BE6 /* FormattingDisabledCardFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingDisabledCardFlowViewController.swift; sourceTree = "<group>"; };
 		E7134D362437AE3900DD842F /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
 		E7134D382437B1BA00DD842F /* XCTestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtension.swift; sourceTree = "<group>"; };
 		E72152832437D9E3009AAFB3 /* CardFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowViewPageObject.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				C9AFE46E22B7C5A600943B3E /* Assets.xcassets */,
 				C9AFE40522B799AE00943B3E /* Info.plist */,
 				C9AFE48422B7C8D700943B3E /* Localizable.strings */,
+				D73A4286264D76FC00705BE6 /* FormattingDisabledCardFlowViewController.swift */,
 			);
 			path = AccessCheckoutDemo;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51CBC4A325A46F5A000D0363 /* RestrictedCardFlowViewController.swift in Sources */,
+				D73A4287264D76FC00705BE6 /* FormattingDisabledCardFlowViewController.swift in Sources */,
 				E75F85F72437BFE40031F7AC /* JsonStubbedResponse.swift in Sources */,
 				CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,

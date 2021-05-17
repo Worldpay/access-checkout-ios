@@ -1,11 +1,17 @@
 import AccessCheckoutSDK
 import UIKit
 
-class RestrictedCardFlowViewController: UIViewController {
+class FormattingDisabledCardFlowViewController: UIViewController {
+//    @IBOutlet weak var panTextField: UITextField!
+//    @IBOutlet weak var imageView: UIImageView!
+//    @IBOutlet weak var panIsValidLabel: UILabel!
+    
     @IBOutlet weak var panTextField: UITextField!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak  var imageView: UIImageView!
     @IBOutlet weak var panIsValidLabel: UILabel!
     
+//    private let unknownBrandImage = UIImage(named: "card_unknown")
+//    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     private let unknownBrandImage = UIImage(named: "card_unknown")
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
@@ -50,7 +56,7 @@ class RestrictedCardFlowViewController: UIViewController {
     }
 }
 
-extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
+extension FormattingDisabledCardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
             let url = URL(string: imageUrl) {

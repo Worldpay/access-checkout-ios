@@ -72,6 +72,26 @@ class CardFlowViewPageObject {
             panField.tap()
         }
         panField.typeText(text)
+
+    }
+    
+    func setCursorAndTypeInPanField(_ characters: [String]) {
+        let button = app.buttons["moveCursorButton"]
+        
+        button.tap()
+        
+        for character in characters {
+            panField.typeText(character)
+        }
+    }
+    
+    func setCursorAndPasteAndTypeInPanField(_ pastedText: String, _ text: String) {
+        let button = app.buttons["moveCursorButton"]
+        
+        button.tap()
+        
+        panField.typeText(pastedText)
+        panField.typeText(text)
     }
 
     func typeTextIntoExpiryDate(_ text: String) {

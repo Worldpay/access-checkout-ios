@@ -45,8 +45,7 @@ public struct CardValidationConfig: ValidationConfig {
     public static func builder() -> CardValidationConfigBuilder {
         return CardValidationConfigBuilder()
     }
-    
-    
+        
     /**
      Creates an instance of `CardValidationConfig`
      
@@ -56,16 +55,16 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
-     - Parameter cardBrandFormattingDisabled: `Boolean` that represents whether the PAN test field will be formatted..
-
+     - Parameter panFormattingDisabled: `Boolean` that represents whether the PAN test field will be formatted..
      */
-     init(panTextField: UITextField,
+    @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CardValidationConfigBuilder` to create your `CardValidationConfig`.")
+    public init(panTextField: UITextField,
                 expiryDateTextField: UITextField,
                 cvcTextField: UITextField,
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
                 acceptedCardBrands: [String] = [],
-                panFormattingDisabled: Bool) {
+                panFormattingDisabled: Bool = false) {
         self.panTextField = panTextField
         self.expiryDateTextField = expiryDateTextField
         self.cvcTextField = cvcTextField
@@ -82,38 +81,6 @@ public struct CardValidationConfig: ValidationConfig {
     }
     
     /**
-     Creates an instance of `CardValidationConfig`
-     
-     - Parameter panTextField: `UITextField` that represents the pan ui element
-     - Parameter expiryDateTextField: `UITextField` that represents the expiry date ui element
-     - Parameter cvcTextField: `UITextField` that represents the cvc ui element
-     - Parameter accessBaseUrl: `String` that represents the base url
-     - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
-     - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
-     */
-    @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CardValidationConfigBuilder` to create your `CardValidationConfig`.")
-    public init(panTextField: UITextField,
-                expiryDateTextField: UITextField,
-                cvcTextField: UITextField,
-                accessBaseUrl: String,
-                validationDelegate: AccessCheckoutCardValidationDelegate,
-                acceptedCardBrands: [String] = []) {
-        self.panTextField = panTextField
-        self.expiryDateTextField = expiryDateTextField
-        self.cvcTextField = cvcTextField
-        self.accessBaseUrl = accessBaseUrl
-        self.validationDelegate = validationDelegate
-        
-        self.panView = nil
-        self.expiryDateView = nil
-        self.cvcView = nil
-        
-        self.textFieldMode = true
-        self.acceptedCardBrands = acceptedCardBrands
-        self.panFormattingDisabled = true
-    }
-    
-    /**
      Deprecated
      Creates an instance of `CardValidationConfig`
      
@@ -123,6 +90,7 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
+     - Parameter panFormattingDisabled: `Boolean` that represents whether the PAN test field will be formatted..
      */
     @available(*, deprecated, message: "Using PanView, ExpiryDateView and CvcView to initialize the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used instead.")
     public init(panView: PanView,
@@ -130,7 +98,8 @@ public struct CardValidationConfig: ValidationConfig {
                 cvcView: CvcView,
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
-                acceptedCardBrands: [String] = []) {
+                acceptedCardBrands: [String] = [],
+                panFormattingDisabled: Bool = false) {
         self.panView = panView
         self.expiryDateView = expiryDateView
         self.cvcView = cvcView
@@ -143,7 +112,7 @@ public struct CardValidationConfig: ValidationConfig {
         
         self.textFieldMode = false
         self.acceptedCardBrands = acceptedCardBrands
-        self.panFormattingDisabled = true
+        self.panFormattingDisabled = panFormattingDisabled
     }
 }
 
