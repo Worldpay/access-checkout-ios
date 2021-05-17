@@ -112,9 +112,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
-                                <rect key="frame" x="261" y="0.0" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
+                                <rect key="frame" x="294" y="332" width="30" height="30"/>
                                 <accessibility key="accessibilityConfiguration" label="moveCursorButton"/>
                                 <connections>
                                     <action selector="moveCursor" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tad-7N-yib"/>
@@ -125,6 +124,7 @@
                         <constraints>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="baseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="1fh-PR-Gif"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="21" id="3R3-7x-qZ8"/>
+                            <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="3eT-E1-LWY"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4Wo-Jr-MTY"/>
                             <constraint firstItem="a8i-GI-0zO" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="20" id="65D-Ef-7g9"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="firstBaseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="6Mp-Cb-ydu"/>
@@ -132,6 +132,7 @@
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="HGC-2s-NEA"/>
                             <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="N9a-eQ-gxn"/>
+                            <constraint firstItem="FGh-S7-760" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="Nwd-J1-PvZ"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="top" secondItem="a8i-GI-0zO" secondAttribute="top" id="Obz-wv-4Uc"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="PHs-7U-Qyf"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Wb7-Z0-DXa"/>
