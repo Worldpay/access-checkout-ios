@@ -4,10 +4,14 @@ import Foundation
 
 final class TestFixtures {
     static let validVisaPan1 = "4111111111111111"
+    static let validVisaPan1WithSpaces = "4111 1111 1111 1111"
     static let validVisaPan2 = "4563648800001000"
     static let validVisaPanAsLongAsMaxLengthAllowed = "4111111111111111111"
+    static let validVisaPanAsLongAsMaxLengthAllowedWithSpaces = "4111 1111 1111 1111 111"
+
     static let visaPanTooLong = "41111111111111111111"
     static let visaPanThatFailsLuhnCheck = "4111111111111110"
+    static let visaPanThatFailsLuhnCheckWithSpaces = "4111 1111 1111 1110"
 
     static let validAmexPan = "341111597241002"
 

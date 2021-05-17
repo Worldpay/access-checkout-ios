@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,7 +34,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
                                 <rect key="frame" x="294" y="282" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
@@ -47,14 +48,14 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="62" id="T9O-hC-CAg"/>
                                 </constraints>
-                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mya-3f-hK8">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="pan" label="pan"/>
-                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
@@ -111,11 +112,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
+                                <rect key="frame" x="294" y="332" width="30" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="moveCursorButton"/>
+                                <connections>
+                                    <action selector="moveCursor" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tad-7N-yib"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="baseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="1fh-PR-Gif"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="21" id="3R3-7x-qZ8"/>
+                            <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="3eT-E1-LWY"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4Wo-Jr-MTY"/>
                             <constraint firstItem="a8i-GI-0zO" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="20" id="65D-Ef-7g9"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="firstBaseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="6Mp-Cb-ydu"/>
@@ -123,6 +132,7 @@
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="HGC-2s-NEA"/>
                             <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="N9a-eQ-gxn"/>
+                            <constraint firstItem="FGh-S7-760" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="Nwd-J1-PvZ"/>
                             <constraint firstItem="8AE-e7-b1R" firstAttribute="top" secondItem="a8i-GI-0zO" secondAttribute="top" id="Obz-wv-4Uc"/>
                             <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="PHs-7U-Qyf"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Wb7-Z0-DXa"/>
@@ -150,6 +160,7 @@
                         <outlet property="panIsValidLabel" destination="MXa-G9-0FX" id="vI4-fM-Idp"/>
                         <outlet property="panTextField" destination="Mya-3f-hK8" id="CtN-ZL-0db"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
+                        <outlet property="setCursorButton" destination="FGh-S7-760" id="lNp-HZ-ymz"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
                     </connections>
@@ -173,7 +184,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DT4-6e-hWq">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="pan" label="pan"/>
-                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
@@ -203,12 +214,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="iUX-jl-sEW" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="84" id="4kh-kc-gek"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iUX-jl-sEW" secondAttribute="trailing" constant="19" id="6Xp-p5-ilF"/>
+                            <constraint firstItem="iUX-jl-sEW" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="84" id="NV3-UH-05j"/>
                             <constraint firstItem="DT4-6e-hWq" firstAttribute="centerY" secondItem="iUX-jl-sEW" secondAttribute="centerY" id="OmC-1X-wmX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DT4-6e-hWq" secondAttribute="trailing" constant="16" id="Thb-hN-Sgd"/>
                             <constraint firstItem="dTi-zG-nFA" firstAttribute="centerX" secondItem="Zvz-kn-Pea" secondAttribute="centerX" id="UL5-Ex-MmA"/>
-                            <constraint firstItem="DT4-6e-hWq" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="cl6-TE-lZY"/>
+                            <constraint firstItem="DT4-6e-hWq" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="l1Q-8I-sar"/>
                             <constraint firstItem="dTi-zG-nFA" firstAttribute="top" secondItem="DT4-6e-hWq" secondAttribute="bottom" constant="10" id="ndM-4W-0zD"/>
                             <constraint firstItem="DT4-6e-hWq" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="ufL-Hu-yUV"/>
                             <constraint firstItem="dTi-zG-nFA" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" constant="40" id="zx8-Mh-4X2"/>
@@ -246,7 +257,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
                                 <rect key="frame" x="291" y="88" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit">
                                     <bool key="isElement" value="NO"/>
@@ -313,7 +324,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="creditcard" catalog="system" width="128" height="91"/>
+        <image name="creditcard" catalog="system" width="128" height="88"/>
         <image name="macwindow" catalog="system" width="128" height="93"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

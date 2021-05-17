@@ -14,7 +14,7 @@ class PanViewPresenterTests: PresenterTestSuite {
 
     func testOnEditingValidatesPan() {
         let pan = "123"
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
 
         presenter.onEditing(text: pan)
 
@@ -22,17 +22,16 @@ class PanViewPresenterTests: PresenterTestSuite {
     }
 
     func testOnEditEndNotifiesMerchantOfValidationStateIfNotAlreadyNotified() {
-        let pan = "123"
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
 
-        presenter.onEditEnd(text: pan)
+        presenter.onEditEnd()
 
         verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
     }
 
     func testCanChangeTextChecksIfTheTextCanBeEnteredAndDoesNotTriggerValidationFlow() {
         let text = "123"
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
 
         _ = presenter.canChangeText(with: text)
 
@@ -41,7 +40,7 @@ class PanViewPresenterTests: PresenterTestSuite {
     }
 
     func testCanChangeTextWithEmptyText() {
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
 
         let result = presenter.canChangeText(with: "")
 
@@ -71,14 +70,20 @@ class PanViewPresenterTests: PresenterTestSuite {
     private let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
 
     private let validVisaPan = TestFixtures.validVisaPan1
+    private let validVisaPanWithSpaces = TestFixtures.validVisaPan1WithSpaces
+
     private let validVisaPanAsLongAsMaxLengthAllowed = TestFixtures.validVisaPanAsLongAsMaxLengthAllowed
+    private let validVisaPanAsLongAsMaxLengthAllowedWithSpaces = TestFixtures.validVisaPanAsLongAsMaxLengthAllowedWithSpaces
+
     private let visaPanThatFailsLuhnCheck = TestFixtures.visaPanThatFailsLuhnCheck
+    private let visaPanThatFailsLuhnCheckWithSpaces = TestFixtures.visaPanThatFailsLuhnCheckWithSpaces
+
     private let visaPanTooLong = TestFixtures.visaPanTooLong
 
     func testOnEndEditingNotifiesMerchant() {
         let pan = "123"
         panTextField.text = pan
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
 
         presenter.textFieldDidEndEditing(panTextField)
         verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
@@ -87,56 +92,89 @@ class PanViewPresenterTests: PresenterTestSuite {
     // MARK: testing what the end user can and cannot type
 
     func testCanClearText() {
-        let range = NSRange(location: 0, length: 0)
-        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock)
-
-        XCTAssertTrue(presenter.textField(panTextField, shouldChangeCharactersIn: range, replacementString: ""))
+        let range = NSRange(location: 0, length: 3)
+        let presenter = PanViewPresenter(panValidationFlow, panValidatorMock, false)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(nil)
+        panTextField.text = "123"
+        presenter.textField(panTextField, shouldChangeCharactersIn: range, replacementString: "")
+        
+        XCTAssertEqual(panTextField.text, "")
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: "")
     }
 
     func testCannotTypeNonNumericalCharacters() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(nil)
+        XCTAssertEqual(panTextField.text, "")
 
-        XCTAssertFalse(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, "abc"))
-        XCTAssertFalse(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, "-*+"))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, true)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "abc")
+        XCTAssertEqual(panTextField.text, "")
+        verify(panValidationFlow).getCardBrand()
+        verifyNoMoreInteractions(panValidationFlow)
+        
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "-*+")
+        XCTAssertEqual(panTextField.text, "")
     }
 
     func testCanTypeValidVisaPan() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(visaBrand)
 
-        XCTAssertTrue(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, validVisaPan))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, validVisaPan)
+        XCTAssertEqual(panTextField.text, validVisaPanWithSpaces)
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: validVisaPanWithSpaces)
     }
 
     func testCanTypeVisaPanThatFailsLuhnCheck() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(visaBrand)
 
-        XCTAssertTrue(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanThatFailsLuhnCheck))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanThatFailsLuhnCheck)
+        XCTAssertEqual(panTextField.text, visaPanThatFailsLuhnCheckWithSpaces)
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: visaPanThatFailsLuhnCheckWithSpaces)
     }
 
     func testCanTypeVisaPanAsLongAsMaxLengthAllowed() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(visaBrand)
 
-        XCTAssertTrue(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, validVisaPanAsLongAsMaxLengthAllowed))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, validVisaPanAsLongAsMaxLengthAllowed)
+        XCTAssertEqual(panTextField.text, validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
     }
 
     func testCannotTypeVisaPanThatExceedsMaximiumLength() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(visaBrand)
 
-        XCTAssertFalse(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLong))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLong)
+        XCTAssertEqual(panTextField.text, "")
+        verify(panValidationFlow).getCardBrand()
+        verifyNoMoreInteractions(panValidationFlow)
     }
 
     //  This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
@@ -144,27 +182,70 @@ class PanViewPresenterTests: PresenterTestSuite {
     func testCanTypeStartOfMaestroPan() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand, maestroBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(maestroBrand)
 
-        XCTAssertTrue(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, "493698123"))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "493698123")
+        XCTAssertEqual(panTextField.text, "4936 9812 3")
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: "4936 9812 3")
     }
 
     func testCanTypePanOfUnknownBrandAsLongAsMaxLengthAllowed() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(nil)
 
-        XCTAssertTrue(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, "1234567890123456789"))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "1234567890123456789")
+        XCTAssertEqual(panTextField.text, "1234 5678 9012 3456 789")
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: "1234 5678 9012 3456 789")
     }
 
     func testCannotTypePanOfUnknownBrandThatExceedsMaximiumLength() {
         let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand, maestroBrand], acceptedCardBrands: [])
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        let panValidator = PanValidator(configurationProvider)
-        let presenter = PanViewPresenter(panValidationFlow, panValidator)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(nil)
 
-        XCTAssertFalse(canEnterPanInUITextField(presenter: presenter, uiTextField: panTextField, "12345678901234567890"))
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "12345678901234567890")
+        XCTAssertEqual(panTextField.text, "")
+        verify(panValidationFlow).getCardBrand()
+        verifyNoMoreInteractions(panValidationFlow)
+    }
+    
+    func testCanTypeVisaPanWithSpacesAsLongAsMaxLengthAllowed() {
+        let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(visaBrand)
+
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
+        XCTAssertEqual(panTextField.text, validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
+    }
+    
+    func testCanTypeUnknownPanWithSpacesAsLongAsMaxLengthAllowed() {
+        let cardBrandsConfiguration = CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
+        configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
+        panValidationFlow.getStubbingProxy().getCardBrand().thenReturn(nil)
+
+        let panValidator = PanValidator(configurationProvider)
+        let presenter = PanViewPresenter(panValidationFlow, panValidator, false)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "1234 5678 9012 3456 789")
+        XCTAssertEqual(panTextField.text, "1234 5678 9012 3456 789")
+        verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(panValidationFlow).validate(pan: "1234 5678 9012 3456 789")
     }
 }

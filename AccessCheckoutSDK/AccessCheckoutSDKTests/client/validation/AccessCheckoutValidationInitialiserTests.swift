@@ -96,4 +96,22 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
     }
+    
+    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanDisableFormatting() {
+        let config = try! CardValidationConfig.builder()
+                .pan(panTextField)
+                .expiryDate(expiryDateTextField)
+                .cvc(cvcTextField)
+                .accessBaseUrl(baseUrl)
+                .validationDelegate(cardValidationDelegateMock)
+                .acceptedCardBrands(["amex","visa"])
+                .disablePanFormatting()
+                .build();
+        
+        accessCheckoutValidationInitialiser!.initialise(config)
+        
+        XCTAssertTrue(panTextField.delegate is PanViewPresenter)
+        XCTAssertTrue(expiryDateTextField.delegate is ExpiryDateViewPresenter)
+        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
+    }
 }

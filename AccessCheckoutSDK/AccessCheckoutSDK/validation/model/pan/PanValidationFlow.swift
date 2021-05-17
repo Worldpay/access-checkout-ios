@@ -31,4 +31,8 @@ class PanValidationFlow {
             panValidationStateHandler.notifyMerchantOfPanValidationState()
         }
     }
+    
+    func getCardBrand() -> CardBrandModel? {
+        return panValidationStateHandler.getCardBrand()
+    }
 }

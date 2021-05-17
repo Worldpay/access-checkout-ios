@@ -35,7 +35,9 @@ public struct CardValidationConfig: ValidationConfig {
     
     let textFieldMode: Bool
     let acceptedCardBrands: [String]
-    
+
+    let panFormattingDisabled: Bool
+
     /**
      - Returns: an instance of a builder used to create an instance  of `CardValidationConfig`
      - SeeAlso: CardValidationConfigBuilder
@@ -43,7 +45,7 @@ public struct CardValidationConfig: ValidationConfig {
     public static func builder() -> CardValidationConfigBuilder {
         return CardValidationConfigBuilder()
     }
-    
+        
     /**
      Creates an instance of `CardValidationConfig`
      
@@ -53,6 +55,7 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
+     - Parameter panFormattingDisabled: `Bool` that represents whether the PAN field will be formatted.
      */
     @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CardValidationConfigBuilder` to create your `CardValidationConfig`.")
     public init(panTextField: UITextField,
@@ -60,7 +63,8 @@ public struct CardValidationConfig: ValidationConfig {
                 cvcTextField: UITextField,
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
-                acceptedCardBrands: [String] = []) {
+                acceptedCardBrands: [String] = [],
+                panFormattingDisabled: Bool = false) {
         self.panTextField = panTextField
         self.expiryDateTextField = expiryDateTextField
         self.cvcTextField = cvcTextField
@@ -73,6 +77,7 @@ public struct CardValidationConfig: ValidationConfig {
         
         self.textFieldMode = true
         self.acceptedCardBrands = acceptedCardBrands
+        self.panFormattingDisabled = panFormattingDisabled
     }
     
     /**
@@ -85,6 +90,7 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
+     - Parameter panFormattingDisabled: `Bool` that represents whether the PAN field will be formatted.
      */
     @available(*, deprecated, message: "Using PanView, ExpiryDateView and CvcView to initialize the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used instead.")
     public init(panView: PanView,
@@ -92,7 +98,8 @@ public struct CardValidationConfig: ValidationConfig {
                 cvcView: CvcView,
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
-                acceptedCardBrands: [String] = []) {
+                acceptedCardBrands: [String] = [],
+                panFormattingDisabled: Bool = false) {
         self.panView = panView
         self.expiryDateView = expiryDateView
         self.cvcView = cvcView
@@ -105,6 +112,7 @@ public struct CardValidationConfig: ValidationConfig {
         
         self.textFieldMode = false
         self.acceptedCardBrands = acceptedCardBrands
+        self.panFormattingDisabled = panFormattingDisabled
     }
 }
 
@@ -119,6 +127,7 @@ public class CardValidationConfigBuilder {
     private var accessBaseUrl: String?
     private var validationDelegate: AccessCheckoutCardValidationDelegate?
     private var acceptedCardBrands: [String] = []
+    private var panFormattingDisabled: Bool = false
 
     fileprivate init() {}
 
@@ -175,6 +184,15 @@ public class CardValidationConfigBuilder {
         self.acceptedCardBrands = acceptedCardBrands
         return self
     }
+    
+    /**
+     - Parameter disableCardBrandFormatting: disables the automatic formatting of Pan field
+     - Returns: the same instance of the builder
+     */
+    public func disablePanFormatting() -> CardValidationConfigBuilder {
+        self.panFormattingDisabled = true
+        return self
+    }
 
     /**
      Use this method to create an instance of `CardValidationConfig`
@@ -204,6 +222,7 @@ public class CardValidationConfigBuilder {
                                     cvcTextField: cvc,
                                     accessBaseUrl: accessBaseUrl,
                                     validationDelegate: validationDelegate,
-                                    acceptedCardBrands: acceptedCardBrands)
+                                    acceptedCardBrands: acceptedCardBrands,
+                                    panFormattingDisabled: panFormattingDisabled)
     }
 }

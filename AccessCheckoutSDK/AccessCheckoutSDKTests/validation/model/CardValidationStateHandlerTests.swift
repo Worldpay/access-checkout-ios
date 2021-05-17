@@ -163,6 +163,18 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).panValidChanged(isValid: false)
     }
     
+    func testShouldReturnCardBrandIfKnownBrand() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, panValidationState: false, cardBrand: visaBrand)
+        
+        XCTAssertEqual(validationStateHandler.getCardBrand(), visaBrand)
+    }
+    
+    func testShouldReturnNilCardBrandIfUnknownBrand() {
+        let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, panValidationState: false, cardBrand: nil)
+        
+        XCTAssertEqual(validationStateHandler.getCardBrand(), nil)
+    }
+    
     // MARK: ExpiryDateValidationStateHandler
     
     func testShouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse() {

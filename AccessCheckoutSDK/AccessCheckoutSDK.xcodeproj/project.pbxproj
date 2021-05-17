@@ -32,6 +32,8 @@
 		C9AFE46922B7AA4800943B3E /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45622B7AA4700943B3E /* mastercard.png */; };
 		C9AFE46A22B7AA4800943B3E /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45722B7AA4700943B3E /* visa.png */; };
 		CC0572552428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */; };
+		D7258632264ABB9D00DB60EB /* PanTextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */; };
+		D7258634264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */; };
 		D72F700424694FF700305480 /* cardTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = D72F700324694FF700305480 /* cardTypes.json */; };
 		D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74028322592136700104B32 /* PresenterTestSuite.swift */; };
 		D74028A525A360CB00104B32 /* CardValidationConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74028A425A360CB00104B32 /* CardValidationConfigTests.swift */; };
@@ -61,6 +63,8 @@
 		D7D6D5F3248154B900D57D7A /* PanValidationFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F2248154B900D57D7A /* PanValidationFlowTests.swift */; };
 		D7D6D5F52481550200D57D7A /* PanValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F42481550200D57D7A /* PanValidationFlow.swift */; };
 		D7D6D5F92484FE0E00D57D7A /* CvcValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6D5F82484FE0E00D57D7A /* CvcValidationFlow.swift */; };
+		D7E536F1264A90B300A476E6 /* PanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E536F0264A90B300A476E6 /* PanFormatter.swift */; };
+		D7E536F3264A90FC00A476E6 /* PanFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E536F2264A90FC00A476E6 /* PanFormatterTests.swift */; };
 		E70305A124924AAA00802AF1 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70305A024924AAA00802AF1 /* TestFixtures.swift */; };
 		E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70A5E842420C8B200F8B73E /* RestClientTests.swift */; };
 		E7167EF2248E2ECC0045158E /* ValidationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7167EF1248E2ECC0045158E /* ValidationConfig.swift */; };
@@ -243,6 +247,8 @@
 		C9AFE45622B7AA4700943B3E /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
 		C9AFE45722B7AA4700943B3E /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKtoSessionsPactTests.swift; sourceTree = "<group>"; };
+		D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanTextChangeHandler.swift; sourceTree = "<group>"; };
+		D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanTextChangeHandlerTests.swift; sourceTree = "<group>"; };
 		D72F700324694FF700305480 /* cardTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardTypes.json; sourceTree = "<group>"; };
 		D74028322592136700104B32 /* PresenterTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterTestSuite.swift; sourceTree = "<group>"; };
 		D74028A425A360CB00104B32 /* CardValidationConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigTests.swift; sourceTree = "<group>"; };
@@ -272,6 +278,8 @@
 		D7D6D5F2248154B900D57D7A /* PanValidationFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationFlowTests.swift; sourceTree = "<group>"; };
 		D7D6D5F42481550200D57D7A /* PanValidationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationFlow.swift; sourceTree = "<group>"; };
 		D7D6D5F82484FE0E00D57D7A /* CvcValidationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcValidationFlow.swift; sourceTree = "<group>"; };
+		D7E536F0264A90B300A476E6 /* PanFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanFormatter.swift; sourceTree = "<group>"; };
+		D7E536F2264A90FC00A476E6 /* PanFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanFormatterTests.swift; sourceTree = "<group>"; };
 		E70305A024924AAA00802AF1 /* TestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFixtures.swift; sourceTree = "<group>"; };
 		E70A5E842420C8B200F8B73E /* RestClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientTests.swift; sourceTree = "<group>"; };
 		E7167EF1248E2ECC0045158E /* ValidationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationConfig.swift; sourceTree = "<group>"; };
@@ -585,9 +593,9 @@
 		E72C3ED02485B0BA00284A31 /* presenters */ = {
 			isa = PBXGroup;
 			children = (
+				E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */,
 				E72C3ED72485B2E100284A31 /* CvcViewPresenter.swift */,
 				E72C3ED52485B0F500284A31 /* ExpiryDateViewPresenter.swift */,
-				E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */,
 				E7723571249397F800018DCB /* Presenter.swift */,
 			);
 			path = presenters;
@@ -816,6 +824,8 @@
 				E7409D50248F9DC000016AEB /* components */,
 				E72C3EF6248A57A400284A31 /* presenters */,
 				E749024A247FEE3C00889AAA /* TextChangeHandlerTests.swift */,
+				D7E536F2264A90FC00A476E6 /* PanFormatterTests.swift */,
+				D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -929,6 +939,8 @@
 				E79EAC5724587DC200A8DDA6 /* components */,
 				E72C3ED02485B0BA00284A31 /* presenters */,
 				E749024C247FEEB600889AAA /* TextChangeHandler.swift */,
+				D7E536F0264A90B300A476E6 /* PanFormatter.swift */,
+				D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1325,6 +1337,7 @@
 				E7821A7F245864C4003F7231 /* VerifiedTokensApiClient.swift in Sources */,
 				E7D19F6E24632208001EA13A /* ApiResponseLinkLookup.swift in Sources */,
 				E7167EF8248E2F330045158E /* CardValidationConfig.swift in Sources */,
+				D7258632264ABB9D00DB60EB /* PanTextChangeHandler.swift in Sources */,
 				E7821A812458652F003F7231 /* UserAgent.swift in Sources */,
 				E72A99E42459E385004FEAD5 /* CardDetails.swift in Sources */,
 				D7D6D5E8248116EC00D57D7A /* CardValidationStateHandler.swift in Sources */,
@@ -1367,6 +1380,7 @@
 				E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */,
 				E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */,
 				E7D19F622462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift in Sources */,
+				D7E536F1264A90B300A476E6 /* PanFormatter.swift in Sources */,
 				E7D37F87248161CD0039DD98 /* CardBrandsConfiguration.swift in Sources */,
 				D7851B302489010900461377 /* AccessCheckoutCvcOnlyValidationDelegate.swift in Sources */,
 				D7851B2C2488EC2800461377 /* CvcOnlyValidationStateHandler.swift in Sources */,
@@ -1421,6 +1435,7 @@
 				E7D37F8C248170300039DD98 /* CardBrandDtoTests.swift in Sources */,
 				D7D6D5D8247FC96100D57D7A /* CvcValidatorTests.swift in Sources */,
 				E798B69F24913E8100A6A9AD /* CvcViewTests.swift in Sources */,
+				D7E536F3264A90FC00A476E6 /* PanFormatterTests.swift in Sources */,
 				E7D37F852481601B0039DD98 /* CardBrandsConfigurationFactoryTests.swift in Sources */,
 				E7D37F7E248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift in Sources */,
 				E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */,
@@ -1482,6 +1497,7 @@
 				E72C3EF8248A57C300284A31 /* PanViewPresenterTests.swift in Sources */,
 				E7AC80AA248E741800E28D76 /* AccessCheckoutCvcOnlyValidationDelegate_FocusOut_Tests.swift in Sources */,
 				D7851B232487B36400461377 /* MockCvvValidationStateHandler.swift in Sources */,
+				D7258634264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift in Sources */,
 				E760196D246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift in Sources */,
 				E7AC80AE248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift in Sources */,
 				D7851B2E2488FE1D00461377 /* MockCvvValidationFlow.swift in Sources */,
@@ -1599,7 +1615,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1657,7 +1673,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1683,6 +1699,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AccessCheckoutSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1711,6 +1728,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AccessCheckoutSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1731,6 +1749,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1750,6 +1769,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				INFOPLIST_FILE = AccessCheckoutSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

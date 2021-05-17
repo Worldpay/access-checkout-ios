@@ -14,6 +14,8 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var expiryDateIsValidLabel: UILabel!
     @IBOutlet weak var cvcIsValidLabel: UILabel!
     
+    @IBOutlet weak var setCursorButton: UIButton!
+    
     private let unknownBrandImage = UIImage(named: "card_unknown")
     
     private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
@@ -22,6 +24,12 @@ class CardFlowViewController: UIViewController {
         submitCard(pan: panTextField.text ?? "",
                    expiryDate: expiryDateTextField.text ?? "",
                    cvc: (cvcTextField.text ?? "") as String)
+    }
+    
+    @IBAction func moveCursor() {
+        if let newPosition = panTextField.position(from: panTextField.beginningOfDocument, offset: 3) {
+            panTextField.selectedTextRange = panTextField.textRange(from: newPosition, to: newPosition)
+        }
     }
     
     private func submitCard(pan: String, expiryDate: String, cvc: String) {
@@ -138,7 +146,7 @@ class CardFlowViewController: UIViewController {
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(self)
             .build()
-        
+                
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
         panValidChanged(isValid: false)

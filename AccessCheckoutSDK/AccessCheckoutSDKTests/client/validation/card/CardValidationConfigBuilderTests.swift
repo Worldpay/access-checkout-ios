@@ -10,6 +10,18 @@ class CardValidationConfigBuilderTests: XCTestCase {
     private let validationDelegate = MockAccessCheckoutCardValidationDelegate()
     private let acceptedCardBrands = ["visa", "amex"]
 
+    func testCanCreateConfigWitDisabledBrandFormatting() {
+        let config = try! builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
+            .accessBaseUrl(accessBaseUrl)
+            .validationDelegate(validationDelegate)
+            .disablePanFormatting()
+            .build()
+
+        XCTAssertTrue(config.panFormattingDisabled)
+    }
+
     func testCanCreateConfigWithoutAcceptedCardBrands() {
         let config = try! builder.pan(panTextField)
             .expiryDate(expiryDateTextField)
