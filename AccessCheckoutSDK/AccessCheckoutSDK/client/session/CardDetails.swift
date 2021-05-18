@@ -38,7 +38,7 @@ public final class CardDetailsBuilder {
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
     public func pan(_ pan: String) -> CardDetailsBuilder {
-        self.pan = pan
+        self.pan = pan.replacingOccurrences(of: " ", with: "")
         return self
     }
     
