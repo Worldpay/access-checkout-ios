@@ -52,7 +52,31 @@ class VerifiedTokensSessionStub : ServiceStub {
                 return
         }
             
-        MockingjayProtocol.addStub(matcher: http(.post, uri: "\(self.baseUri)/verifiedTokens/sessions"), builder: jsonData(data))
+        MockingjayProtocol.addStub(matcher: checkBody(.post, "\(self.baseUri)/verifiedTokens/sessions"), builder: jsonData(data))
+    }
+    
+    func checkBody(_ method: HTTPMethod, _ uri: String) -> (_ request: URLRequest) -> Bool {
+        return { (request:URLRequest) in
+            let body = request.httpBodyStream?.readfully() ?? Data()
+            let parsedJson = try? JSONSerialization.jsonObject(with: body)
+            guard let jsonDict = parsedJson as? Dictionary<String, AnyObject> else { return false }
+
+            guard let pan = jsonDict["cardNumber"] as? String else { return false }
+            
+            let range = NSRange(location: 0, length: pan.utf16.count)
+            let regex = try! NSRegularExpression(pattern: "^[0-9]+$")
+            if(regex.firstMatch(in: pan, options: [], range: range) == nil) {
+                return false
+            }
+            
+            if let requestMethod = request.httpMethod {
+              if requestMethod == method.description {
+                return Mockingjay.uri(uri)(request)
+              }
+            }
+            
+            return false
+        }
     }
 }
 
@@ -106,5 +130,26 @@ class SessionsPaymentsCvcStub : ServiceStub {
         }
             
         MockingjayProtocol.addStub(matcher: http(.post, uri: "\(self.baseUri)/sessions/payments/cvc"), builder: jsonData(data))
+    }
+}
+
+extension InputStream {
+    func readfully() -> Data {
+        var result = Data()
+        var buffer = [UInt8](repeating: 0, count: 4096)
+        
+        open()
+        
+        var amount = 0
+        repeat {
+            amount = read(&buffer, maxLength: buffer.count)
+            if amount > 0 {
+                result.append(buffer, count: amount)
+            }
+        } while amount > 0
+        
+        close()
+        
+        return result
     }
 }
