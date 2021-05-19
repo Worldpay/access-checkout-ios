@@ -133,8 +133,6 @@ class SessionsPaymentsCvcStub : ServiceStub {
     }
 }
 
-import Foundation
-
 extension InputStream {
     func readfully() -> Data {
         var result = Data()
