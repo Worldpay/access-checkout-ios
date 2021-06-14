@@ -145,7 +145,7 @@ workflows:
                 set -x
 
                 # Download and install Swift environment variable innjector
-                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.2/scripts/install-binary.sh | sh
+                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
 
                 # Replacing env variables
                 variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
@@ -158,7 +158,7 @@ workflows:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
             - simulator_device: iPhone 11 Pro
-            - simulator_os_version: 13.4
+            - simulator_os_version: 13.7
             - scheme: "$DEMO_SCHEME"
             - generate_code_coverage_files: "yes"
       - deploy-to-bitrise-io:
