@@ -26,7 +26,6 @@ class RestrictedCardFlowViewController: UIViewController {
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
-            .disablePanFormatting()
             .build()
         
         AccessCheckoutValidationInitialiser().initialise(validationConfig)

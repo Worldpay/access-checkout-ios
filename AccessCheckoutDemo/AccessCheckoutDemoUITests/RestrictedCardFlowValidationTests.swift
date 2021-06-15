@@ -108,11 +108,11 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         
     }
     
-    // MARK: Testing formatting can be turned off
+    // MARK: Testing PAN formatting
     
     func testDoesNotFormatPan() {
         view!.typeTextIntoPan("4111111111111111")
         
-        XCTAssertEqual(view!.panText, "4111111111111111")
+        XCTAssertEqual(view!.panText, "4111 1111 1111 1111")
     }
 }
