@@ -106,3 +106,12 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
 ## Security
 
 Checkmarx scans are triggered on push via a webhook set up in GitHub, and CRs for new releases must have a valid Checkmarx report attached to the CR
+
+## How-tos
+
+### Bumping the SDK version
+
+Run the command below to bump the SDK version in code. 
+A commit with all relevant changes will be added to the branch currently checked out. 
+
+`./scripts/bump_version.sh -v=[version] -t=[ticket_number]`
