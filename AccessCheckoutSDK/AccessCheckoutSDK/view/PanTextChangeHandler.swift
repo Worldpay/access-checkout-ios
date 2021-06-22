@@ -1,12 +1,11 @@
 class PanTextChangeHandler {
-    
     let panFormatter: PanFormatter
     
-    init(disableFormatting: Bool) {
-        self.panFormatter = PanFormatter(disableFormatting: disableFormatting)
+    init(panFormattingEnabled: Bool) {
+        self.panFormatter = PanFormatter(cardSpacingEnabled: panFormattingEnabled)
     }
     
-    func change(originalText:String?, textChange: String, usingSelection selection:NSRange, brand: CardBrandModel?) -> String {
+    func change(originalText: String?, textChange: String, usingSelection selection: NSRange, brand: CardBrandModel?) -> String {
         guard let originalText = originalText else {
             return textChange
         }

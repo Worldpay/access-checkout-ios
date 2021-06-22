@@ -39,7 +39,7 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         
-        let panPresenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler, config.panFormattingDisabled)
+        let panPresenter = panViewPresenter(configurationProvider, cvcValidationFlow, validationStateHandler, config.panFormattingEnabled)
         let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
@@ -70,10 +70,10 @@ public struct AccessCheckoutValidationInitialiser {
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
                                   _ cvcValidationFlow: CvcValidationFlow,
                                   _ validationStateHandler: PanValidationStateHandler,
-                                  _ panFormattingDisabled: Bool) -> PanViewPresenter {
+                                  _ panFormattingEnabled: Bool) -> PanViewPresenter {
         let panValidator = PanValidator(configurationProvider)
         let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
-        return PanViewPresenter(panValidationFlow, panValidator, panFormattingDisabled)
+        return PanViewPresenter(panValidationFlow, panValidator, panFormattingEnabled: panFormattingEnabled)
     }
     
     private func expiryDateViewPresenter(_ validationStateHandler: ExpiryDateValidationStateHandler) -> ExpiryDateViewPresenter {
@@ -86,7 +86,7 @@ public struct AccessCheckoutValidationInitialiser {
         clearExistingPresenter(from: textField)
         textField.delegate = delegate
         textField.addTarget(delegate, action: #selector(delegate.textFieldEditingChanged), for: .editingChanged)
-
+        
         AccessCheckoutValidationInitialiser.presenters.append(delegate)
     }
     
