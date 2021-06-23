@@ -1,15 +1,14 @@
 @testable import AccessCheckoutSDK
 import XCTest
 
-class PanTextChangeHandlerTests : XCTestCase {
-        
-    private let textChangeHandler = PanTextChangeHandler(disableFormatting: false)
-        
+class PanTextChangeHandlerTests: XCTestCase {
+    private let textChangeHandler = PanTextChangeHandler(panFormattingEnabled: true)
+    
     func testSupportsAppendingText() {
         let originalText = "abc"
         let textChange = "de"
-        let selection:NSRange = NSRange(location: 3, length: 0)
-    
+        let selection: NSRange = NSRange(location: 3, length: 0)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("abcd e", result)
@@ -18,18 +17,18 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testSupportsDeletingACharacter() {
         let originalText = "1234 5"
         let textChange = ""
-        let selection:NSRange = NSRange(location: 3, length: 1)
-    
+        let selection: NSRange = NSRange(location: 3, length: 1)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("1235", result)
     }
-
+    
     func testReturnsSameStringWhenDeletingASpace() {
         let originalText = "1234 5"
         let textChange = ""
-        let selection:NSRange = NSRange(location: 4, length: 1)
-    
+        let selection: NSRange = NSRange(location: 4, length: 1)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("1234 5", result)
@@ -38,8 +37,8 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testSupportsDeletingASpaceAndText() {
         let originalText = "1234 5"
         let textChange = ""
-        let selection:NSRange = NSRange(location: 3, length: 3)
-    
+        let selection: NSRange = NSRange(location: 3, length: 3)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("123", result)
@@ -48,8 +47,8 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testSupportsReplacingText() {
         let originalText = "abcd"
         let textChange = "123"
-        let selection:NSRange = NSRange(location: 2, length: 2)
-    
+        let selection: NSRange = NSRange(location: 2, length: 2)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("ab12 3", result)
@@ -58,8 +57,8 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testSupportsDeletingASelection() {
         let originalText = "abcd"
         let textChange = ""
-        let selection:NSRange = NSRange(location: 2, length: 2)
-    
+        let selection: NSRange = NSRange(location: 2, length: 2)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("ab", result)
@@ -68,8 +67,8 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testSupportsDeletingEntireText() {
         let originalText = "abcd"
         let textChange = ""
-        let selection:NSRange = NSRange(location: 0, length: originalText.count)
-    
+        let selection: NSRange = NSRange(location: 0, length: originalText.count)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("", result)
@@ -78,18 +77,18 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testReturnsOriginalTextWhenSelectionIsInvalid() {
         let originalText = "abcd"
         let textChange = "efg"
-        let selection:NSRange = NSRange(location: 0, length: 10)
-    
+        let selection: NSRange = NSRange(location: 0, length: 10)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("abcd", result)
     }
     
     func testReturnsTextChangeWhenNoOriginalText() {
-        let originalText:String? = nil
+        let originalText: String? = nil
         let textChange = "123"
-        let selection:NSRange = NSRange(location: 0, length: 0)
-    
+        let selection: NSRange = NSRange(location: 0, length: 0)
+        
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
         XCTAssertEqual("123", result)
@@ -98,7 +97,7 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testReturnsTextWithSpacesWhenFormattingEnabled() {
         let originalText = "44444444"
         let textChange = "4"
-        let selection:NSRange = NSRange(location: 8, length: 0)
+        let selection: NSRange = NSRange(location: 8, length: 0)
         
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
         
@@ -108,7 +107,7 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testReturnsTextWithSpacesWhenFormattingEnabledAndAmexPan() {
         let originalText = "3717 444444"
         let textChange = "1"
-        let selection:NSRange = NSRange(location: 11, length: 0)
+        let selection: NSRange = NSRange(location: 11, length: 0)
         
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: TestFixtures.amexBrand())
         
@@ -118,7 +117,7 @@ class PanTextChangeHandlerTests : XCTestCase {
     func testReturnsTextWithSpacesWhenFormattingEnabledAndInsertingInAmexPan() {
         let originalText = "3717 444444"
         let textChange = "1"
-        let selection:NSRange = NSRange(location: 8, length: 0)
+        let selection: NSRange = NSRange(location: 8, length: 0)
         
         let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: TestFixtures.amexBrand())
         

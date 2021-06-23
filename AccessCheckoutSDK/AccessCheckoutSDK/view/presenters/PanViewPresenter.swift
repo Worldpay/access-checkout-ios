@@ -3,12 +3,12 @@ import Foundation
 class PanViewPresenter: NSObject, Presenter {
     private let validationFlow: PanValidationFlow
     private let validator: PanValidator
-    private let panTextChangeHandler:PanTextChangeHandler
-
-    init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator, _ disableFormatting: Bool) {
+    private let panTextChangeHandler: PanTextChangeHandler
+    
+    init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator, panFormattingEnabled: Bool) {
         self.validationFlow = validationFlow
         self.validator = panValidator
-        self.panTextChangeHandler = PanTextChangeHandler(disableFormatting: disableFormatting)
+        self.panTextChangeHandler = PanTextChangeHandler(panFormattingEnabled: panFormattingEnabled)
     }
     
     func onEditing(text: String) {
@@ -31,7 +31,7 @@ class PanViewPresenter: NSObject, Presenter {
         guard let pan = textField.text else {
             return
         }
-
+        
         onEditing(text: pan)
     }
 }
@@ -40,14 +40,13 @@ extension PanViewPresenter: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         onEditEnd()
     }
-        
+    
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let cursorPosition = range.location
         let originalText = textField.text ?? ""
         let resultingText = panTextChangeHandler.change(originalText: originalText, textChange: string, usingSelection: range, brand: validationFlow.getCardBrand())
-
+        
         if canChangeText(with: resultingText) {
-            
             textField.text = resultingText
             onEditing(text: resultingText)
             
@@ -58,7 +57,6 @@ extension PanViewPresenter: UITextFieldDelegate {
     }
     
     private func setCursorPosition(_ cursorPosition: Int, _ originalText: String, _ resultingText: String, _ string: String, _ textField: UITextField) {
-        
         let newCursorPosition = calculateCusrorPosition(currentPosition: cursorPosition, originalText: originalText, resultingText: resultingText, changeLength: string.count)
         
         DispatchQueue.main.async {
@@ -70,26 +68,25 @@ extension PanViewPresenter: UITextFieldDelegate {
     
     private func calculateCusrorPosition(currentPosition: Int, originalText: String, resultingText: String, changeLength: Int) -> Int {
         var offset = resultingText.count - originalText.count
-        if(offset < 0){
+        if offset < 0 {
             return currentPosition
         }
         
         let originalSpacesToLeft = spacesToLeft(string: originalText, limit: currentPosition)
-        let newSpacesToLeft = spacesToLeft(string: resultingText, limit: (currentPosition + offset))
+        let newSpacesToLeft = spacesToLeft(string: resultingText, limit: currentPosition + offset)
         offset = changeLength + newSpacesToLeft - originalSpacesToLeft
-
+        
         return currentPosition + offset
     }
     
-    private func spacesToLeft(string: String, limit: Int)-> Int {
+    private func spacesToLeft(string: String, limit: Int) -> Int {
         var spacesToLeft = 0
         let substr = String(string.prefix(limit))
-        for(_ , character) in substr.enumerated() {
-            if(character == " ") {
+        for (_, character) in substr.enumerated() {
+            if character == " " {
                 spacesToLeft += 1
             }
         }
         return spacesToLeft
     }
 }
-
