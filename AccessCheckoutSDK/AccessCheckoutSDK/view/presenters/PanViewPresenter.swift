@@ -97,16 +97,25 @@ extension PanViewPresenter: UITextFieldDelegate {
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let replacementDigits = stripAllCharsButDigits(string)
-        let caretPosition = range.location
-
-        if !string.isEmpty, replacementDigits.isEmpty {
+        var caretPosition = range.location
+        let digitsOnly = stripAllCharsButDigits(string)
+        if !string.isEmpty, digitsOnly.isEmpty {
             setCaretPosition(textField, caretPosition)
             return false
         }
 
-        let resultingText = panTextChangeHandler.change(originalText: textField.text ?? "", textChange: replacementDigits,
-                                                        usingSelection: range, brand: validationFlow.getCardBrand())
+        var textRange: NSRange
+        if deletingSpace(from: textField.text, selection: range) {
+            textRange = NSRange(location: range.location - 1, length: range.length + 1)
+            caretPosition = textRange.location
+        } else {
+            textRange = range
+        }
+
+        let resultingText = panTextChangeHandler.change(originalText: textField.text ?? "",
+                                                        textChange: digitsOnly,
+                                                        usingSelection: textRange,
+                                                        brand: validationFlow.getCardBrand())
 
         if canChangeText(with: resultingText) {
             let numberOfDigitsBeforeCaret = countNumberOfDigitsBeforeCaret(textField.text!, caretPosition)
@@ -114,13 +123,26 @@ extension PanViewPresenter: UITextFieldDelegate {
             textField.text = resultingText
             onEditing(text: resultingText)
 
-            let numberOfDigitsBeforeNewCaretPosition = numberOfDigitsBeforeCaret + replacementDigits.count
+            let numberOfDigitsBeforeNewCaretPosition = numberOfDigitsBeforeCaret + digitsOnly.count
             let newCaretPosition = findIndexOfNthDigit(text: resultingText, nth: numberOfDigitsBeforeNewCaretPosition)
             setCaretPosition(textField, newCaretPosition)
             onEditEnd()
         }
 
         return false
+    }
+
+    private func deletingSpace(from string: String?, selection: NSRange) -> Bool {
+        guard let text = string else {
+            return false
+        }
+        if selection.length != 1 {
+            return false
+        }
+
+        let start = text.index(text.startIndex, offsetBy: selection.lowerBound)
+        let end = text.index(text.startIndex, offsetBy: selection.upperBound)
+        return text[start..<end] == " "
     }
 
     private func stripAllCharsButDigits(_ string: String) -> String {

@@ -206,7 +206,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = PanViewPresenter(panValidationFlowMock, panValidator, panFormattingEnabled: true)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "493698123")
-        
+
         XCTAssertEqual(panTextField.text, "4936 9812 3")
         verify(panValidationFlowMock).notifyMerchantIfNotAlreadyNotified()
         verify(panValidationFlowMock).validate(pan: "4936 9812 3")
@@ -230,12 +230,27 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         verifyNoMoreInteractions(panValidationFlowMock)
     }
 
+    func testShouldDeleteSpaceAndPreviousDigitWhenDeletingSpace() {
+        let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
+        panTextField.text = "4444 3333"
+        let textToInsert = ""
+        let selection = NSRange(location: 4, length: 1)
+
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: selection, replacementString: textToInsert)
+
+        XCTAssertEqual("4443 333", panTextField.text)
+        waitThen {
+            XCTAssertEqual(3, self.caretPosition())
+        }
+    }
+
     // MARK: Caret position tests
 
     func testShouldMoveCaretToEndWhenEnteringTextInEmptyField() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         let textToInsert = "44443333"
         let carePosition = NSRange(location: 0, length: 0)
+
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3333", panTextField.text)
@@ -249,6 +264,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         panTextField.text = "4444 3333"
         let textToInsert = "1"
         let carePosition = NSRange(location: 6, length: 0)
+
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3133 3", panTextField.text)
