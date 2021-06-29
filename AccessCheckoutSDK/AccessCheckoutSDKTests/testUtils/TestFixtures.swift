@@ -10,6 +10,7 @@ final class TestFixtures {
     static let validVisaPanAsLongAsMaxLengthAllowedWithSpaces = "4111 1111 1111 1111 111"
 
     static let visaPanTooLong = "41111111111111111111"
+    static let visaPanTooLongWithSpaces = "4111 1111 1111 1111 1111"
     static let visaPanThatFailsLuhnCheck = "4111111111111110"
     static let visaPanThatFailsLuhnCheckWithSpaces = "4111 1111 1111 1110"
 
@@ -54,5 +55,9 @@ final class TestFixtures {
                                     panPattern: "^3[47]\\d*$",
                                     panValidLengths: [15],
                                     cvcValidLength: 4)
+    }
+
+    static func unknownBrand() -> CardBrandModel? {
+        return nil
     }
 }

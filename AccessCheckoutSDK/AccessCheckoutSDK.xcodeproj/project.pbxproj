@@ -12,6 +12,7 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
+		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
 		5166BC8726833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */; };
 		5166BC9526833FCA00648CE8 /* CardValidationConfigConstructorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC9426833FCA00648CE8 /* CardValidationConfigConstructorTests.swift */; };
 		51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */; };
@@ -98,7 +99,7 @@
 		E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EF024893C0100284A31 /* CardBrandsConfigurationProvider.swift */; };
 		E72C3EF324893C6400284A31 /* CardBrandsConfigurationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EF224893C6400284A31 /* CardBrandsConfigurationProviderTests.swift */; };
 		E72C3EF524894B2C00284A31 /* MockCardBrandsConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EF424894B2C00284A31 /* MockCardBrandsConfigurationProvider.swift */; };
-		E72C3EF8248A57C300284A31 /* PanViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EF7248A57C300284A31 /* PanViewPresenterTests.swift */; };
+		E72C3EF8248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EF7248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift */; };
 		E72C3EFE248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EFD248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift */; };
 		E72C3F02248A78DA00284A31 /* CvcViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */; };
 		E72C3F0B248AB7B800284A31 /* CardBrandModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3F0A248AB7B800284A31 /* CardBrandModelTransformer.swift */; };
@@ -216,6 +217,7 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCardSpacingTests.swift; sourceTree = "<group>"; };
 		5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorLegacyViewTests.swift; sourceTree = "<group>"; };
 		5166BC9426833FCA00648CE8 /* CardValidationConfigConstructorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorTests.swift; sourceTree = "<group>"; };
 		51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
@@ -314,7 +316,7 @@
 		E72C3EF024893C0100284A31 /* CardBrandsConfigurationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandsConfigurationProvider.swift; sourceTree = "<group>"; };
 		E72C3EF224893C6400284A31 /* CardBrandsConfigurationProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandsConfigurationProviderTests.swift; sourceTree = "<group>"; };
 		E72C3EF424894B2C00284A31 /* MockCardBrandsConfigurationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCardBrandsConfigurationProvider.swift; sourceTree = "<group>"; };
-		E72C3EF7248A57C300284A31 /* PanViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterTests.swift; sourceTree = "<group>"; };
+		E72C3EF7248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterNoCardSpacingTests.swift; sourceTree = "<group>"; };
 		E72C3EFD248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateViewPresenterTests.swift; sourceTree = "<group>"; };
 		E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcViewPresenterTests.swift; sourceTree = "<group>"; };
 		E72C3F0A248AB7B800284A31 /* CardBrandModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandModelTransformer.swift; sourceTree = "<group>"; };
@@ -609,7 +611,8 @@
 			children = (
 				E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */,
 				E72C3EFD248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift */,
-				E72C3EF7248A57C300284A31 /* PanViewPresenterTests.swift */,
+				E72C3EF7248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift */,
+				5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */,
 			);
 			path = presenters;
 			sourceTree = "<group>";
@@ -1498,7 +1501,8 @@
 				5166BC9526833FCA00648CE8 /* CardValidationConfigConstructorTests.swift in Sources */,
 				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
 				D7851B212487B21600461377 /* CvcValidationFlowTests.swift in Sources */,
-				E72C3EF8248A57C300284A31 /* PanViewPresenterTests.swift in Sources */,
+				5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */,
+				E72C3EF8248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift in Sources */,
 				E7AC80AA248E741800E28D76 /* AccessCheckoutCvcOnlyValidationDelegate_FocusOut_Tests.swift in Sources */,
 				D7851B232487B36400461377 /* MockCvvValidationStateHandler.swift in Sources */,
 				D7258634264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift in Sources */,
