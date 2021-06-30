@@ -5,10 +5,7 @@ class PanTextChangeHandler {
         self.panFormatter = PanFormatter(cardSpacingEnabled: panFormattingEnabled)
     }
     
-    func change(originalText: String?, textChange: String, usingSelection selection: NSRange, brand: CardBrandModel?) -> String {
-        guard let originalText = originalText else {
-            return textChange
-        }
+    func change(originalText: String, textChange: String, usingSelection selection: NSRange, brand: CardBrandModel?) -> String {
         guard let selection = Range(selection, in: originalText) else {
             return originalText
         }

@@ -84,16 +84,6 @@ class PanTextChangeHandlerTests: XCTestCase {
         XCTAssertEqual("abcd", result)
     }
     
-    func testReturnsTextChangeWhenNoOriginalText() {
-        let originalText: String? = nil
-        let textChange = "123"
-        let selection: NSRange = NSRange(location: 0, length: 0)
-        
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
-        
-        XCTAssertEqual("123", result)
-    }
-    
     func testReturnsTextWithSpacesWhenFormattingEnabled() {
         let originalText = "44444444"
         let textChange = "4"

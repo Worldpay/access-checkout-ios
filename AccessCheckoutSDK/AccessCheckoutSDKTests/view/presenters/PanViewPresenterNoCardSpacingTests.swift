@@ -127,6 +127,16 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         verify(panValidationFlow).validate(pan: "")
     }
 
+    func testCanTypeDigitsWhenTextfieldTextIsSetToNil() {
+        let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: nil)
+        let range = NSRange(location: 0, length: 0)
+        panTextField.text = nil
+
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: range, replacementString: "123")
+
+        XCTAssertEqual(panTextField.text, "123")
+    }
+
     func testCannotTypeOnlyNonNumericalCharacters() {
         let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: nil)
         XCTAssertEqual(panTextField.text, "")
@@ -196,7 +206,7 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         let presenter = PanViewPresenter(panValidationFlow, panValidator, panFormattingEnabled: false)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "493698123")
-        
+
         XCTAssertEqual(panTextField.text, "493698123")
         verify(panValidationFlow).notifyMerchantIfNotAlreadyNotified()
         verify(panValidationFlow).validate(pan: "493698123")
@@ -342,6 +352,20 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         XCTAssertEqual("44443333", panTextField.text)
         waitThen {
             XCTAssertEqual(5, self.caretPosition())
+        }
+    }
+
+    func testShouldNotMoveCaretWhenPastingWouldCausePanToExceedMaxLength() {
+        let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: unknownBrand)
+        panTextField.text = "4444333322221111"
+        let textToInsert = "9999"
+        let selection = NSRange(location: 1, length: 0)
+
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: selection, replacementString: textToInsert)
+
+        XCTAssertEqual("4444333322221111", panTextField.text)
+        waitThen {
+            XCTAssertEqual(1, self.caretPosition())
         }
     }
 }

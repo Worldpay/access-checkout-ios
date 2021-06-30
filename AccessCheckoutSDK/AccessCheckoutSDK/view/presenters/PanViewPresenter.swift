@@ -96,52 +96,68 @@ extension PanViewPresenter: UITextFieldDelegate {
         onEditEnd()
     }
 
+    fileprivate func newRangeWithPreviousDigit(originalRange range: NSRange) -> NSRange {
+        return NSRange(location: range.location - 1, length: range.length + 1)
+    }
+
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var caretPosition = range.location
         let digitsOnly = stripAllCharsButDigits(string)
-        if !string.isEmpty, digitsOnly.isEmpty {
-            setCaretPosition(textField, caretPosition)
+        if digitsOnly.isEmpty, !string.isEmpty {
+            setCaretPosition(textField, range.location)
             return false
         }
 
-        var textRange: NSRange
-        if deletingSpace(from: textField.text, selection: range) {
-            textRange = NSRange(location: range.location - 1, length: range.length + 1)
-            caretPosition = textRange.location
+        let originalText = textField.text ?? ""
+        let selection: NSRange
+        let caretPosition: Int
+
+        if isDeletingSpace(originalText: originalText, replacementString: string, selection: range) {
+            selection = newRangeWithPreviousDigit(originalRange: range)
+            caretPosition = range.location - 1
         } else {
-            textRange = range
+            selection = range
+            caretPosition = range.location
         }
 
-        let resultingText = panTextChangeHandler.change(originalText: textField.text ?? "",
+        let resultingText = panTextChangeHandler.change(originalText: originalText,
                                                         textChange: digitsOnly,
-                                                        usingSelection: textRange,
+                                                        usingSelection: selection,
                                                         brand: validationFlow.getCardBrand())
 
         if canChangeText(with: resultingText) {
-            let numberOfDigitsBeforeCaret = countNumberOfDigitsBeforeCaret(textField.text!, caretPosition)
-
             textField.text = resultingText
             onEditing(text: resultingText)
 
-            let numberOfDigitsBeforeNewCaretPosition = numberOfDigitsBeforeCaret + digitsOnly.count
-            let newCaretPosition = findIndexOfNthDigit(text: resultingText, nth: numberOfDigitsBeforeNewCaretPosition)
+            let numberOfDigitsBeforeNewCaretPosition = countNumberOfDigitsBeforeCaret(originalText, caretPosition) + digitsOnly.count
+            var newCaretPosition = findIndexOfNthDigit(text: resultingText, nth: numberOfDigitsBeforeNewCaretPosition)
+
+            if isDeletingTextInFrontOfSpace(originalText: originalText, replacementString: string, caretPosition: caretPosition) {
+                newCaretPosition = newCaretPosition + 1 // this is to ensure the caret is left after the space
+            }
             setCaretPosition(textField, newCaretPosition)
             onEditEnd()
+        } else {
+            setCaretPosition(textField, range.location)
         }
 
         return false
     }
 
-    private func deletingSpace(from string: String?, selection: NSRange) -> Bool {
-        guard let text = string else {
-            return false
-        }
-        if selection.length != 1 {
-            return false
-        }
+    private func isDeletingSpace(originalText: String, replacementString: String, selection: NSRange) -> Bool {
+        return replacementString.isEmpty
+            && selectionIsSpace(originalText, selectionStart: selection.lowerBound, selectionEnd: selection.upperBound)
+    }
 
-        let start = text.index(text.startIndex, offsetBy: selection.lowerBound)
-        let end = text.index(text.startIndex, offsetBy: selection.upperBound)
+    private func isDeletingTextInFrontOfSpace(originalText: String, replacementString: String, caretPosition: Int) -> Bool {
+        if !replacementString.isEmpty || caretPosition == 0 {
+            return false
+        }
+        return selectionIsSpace(originalText, selectionStart: caretPosition - 1, selectionEnd: caretPosition)
+    }
+
+    private func selectionIsSpace(_ text: String, selectionStart: Int, selectionEnd: Int) -> Bool {
+        let start = text.index(text.startIndex, offsetBy: selectionStart)
+        let end = text.index(text.startIndex, offsetBy: selectionEnd)
         return text[start..<end] == " "
     }
 
