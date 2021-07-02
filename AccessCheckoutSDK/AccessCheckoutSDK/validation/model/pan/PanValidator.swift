@@ -28,7 +28,7 @@ class PanValidator {
         return validationRule.textIsMatched(strippedPan) && validationRule.textIsShorterOrAsLongAsMaxLength(strippedPan)
     }
     
-    private func stripWhiteSpaces(_  pan: String) -> String {
+    private func stripWhiteSpaces(_ pan: String) -> String {
         return pan.replacingOccurrences(of: " ", with: "")
     }
     

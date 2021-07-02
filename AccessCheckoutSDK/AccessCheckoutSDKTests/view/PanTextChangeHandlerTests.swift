@@ -2,14 +2,12 @@
 import XCTest
 
 class PanTextChangeHandlerTests: XCTestCase {
-    private let textChangeHandler = PanTextChangeHandler(panFormattingEnabled: true)
-    
     func testSupportsAppendingText() {
         let originalText = "abc"
         let textChange = "de"
         let selection: NSRange = NSRange(location: 3, length: 0)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("abcd e", result)
     }
@@ -19,7 +17,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = ""
         let selection: NSRange = NSRange(location: 3, length: 1)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("1235", result)
     }
@@ -29,7 +27,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = ""
         let selection: NSRange = NSRange(location: 4, length: 1)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("1234 5", result)
     }
@@ -39,7 +37,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = ""
         let selection: NSRange = NSRange(location: 3, length: 3)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("123", result)
     }
@@ -49,7 +47,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = "123"
         let selection: NSRange = NSRange(location: 2, length: 2)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("ab12 3", result)
     }
@@ -59,7 +57,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = ""
         let selection: NSRange = NSRange(location: 2, length: 2)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("ab", result)
     }
@@ -69,7 +67,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = ""
         let selection: NSRange = NSRange(location: 0, length: originalText.count)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("", result)
     }
@@ -79,7 +77,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = "efg"
         let selection: NSRange = NSRange(location: 0, length: 10)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual("abcd", result)
     }
@@ -89,7 +87,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = "4"
         let selection: NSRange = NSRange(location: 8, length: 0)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: nil)
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual(result, "4444 4444 4")
     }
@@ -99,7 +97,7 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = "1"
         let selection: NSRange = NSRange(location: 11, length: 0)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: TestFixtures.amexBrand())
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual(result, "3717 444444 1")
     }
@@ -109,8 +107,22 @@ class PanTextChangeHandlerTests: XCTestCase {
         let textChange = "1"
         let selection: NSRange = NSRange(location: 8, length: 0)
         
-        let result = textChangeHandler.change(originalText: originalText, textChange: textChange, usingSelection: selection, brand: TestFixtures.amexBrand())
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
         
         XCTAssertEqual(result, "3717 444144 4")
+    }
+    
+    private func panTextChangeHandler() -> PanTextChangeHandler {
+        let cardBrandsInConfig = [TestFixtures.amexBrand(), TestFixtures.visaBrand()]
+        
+        let acceptedCardBrands: [String] = []
+        let configuration = CardBrandsConfiguration(allCardBrands: cardBrandsInConfig, acceptedCardBrands: acceptedCardBrands)
+        let configurationFactory = CardBrandsConfigurationFactoryMock()
+        configurationFactory.willReturn(configuration)
+        
+        let configurationProvider = CardBrandsConfigurationProvider(configurationFactory)
+        configurationProvider.retrieveRemoteConfiguration(baseUrl: "", acceptedCardBrands: acceptedCardBrands)
+        
+        return PanTextChangeHandler(PanValidator(configurationProvider), panFormattingEnabled: true)
     }
 }

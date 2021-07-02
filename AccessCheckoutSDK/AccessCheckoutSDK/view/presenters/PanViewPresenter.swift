@@ -9,7 +9,7 @@ class PanViewPresenter: NSObject, Presenter {
     init(_ validationFlow: PanValidationFlow, _ panValidator: PanValidator, panFormattingEnabled: Bool) {
         self.validationFlow = validationFlow
         self.validator = panValidator
-        self.panTextChangeHandler = PanTextChangeHandler(panFormattingEnabled: panFormattingEnabled)
+        self.panTextChangeHandler = PanTextChangeHandler(panValidator, panFormattingEnabled: panFormattingEnabled)
         self.panFormatter = PanFormatter(cardSpacingEnabled: panFormattingEnabled)
     }
 
@@ -121,8 +121,7 @@ extension PanViewPresenter: UITextFieldDelegate {
 
         let resultingText = panTextChangeHandler.change(originalText: originalText,
                                                         textChange: digitsOnly,
-                                                        usingSelection: selection,
-                                                        brand: validationFlow.getCardBrand())
+                                                        usingSelection: selection)
 
         if canChangeText(with: resultingText) {
             textField.text = resultingText
