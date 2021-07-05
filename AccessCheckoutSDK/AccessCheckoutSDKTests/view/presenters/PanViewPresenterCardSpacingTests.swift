@@ -5,6 +5,7 @@ import XCTest
 class PanViewPresenterCardSpacingTests: PresenterTestSuite {
     private let panValidationFlowMock = mockPanValidationFlow()
 
+    private let amexBrand = TestFixtures.amexBrand()
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
     private let unknownBrand = TestFixtures.unknownBrand()
@@ -44,6 +45,28 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
 
         let panValidator = PanValidator(configurationProvider)
         return PanViewPresenter(panValidationFlowMock, panValidator, panFormattingEnabled: panFormattingEnabled)
+    }
+
+    private func createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [CardBrandModel]) -> PanViewPresenter {
+        let acceptedCardBrands: [String] = []
+
+        let merchantValidationDelegate = MockAccessCheckoutCardValidationDelegate()
+        merchantValidationDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
+        merchantValidationDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+
+        let configuration = CardBrandsConfiguration(allCardBrands: allCardBrands, acceptedCardBrands: acceptedCardBrands)
+        let configurationFactory = CardBrandsConfigurationFactoryMock()
+        configurationFactory.willReturn(configuration)
+
+        let configurationProvider = CardBrandsConfigurationProvider(configurationFactory)
+        configurationProvider.retrieveRemoteConfiguration(baseUrl: "", acceptedCardBrands: acceptedCardBrands)
+
+        let panValidator = PanValidator(configurationProvider)
+        let validationStateHandler = CardValidationStateHandler(merchantValidationDelegate)
+        let cvcValidationFlow = CvcValidationFlow(CvcValidator(), validationStateHandler)
+        let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
+
+        return PanViewPresenter(panValidationFlow, panValidator, panFormattingEnabled: true)
     }
 
     private func caretPosition() -> Int {
@@ -201,7 +224,6 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLongWithSpaces)
         XCTAssertEqual(panTextField.text, "")
-        verify(panValidationFlowMock).getCardBrand()
         verifyNoMoreInteractions(panValidationFlowMock)
     }
 
@@ -236,8 +258,35 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "1234 5678 9012 3456 7890")
         XCTAssertEqual(panTextField.text, "")
-        verify(panValidationFlowMock).getCardBrand()
         verifyNoMoreInteractions(panValidationFlowMock)
+    }
+
+    func testShouldFormatCorrectlyAmexCardEnteredInABlankUITextfield() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "345678901234567")
+
+        XCTAssertEqual(panTextField.text, "3456 789012 34567")
+    }
+
+    func testShouldFormatCorrectlyCardWithDifferentFormatEnteredAfterAmexCard() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "3456 789012 34567")
+
+        let allTextSelected = NSRange(location: 0, length: panTextField.text!.count)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: allTextSelected, replacementString: "4444123456789012")
+
+        XCTAssertEqual(panTextField.text, "4444 1234 5678 9012")
+    }
+
+    func testShouldFormatCorrectlyAmexEnteredAfterCardWithDifferentFormat() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "4444123456789012")
+
+        let allTextSelected = NSRange(location: 0, length: panTextField.text!.count)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: allTextSelected, replacementString: "345678901234567")
+
+        XCTAssertEqual(panTextField.text, "3456 789012 34567")
     }
 
     // MARK: Caret position tests

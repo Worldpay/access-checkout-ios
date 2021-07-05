@@ -191,7 +191,6 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLong)
         XCTAssertEqual(panTextField.text, "")
-        verify(panValidationFlow).getCardBrand()
         verifyNoMoreInteractions(panValidationFlow)
     }
 
@@ -226,7 +225,6 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "12345678901234567890")
         XCTAssertEqual(panTextField.text, "")
-        verify(panValidationFlow).getCardBrand()
         verifyNoMoreInteractions(panValidationFlow)
     }
 
