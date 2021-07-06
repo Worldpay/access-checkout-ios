@@ -4,7 +4,7 @@ import XCTest
 
 class CardFlowCardValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
-    
+
     let app = XCUIApplication()
     var view: CardFlowViewPageObject?
 
@@ -242,97 +242,5 @@ class CardFlowCardValidationTests: XCTestCase {
 
         // Invalid state
         XCTAssertFalse(view!.submitButton.isEnabled)
-    }
-    
-    // Mark: Formatting
-    
-    func testCorrectlyFormatsAmexPan() {
-        view!.typeTextIntoPan("37178")
-        XCTAssertTrue(view!.imageIs("amex"))
-        
-        XCTAssertEqual(view!.panText!, "3717 8")
-        
-        view!.typeTextIntoPan("1111")
-        
-        XCTAssertEqual(view!.panText!, "3717 81111")
-        
-        view!.typeTextIntoPan("1111")
-        
-        XCTAssertEqual(view!.panText!, "3717 811111 111")
-        
-        view!.typeTextIntoPan(backspace)
-        view!.typeTextIntoPan(backspace)
-        view!.typeTextIntoPan(backspace)
-        view!.typeTextIntoPan(backspace)
-        
-        XCTAssertEqual(view!.panText!, "3717 81111")
-    }
-    
-    func testCorrectlyFormatsUnknownPan() {
-        view!.typeTextIntoPan("11111")
-        XCTAssertTrue(view!.imageIs("unknown_card_brand"))
-        
-        XCTAssertEqual(view!.panText!, "1111 1")
-        
-        view!.typeTextIntoPan("1111")
-        
-        XCTAssertEqual(view!.panText!, "1111 1111 1")
-        
-        view!.typeTextIntoPan("3333")
-        
-        XCTAssertEqual(view!.panText!, "1111 1111 1333 3")
-        
-        view!.typeTextIntoPan(backspace)
-        view!.typeTextIntoPan(backspace)
-        
-        XCTAssertEqual(view!.panText!, "1111 1111 133")
-    }
-    
-    func testCorrectlyFormatsVisaPan() {
-        view!.typeTextIntoPan("41111")
-        XCTAssertTrue(view!.imageIs("visa"))
-        
-        XCTAssertEqual(view!.panText!, "4111 1")
-        
-        view!.typeTextIntoPan("1111")
-        
-        XCTAssertEqual(view!.panText!, "4111 1111 1")
-        
-        view!.typeTextIntoPan("3333")
-        
-        XCTAssertEqual(view!.panText!, "4111 1111 1333 3")
-        
-        view!.typeTextIntoPan(backspace)
-        view!.typeTextIntoPan(backspace)
-        
-        XCTAssertEqual(view!.panText!, "4111 1111 133")
-    }
-    
-    func testCorrectlyFormatsWhenTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4111")
-        view!.setCursorAtPosition3AndTypeInPanField(["4"])
-        
-        XCTAssertEqual(view!.panText!, "4114 1")
-    }
-    
-    func testCorrectlyFormatsWhenPastingAndTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4111")
-        view!.setCursorAtPosition3AndTypeInPanField(["123", "5"])
-        
-        XCTAssertEqual(view!.panText!, "4111 2351")
-    }
-    
-    func testCorrectlyFormatsWhenDeletingInMiddleOfPan() {
-        view!.typeTextIntoPan("4321 4321")
-        view!.setCursorAtPosition3AndTypeInPanField([backspace])
-        
-        XCTAssertEqual(view!.panText!, "4314 321")
-    }
-    
-    func testCorrectlyFormatsAndCursorIsCorrectWhenDeletingAndThenTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4321 4321")
-        view!.setCursorAtPosition3AndTypeInPanField([backspace, backspace, "3", "1234", backspace])
-        
-        XCTAssertEqual(view!.panText!, "4312 3143 21")
     }
 }
