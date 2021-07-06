@@ -289,14 +289,36 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         XCTAssertEqual(panTextField.text, "3456 789012 34567")
     }
 
+    func testShouldFormatCorrectlyCardWhenItBecomesAmex() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "45678912345")
+        XCTAssertEqual(panTextField.text, "4567 8912 345")
+
+        let noTextSelected = NSRange(location: 0, length: 0)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: noTextSelected, replacementString: "3")
+
+        XCTAssertEqual(panTextField.text, "3456 789123 45")
+    }
+
+    func testShouldFormatCorrectlyCardWhenItBecomesCardWithStandardFormat() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "345678912345")
+        XCTAssertEqual(panTextField.text, "3456 789123 45")
+
+        let noTextSelected = NSRange(location: 0, length: 0)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: noTextSelected, replacementString: "4")
+
+        XCTAssertEqual(panTextField.text, "4345 6789 1234 5")
+    }
+
     // MARK: Caret position tests
 
     func testShouldMoveCaretToEndWhenEnteringTextInEmptyField() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         let textToInsert = "44443333"
-        let carePosition = NSRange(location: 0, length: 0)
+        let caretPosition = NSRange(location: 0, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3333", panTextField.text)
         waitThen {
@@ -308,9 +330,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333"
         let textToInsert = "1"
-        let carePosition = NSRange(location: 6, length: 0)
+        let caretPosition = NSRange(location: 6, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3133 3", panTextField.text)
         waitThen {
@@ -322,9 +344,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4443"
         let textToInsert = "11"
-        let carePosition = NSRange(location: 0, length: 0)
+        let caretPosition = NSRange(location: 0, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("1144 43", panTextField.text)
         waitThen {
@@ -406,9 +428,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333"
         let textToInsert = "2  2abc"
-        let carePosition = NSRange(location: 6, length: 0)
+        let caretPosition = NSRange(location: 6, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3223 33", panTextField.text)
         waitThen {
@@ -420,9 +442,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333"
         let textToInsert = "abc"
-        let carePosition = NSRange(location: 6, length: 0)
+        let caretPosition = NSRange(location: 6, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 3333", panTextField.text)
         waitThen {
@@ -430,17 +452,17 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         }
     }
 
-    func testShouldNotMoveCaretAfterSpaceWhenDigitInsertedAsTheLastDigitOfAGroupThatHasASpaceAfterIt() {
+    func testShouldMoveCaretAfterSpaceWhenDigitInsertedAsTheLastDigitOfAGroupThatAlreadyHasASpaceAfterIt() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333"
         let textToInsert = "2"
-        let carePosition = NSRange(location: 3, length: 0)
+        let caretPosition = NSRange(location: 3, length: 0)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4442 4333 3", panTextField.text)
         waitThen {
-            XCTAssertEqual(4, self.caretPosition())
+            XCTAssertEqual(5, self.caretPosition())
         }
     }
 
@@ -448,9 +470,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333"
         let textToInsert = "2"
-        let carePosition = NSRange(location: 4, length: 1)
+        let caretPosition = NSRange(location: 4, length: 1)
 
-        _ = presenter.textField(panTextField, shouldChangeCharactersIn: carePosition, replacementString: textToInsert)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: caretPosition, replacementString: textToInsert)
 
         XCTAssertEqual("4444 2333 3", panTextField.text)
         waitThen {
@@ -516,28 +538,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
 
     // MARK: test for textFieldEditingChanged
 
-    // Reformatting the pan is required in the case when deleting text using the delete key instead of the backspace key to
-
-    func testTextFieldEditingChangedShouldReformatPanAndNotMoveCaretWhenPanIsIncorrectlyFormatted() {
+    func testTextFieldEditingChangedShouldValidatePan() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
-        panTextField.text = "4444333 22"
-        let caretPosition = 5
-
-        let newPosition = panTextField.position(from: panTextField.beginningOfDocument, offset: caretPosition)!
-        panTextField.selectedTextRange = panTextField.textRange(from: newPosition, to: newPosition)
-        XCTAssertEqual(caretPosition, self.caretPosition())
-
-        presenter.textFieldEditingChanged(panTextField)
-
-        XCTAssertEqual("4444 3332 2", panTextField.text)
-        waitThen {
-            XCTAssertEqual(caretPosition + 1, self.caretPosition())
-        }
-    }
-
-    func testTextFieldEditingChangedShouldPassReformatedPanToValidationFlow() {
-        let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
-        panTextField.text = "4444333"
+        panTextField.text = "4444 333"
 
         presenter.textFieldEditingChanged(panTextField)
 
