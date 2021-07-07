@@ -31,24 +31,11 @@ class PanViewPresenter: NSObject, Presenter {
 
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        guard let text = textField.text else {
+        guard let pan = textField.text else {
             return
         }
 
-        let formattedPan = panFormatter.format(pan: text, brand: validationFlow.getCardBrand())
-        if formattedPan != text {
-            if let selectedTextRange = textField.selectedTextRange {
-                let caretPosition = textField.offset(from: textField.beginningOfDocument, to: selectedTextRange.start)
-                let newCaretPosition = findIndexOfNthDigit(text: formattedPan, nth: countNumberOfDigitsBeforeCaret(text, caretPosition))
-
-                textField.text = formattedPan
-                setCaretPosition(textField, newCaretPosition)
-            } else {
-                textField.text = formattedPan
-            }
-        }
-
-        onEditing(text: formattedPan)
+        onEditing(text: pan)
     }
 
     private func countNumberOfDigitsBeforeCaret(_ text: String, _ caretPosition: Int) -> Int {
@@ -130,9 +117,12 @@ extension PanViewPresenter: UITextFieldDelegate {
             let numberOfDigitsBeforeNewCaretPosition = countNumberOfDigitsBeforeCaret(originalText, caretPosition) + digitsOnly.count
             var newCaretPosition = findIndexOfNthDigit(text: resultingText, nth: numberOfDigitsBeforeNewCaretPosition)
 
-            if isDeletingTextInFrontOfSpace(originalText: originalText, replacementString: string, caretPosition: caretPosition) {
-                newCaretPosition = newCaretPosition + 1 // this is to ensure the caret is left after the space
+            if hasDeletedTextThatWasAfterSpace(text: originalText, replacementString: string, caretPosition: caretPosition) {
+                newCaretPosition = newCaretPosition + 1
+            } else if hasInsertedTextJustBeforeSpace(text: resultingText, digitsInserted: digitsOnly, caretPosition: newCaretPosition) {
+                newCaretPosition = newCaretPosition + 1
             }
+
             setCaretPosition(textField, newCaretPosition)
             onEditEnd()
         } else {
@@ -144,19 +134,24 @@ extension PanViewPresenter: UITextFieldDelegate {
 
     private func isDeletingSpace(originalText: String, replacementString: String, selection: NSRange) -> Bool {
         return replacementString.isEmpty
-            && selectionIsSpace(originalText, selectionStart: selection.lowerBound, selectionEnd: selection.upperBound)
+            && isSpace(originalText, start: selection.lowerBound, end: selection.upperBound)
     }
 
-    private func isDeletingTextInFrontOfSpace(originalText: String, replacementString: String, caretPosition: Int) -> Bool {
+    private func hasDeletedTextThatWasAfterSpace(text: String, replacementString: String, caretPosition: Int) -> Bool {
         if !replacementString.isEmpty || caretPosition == 0 {
             return false
         }
-        return selectionIsSpace(originalText, selectionStart: caretPosition - 1, selectionEnd: caretPosition)
+        return isSpace(text, start: caretPosition - 1, end: caretPosition)
     }
 
-    private func selectionIsSpace(_ text: String, selectionStart: Int, selectionEnd: Int) -> Bool {
-        let start = text.index(text.startIndex, offsetBy: selectionStart)
-        let end = text.index(text.startIndex, offsetBy: selectionEnd)
+    private func hasInsertedTextJustBeforeSpace(text: String, digitsInserted: String, caretPosition: Int) -> Bool {
+        return caretPosition < text.count - 1
+            && isSpace(text, start: caretPosition, end: caretPosition + 1)
+    }
+
+    private func isSpace(_ text: String, start: Int, end: Int) -> Bool {
+        let start = text.index(text.startIndex, offsetBy: start)
+        let end = text.index(text.startIndex, offsetBy: end)
         return text[start..<end] == " "
     }
 

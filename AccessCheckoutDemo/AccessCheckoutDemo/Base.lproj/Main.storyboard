@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -112,13 +112,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
-                                <rect key="frame" x="294" y="332" width="30" height="30"/>
-                                <accessibility key="accessibilityConfiguration" label="moveCursorButton"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
+                                <rect key="frame" x="16" y="343" width="185" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="setPanCaretPositionButton"/>
+                                <state key="normal" title="setPanCaretPositionButton"/>
                                 <connections>
-                                    <action selector="moveCursor" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tad-7N-yib"/>
+                                    <action selector="setPanCaret" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tad-7N-yib"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gdc-Jc-Nb3">
+                                <rect key="frame" x="17" y="381" width="1" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="setPanCaretPositionTextField"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uCP-BC-ifY">
+                                <rect key="frame" x="103" y="381" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="getPanCaretPositionTextField"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -156,11 +171,13 @@
                         <outlet property="cvcTextField" destination="8AE-e7-b1R" id="Dyk-Q4-XIZ"/>
                         <outlet property="expiryDateIsValidLabel" destination="FMM-PP-5OM" id="EKv-Pa-JkQ"/>
                         <outlet property="expiryDateTextField" destination="a8i-GI-0zO" id="ctL-po-sv5"/>
+                        <outlet property="getPanCaretPositionTextField" destination="uCP-BC-ifY" id="tZd-4h-DAb"/>
                         <outlet property="imageView" destination="4gy-2k-boW" id="RJe-7W-H1o"/>
                         <outlet property="panIsValidLabel" destination="MXa-G9-0FX" id="vI4-fM-Idp"/>
                         <outlet property="panTextField" destination="Mya-3f-hK8" id="CtN-ZL-0db"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
-                        <outlet property="setCursorButton" destination="FGh-S7-760" id="lNp-HZ-ymz"/>
+                        <outlet property="setPanCaretPositionButton" destination="FGh-S7-760" id="lNp-HZ-ymz"/>
+                        <outlet property="setPanCaretPositionTextField" destination="gdc-Jc-Nb3" id="JQh-qT-u79"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
                     </connections>

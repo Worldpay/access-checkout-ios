@@ -14,7 +14,9 @@ class CardFlowViewController: UIViewController {
     @IBOutlet weak var expiryDateIsValidLabel: UILabel!
     @IBOutlet weak var cvcIsValidLabel: UILabel!
 
-    @IBOutlet weak var setCursorButton: UIButton!
+    @IBOutlet weak var getPanCaretPositionTextField: UITextField!
+    @IBOutlet weak var setPanCaretPositionButton: UIButton!
+    @IBOutlet weak var setPanCaretPositionTextField: UITextField!
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
@@ -26,8 +28,19 @@ class CardFlowViewController: UIViewController {
                    cvc: (cvcTextField.text ?? "") as String)
     }
 
-    @IBAction func moveCursor() {
-        if let newPosition = panTextField.position(from: panTextField.beginningOfDocument, offset: 3) {
+    @IBAction func getPanCaret(_ sender: Any) {
+        if let textRange = panTextField.selectedTextRange {
+            let cursorPosition = panTextField.offset(from: panTextField.beginningOfDocument, to: textRange.start)
+            setPanCaretPositionTextField.text = "\(cursorPosition)"
+        }
+    }
+
+    @IBAction func setPanCaret() {
+        if let caretPosition = setPanCaretPositionTextField.text,
+            let newPosition = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPosition)!) {
+            NSLog("Setting caret position for PAN field at position \(caretPosition)")
+
+            panTextField.becomeFirstResponder()
             panTextField.selectedTextRange = panTextField.textRange(from: newPosition, to: newPosition)
         }
     }
@@ -112,6 +125,14 @@ class CardFlowViewController: UIViewController {
         }
     }
 
+    @objc
+    func recordPanTextFieldsCaretPosition(sender: UITextField) {
+        if let textRange = sender.selectedTextRange {
+            let cursorPosition = sender.offset(from: sender.beginningOfDocument, to: textRange.start)
+            getPanCaretPositionTextField.text = "\(cursorPosition)"
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -133,9 +154,16 @@ class CardFlowViewController: UIViewController {
         cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "CVC"
 
+        // Controls used as helpers for the automated tests - Start of section
+        panTextField.addTarget(self, action: #selector(recordPanTextFieldsCaretPosition), for: .editingDidEnd)
+
         panIsValidLabel.font = UIFont.systemFont(ofSize: 0)
         expiryDateIsValidLabel.font = UIFont.systemFont(ofSize: 0)
         cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+
+        setPanCaretPositionTextField.borderStyle = .none
+        setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
+        // Controls used as helpers for the automated tests - End of section
 
         resetCard(preserveContent: false, validationErrors: nil)
 
