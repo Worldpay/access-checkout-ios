@@ -163,6 +163,7 @@ class CardFlowViewController: UIViewController {
 
         setPanCaretPositionTextField.borderStyle = .none
         setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
+        getPanCaretPositionTextField.borderStyle = .none
         // Controls used as helpers for the automated tests - End of section
 
         resetCard(preserveContent: false, validationErrors: nil)

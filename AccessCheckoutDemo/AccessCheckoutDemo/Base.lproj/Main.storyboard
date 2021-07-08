@@ -128,7 +128,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uCP-BC-ifY">
-                                <rect key="frame" x="103" y="381" width="97" height="34"/>
+                                <rect key="frame" x="103" y="381" width="1" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="getPanCaretPositionTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

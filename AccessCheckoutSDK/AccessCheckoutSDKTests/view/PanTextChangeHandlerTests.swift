@@ -112,6 +112,16 @@ class PanTextChangeHandlerTests: XCTestCase {
         XCTAssertEqual(result, "3717 444144 4")
     }
     
+    func testReturnsTextCutToMaxLengthIfLongerThanMaxLengthForBrand() {
+        let originalText = "4444 3333 2222"
+        let textChange = "111100009999"
+        let selection: NSRange = NSRange(location: 14, length: 0)
+        
+        let result = panTextChangeHandler().change(originalText: originalText, textChange: textChange, usingSelection: selection)
+        
+        XCTAssertEqual(result, "4444 3333 2222 1111 000")
+    }
+    
     private func panTextChangeHandler() -> PanTextChangeHandler {
         let cardBrandsInConfig = [TestFixtures.amexBrand(), TestFixtures.visaBrand()]
         

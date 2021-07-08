@@ -219,12 +219,12 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         verify(panValidationFlowMock).validate(pan: validVisaPanAsLongAsMaxLengthAllowedWithSpaces)
     }
 
-    func testCannotTypeVisaPanWithSpacesThatExceedsMaximiumLength() {
+    func testCutsToMaxLengthAVisaPanWithSpacesThatExceedsMaximiumLength() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: visaBrand)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLongWithSpaces)
-        XCTAssertEqual(panTextField.text, "")
-        verifyNoMoreInteractions(panValidationFlowMock)
+
+        XCTAssertEqual(panTextField.text, "4111 1111 1111 1111 111")
     }
 
     //  This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
@@ -253,12 +253,12 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         verify(panValidationFlowMock).validate(pan: "1234 5678 9012 3456 789")
     }
 
-    func testCannotTypePanOfUnknownBrandThatExceedsMaximiumLength() {
+    func testCutsToMaxLengthAPanOfUnknownBrandThatExceedsMaxLength() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "1234 5678 9012 3456 7890")
-        XCTAssertEqual(panTextField.text, "")
-        verifyNoMoreInteractions(panValidationFlowMock)
+
+        XCTAssertEqual(panTextField.text, "1234 5678 9012 3456 789")
     }
 
     func testShouldFormatCorrectlyAmexCardEnteredInABlankUITextfield() {
@@ -309,6 +309,29 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: noTextSelected, replacementString: "4")
 
         XCTAssertEqual(panTextField.text, "4345 6789 1234 5")
+    }
+
+    func testShouldCutToFirstXDigitsPanWhichIsLongerThanTheMaxLength() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "44443333222211110000999988887777")
+
+        XCTAssertEqual(panTextField.text, "4444 3333 2222 1111 000")
+    }
+
+    func testShouldCutToFirstXDigitsPanWhichIsLongerThanTheMaxLengthWithBrandDifferentFromCurrentBrand() {
+        let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
+        panTextField.text = "3455 55666 677"
+
+        var noTextSelected = NSRange(location: 2, length: 0)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: noTextSelected, replacementString: "8888")
+        // Cuts pan to 15 digits due to Amex max length
+        XCTAssertEqual("3488 885555 66667", panTextField.text)
+
+        // Cuts pan to 19 digits due to visa max length
+        noTextSelected = NSRange(location: 0, length: 0)
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: noTextSelected, replacementString: "44442222")
+        XCTAssertEqual("4444 2222 3488 8855 556", panTextField.text)
     }
 
     // MARK: Caret position tests
@@ -522,7 +545,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         }
     }
 
-    func testShouldNotMoveCaretWhenPastingWouldCausePanToExceedMaxLength() {
+    func testShouldMoveCaretWhenPastingCausesPanToBeCutBecauseItExceedsMaxLength() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444 3333 2222 1111"
         let textToInsert = "9999"
@@ -530,9 +553,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
 
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: selection, replacementString: textToInsert)
 
-        XCTAssertEqual("4444 3333 2222 1111", panTextField.text)
+        XCTAssertEqual("4999 9444 3333 2222 111", panTextField.text)
         waitThen {
-            XCTAssertEqual(1, self.caretPosition())
+            XCTAssertEqual(6, self.caretPosition())
         }
     }
 
