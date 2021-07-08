@@ -12,9 +12,22 @@ class PanTextChangeHandler {
             return originalText
         }
         
-        let resultingText = originalText.replacingCharacters(in: selection, with: textChange)
+        let resultingText = stripWhiteSpaces(from: originalText.replacingCharacters(in: selection, with: textChange))
         let validationResult = panValidator.validate(pan: resultingText)
+        let maxLengthAllowed = (validationResult.cardBrand?.panValidationRule.validLengths.max() ?? ValidationRulesDefaults.instance().pan.validLengths.max())!
         
-        return panFormatter.format(pan: resultingText, brand: validationResult.cardBrand)
+        let textCutToMaxLength = resultingText.count <= maxLengthAllowed ? resultingText : left(nCharacters: maxLengthAllowed, of: resultingText)
+        
+        return panFormatter.format(pan: textCutToMaxLength, brand: validationResult.cardBrand)
+    }
+    
+    private func left(nCharacters: Int, of text: String) -> String {
+        let start = text.index(text.startIndex, offsetBy: 0)
+        let end = text.index(text.startIndex, offsetBy: nCharacters)
+        return String(text[start..<end])
+    }
+    
+    private func stripWhiteSpaces(from pan: String) -> String {
+        return pan.replacingOccurrences(of: " ", with: "")
     }
 }

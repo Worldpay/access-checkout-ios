@@ -186,12 +186,12 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         verify(panValidationFlowMock).validate(pan: validVisaPanAsLongAsMaxLengthAllowed)
     }
 
-    func testCannotTypeVisaPanThatExceedsMaximiumLength() {
+    func testCutsToMaxLengthAVisaPanThatExceedsMaxLength() {
         let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: visaBrand)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, visaPanTooLong)
-        XCTAssertEqual(panTextField.text, "")
-        verifyNoMoreInteractions(panValidationFlowMock)
+
+        XCTAssertEqual(panTextField.text, "4111111111111111111")
     }
 
     // This test is important because the Visa pattern excludes explictly the Maestro pattern so we want
@@ -220,12 +220,20 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         verify(panValidationFlowMock).validate(pan: "1234567890123456789")
     }
 
-    func testCannotTypePanOfUnknownBrandThatExceedsMaximiumLength() {
+    func testShouldCutToMaxLengthUnknownBrandWhichIsLongerThanTheMaxLength() {
         let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: nil)
 
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "12345678901234567890")
-        XCTAssertEqual(panTextField.text, "")
-        verifyNoMoreInteractions(panValidationFlowMock)
+
+        XCTAssertEqual(panTextField.text, "1234567890123456789")
+    }
+
+    func testShouldCutToMaxLengthVisaPanWhichIsLongerThanTheMaxLength() {
+        let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: visaBrand)
+
+        enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "44443333222211110000999988887777")
+
+        XCTAssertEqual(panTextField.text, "4444333322221111000")
     }
 
     // MARK: Caret position tests
@@ -353,7 +361,7 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         }
     }
 
-    func testShouldNotMoveCaretWhenPastingWouldCausePanToExceedMaxLength() {
+    func testShouldMoveCaretWhenPastingCausesPanToBeCutBecauseItExceedsMaxLength() {
         let presenter = createPresenterWithoutCardSpacing(detectedCardBrand: unknownBrand)
         panTextField.text = "4444333322221111"
         let textToInsert = "9999"
@@ -361,9 +369,9 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
 
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: selection, replacementString: textToInsert)
 
-        XCTAssertEqual("4444333322221111", panTextField.text)
+        XCTAssertEqual("4999944433332222111", panTextField.text)
         waitThen {
-            XCTAssertEqual(1, self.caretPosition())
+            XCTAssertEqual(5, self.caretPosition())
         }
     }
 
