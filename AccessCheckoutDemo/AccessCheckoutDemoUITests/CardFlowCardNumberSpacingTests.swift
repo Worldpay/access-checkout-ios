@@ -249,8 +249,9 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
     
     // MARK: Tests specific to spaces and caret position
     
-    func testDeletesPreviousDigitWhenDeletingSpace() {
+    func testDeletesSpaceAndPreviousDigitWhenDeletingSpace() {
         view!.typeTextIntoPan("123456")
+        XCTAssertEqual(view!.panText!, "1234 56")
         
         view!.setPanCaretAtAndTypeIn(position: 5, text: [backspace])
         
@@ -258,8 +259,19 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
         XCTAssertEqual(3, view!.panCaretPosition())
     }
     
+    func testDeletesSpaceAndPreviousDigitWhenDeletingSelectedSpace() {
+        view!.typeTextIntoPan("123456")
+        XCTAssertEqual(view!.panText!, "1234 56")
+        
+        view!.selectPanAndTypeIn(position: 4, selectionLength: 1, text: [backspace])
+        
+        XCTAssertEqual(view!.panText!, "1235 6")
+        XCTAssertEqual(3, view!.panCaretPosition())
+    }
+    
     func testMovesCaretAfterSpaceWhenInsertingDigitAtEndOfDigitsGroup() {
         view!.typeTextIntoPan("12345")
+        XCTAssertEqual(view!.panText!, "1234 5")
         
         view!.setPanCaretAtAndTypeIn(position: 3, text: ["6"])
         
@@ -267,13 +279,24 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
         XCTAssertEqual(5, view!.panCaretPosition())
     }
     
-    func testLeavesCaretAfterSpaceWhenDeletingDigitAtStartOfDigitsGroup() {
+    func testLeavesCaretAfterSpaceWhenDeletingDigitWhichIsJustAfterSpace() {
         view!.typeTextIntoPan("123456")
+        XCTAssertEqual(view!.panText!, "1234 56")
         
         view!.setPanCaretAtAndTypeIn(position: 6, text: [backspace])
         
         XCTAssertEqual(view!.panText!, "1234 6")
         XCTAssertEqual(5, view!.panCaretPosition())
+    }
+    
+    func testLeavesCaretAtSamePositionWhenSelectingTextThatStartsWithSpaceAndDeletingIt() {
+        view!.typeTextIntoPan("123456789012")
+        XCTAssertEqual(view!.panText!, "1234 5678 9012")
+        
+        view!.selectPanAndTypeIn(position: 4, selectionLength: 3, text: [backspace])
+        
+        XCTAssertEqual(view!.panText!, "1234 7890 12")
+        XCTAssertEqual(4, view!.panCaretPosition())
     }
     
     private func waitFor(timeoutInSeconds: Double) {
