@@ -101,6 +101,19 @@ class CardFlowViewPageObject {
         }
     }
 
+    func selectPanAndTypeIn(position: Int, selectionLength: Int, text: [String]) {
+        let textField = app.textFields["setPanCaretPositionTextField"]
+        textField.tap()
+        textField.typeText("\(position)|\(selectionLength)")
+
+        let button = app.buttons["setPanCaretPositionButton"]
+        button.tap()
+
+        for character in text {
+            panField.typeText(character)
+        }
+    }
+
     func typeTextIntoExpiryDate(_ text: String) {
         if !expiryDateField.isFocused {
             expiryDateField.tap()

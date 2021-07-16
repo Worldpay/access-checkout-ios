@@ -117,7 +117,7 @@ extension PanViewPresenter: UITextFieldDelegate {
             let numberOfDigitsBeforeNewCaretPosition = countNumberOfDigitsBeforeCaret(originalText, caretPosition) + digitsOnly.count
             var newCaretPosition = findIndexOfNthDigit(text: resultingText, nth: numberOfDigitsBeforeNewCaretPosition)
 
-            if hasDeletedTextThatWasAfterSpace(text: originalText, replacementString: string, caretPosition: caretPosition) {
+            if hasDeletedDigitThatWasAfterSpace(originalText: originalText, originalSelection: range, originalCaretPosition: range.location, replacementString: string) {
                 newCaretPosition = newCaretPosition + 1
             } else if hasInsertedTextJustBeforeSpace(text: resultingText, digitsInserted: digitsOnly, caretPosition: newCaretPosition) {
                 newCaretPosition = newCaretPosition + 1
@@ -137,15 +137,16 @@ extension PanViewPresenter: UITextFieldDelegate {
             && isSpace(originalText, start: selection.lowerBound, end: selection.upperBound)
     }
 
-    private func hasDeletedTextThatWasAfterSpace(text: String, replacementString: String, caretPosition: Int) -> Bool {
-        if !replacementString.isEmpty || caretPosition == 0 {
+    private func hasDeletedDigitThatWasAfterSpace(originalText: String, originalSelection: NSRange, originalCaretPosition: Int, replacementString: String) -> Bool {
+        if !replacementString.isEmpty || originalSelection.length > 1 || originalCaretPosition == 0 {
             return false
         }
-        return isSpace(text, start: caretPosition - 1, end: caretPosition)
+        return isSpace(originalText, start: originalCaretPosition - 1, end: originalCaretPosition)
     }
 
     private func hasInsertedTextJustBeforeSpace(text: String, digitsInserted: String, caretPosition: Int) -> Bool {
-        return caretPosition < text.count - 1
+        return !digitsInserted.isEmpty
+            && caretPosition < text.count - 1
             && isSpace(text, start: caretPosition, end: caretPosition + 1)
     }
 

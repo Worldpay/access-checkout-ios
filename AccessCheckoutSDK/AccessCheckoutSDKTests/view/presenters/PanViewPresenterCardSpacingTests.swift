@@ -272,6 +272,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
     func testShouldFormatCorrectlyCardWithDifferentFormatEnteredAfterAmexCard() {
         let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "3456 789012 34567")
+        XCTAssertEqual(panTextField.text, "3456 789012 34567")
 
         let allTextSelected = NSRange(location: 0, length: panTextField.text!.count)
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: allTextSelected, replacementString: "4444123456789012")
@@ -282,6 +283,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
     func testShouldFormatCorrectlyAmexEnteredAfterCardWithDifferentFormat() {
         let presenter = createPresenterWithCardSpacingAndFullOnValidation(allCardBrands: [visaBrand, amexBrand])
         enterPanInUITextField(presenter: presenter, uiTextField: panTextField, "4444123456789012")
+        XCTAssertEqual(panTextField.text, "4444 1234 5678 9012")
 
         let allTextSelected = NSRange(location: 0, length: panTextField.text!.count)
         _ = presenter.textField(panTextField, shouldChangeCharactersIn: allTextSelected, replacementString: "345678901234567")
@@ -545,9 +547,9 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         }
     }
 
-    func testShouldMoveCaretWhenPastingCausesPanToBeCutBecauseItExceedsMaxLength() {
+    func testShouldShiftDigitsAndMoveCaretWhenPastingDigitsInAPanAlreadyAtMaxLength() {
         let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
-        panTextField.text = "4444 3333 2222 1111"
+        panTextField.text = "4444 3333 2222 1111 000"
         let textToInsert = "9999"
         let selection = NSRange(location: 1, length: 0)
 
@@ -556,6 +558,20 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         XCTAssertEqual("4999 9444 3333 2222 111", panTextField.text)
         waitThen {
             XCTAssertEqual(6, self.caretPosition())
+        }
+    }
+
+    func testShouldNotMoveCaretAfterSpaceWhenDeletingSelectionThatStartsWithASpace() {
+        let presenter = createPresenterWithCardSpacing(detectedCardBrand: unknownBrand)
+        panTextField.text = "4444 3333 2222 1111 000"
+        let textToInsert = ""
+        let selection = NSRange(location: 4, length: 3)
+
+        _ = presenter.textField(panTextField, shouldChangeCharactersIn: selection, replacementString: textToInsert)
+
+        XCTAssertEqual("4444 3322 2211 1100 0", panTextField.text)
+        waitThen {
+            XCTAssertEqual(4, self.caretPosition())
         }
     }
 
