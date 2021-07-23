@@ -31,18 +31,32 @@ class CardFlowViewController: UIViewController {
     @IBAction func getPanCaret(_ sender: Any) {
         if let textRange = panTextField.selectedTextRange {
             let cursorPosition = panTextField.offset(from: panTextField.beginningOfDocument, to: textRange.start)
-            setPanCaretPositionTextField.text = "\(cursorPosition)"
+            getPanCaretPositionTextField.text = "\(cursorPosition)"
         }
     }
 
     @IBAction func setPanCaret() {
-        if let caretPosition = setPanCaretPositionTextField.text,
-            let newPosition = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPosition)!) {
-            NSLog("Setting caret position for PAN field at position \(caretPosition)")
-
-            panTextField.becomeFirstResponder()
-            panTextField.selectedTextRange = panTextField.textRange(from: newPosition, to: newPosition)
+        guard let caretPositionText = setPanCaretPositionTextField.text else {
+            return
         }
+
+        var caretPositionFrom: UITextPosition
+        var caretPositionTo: UITextPosition
+
+        // If caret position contains a | then it represents a selection. The caret position should be before | and the length of the selection after |
+        if caretPositionText.contains("|") {
+            let split = caretPositionText.split(separator: "|")
+            let start = Int(split[0])!
+            let length = Int(split[1])!
+            caretPositionFrom = panTextField.position(from: panTextField.beginningOfDocument, offset: start)!
+            caretPositionTo = panTextField.position(from: panTextField.beginningOfDocument, offset: start + length)!
+        } else {
+            caretPositionFrom = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPositionText)!)!
+            caretPositionTo = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPositionText)!)!
+        }
+
+        panTextField.becomeFirstResponder()
+        panTextField.selectedTextRange = panTextField.textRange(from: caretPositionFrom, to: caretPositionTo)
     }
 
     private func submitCard(pan: String, expiryDate: String, cvc: String) {
