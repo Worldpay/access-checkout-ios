@@ -1,5 +1,5 @@
 PODS:
-  - AccessCheckoutSDK (2.2.0)
+  - AccessCheckoutSDK (2.3.0)
   - Mockingjay/Core (3.0.0-alpha.1):
     - URITemplate (~> 3.0)
   - URITemplate (3.0.0)
@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AccessCheckoutSDK: a1dd9cc3d41a55b02cbb225c1dc8b3270095d96c
+  AccessCheckoutSDK: 585eaab57ab6fbba69cc90bdd989e423ac96e221
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
