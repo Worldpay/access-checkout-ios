@@ -1,7 +1,7 @@
 PODS:
-  - Cuckoo (1.5.0):
-    - Cuckoo/Swift (= 1.5.0)
-  - Cuckoo/Swift (1.5.0)
+  - Cuckoo (1.5.1):
+    - Cuckoo/Swift (= 1.5.1)
+  - Cuckoo/Swift (1.5.1)
   - Mockingjay (3.0.0-alpha.1):
     - Mockingjay/Core (= 3.0.0-alpha.1)
     - Mockingjay/XCTest (= 3.0.0-alpha.1)
@@ -25,11 +25,11 @@ SPEC REPOS:
     - URITemplate
 
 SPEC CHECKSUMS:
-  Cuckoo: 09ff1b7c6613b9c27dafea90702ca32208fe59d3
+  Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   PactConsumerSwift: 270ad8b4e83f9d5b2692d7bbed8fdd6ef39e56f3
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
 PODFILE CHECKSUM: 533bc3de53ecdc768b831ced07ef125060d68a8f
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.10.2
