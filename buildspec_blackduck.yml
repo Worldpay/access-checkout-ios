@@ -12,6 +12,6 @@ phases:
       - ./scripts/blackduck/post_scan.sh
 artifacts:
   files:
-    - "*.pdf"
+    - "**/*.pdf"
   name: $CODEBUILD_BUILD_NUMBER
   discard-paths: yes
