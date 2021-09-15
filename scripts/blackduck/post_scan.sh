@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SDK_VERSION=$(grep 'spec.version' AccessCheckoutSDK.podspec | cut -d= -f2 | sed -e 's/"//g' | awk '{$1=$1};1')
-REPORT_SDK_VERSION=$(grep 'spec.version' AccessCheckoutSDK.podspec | cut -d= -f2 | sed -e 's/"//g' | awk '{$1=$1};1')
+SDK_VERSION=$(grep 'spec.version' ../AccessCheckoutSDK.podspec | cut -d= -f2 | sed -e 's/"//g' | awk '{$1=$1};1')
+REPORT_SDK_VERSION=$(grep 'spec.version' ../AccessCheckoutSDK.podspec | cut -d= -f2 | sed -e 's/"//g' -e 's/\./_/g' | awk '{$1=$1};1')
 if [ $CODEBUILD_BUILD_SUCCEEDING -eq 1 ]; then
   emoji=":duck:"
   color="#31AD72"
