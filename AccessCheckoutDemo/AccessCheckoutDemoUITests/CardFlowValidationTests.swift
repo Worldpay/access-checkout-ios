@@ -176,56 +176,6 @@ class CardFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }
 
-    // MARK: Test displays card brand images
-
-    func testDisplaysBrandImageFor_amex() {
-        view!.typeTextIntoPan("34")
-
-        XCTAssertTrue(view!.imageIs("amex"))
-    }
-
-    func testDisplaysBrandImageFor_diners() {
-        view!.typeTextIntoPan("36")
-
-        XCTAssertTrue(view!.imageIs("diners"))
-    }
-
-    func testDisplaysBrandImageFor_discover() {
-        view!.typeTextIntoPan("65")
-
-        XCTAssertTrue(view!.imageIs("discover"))
-    }
-
-    func testDisplaysBrandImageFor_jcb() {
-        view!.typeTextIntoPan("352")
-
-        XCTAssertTrue(view!.imageIs("jcb"))
-    }
-
-    func testDisplaysBrandImageFor_maestro() {
-        view!.typeTextIntoPan("67")
-
-        XCTAssertTrue(view!.imageIs("maestro"))
-    }
-
-    func testDisplaysBrandImageFor_mastercard() {
-        view!.typeTextIntoPan("55")
-
-        XCTAssertTrue(view!.imageIs("mastercard"))
-    }
-
-    func testDisplaysBrandImageFor_visa() {
-        view!.typeTextIntoPan("4")
-
-        XCTAssertTrue(view!.imageIs("visa"))
-    }
-
-    func testDisplaysBrandImageFor_unknownCardBrand() {
-        view!.typeTextIntoPan("0")
-
-        XCTAssertTrue(view!.imageIs("unknown_card_brand"))
-    }
-
     // MARK: Submit button
 
     func testSubmit_isEnabledWhenCardDetailsAreValid() {

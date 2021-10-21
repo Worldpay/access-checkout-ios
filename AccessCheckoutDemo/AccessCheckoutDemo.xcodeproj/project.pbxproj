@@ -14,6 +14,7 @@
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
 		516E31E22694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */; };
 		516E31E8269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */; };
+		51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */; };
 		51CAA6BB25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */; };
 		51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */; };
 		51CAA6C125C9BD1800C7D71A /* CvcFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */; };
@@ -80,6 +81,7 @@
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowNoCardNumberSpacingTests.swift; sourceTree = "<group>"; };
+		51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardBrandTests.swift; sourceTree = "<group>"; };
 		51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowViewPageObject.swift; sourceTree = "<group>"; };
 		51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcFlowUITests.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				E7134D352437AE1100DD842F /* utils */,
 				E7B7F4DE2435EE7000E2DDA6 /* pageObjects */,
+				51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */,
 				516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */,
 				C9AFE47A22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift */,
 				E74F7C3B24741490005D40FE /* CardFlowUITests.swift */,
@@ -521,6 +524,7 @@
 				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
 				51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */,
 				C9AFE47E22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift in Sources */,
+				51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */,
 				C9AFE47D22B7C6DA00943B3E /* CardFlowValidationTests.swift in Sources */,
 				E74F7C3E247416AE005D40FE /* SwitchViewPageObject.swift in Sources */,
 				E7B7F4DB24350F4B00E2DDA6 /* CvcFlowValidationTests.swift in Sources */,
