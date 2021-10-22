@@ -1,6 +1,6 @@
 new_version=$1
 
-if ! [[ "$new_version" =~ ^[0-9]\.[0-9]\.[0-9]$ ]]; then
+if ! [[ "$new_version" =~ ^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
     echo "Failed to change version in code.
 
 Version provided must be in format x.y.z"
@@ -8,24 +8,47 @@ Version provided must be in format x.y.z"
 fi
 
 updateVersionInInfoPlist(){
-  sed -i '' '/CFBundleShortVersionString/,/<string>/s/[0-9].[0-9].[0-9]/'"$1"'/' $2
+  sed -i '' '/CFBundleShortVersionString/,/<string>/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
 updateVersionInPodSpec(){
-  sed -i '' '/spec.version/s/[0-9].[0-9].[0-9]/'"$1"'/; /spec.source/s/[0-9].[0-9].[0-9]/'"$1"'/' $2
+  sed -i '' '/spec.version/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/; /spec.source/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
 updateVersionInUserAgent(){
-  sed -i '' '/sdkVersion/s/[0-9].[0-9].[0-9]/'"$1"'/' $2
+  sed -i '' '/sdkVersion/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
 updateVersionInPactScript(){
-  sed -i '' '/CONTRACT_VERSION/s/[0-9].[0-9].[0-9]/'"$1"'/' $2
+  sed -i '' '/CONTRACT_VERSION/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
 updateVersionInInfoPlist "$new_version" "./AccessCheckoutSDK/AccessCheckoutSDK/Info.plist"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./AccessCheckoutSDK/AccessCheckoutSDK/Info.plist"
+fi
+
 updateVersionInInfoPlist "$new_version" "./AccessCheckoutDemo/AccessCheckoutDemo/Info.plist"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./AccessCheckoutDemo/AccessCheckoutDemo/Info.plist"
+fi
+
 updateVersionInPodSpec "$new_version" "./AccessCheckoutSDK.podspec"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./AccessCheckoutSDK.podspec"
+fi
+
 updateVersionInUserAgent "$new_version" "./AccessCheckoutSDK/AccessCheckoutSDK/api/UserAgent.swift"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./AccessCheckoutSDK/AccessCheckoutSDK/api/UserAgent.swift"
+fi
+
 updateVersionInPactScript "$new_version" "./scripts/upload_pact.sh"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./scripts/upload_pact.sh"
+fi
+
 updateVersionInPactScript "$new_version" "./scripts/verify_pact_tags.sh"
+if [ $? -ne 0 ]; then
+  echo "Failed to update version in ./scripts/verify_pact_tags.sh"
+fi
