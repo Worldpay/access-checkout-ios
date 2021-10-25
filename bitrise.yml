@@ -73,6 +73,7 @@ workflows:
         - test_devices: |-
             iphone8,11.4,en,portrait
             iphone8,12.4,en,portrait
+        - test_timeout: 13500
     - script:
         inputs:
         - content: |-
