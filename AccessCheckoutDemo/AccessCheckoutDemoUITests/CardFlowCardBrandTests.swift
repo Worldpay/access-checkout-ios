@@ -18,140 +18,170 @@ class CardFlowCardBrandTests: XCTestCase {
     // MARK: AMEX
 
     func testDisplaysBrandImage_AMEX_ForRange_34() {
-        assertBrand(is: "amex", for: "3400")
-        assertBrand(is: "amex", for: "3499")
+        assertBrand(of: "3400", is: "amex")
+        assertBrand(of: "3499", is: "amex")
     }
 
     func testDisplaysBrandImage_AMEX_ForRange_37() {
-        assertBrand(is: "amex", for: "3700")
-        assertBrand(is: "amex", for: "3799")
+        assertBrand(of: "3700", is: "amex")
+        assertBrand(of: "3799", is: "amex")
     }
 
     // MARK: DINERS
 
     func testDisplaysBrandImage_DINERS_ForRange_300_305() {
-        assertBrand(is: "diners", for: "3000")
-        assertBrand(is: "diners", for: "3059")
+        assertBrand(of: "3000", is: "diners")
+        assertBrand(of: "3059", is: "diners")
+    }
+
+    func testDisplaysBrandImage_DINERS_ForRange_3095() {
+        assertBrand(of: "30950", is: "diners")
+        assertBrand(of: "30959", is: "diners")
     }
 
     func testDisplaysBrandImage_DINERS_ForRange_36() {
-        assertBrand(is: "diners", for: "360")
-        assertBrand(is: "diners", for: "369")
+        assertBrand(of: "360", is: "diners")
+        assertBrand(of: "369", is: "diners")
     }
 
     func testDisplaysBrandImage_DINERS_ForRange_38() {
-        assertBrand(is: "diners", for: "380")
-        assertBrand(is: "diners", for: "389")
+        assertBrand(of: "380", is: "diners")
+        assertBrand(of: "389", is: "diners")
     }
 
     func testDisplaysBrandImage_DINERS_ForRange_39() {
-        assertBrand(is: "diners", for: "390")
-        assertBrand(is: "diners", for: "399")
+        assertBrand(of: "390", is: "diners")
+        assertBrand(of: "399", is: "diners")
     }
 
     // MARK: DISCOVER
 
     func testDisplaysBrandImage_DISCOVER_ForRange_6011() {
-        assertBrand(is: "discover", for: "60110")
-        assertBrand(is: "discover", for: "60119")
+        assertBrand(of: "60110", is: "discover")
+        assertBrand(of: "60119", is: "discover")
     }
 
     func testDisplaysBrandImage_DISCOVER_ForRange_644_649() {
-        assertBrand(is: "discover", for: "6440")
-        assertBrand(is: "discover", for: "6449")
+        assertBrand(of: "6440", is: "discover")
+        assertBrand(of: "6449", is: "discover")
     }
 
     func testDisplaysBrandImage_DISCOVER_ForRange_65() {
-        assertBrand(is: "discover", for: "650")
-        assertBrand(is: "discover", for: "659")
+        assertBrand(of: "650", is: "discover")
+        assertBrand(of: "659", is: "discover")
     }
 
     // MARK: JCB
 
-    func testDisplaysBrandImage_JCB_ForRange_352_358() {
-        assertBrand(is: "jcb", for: "3520")
-        assertBrand(is: "jcb", for: "3589")
+    func testDisplaysBrandImage_JCB_ForRange_1800() {
+        assertBrand(of: "18000", is: "jcb")
+        assertBrand(of: "18009", is: "jcb")
     }
 
     func testDisplaysBrandImage_JCB_ForRange_2131() {
-        assertBrand(is: "jcb", for: "21310")
-        assertBrand(is: "jcb", for: "21319")
+        assertBrand(of: "21310", is: "jcb")
+        assertBrand(of: "21319", is: "jcb")
     }
 
-    func testDisplaysBrandImage_JCB_ForRange_1800() {
-        assertBrand(is: "jcb", for: "18000")
-        assertBrand(is: "jcb", for: "18009")
+    func testDisplaysBrandImage_JCB_ForRange_3088_3094() {
+        assertBrand(of: "30880", is: "jcb")
+        assertBrand(of: "30949", is: "jcb")
+    }
+
+    func testDisplaysBrandImage_JCB_ForRange_3096_3102() {
+        assertBrand(of: "30960", is: "jcb")
+        assertBrand(of: "31029", is: "jcb")
+    }
+
+    func testDisplaysBrandImage_JCB_ForRange_3112_3120() {
+        assertBrand(of: "31120", is: "jcb")
+        assertBrand(of: "31209", is: "jcb")
+    }
+
+    func testDisplaysBrandImage_JCB_ForRange_3158_3159() {
+        assertBrand(of: "31580", is: "jcb")
+        assertBrand(of: "31599", is: "jcb")
+    }
+
+    func testDisplaysBrandImage_JCB_ForRange_3337_3349() {
+        assertBrand(of: "33370", is: "jcb")
+        assertBrand(of: "33499", is: "jcb")
+    }
+
+    func testDisplaysBrandImage_JCB_ForRange_352_358() {
+        assertBrand(of: "3520", is: "jcb")
+        assertBrand(of: "3589", is: "jcb")
     }
 
     // MARK: MAESTRO
 
     func testDisplaysBrandImage_MAESTRO_ForRange_493698() {
-        assertBrand(is: "maestro", for: "4936980")
-        assertBrand(is: "maestro", for: "4936989")
+        assertBrand(of: "4936980", is: "maestro")
+        assertBrand(of: "4936989", is: "maestro")
     }
 
     func testDisplaysBrandImage_MAESTRO_ForRange_50000_50599() {
-        assertBrand(is: "maestro", for: "500000")
-        assertBrand(is: "maestro", for: "505999")
+        assertBrand(of: "500000", is: "maestro")
+        assertBrand(of: "505999", is: "maestro")
     }
 
     func testDisplaysBrandImage_MAESTRO_ForRange_5060_5065() {
-        assertBrand(is: "maestro", for: "50600")
-        assertBrand(is: "maestro", for: "50659")
+        assertBrand(of: "50600", is: "maestro")
+        assertBrand(of: "50659", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_5066() {
-        assertBrand(is: "maestro", for: "50660")
-        assertBrand(is: "maestro", for: "50669")
+        assertBrand(of: "50660", is: "maestro")
+        assertBrand(of: "50669", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_50677_50679() {
-        assertBrand(is: "maestro", for: "506770")
-        assertBrand(is: "maestro", for: "506799")
+        assertBrand(of: "506770", is: "maestro")
+        assertBrand(of: "506799", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_50680_50699() {
-        assertBrand(is: "maestro", for: "506800")
-        assertBrand(is: "maestro", for: "506999")
+        assertBrand(of: "506800", is: "maestro")
+        assertBrand(of: "506999", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_50700_50899() {
-        assertBrand(is: "maestro", for: "507000")
-        assertBrand(is: "maestro", for: "507999")
+        assertBrand(of: "507000", is: "maestro")
+        assertBrand(of: "507999", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_56_59() {
-        assertBrand(is: "maestro", for: "560")
-        assertBrand(is: "maestro", for: "599")
+        assertBrand(of: "560", is: "maestro")
+        assertBrand(of: "599", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_63() {
-        assertBrand(is: "maestro", for: "630")
-        assertBrand(is: "maestro", for: "639")
+        assertBrand(of: "630", is: "maestro")
+        assertBrand(of: "639", is: "maestro")
     }
-    
+
     func testDisplaysBrandImage_MAESTRO_ForRange_67() {
-        assertBrand(is: "maestro", for: "670")
-        assertBrand(is: "maestro", for: "679")
+        assertBrand(of: "670", is: "maestro")
+        assertBrand(of: "679", is: "maestro")
     }
 
     // MARK: MASTERCARD
 
     func testDisplaysBrandImage_MASTERCARD_ForRange_51_55() {
-        assertBrand(is: "mastercard", for: "510")
-        assertBrand(is: "mastercard", for: "559")
+        assertBrand(of: "510", is: "mastercard")
+        assertBrand(of: "559", is: "mastercard")
     }
 
     func testDisplaysBrandImage_MASTERCARD_ForRange_22_27() {
-        assertBrand(is: "mastercard", for: "220")
-        assertBrand(is: "mastercard", for: "279")
+        assertBrand(of: "220", is: "mastercard")
+        assertBrand(of: "279", is: "mastercard")
     }
 
     // MARK: VISA
 
     func testDisplaysBrandImage_VISA_ForRange4() {
-        assertBrand(is: "visa", for: "40")
-        assertBrand(is: "visa", for: "49")
+        assertBrand(of: "40", is: "visa")
+        assertBrand(of: "49", is: "visa")
     }
 
     func testDisplaysBrandImage_NOT_VISA_For493698() {
@@ -164,17 +194,17 @@ class CardFlowCardBrandTests: XCTestCase {
     // MARK: UNKNOWN CARD BRAND
 
     func testDisplaysBrandImageFor_unknownCardBrand() {
-        assertBrand(is: "unknown_card_brand", for: "0")
+        assertBrand(of: "0", is: "unknown_card_brand")
     }
 
     // MARK: utils
 
-    func assertBrand(is brand: String, for pan: String) {
+    func assertBrand(of pan: String, is brand: String) {
         if let panText = view!.panText, !panText.isEmpty {
             for _ in 0..<20 {
                 view!.typeTextIntoPan(backspace)
             }
-            
+
             XCTAssertEqual("Card Number", view!.panText)
             XCTAssertTrue(view!.imageIs("unknown_card_brand"))
         }
