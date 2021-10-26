@@ -7,7 +7,6 @@ class RestrictedCardFlowViewController: UIViewController {
     @IBOutlet weak var panIsValidLabel: UILabel!
     
     private let unknownBrandImage = UIImage(named: "card_unknown")
-    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,7 @@ class RestrictedCardFlowViewController: UIViewController {
         let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
             .expiryDate(UITextField())
             .cvc(UITextField())
-            .accessBaseUrl(accessBaseUrl)
+            .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
             .build()

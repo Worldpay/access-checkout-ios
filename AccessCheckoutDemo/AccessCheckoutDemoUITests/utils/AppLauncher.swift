@@ -7,6 +7,7 @@ class AppLauncher {
     private var sessionsStub:String?
     private var verifiedTokensSessionStub:String?
     private var verifiedTokensStub:String?
+    private var disableStubs:String?
     
     private init() {
         
@@ -34,9 +35,17 @@ class AppLauncher {
         if let resourceName = self.verifiedTokensStub {
             app.launchArguments.append(contentsOf:["-\(LaunchArguments.VerifiedTokensStub)", resourceName])
         }
+        if let disableStubs = self.disableStubs {
+            app.launchArguments.append(contentsOf:["-\(LaunchArguments.DisableStubs)", disableStubs])
+        }
         app.launch()
         
         return app
+    }
+    
+    func disableStubs(_ value:Bool) -> AppLauncher {
+        self.disableStubs = value.description
+        return self
     }
     
     func discoveryStub(respondsWith discoveryStub:String) -> AppLauncher {

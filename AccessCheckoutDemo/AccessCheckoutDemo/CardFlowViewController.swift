@@ -20,8 +20,6 @@ class CardFlowViewController: UIViewController {
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
-    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
-
     @IBAction func submit(_ sender: Any) {
         submitCard(pan: panTextField.text ?? "",
                    expiryDate: expiryDateTextField.text ?? "",
@@ -69,8 +67,8 @@ class CardFlowViewController: UIViewController {
             .cvc(cvc)
             .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
-            .merchantId(CI.merchantId)
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
+            .merchantId(Configuration.merchantId)
             .build()
 
         try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
@@ -186,7 +184,7 @@ class CardFlowViewController: UIViewController {
             .pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
-            .accessBaseUrl(accessBaseUrl)
+            .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .enablePanFormatting()
             .build()

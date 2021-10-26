@@ -11,7 +11,11 @@ class CardFlowCardBrandTests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
 
-        app.launch()
+        // These tests will use the remote card configuration hosted on https://npe.access.worldpay.com/access-checkout/cardTypes.json
+        let app = appLauncher()
+            .disableStubs(true)
+            .launch()
+        
         view = CardFlowViewPageObject(app)
     }
 
