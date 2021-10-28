@@ -1,25 +1,27 @@
-import UIKit
-import Mockingjay
 import AccessCheckoutSDK
+import Mockingjay
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let disableStubsLaunchArgument = LaunchArguments.valueOf(LaunchArguments.DisableStubs)
+        let disableStubs:Bool = disableStubsLaunchArgument != "" && disableStubsLaunchArgument != nil ? (disableStubsLaunchArgument! as NSString).boolValue : false
         
-        if let servicesBaseUri = Bundle.main.infoDictionary?["AccessBaseURL"] as? String {
-            // Network stubs
-            DiscoveryStub(baseUri: servicesBaseUri).start()
-            VerifiedTokensStub(baseUri: servicesBaseUri).start()
-            VerifiedTokensSessionStub(baseUri: servicesBaseUri).start()
-            SessionsStub(baseUri: servicesBaseUri).start()
-            SessionsPaymentsCvcStub(baseUri: servicesBaseUri).start()
+        if !disableStubs {
+            // Stub remote APIs
+            DiscoveryStub(baseUri: Configuration.accessBaseUrl).start()
+            VerifiedTokensStub(baseUri: Configuration.accessBaseUrl).start()
+            VerifiedTokensSessionStub(baseUri: Configuration.accessBaseUrl).start()
+            SessionsStub(baseUri: Configuration.accessBaseUrl).start()
+            SessionsPaymentsCvcStub(baseUri: Configuration.accessBaseUrl).start()
+
+            // Stub remote card configuration
+            CardConfigurationStub(baseUri: Bundle.main.bundleURL.absoluteString, cardConfigurationUri: Configuration.accessCardConfigurationUrl).start()
         }
-        if let configurationUri = Bundle.main.infoDictionary?["AccessCardConfigurationURL"] as? String {
-            CardConfigurationStub(baseUri: Bundle.main.bundleURL.absoluteString, cardConfigurationUri: configurationUri).start()
-        }
+
         return true
     }
 
@@ -44,9 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
+
     func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
         return extensionPointIdentifier != UIApplication.ExtensionPointIdentifier.keyboard
     }
 }
-

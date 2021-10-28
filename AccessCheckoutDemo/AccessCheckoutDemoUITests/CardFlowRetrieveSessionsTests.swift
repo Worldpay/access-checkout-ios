@@ -2,6 +2,9 @@
 import XCTest
 
 class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
+    private let expectedVtSessionRegex = "https:\\/\\/npe\\.access\\.worldpay\\.com\\/verifiedTokens\\/sessions\\/[a-zA-Z0-9\\-]+"
+    private let expectedCvcSessionRegex = "https:\\/\\/npe\\.access\\.worldpay\\.com\\/sessions\\/[a-zA-Z0-9\\-]+"
+    
     override func setUp() {
         continueAfterFailure = false
     }
@@ -12,7 +15,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensSessionStub(respondsWith: "VerifiedTokensSession-success")
             .launch()
         let expectedTitle = "Verified Tokens Session"
-        let expectedMessage = formatStringAsStaticTextLabel("https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session")
+        
         let view = CardFlowViewPageObject(app)
         
         fillUpFormWithValidValues(using: view)
@@ -22,7 +25,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssertEqual(alert.title, expectedTitle)
-        XCTAssertEqual(alert.message, expectedMessage)
+        XCTAssertNotNil(alert.message.range(of: expectedVtSessionRegex, options: .regularExpression))
     }
     
     func testRetrievesAVerifiedTokensSessionAndAPaymentsCvcSessionToken_whenPaymentsCvcSessionToggleIsOn() {
@@ -34,10 +37,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .launch()
         let view = CardFlowViewPageObject(app)
         let expectedTitle = "Verified Tokens & Payments CVC Sessions"
-        let expectedMessage = formatStringAsStaticTextLabel("""
-        https://try.access.worldpay.com/verifiedTokens/sessions/some-verified-tokens-session
-        https://try.access.worldpay.com/sessions/some-payments-cvc-session
-        """)
         
         fillUpFormWithValidValues(using: view)
         view.paymentsCvcSessionToggle.toggleOn()
@@ -47,7 +46,8 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssertEqual(alert.title, expectedTitle)
-        XCTAssertEqual(alert.message, expectedMessage)
+        XCTAssertNotNil(alert.message.range(of: expectedVtSessionRegex, options: .regularExpression))
+        XCTAssertNotNil(alert.message.range(of: expectedCvcSessionRegex, options: .regularExpression))
     }
     
     func testClearsFormAndDisablesButtonWhenAlertWithSessionIsClosed() {

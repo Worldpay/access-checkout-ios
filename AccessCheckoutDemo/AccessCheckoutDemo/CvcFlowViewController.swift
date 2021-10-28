@@ -7,8 +7,6 @@ class CvcFlowViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var cvcIsValidLabel: UILabel!
     
-    private let accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
-    
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         let cvc = cvcTextField.text
         
@@ -18,8 +16,8 @@ class CvcFlowViewController: UIViewController {
             .cvc(cvc ?? "")
             .build()
         
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(accessBaseUrl)
-            .merchantId(CI.merchantId)
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
+            .merchantId(Configuration.merchantId)
             .build()
         
         try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.cvc]) { result in

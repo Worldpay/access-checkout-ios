@@ -3,6 +3,8 @@ import Foundation
 import XCTest
 
 class CvcFlowRetrieveSessionTests: XCTestCase {
+    private let expectedCvcSessionRegex = "https:\\/\\/npe\\.access\\.worldpay\\.com\\/sessions\\/[a-zA-Z0-9\\-]+"
+    
     var view: CvcFlowViewPageObject?
     
     override func setUp() {
@@ -11,7 +13,6 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
     
     func testSuccessfullyCreatesAndDisplaysACvcSession() {
         let expectedTitle = "Payments CVC Session"
-        let expectedMessage = "https://try.access.worldpay.com/sessions/some-payments-cvc-session"
         
         let app = appLauncher().discoveryStub(respondsWith: "Discovery-success")
             .sessionsStub(respondsWith: "sessions-success")
@@ -25,7 +26,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssertEqual(expectedTitle, alert.title)
-        XCTAssertEqual(expectedMessage, alert.message)
+        XCTAssertNotNil(alert.message.range(of: expectedCvcSessionRegex, options: .regularExpression))
     }
     
     func testClearsCvcAndDisablesButtonWhenAlertWithSessionIsClosed() {

@@ -14,6 +14,8 @@
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
 		516E31E22694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */; };
 		516E31E8269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */; };
+		5174649A27271F1A00E4902B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174649927271F1A00E4902B /* Configuration.swift */; };
+		51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */; };
 		51CAA6BB25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */; };
 		51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */; };
 		51CAA6C125C9BD1800C7D71A /* CvcFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */; };
@@ -80,6 +82,8 @@
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowNoCardNumberSpacingTests.swift; sourceTree = "<group>"; };
+		5174649927271F1A00E4902B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardBrandTests.swift; sourceTree = "<group>"; };
 		51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowViewPageObject.swift; sourceTree = "<group>"; };
 		51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcFlowUITests.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
+				5174649927271F1A00E4902B /* Configuration.swift */,
 				51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */,
 				E7B9A349243393C400137BCF /* CvcFlowViewController.swift */,
 				CC1BD93A2448BB9200A4C745 /* CIVariables.swift */,
@@ -247,6 +252,7 @@
 			children = (
 				E7134D352437AE1100DD842F /* utils */,
 				E7B7F4DE2435EE7000E2DDA6 /* pageObjects */,
+				51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */,
 				516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */,
 				C9AFE47A22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift */,
 				E74F7C3B24741490005D40FE /* CardFlowUITests.swift */,
@@ -498,6 +504,7 @@
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,
 				E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */,
 				E75F85F92437CB440031F7AC /* ServiceStub.swift in Sources */,
+				5174649A27271F1A00E4902B /* Configuration.swift in Sources */,
 				E7B9A34A243393C400137BCF /* CvcFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
 				E75F85FB2437CDC80031F7AC /* LaunchArguments.swift in Sources */,
@@ -521,6 +528,7 @@
 				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
 				51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */,
 				C9AFE47E22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift in Sources */,
+				51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */,
 				C9AFE47D22B7C6DA00943B3E /* CardFlowValidationTests.swift in Sources */,
 				E74F7C3E247416AE005D40FE /* SwitchViewPageObject.swift in Sources */,
 				E7B7F4DB24350F4B00E2DDA6 /* CvcFlowValidationTests.swift in Sources */,
@@ -690,8 +698,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8BA50193BD557BCBB2DE4933 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://try.access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardTypes.json";
+				ACCESS_BASE_URL = "https://npe.access.worldpay.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -713,8 +720,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://try.access.worldpay.com";
-				ACCESS_CARD_CONFIG_URL = "https://try.access.worldpay.com/access-checkout/cardTypes.json";
+				ACCESS_BASE_URL = "https://npe.access.worldpay.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
