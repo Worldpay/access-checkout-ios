@@ -15,7 +15,7 @@ class CardFlowCardBrandTests: XCTestCase {
         let app = appLauncher()
             .disableStubs(true)
             .launch()
-        
+
         view = CardFlowViewPageObject(app)
     }
 
@@ -67,7 +67,7 @@ class CardFlowCardBrandTests: XCTestCase {
 
     func testDisplaysBrandImage_DISCOVER_ForRange_644_649() {
         assertBrand(of: "6440", is: "discover")
-        assertBrand(of: "6449", is: "discover")
+        assertBrand(of: "6499", is: "discover")
     }
 
     func testDisplaysBrandImage_DISCOVER_ForRange_65() {

@@ -17,4 +17,5 @@ Note that because of what looks like a bug, the variable-injector plugin does no
 
 ## Stubbing
 
-By default this demo application uses stubs to emulate Worldpay API services.
+By default this demo application uses stubs to emulate Worldpay API services. 
+They can be disabled by adding the `-disableStubs true` command line argument in the AccessCheckoutDemo scheme configuration.
