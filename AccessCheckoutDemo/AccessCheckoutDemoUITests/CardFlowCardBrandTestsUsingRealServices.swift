@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class CardFlowCardBrandTests: XCTestCase {
+class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     let app = XCUIApplication()
