@@ -15,13 +15,14 @@
 		516E31E22694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */; };
 		516E31E8269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */; };
 		5174649A27271F1A00E4902B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174649927271F1A00E4902B /* Configuration.swift */; };
-		51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */; };
+		51B820782721A0B700CFAB53 /* CardFlowCardBrandTestsUsingRealServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B820772721A0B700CFAB53 /* CardFlowCardBrandTestsUsingRealServices.swift */; };
 		51CAA6BB25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */; };
 		51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */; };
 		51CAA6C125C9BD1800C7D71A /* CvcFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */; };
 		51CBC4A325A46F5A000D0363 /* RestrictedCardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */; };
 		51CBC4A725A480DC000D0363 /* RestrictedCardFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A625A480DC000D0363 /* RestrictedCardFlowUITests.swift */; };
 		51CBC4A925A480F0000D0363 /* RestrictedCardFlowValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A825A480F0000D0363 /* RestrictedCardFlowValidationTests.swift */; };
+		51E19A03273BDD1B00BD2713 /* CardFlowValidationTestsUsingRealServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E19A02273BDD1B00BD2713 /* CardFlowValidationTestsUsingRealServices.swift */; };
 		B9E2AA0C48294C91BA6E878D /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B46E6E24989CAB4DC75302 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
 		C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */; };
@@ -83,13 +84,14 @@
 		516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowNoCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		5174649927271F1A00E4902B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardBrandTests.swift; sourceTree = "<group>"; };
+		51B820772721A0B700CFAB53 /* CardFlowCardBrandTestsUsingRealServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardBrandTestsUsingRealServices.swift; sourceTree = "<group>"; };
 		51CAA6BA25C9A1CA00C7D71A /* RestrictedCardFlowViewPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowViewPageObject.swift; sourceTree = "<group>"; };
 		51CAA6BC25C9A24100C7D71A /* XCUIElementExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcFlowUITests.swift; sourceTree = "<group>"; };
 		51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowViewController.swift; sourceTree = "<group>"; };
 		51CBC4A625A480DC000D0363 /* RestrictedCardFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowUITests.swift; sourceTree = "<group>"; };
 		51CBC4A825A480F0000D0363 /* RestrictedCardFlowValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowValidationTests.swift; sourceTree = "<group>"; };
+		51E19A02273BDD1B00BD2713 /* CardFlowValidationTestsUsingRealServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowValidationTestsUsingRealServices.swift; sourceTree = "<group>"; };
 		5F532F45E152C8559DCC281F /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		63B46E6E24989CAB4DC75302 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -252,11 +254,12 @@
 			children = (
 				E7134D352437AE1100DD842F /* utils */,
 				E7B7F4DE2435EE7000E2DDA6 /* pageObjects */,
-				51B820772721A0B700CFAB53 /* CardFlowCardBrandTests.swift */,
+				51B820772721A0B700CFAB53 /* CardFlowCardBrandTestsUsingRealServices.swift */,
 				516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */,
 				C9AFE47A22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift */,
 				E74F7C3B24741490005D40FE /* CardFlowUITests.swift */,
 				C9AFE47922B7C6DA00943B3E /* CardFlowValidationTests.swift */,
+				51E19A02273BDD1B00BD2713 /* CardFlowValidationTestsUsingRealServices.swift */,
 				51CAA6C025C9BD1800C7D71A /* CvcFlowUITests.swift */,
 				E7B7F4DA24350F4B00E2DDA6 /* CvcFlowValidationTests.swift */,
 				E79A3F1424360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift */,
@@ -518,6 +521,7 @@
 				E74F7C3C24741490005D40FE /* CardFlowUITests.swift in Sources */,
 				E72152822437D678009AAFB3 /* LaunchArguments.swift in Sources */,
 				E72152842437D9E3009AAFB3 /* CardFlowViewPageObject.swift in Sources */,
+				51E19A03273BDD1B00BD2713 /* CardFlowValidationTestsUsingRealServices.swift in Sources */,
 				E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */,
 				E7134D392437B1BA00DD842F /* XCTestExtension.swift in Sources */,
 				51CBC4A925A480F0000D0363 /* RestrictedCardFlowValidationTests.swift in Sources */,
@@ -528,7 +532,7 @@
 				E7134D372437AE3900DD842F /* AppLauncher.swift in Sources */,
 				51CAA6BD25C9A24100C7D71A /* XCUIElementExtension.swift in Sources */,
 				C9AFE47E22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift in Sources */,
-				51B820782721A0B700CFAB53 /* CardFlowCardBrandTests.swift in Sources */,
+				51B820782721A0B700CFAB53 /* CardFlowCardBrandTestsUsingRealServices.swift in Sources */,
 				C9AFE47D22B7C6DA00943B3E /* CardFlowValidationTests.swift in Sources */,
 				E74F7C3E247416AE005D40FE /* SwitchViewPageObject.swift in Sources */,
 				E7B7F4DB24350F4B00E2DDA6 /* CvcFlowValidationTests.swift in Sources */,
