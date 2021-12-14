@@ -39,6 +39,8 @@ class ExpiryDateViewPresenter: NSObject, Presenter {
                 if text != newText {
                     updateText(textField, with: newText)
                     text = newText
+                    textField.sendActions(for: .editingChanged)
+                    return
                 }
             }
         }
