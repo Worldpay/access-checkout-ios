@@ -124,6 +124,7 @@ extension PanViewPresenter: UITextFieldDelegate {
             }
 
             setCaretPosition(textField, newCaretPosition)
+            textField.sendActions(for: UIControl.Event.editingChanged)
             onEditEnd()
         } else {
             setCaretPosition(textField, range.location)
