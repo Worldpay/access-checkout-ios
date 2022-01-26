@@ -173,9 +173,13 @@ class CardFlowViewController: UIViewController {
         expiryDateIsValidLabel.font = UIFont.systemFont(ofSize: 0)
         cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
 
-        setPanCaretPositionTextField.borderStyle = .none
         setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
+        
+        setPanCaretPositionTextField.borderStyle = .none
+        setPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
+        
         getPanCaretPositionTextField.borderStyle = .none
+        getPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
         // Controls used as helpers for the automated tests - End of section
 
         resetCard(preserveContent: false, validationErrors: nil)
