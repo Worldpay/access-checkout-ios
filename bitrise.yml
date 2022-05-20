@@ -20,38 +20,13 @@ workflows:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
     - script:
+        title: "Swift environment variable injection"
         inputs:
-          - content: |-
-              #!/usr/bin/env bash
-              # fail if any commands fails
-              set -e
-              # debug log
-              set -x
-
-              # Download and install Swift environment variable innjector
-              curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
-
-              # Replacing env variables
-              variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
-        title: Swift environment variable injection
+          - content: ./scripts/ci/replace-env-variables-in-code.sh
     - script:
+        title: "Install pact-ruby-standalone"
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Download to AccessCheckout directory
-            cd AccessCheckoutSDK
-            echo "Fetching pact-ruby-standalone..."
-            curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
-            echo "Unpacking..."
-            tar xzf pact-1.63.0-osx.tar.gz
-            ./pact/bin/pact-mock-service --help start
-            echo "... pact-ruby-standalone ready!"
-        title: Install pact-ruby-standalone
+        - content: ./scripts/ci/install-pact-ruby-standalone.sh
     - xcode-test:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
@@ -75,33 +50,25 @@ workflows:
             iphone8,12.4,en,portrait
         - test_timeout: 13500
     - script:
+        title: "Add version number to env variables"
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Capture the release number and put it in a workflow variable
-            release_version=$(grep -A1 CFBundleShortVersionString AccessCheckoutSDK/AccessCheckoutSDK/Info.plist | grep string | sed -E "s/<\/?string>//g" | xargs echo -n)
-            envman add --key PROJECT_VERSION --value $release_version
-    - script-runner@0.9.3:
-        title: Amend PACT file
+        - content: ./scripts/ci/add-version-number-to-env-variables.sh
+    - script:
+        title: "Amend PACT file"
         inputs:
-          - file_path: scripts/apply_pact_fix.sh
-    - script@1.1.5:
-        title: Install pact client
+          - content: ./scripts/apply_pact_fix.sh
+    - script:
+        title: "Install pact client"
         inputs:
           - content: gem install pact_broker-client
-    - script-runner@0.9.3:
+    - script:
         title: "Deploy pact file to pact broker"
         inputs:
-          - file_path: scripts/upload_pact.sh
-    - script-runner@0.9.3:
+          - content: ./scripts/upload_pact.sh
+    - script:
         title: "Verify pact correctly tagged on broker"
         inputs:
-          - file_path: scripts/verify_pact_tags.sh
+          - content: ./scripts/verify_pact_tags.sh
     - script-runner@0.9.3:
         inputs:
         - file_path: "scripts/coverage.sh"
@@ -137,20 +104,9 @@ workflows:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
       - script:
+          title: "Swift environment variable injection"
           inputs:
-            - content: |-
-                #!/usr/bin/env bash
-                # fail if any commands fails
-                set -e
-                # debug log
-                set -x
-
-                # Download and install Swift environment variable innjector
-                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
-
-                # Replacing env variables
-                variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
-          title: Swift environment variable injection
+            - content: ./scripts/ci/replace-env-variables-in-code.sh
       - xcode-build-for-test:
           inputs:
             - scheme: "$DEMO_SCHEME"
@@ -175,20 +131,9 @@ workflows:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
       - script:
+          title: "Swift environment variable injection"
           inputs:
-            - content: |-
-                #!/usr/bin/env bash
-                # fail if any commands fails
-                set -e
-                # debug log
-                set -x
-
-                # Download and install Swift environment variable innjector
-                curl -ssl https://raw.githubusercontent.com/LucianoPAlmeida/variable-injector/0.3.3/scripts/install-binary.sh | sh
-
-                # Replacing env variables
-                variable-injector --file AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift --verbose
-          title: Swift environment variable injection
+            - content: ./scripts/ci/replace-env-variables-in-code.sh
       - xcode-build-for-test:
           inputs:
             - scheme: "$DEMO_SCHEME"
@@ -213,35 +158,13 @@ workflows:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
     - script:
+        title: "Add version number to env variables"
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Capture the release number and put it in a workflow variable
-            release_version=$(grep -A1 CFBundleShortVersionString AccessCheckoutSDK/AccessCheckoutSDK/Info.plist | grep string | sed -E "s/<\/?string>//g" | xargs echo -n)
-            envman add --key PROJECT_VERSION --value $release_version
+        - content: ./scripts/ci/add-version-number-to-env-variables.sh
     - script:
+        title: "Install pact-ruby-standalone"
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            # Download to AccessCheckoutSDK directory
-            cd AccessCheckoutSDK
-            echo "Fetching pact-ruby-standalone..."
-            curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.63.0/pact-1.63.0-osx.tar.gz
-            echo "Unpacking..."
-            tar xzf pact-1.63.0-osx.tar.gz
-            ./pact/bin/pact-mock-service --help start
-            echo "... pact-ruby-standalone ready!"
-        title: Install pact-ruby-standalone
+          - content: ./scripts/ci/install-pact-ruby-standalone.sh
     - xcode-test:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
@@ -267,15 +190,9 @@ workflows:
         - commit: "$GIT_CLONE_COMMIT_HASH"
         - api_token: "$GITHUB_PERSONAL_ACCESS_TOKEN"
     - script:
+        title: "Lint podspec"
         inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # debug log
-            set -x
-
-            pod spec lint AccessCheckoutSDK.podspec --allow-warnings
+        - content: ./scripts/ci/lint-podspec.sh
     - cache-push: {}
 app:
   envs:
