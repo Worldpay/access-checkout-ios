@@ -1,3 +1,5 @@
+import Foundation
+
 class VerifiedTokensApiDiscovery {
     private var discoveryFactory: SingleLinkDiscoveryFactory
     

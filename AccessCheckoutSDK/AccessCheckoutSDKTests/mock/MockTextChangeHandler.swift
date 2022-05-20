@@ -1,6 +1,8 @@
 import Cuckoo
 @testable import AccessCheckoutSDK
 
+import Foundation
+
 
  class MockTextChangeHandler: TextChangeHandler, Cuckoo.ClassMock {
     

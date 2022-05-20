@@ -1,3 +1,5 @@
+import Foundation
+
 class SingleLinkDiscovery {
     private let restClient: RestClient
     private let apiResponseLinkLookup: ApiResponseLinkLookup

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class PanViewPresenter: NSObject, Presenter {
     private let validationFlow: PanValidationFlow

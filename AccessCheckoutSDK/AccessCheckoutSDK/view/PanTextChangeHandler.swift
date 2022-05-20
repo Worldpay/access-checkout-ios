@@ -1,3 +1,5 @@
+import Foundation
+
 class PanTextChangeHandler {
     private let panFormatter: PanFormatter
     private let panValidator: PanValidator

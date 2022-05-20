@@ -1,3 +1,5 @@
+import Foundation
+
 class ExpiryDateValidator {
     func validate(_ expiryDate: String) -> Bool {
         if expiryDate.isEmpty {

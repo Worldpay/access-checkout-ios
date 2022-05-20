@@ -1,3 +1,5 @@
+import UIKit
+
 /**
  An implementation of the `ValidationConfig` that represents the card validation configuration.
  

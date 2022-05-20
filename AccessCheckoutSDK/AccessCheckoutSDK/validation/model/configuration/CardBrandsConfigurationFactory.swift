@@ -1,3 +1,5 @@
+import Foundation
+
 class CardBrandsConfigurationFactory {
     private let configurationFileRelativePath = "access-checkout/cardTypes.json"
     

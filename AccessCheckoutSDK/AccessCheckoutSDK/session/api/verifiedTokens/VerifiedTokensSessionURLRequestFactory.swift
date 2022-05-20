@@ -1,3 +1,5 @@
+import Foundation
+
 class VerifiedTokensSessionURLRequestFactory {
     func create(url: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)

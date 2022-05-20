@@ -1,3 +1,5 @@
+import Foundation
+
 class VerifiedTokensApiClient {
     private let sessionNotFoundError = AccessCheckoutError.sessionLinkNotFound(linkName: ApiLinks.sessions.result)
 
