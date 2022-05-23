@@ -10,6 +10,7 @@ workflows:
           - workflows: |-
               ui-tests-ios-13
               ui-tests-ios-14
+              spm-support
           - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
     - cache-pull: {}
     - certificate-and-profile-installer: {}
@@ -145,6 +146,30 @@ workflows:
             - simulator_os_version: 14.4
             - scheme: "$DEMO_SCHEME"
             - generate_code_coverage_files: "yes"
+      - deploy-to-bitrise-io:
+      - cache-push: {}
+  spm-support:
+    steps:
+      - cache-pull: {}
+      - certificate-and-profile-installer: {}
+      - script:
+          title: "Remove AccessCheckoutSDK from Demo app Podfile"
+          inputs:
+            - content: ./scripts/ci/remove-sdk-from-demo-app-podfile.sh
+      - cocoapods-install:
+          inputs:
+            - source_root_path: AccessCheckoutDemo
+      - script:
+          title: "Add local version of AccessCheckoutSDK as a SPM dependency"
+          inputs:
+            - content: ./scripts/ci/add-sdk-dependency-to-demo-app.sh
+      - recreate-user-schemes:
+          inputs:
+            - project_path: "$DEMO_PROJECT_PATH"
+      - xcode-build-for-test:
+          inputs:
+            - scheme: "$DEMO_SCHEME"
+            - project_path: "$DEMO_PROJECT_PATH"
       - deploy-to-bitrise-io:
       - cache-push: {}
   release:
