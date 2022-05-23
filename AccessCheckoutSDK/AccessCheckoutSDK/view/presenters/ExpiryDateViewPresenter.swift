@@ -1,3 +1,6 @@
+import Foundation
+import UIKit
+
 class ExpiryDateViewPresenter: NSObject, Presenter {
     private let validationFlow: ExpiryDateValidationFlow
     private let validator: ExpiryDateValidator

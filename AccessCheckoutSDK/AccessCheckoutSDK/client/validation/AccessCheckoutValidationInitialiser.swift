@@ -1,3 +1,5 @@
+import UIKit
+
 /**
  * Class that is responsible for initialising validation using a given `ValidationConfig`
  */

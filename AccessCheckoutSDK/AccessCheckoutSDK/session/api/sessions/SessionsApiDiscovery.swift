@@ -1,3 +1,5 @@
+import Foundation
+
 class SessionsApiDiscovery {
     private var discoveryFactory: SingleLinkDiscoveryFactory
     

@@ -1,3 +1,5 @@
+import Foundation
+
 class RestClient {
     func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutError>) -> Void) {
         urlSession.dataTask(with: request) { data, _, error in

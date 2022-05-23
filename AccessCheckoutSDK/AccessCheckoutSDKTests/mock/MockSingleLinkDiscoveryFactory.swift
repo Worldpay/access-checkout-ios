@@ -1,6 +1,8 @@
 import Cuckoo
 @testable import AccessCheckoutSDK
 
+import Foundation
+
 
  class MockSingleLinkDiscoveryFactory: SingleLinkDiscoveryFactory, Cuckoo.ClassMock {
     

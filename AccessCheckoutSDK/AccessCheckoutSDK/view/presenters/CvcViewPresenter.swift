@@ -1,3 +1,6 @@
+import Foundation
+import UIKit
+
 class CvcViewPresenter: NSObject, Presenter {
     private let validationFlow: CvcValidationFlow
     private let validator: CvcValidator

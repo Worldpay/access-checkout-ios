@@ -1,3 +1,5 @@
+import Dispatch
+
 class RetrieveSessionResultsHandler {
     private let numberOfExpectedResults: Int
     private let completionHandler: (Result<[SessionType: String], AccessCheckoutError>) -> Void
