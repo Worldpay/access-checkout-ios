@@ -8,6 +8,7 @@ curl -LOk https://detect.synopsys.com/detect.sh
 chmod +x ./detect.sh
 
 if [ $IS_RELEASE_SCAN -eq 0 ]
+then
   VERSION_NAME=$SDK_VERSION
 else
   VERSION_NAME="$SDK_VERSION-RELEASE"
