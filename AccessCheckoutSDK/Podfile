@@ -12,7 +12,7 @@ target 'AccessCheckoutSDK' do
   
   target 'AccessCheckoutSDKTests' do
     inherit! :search_paths
-    pod 'Mockingjay', '~> 3.0.0-alpha.1'
+    pod 'Mockingjay', :git => 'https://github.com/kylef/Mockingjay.git', :commit => '9e5bd2f'
     pod 'Cuckoo'
   end
   
@@ -20,7 +20,7 @@ target 'AccessCheckoutSDK' do
     platform :ios, '9.0'
     inherit! :search_paths
     pod 'PactConsumerSwift'
-    pod 'Mockingjay', '~> 3.0.0-alpha.1'
+    pod 'Mockingjay', :git => 'https://github.com/kylef/Mockingjay.git', :commit => '9e5bd2f'
   end
 
 end

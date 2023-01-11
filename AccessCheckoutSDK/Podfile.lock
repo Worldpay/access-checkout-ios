@@ -10,26 +10,35 @@ PODS:
   - Mockingjay/XCTest (3.0.0-alpha.1):
     - Mockingjay/Core
   - PactConsumerSwift (0.10.1)
-  - URITemplate (3.0.0)
+  - URITemplate (3.0.1)
 
 DEPENDENCIES:
   - Cuckoo
-  - Mockingjay (~> 3.0.0-alpha.1)
+  - Mockingjay (from `https://github.com/kylef/Mockingjay.git`, commit `9e5bd2f`)
   - PactConsumerSwift
 
 SPEC REPOS:
   trunk:
     - Cuckoo
-    - Mockingjay
     - PactConsumerSwift
     - URITemplate
 
+EXTERNAL SOURCES:
+  Mockingjay:
+    :commit: 9e5bd2f
+    :git: https://github.com/kylef/Mockingjay.git
+
+CHECKOUT OPTIONS:
+  Mockingjay:
+    :commit: 9e5bd2f
+    :git: https://github.com/kylef/Mockingjay.git
+
 SPEC CHECKSUMS:
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
-  Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
+  Mockingjay: 97656c6f59879923976a0a52ef09da45756cca82
   PactConsumerSwift: 270ad8b4e83f9d5b2692d7bbed8fdd6ef39e56f3
-  URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
+  URITemplate: 5f5a79f3e384884102c4e6b3325d159c20a8035a
 
-PODFILE CHECKSUM: 533bc3de53ecdc768b831ced07ef125060d68a8f
+PODFILE CHECKSUM: 17aeafb21d9a6df2ea1a2ca1b14fa3ff7e3b079a
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
