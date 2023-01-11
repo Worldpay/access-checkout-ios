@@ -2,6 +2,10 @@ import Cuckoo
 @testable import AccessCheckoutSDK
 
 
+
+
+
+
  class MockExpiryDateValidationStateHandler: ExpiryDateValidationStateHandler, Cuckoo.ProtocolMock {
     
      typealias MocksType = ExpiryDateValidationStateHandler
@@ -23,6 +27,7 @@ import Cuckoo
     
     
     
+    
      var alreadyNotifiedMerchantOfExpiryDateValidationState: Bool {
         get {
             return cuckoo_manager.getter("alreadyNotifiedMerchantOfExpiryDateValidationState",
@@ -35,15 +40,20 @@ import Cuckoo
         
     }
     
+    
 
     
 
+    
     
     
     
      func handleExpiryDateValidation(isValid: Bool)  {
         
-    return cuckoo_manager.call("handleExpiryDateValidation(isValid: Bool)",
+    return cuckoo_manager.call(
+    """
+    handleExpiryDateValidation(isValid: Bool)
+    """,
             parameters: (isValid),
             escapingParameters: (isValid),
             superclassCall:
@@ -56,9 +66,14 @@ import Cuckoo
     
     
     
+    
+    
      func notifyMerchantOfExpiryDateValidationState()  {
         
-    return cuckoo_manager.call("notifyMerchantOfExpiryDateValidationState()",
+    return cuckoo_manager.call(
+    """
+    notifyMerchantOfExpiryDateValidationState()
+    """,
             parameters: (),
             escapingParameters: (),
             superclassCall:
@@ -69,67 +84,99 @@ import Cuckoo
         
     }
     
+    
 
-	 struct __StubbingProxy_ExpiryDateValidationStateHandler: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	     init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	    var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockExpiryDateValidationStateHandler, Bool> {
-	        return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState")
-	    }
-	    
-	    
-	    func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
-	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method: "handleExpiryDateValidation(isValid: Bool)", parameterMatchers: matchers))
-	    }
-	    
-	    func notifyMerchantOfExpiryDateValidationState() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
-	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-	        return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method: "notifyMerchantOfExpiryDateValidationState()", parameterMatchers: matchers))
-	    }
-	    
-	}
+     struct __StubbingProxy_ExpiryDateValidationStateHandler: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+         init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockExpiryDateValidationStateHandler, Bool> {
+            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState")
+        }
+        
+        
+        
+        
+        
+        func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
+            let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method:
+    """
+    handleExpiryDateValidation(isValid: Bool)
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func notifyMerchantOfExpiryDateValidationState() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockExpiryDateValidationStateHandler.self, method:
+    """
+    notifyMerchantOfExpiryDateValidationState()
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
 
-	 struct __VerificationProxy_ExpiryDateValidationStateHandler: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	     init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	    
-	    var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
-	        return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
-	    }
-	    
-	
-	    
-	    @discardableResult
-	    func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
-	        let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
-	        return cuckoo_manager.verify("handleExpiryDateValidation(isValid: Bool)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	    @discardableResult
-	    func notifyMerchantOfExpiryDateValidationState() -> Cuckoo.__DoNotUse<(), Void> {
-	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-	        return cuckoo_manager.verify("notifyMerchantOfExpiryDateValidationState()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	}
+     struct __VerificationProxy_ExpiryDateValidationStateHandler: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+         init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
+            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.__DoNotUse<(Bool), Void> where M1.MatchedType == Bool {
+            let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    handleExpiryDateValidation(isValid: Bool)
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func notifyMerchantOfExpiryDateValidationState() -> Cuckoo.__DoNotUse<(), Void> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    notifyMerchantOfExpiryDateValidationState()
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
 }
 
+
  class ExpiryDateValidationStateHandlerStub: ExpiryDateValidationStateHandler {
+    
+    
     
     
      var alreadyNotifiedMerchantOfExpiryDateValidationState: Bool {
@@ -139,17 +186,29 @@ import Cuckoo
         
     }
     
+    
 
     
 
+    
+    
+    
     
      func handleExpiryDateValidation(isValid: Bool)   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
+    
+    
+    
+    
      func notifyMerchantOfExpiryDateValidationState()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
+    
 }
+
+
+
 
