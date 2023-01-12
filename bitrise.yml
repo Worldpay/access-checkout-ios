@@ -20,10 +20,11 @@ workflows:
     - recreate-user-schemes:
         inputs:
         - project_path: "$SDK_PROJECT_PATH"
-    - script:
-        title: "Swift environment variable injection"
+    - swift-environment-variable-injector:
         inputs:
-          - content: ./scripts/ci/replace-env-variables-in-code.sh
+          - variable_injector_version: 0.3.7
+          - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
+          - verbose: true
     - script:
         title: "Install pact-ruby-standalone"
         inputs:
@@ -103,10 +104,11 @@ workflows:
       - recreate-user-schemes:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
-      - script:
-          title: "Swift environment variable injection"
+      - swift-environment-variable-injector:
           inputs:
-            - content: ./scripts/ci/replace-env-variables-in-code.sh
+            - variable_injector_version: 0.3.7
+            - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
+            - verbose: true
       - xcode-build-for-test:
           inputs:
             - scheme: "$DEMO_SCHEME"
@@ -130,10 +132,11 @@ workflows:
       - recreate-user-schemes:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
-      - script:
-          title: "Swift environment variable injection"
+      - swift-environment-variable-injector:
           inputs:
-            - content: ./scripts/ci/replace-env-variables-in-code.sh
+            - variable_injector_version: 0.3.7
+            - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
+            - verbose: true
       - xcode-build-for-test:
           inputs:
             - scheme: "$DEMO_SCHEME"
