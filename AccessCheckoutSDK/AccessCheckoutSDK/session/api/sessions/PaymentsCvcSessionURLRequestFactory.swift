@@ -8,7 +8,7 @@ class PaymentsCvcSessionURLRequestFactory {
         request.httpMethod = "POST"
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "Content-type")
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "Accept")
-        request.addValue(UserAgent.headerValue, forHTTPHeaderField: UserAgent.headerName)
+        request.addValue(WpSdkHeader.value, forHTTPHeaderField: WpSdkHeader.name)
 
         return request
     }

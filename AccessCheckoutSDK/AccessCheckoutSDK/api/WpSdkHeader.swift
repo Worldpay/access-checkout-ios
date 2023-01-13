@@ -1,29 +1,29 @@
 import Foundation
 
-public struct UserAgent {
+public struct WpSdkHeader {
     static let sdkVersion = "2.4.0"
     static private let valueFormat = "access-checkout-ios/%@"
     
-    static let headerName = "X-WP-SDK"
+    static let name = "X-WP-SDK"
     
-    static let defaultHeaderValue = String(format: valueFormat, UserAgent.sdkVersion)
-    private static var _headerValue = defaultHeaderValue
-    static var headerValue:String {
+    static let defaultValue = String(format: valueFormat, WpSdkHeader.sdkVersion)
+    private static var _value = defaultValue
+    static var value:String {
         get {
-            return _headerValue
+            return _value
         }
     }
     
-    public static func overrideHeaderValue(with value:String) throws {
-        if !validateVersionForOverride(untrustedVersion: value) {
-            throw UserAgentError.invalidVersion()
+    public static func overrideValue(with newValue:String) throws {
+        if !validateVersionForOverride(untrustedVersion: newValue) {
+            throw WpSdkHeaderValueError.invalidVersion()
         }
         
-        _headerValue = value
+        _value = newValue
     }
     
     private static func validateVersionForOverride(untrustedVersion:String) -> Bool{
-        if untrustedVersion == defaultHeaderValue {
+        if untrustedVersion == defaultValue {
             return true
         }
         
@@ -34,7 +34,7 @@ public struct UserAgent {
     }
 }
 
-struct UserAgentError : Error, Equatable {
+struct WpSdkHeaderValueError : Error, Equatable {
     private static let invalidVersionErrorMessage = "Unsupported version format. This functionality only supports access-checkout-react-native semantic versions or default access-checkout-ios version."
 
     let message: String
@@ -43,7 +43,7 @@ struct UserAgentError : Error, Equatable {
         self.message = message
     }
     
-    static func invalidVersion() -> UserAgentError {
-        return UserAgentError(message: invalidVersionErrorMessage)
+    static func invalidVersion() -> WpSdkHeaderValueError {
+        return WpSdkHeaderValueError(message: invalidVersionErrorMessage)
     }
 }

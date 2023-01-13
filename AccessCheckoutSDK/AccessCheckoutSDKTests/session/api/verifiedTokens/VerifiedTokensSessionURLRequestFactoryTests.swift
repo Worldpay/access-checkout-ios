@@ -9,7 +9,7 @@ class VerifiedTokensSessionURLRequestFactoryTests: XCTestCase {
     private let merchantId: String = "a-merchant-id"
 
     private let urlRequestFactory = VerifiedTokensSessionURLRequestFactory()
-    private let sdkVersion = UserAgent.sdkVersion
+    private let sdkVersion = WpSdkHeader.sdkVersion
     private let expectedBodyAsString = "{\"cvc\":\"123\",\"identity\":\"some-identity\"}"
     private let expectedMethod = "POST"
 

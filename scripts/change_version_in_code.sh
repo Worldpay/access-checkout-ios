@@ -15,7 +15,7 @@ updateVersionInPodSpec(){
   sed -i '' '/spec.version/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/; /spec.source/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
-updateVersionInUserAgent(){
+updateVersionInWpSdkHeader(){
   sed -i '' '/sdkVersion/s/[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}/'"$1"'/' $2
 }
 
@@ -38,9 +38,9 @@ if [ $? -ne 0 ]; then
   echo "Failed to update version in ./AccessCheckoutSDK.podspec"
 fi
 
-updateVersionInUserAgent "$new_version" "./AccessCheckoutSDK/AccessCheckoutSDK/api/UserAgent.swift"
+updateVersionInWpSdkHeader "$new_version" "./AccessCheckoutSDK/AccessCheckoutSDK/api/WpSdkHeader.swift"
 if [ $? -ne 0 ]; then
-  echo "Failed to update version in ./AccessCheckoutSDK/AccessCheckoutSDK/api/UserAgent.swift"
+  echo "Failed to update version in ./AccessCheckoutSDK/AccessCheckoutSDK/api/WpSdkHeader.swift"
 fi
 
 updateVersionInPactScript "$new_version" "./scripts/upload_pact.sh"

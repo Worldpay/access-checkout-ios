@@ -6,7 +6,7 @@ class VerifiedTokensSessionURLRequestFactory {
         request.httpMethod = "POST"
         
         request.addValue(ApiHeaders.verifiedTokensHeaderValue, forHTTPHeaderField: "content-type")
-        request.addValue(UserAgent.headerValue, forHTTPHeaderField: UserAgent.headerName)
+        request.addValue(WpSdkHeader.value, forHTTPHeaderField: WpSdkHeader.name)
         
         let expiryDate = VerifiedTokensSessionRequest.CardExpiryDate(month: expiryMonth, year: expiryYear)
         let tokenRequest = VerifiedTokensSessionRequest(cardNumber: pan,
