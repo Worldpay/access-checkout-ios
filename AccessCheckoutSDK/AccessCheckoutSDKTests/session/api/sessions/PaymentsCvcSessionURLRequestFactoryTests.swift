@@ -4,7 +4,7 @@ import XCTest
 class PaymentsCvcSessionURLRequestFactoryTests: XCTestCase {
     private let urlRequestFactory = PaymentsCvcSessionURLRequestFactory()
     private let cvc: String = "123"
-    private let sdkVersion = UserAgent.sdkVersion
+    private let sdkVersion = WpSdkHeader.sdkVersion
     private let expectedBodyAsString = "{\"cvc\":\"123\",\"identity\":\"some-identity\"}"
     private let expectedMethod = "POST"
 
