@@ -107,6 +107,12 @@ workflows:
       - SIMULATOR_OS_VERSION: "14.5"
     after_run:
       - ui-tests
+  ui-tests-ios-15:
+    envs:
+      - SIMULATOR_DEVICE: "iPad (9th generation)"
+      - SIMULATOR_OS_VERSION: "15.5"
+    after_run:
+      - ui-tests
   ui-tests:
     steps:
       - cache-pull: {}
