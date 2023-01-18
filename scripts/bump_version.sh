@@ -64,7 +64,7 @@ git checkout master
 echo "Pulling latest changes"
 git pull
 
-echo "Checking out new branch ${$newBranch}"
+echo "Checking out new branch ${newBranch}"
 git checkout -b $newBranch
 
 
