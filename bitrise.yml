@@ -10,6 +10,7 @@ workflows:
           - workflows: |-
               ui-tests-ios-13
               ui-tests-ios-14
+              ui-tests-ios-15
               spm-support
           - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
     - cache-pull: {}
@@ -95,34 +96,24 @@ workflows:
         inputs:
           - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
   ui-tests-ios-13:
-    steps:
-      - cache-pull: {}
-      - certificate-and-profile-installer: {}
-      - cocoapods-install:
-          inputs:
-            - source_root_path: AccessCheckoutDemo
-      - recreate-user-schemes:
-          inputs:
-            - project_path: "$DEMO_PROJECT_PATH"
-      - swift-environment-variable-injector:
-          inputs:
-            - variable_injector_version: 0.3.7
-            - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
-            - verbose: true
-      - xcode-build-for-test:
-          inputs:
-            - scheme: "$DEMO_SCHEME"
-            - project_path: "$DEMO_PROJECT_PATH"
-      - xcode-test:
-          inputs:
-            - project_path: "$DEMO_PROJECT_PATH"
-            - simulator_device: iPhone 11 Pro
-            - simulator_os_version: 13.7
-            - scheme: "$DEMO_SCHEME"
-            - generate_code_coverage_files: "yes"
-      - deploy-to-bitrise-io:
-      - cache-push: {}
+    envs:
+      - SIMULATOR_DEVICE: "iPhone 11 Pro"
+      - SIMULATOR_OS_VERSION: "13.7"
+    after_run:
+      - ui-tests
   ui-tests-ios-14:
+    envs:
+      - SIMULATOR_DEVICE: "iPhone 11 Pro"
+      - SIMULATOR_OS_VERSION: "14.5"
+    after_run:
+      - ui-tests
+  ui-tests-ios-15:
+    envs:
+      - SIMULATOR_DEVICE: "iPad (9th generation)"
+      - SIMULATOR_OS_VERSION: "15.5"
+    after_run:
+      - ui-tests
+  ui-tests:
     steps:
       - cache-pull: {}
       - certificate-and-profile-installer: {}
@@ -144,8 +135,7 @@ workflows:
       - xcode-test:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"
-            - simulator_device: iPhone 11 Pro
-            - simulator_os_version: 14.4
+            - destination: platform=iOS Simulator,name=$SIMULATOR_DEVICE,OS=$SIMULATOR_OS_VERSION
             - scheme: "$DEMO_SCHEME"
             - generate_code_coverage_files: "yes"
       - deploy-to-bitrise-io:
