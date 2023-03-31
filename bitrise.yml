@@ -49,8 +49,8 @@ workflows:
     - virtual-device-testing-for-ios:
         inputs:
         - test_devices: |-
-            iphone8,16.3,en,portrait
-        - test_timeout: 13500
+            iphone8,15.7,en,portrait
+        - test_timeout: 2700
     - script:
         title: "Add version number to env variables"
         inputs:
