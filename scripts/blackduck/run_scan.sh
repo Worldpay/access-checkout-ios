@@ -4,7 +4,8 @@ echo "Initiating Blackduck Scan..."
 
 SDK_VERSION=$(grep 'spec.version' AccessCheckoutSDK.podspec | cut -d= -f2 | sed -e 's/"//g' | awk '{$1=$1};1')
 cd AccessCheckoutSDK
-curl -LOk https://detect.synopsys.com/detect.sh
+curl -LOk https://detect.synopsys.com/detect8.sh
+mv  detect8.sh ./detect.sh
 chmod +x ./detect.sh
 
 if [ $IS_RELEASE_SCAN -eq 0 ]
