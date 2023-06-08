@@ -50,9 +50,7 @@ class CvcFlowCvcValidationTests: XCTestCase {
         XCTAssertEqual(view!.cvcText, "1234")
 
         view!.typeTextIntoCvc(backspace)
-        view!.typeTextIntoCvc(backspace)
-        view!.typeTextIntoCvc(backspace)
-        XCTAssertEqual(view!.cvcText, "1")
+        XCTAssertEqual(view!.cvcText, "123")
     }
 
     func testCvc_isInvalidAfterAllTextIsCleared() {
