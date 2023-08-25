@@ -141,13 +141,13 @@ class CardFlowViewPageObject {
     func clearField(_ field: XCUIElement) {
         field.press(forDuration: 2)
         let selectAllMenu = app.menuItems["Select All"]
-        _ = selectAllMenu.waitForExistence(timeout: 2)
+        _ = selectAllMenu.waitForExistence(timeout: 3)
         selectAllMenu.tap()
 
         let cutMenu = app.menuItems["Cut"]
-        _ = cutMenu.waitForExistence(timeout: 2)
+        _ = cutMenu.waitForExistence(timeout: 3)
         cutMenu.tap()
-        wait(0.05)
+        wait(1)
     }
 
     private func wait(_ timeoutInSeconds: TimeInterval) {
