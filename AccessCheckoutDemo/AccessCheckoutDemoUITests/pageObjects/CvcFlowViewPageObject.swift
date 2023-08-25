@@ -30,6 +30,7 @@ class CvcFlowViewPageObject {
     func typeTextIntoCvc(_ text: String) {
         cvcField.tap()
         cvcField.typeText(text)
+        wait(0.2)
     }
 
     func submit() {
@@ -39,13 +40,13 @@ class CvcFlowViewPageObject {
     func clearCvc() {
         cvcField.press(forDuration: 2)
         let selectAllMenu = app.menuItems["Select All"]
-        _ = selectAllMenu.waitForExistence(timeout: 2)
+        _ = selectAllMenu.waitForExistence(timeout: 3)
         selectAllMenu.tap()
         
         let cutMenu = app.menuItems["Cut"]
-        _ = cutMenu.waitForExistence(timeout: 2)
+        _ = cutMenu.waitForExistence(timeout: 3)
         cutMenu.tap()
-        wait(0.05)
+        wait(1)
     }
 
     private func wait(_ timeoutInSeconds: TimeInterval) {
