@@ -2,7 +2,7 @@ PODS:
   - AccessCheckoutSDK (2.4.1)
   - Mockingjay/Core (3.0.0-alpha.1):
     - URITemplate (~> 3.0)
-  - URITemplate (3.0.0)
+  - URITemplate (3.0.1)
 
 DEPENDENCIES:
   - AccessCheckoutSDK (from `../`)
@@ -20,8 +20,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AccessCheckoutSDK: ae15fcbb874f2c1c824d36651e886f6fa7bee39f
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
-  URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
+  URITemplate: 5f5a79f3e384884102c4e6b3325d159c20a8035a
 
-PODFILE CHECKSUM: 84497c8aa9fbe23d4d865e29bbb7dae17b961d61
+PODFILE CHECKSUM: 1c1eb852b32f7821ebba0274994bccc1c8b703cc
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
