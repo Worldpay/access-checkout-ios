@@ -45,7 +45,11 @@ public struct AccessCheckoutValidationInitialiser {
         let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
-        if config.textFieldMode {
+        if config.accessCheckoutUITextFieldMode {
+            setTextFieldDelegate(textField: config.panUITextField!.uiTextField, delegate: panPresenter)
+            setTextFieldDelegate(textField: config.expiryDateUITextField!.uiTextField, delegate: expiryDatePresenter)
+            setTextFieldDelegate(textField: config.cvcUITextField!.uiTextField, delegate: cvcPresenter)
+        } else if config.textFieldMode {
             setTextFieldDelegate(textField: config.panTextField!, delegate: panPresenter)
             setTextFieldDelegate(textField: config.expiryDateTextField!, delegate: expiryDatePresenter)
             setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
@@ -62,7 +66,9 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
-        if config.textFieldMode {
+        if config.accessCheckoutUITextFieldMode {
+            setTextFieldDelegate(textField: config.cvcUITextField!.uiTextField, delegate: cvcPresenter)
+        } else if config.textFieldMode {
             setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
         } else {
             config.cvcView!.presenter = cvcPresenter

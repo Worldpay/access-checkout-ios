@@ -15,7 +15,9 @@ import UIKit
 public struct CvcOnlyValidationConfig: ValidationConfig {
     let cvcView: CvcView?
     let cvcTextField: UITextField?
+    let cvcUITextField:AccessCheckoutUITextField?
     
+    let accessCheckoutUITextFieldMode: Bool
     let textFieldMode: Bool
     let validationDelegate: AccessCheckoutCvcOnlyValidationDelegate
 
@@ -39,7 +41,9 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
         self.cvcView = cvcView
         self.validationDelegate = validationDelegate
         self.cvcTextField = nil
+        self.cvcUITextField = nil
         self.textFieldMode = false
+        self.accessCheckoutUITextFieldMode = false
     }
     
     /**
@@ -53,7 +57,25 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
         self.cvcTextField = cvcTextField
         self.validationDelegate = validationDelegate
         self.cvcView = nil
+        self.cvcUITextField = nil
         self.textFieldMode = true
+        self.accessCheckoutUITextFieldMode = false
+    }
+    
+    /**
+    Creates an instance of `CvcOnlyValidationConfig`
+
+    - Parameter cvcView: `AccessCheckoutUITextField` that represents the cvc ui element
+    - Parameter validationDelegate: `AccessCheckoutCvcOnlyValidationDelegate` that represents the validation events listener
+    */
+    @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CvcOnlyValidationConfigBuilder` to create your `CvcOnlyValidationConfig`.")
+    public init(cvcUITextField: AccessCheckoutUITextField, validationDelegate: AccessCheckoutCvcOnlyValidationDelegate) {
+        self.cvcUITextField = cvcUITextField
+        self.validationDelegate = validationDelegate
+        self.cvcView = nil
+        self.cvcTextField = nil
+        self.textFieldMode = false
+        self.accessCheckoutUITextFieldMode = true
     }
 }
 
@@ -62,7 +84,8 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
  An instance of this builder can be obtained by calling `CvcOnlyValidationConfig.builder()`
  */
 public class CvcOnlyValidationConfigBuilder {
-    private var cvc: UITextField?
+    private var cvcLegacy: UITextField?
+    private var cvc: AccessCheckoutUITextField?
     private var validationDelegate: AccessCheckoutCvcOnlyValidationDelegate?
 
     fileprivate init() {}
@@ -71,7 +94,16 @@ public class CvcOnlyValidationConfigBuilder {
      - Parameter cvc: `UITextField` that represents the cvc ui element
      - Returns: the same instance of the builder
      */
-    public func cvc(_ cvc: UITextField) -> CvcOnlyValidationConfigBuilder {
+    public func cvcLegacy(_ cvc: UITextField) -> CvcOnlyValidationConfigBuilder {
+        self.cvcLegacy = cvc
+        return self
+    }
+    
+    /**
+     - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
+     - Returns: the same instance of the builder
+     */
+    public func cvc(_ cvc: AccessCheckoutUITextField) -> CvcOnlyValidationConfigBuilder {
         self.cvc = cvc
         return self
     }
@@ -98,7 +130,7 @@ public class CvcOnlyValidationConfigBuilder {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
 
-        return CvcOnlyValidationConfig(cvcTextField: cvc, validationDelegate: validationDelegate)
+        return CvcOnlyValidationConfig(cvcUITextField: cvc, validationDelegate: validationDelegate)
     }
 }
 

@@ -8,7 +8,7 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
 
     func testCanCreateConfig() {
         let config = try! CvcOnlyValidationConfig.builder()
-            .cvc(cvcTextField)
+            .cvcLegacy(cvcTextField)
             .validationDelegate(validationDelegate)
             .build()
 
@@ -26,7 +26,7 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenValidationDelegateIsNotSpecified() throws {
-        _ = builder.cvc(cvcTextField)
+        _ = builder.cvcLegacy(cvcTextField)
         let expectedMessage = "Expected validation delegate to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in

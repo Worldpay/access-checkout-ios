@@ -3,9 +3,9 @@ import Cuckoo
 import XCTest
 
 class AcceptanceTestSuite: XCTestCase {
-    let panTextField = UITextField()
-    let expiryDateTextField = UITextField()
-    let cvcTextField = UITextField()
+    let panTextField = AccessCheckoutUITextField()
+    let expiryDateTextField = AccessCheckoutUITextField()
+    let cvcTextField = AccessCheckoutUITextField()
     
     func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedCardBrands: [String] = []) -> MockAccessCheckoutCardValidationDelegate {
         return initialiseCardValidation(cardBrands: cardBrands, acceptedBrands: acceptedCardBrands, panTextField, expiryDateTextField, cvcTextField)
@@ -15,7 +15,10 @@ class AcceptanceTestSuite: XCTestCase {
         return initialiseCardValidation(cardBrands: [TestFixtures.visaBrand(), TestFixtures.maestroBrand()], acceptedBrands: [], panTextField, expiryDateTextField, cvcTextField)
     }
     
-    func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedBrands: [String], _ panTextField: UITextField, _ expiryDateTextField: UITextField, _ cvcTextField: UITextField) -> MockAccessCheckoutCardValidationDelegate {
+    func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedBrands: [String],
+                                  _ panTextField: AccessCheckoutUITextField,
+                                  _ expiryDateTextField: AccessCheckoutUITextField,
+                                  _ cvcTextField: AccessCheckoutUITextField) -> MockAccessCheckoutCardValidationDelegate {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
@@ -65,7 +68,7 @@ class AcceptanceTestSuite: XCTestCase {
     
     func editPan(text: String) {
         panTextField.text = text
-        (panTextField.delegate as! Presenter).textFieldEditingChanged(panTextField)
+        (panTextField.delegate as! Presenter).textFieldEditingChanged(panTextField.uiTextField)
     }
     
     func clearPan() {
@@ -73,22 +76,22 @@ class AcceptanceTestSuite: XCTestCase {
     }
     
     func removeFocusFromPan() {
-        (panTextField.delegate!).textFieldDidEndEditing!(panTextField)
+        (panTextField.delegate!).textFieldDidEndEditing!(panTextField.uiTextField)
     }
     
     func canEnterPan(_ text: String) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
-        return (panTextField.delegate!).textField!(panTextField, shouldChangeCharactersIn: range, replacementString: text)
+        return (panTextField.delegate!).textField!(panTextField.uiTextField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
     func editExpiryDate(text: String) {
         expiryDateTextField.text = text
-        (expiryDateTextField.delegate as! Presenter).textFieldEditingChanged(expiryDateTextField)
+        (expiryDateTextField.delegate as! Presenter).textFieldEditingChanged(expiryDateTextField.uiTextField)
     }
     
     func removeFocusFromExpiryDate() {
-        (expiryDateTextField.delegate!).textFieldDidEndEditing!(expiryDateTextField)
+        (expiryDateTextField.delegate!).textFieldDidEndEditing!(expiryDateTextField.uiTextField)
     }
     
     func clearExpiryDate() {
@@ -98,12 +101,12 @@ class AcceptanceTestSuite: XCTestCase {
     func canEnterExpiryDate(_ text: String) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
-        return (expiryDateTextField.delegate!).textField!(expiryDateTextField, shouldChangeCharactersIn: range, replacementString: text)
+        return (expiryDateTextField.delegate!).textField!(expiryDateTextField.uiTextField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
     func editCvc(text: String) {
         cvcTextField.text = text
-        (cvcTextField.delegate as! Presenter).textFieldEditingChanged(cvcTextField)
+        (cvcTextField.delegate as! Presenter).textFieldEditingChanged(cvcTextField.uiTextField)
     }
     
     func clearCvc() {
@@ -111,13 +114,13 @@ class AcceptanceTestSuite: XCTestCase {
     }
     
     func removeFocusFromCvc() {
-        (cvcTextField.delegate!).textFieldDidEndEditing!(cvcTextField)
+        (cvcTextField.delegate!).textFieldDidEndEditing!(cvcTextField.uiTextField)
     }
     
     func canEnterCvc(_ text: String) -> Bool {
         let range = NSRange(location: 0, length: 0)
         
-        return (cvcTextField.delegate!).textField!(cvcTextField, shouldChangeCharactersIn: range, replacementString: text)
+        return (cvcTextField.delegate!).textField!(cvcTextField.uiTextField, shouldChangeCharactersIn: range, replacementString: text)
     }
     
     private func createConfiguration(brands: [CardBrandModel], acceptedBrands: [String]) -> CardBrandsConfiguration {

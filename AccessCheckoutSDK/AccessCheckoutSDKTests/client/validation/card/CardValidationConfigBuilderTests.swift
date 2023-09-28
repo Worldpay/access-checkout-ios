@@ -11,9 +11,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     private let acceptedCardBrands = ["visa", "amex"]
 
     func testConfigWithHasFormattingNotEnabledByDefault() {
-        let config = try! builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        let config = try! builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .build()
@@ -22,9 +22,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithPanFormattingEnabled() {
-        let config = try! builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        let config = try! builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .enablePanFormatting()
@@ -34,9 +34,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithoutAcceptedCardBrands() {
-        let config = try! builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        let config = try! builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .build()
@@ -50,9 +50,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithAcceptedCardBrands() {
-        let config = try! builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        let config = try! builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -67,8 +67,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenPanIsNotSpecified() throws {
-        _ = builder.expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        _ = builder.expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -80,8 +80,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenExpiryDateIsNotSpecified() throws {
-        _ = builder.pan(panTextField)
-            .cvc(cvcTextField)
+        _ = builder.panLegacy(panTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -93,8 +93,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenCvcIsNotSpecified() throws {
-        _ = builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
+        _ = builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -106,9 +106,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenAccessBaseUrlIsNotSpecified() throws {
-        _ = builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        _ = builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
         let expectedMessage = "Expected base url to be provided but was not"
@@ -119,9 +119,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenValidationDelegateIsNotSpecified() throws {
-        _ = builder.pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        _ = builder.panLegacy(panTextField)
+            .expiryDateLegacy(expiryDateTextField)
+            .cvcLegacy(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .acceptedCardBrands(acceptedCardBrands)
         let expectedMessage = "Expected validation delegate to be provided but was not"
