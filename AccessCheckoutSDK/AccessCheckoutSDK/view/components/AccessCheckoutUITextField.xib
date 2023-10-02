@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK" customModuleProvider="target">
             <connections>
-                <outlet property="uiTextField" destination="WFy-n5-QRw" id="BPv-JU-ysC"/>
+                <outlet property="uiTextField" destination="WFy-n5-QRw" id="N4E-nX-tdR"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

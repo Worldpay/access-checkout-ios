@@ -2,9 +2,9 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panTextField: UITextField!
-    @IBOutlet weak var expiryDateTextField: UITextField!
-    @IBOutlet weak var cvcTextField: UITextField!
+    @IBOutlet weak var panTextField: AccessCheckoutUITextField!
+    @IBOutlet weak var expiryDateTextField: AccessCheckoutUITextField!
+    @IBOutlet weak var cvcTextField: AccessCheckoutUITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -21,9 +21,9 @@ class CardFlowViewController: UIViewController {
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     @IBAction func submit(_ sender: Any) {
-        submitCard(pan: panTextField.text ?? "",
-                   expiryDate: expiryDateTextField.text ?? "",
-                   cvc: (cvcTextField.text ?? "") as String)
+//        submitCard(pan: panTextField.text ?? "",
+//                   expiryDate: expiryDateTextField.text ?? "",
+//                   cvc: (cvcTextField.text ?? "") as String)
     }
 
     @IBAction func getPanCaret(_ sender: Any) {
@@ -57,66 +57,69 @@ class CardFlowViewController: UIViewController {
         panTextField.selectedTextRange = panTextField.textRange(from: caretPositionFrom, to: caretPositionTo)
     }
 
-    private func submitCard(pan: String, expiryDate: String, cvc: String) {
+    private func submitCard(pan: AccessCheckoutUITextField, expiryDate: AccessCheckoutUITextField, cvc: AccessCheckoutUITextField) {
         spinner.startAnimating()
 
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
-        let cardDetails = try! CardDetailsBuilder().pan(pan)
-            .expiryDate(expiryDate)
-            .cvc(cvc)
-            .build()
-
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
-            .merchantId(Configuration.merchantId)
-            .build()
-
-        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
-            DispatchQueue.main.async {
-                self.spinner.stopAnimating()
-
-                switch result {
-                case .success(let sessions):
-                    var titleToDisplay: String, messageToDisplay: String
-
-                    if sessionTypes.count > 1 {
-                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
-                        messageToDisplay = """
-                        \(sessions[SessionType.card]!)
-                        \(sessions[SessionType.cvc]!)
-                        """
-                    } else {
-                        titleToDisplay = "Verified Tokens Session"
-                        messageToDisplay = "\(sessions[SessionType.card]!)"
-                    }
-
-                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
-                        self.resetCard(preserveContent: false, validationErrors: nil)
-                    })
-                case .failure(let error):
-                    let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
-                    if error.message.contains("bodyDoesNotMatchSchema") {
-                        accessCheckoutClientValidationErrors = error.validationErrors
-                    }
-
-                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
-                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-                    })
-                }
-            }
-        }
+//        let cardDetails = try! CardDetailsBuilder().pan(pan)
+//            .expiryDate(expiryDate)
+//            .cvc(cvc)
+//            .build()
+//
+//        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
+//            .merchantId(Configuration.merchantId)
+//            .build()
+//
+//        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
+//            DispatchQueue.main.async {
+//                self.spinner.stopAnimating()
+//
+//                switch result {
+//                case .success(let sessions):
+//                    var titleToDisplay: String, messageToDisplay: String
+//
+//                    if sessionTypes.count > 1 {
+//                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
+//                        messageToDisplay = """
+//                        \(sessions[SessionType.card]!)
+//                        \(sessions[SessionType.cvc]!)
+//                        """
+//                    } else {
+//                        titleToDisplay = "Verified Tokens Session"
+//                        messageToDisplay = "\(sessions[SessionType.card]!)"
+//                    }
+//
+//                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
+//                        self.resetCard(preserveContent: false, validationErrors: nil)
+//                    })
+//                case .failure(let error):
+//                    let title = error.localizedDescription
+//                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
+//                    if error.message.contains("bodyDoesNotMatchSchema") {
+//                        accessCheckoutClientValidationErrors = error.validationErrors
+//                    }
+//
+//                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
+//                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
+//                    })
+//                }
+//            }
+//        }
     }
 
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
-            panTextField.text = ""
+//            panTextField.text = ""
+            panTextField.clear()
             panTextField.sendActions(for: .editingChanged)
-
-            expiryDateTextField.text = ""
+            
+//            expiryDateTextField.text = ""
+            expiryDateTextField.clear()
             expiryDateTextField.sendActions(for: .editingChanged)
 
-            cvcTextField.text = ""
+//            cvcTextField.text = ""
+            cvcTextField.clear()
             cvcTextField.sendActions(for: .editingChanged)
         }
 
