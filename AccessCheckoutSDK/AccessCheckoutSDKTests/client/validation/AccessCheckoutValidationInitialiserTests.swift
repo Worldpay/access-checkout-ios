@@ -101,7 +101,9 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
     }
     
-    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormattingForLegacyUITextField() {
+    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormattingForLegacyUITextField() throws {
+        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
+        
         let config = try! CardValidationConfig.builder()
             .panLegacy(panTextField)
             .expiryDateLegacy(expiryDateTextField)

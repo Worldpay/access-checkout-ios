@@ -4,7 +4,8 @@ import UIKit
     @IBOutlet internal var uiTextField: UITextField!
 
     init() {
-        super.init(coder: NSCoder())!
+        super.init(frame: CGRect())
+        initSubViews()
     }
 
     required init?(coder: NSCoder) {
