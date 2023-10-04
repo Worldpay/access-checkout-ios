@@ -35,8 +35,4 @@ public struct AccessCheckoutIllegalArgumentError: Error, Equatable {
     static func missingValidationDelegate() -> AccessCheckoutIllegalArgumentError {
         return AccessCheckoutIllegalArgumentError(message: "Expected validation delegate to be provided but was not")
     }
-    
-    static func cannotBuildEmptyCardDetails() -> AccessCheckoutIllegalArgumentError {
-        return AccessCheckoutIllegalArgumentError(message: "Cannot build an instance of CardDetails when pan, expiryDate and cvc are all nil")
-    }
 }

@@ -20,6 +20,7 @@
 		5182FA772AC4861700976088 /* AccessCheckoutUITextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5182FA762AC4861700976088 /* AccessCheckoutUITextField.xib */; };
 		51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */; };
 		51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */; };
+		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51F1E92A2AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F1E9292AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
 		683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */; };
@@ -229,6 +230,7 @@
 		5182FA762AC4861700976088 /* AccessCheckoutUITextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessCheckoutUITextField.xib; sourceTree = "<group>"; };
 		51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
 		51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcOnlyValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
+		51E831E12ACDB49900A8FC22 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		51F1E9292AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -998,6 +1000,7 @@
 				D74028322592136700104B32 /* PresenterTestSuite.swift */,
 				E7D19F8024640008001EA13A /* StubUtils.swift */,
 				E70305A024924AAA00802AF1 /* TestFixtures.swift */,
+				51E831E12ACDB49900A8FC22 /* UIUtils.swift */,
 			);
 			path = testUtils;
 			sourceTree = "<group>";
@@ -1504,6 +1507,7 @@
 				E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */,
 				E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */,
 				E719B0AA2464A3B30037DED4 /* VerifiedTokensApiClientMock.swift in Sources */,
+				51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */,
 				D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */,
 				E719B09E246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,

@@ -1,8 +1,5 @@
 // TODO: fix comments in this code
 
-
-
-
 /**
  This protocol is a representation of card information that can be constructed with a `CardDetailsBuilder`
  
@@ -232,8 +229,7 @@ public final class CardDetailsBuilder {
                 cvcUITextField: cvcUITextField
             )
         }
-        
-        throw AccessCheckoutIllegalArgumentError.cannotBuildEmptyCardDetails()
+        return CardDetailsFromValues(pan: nil, expiryMonth: nil, expiryYear: nil, cvc: nil)
     }
 }
 

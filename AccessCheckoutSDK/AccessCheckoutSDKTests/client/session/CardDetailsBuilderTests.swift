@@ -5,9 +5,9 @@ class CardDetailsBuilderTests: XCTestCase {
     // MARK: tests covering SAQ-A compliant way of instiantiating card details
 
     func testBuildsCardDetailsUsingUITextFields() throws {
-        let panUITextField = AccessCheckoutUITextField(createUiTextField(withText: "1234123412341234"))
-        let expiryDateUITextField = AccessCheckoutUITextField(createUiTextField(withText: "10/23"))
-        let cvcUITextField = AccessCheckoutUITextField(createUiTextField(withText: "123"))
+        let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
+        let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/23")
+        let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
         
         let cardDetailsBuilder = CardDetailsBuilder().pan(panUITextField)
             .expiryDate(expiryDateUITextField)
@@ -22,10 +22,10 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testBuildsCardDetailsUsingUITextFieldsWhenPanHasSpaces() throws {
-        let panUITextField = AccessCheckoutUITextField(createUiTextField(withText: "1234 1234 1234 1234"))
-        let expiryDateUITextField = AccessCheckoutUITextField(createUiTextField(withText: "10/23"))
-        let cvcUITextField = AccessCheckoutUITextField(createUiTextField(withText: "123"))
-        
+        let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234 1234 1234 1234")
+        let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/23")
+        let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
+    
         let cardDetailsBuilder = CardDetailsBuilder().pan(panUITextField)
             .expiryDate(expiryDateUITextField)
             .cvc(cvcUITextField)
@@ -39,9 +39,9 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testBuildsCardDetailsUsingUITextFieldsWhenExpiryDateHasNoSlash() throws {
-        let panUITextField = AccessCheckoutUITextField(createUiTextField(withText: "1234123412341234"))
-        let expiryDateUITextField = AccessCheckoutUITextField(createUiTextField(withText: "1023"))
-        let cvcUITextField = AccessCheckoutUITextField(createUiTextField(withText: "123"))
+        let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
+        let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1023")
+        let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
         
         let cardDetailsBuilder = CardDetailsBuilder().pan(panUITextField)
             .expiryDate(expiryDateUITextField)
@@ -56,7 +56,7 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testBuildsCardDetailsUsingUITextFieldsWhenPassingOnlyUITextFieldForCvc() throws {
-        let cvcUITextField = AccessCheckoutUITextField(createUiTextField(withText: "123"))
+        let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
         let cardDetailsBuilder = CardDetailsBuilder().cvc(cvcUITextField)
         
         let cardDetails = try cardDetailsBuilder.build()
@@ -68,9 +68,9 @@ class CardDetailsBuilderTests: XCTestCase {
     }
     
     func testThrowsErrorWhenUsingUITextFieldsWhenExpiryDateIsInIncorrectFormat() throws {
-        let panUITextField = AccessCheckoutUITextField(createUiTextField(withText: "1234123412341234"))
-        let expiryDateUITextField = AccessCheckoutUITextField(createUiTextField(withText: "10/2023"))
-        let cvcUITextField = AccessCheckoutUITextField(createUiTextField(withText: "123"))
+        let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
+        let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/2023")
+        let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
         
         let expectedMessage = "Expected expiry date in format MM/YY or MMYY but found 10/2023"
         let cardDetailsBuilder = CardDetailsBuilder().pan(panUITextField)
@@ -147,17 +147,12 @@ class CardDetailsBuilderTests: XCTestCase {
     
     // MARK: tests covering attempt to build an empty instance of card details
 
-    func testThrowsErrorWhenAttemptingToBuildEmptyCardDetails() throws {
-        let expectedMessage = "Cannot build an instance of CardDetails when pan, expiryDate and cvc are all nil"
-
-        XCTAssertThrowsError(try CardDetailsBuilder().build()) { error in
-            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
-        }
-    }
-    
-    private func createUiTextField(withText text: String) -> UITextField {
-        let uiTextField = UITextField()
-        uiTextField.text = text
-        return uiTextField
+    func testCanBuildEmptyCardDetails() throws {
+        let cardDetails = try CardDetailsBuilder().build()
+        
+        XCTAssertNil(cardDetails.pan)
+        XCTAssertNil(cardDetails.expiryMonth)
+        XCTAssertNil(cardDetails.expiryYear)
+        XCTAssertNil(cardDetails.cvc)
     }
 }

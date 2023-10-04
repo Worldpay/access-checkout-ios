@@ -32,7 +32,27 @@ import UIKit
             UIView.AutoresizingMask.flexibleWidth,
             UIView.AutoresizingMask.flexibleHeight
         ]
+        
         addSubview(view)
+    }
+    
+    override public func becomeFirstResponder() -> Bool {
+        self.uiTextField.becomeFirstResponder()
+    }
+
+    override public var isAccessibilityElement: Bool {
+        set { self.uiTextField.isAccessibilityElement = newValue }
+        get { false }
+    }
+    
+    override public var accessibilityIdentifier: String? {
+        set { self.uiTextField.accessibilityIdentifier = newValue }
+        get { nil }
+    }
+    
+    override public var accessibilityLabel: String? {
+        set { self.uiTextField.accessibilityLabel = newValue }
+        get { nil }
     }
     
     internal var text: String? {
