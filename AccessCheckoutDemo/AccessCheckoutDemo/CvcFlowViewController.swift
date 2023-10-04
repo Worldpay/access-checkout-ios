@@ -2,41 +2,39 @@ import AccessCheckoutSDK
 import UIKit
 
 class CvcFlowViewController: UIViewController {
-    @IBOutlet weak var cvcTextField: AccessCheckoutUITextField!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var cvcIsValidLabel: UILabel!
+    @IBOutlet var cvcTextField: AccessCheckoutUITextField!
+    @IBOutlet var submitButton: UIButton!
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var cvcIsValidLabel: UILabel!
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
-//        let cvc = cvcTextField.text
-//
-//        spinner.startAnimating()
-//
-//        let cardDetails = try! CardDetailsBuilder()
-//            .cvc(cvc ?? "")
-//            .build()
-//
-//        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
-//            .merchantId(Configuration.merchantId)
-//            .build()
-//
-//        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.cvc]) { result in
-//            DispatchQueue.main.async {
-//                self.spinner.stopAnimating()
-//
-//                switch result {
-//                    case .success(let sessions):
-//                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.cvc], closeHandler: {
-//                            self.cvcTextField.text = ""
-//                            self.cvcTextField.sendActions(for: .editingChanged)
-//                    })
-//                    case .failure(let error):
-//                        self.highlightCvcField(error: error)
-//
-//                        AlertView.display(using: self, title: "Error", message: error.localizedDescription)
-//                }
-//            }
-//        }
+        spinner.startAnimating()
+
+        let cardDetails = try! CardDetailsBuilder()
+            .cvc(cvcTextField)
+            .build()
+
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
+            .merchantId(Configuration.merchantId)
+            .build()
+
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.cvc]) { result in
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+
+                switch result {
+                    case .success(let sessions):
+                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.cvc], closeHandler: {
+                            self.cvcTextField.clear()
+                            self.cvcTextField.sendActions(for: .editingChanged)
+                        })
+                    case .failure(let error):
+                        self.highlightCvcField(error: error)
+
+                        AlertView.display(using: self, title: "Error", message: error.localizedDescription)
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {

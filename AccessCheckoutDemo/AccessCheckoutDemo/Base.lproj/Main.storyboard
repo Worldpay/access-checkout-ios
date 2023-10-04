@@ -23,7 +23,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Olc-Mj-W5U"/>
                                 </constraints>
@@ -31,6 +33,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="145" width="64" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="1K6-wM-DAF"/>
                                     <constraint firstAttribute="height" constant="44" id="Ute-5x-z9t"/>
@@ -39,6 +44,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="103" y="145" width="62" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry Date">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
                                 <rect key="frame" x="294" y="221" width="51" height="31"/>
@@ -190,7 +198,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
                                 <rect key="frame" x="283" y="84" width="57" height="38"/>
@@ -276,7 +286,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="81" width="97" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="gId-03-C4E"/>
                                 </constraints>

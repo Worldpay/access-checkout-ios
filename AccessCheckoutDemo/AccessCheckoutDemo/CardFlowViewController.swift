@@ -2,28 +2,28 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panTextField: AccessCheckoutUITextField!
-    @IBOutlet weak var expiryDateTextField: AccessCheckoutUITextField!
-    @IBOutlet weak var cvcTextField: AccessCheckoutUITextField!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
+    @IBOutlet var panTextField: AccessCheckoutUITextField!
+    @IBOutlet var expiryDateTextField: AccessCheckoutUITextField!
+    @IBOutlet var cvcTextField: AccessCheckoutUITextField!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var submitButton: UIButton!
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var paymentsCvcSessionToggle: UISwitch!
 
-    @IBOutlet weak var panIsValidLabel: UILabel!
-    @IBOutlet weak var expiryDateIsValidLabel: UILabel!
-    @IBOutlet weak var cvcIsValidLabel: UILabel!
+    @IBOutlet var panIsValidLabel: UILabel!
+    @IBOutlet var expiryDateIsValidLabel: UILabel!
+    @IBOutlet var cvcIsValidLabel: UILabel!
 
-    @IBOutlet weak var getPanCaretPositionTextField: UITextField!
-    @IBOutlet weak var setPanCaretPositionButton: UIButton!
-    @IBOutlet weak var setPanCaretPositionTextField: UITextField!
+    @IBOutlet var getPanCaretPositionTextField: UITextField!
+    @IBOutlet var setPanCaretPositionButton: UIButton!
+    @IBOutlet var setPanCaretPositionTextField: UITextField!
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     @IBAction func submit(_ sender: Any) {
-//        submitCard(pan: panTextField.text ?? "",
-//                   expiryDate: expiryDateTextField.text ?? "",
-//                   cvc: (cvcTextField.text ?? "") as String)
+        submitCard(panUITextField: panTextField,
+                   expiryDateUITextField: expiryDateTextField,
+                   cvcUITextField: cvcTextField)
     }
 
     @IBAction func getPanCaret(_ sender: Any) {
@@ -57,68 +57,68 @@ class CardFlowViewController: UIViewController {
         panTextField.selectedTextRange = panTextField.textRange(from: caretPositionFrom, to: caretPositionTo)
     }
 
-    private func submitCard(pan: AccessCheckoutUITextField, expiryDate: AccessCheckoutUITextField, cvc: AccessCheckoutUITextField) {
+    private func submitCard(panUITextField: AccessCheckoutUITextField,
+                            expiryDateUITextField: AccessCheckoutUITextField,
+                            cvcUITextField: AccessCheckoutUITextField)
+    {
         spinner.startAnimating()
 
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
-//        let cardDetails = try! CardDetailsBuilder().pan(pan)
-//            .expiryDate(expiryDate)
-//            .cvc(cvc)
-//            .build()
-//
-//        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
-//            .merchantId(Configuration.merchantId)
-//            .build()
-//
-//        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
-//            DispatchQueue.main.async {
-//                self.spinner.stopAnimating()
-//
-//                switch result {
-//                case .success(let sessions):
-//                    var titleToDisplay: String, messageToDisplay: String
-//
-//                    if sessionTypes.count > 1 {
-//                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
-//                        messageToDisplay = """
-//                        \(sessions[SessionType.card]!)
-//                        \(sessions[SessionType.cvc]!)
-//                        """
-//                    } else {
-//                        titleToDisplay = "Verified Tokens Session"
-//                        messageToDisplay = "\(sessions[SessionType.card]!)"
-//                    }
-//
-//                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
-//                        self.resetCard(preserveContent: false, validationErrors: nil)
-//                    })
-//                case .failure(let error):
-//                    let title = error.localizedDescription
-//                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
-//                    if error.message.contains("bodyDoesNotMatchSchema") {
-//                        accessCheckoutClientValidationErrors = error.validationErrors
-//                    }
-//
-//                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
-//                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-//                    })
-//                }
-//            }
-//        }
+        let cardDetails = try! CardDetailsBuilder().pan(panUITextField)
+            .expiryDate(expiryDateUITextField)
+            .cvc(cvcUITextField)
+            .build()
+
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
+            .merchantId(Configuration.merchantId)
+            .build()
+
+        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+
+                switch result {
+                case .success(let sessions):
+                    var titleToDisplay: String, messageToDisplay: String
+
+                    if sessionTypes.count > 1 {
+                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
+                        messageToDisplay = """
+                        \(sessions[SessionType.card]!)
+                        \(sessions[SessionType.cvc]!)
+                        """
+                    } else {
+                        titleToDisplay = "Verified Tokens Session"
+                        messageToDisplay = "\(sessions[SessionType.card]!)"
+                    }
+
+                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
+                        self.resetCard(preserveContent: false, validationErrors: nil)
+                    })
+                case .failure(let error):
+                    let title = error.localizedDescription
+                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
+                    if error.message.contains("bodyDoesNotMatchSchema") {
+                        accessCheckoutClientValidationErrors = error.validationErrors
+                    }
+
+                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
+                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
+                    })
+                }
+            }
+        }
     }
 
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
-//            panTextField.text = ""
             panTextField.clear()
             panTextField.sendActions(for: .editingChanged)
-            
-//            expiryDateTextField.text = ""
+
             expiryDateTextField.clear()
             expiryDateTextField.sendActions(for: .editingChanged)
 
-//            cvcTextField.text = ""
             cvcTextField.clear()
             cvcTextField.sendActions(for: .editingChanged)
         }
@@ -177,10 +177,10 @@ class CardFlowViewController: UIViewController {
         cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
 
         setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
-        
+
         setPanCaretPositionTextField.borderStyle = .none
         setPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
-        
+
         getPanCaretPositionTextField.borderStyle = .none
         getPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
         // Controls used as helpers for the automated tests - End of section
@@ -233,7 +233,8 @@ class CardFlowViewController: UIViewController {
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl) {
+           let url = URL(string: imageUrl)
+        {
             updateCardBrandImage(url: url)
         } else {
             imageView.image = unknownBrandImage

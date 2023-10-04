@@ -3,19 +3,24 @@ import UIKit
 @IBDesignable public class AccessCheckoutUITextField: UIView {
     @IBOutlet internal var uiTextField: UITextField!
 
+    internal init(_ uiTextField: UITextField) {
+        super.init(frame: CGRect())
+        self.uiTextField = uiTextField
+    }
+    
     init() {
         super.init(frame: CGRect())
-        initSubViews()
+        self.initSubViews()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        initSubViews()
+        self.initSubViews()
     }
     
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
-        initSubViews()
+        self.initSubViews()
     }
     
     private func initSubViews() {
@@ -56,7 +61,7 @@ import UIKit
     }
     
     public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
-        self.uiTextField.addTarget(target, action:action, for: controlEvents)
+        self.uiTextField.addTarget(target, action: action, for: controlEvents)
     }
 
     public func clear() {
@@ -69,14 +74,10 @@ import UIKit
     
     /* The end and beginning of the the text document. */
     @available(iOS 3.2, *)
-    public var beginningOfDocument: UITextPosition {
-        get { self.uiTextField.beginningOfDocument }
-    }
+    public var beginningOfDocument: UITextPosition { self.uiTextField.beginningOfDocument }
 
     @available(iOS 3.2, *)
-    public var endOfDocument: UITextPosition {
-        get { self.uiTextField.endOfDocument }
-    }
+    public var endOfDocument: UITextPosition { self.uiTextField.endOfDocument }
     
     /* Methods for creating ranges and positions. */
     @available(iOS 3.2, *)
@@ -86,7 +87,7 @@ import UIKit
 
     @available(iOS 3.2, *)
     public func position(from position: UITextPosition, in direction: UITextLayoutDirection, offset: Int) -> UITextPosition? {
-        return self.uiTextField.position(from: position, in:direction, offset: offset)
+        return self.uiTextField.position(from: position, in: direction, offset: offset)
     }
     
     @available(iOS 3.2, *)
