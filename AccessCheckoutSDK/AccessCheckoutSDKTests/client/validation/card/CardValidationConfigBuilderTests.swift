@@ -11,11 +11,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     private let acceptedCardBrands = ["visa", "amex"]
 
     func testConfigWithHasFormattingNotEnabledByDefault() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        let config = try! builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        let config = try! builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .build()
@@ -24,11 +22,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithPanFormattingEnabled() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        let config = try! builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        let config = try! builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .enablePanFormatting()
@@ -38,11 +34,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithoutAcceptedCardBrands() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        let config = try! builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        let config = try! builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .build()
@@ -56,11 +50,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testCanCreateConfigWithAcceptedCardBrands() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        let config = try! builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        let config = try! builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -75,10 +67,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenPanIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        _ = builder.expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -90,10 +80,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenExpiryDateIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.panLegacy(panTextField)
-            .cvcLegacy(cvcTextField)
+        _ = builder.pan(panTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -105,10 +93,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenCvcIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
+        _ = builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
             .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
@@ -120,11 +106,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenAccessBaseUrlIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        _ = builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
         let expectedMessage = "Expected base url to be provided but was not"
@@ -135,11 +119,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenValidationDelegateIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+        _ = builder.pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(accessBaseUrl)
             .acceptedCardBrands(acceptedCardBrands)
         let expectedMessage = "Expected validation delegate to be provided but was not"

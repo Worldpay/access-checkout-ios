@@ -5,20 +5,22 @@ import UIKit
  
  Use this configuration to register the relevant fields and listener.
  
- - panTextField: `UITextField` that represents the pan ui element
- - expiryDateTextField: `UITextField` that represents the expiry date ui element
- - cvcTextField: `UITextField` that represents the cvc ui element
+ - panTextField: `AccessCheckoutUITextField` that represents the pan ui element
+ - expiryDateTextField: `AccessCheckoutUITextField` that represents the expiry date ui element
+ - cvcTextField: `AccessCheckoutUITextField` that represents the cvc ui element
  - accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
  - validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation delegate that should be notified on validation changes
  - acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
  - panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
  
- Deprecated - using the Views below to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used as above.
- 
+ Deprecated - using the Views below to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField`s should be used instead
  - panView: `PanView` that represents the pan ui element
  - expiryDateView: `ExpiryDateView` that represents the expiry date ui element
  - cvcView: `CvcView` that represents the cvc ui element
  
+ Deprecated - using `UITextField` instances to capture card information is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField`s should be used instead
+ 
+ - SeeAlso: AccessCheckoutUITextField
  - SeeAlso: PanView
  - SeeAlso: ExpiryDateView
  - SeeAlso: CvcView
@@ -29,9 +31,9 @@ public struct CardValidationConfig: ValidationConfig {
     let expiryDateTextField: UITextField?
     let cvcTextField: UITextField?
     
-    let panUITextField:AccessCheckoutUITextField?
-    let expiryDateUITextField:AccessCheckoutUITextField?
-    let cvcUITextField:AccessCheckoutUITextField?
+    let pan: AccessCheckoutUITextField?
+    let expiryDate: AccessCheckoutUITextField?
+    let cvc: AccessCheckoutUITextField?
     
     let panView: PanView?
     let expiryDateView: ExpiryDateView?
@@ -72,7 +74,8 @@ public struct CardValidationConfig: ValidationConfig {
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
                 acceptedCardBrands: [String] = [],
-                panFormattingEnabled: Bool = false) {
+                panFormattingEnabled: Bool = false)
+    {
         self.panTextField = panTextField
         self.expiryDateTextField = expiryDateTextField
         self.cvcTextField = cvcTextField
@@ -83,9 +86,9 @@ public struct CardValidationConfig: ValidationConfig {
         self.expiryDateView = nil
         self.cvcView = nil
         
-        self.panUITextField = nil
-        self.expiryDateUITextField = nil
-        self.cvcUITextField = nil
+        self.pan = nil
+        self.expiryDate = nil
+        self.cvc = nil
         
         self.textFieldMode = true
         self.accessCheckoutUITextFieldMode = false
@@ -112,7 +115,8 @@ public struct CardValidationConfig: ValidationConfig {
                 accessBaseUrl: String,
                 validationDelegate: AccessCheckoutCardValidationDelegate,
                 acceptedCardBrands: [String] = [],
-                panFormattingEnabled: Bool = false) {
+                panFormattingEnabled: Bool = false)
+    {
         self.panView = panView
         self.expiryDateView = expiryDateView
         self.cvcView = cvcView
@@ -123,9 +127,9 @@ public struct CardValidationConfig: ValidationConfig {
         self.expiryDateTextField = nil
         self.cvcTextField = nil
         
-        self.panUITextField = nil
-        self.expiryDateUITextField = nil
-        self.cvcUITextField = nil
+        self.pan = nil
+        self.expiryDate = nil
+        self.cvc = nil
         
         self.textFieldMode = false
         self.accessCheckoutUITextFieldMode = false
@@ -144,16 +148,17 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
      */
-    public init(panUITextField: AccessCheckoutUITextField,
-                expiryDateUITextField: AccessCheckoutUITextField,
-                cvcUITextField: AccessCheckoutUITextField,
-                accessBaseUrl: String,
-                validationDelegate: AccessCheckoutCardValidationDelegate,
-                acceptedCardBrands: [String] = [],
-                panFormattingEnabled: Bool = false) {
-        self.panUITextField = panUITextField
-        self.expiryDateUITextField = expiryDateUITextField
-        self.cvcUITextField = cvcUITextField
+    internal init(pan: AccessCheckoutUITextField,
+                  expiryDate: AccessCheckoutUITextField,
+                  cvc: AccessCheckoutUITextField,
+                  accessBaseUrl: String,
+                  validationDelegate: AccessCheckoutCardValidationDelegate,
+                  acceptedCardBrands: [String] = [],
+                  panFormattingEnabled: Bool = false)
+    {
+        self.pan = pan
+        self.expiryDate = expiryDate
+        self.cvc = cvc
 
         self.accessBaseUrl = accessBaseUrl
         self.validationDelegate = validationDelegate
@@ -194,34 +199,40 @@ public class CardValidationConfigBuilder {
     fileprivate init() {}
     
     /**
-     - Parameter pan: UITextField that represents the pan ui element
-     - Returns: the same instance of the builder
-     */
-    public func panLegacy(_ pan: UITextField) -> CardValidationConfigBuilder {
-        self.panLegacy = pan
+     Deprecated
+      - Parameter pan: UITextField that represents the pan ui element
+      - Returns: the same instance of the builder
+      */
+    @available(*, deprecated, message: "This method is deprecated and will not be supported on future major versions of the SDK. `pan(AccessCheckoutUITextField)` should be used instead.")
+    public func pan(_ pan: UITextField) -> CardValidationConfigBuilder {
+        panLegacy = pan
         return self
     }
     
     /**
-     - Parameter expiryDate: `UITextField` that represents the expiry date ui element
-     - Returns: the same instance of the builder
-     */
-    public func expiryDateLegacy(_ expiryDate: UITextField) -> CardValidationConfigBuilder {
-        self.expiryDateLegacy = expiryDate
+     Deprecated
+      - Parameter expiryDate: `UITextField` that represents the expiry date ui element
+      - Returns: the same instance of the builder
+      */
+    @available(*, deprecated, message: "This method is deprecated and will not be supported on future major versions of the SDK. `expiryDate(AccessCheckoutUITextField)` should be used instead.")
+    public func expiryDate(_ expiryDate: UITextField) -> CardValidationConfigBuilder {
+        expiryDateLegacy = expiryDate
         return self
     }
     
     /**
-     - Parameter cvc: `UITextField` that represents the cvc ui element
-     - Returns: the same instance of the builder
-     */
-    public func cvcLegacy(_ cvc: UITextField) -> CardValidationConfigBuilder {
-        self.cvcLegacy = cvc
+     Deprecated
+      - Parameter cvc: `UITextField` that represents the cvc ui element
+      - Returns: the same instance of the builder
+      */
+    @available(*, deprecated, message: "This method is deprecated and will not be supported on future major versions of the SDK. `cvc(AccessCheckoutUITextField)` should be used instead.")
+    public func cvc(_ cvc: UITextField) -> CardValidationConfigBuilder {
+        cvcLegacy = cvc
         return self
     }
     
     /**
-     - Parameter pan: AccessCheckoutUITextField that represents the pan ui element
+     - Parameter pan: `AccessCheckoutUITextField` that represents the pan ui element
      - Returns: the same instance of the builder
      */
     public func pan(_ pan: AccessCheckoutUITextField) -> CardValidationConfigBuilder {
@@ -290,13 +301,13 @@ public class CardValidationConfigBuilder {
      - Throws: an `AccessCheckoutIllegalArgumentError` if either the pan, expiryDate, cvc, accessBaseUrl or validationDelegate have not been specified
      */
     public func build() throws -> CardValidationConfig {
-        guard let pan = pan else {
+        if pan == nil && panLegacy == nil {
             throw AccessCheckoutIllegalArgumentError.missingPan()
         }
-        guard let expiryDate = expiryDate else {
+        if expiryDate == nil && expiryDateLegacy == nil {
             throw AccessCheckoutIllegalArgumentError.missingExpiryDate()
         }
-        guard let cvc = cvc else {
+        if cvc == nil && cvcLegacy == nil {
             throw AccessCheckoutIllegalArgumentError.missingCvc()
         }
         guard let accessBaseUrl = accessBaseUrl else {
@@ -306,9 +317,18 @@ public class CardValidationConfigBuilder {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
         
-        return CardValidationConfig(panUITextField: pan,
-                                    expiryDateUITextField: expiryDate,
-                                    cvcUITextField: cvc,
+        if let pan = pan, let expiryDate = expiryDate, let cvc = cvc {
+            return CardValidationConfig(pan: pan,
+                                        expiryDate: expiryDate,
+                                        cvc: cvc,
+                                        accessBaseUrl: accessBaseUrl,
+                                        validationDelegate: validationDelegate,
+                                        acceptedCardBrands: acceptedCardBrands,
+                                        panFormattingEnabled: panFormattingEnabled)
+        }
+        return CardValidationConfig(panTextField: panLegacy!,
+                                    expiryDateTextField: expiryDateLegacy!,
+                                    cvcTextField: cvcLegacy!,
                                     accessBaseUrl: accessBaseUrl,
                                     validationDelegate: validationDelegate,
                                     acceptedCardBrands: acceptedCardBrands,

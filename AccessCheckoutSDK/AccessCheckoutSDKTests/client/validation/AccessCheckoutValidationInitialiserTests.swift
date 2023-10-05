@@ -102,12 +102,10 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     }
     
     func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormattingForLegacyUITextField() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
         let config = try! CardValidationConfig.builder()
-            .panLegacy(panTextField)
-            .expiryDateLegacy(expiryDateTextField)
-            .cvcLegacy(cvcTextField)
+            .pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .accessBaseUrl(baseUrl)
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])

@@ -7,10 +7,8 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     private let validationDelegate = MockAccessCheckoutCvcOnlyValidationDelegate()
 
     func testCanCreateConfig() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
         let config = try! CvcOnlyValidationConfig.builder()
-            .cvcLegacy(cvcTextField)
+            .cvc(cvcTextField)
             .validationDelegate(validationDelegate)
             .build()
 
@@ -19,8 +17,6 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenCvcIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
         _ = builder.validationDelegate(validationDelegate)
         let expectedMessage = "Expected cvc to be provided but was not"
 
@@ -30,9 +26,7 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenValidationDelegateIsNotSpecified() throws {
-        throw XCTSkip("Skipping this test because it is testing soon to be legacy code")
-        
-        _ = builder.cvcLegacy(cvcTextField)
+        _ = builder.cvc(cvcTextField)
         let expectedMessage = "Expected validation delegate to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in

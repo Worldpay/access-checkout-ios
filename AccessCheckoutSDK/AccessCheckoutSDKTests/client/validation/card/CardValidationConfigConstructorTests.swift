@@ -11,9 +11,9 @@ class CardValidationConfigConstructorTests: XCTestCase {
     private let acceptedCardBrands = ["visa", "amex"]
 
     func testShouldSetTextFieldModeToTrueIfInitWithUITextFields() {
-        let cardValidationConfig = CardValidationConfig(panUITextField: panUITextField,
-                                                        expiryDateUITextField: expiryDateUITextField,
-                                                        cvcUITextField: cvcUITextField,
+        let cardValidationConfig = CardValidationConfig(pan: panUITextField,
+                                                        expiryDate: expiryDateUITextField,
+                                                        cvc: cvcUITextField,
                                                         accessBaseUrl: "some-url",
                                                         validationDelegate: validationDelegate)
 
@@ -22,9 +22,9 @@ class CardValidationConfigConstructorTests: XCTestCase {
     }
 
     func testConfigWithHasFormattingNotEnabledByDefault() {
-        let config = CardValidationConfig(panUITextField: panUITextField,
-                                          expiryDateUITextField: expiryDateUITextField,
-                                          cvcUITextField: cvcUITextField,
+        let config = CardValidationConfig(pan: panUITextField,
+                                          expiryDate: expiryDateUITextField,
+                                          cvc: cvcUITextField,
                                           accessBaseUrl: accessBaseUrl,
                                           validationDelegate: validationDelegate)
 
@@ -32,9 +32,9 @@ class CardValidationConfigConstructorTests: XCTestCase {
     }
 
     func testCanCreateConfigWithPanFormattingEnabled() {
-        let config = CardValidationConfig(panUITextField: panUITextField,
-                                          expiryDateUITextField: expiryDateUITextField,
-                                          cvcUITextField: cvcUITextField,
+        let config = CardValidationConfig(pan: panUITextField,
+                                          expiryDate: expiryDateUITextField,
+                                          cvc: cvcUITextField,
                                           accessBaseUrl: accessBaseUrl,
                                           validationDelegate: validationDelegate,
                                           panFormattingEnabled: true)
@@ -43,31 +43,31 @@ class CardValidationConfigConstructorTests: XCTestCase {
     }
 
     func testCanCreateConfigWithoutAcceptedCardBrands() {
-        let config = CardValidationConfig(panUITextField: panUITextField,
-                                          expiryDateUITextField: expiryDateUITextField,
-                                          cvcUITextField: cvcUITextField,
+        let config = CardValidationConfig(pan: panUITextField,
+                                          expiryDate: expiryDateUITextField,
+                                          cvc: cvcUITextField,
                                           accessBaseUrl: accessBaseUrl,
                                           validationDelegate: validationDelegate)
 
-        XCTAssertEqual(panUITextField, config.panUITextField)
-        XCTAssertEqual(expiryDateUITextField, config.expiryDateUITextField)
-        XCTAssertEqual(cvcUITextField, config.cvcUITextField)
+        XCTAssertEqual(panUITextField, config.pan)
+        XCTAssertEqual(expiryDateUITextField, config.expiryDate)
+        XCTAssertEqual(cvcUITextField, config.cvc)
         XCTAssertEqual(accessBaseUrl, config.accessBaseUrl)
         XCTAssertTrue(config.validationDelegate is MockAccessCheckoutCardValidationDelegate)
         XCTAssertEqual([], config.acceptedCardBrands)
     }
 
     func testCanCreateConfigWithAcceptedCardBrands() {
-        let config = CardValidationConfig(panUITextField: panUITextField,
-                                          expiryDateUITextField: expiryDateUITextField,
-                                          cvcUITextField: cvcUITextField,
+        let config = CardValidationConfig(pan: panUITextField,
+                                          expiryDate: expiryDateUITextField,
+                                          cvc: cvcUITextField,
                                           accessBaseUrl: accessBaseUrl,
                                           validationDelegate: validationDelegate,
                                           acceptedCardBrands: acceptedCardBrands)
 
-        XCTAssertEqual(panUITextField, config.panUITextField)
-        XCTAssertEqual(expiryDateUITextField, config.expiryDateUITextField)
-        XCTAssertEqual(cvcUITextField, config.cvcUITextField)
+        XCTAssertEqual(panUITextField, config.pan)
+        XCTAssertEqual(expiryDateUITextField, config.expiryDate)
+        XCTAssertEqual(cvcUITextField, config.cvc)
         XCTAssertEqual(accessBaseUrl, config.accessBaseUrl)
         XCTAssertTrue(config.validationDelegate is MockAccessCheckoutCardValidationDelegate)
         XCTAssertEqual(acceptedCardBrands, config.acceptedCardBrands)
