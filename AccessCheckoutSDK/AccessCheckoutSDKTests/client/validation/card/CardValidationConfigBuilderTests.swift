@@ -10,7 +10,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
     private let validationDelegate = MockAccessCheckoutCardValidationDelegate()
     private let acceptedCardBrands = ["visa", "amex"]
 
-    func testConfigWithHasFormattingNotEnabledByDefault() {
+    func testConfigWithHasFormattingNotEnabledByDefault() throws {
         let config = try! builder.pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
@@ -21,7 +21,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
         XCTAssertFalse(config.panFormattingEnabled)
     }
 
-    func testCanCreateConfigWithPanFormattingEnabled() {
+    func testCanCreateConfigWithPanFormattingEnabled() throws {
         let config = try! builder.pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
@@ -33,7 +33,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
         XCTAssertTrue(config.panFormattingEnabled)
     }
 
-    func testCanCreateConfigWithoutAcceptedCardBrands() {
+    func testCanCreateConfigWithoutAcceptedCardBrands() throws {
         let config = try! builder.pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
@@ -49,7 +49,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
         XCTAssertEqual([], config.acceptedCardBrands)
     }
 
-    func testCanCreateConfigWithAcceptedCardBrands() {
+    func testCanCreateConfigWithAcceptedCardBrands() throws {
         let config = try! builder.pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)

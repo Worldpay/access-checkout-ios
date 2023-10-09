@@ -2,28 +2,28 @@ import AccessCheckoutSDK
 import UIKit
 
 class CardFlowViewController: UIViewController {
-    @IBOutlet weak var panTextField: UITextField!
-    @IBOutlet weak var expiryDateTextField: UITextField!
-    @IBOutlet weak var cvcTextField: UITextField!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var paymentsCvcSessionToggle: UISwitch!
+    @IBOutlet var panTextField: AccessCheckoutUITextField!
+    @IBOutlet var expiryDateTextField: AccessCheckoutUITextField!
+    @IBOutlet var cvcTextField: AccessCheckoutUITextField!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var submitButton: UIButton!
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var paymentsCvcSessionToggle: UISwitch!
 
-    @IBOutlet weak var panIsValidLabel: UILabel!
-    @IBOutlet weak var expiryDateIsValidLabel: UILabel!
-    @IBOutlet weak var cvcIsValidLabel: UILabel!
+    @IBOutlet var panIsValidLabel: UILabel!
+    @IBOutlet var expiryDateIsValidLabel: UILabel!
+    @IBOutlet var cvcIsValidLabel: UILabel!
 
-    @IBOutlet weak var getPanCaretPositionTextField: UITextField!
-    @IBOutlet weak var setPanCaretPositionButton: UIButton!
-    @IBOutlet weak var setPanCaretPositionTextField: UITextField!
+    @IBOutlet var getPanCaretPositionTextField: UITextField!
+    @IBOutlet var setPanCaretPositionButton: UIButton!
+    @IBOutlet var setPanCaretPositionTextField: UITextField!
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     @IBAction func submit(_ sender: Any) {
-        submitCard(pan: panTextField.text ?? "",
-                   expiryDate: expiryDateTextField.text ?? "",
-                   cvc: (cvcTextField.text ?? "") as String)
+        submitCard(panUITextField: panTextField,
+                   expiryDateUITextField: expiryDateTextField,
+                   cvcUITextField: cvcTextField)
     }
 
     @IBAction func getPanCaret(_ sender: Any) {
@@ -57,14 +57,17 @@ class CardFlowViewController: UIViewController {
         panTextField.selectedTextRange = panTextField.textRange(from: caretPositionFrom, to: caretPositionTo)
     }
 
-    private func submitCard(pan: String, expiryDate: String, cvc: String) {
+    private func submitCard(panUITextField: AccessCheckoutUITextField,
+                            expiryDateUITextField: AccessCheckoutUITextField,
+                            cvcUITextField: AccessCheckoutUITextField)
+    {
         spinner.startAnimating()
 
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
-        let cardDetails = try! CardDetailsBuilder().pan(pan)
-            .expiryDate(expiryDate)
-            .cvc(cvc)
+        let cardDetails = try! CardDetailsBuilder().pan(panUITextField)
+            .expiryDate(expiryDateUITextField)
+            .cvc(cvcUITextField)
             .build()
 
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
@@ -110,13 +113,13 @@ class CardFlowViewController: UIViewController {
 
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
-            panTextField.text = ""
+            panTextField.clear()
             panTextField.sendActions(for: .editingChanged)
 
-            expiryDateTextField.text = ""
+            expiryDateTextField.clear()
             expiryDateTextField.sendActions(for: .editingChanged)
 
-            cvcTextField.text = ""
+            cvcTextField.clear()
             cvcTextField.sendActions(for: .editingChanged)
         }
 
@@ -174,10 +177,10 @@ class CardFlowViewController: UIViewController {
         cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
 
         setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
-        
+
         setPanCaretPositionTextField.borderStyle = .none
         setPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
-        
+
         getPanCaretPositionTextField.borderStyle = .none
         getPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
         // Controls used as helpers for the automated tests - End of section
@@ -230,7 +233,8 @@ class CardFlowViewController: UIViewController {
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl) {
+           let url = URL(string: imageUrl)
+        {
             updateCardBrandImage(url: url)
         } else {
             imageView.image = unknownBrandImage

@@ -5,7 +5,11 @@ import XCTest
 class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     let merchantId = "123"
     let baseUrl = "some-url"
-    let cardDetails = try! CardDetailsBuilder().build()
+    
+    let cardDetails = try! CardDetailsBuilder()
+        .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
+        .build()
+    
     let paymentsCvcSessionHandler = PaymentsCvcRetrieveSessionHandlerMock()
     let verifiedTokensSessionHandler = VerifiedTokensRetrieveSessionHandlerMock()
     

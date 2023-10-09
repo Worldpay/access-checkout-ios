@@ -45,7 +45,11 @@ public struct AccessCheckoutValidationInitialiser {
         let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
-        if config.textFieldMode {
+        if config.accessCheckoutUITextFieldMode {
+            setTextFieldDelegate(textField: config.pan!.uiTextField, delegate: panPresenter)
+            setTextFieldDelegate(textField: config.expiryDate!.uiTextField, delegate: expiryDatePresenter)
+            setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
+        } else if config.textFieldMode {
             setTextFieldDelegate(textField: config.panTextField!, delegate: panPresenter)
             setTextFieldDelegate(textField: config.expiryDateTextField!, delegate: expiryDatePresenter)
             setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
@@ -62,7 +66,9 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
         
-        if config.textFieldMode {
+        if config.accessCheckoutUITextFieldMode {
+            setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
+        } else if config.textFieldMode {
             setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
         } else {
             config.cvcView!.presenter = cvcPresenter
@@ -72,7 +78,8 @@ public struct AccessCheckoutValidationInitialiser {
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,
                                   _ cvcValidationFlow: CvcValidationFlow,
                                   _ validationStateHandler: PanValidationStateHandler,
-                                  _ panFormattingEnabled: Bool) -> PanViewPresenter {
+                                  _ panFormattingEnabled: Bool) -> PanViewPresenter
+    {
         let panValidator = PanValidator(configurationProvider)
         let panValidationFlow = PanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
         return PanViewPresenter(panValidationFlow, panValidator, panFormattingEnabled: panFormattingEnabled)

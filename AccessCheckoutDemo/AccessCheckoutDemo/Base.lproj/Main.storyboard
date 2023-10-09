@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +20,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Olc-Mj-W5U"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                <rect key="frame" x="16" y="145" width="64" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="1K6-wM-DAF"/>
+                                    <constraint firstAttribute="height" constant="44" id="Ute-5x-z9t"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                <rect key="frame" x="103" y="145" width="62" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                            </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
                                 <rect key="frame" x="294" y="221" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
@@ -34,42 +62,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="294" y="282" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
+                                <rect key="frame" x="16" y="282" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8AE-e7-b1R">
-                                <rect key="frame" x="103" y="145" width="62" height="44"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="cvc"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="62" id="T9O-hC-CAg"/>
-                                </constraints>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mya-3f-hK8">
-                                <rect key="frame" x="16" y="81" width="327" height="44"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="pan"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8i-GI-0zO">
-                                <rect key="frame" x="16" y="145" width="64" height="44"/>
-                                <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry Date"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="6EM-ft-nNk"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="qzS-NE-0Wd"/>
-                                    <constraint firstAttribute="height" constant="44" id="znX-4L-e4b"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                            </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
                                 <rect key="frame" x="283" y="84" width="57" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
@@ -85,8 +85,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
-                                <rect key="frame" x="266" y="287" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
+                                <rect key="frame" x="-12" y="287" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
                                 <rect key="frame" x="16" y="0.0" width="119" height="21"/>
@@ -96,24 +96,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMM-PP-5OM">
-                                <rect key="frame" x="16" y="20" width="173" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMM-PP-5OM">
+                                <rect key="frame" x="16" y="20" width="172" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDateIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-IN-v4K">
-                                <rect key="frame" x="16" y="41" width="118" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NxL-IN-v4K">
+                                <rect key="frame" x="16" y="41" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
-                                <rect key="frame" x="16" y="343" width="185" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
+                                <rect key="frame" x="16" y="332" width="185" height="30"/>
                                 <accessibility key="accessibilityConfiguration" label="setPanCaretPositionButton"/>
                                 <state key="normal" title="setPanCaretPositionButton"/>
                                 <connections>
@@ -137,44 +137,43 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="baseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="1fh-PR-Gif"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="21" id="3R3-7x-qZ8"/>
                             <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="3eT-E1-LWY"/>
-                            <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4Wo-Jr-MTY"/>
-                            <constraint firstItem="a8i-GI-0zO" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="20" id="65D-Ef-7g9"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="firstBaseline" secondItem="a8i-GI-0zO" secondAttribute="baseline" id="6Mp-Cb-ydu"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="A4Q-yr-qYy" secondAttribute="top" id="5Cc-Zm-iER"/>
+                            <constraint firstItem="uOE-eK-LJK" firstAttribute="trailing" secondItem="V3W-HP-wPE" secondAttribute="trailing" id="7Uy-EY-dpW"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="D1W-nh-hHQ"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="NxL-IN-v4K" secondAttribute="leading" id="Ddn-oh-qOo"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="8" id="Ec7-e5-MQQ"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="HGC-2s-NEA"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="uOE-eK-LJK" secondAttribute="bottom" constant="20" id="ExN-ri-CWS"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="bottom" secondItem="A4Q-yr-qYy" secondAttribute="bottom" id="HeA-VK-iPK"/>
                             <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
-                            <constraint firstItem="Mya-3f-hK8" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="N9a-eQ-gxn"/>
+                            <constraint firstItem="uOE-eK-LJK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JNk-u6-HOu"/>
+                            <constraint firstItem="A4Q-yr-qYy" firstAttribute="leading" secondItem="ts8-Kj-GhN" secondAttribute="trailing" constant="23" id="Nhx-HB-abn"/>
                             <constraint firstItem="FGh-S7-760" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="Nwd-J1-PvZ"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="top" secondItem="a8i-GI-0zO" secondAttribute="top" id="Obz-wv-4Uc"/>
-                            <constraint firstItem="Mya-3f-hK8" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="leading" id="PHs-7U-Qyf"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="Tct-QG-Q6u"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Wb7-Z0-DXa"/>
-                            <constraint firstItem="Mya-3f-hK8" firstAttribute="trailing" secondItem="V3W-HP-wPE" secondAttribute="trailing" id="XQ4-Wj-5tw"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="bottom" secondItem="a8i-GI-0zO" secondAttribute="bottom" id="YAA-AS-D9n"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="centerY" secondItem="V3W-HP-wPE" secondAttribute="centerY" id="YOD-hy-WxO"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="aIa-0m-NUn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="19" id="bQl-87-Tli"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="8" id="chq-il-XVd"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="leading" secondItem="a8i-GI-0zO" secondAttribute="trailing" constant="23" id="d4P-3N-Epg"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="Mya-3f-hK8" secondAttribute="bottom" constant="96" id="g9c-2p-ZIo"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="lY1-Hn-FII"/>
-                            <constraint firstItem="8AE-e7-b1R" firstAttribute="baseline" secondItem="a8i-GI-0zO" secondAttribute="firstBaseline" id="ln5-sL-V1h"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Mya-3f-hK8" secondAttribute="trailing" constant="16" id="yeE-Ox-lHE"/>
-                            <constraint firstItem="Mya-3f-hK8" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="zTy-uV-Q3K"/>
+                            <constraint firstItem="uOE-eK-LJK" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="gav-x2-6nM"/>
+                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="FMM-PP-5OM" secondAttribute="leading" id="ixK-6Z-DA2"/>
+                            <constraint firstAttribute="trailing" secondItem="A4Q-yr-qYy" secondAttribute="trailing" constant="210" id="jnm-R8-NOg"/>
+                            <constraint firstItem="uOE-eK-LJK" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="js5-A8-eow"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uOE-eK-LJK" secondAttribute="trailing" constant="16" id="noD-9L-4qa"/>
+                            <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="ts8-Kj-GhN" secondAttribute="bottom" constant="38" id="wQt-85-33g"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card Flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
                     <connections>
                         <outlet property="cvcIsValidLabel" destination="NxL-IN-v4K" id="3xq-OV-BPX"/>
-                        <outlet property="cvcTextField" destination="8AE-e7-b1R" id="Dyk-Q4-XIZ"/>
+                        <outlet property="cvcTextField" destination="A4Q-yr-qYy" id="pGg-lZ-5MU"/>
                         <outlet property="expiryDateIsValidLabel" destination="FMM-PP-5OM" id="EKv-Pa-JkQ"/>
-                        <outlet property="expiryDateTextField" destination="a8i-GI-0zO" id="ctL-po-sv5"/>
+                        <outlet property="expiryDateTextField" destination="ts8-Kj-GhN" id="g2q-k2-Uxk"/>
                         <outlet property="getPanCaretPositionTextField" destination="uCP-BC-ifY" id="tZd-4h-DAb"/>
                         <outlet property="imageView" destination="4gy-2k-boW" id="RJe-7W-H1o"/>
                         <outlet property="panIsValidLabel" destination="MXa-G9-0FX" id="vI4-fM-Idp"/>
-                        <outlet property="panTextField" destination="Mya-3f-hK8" id="CtN-ZL-0db"/>
+                        <outlet property="panTextField" destination="uOE-eK-LJK" id="ElA-Kn-zDb"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
                         <outlet property="setPanCaretPositionButton" destination="FGh-S7-760" id="lNp-HZ-ymz"/>
                         <outlet property="setPanCaretPositionTextField" destination="gdc-Jc-Nb3" id="JQh-qT-u79"/>
@@ -198,13 +197,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DT4-6e-hWq">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="16" y="81" width="327" height="44"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="pan"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                            </textField>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
                                 <rect key="frame" x="283" y="84" width="57" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
@@ -213,8 +212,8 @@
                                     <constraint firstAttribute="height" constant="38" id="abL-ww-6yu"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
-                                <rect key="frame" x="56" y="135" width="262" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
+                                <rect key="frame" x="20" y="135" width="261.5" height="14"/>
                                 <accessibility key="accessibilityConfiguration" identifier="restrictedCardBrandsLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
@@ -231,22 +230,22 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="centerY" secondItem="iUX-jl-sEW" secondAttribute="centerY" id="2E3-Zy-H8a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iUX-jl-sEW" secondAttribute="trailing" constant="19" id="6Xp-p5-ilF"/>
+                            <constraint firstItem="dTi-zG-nFA" firstAttribute="top" secondItem="cXc-DJ-Q7s" secondAttribute="bottom" constant="10" id="IKl-TO-cu3"/>
+                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="JfK-5R-HwU"/>
                             <constraint firstItem="iUX-jl-sEW" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="84" id="NV3-UH-05j"/>
-                            <constraint firstItem="DT4-6e-hWq" firstAttribute="centerY" secondItem="iUX-jl-sEW" secondAttribute="centerY" id="OmC-1X-wmX"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DT4-6e-hWq" secondAttribute="trailing" constant="16" id="Thb-hN-Sgd"/>
-                            <constraint firstItem="dTi-zG-nFA" firstAttribute="centerX" secondItem="Zvz-kn-Pea" secondAttribute="centerX" id="UL5-Ex-MmA"/>
-                            <constraint firstItem="DT4-6e-hWq" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="l1Q-8I-sar"/>
-                            <constraint firstItem="dTi-zG-nFA" firstAttribute="top" secondItem="DT4-6e-hWq" secondAttribute="bottom" constant="10" id="ndM-4W-0zD"/>
-                            <constraint firstItem="DT4-6e-hWq" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="ufL-Hu-yUV"/>
-                            <constraint firstItem="dTi-zG-nFA" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" constant="40" id="zx8-Mh-4X2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cXc-DJ-Q7s" secondAttribute="trailing" constant="16" id="cRA-jE-7WA"/>
+                            <constraint firstItem="iUX-jl-sEW" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="trailing" constant="-92" id="nKU-GJ-Rvf"/>
+                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="pxW-8y-8a7"/>
+                            <constraint firstItem="dTi-zG-nFA" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" constant="4" id="zx8-Mh-4X2"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Restricted Card Flow" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
                     <connections>
                         <outlet property="imageView" destination="iUX-jl-sEW" id="9lP-kL-PiX"/>
                         <outlet property="panIsValidLabel" destination="DcK-R3-jK5" id="3be-3n-4XV"/>
-                        <outlet property="panTextField" destination="DT4-6e-hWq" id="95m-NU-26K"/>
+                        <outlet property="panTextField" destination="cXc-DJ-Q7s" id="VN1-U0-875"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfJ-C5-324" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -265,15 +264,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5NE-TN-m7a">
-                                <rect key="frame" x="16" y="81" width="97" height="44"/>
-                                <accessibility key="accessibilityConfiguration" hint="123" identifier="cvc" label="cvc"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="1CT-72-q9H"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
                                 <rect key="frame" x="291" y="88" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit">
@@ -295,22 +285,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                <rect key="frame" x="16" y="81" width="97" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="gId-03-C4E"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="xFk-y0-dUk" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="88" id="11c-aF-4Tw"/>
-                            <constraint firstItem="5NE-TN-m7a" firstAttribute="centerY" secondItem="tjE-oa-gkj" secondAttribute="centerY" id="9qW-eq-9U7"/>
+                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="81" id="1D2-5j-3Fz"/>
+                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leadingMargin" id="6A4-u4-x9e"/>
                             <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="Ha2-JX-7UP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xFk-y0-dUk" secondAttribute="trailing" constant="19" id="cOE-Ap-r6F"/>
-                            <constraint firstItem="5NE-TN-m7a" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leadingMargin" id="hPa-Go-lQS"/>
                             <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="xFk-y0-dUk" secondAttribute="centerY" id="iQK-kr-5dS"/>
-                            <constraint firstItem="5NE-TN-m7a" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="81" id="jg7-zw-0Ve"/>
+                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="centerY" secondItem="tjE-oa-gkj" secondAttribute="centerY" id="sEV-tb-E0U"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="CVC Flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
                     <connections>
                         <outlet property="cvcIsValidLabel" destination="rhE-RM-1YK" id="8VX-Tu-dTh"/>
-                        <outlet property="cvcTextField" destination="5NE-TN-m7a" id="urH-5K-lPD"/>
+                        <outlet property="cvcTextField" destination="rhF-MI-5Qs" id="KuL-TK-MNQ"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
                         <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>
                     </connections>

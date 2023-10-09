@@ -6,7 +6,7 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     private let cvcTextField = UITextField()
     private let validationDelegate = MockAccessCheckoutCvcOnlyValidationDelegate()
 
-    func testCanCreateConfig() {
+    func testCanCreateConfig() throws {
         let config = try! CvcOnlyValidationConfig.builder()
             .cvc(cvcTextField)
             .validationDelegate(validationDelegate)

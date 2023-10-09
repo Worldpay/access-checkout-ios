@@ -61,6 +61,10 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let cvcTextField = UITextField()
     let expiryDateTextField = UITextField()
     
+    let panUITextField = AccessCheckoutUITextField()
+    let cvcUITextField = AccessCheckoutUITextField()
+    let expiryDateUITextField = AccessCheckoutUITextField()
+    
     func testInitialisationForCardPaymentFlowWithTextFieldsRetrievesConfiguration() {
         let validationConfig = CardValidationConfig(panTextField: panTextField,
                                                     expiryDateTextField: expiryDateTextField,
@@ -97,7 +101,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
     }
     
-    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormatting() {
+    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormattingForLegacyUITextField() throws {
         let config = try! CardValidationConfig.builder()
             .pan(panTextField)
             .expiryDate(expiryDateTextField)
@@ -113,5 +117,23 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         XCTAssertTrue(panTextField.delegate is PanViewPresenter)
         XCTAssertTrue(expiryDateTextField.delegate is ExpiryDateViewPresenter)
         XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
+    }
+    
+    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormatting() {
+        let config = try! CardValidationConfig.builder()
+            .pan(panUITextField)
+            .expiryDate(expiryDateUITextField)
+            .cvc(cvcUITextField)
+            .accessBaseUrl(baseUrl)
+            .validationDelegate(cardValidationDelegateMock)
+            .acceptedCardBrands(["amex", "visa"])
+            .enablePanFormatting()
+            .build()
+        
+        accessCheckoutValidationInitialiser!.initialise(config)
+        
+        XCTAssertTrue(panUITextField.uiTextField.delegate is PanViewPresenter)
+        XCTAssertTrue(expiryDateUITextField.uiTextField.delegate is ExpiryDateViewPresenter)
+        XCTAssertTrue(cvcUITextField.uiTextField.delegate is CvcViewPresenter)
     }
 }

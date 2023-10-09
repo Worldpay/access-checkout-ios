@@ -2,7 +2,7 @@ import AccessCheckoutSDK
 import UIKit
 
 class RestrictedCardFlowViewController: UIViewController {
-    @IBOutlet weak var panTextField: UITextField!
+    @IBOutlet weak var panTextField: AccessCheckoutUITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var panIsValidLabel: UILabel!
     
@@ -20,8 +20,8 @@ class RestrictedCardFlowViewController: UIViewController {
         panIsValidLabel.font = UIFont.systemFont(ofSize: 0)
         
         let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
-            .expiryDate(UITextField())
-            .cvc(UITextField())
+            .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
+            .cvc(AccessCheckoutUITextField(frame: CGRect()))
             .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
