@@ -1,5 +1,3 @@
-// TODO: fix comments in this code
-
 /**
  This class is a representation of card information. It cannot be constructed as such, only subclasses conforming to its internal interface can be constructed with a `CardDetailsBuilder`.
  - `pan`: an optional `String` containing the PAN as a numeric string with no spaces
