@@ -1,6 +1,6 @@
 import UIKit
 
-@IBDesignable public class AccessCheckoutUITextField: UIView {
+@IBDesignable public final class AccessCheckoutUITextField: UIView {
     @IBOutlet internal var uiTextField: UITextField!
 
     internal init(_ uiTextField: UITextField) {
@@ -36,13 +36,15 @@ import UIKit
         addSubview(view)
     }
     
-    override public func becomeFirstResponder() -> Bool {
-        self.uiTextField.becomeFirstResponder()
-    }
-
+    /* Properties relating to accessibility */
     override public var isAccessibilityElement: Bool {
         set { self.uiTextField.isAccessibilityElement = newValue }
         get { false }
+    }
+    
+    override public var accessibilityHint: String? {
+        set { self.uiTextField.accessibilityHint = newValue }
+        get { nil }
     }
     
     override public var accessibilityIdentifier: String? {
@@ -55,19 +57,15 @@ import UIKit
         get { nil }
     }
     
+    override public var accessibilityLanguage: String? {
+        set { self.uiTextField.accessibilityLanguage = newValue }
+        get { nil }
+    }
+    
+    /* Properties related to the text */
     internal var text: String? {
         set { self.uiTextField.text = newValue }
         get { self.uiTextField.text }
-    }
-    
-    internal var delegate: UITextFieldDelegate? {
-        set { self.uiTextField.delegate = newValue }
-        get { self.uiTextField.delegate }
-    }
-    
-    public var placeholder: String? {
-        set { self.uiTextField.placeholder = newValue }
-        get { self.uiTextField.placeholder }
     }
     
     public var textColor: UIColor? {
@@ -75,31 +73,61 @@ import UIKit
         get { self.uiTextField.textColor }
     }
     
+    public var font: UIFont? { // default is nil. use system font 12 pt
+        set { self.uiTextField.font = newValue }
+        get { self.uiTextField.font }
+    }
+    
+    public var textAlignment: NSTextAlignment { // default is NSLeftTextAlignment
+        set { self.uiTextField.textAlignment = newValue }
+        get { self.uiTextField.textAlignment }
+    }
+    
+    public var placeholder: String? {
+        set { self.uiTextField.placeholder = newValue }
+        get { self.uiTextField.placeholder }
+    }
+    
+    @available(iOS 6.0, *)
+    public var attributedPlaceholder: NSAttributedString? {
+        set { self.uiTextField.attributedPlaceholder = newValue }
+        get { self.uiTextField.attributedPlaceholder }
+    }
+    
+    internal var delegate: UITextFieldDelegate? {
+        set { self.uiTextField.delegate = newValue }
+        get { self.uiTextField.delegate }
+    }
+    
+    @available(iOS 3.2, *)
     public var selectedTextRange: UITextRange? {
         set { self.uiTextField.selectedTextRange = newValue }
         get { self.uiTextField.selectedTextRange }
     }
     
-    public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
-        self.uiTextField.addTarget(target, action: action, for: controlEvents)
-    }
-
     public func clear() {
         self.uiTextField.text = ""
     }
     
-    public func offset(from: UITextPosition, to: UITextPosition) -> Int {
-        return self.uiTextField.offset(from: from, to: to)
+    /* Properties related to keyboard appearance */
+    public var keyboardAppearance: UIKeyboardAppearance { // default is UIKeyboardAppearanceDefault
+        set { self.uiTextField.keyboardAppearance = newValue }
+        get { self.uiTextField.keyboardAppearance }
     }
     
-    /* The end and beginning of the the text document. */
+    public var keyboardType: UIKeyboardType { // default is UIKeyboardTypeDefault
+        set { self.uiTextField.keyboardType = newValue }
+        get { self.uiTextField.keyboardType }
+    }
+
+    /* Properties related to positions and selection */
     @available(iOS 3.2, *)
     public var beginningOfDocument: UITextPosition { self.uiTextField.beginningOfDocument }
 
     @available(iOS 3.2, *)
     public var endOfDocument: UITextPosition { self.uiTextField.endOfDocument }
     
-    /* Methods for creating ranges and positions. */
+    /* Methods to create text ranges and positions */
     @available(iOS 3.2, *)
     public func position(from position: UITextPosition, offset: Int) -> UITextPosition? {
         return self.uiTextField.position(from: position, offset: offset)
@@ -115,6 +143,13 @@ import UIKit
         return self.uiTextField.textRange(from: from, to: to)
     }
     
+    /* Methods relating to the content of the UITextField */
+    @available(iOS 3.2, *)
+    public func offset(from: UITextPosition, to: UITextPosition) -> Int {
+        return self.uiTextField.offset(from: from, to: to)
+    }
+    
+    /* Methods to send actions */
     public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
         self.uiTextField.sendAction(action, to: target, for: event)
     }
@@ -126,5 +161,23 @@ import UIKit
     
     public func sendActions(for controlEvents: UIControl.Event) {
         self.uiTextField.sendActions(for: controlEvents)
+    }
+    
+    /* Methods to add/remove event listeners */
+    public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+        self.uiTextField.addTarget(target, action: action, for: controlEvents)
+    }
+    
+    public func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
+        self.uiTextField.removeTarget(target, action: action, for: controlEvents)
+    }
+    
+    /* Methods related to first responder */
+    override public func becomeFirstResponder() -> Bool {
+        self.uiTextField.becomeFirstResponder()
+    }
+    
+    override public func resignFirstResponder() -> Bool {
+        self.uiTextField.resignFirstResponder()
     }
 }

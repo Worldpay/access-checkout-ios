@@ -49,11 +49,11 @@
                                 </accessibility>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
-                                <rect key="frame" x="294" y="221" width="51" height="31"/>
+                                <rect key="frame" x="294" y="239.5" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
-                                <rect key="frame" x="16" y="254" width="244.5" height="12"/>
+                                <rect key="frame" x="16" y="290.5" width="244.5" height="12"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="lW3-xC-Dsc"/>
@@ -62,8 +62,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="16" y="282" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
+                                <rect key="frame" x="16" y="318.5" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
@@ -79,18 +79,14 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                <rect key="frame" x="16" y="227" width="168.5" height="19"/>
+                                <rect key="frame" x="16" y="227" width="168.5" height="55.5"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
-                                <rect key="frame" x="-12" y="287" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
                                 <rect key="frame" x="16" y="0.0" width="119" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -112,8 +108,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
-                                <rect key="frame" x="16" y="332" width="185" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
+                                <rect key="frame" x="16" y="368.5" width="185" height="30"/>
                                 <accessibility key="accessibilityConfiguration" label="setPanCaretPositionButton"/>
                                 <state key="normal" title="setPanCaretPositionButton"/>
                                 <connections>
@@ -134,34 +130,40 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
+                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1hk-aX-03H"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="21" id="3R3-7x-qZ8"/>
-                            <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="3eT-E1-LWY"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="A4Q-yr-qYy" secondAttribute="top" id="5Cc-Zm-iER"/>
+                            <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="5Gy-mR-DcS"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="trailing" secondItem="V3W-HP-wPE" secondAttribute="trailing" id="7Uy-EY-dpW"/>
+                            <constraint firstItem="NXi-qk-FE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQx-fs-pkB"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="D1W-nh-hHQ"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="NxL-IN-v4K" secondAttribute="leading" id="Ddn-oh-qOo"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="NXi-qk-FE5" secondAttribute="trailing" constant="8" id="Ec7-e5-MQQ"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="uOE-eK-LJK" secondAttribute="bottom" constant="20" id="ExN-ri-CWS"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="bottom" secondItem="A4Q-yr-qYy" secondAttribute="bottom" id="HeA-VK-iPK"/>
                             <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JNk-u6-HOu"/>
                             <constraint firstItem="A4Q-yr-qYy" firstAttribute="leading" secondItem="ts8-Kj-GhN" secondAttribute="trailing" constant="23" id="Nhx-HB-abn"/>
-                            <constraint firstItem="FGh-S7-760" firstAttribute="leading" secondItem="PSJ-iT-v62" secondAttribute="leading" id="Nwd-J1-PvZ"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="Tct-QG-Q6u"/>
-                            <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="PSJ-iT-v62" secondAttribute="centerY" id="Wb7-Z0-DXa"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="centerY" secondItem="V3W-HP-wPE" secondAttribute="centerY" id="YOD-hy-WxO"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="aIa-0m-NUn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="19" id="bQl-87-Tli"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="8" id="chq-il-XVd"/>
+                            <constraint firstItem="MXa-G9-0FX" firstAttribute="leading" secondItem="FMM-PP-5OM" secondAttribute="leading" id="etF-g2-99x"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="gav-x2-6nM"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="FMM-PP-5OM" secondAttribute="leading" id="ixK-6Z-DA2"/>
+                            <constraint firstItem="MXa-G9-0FX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="h51-RY-kMj"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="jQm-i4-aaC"/>
                             <constraint firstAttribute="trailing" secondItem="A4Q-yr-qYy" secondAttribute="trailing" constant="210" id="jnm-R8-NOg"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="81" id="js5-A8-eow"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uOE-eK-LJK" secondAttribute="trailing" constant="16" id="noD-9L-4qa"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="trailing" constant="-334.5" id="p00-Iu-VJL"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="ts8-Kj-GhN" secondAttribute="bottom" constant="38" id="wQt-85-33g"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="FGh-S7-760" secondAttribute="leading" id="wiF-tA-Jtk"/>
+                            <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="NXi-qk-FE5" secondAttribute="centerY" id="zWA-F6-gYa"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card Flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
