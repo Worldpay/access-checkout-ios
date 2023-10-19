@@ -27,11 +27,11 @@ public extension AccessCheckoutUITextField {
     }
     
     // MARK: Methods to add/remove event listeners
-    public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
         self.uiTextField.addTarget(target, action: action, for: controlEvents)
     }
     
-    public func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
+    func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
         self.uiTextField.removeTarget(target, action: action, for: controlEvents)
     }
 }
