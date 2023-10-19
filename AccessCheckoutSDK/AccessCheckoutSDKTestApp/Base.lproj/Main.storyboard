@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Card number spacing enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-6K-hgm">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card number spacing enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsk-6K-hgm">
                                 <rect key="frame" x="21" y="109" width="229" height="20.5"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -45,13 +46,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set caret position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7O-KP-Jwr">
-                                <rect key="frame" x="20" y="593" width="134" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set caret position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7O-KP-Jwr">
+                                <rect key="frame" x="20" y="592" width="134" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ve-1b-8ez">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ve-1b-8ez">
                                 <rect key="frame" x="166" y="550" width="97" height="34"/>
                                 <accessibility key="accessibilityConfiguration" identifier="panWithoutSpacingCaretPositionTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -63,7 +64,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Caret position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOd-Wi-gth">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Caret position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="107" translatesAutoresizingMaskIntoConstraints="NO" id="iOd-Wi-gth">
                                 <rect key="frame" x="20" y="557" width="107" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -157,8 +158,8 @@
                             <constraint firstItem="3on-2C-Pqb" firstAttribute="centerY" secondItem="t8V-a2-jEC" secondAttribute="centerY" id="lh7-7d-JLJ"/>
                             <constraint firstItem="VSp-JN-R1j" firstAttribute="leading" secondItem="U2e-bY-RJ6" secondAttribute="leading" id="llf-J3-L43"/>
                             <constraint firstItem="U6f-Y3-v7i" firstAttribute="leading" secondItem="t8V-a2-jEC" secondAttribute="trailing" constant="8" id="luH-Ir-131"/>
-                            <constraint firstItem="U2e-bY-RJ6" firstAttribute="leading" secondItem="fsk-6K-hgm" secondAttribute="leading" id="rBG-Y3-BEt"/>
-                            <constraint firstItem="rtC-Eg-qgu" firstAttribute="top" secondItem="1ve-1b-8ez" secondAttribute="bottom" constant="2" id="rul-YF-CFj"/>
+                            <constraint firstItem="U2e-bY-RJ6" firstAttribute="leading" secondItem="fsk-6K-hgm" secondAttribute="leading" constant="-1" id="rBG-Y3-BEt"/>
+                            <constraint firstItem="rtC-Eg-qgu" firstAttribute="top" secondItem="1ve-1b-8ez" secondAttribute="bottom" constant="1" id="rul-YF-CFj"/>
                             <constraint firstItem="VSp-JN-R1j" firstAttribute="centerY" secondItem="jrM-nj-CDF" secondAttribute="centerY" id="usT-61-qnX"/>
                             <constraint firstItem="rtC-Eg-qgu" firstAttribute="centerY" secondItem="Zcp-r3-dJ2" secondAttribute="centerY" id="vyG-aK-8tr"/>
                             <constraint firstItem="1ve-1b-8ez" firstAttribute="leading" secondItem="rtC-Eg-qgu" secondAttribute="leading" id="wNf-vk-fya"/>
