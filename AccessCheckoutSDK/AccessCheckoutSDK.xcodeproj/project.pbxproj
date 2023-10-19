@@ -15,6 +15,8 @@
 		512DF1A02AE1663000416372 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF19F2AE1662F00416372 /* Configuration.swift */; };
 		512DF1A42AE1698500416372 /* PanWithoutSpacingPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */; };
 		512DF1A62AE16A8B00416372 /* PanWithSpacingPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */; };
+		512DF1AA2AE1855800416372 /* PanWithoutSpacingFieldsExistUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1A92AE1855800416372 /* PanWithoutSpacingFieldsExistUITests.swift */; };
+		512DF1AC2AE1860700416372 /* PanBasePageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1AB2AE1860700416372 /* PanBasePageObject.swift */; };
 		512F69342AE12A4D002BF7A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69332AE12A4D002BF7A8 /* AppDelegate.swift */; };
 		512F69362AE12A4D002BF7A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69352AE12A4D002BF7A8 /* SceneDelegate.swift */; };
 		512F69382AE12A4D002BF7A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69372AE12A4D002BF7A8 /* ViewController.swift */; };
@@ -250,6 +252,8 @@
 		512DF19F2AE1662F00416372 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithoutSpacingPageObject.swift; sourceTree = "<group>"; };
 		512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithSpacingPageObject.swift; sourceTree = "<group>"; };
+		512DF1A92AE1855800416372 /* PanWithoutSpacingFieldsExistUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithoutSpacingFieldsExistUITests.swift; sourceTree = "<group>"; };
+		512DF1AB2AE1860700416372 /* PanBasePageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanBasePageObject.swift; sourceTree = "<group>"; };
 		512F69312AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutSDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F69332AE12A4D002BF7A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		512F69352AE12A4D002BF7A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -514,6 +518,7 @@
 		512DF1A22AE1697A00416372 /* pageObjects */ = {
 			isa = PBXGroup;
 			children = (
+				512DF1AB2AE1860700416372 /* PanBasePageObject.swift */,
 				512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */,
 				512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */,
 			);
@@ -540,6 +545,7 @@
 			children = (
 				512DF1A22AE1697A00416372 /* pageObjects */,
 				512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */,
+				512DF1A92AE1855800416372 /* PanWithoutSpacingFieldsExistUITests.swift */,
 			);
 			path = AccessCheckoutSDKTestAppUITests;
 			sourceTree = "<group>";
@@ -1529,7 +1535,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				512DF1AC2AE1860700416372 /* PanBasePageObject.swift in Sources */,
 				512F69552AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift in Sources */,
+				512DF1AA2AE1855800416372 /* PanWithoutSpacingFieldsExistUITests.swift in Sources */,
 				512DF1A62AE16A8B00416372 /* PanWithSpacingPageObject.swift in Sources */,
 				512DF1A42AE1698500416372 /* PanWithoutSpacingPageObject.swift in Sources */,
 			);

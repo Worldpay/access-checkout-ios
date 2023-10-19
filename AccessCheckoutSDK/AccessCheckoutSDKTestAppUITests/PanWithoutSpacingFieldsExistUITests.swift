@@ -1,16 +1,16 @@
 import XCTest
 
-class PanWithSpacingFieldsExistUITests: XCTestCase {
+class PanWithoutSpacingFieldsExistUITests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
     let app = XCUIApplication()
-    var view: PanWithSpacingPageObject?
+    var view: PanWithoutSpacingPageObject?
     
     override func setUp() {
         continueAfterFailure = false
         
         app.launch()
-        view = PanWithSpacingPageObject(app)
+        view = PanWithoutSpacingPageObject(app)
     }
     
     func testCardNumberTextField_exists() {
