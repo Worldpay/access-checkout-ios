@@ -74,46 +74,6 @@ class CardFlowViewPageObject {
         panField.typeText(text)
     }
 
-    func panCaretPosition() -> Int {
-        let textField = app.textFields["getPanCaretPositionTextField"]
-        // Focusing the textfield triggers the editEnd event on the pan field (see production code)
-        // There is a listener for this event which captures the position of the caret in the pan field
-        // and updates the text in panCaretPositionTextField
-        textField.tap()
-
-        guard let text = textField.value else {
-            return -1
-        }
-
-        return Int(text as! String)!
-    }
-
-    func setPanCaretAtAndTypeIn(position: Int, text: [String]) {
-        let textField = app.textFields["setPanCaretPositionTextField"]
-        textField.tap()
-        textField.typeText("\(position)")
-
-        let button = app.buttons["setPanCaretPositionButton"]
-        button.tap()
-
-        for character in text {
-            panField.typeText(character)
-        }
-    }
-
-    func selectPanAndTypeIn(position: Int, selectionLength: Int, text: [String]) {
-        let textField = app.textFields["setPanCaretPositionTextField"]
-        textField.tap()
-        textField.typeText("\(position)|\(selectionLength)")
-
-        let button = app.buttons["setPanCaretPositionButton"]
-        button.tap()
-
-        for character in text {
-            panField.typeText(character)
-        }
-    }
-
     func typeTextIntoExpiryDate(_ text: String) {
         if !expiryDateField.isFocused {
             expiryDateField.tap()

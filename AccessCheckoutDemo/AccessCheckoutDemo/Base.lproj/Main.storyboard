@@ -108,28 +108,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGh-S7-760">
-                                <rect key="frame" x="16" y="368.5" width="185" height="30"/>
-                                <accessibility key="accessibilityConfiguration" label="setPanCaretPositionButton"/>
-                                <state key="normal" title="setPanCaretPositionButton"/>
-                                <connections>
-                                    <action selector="setPanCaret" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tad-7N-yib"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gdc-Jc-Nb3">
-                                <rect key="frame" x="17" y="381" width="1" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="setPanCaretPositionTextField"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uCP-BC-ifY">
-                                <rect key="frame" x="103" y="381" width="1" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="getPanCaretPositionTextField"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
                                 <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
@@ -139,7 +117,6 @@
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1hk-aX-03H"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="21" id="3R3-7x-qZ8"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="A4Q-yr-qYy" secondAttribute="top" id="5Cc-Zm-iER"/>
-                            <constraint firstItem="FGh-S7-760" firstAttribute="top" secondItem="PSJ-iT-v62" secondAttribute="bottom" constant="20" id="5Gy-mR-DcS"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="trailing" secondItem="V3W-HP-wPE" secondAttribute="trailing" id="7Uy-EY-dpW"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQx-fs-pkB"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="gxk-b1-dMa" secondAttribute="leading" id="D1W-nh-hHQ"/>
@@ -162,7 +139,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="uOE-eK-LJK" secondAttribute="trailing" constant="16" id="noD-9L-4qa"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="trailing" constant="-334.5" id="p00-Iu-VJL"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="ts8-Kj-GhN" secondAttribute="bottom" constant="38" id="wQt-85-33g"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="FGh-S7-760" secondAttribute="leading" id="wiF-tA-Jtk"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="centerY" secondItem="NXi-qk-FE5" secondAttribute="centerY" id="zWA-F6-gYa"/>
                         </constraints>
                     </view>
@@ -172,13 +148,10 @@
                         <outlet property="cvcTextField" destination="A4Q-yr-qYy" id="pGg-lZ-5MU"/>
                         <outlet property="expiryDateIsValidLabel" destination="FMM-PP-5OM" id="EKv-Pa-JkQ"/>
                         <outlet property="expiryDateTextField" destination="ts8-Kj-GhN" id="g2q-k2-Uxk"/>
-                        <outlet property="getPanCaretPositionTextField" destination="uCP-BC-ifY" id="tZd-4h-DAb"/>
                         <outlet property="imageView" destination="4gy-2k-boW" id="RJe-7W-H1o"/>
                         <outlet property="panIsValidLabel" destination="MXa-G9-0FX" id="vI4-fM-Idp"/>
                         <outlet property="panTextField" destination="uOE-eK-LJK" id="ElA-Kn-zDb"/>
                         <outlet property="paymentsCvcSessionToggle" destination="V3W-HP-wPE" id="EPo-AH-AJP"/>
-                        <outlet property="setPanCaretPositionButton" destination="FGh-S7-760" id="lNp-HZ-ymz"/>
-                        <outlet property="setPanCaretPositionTextField" destination="gdc-Jc-Nb3" id="JQh-qT-u79"/>
                         <outlet property="spinner" destination="NXi-qk-FE5" id="hD6-DA-Fl5"/>
                         <outlet property="submitButton" destination="PSJ-iT-v62" id="l4P-oB-AHY"/>
                     </connections>
