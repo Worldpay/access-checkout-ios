@@ -157,7 +157,7 @@ workflows:
       - xcode-test:
           inputs:
             - project_path: "$SDK_PROJECT_PATH"
-            - destination: platform=iOS Simulator,name=iPhone 11 Pro,OS=13.7
+            - destination: generic/platform=iOS Simulator
             - scheme: "$SDK_UI_TESTS_SCHEME"
             - generate_code_coverage_files: "yes"
       - deploy-to-bitrise-io:
