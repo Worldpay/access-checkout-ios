@@ -24,10 +24,10 @@ class ViewController: UIViewController {
         panWithoutSpacing.layer.borderColor = UIColor.black.cgColor
         panWithoutSpacing.layer.cornerRadius = 5
 
-        panWithSpacing.addTarget(self, action: #selector(recordPanWithSpacingCaretPosition), for: .editingChanged)
+        panWithSpacing.addTarget(self, action: #selector(recordPanWithSpacingCaretPosition), for: .editingDidEnd)
         initialiseValidation(usingCardNumberField: panWithSpacing, cardNumberSpacingEnabled: true)
 
-        panWithoutSpacing.addTarget(self, action: #selector(recordPanWithoutSpacingCaretPosition), for: .editingChanged)
+        panWithoutSpacing.addTarget(self, action: #selector(recordPanWithoutSpacingCaretPosition), for: .editingDidEnd)
         initialiseValidation(usingCardNumberField: panWithoutSpacing, cardNumberSpacingEnabled: false)
     }
 
