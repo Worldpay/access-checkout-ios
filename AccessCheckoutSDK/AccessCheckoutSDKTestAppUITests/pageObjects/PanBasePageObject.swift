@@ -49,7 +49,7 @@ class PanBasePageObject {
         panField.typeText(text)
     }
 
-    func panWithSpacingCaretPosition() -> Int {
+    func panCaretPosition() -> Int {
         let textField = panCaretPositionTextField
         // Focusing the textfield triggers the editEnd event on the pan field (see production code)
         // There is a listener for this event which captures the position of the caret in the pan field
@@ -63,7 +63,7 @@ class PanBasePageObject {
         return Int(text as! String)!
     }
 
-    func setPanWithSpacingCaretAtAndTypeIn(position: Int, text: [String]) {
+    func setPanCaretAtAndTypeIn(position: Int, text: [String]) {
         let textField = setPanCaretPositionTextField
         textField.tap()
         textField.typeText("\(position)")
@@ -76,7 +76,7 @@ class PanBasePageObject {
         }
     }
 
-    func selectPanWithSpacingAndTypeIn(position: Int, selectionLength: Int, text: [String]) {
+    func selectPanAndTypeIn(position: Int, selectionLength: Int, text: [String]) {
         let textField = setPanCaretPositionTextField
         textField.tap()
         textField.typeText("\(position)|\(selectionLength)")
