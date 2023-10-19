@@ -217,6 +217,13 @@
 			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
 			remoteInfo = AccessCheckoutSDK;
 		};
+		512DF1A72AE17D7700416372 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
+			remoteInfo = AccessCheckoutSDK;
+		};
 		512F69512AE12A50002BF7A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
@@ -1207,6 +1214,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				512DF1A82AE17D7700416372 /* PBXTargetDependency */,
 			);
 			name = AccessCheckoutSDKTestApp;
 			productName = AccessCheckoutSDKTestApp;
@@ -1718,6 +1726,11 @@
 			isa = PBXTargetDependency;
 			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
 			targetProxy = 1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */;
+		};
+		512DF1A82AE17D7700416372 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
+			targetProxy = 512DF1A72AE17D7700416372 /* PBXContainerItemProxy */;
 		};
 		512F69522AE12A50002BF7A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
