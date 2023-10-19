@@ -21,7 +21,6 @@
 		512F693B2AE12A4D002BF7A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512F69392AE12A4D002BF7A8 /* Main.storyboard */; };
 		512F693D2AE12A4F002BF7A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512F693C2AE12A4F002BF7A8 /* Assets.xcassets */; };
 		512F69402AE12A4F002BF7A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512F693E2AE12A4F002BF7A8 /* LaunchScreen.storyboard */; };
-		512F694B2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */; };
 		512F69552AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */; };
 		512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */; };
 		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
@@ -218,13 +217,6 @@
 			remoteGlobalIDString = C9AFE3D222B7996200943B3E;
 			remoteInfo = AccessCheckoutSDK;
 		};
-		512F69472AE12A4F002BF7A8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 512F69302AE12A4D002BF7A8;
-			remoteInfo = AccessCheckoutSDKTestApp;
-		};
 		512F69512AE12A50002BF7A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C9AFE3CA22B7996200943B3E /* Project object */;
@@ -259,8 +251,6 @@
 		512F693C2AE12A4F002BF7A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		512F693F2AE12A4F002BF7A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		512F69412AE12A4F002BF7A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		512F69462AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppTests.swift; sourceTree = "<group>"; };
 		512F69502AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithSpacingFieldsExistUITests.swift; sourceTree = "<group>"; };
 		512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldExtension.swift; sourceTree = "<group>"; };
@@ -477,13 +467,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		512F69432AE12A4F002BF7A8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		512F694D2AE12A50002BF7A8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -543,14 +526,6 @@
 				512DF19F2AE1662F00416372 /* Configuration.swift */,
 			);
 			path = AccessCheckoutSDKTestApp;
-			sourceTree = "<group>";
-		};
-		512F69492AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */,
-			);
-			path = AccessCheckoutSDKTestAppTests;
 			sourceTree = "<group>";
 		};
 		512F69532AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests */ = {
@@ -626,7 +601,6 @@
 				1BCBFEB622B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
 				E7B0A17324293D290028797E /* scripts */,
 				512F69322AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp */,
-				512F69492AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests */,
 				512F69532AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests */,
 				C9AFE3D422B7996200943B3E /* Products */,
 				FE5EBE1BF82722DA10BBC5FC /* Pods */,
@@ -642,7 +616,6 @@
 				C9AFE3DC22B7996200943B3E /* AccessCheckoutSDKTests.xctest */,
 				1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */,
 				512F69312AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp.app */,
-				512F69462AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.xctest */,
 				512F69502AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.xctest */,
 			);
 			name = Products;
@@ -1240,24 +1213,6 @@
 			productReference = 512F69312AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		512F69452AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 512F695F2AE12A50002BF7A8 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTestAppTests" */;
-			buildPhases = (
-				512F69422AE12A4F002BF7A8 /* Sources */,
-				512F69432AE12A4F002BF7A8 /* Frameworks */,
-				512F69442AE12A4F002BF7A8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				512F69482AE12A4F002BF7A8 /* PBXTargetDependency */,
-			);
-			name = AccessCheckoutSDKTestAppTests;
-			productName = AccessCheckoutSDKTestAppTests;
-			productReference = 512F69462AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		512F694F2AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 512F69602AE12A50002BF7A8 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTestAppUITests" */;
@@ -1333,10 +1288,6 @@
 					512F69302AE12A4D002BF7A8 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					512F69452AE12A4F002BF7A8 = {
-						CreatedOnToolsVersion = 13.2.1;
-						TestTargetID = 512F69302AE12A4D002BF7A8;
-					};
 					512F694F2AE12A50002BF7A8 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 512F69302AE12A4D002BF7A8;
@@ -1367,7 +1318,6 @@
 				C9AFE3DB22B7996200943B3E /* AccessCheckoutSDKTests */,
 				1BCBFEB422B8EA3C00A65FAA /* AccessCheckoutSDKPactTests */,
 				512F69302AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp */,
-				512F69452AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests */,
 				512F694F2AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests */,
 			);
 		};
@@ -1388,13 +1338,6 @@
 				512F69402AE12A4F002BF7A8 /* LaunchScreen.storyboard in Resources */,
 				512F693D2AE12A4F002BF7A8 /* Assets.xcassets in Resources */,
 				512F693B2AE12A4D002BF7A8 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		512F69442AE12A4F002BF7A8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1571,14 +1514,6 @@
 				512F69342AE12A4D002BF7A8 /* AppDelegate.swift in Sources */,
 				512DF1A02AE1663000416372 /* Configuration.swift in Sources */,
 				512F69362AE12A4D002BF7A8 /* SceneDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		512F69422AE12A4F002BF7A8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				512F694B2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1784,11 +1719,6 @@
 			target = C9AFE3D222B7996200943B3E /* AccessCheckoutSDK */;
 			targetProxy = 1BCBFEBB22B8EA3C00A65FAA /* PBXContainerItemProxy */;
 		};
-		512F69482AE12A4F002BF7A8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 512F69302AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp */;
-			targetProxy = 512F69472AE12A4F002BF7A8 /* PBXContainerItemProxy */;
-		};
 		512F69522AE12A50002BF7A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 512F69302AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp */;
@@ -1868,8 +1798,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AccessCheckoutSDKTestApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1885,6 +1817,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1898,8 +1831,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AccessCheckoutSDKTestApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1915,51 +1850,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		512F695A2AE12A50002BF7A8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AccessCheckoutSDKTestApp.app/AccessCheckoutSDKTestApp";
-			};
-			name = Debug;
-		};
-		512F695B2AE12A50002BF7A8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AccessCheckoutSDKTestApp.app/AccessCheckoutSDKTestApp";
 			};
 			name = Release;
 		};
@@ -1969,13 +1863,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1989,13 +1888,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LPBQ5BR8NU;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2239,15 +2143,6 @@
 			buildConfigurations = (
 				512F69582AE12A50002BF7A8 /* Debug */,
 				512F69592AE12A50002BF7A8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		512F695F2AE12A50002BF7A8 /* Build configuration list for PBXNativeTarget "AccessCheckoutSDKTestAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				512F695A2AE12A50002BF7A8 /* Debug */,
-				512F695B2AE12A50002BF7A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
