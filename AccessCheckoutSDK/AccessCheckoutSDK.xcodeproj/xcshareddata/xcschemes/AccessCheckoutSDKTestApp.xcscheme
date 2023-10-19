@@ -32,16 +32,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "512F69452AE12A4F002BF7A8"
-               BuildableName = "AccessCheckoutSDKTestAppTests.xctest"
-               BlueprintName = "AccessCheckoutSDKTestAppTests"
-               ReferencedContainer = "container:AccessCheckoutSDK.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "512F694F2AE12A50002BF7A8"
                BuildableName = "AccessCheckoutSDKTestAppUITests.xctest"
                BlueprintName = "AccessCheckoutSDKTestAppUITests"

@@ -7,24 +7,32 @@ public final class AccessCheckoutUITextField: UIView {
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
+        self.setStyles()
     }
     
     init() {
         super.init(frame: CGRect())
-        self.initSubViews()
+        self.addSubViews()
+        self.setStyles()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.initSubViews()
+        self.addSubViews()
+        self.setStyles()
     }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.initSubViews()
+        self.addSubViews()
+        self.setStyles()
     }
     
-    private func initSubViews() {
+    override public func prepareForInterfaceBuilder() {
+        self.setStyles()
+    }
+    
+    private func addSubViews() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
@@ -35,15 +43,18 @@ public final class AccessCheckoutUITextField: UIView {
         ]
         
         addSubview(view)
-
-//        self.layer.borderWidth = 0.15
-//        self.layer.borderColor = UIColor.green.cgColor
-//        self.layer.cornerRadius = 5
-//
-//        setNeedsDisplay()
     }
     
-    /* Properties relating to accessibility */
+    private func setStyles() {
+        self.layer.cornerRadius = self.cornerRadius
+        self.layer.borderColor = self.borderColor.cgColor
+        self.layer.borderWidth = self.borderWidth
+        self.uiTextField.keyboardType = self.keyboardType
+    }
+    
+    // MARK: Public properties
+
+    /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
         set { self.uiTextField.isAccessibilityElement = newValue }
         get { false }
@@ -69,65 +80,64 @@ public final class AccessCheckoutUITextField: UIView {
         get { nil }
     }
     
-    /* Properties related to the text */
-    internal var text: String? {
-        set { self.uiTextField.text = newValue }
-        get { self.uiTextField.text }
+    /* Border properties */
+    @IBInspectable
+    public var cornerRadius: CGFloat = 5 {
+        didSet { self.layer.cornerRadius = self.cornerRadius }
     }
     
-    public var textColor: UIColor? {
-        set { self.uiTextField.textColor = newValue }
-        get { self.uiTextField.textColor }
+    @IBInspectable
+    public var borderWidth: CGFloat = 0.15 {
+        didSet { self.layer.cornerRadius = self.cornerRadius }
     }
     
+    @IBInspectable
+    public var borderColor: UIColor = .gray {
+        didSet { self.layer.borderColor = self.borderColor.cgColor }
+    }
+    
+    /* Text properties */
+    @IBInspectable
+    public var textColor: UIColor? { // default is nil. use opaque black
+        didSet { self.uiTextField.textColor = self.textColor }
+    }
+    
+    @IBInspectable
     public var font: UIFont? { // default is nil. use system font 12 pt
-        set { self.uiTextField.font = newValue }
-        get { self.uiTextField.font }
+        didSet { self.uiTextField.font = self.font }
     }
     
-    public var textAlignment: NSTextAlignment { // default is NSLeftTextAlignment
-        set { self.uiTextField.textAlignment = newValue }
-        get { self.uiTextField.textAlignment }
+    @IBInspectable
+    public var textAlignment: NSTextAlignment = .left {
+        didSet { self.uiTextField.textAlignment = self.textAlignment }
     }
     
-    public var placeholder: String? {
-        set { self.uiTextField.placeholder = newValue }
-        get { self.uiTextField.placeholder }
-    }
-    
+    /* Placeholder properties */
     @available(iOS 6.0, *)
     public var attributedPlaceholder: NSAttributedString? {
-        set { self.uiTextField.attributedPlaceholder = newValue }
-        get { self.uiTextField.attributedPlaceholder }
+        didSet { self.uiTextField.attributedPlaceholder = self.attributedPlaceholder }
     }
     
-    internal var delegate: UITextFieldDelegate? {
-        set { self.uiTextField.delegate = newValue }
-        get { self.uiTextField.delegate }
+    @IBInspectable
+    public var placeholder: String? {
+        didSet { self.uiTextField.placeholder = self.placeholder }
     }
     
-    @available(iOS 3.2, *)
-    public var selectedTextRange: UITextRange? {
-        set { self.uiTextField.selectedTextRange = newValue }
-        get { self.uiTextField.selectedTextRange }
+    /* Properties related to keyboard appearance */
+    public var keyboardAppearance: UIKeyboardAppearance = .default {
+        didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
     
+    public var keyboardType: UIKeyboardType = .numberPad {
+        didSet { self.uiTextField.keyboardType = self.keyboardType }
+    }
+
+    // MARK: Public methods
+
     public func clear() {
         self.uiTextField.text = ""
     }
     
-    /* Properties related to keyboard appearance */
-    public var keyboardAppearance: UIKeyboardAppearance { // default is UIKeyboardAppearanceDefault
-        set { self.uiTextField.keyboardAppearance = newValue }
-        get { self.uiTextField.keyboardAppearance }
-    }
-    
-    public var keyboardType: UIKeyboardType { // default is UIKeyboardTypeDefault
-        set { self.uiTextField.keyboardType = newValue }
-        get { self.uiTextField.keyboardType }
-    }
-
-    /* Methods to send actions */
     public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
         self.uiTextField.sendAction(action, to: target, for: event)
     }
@@ -141,12 +151,23 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextField.sendActions(for: controlEvents)
     }
     
-    /* Methods related to first responder */
     override public func becomeFirstResponder() -> Bool {
         self.uiTextField.becomeFirstResponder()
     }
     
     override public func resignFirstResponder() -> Bool {
         self.uiTextField.resignFirstResponder()
+    }
+    
+    // MARK: Internal properties
+
+    internal var text: String? {
+        get { self.uiTextField.text }
+        set { self.uiTextField.text = newValue }
+    }
+    
+    internal var delegate: UITextFieldDelegate? {
+        get { self.uiTextField.delegate }
+        set { self.uiTextField.delegate = newValue }
     }
 }

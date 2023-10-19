@@ -32,6 +32,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="YKB-fI-dtD"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value=" Card number"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EaK-rI-Efc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                 <rect key="frame" x="20" y="508" width="374" height="34"/>
@@ -39,6 +42,9 @@
                                 <accessibility key="accessibilityConfiguration" identifier="panWithoutSpacing">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card number spacing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntR-RK-hOD">
                                 <rect key="frame" x="20" y="479" width="187" height="21"/>
