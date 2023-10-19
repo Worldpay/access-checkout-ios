@@ -19,10 +19,12 @@ class ViewController: UIViewController {
         panWithSpacing.layer.borderWidth = 0.15
         panWithSpacing.layer.borderColor = UIColor.black.cgColor
         panWithSpacing.layer.cornerRadius = 5
+        panWithSpacing.placeholder = "Card Number"
 
         panWithoutSpacing.layer.borderWidth = 0.15
         panWithoutSpacing.layer.borderColor = UIColor.black.cgColor
         panWithoutSpacing.layer.cornerRadius = 5
+        panWithoutSpacing.placeholder = "Card Number"
 
         panWithSpacing.addTarget(self, action: #selector(recordPanWithSpacingCaretPosition), for: .editingDidEnd)
         initialiseValidation(usingCardNumberField: panWithSpacing, cardNumberSpacingEnabled: true)
