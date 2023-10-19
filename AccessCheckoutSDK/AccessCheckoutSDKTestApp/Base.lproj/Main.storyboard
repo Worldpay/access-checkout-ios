@@ -53,13 +53,13 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ve-1b-8ez">
                                 <rect key="frame" x="166" y="550" width="97" height="34"/>
-                                <accessibility key="accessibilityConfiguration" identifier="panWithSpacingCaretPositionTextField"/>
+                                <accessibility key="accessibilityConfiguration" identifier="panWithoutSpacingCaretPositionTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rtC-Eg-qgu">
                                 <rect key="frame" x="166" y="586" width="97" height="34"/>
-                                <accessibility key="accessibilityConfiguration" identifier="setPanWithSpacingCaretPositionTextField"/>
+                                <accessibility key="accessibilityConfiguration" identifier="setPanWithoutSpacingCaretPositionTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -71,7 +71,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcp-r3-dJ2">
                                 <rect key="frame" x="271" y="585" width="75" height="35"/>
-                                <accessibility key="accessibilityConfiguration" identifier="setPanWithSpacingCaretPositionButton"/>
+                                <accessibility key="accessibilityConfiguration" identifier="setPanWithoutSpacingCaretPositionButton"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Set"/>
                                 <connections>
