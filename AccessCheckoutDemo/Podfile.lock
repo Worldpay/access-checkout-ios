@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AccessCheckoutSDK: ae15fcbb874f2c1c824d36651e886f6fa7bee39f
+  AccessCheckoutSDK: 51336c9c1bf8901f963f830d76b59798e277e8c3
   Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 

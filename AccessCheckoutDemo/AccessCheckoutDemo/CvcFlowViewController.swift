@@ -46,7 +46,10 @@ class CvcFlowViewController: UIViewController {
         cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "123"
         
-        cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        // Control used as helpers for the automated tests - Start of section
+        // Label colour is changed to make it invisible
+        cvcIsValidLabel.textColor = Configuration.backgroundColor
+        // Controls used as helpers for the automated tests - End of section
         
         let validationConfig = try! CvcOnlyValidationConfig.builder()
             .cvc(cvcTextField)

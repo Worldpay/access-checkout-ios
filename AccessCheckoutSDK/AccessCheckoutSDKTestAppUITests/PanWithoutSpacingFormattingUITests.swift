@@ -34,13 +34,25 @@ class PanWithoutSpacingFormattingUITests: XCTestCase {
         XCTAssertEqual(view!.panText, "4111")
         
         view!.typeTextIntoPan(backspace)
+        wait(0.5)
         XCTAssertEqual(view!.panText, "411")
+
         view!.typeTextIntoPan(backspace)
+        wait(0.5)
         XCTAssertEqual(view!.panText, "41")
+
         view!.typeTextIntoPan(backspace)
+        wait(0.5)
         XCTAssertEqual(view!.panText, "4")
+
         view!.typeTextIntoPan(backspace)
-        XCTAssertEqual(view!.panText, "Card Number")
+        wait(0.5)
+        XCTAssertEqual(view!.panText, "Card number")
+    }
+    
+    private func wait(_ timeoutInSeconds: TimeInterval) {
+        let exp = XCTestCase().expectation(description: "Waiting for \(timeoutInSeconds)")
+        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
 }
 

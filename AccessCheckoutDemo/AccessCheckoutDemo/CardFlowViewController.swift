@@ -127,9 +127,10 @@ class CardFlowViewController: UIViewController {
         cvcTextField.placeholder = "CVC"
 
         // Controls used as helpers for the automated tests - Start of section
-        panIsValidLabel.font = UIFont.systemFont(ofSize: 0)
-        expiryDateIsValidLabel.font = UIFont.systemFont(ofSize: 0)
-        cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
+        // Labels colours are changed to make them invisible
+        panIsValidLabel.textColor = Configuration.backgroundColor
+        expiryDateIsValidLabel.textColor = Configuration.backgroundColor
+        cvcIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
         resetCard(preserveContent: false, validationErrors: nil)
