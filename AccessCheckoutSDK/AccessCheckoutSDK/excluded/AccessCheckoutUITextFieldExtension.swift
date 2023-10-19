@@ -1,32 +1,37 @@
 import UIKit
 
+/**
+ * This extension is NOT published via Cocoapods or SPM
+ * It is solely designed to expose certain properties to the UI tests for this SDK
+ */
 public extension AccessCheckoutUITextField {
-    /* Properties related to positions and selection */
-    @available(iOS 3.2, *)
+    // MARK: Methods related to caret position and selection
     var beginningOfDocument: UITextPosition { self.uiTextField.beginningOfDocument }
 
-    @available(iOS 3.2, *)
     var endOfDocument: UITextPosition { self.uiTextField.endOfDocument }
 
-    /* Methods to create text ranges and positions */
-    @available(iOS 3.2, *)
     func position(from position: UITextPosition, offset: Int) -> UITextPosition? {
         return self.uiTextField.position(from: position, offset: offset)
     }
 
-    @available(iOS 3.2, *)
     func position(from position: UITextPosition, in direction: UITextLayoutDirection, offset: Int) -> UITextPosition? {
         return self.uiTextField.position(from: position, in: direction, offset: offset)
     }
 
-    @available(iOS 3.2, *)
     func textRange(from: UITextPosition, to: UITextPosition) -> UITextRange? {
         return self.uiTextField.textRange(from: from, to: to)
     }
 
-    /* Methods relating to the content of the UITextField */
-    @available(iOS 3.2, *)
     func offset(from: UITextPosition, to: UITextPosition) -> Int {
         return self.uiTextField.offset(from: from, to: to)
+    }
+    
+    // MARK: Methods to add/remove event listeners
+    public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+        self.uiTextField.addTarget(target, action: action, for: controlEvents)
+    }
+    
+    public func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
+        self.uiTextField.removeTarget(target, action: action, for: controlEvents)
     }
 }

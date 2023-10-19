@@ -1,6 +1,7 @@
 import UIKit
 
-@IBDesignable public final class AccessCheckoutUITextField: UIView {
+@IBDesignable
+public final class AccessCheckoutUITextField: UIView {
     @IBOutlet internal var uiTextField: UITextField!
 
     internal init(_ uiTextField: UITextField) {
@@ -34,6 +35,12 @@ import UIKit
         ]
         
         addSubview(view)
+
+//        self.layer.borderWidth = 0.15
+//        self.layer.borderColor = UIColor.green.cgColor
+//        self.layer.cornerRadius = 5
+//
+//        setNeedsDisplay()
     }
     
     /* Properties relating to accessibility */
@@ -132,15 +139,6 @@ import UIKit
     
     public func sendActions(for controlEvents: UIControl.Event) {
         self.uiTextField.sendActions(for: controlEvents)
-    }
-    
-    /* Methods to add/remove event listeners */
-    public func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
-        self.uiTextField.addTarget(target, action: action, for: controlEvents)
-    }
-    
-    public func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
-        self.uiTextField.removeTarget(target, action: action, for: controlEvents)
     }
     
     /* Methods related to first responder */

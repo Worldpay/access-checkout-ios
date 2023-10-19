@@ -12,6 +12,9 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
+		512DF1A02AE1663000416372 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF19F2AE1662F00416372 /* Configuration.swift */; };
+		512DF1A42AE1698500416372 /* PanWithoutSpacingPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */; };
+		512DF1A62AE16A8B00416372 /* PanWithSpacingPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */; };
 		512F69342AE12A4D002BF7A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69332AE12A4D002BF7A8 /* AppDelegate.swift */; };
 		512F69362AE12A4D002BF7A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69352AE12A4D002BF7A8 /* SceneDelegate.swift */; };
 		512F69382AE12A4D002BF7A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69372AE12A4D002BF7A8 /* ViewController.swift */; };
@@ -19,8 +22,7 @@
 		512F693D2AE12A4F002BF7A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512F693C2AE12A4F002BF7A8 /* Assets.xcassets */; };
 		512F69402AE12A4F002BF7A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512F693E2AE12A4F002BF7A8 /* LaunchScreen.storyboard */; };
 		512F694B2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */; };
-		512F69552AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69542AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift */; };
-		512F69572AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69562AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift */; };
+		512F69552AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */; };
 		512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */; };
 		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
 		5166BC8726833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */; };
@@ -246,6 +248,9 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		512DF19F2AE1662F00416372 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithoutSpacingPageObject.swift; sourceTree = "<group>"; };
+		512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithSpacingPageObject.swift; sourceTree = "<group>"; };
 		512F69312AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutSDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F69332AE12A4D002BF7A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		512F69352AE12A4D002BF7A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -257,8 +262,7 @@
 		512F69462AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppTests.swift; sourceTree = "<group>"; };
 		512F69502AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		512F69542AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppUITests.swift; sourceTree = "<group>"; };
-		512F69562AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithSpacingFieldsExistUITests.swift; sourceTree = "<group>"; };
 		512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldExtension.swift; sourceTree = "<group>"; };
 		5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCardSpacingTests.swift; sourceTree = "<group>"; };
 		5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorLegacyViewTests.swift; sourceTree = "<group>"; };
@@ -517,6 +521,15 @@
 			path = AccessCheckoutSDKPactTests;
 			sourceTree = "<group>";
 		};
+		512DF1A22AE1697A00416372 /* pageObjects */ = {
+			isa = PBXGroup;
+			children = (
+				512DF1A52AE16A8B00416372 /* PanWithSpacingPageObject.swift */,
+				512DF1A32AE1698500416372 /* PanWithoutSpacingPageObject.swift */,
+			);
+			path = pageObjects;
+			sourceTree = "<group>";
+		};
 		512F69322AE12A4D002BF7A8 /* AccessCheckoutSDKTestApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +540,7 @@
 				512F693C2AE12A4F002BF7A8 /* Assets.xcassets */,
 				512F693E2AE12A4F002BF7A8 /* LaunchScreen.storyboard */,
 				512F69412AE12A4F002BF7A8 /* Info.plist */,
+				512DF19F2AE1662F00416372 /* Configuration.swift */,
 			);
 			path = AccessCheckoutSDKTestApp;
 			sourceTree = "<group>";
@@ -542,8 +556,8 @@
 		512F69532AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				512F69542AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift */,
-				512F69562AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift */,
+				512DF1A22AE1697A00416372 /* pageObjects */,
+				512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */,
 			);
 			path = AccessCheckoutSDKTestAppUITests;
 			sourceTree = "<group>";
@@ -1555,6 +1569,7 @@
 			files = (
 				512F69382AE12A4D002BF7A8 /* ViewController.swift in Sources */,
 				512F69342AE12A4D002BF7A8 /* AppDelegate.swift in Sources */,
+				512DF1A02AE1663000416372 /* Configuration.swift in Sources */,
 				512F69362AE12A4D002BF7A8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1571,8 +1586,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				512F69552AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift in Sources */,
-				512F69572AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift in Sources */,
+				512F69552AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift in Sources */,
+				512DF1A62AE16A8B00416372 /* PanWithSpacingPageObject.swift in Sources */,
+				512DF1A42AE1698500416372 /* PanWithoutSpacingPageObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
