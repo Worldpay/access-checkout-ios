@@ -12,13 +12,14 @@ Pod::Spec.new do |spec|
   spec.platform = :ios
   spec.ios.deployment_target = '8.0'
 
-  spec.homepage     = 'https://github.com/Worldpay/access-checkout-ios'
+  spec.homepage     = 'https://github.worldpay.com/Olivier-Chalet/access-checkout-ios-olivier'
   spec.license      = { :type => 'MIT', :file => 'AccessCheckoutSDK/LICENSE' }
 
   spec.author       = 'Access Worldpay'
 
   spec.source       = { :git => "https://github.com/Worldpay/access-checkout-ios.git", :tag => "v2.4.1" }
   spec.source_files = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{h,swift,xib,strings}'
+  spec.exclude_files = 'AccessCheckoutSDK/AccessCheckoutSDK/excluded/**/*.*'
   spec.public_header_files = 'AccessCheckoutSDK/AccessCheckoutSDK/AccessCheckoutSDK.h'
   spec.resources    = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{json,png}'
 end

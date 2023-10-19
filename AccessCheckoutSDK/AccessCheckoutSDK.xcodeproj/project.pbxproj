@@ -21,6 +21,7 @@
 		512F694B2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F694A2AE12A4F002BF7A8 /* AccessCheckoutSDKTestAppTests.swift */; };
 		512F69552AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69542AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift */; };
 		512F69572AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69562AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift */; };
+		512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */; };
 		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
 		5166BC8726833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */; };
 		5166BC9526833FCA00648CE8 /* CardValidationConfigConstructorLegacyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC9426833FCA00648CE8 /* CardValidationConfigConstructorLegacyTests.swift */; };
@@ -258,6 +259,7 @@
 		512F69502AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F69542AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppUITests.swift; sourceTree = "<group>"; };
 		512F69562AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKTestAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldExtension.swift; sourceTree = "<group>"; };
 		5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCardSpacingTests.swift; sourceTree = "<group>"; };
 		5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorLegacyViewTests.swift; sourceTree = "<group>"; };
 		5166BC9426833FCA00648CE8 /* CardValidationConfigConstructorLegacyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorLegacyTests.swift; sourceTree = "<group>"; };
@@ -546,6 +548,14 @@
 			path = AccessCheckoutSDKTestAppUITests;
 			sourceTree = "<group>";
 		};
+		512F69612AE13054002BF7A8 /* excluded */ = {
+			isa = PBXGroup;
+			children = (
+				512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */,
+			);
+			path = excluded;
+			sourceTree = "<group>";
+		};
 		55978FA9739F804F88DE07A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -632,6 +642,7 @@
 				E72C3F18248B00CA00284A31 /* session */,
 				E79EAC4F24587B8B00A8DDA6 /* validation */,
 				E79EAC4D24587B5300A8DDA6 /* view */,
+				512F69612AE13054002BF7A8 /* excluded */,
 				C9AFE45222B7AA4700943B3E /* amex.png */,
 				C9AFE45622B7AA4700943B3E /* mastercard.png */,
 				C9AFE45722B7AA4700943B3E /* visa.png */,
@@ -1632,6 +1643,7 @@
 				E7D37F8024815E0C0039DD98 /* CardBrandsConfigurationFactory.swift in Sources */,
 				D7D6D5F52481550200D57D7A /* PanValidationFlow.swift in Sources */,
 				E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */,
+				512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */,
 				E74EB7432497A77C008743E7 /* ExpiryDateFormatter.swift in Sources */,
 				C9AFE45A22B7AA4800943B3E /* AccessCheckoutError.swift in Sources */,
 				E7A4AB66245B37F6009D586E /* AccessCheckoutIllegalArgumentError.swift in Sources */,

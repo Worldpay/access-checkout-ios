@@ -120,35 +120,6 @@ import UIKit
         get { self.uiTextField.keyboardType }
     }
 
-    /* Properties related to positions and selection */
-    @available(iOS 3.2, *)
-    public var beginningOfDocument: UITextPosition { self.uiTextField.beginningOfDocument }
-
-    @available(iOS 3.2, *)
-    public var endOfDocument: UITextPosition { self.uiTextField.endOfDocument }
-    
-    /* Methods to create text ranges and positions */
-    @available(iOS 3.2, *)
-    public func position(from position: UITextPosition, offset: Int) -> UITextPosition? {
-        return self.uiTextField.position(from: position, offset: offset)
-    }
-
-    @available(iOS 3.2, *)
-    public func position(from position: UITextPosition, in direction: UITextLayoutDirection, offset: Int) -> UITextPosition? {
-        return self.uiTextField.position(from: position, in: direction, offset: offset)
-    }
-    
-    @available(iOS 3.2, *)
-    public func textRange(from: UITextPosition, to: UITextPosition) -> UITextRange? {
-        return self.uiTextField.textRange(from: from, to: to)
-    }
-    
-    /* Methods relating to the content of the UITextField */
-    @available(iOS 3.2, *)
-    public func offset(from: UITextPosition, to: UITextPosition) -> Int {
-        return self.uiTextField.offset(from: from, to: to)
-    }
-    
     /* Methods to send actions */
     public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
         self.uiTextField.sendAction(action, to: target, for: event)
