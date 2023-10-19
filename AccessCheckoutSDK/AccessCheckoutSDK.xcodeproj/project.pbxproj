@@ -1884,7 +1884,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests.xctrunner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
@@ -1909,7 +1909,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests.xctrunner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.worldpay.access.checkout.AccessCheckoutSDKTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
