@@ -10,7 +10,7 @@ public final class AccessCheckoutUITextField: UIView {
         self.setStyles()
     }
     
-    init() {
+    internal init() {
         super.init(frame: CGRect())
         self.addSubViews()
         self.setStyles()
@@ -29,6 +29,8 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     override public func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        
         self.setStyles()
     }
     
@@ -49,7 +51,10 @@ public final class AccessCheckoutUITextField: UIView {
         self.layer.cornerRadius = self.cornerRadius
         self.layer.borderColor = self.borderColor.cgColor
         self.layer.borderWidth = self.borderWidth
+        
         self.uiTextField.keyboardType = self.keyboardType
+        self.uiTextField.textColor = self.textColor
+        self.uiTextField.placeholder = self.placeholder
     }
     
     // MARK: Public properties
@@ -57,7 +62,7 @@ public final class AccessCheckoutUITextField: UIView {
     /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
         set { self.uiTextField.isAccessibilityElement = newValue }
-        get { false }
+        get { true }
     }
     
     override public var accessibilityHint: String? {
@@ -88,7 +93,7 @@ public final class AccessCheckoutUITextField: UIView {
     
     @IBInspectable
     public var borderWidth: CGFloat = 0.15 {
-        didSet { self.layer.cornerRadius = self.cornerRadius }
+        didSet { self.layer.borderWidth = self.borderWidth }
     }
     
     @IBInspectable
@@ -113,43 +118,43 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     /* Placeholder properties */
-    @available(iOS 6.0, *)
-    public var attributedPlaceholder: NSAttributedString? {
-        didSet { self.uiTextField.attributedPlaceholder = self.attributedPlaceholder }
-    }
-    
     @IBInspectable
     public var placeholder: String? {
         didSet { self.uiTextField.placeholder = self.placeholder }
     }
     
-    /* Properties related to keyboard appearance */
-    public var keyboardAppearance: UIKeyboardAppearance = .default {
-        didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
+    @available(iOS 6.0, *)
+    public var attributedPlaceholder: NSAttributedString? {
+        didSet { self.uiTextField.attributedPlaceholder = self.attributedPlaceholder }
     }
     
+    /* Keyboard properties */
     public var keyboardType: UIKeyboardType = .numberPad {
         didSet { self.uiTextField.keyboardType = self.keyboardType }
     }
 
+    public var keyboardAppearance: UIKeyboardAppearance = .default {
+        didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
+    }
+    
     // MARK: Public methods
 
     public func clear() {
         self.uiTextField.text = ""
     }
     
-    public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
-        self.uiTextField.sendAction(action, to: target, for: event)
-    }
-    
-    @available(iOS 14.0, *)
-    public func sendAction(_ action: UIAction) {
-        self.uiTextField.sendAction(action)
-    }
-    
-    public func sendActions(for controlEvents: UIControl.Event) {
-        self.uiTextField.sendActions(for: controlEvents)
-    }
+//    public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+//        self.uiTextField.sendAction(action, to: target, for: event)
+//    }
+//
+//    @available(iOS 14.0, *)
+//    public func sendAction(_ action: UIAction) {
+//        self.uiTextField.sendAction(action)
+//    }
+//
+//    public func sendActions(for controlEvents: UIControl.Event) {
+//        self.uiTextField.sendActions(for: controlEvents)
+//    }
     
     override public func becomeFirstResponder() -> Bool {
         self.uiTextField.becomeFirstResponder()

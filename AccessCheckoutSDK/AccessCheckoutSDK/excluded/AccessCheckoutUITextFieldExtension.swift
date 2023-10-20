@@ -2,7 +2,7 @@ import UIKit
 
 /**
  * This extension is NOT published via Cocoapods or SPM
- * It is solely designed to expose certain properties to the UI tests for this SDK
+ * It is solely designed to expose certain properties used in the UI tests of this SDK
  */
 public extension AccessCheckoutUITextField {
     // MARK: Methods related to caret position and selection
@@ -17,10 +17,6 @@ public extension AccessCheckoutUITextField {
 
     func position(from position: UITextPosition, offset: Int) -> UITextPosition? {
         return self.uiTextField.position(from: position, offset: offset)
-    }
-
-    func position(from position: UITextPosition, in direction: UITextLayoutDirection, offset: Int) -> UITextPosition? {
-        return self.uiTextField.position(from: position, in: direction, offset: offset)
     }
 
     func textRange(from: UITextPosition, to: UITextPosition) -> UITextRange? {
