@@ -39,8 +39,6 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(UIKeyboardType.namePhonePad.rawValue, textField.uiTextField.keyboardType.rawValue)
         XCTAssertEqual("some placeholder", textField.uiTextField.placeholder)
         XCTAssertEqual(UIColor.yellow, textField.uiTextField.textColor)
-        
-        // TODO: add support for other properties
     }
     
     // MARK: Accessibility properties tests

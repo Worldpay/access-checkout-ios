@@ -143,19 +143,6 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextField.text = ""
     }
     
-//    public func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
-//        self.uiTextField.sendAction(action, to: target, for: event)
-//    }
-//
-//    @available(iOS 14.0, *)
-//    public func sendAction(_ action: UIAction) {
-//        self.uiTextField.sendAction(action)
-//    }
-//
-//    public func sendActions(for controlEvents: UIControl.Event) {
-//        self.uiTextField.sendActions(for: controlEvents)
-//    }
-    
     override public func becomeFirstResponder() -> Bool {
         self.uiTextField.becomeFirstResponder()
     }
