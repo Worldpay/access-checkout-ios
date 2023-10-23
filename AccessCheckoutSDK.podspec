@@ -19,6 +19,7 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://github.com/Worldpay/access-checkout-ios.git", :tag => "v2.4.1" }
   spec.source_files = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{h,swift,xib,strings}'
+  spec.exclude_files = 'AccessCheckoutSDK/AccessCheckoutSDK/excluded/**/*.*'
   spec.public_header_files = 'AccessCheckoutSDK/AccessCheckoutSDK/AccessCheckoutSDK.h'
   spec.resources    = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{json,png}'
 end

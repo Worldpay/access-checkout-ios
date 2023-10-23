@@ -13,7 +13,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AccessCheckoutSDK", dependencies: [], path: "AccessCheckoutSDK/AccessCheckoutSDK"
+            name: "AccessCheckoutSDK", dependencies: [], path: "AccessCheckoutSDK/AccessCheckoutSDK", exclude: ["excluded/"]
         )
     ]
 )

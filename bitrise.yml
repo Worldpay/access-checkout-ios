@@ -8,10 +8,13 @@ workflows:
     - build-router-start:
         inputs:
           - workflows: |-
+              spm-support
+              sdk-ui-tests-ios-13
+              sdk-ui-tests-ios-14
+              sdk-ui-tests-ios-15
               ui-tests-ios-13
               ui-tests-ios-14
               ui-tests-ios-15
-              spm-support
           - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
     - cache-pull: {}
     - certificate-and-profile-installer: {}
@@ -140,6 +143,46 @@ workflows:
             - generate_code_coverage_files: "yes"
       - deploy-to-bitrise-io:
       - cache-push: {}
+  sdk-ui-tests-ios-13:
+    envs:
+      - SIMULATOR_DEVICE: "iPhone 11 Pro"
+      - SIMULATOR_OS_VERSION: "13.7"
+    after_run:
+      - sdk-ui-tests
+  sdk-ui-tests-ios-14:
+    envs:
+      - SIMULATOR_DEVICE: "iPhone 11 Pro"
+      - SIMULATOR_OS_VERSION: "14.5"
+    after_run:
+      - sdk-ui-tests
+  sdk-ui-tests-ios-15:
+    envs:
+      - SIMULATOR_DEVICE: "iPad (9th generation)"
+      - SIMULATOR_OS_VERSION: "15.5"
+    after_run:
+      - sdk-ui-tests
+  sdk-ui-tests:
+    steps:
+      - cache-pull: { }
+      - certificate-and-profile-installer: { }
+      - cocoapods-install:
+          inputs:
+            - source_root_path: AccessCheckoutSDK
+      - recreate-user-schemes:
+          inputs:
+            - project_path: "$SDK_PROJECT_PATH"
+      - xcode-build-for-test:
+          inputs:
+            - scheme: "$SDK_UI_TESTS_SCHEME"
+            - project_path: "$SDK_PROJECT_PATH"
+      - xcode-test:
+          inputs:
+            - project_path: "$SDK_PROJECT_PATH"
+            - destination: platform=iOS Simulator,name=$SIMULATOR_DEVICE,OS=$SIMULATOR_OS_VERSION
+            - scheme: "$SDK_UI_TESTS_SCHEME"
+            - generate_code_coverage_files: "yes"
+      - deploy-to-bitrise-io:
+      - cache-push: { }
   spm-support:
     steps:
       - cache-pull: {}
@@ -231,6 +274,9 @@ app:
   - opts:
       is_expand: false
     BITRISE_DEMO_SCHEME: AccessCheckoutDemo
+  - opts:
+      is_expand: false
+    SDK_UI_TESTS_SCHEME: AccessCheckoutSDKTestApp
   - opts:
       is_expand: false
     BITRISE_EXPORT_METHOD: enterprise

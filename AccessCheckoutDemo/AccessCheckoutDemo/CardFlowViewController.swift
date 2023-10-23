@@ -14,47 +14,12 @@ class CardFlowViewController: UIViewController {
     @IBOutlet var expiryDateIsValidLabel: UILabel!
     @IBOutlet var cvcIsValidLabel: UILabel!
 
-    @IBOutlet var getPanCaretPositionTextField: UITextField!
-    @IBOutlet var setPanCaretPositionButton: UIButton!
-    @IBOutlet var setPanCaretPositionTextField: UITextField!
-
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     @IBAction func submit(_ sender: Any) {
         submitCard(panUITextField: panTextField,
                    expiryDateUITextField: expiryDateTextField,
                    cvcUITextField: cvcTextField)
-    }
-
-    @IBAction func getPanCaret(_ sender: Any) {
-        if let textRange = panTextField.selectedTextRange {
-            let cursorPosition = panTextField.offset(from: panTextField.beginningOfDocument, to: textRange.start)
-            getPanCaretPositionTextField.text = "\(cursorPosition)"
-        }
-    }
-
-    @IBAction func setPanCaret() {
-        guard let caretPositionText = setPanCaretPositionTextField.text else {
-            return
-        }
-
-        var caretPositionFrom: UITextPosition
-        var caretPositionTo: UITextPosition
-
-        // If caret position contains a | then it represents a selection. The caret position should be before | and the length of the selection after |
-        if caretPositionText.contains("|") {
-            let split = caretPositionText.split(separator: "|")
-            let start = Int(split[0])!
-            let length = Int(split[1])!
-            caretPositionFrom = panTextField.position(from: panTextField.beginningOfDocument, offset: start)!
-            caretPositionTo = panTextField.position(from: panTextField.beginningOfDocument, offset: start + length)!
-        } else {
-            caretPositionFrom = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPositionText)!)!
-            caretPositionTo = panTextField.position(from: panTextField.beginningOfDocument, offset: Int(caretPositionText)!)!
-        }
-
-        panTextField.becomeFirstResponder()
-        panTextField.selectedTextRange = panTextField.textRange(from: caretPositionFrom, to: caretPositionTo)
     }
 
     private func submitCard(panUITextField: AccessCheckoutUITextField,
@@ -114,13 +79,8 @@ class CardFlowViewController: UIViewController {
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
             panTextField.clear()
-            panTextField.sendActions(for: .editingChanged)
-
             expiryDateTextField.clear()
-            expiryDateTextField.sendActions(for: .editingChanged)
-
             cvcTextField.clear()
-            cvcTextField.sendActions(for: .editingChanged)
         }
 
         validationErrors?.forEach { error in
@@ -137,14 +97,6 @@ class CardFlowViewController: UIViewController {
                     changeCvcValidIndicator(isValid: false)
                 }
             }
-        }
-    }
-
-    @objc
-    func recordPanTextFieldsCaretPosition(sender: UITextField) {
-        if let textRange = sender.selectedTextRange {
-            let cursorPosition = sender.offset(from: sender.beginningOfDocument, to: textRange.start)
-            getPanCaretPositionTextField.text = "\(cursorPosition)"
         }
     }
 
@@ -170,19 +122,10 @@ class CardFlowViewController: UIViewController {
         cvcTextField.placeholder = "CVC"
 
         // Controls used as helpers for the automated tests - Start of section
-        panTextField.addTarget(self, action: #selector(recordPanTextFieldsCaretPosition), for: .editingDidEnd)
-
-        panIsValidLabel.font = UIFont.systemFont(ofSize: 0)
-        expiryDateIsValidLabel.font = UIFont.systemFont(ofSize: 0)
-        cvcIsValidLabel.font = UIFont.systemFont(ofSize: 0)
-
-        setPanCaretPositionButton.titleLabel?.font = UIFont.systemFont(ofSize: 0)
-
-        setPanCaretPositionTextField.borderStyle = .none
-        setPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
-
-        getPanCaretPositionTextField.borderStyle = .none
-        getPanCaretPositionTextField.font = UIFont.systemFont(ofSize: 0)
+        // Labels colours are changed to make them invisible
+        panIsValidLabel.textColor = Configuration.backgroundColor
+        expiryDateIsValidLabel.textColor = Configuration.backgroundColor
+        cvcIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
         resetCard(preserveContent: false, validationErrors: nil)
