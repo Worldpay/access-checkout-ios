@@ -388,14 +388,17 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     
     // MARK: methods properties
 
-    func testClearClearsUITextFieldtext() {
-        let textField = createTextField()
+    func testClearClearsUITextFieldText_andDispatchesAnEditingChangedEvent() {
+        let uiTextFieldMock = UITextFieldMock()
+        let textField = AccessCheckoutUITextField(uiTextFieldMock)
         textField.uiTextField.text = "something"
         XCTAssertEqual("something", textField.uiTextField.text)
         
         textField.clear()
         
         XCTAssertEqual("", textField.uiTextField.text)
+        XCTAssertTrue(uiTextFieldMock.sendActionsCalled)
+        XCTAssertEqual(.editingChanged, uiTextFieldMock.sendActionsEvents)
     }
     
     func testBecomeFirstResponderDelegatesCallToUITextField() {
@@ -458,38 +461,6 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     
     private func createTextField() -> AccessCheckoutUITextField {
         return AccessCheckoutUITextField()
-    }
-}
-
-private class NSCoderStub: NSCoder {
-    override init() {}
-    
-    override var allowsKeyedCoding: Bool {
-        return true
-    }
-    
-    override func decodeObject(forKey key: String) -> Any? {
-        return nil
-    }
-    
-    override func decodeBool(forKey key: String) -> Bool {
-        return false
-    }
-
-    override func encodeValue(ofObjCType type: UnsafePointer<CChar>, at addr: UnsafeRawPointer) {}
-    
-    override func encode(_ data: Data) {}
-    
-    override func decodeData() -> Data? {
-        return nil
-    }
-    
-    override func version(forClassName className: String) -> Int {
-        return 0
-    }
-    
-    override func containsValue(forKey key: String) -> Bool {
-        return false
     }
 }
 

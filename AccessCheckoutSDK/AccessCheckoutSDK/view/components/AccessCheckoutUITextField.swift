@@ -141,6 +141,7 @@ public final class AccessCheckoutUITextField: UIView {
 
     public func clear() {
         self.uiTextField.text = ""
+        self.uiTextField.sendActions(for: .editingChanged)
     }
     
     override public func becomeFirstResponder() -> Bool {

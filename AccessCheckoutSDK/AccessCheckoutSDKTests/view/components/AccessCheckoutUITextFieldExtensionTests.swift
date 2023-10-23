@@ -50,24 +50,6 @@ class AccessCheckoutUITextFieldExtensionTests: XCTestCase {
         XCTAssertTrue(uiTextFieldMock.textRangeCalled)
     }
     
-    func testAddTargetDelegatesCallToUITextField() {
-        let uiTextFieldMock = UITextFieldMock()
-        let textField = AccessCheckoutUITextField(uiTextFieldMock)
-        
-        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingDidEnd)
-        
-        XCTAssertTrue(uiTextFieldMock.addTargetCalled)
-    }
-    
-    func testRemoveTargetDelegatesCallToUITextField() {
-        let uiTextFieldMock = UITextFieldMock()
-        let textField = AccessCheckoutUITextField(uiTextFieldMock)
-        
-        textField.removeTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingDidEnd)
-        
-        XCTAssertTrue(uiTextFieldMock.removeTargetCalled)
-    }
-    
     func testSelectedTextRangeGetterReturnsUITextFieldSelectedTextRange() {
         let uiTextField = UITextFieldMock()
         let textField = AccessCheckoutUITextField(uiTextField)
@@ -88,6 +70,24 @@ class AccessCheckoutUITextFieldExtensionTests: XCTestCase {
 
         XCTAssertNotNil(textField.uiTextField.selectedTextRange)
         XCTAssertTrue(textField.uiTextField.selectedTextRange === selectedTextRange)
+    }
+    
+    func testAddTargetDelegatesCallToUITextField() {
+        let uiTextFieldMock = UITextFieldMock()
+        let textField = AccessCheckoutUITextField(uiTextFieldMock)
+        
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingDidEnd)
+        
+        XCTAssertTrue(uiTextFieldMock.addTargetCalled)
+    }
+    
+    func testRemoveTargetDelegatesCallToUITextField() {
+        let uiTextFieldMock = UITextFieldMock()
+        let textField = AccessCheckoutUITextField(uiTextFieldMock)
+        
+        textField.removeTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingDidEnd)
+        
+        XCTAssertTrue(uiTextFieldMock.removeTargetCalled)
     }
     
     @objc

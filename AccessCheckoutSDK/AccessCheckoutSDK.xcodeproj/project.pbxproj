@@ -936,11 +936,11 @@
 			isa = PBXGroup;
 			children = (
 				51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */,
+				517145832AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift */,
 				E798B69E24913E8100A6A9AD /* CvcViewTests.swift */,
 				E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */,
 				E79DAF1624911DB60043CD46 /* ExpiryDateViewTests.swift */,
 				E7409D51248F9DE200016AEB /* PanViewTests.swift */,
-				517145832AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";

@@ -79,13 +79,8 @@ class CardFlowViewController: UIViewController {
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
         if !preserveContent {
             panTextField.clear()
-            panTextField.sendActions(for: .editingChanged)
-
             expiryDateTextField.clear()
-            expiryDateTextField.sendActions(for: .editingChanged)
-
             cvcTextField.clear()
-            cvcTextField.sendActions(for: .editingChanged)
         }
 
         validationErrors?.forEach { error in

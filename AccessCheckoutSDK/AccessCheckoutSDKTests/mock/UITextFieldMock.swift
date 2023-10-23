@@ -10,6 +10,9 @@ class UITextFieldMock: UITextField {
     public private(set) var addTargetCalled: Bool = false
     public private(set) var removeTargetCalled: Bool = false
     
+    public private(set) var sendActionsCalled: Bool = false
+    public private(set) var sendActionsEvents: UIControl.Event?
+    
     private var _beginningOfDocument: UITextPosition?
     override var beginningOfDocument: UITextPosition {
         if let mockValue = _beginningOfDocument {
@@ -73,5 +76,10 @@ class UITextFieldMock: UITextField {
     
     override public func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event) {
         removeTargetCalled = true
+    }
+    
+    override public func sendActions(for controlEvents:UIControl.Event) {
+        sendActionsCalled = true
+        sendActionsEvents = controlEvents
     }
 }
