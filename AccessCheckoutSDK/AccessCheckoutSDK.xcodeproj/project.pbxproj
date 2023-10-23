@@ -570,6 +570,34 @@
 			path = excluded;
 			sourceTree = "<group>";
 		};
+		517145872AE6824100A73A3F /* formatting */ = {
+			isa = PBXGroup;
+			children = (
+				D7E536F0264A90B300A476E6 /* PanFormatter.swift */,
+				D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */,
+				E749024C247FEEB600889AAA /* TextChangeHandler.swift */,
+			);
+			path = formatting;
+			sourceTree = "<group>";
+		};
+		517145882AE6826700A73A3F /* formatting */ = {
+			isa = PBXGroup;
+			children = (
+				D7E536F2264A90FC00A476E6 /* PanFormatterTests.swift */,
+				D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */,
+				E749024A247FEE3C00889AAA /* TextChangeHandlerTests.swift */,
+			);
+			path = formatting;
+			sourceTree = "<group>";
+		};
+		517145892AE6828C00A73A3F /* excluded */ = {
+			isa = PBXGroup;
+			children = (
+				517145832AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift */,
+			);
+			path = excluded;
+			sourceTree = "<group>";
+		};
 		55978FA9739F804F88DE07A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,6 +704,7 @@
 				E7D19F7D2463FEE3001EA13A /* testUtils */,
 				E73A201A2459D46100D5EB4C /* validation */,
 				E7490249247FE96600889AAA /* view */,
+				517145892AE6828C00A73A3F /* excluded */,
 				C9AFE3E322B7996200943B3E /* Info.plist */,
 			);
 			path = AccessCheckoutSDKTests;
@@ -935,8 +964,6 @@
 		E7409D50248F9DC000016AEB /* components */ = {
 			isa = PBXGroup;
 			children = (
-				51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */,
-				517145832AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift */,
 				E798B69E24913E8100A6A9AD /* CvcViewTests.swift */,
 				E74EB7442497A790008743E7 /* ExpiryDateFormatterTests.swift */,
 				E79DAF1624911DB60043CD46 /* ExpiryDateViewTests.swift */,
@@ -960,10 +987,9 @@
 			isa = PBXGroup;
 			children = (
 				E7409D50248F9DC000016AEB /* components */,
+				517145882AE6826700A73A3F /* formatting */,
 				E72C3EF6248A57A400284A31 /* presenters */,
-				E749024A247FEE3C00889AAA /* TextChangeHandlerTests.swift */,
-				D7E536F2264A90FC00A476E6 /* PanFormatterTests.swift */,
-				D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */,
+				51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1075,10 +1101,10 @@
 			isa = PBXGroup;
 			children = (
 				E79EAC5724587DC200A8DDA6 /* components */,
+				517145872AE6824100A73A3F /* formatting */,
 				E72C3ED02485B0BA00284A31 /* presenters */,
-				E749024C247FEEB600889AAA /* TextChangeHandler.swift */,
-				D7E536F0264A90B300A476E6 /* PanFormatter.swift */,
-				D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */,
+				5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */,
+				5182FA762AC4861700976088 /* AccessCheckoutUITextField.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1095,8 +1121,6 @@
 		E79EAC5724587DC200A8DDA6 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */,
-				5182FA762AC4861700976088 /* AccessCheckoutUITextField.xib */,
 				E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */,
 				C9AFE44F22B7AA4700943B3E /* CvcView.swift */,
 				C9AFE44922B7AA4700943B3E /* CvcView.xib */,
