@@ -62,7 +62,7 @@ public final class AccessCheckoutUITextField: UIView {
     /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
         set { self.uiTextField.isAccessibilityElement = newValue }
-        get { true }
+        get { false }
     }
     
     override public var accessibilityHint: String? {

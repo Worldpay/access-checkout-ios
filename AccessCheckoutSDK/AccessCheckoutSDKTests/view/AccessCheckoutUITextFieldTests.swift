@@ -46,10 +46,10 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // isAccessibilityElement
     func testIsAccessibilityElementGetterAlwaysReturnsTrue() {
         let textField = createTextField()
-        XCTAssertTrue(textField.isAccessibilityElement)
+        XCTAssertFalse(textField.isAccessibilityElement)
         
-        textField.isAccessibilityElement = false
-        XCTAssertTrue(textField.isAccessibilityElement)
+        textField.isAccessibilityElement = true
+        XCTAssertFalse(textField.isAccessibilityElement)
     }
     
     func testIsAccessibilityElementSetterSetsUITextFieldProperty() {
