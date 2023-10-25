@@ -1,16 +1,8 @@
 @testable import AccessCheckoutSDK
-import Mockingjay
+import Swifter
 import XCTest
 
 class StubUtils {
-    static func stubSuccessfulGetResponse(url: String, responseAsString: String) {
-        XCTestCase().stub(http(.get, uri: url), toResponse(responseAsString: responseAsString, responseCode: 200))
-    }
-    
-    static func stubGetResponse(url: String, responseAsString: String, responseCode: Int) {
-        XCTestCase().stub(http(.get, uri: url), toResponse(responseAsString: responseAsString, responseCode: responseCode))
-    }
-    
     static func createError(errorName: String, message: String) -> AccessCheckoutError {
         let json = """
         {
@@ -19,6 +11,11 @@ class StubUtils {
         }
         """
         
+        let jsonAsData = json.data(using: .utf8)!
+        return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
+    }
+    
+    static func parseAccessCheckoutError(json: String) -> AccessCheckoutError {
         let jsonAsData = json.data(using: .utf8)!
         return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
     }
@@ -62,11 +59,11 @@ class StubUtils {
         return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
     }
     
-    private static func toResponse(responseAsString: String, responseCode: Int) -> (URLRequest) -> Response {
-        return jsonData(toData(responseAsString), status: responseCode)
-    }
-    
-    private static func toData(_ stringData: String) -> Data {
-        return stringData.data(using: .utf8)!
-    }
+//    private static func toResponse(responseAsString: String, responseCode: Int) -> (URLRequest) -> Response {
+//        return jsonData(toData(responseAsString), status: responseCode)
+//    }
+//
+//    private static func toData(_ stringData: String) -> Data {
+//        return stringData.data(using: .utf8)!
+//    }
 }

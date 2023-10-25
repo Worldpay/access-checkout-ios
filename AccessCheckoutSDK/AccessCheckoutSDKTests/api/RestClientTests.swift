@@ -1,20 +1,24 @@
 @testable import AccessCheckoutSDK
 import Foundation
-import Mockingjay
 import XCTest
 
 class RestClientTests: XCTestCase {
+    private var serviceStubs: ServiceStubs?
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     private let restClient = RestClient()
 
+    override func setUp() {
+        serviceStubs = ServiceStubs()
+    }
+
     override func tearDown() {
-        removeAllStubs()
+        serviceStubs?.stop()
     }
 
     func testRestClientSendsRequest() {
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
-        let urlSessionDataTaskMock: URLSessionDataTaskMock = URLSessionDataTaskMock()
-        let urlSession: URLSessionMock = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
+        let urlSessionDataTaskMock = URLSessionDataTaskMock()
+        let urlSession = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { _ in }
 
@@ -24,8 +28,10 @@ class RestClientTests: XCTestCase {
 
     func testRestClientCanReturnSuccessfulResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
-        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
-        stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("{\"id\":1, \"name\":\"some name\"}"), status: 200))
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
+        serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
             switch result {
@@ -43,18 +49,15 @@ class RestClientTests: XCTestCase {
 
     func testRestClientCanReturnError() {
         let expectationToWaitFor = XCTestExpectation(description: "")
-        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
-        stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("""
-            {
-                "errorName": "bodyDoesNotMatchSchema",
-                "message": "The json body provided does not match the expected schema",
-                "validationErrors": [{
-                  "errorName": "fieldHasInvalidValue",
-                  "message": "Cvc is invalid",
-                  "jsonPath": "$.cvc"
-                }]
-            }
-        """), status: 400))
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = """
+        {
+            "errorName": "bodyDoesNotMatchSchema",
+            "message": "The json body provided does not match the expected schema"
+        }
+        """
+        serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
             switch result {
@@ -72,8 +75,10 @@ class RestClientTests: XCTestCase {
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
-        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
-        stub(http(.get, uri: "http://localhost/somewhere"), jsonData(toData("some data returned"), status: 200))
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let textResponse = "some data returned"
+        serviceStubs!.get200(path: "/somewhere", textResponse: textResponse)
+            .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
             switch result {

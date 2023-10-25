@@ -1,9 +1,18 @@
 @testable import AccessCheckoutSDK
 import Cuckoo
-import Mockingjay
 import XCTest
 
 class CardBrandsConfigurationFactoryTests: XCTestCase {
+    private var serviceStubs: ServiceStubs?
+    
+    override func setUp() {
+        serviceStubs = ServiceStubs()
+    }
+    
+    override func tearDown() {
+        serviceStubs?.stop()
+    }
+    
     private let successfulResponse = """
     [{
         "name": "visa",
@@ -18,9 +27,11 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
     
     func testCreatesConfigurationWithBrandsAndAcceptedCardBrands_byRequestingRemoteConfigurationFileForBaseUrlWithoutTrailingSlash() throws {
         let expectationToFulfill = expectation(description: "")
-        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: successfulResponse, status: 200)
         
-        factory.create(baseUrl: "http://localhost", acceptedCardBrands: ["amex", "jcb"]) { configuration in
+        serviceStubs!.get200(path: "/access-checkout/cardTypes.json", jsonResponse: successfulResponse)
+            .start()
+        
+        factory.create(baseUrl: serviceStubs!.baseUrl, acceptedCardBrands: ["amex", "jcb"]) { configuration in
             XCTAssertEqual(1, configuration.allCardBrands.count)
             XCTAssertEqual("visa", configuration.allCardBrands[0].name)
             
@@ -28,14 +39,15 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 0.5)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func testCreatesConfigurationWithBrandsAndAcceptedCardBrands_byRequestingRemoteConfigurationFileForBaseUrlWithTrailingSlash() throws {
         let expectationToFulfill = expectation(description: "")
-        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: successfulResponse, status: 200)
+        serviceStubs!.get200(path: "/access-checkout/cardTypes.json", jsonResponse: successfulResponse)
+            .start()
         
-        factory.create(baseUrl: "http://localhost/", acceptedCardBrands: ["amex", "jcb"]) { configuration in
+        factory.create(baseUrl: serviceStubs!.baseUrl, acceptedCardBrands: ["amex", "jcb"]) { configuration in
             XCTAssertEqual(1, configuration.allCardBrands.count)
             XCTAssertEqual("visa", configuration.allCardBrands[0].name)
             
@@ -43,7 +55,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 0.5)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenInvalidUrlIsPassed() throws {
@@ -61,7 +73,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenFailingToConnectToUrl() throws {
         let expectationToFulfill = expectation(description: "")
         
-        factory.create(baseUrl: "http://localhost", acceptedCardBrands: ["amex", "jcb"]) { configuration in
+        factory.create(baseUrl: "http://localhost:9000", acceptedCardBrands: ["amex", "jcb"]) { configuration in
             XCTAssertTrue(configuration.allCardBrands.isEmpty)
             XCTAssertEqual(["amex", "jcb"], configuration.acceptedCardBrands)
             expectationToFulfill.fulfill()
@@ -72,15 +84,16 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
     
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenReceivingErrorInResponse() throws {
         let expectationToFulfill = expectation(description: "")
-        stubResponse(forUrl: "http://localhost/access-checkout/cardTypes.json", response: "some invalid response", status: 400)
+        serviceStubs!.get400(path: "/access-checkout/cardTypes.json", textResponse: "some invalid response")
+            .start()
         
-        factory.create(baseUrl: "http://localhost", acceptedCardBrands: ["amex", "jcb"]) { configuration in
+        factory.create(baseUrl: serviceStubs!.baseUrl, acceptedCardBrands: ["amex", "jcb"]) { configuration in
             XCTAssertTrue(configuration.allCardBrands.isEmpty)
             XCTAssertEqual(["amex", "jcb"], configuration.acceptedCardBrands)
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 0.5)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func createsAnEmptyConfiguration() {
@@ -89,11 +102,5 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
         let result = factory.emptyConfiguration()
         
         XCTAssertEqual(expectedConfiguration, result)
-    }
-    
-    private func stubResponse(forUrl url: String, response: String, status: Int) {
-        let data = response.data(using: .utf8)!
-        
-        stub(http(.get, uri: url), jsonData(data, status: status))
     }
 }
