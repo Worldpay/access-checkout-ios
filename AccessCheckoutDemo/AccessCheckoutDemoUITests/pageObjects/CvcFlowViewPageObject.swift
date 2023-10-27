@@ -20,7 +20,10 @@ class CvcFlowViewPageObject {
     }
 
     var alert: AlertViewPageObject {
-        return AlertViewPageObject(element: app.alerts.firstMatch)
+        let element = app.alerts.firstMatch
+        XCTAssertTrue(element.waitForExistence(timeout: 1))
+        
+        return AlertViewPageObject(element: element)
     }
 
     init(_ app: XCUIApplication) {

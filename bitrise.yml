@@ -131,10 +131,6 @@ workflows:
             - variable_injector_version: 0.3.7
             - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
             - verbose: true
-      - xcode-build-for-test:
-          inputs:
-            - scheme: "$DEMO_SCHEME"
-            - project_path: "$DEMO_PROJECT_PATH"
       - xcode-test:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"

@@ -44,7 +44,10 @@ class CardFlowViewPageObject {
     }
 
     var alert: AlertViewPageObject {
-        return AlertViewPageObject(element: app.alerts.firstMatch)
+        let element = app.alerts.firstMatch
+        XCTAssertTrue(element.waitForExistence(timeout: 10))
+        
+        return AlertViewPageObject(element: element)
     }
 
     var paymentsCvcSessionToggle: SwitchViewPageObject {

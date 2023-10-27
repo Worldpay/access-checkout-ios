@@ -7,7 +7,7 @@ struct LaunchArguments {
     static let CardConfigurationStub = "stubCardConfiguration"
     static let SessionsStub = "stubSessions"
     static let SessionsPaymentsCvcStub = "stubSessionsPaymentsCvc"
-    static let DisableStubs = "disableStubs"
+    static let EnableStubs = "enableStubs"
     
     static func valueOf(_ argumentName:String) -> String? {
         return UserDefaults.standard.string(forKey: argumentName)

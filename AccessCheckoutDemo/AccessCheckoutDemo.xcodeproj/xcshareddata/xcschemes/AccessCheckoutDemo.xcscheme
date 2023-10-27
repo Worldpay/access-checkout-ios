@@ -75,6 +75,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-enableStubs true"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-stubCardConfiguration CardConfiguration"
             isEnabled = "YES">
          </CommandLineArgument>

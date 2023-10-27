@@ -1,20 +1,20 @@
 import Foundation
 import UIKit
 
-public struct Configuration {
-    private static var _accessBaseUrl: String = ""
+struct Configuration {
+    static var _accessBaseUrl: String = ""
     
-    static func initialize(disableStubs:Bool) {
-        if disableStubs {
-            _accessBaseUrl = ServiceStubs.baseUri
-        } else {
-            _accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
-        }
-    }
+//    static func initialize(disableStubs:Bool) {
+//        if disableStubs {
+//            _accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+//        } else {
+//            _accessBaseUrl = "http://localhost:8123"
+//        }
+//    }
     
     static let merchantId = CI.merchantId != "" && CI.merchantId != "$(MERCHANT_ID)" ? CI.merchantId : "identity"
 
-    static let accessBaseUrl: String = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+    static var accessBaseUrl: String = ""
 
     static let accessCardConfigurationUrl: String = "\(urlWitoutTrailingSlash(accessBaseUrl))/access-checkout/cardTypes.json"
 
