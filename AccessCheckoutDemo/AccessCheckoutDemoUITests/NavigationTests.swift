@@ -1,29 +1,24 @@
 import XCTest
 
 class NavigationTests: XCTestCase {
-    let app = XCUIApplication()
+    var view: NavigationViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
         
-        app.launch()
+        let app = AppLauncher.launch()
+        view = NavigationViewPageObject(app)
     }
     
     func testHasButtonToNavigateToCardFlow() {
-        let element: XCUIElement = NavigationViewPageObject(app).cardFlowNavigationButton
-        
-        XCTAssertTrue(element.exists)
+        XCTAssertTrue(view!.cardFlowNavigationButton.exists)
     }
     
     func testHasButtonToNavigateToRestrictedCardFlow() {
-        let element: XCUIElement = NavigationViewPageObject(app).restrictedCardFlowNavigationButton
-        
-        XCTAssertTrue(element.exists)
+        XCTAssertTrue(view!.restrictedCardFlowNavigationButton.exists)
     }
     
     func testHasButtonsToNavigateToCvcFlow() {
-        let element: XCUIElement = NavigationViewPageObject(app).cvcFlowNavigationButton
-        
-        XCTAssertTrue(element.exists)
+        XCTAssertTrue(view!.cvcFlowNavigationButton.exists)
     }
 }

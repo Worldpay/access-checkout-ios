@@ -3,14 +3,13 @@ import XCTest
 class CardFlowCardNumberSpacingTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
-    let app = XCUIApplication()
     var view: CardFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
         // Stubs are not enabled so these tests will use the real remote card configuration
-        app.launch()
+        let app = AppLauncher.launch()
         view = CardFlowViewPageObject(app)
     }
 
@@ -176,10 +175,5 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
         view!.typeTextIntoPan(backspace)
 
         XCTAssertEqual(view!.panText!, "1220 0000 000")
-    }
-
-    private func waitFor(timeoutInSeconds: Double) {
-        let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
-        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
 }

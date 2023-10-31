@@ -1,13 +1,12 @@
 import XCTest
 
 class CvcFlowUITests: XCTestCase {
-    let app = XCUIApplication()
     var view: CvcFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
-        app.launch()
+        let app = AppLauncher.launch()
 
         view = NavigationViewPageObject(app).navigateToCvcFlow()
     }

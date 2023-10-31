@@ -1,5 +1,5 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
 class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
     private let expectedVtSessionRegex = "http:\\/\\/localhost:\\d{4}\\/verifiedTokens\\/sessions\\/[a-zA-Z0-9\\-]+"
@@ -26,7 +26,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensSessions(respondWith: .verifiedTokensSessionSuccess)
             .start()
         
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
         let expectedTitle = "Verified Tokens Session"
         
         let view = CardFlowViewPageObject(app)
@@ -46,7 +46,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
             .start()
         
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
         let view = CardFlowViewPageObject(app)
         let expectedTitle = "Verified Tokens & Payments CVC Sessions"
 
@@ -67,7 +67,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
             .start()
         
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
         let view = CardFlowViewPageObject(app)
         let expectedTitle = "Verified Tokens Session"
 
@@ -81,7 +81,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         alert.close()
         XCTAssertFalse(alert.exists)
 
-        waitFor(timeoutInSeconds: 0.5)
+        TestUtils.wait(seconds: 0.5)
         XCTAssertEqual(view.panField.placeholderValue, view.panText)
         XCTAssertEqual(view.expiryDateField.placeholderValue, view.expiryDateText)
         XCTAssertEqual(view.cvcField.placeholderValue, view.cvcText)
@@ -93,7 +93,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
             .verifiedTokensSessions(respondWith: .verifiedTokensSessionsPanFailedLuhnCheck)
             .start()
         
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
         let view = CardFlowViewPageObject(app)
 
         fillUpFormWithValidValues(using: view)
@@ -110,11 +110,6 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         view.typeTextIntoPan("4111111111111111")
         view.typeTextIntoExpiryDate("01/99")
         view.typeTextIntoCvc("123")
-    }
-    
-    private func waitFor(timeoutInSeconds: Double) {
-        let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
-        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
     
     private func formatStringAsStaticTextLabel(_ string: String) -> String {

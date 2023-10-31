@@ -1,5 +1,5 @@
-import XCTest
 @testable import AccessCheckoutSDK
+import XCTest
 
 class CvcFlowRetrieveSessionTests: XCTestCase {
     private let expectedCvcSessionRegex = "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"
@@ -21,7 +21,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         serviceStubs
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
             .start()
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
         
         let expectedTitle = "Payments CVC Session"
         
@@ -39,7 +39,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         serviceStubs
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
             .start()
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
 
         let view = NavigationViewPageObject(app).navigateToCvcFlow()
         view.typeTextIntoCvc("123")
@@ -51,7 +51,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         alert.close()
         XCTAssertFalse(alert.exists)
         
-        waitFor(timeoutInSeconds: 0.5)
+        TestUtils.wait(seconds: 0.5)
         XCTAssertEqual(view.cvcField.placeholderValue, view.cvcText)
         XCTAssertEqual(view.submitButton.isEnabled, false)
     }
@@ -76,7 +76,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         serviceStubs
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcError)
             .start()
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
 
         let view = NavigationViewPageObject(app).navigateToCvcFlow()
         view.typeTextIntoCvc("123")
@@ -92,7 +92,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         serviceStubs
             .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcError)
             .start()
-        let app = appLauncher().launch(enableStubs: true)
+        let app = AppLauncher.launch(enableStubs: true)
 
         let view = NavigationViewPageObject(app).navigateToCvcFlow()
         view.typeTextIntoCvc("123")
@@ -104,7 +104,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         alert.close()
         XCTAssertFalse(alert.exists)
         
-        waitFor(timeoutInSeconds: 0.05)
+        TestUtils.wait(seconds: 0.05)
         XCTAssertEqual("123", view.cvcText)
     }
     
@@ -112,10 +112,5 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         // The XCUI framework seems to replace carriage returns by spaces for alert labels
         // This function is designed to format strings the same way so that we can search staticTexts accordingly
         return string.replacingOccurrences(of: "\n", with: " ")
-    }
-    
-    private func waitFor(timeoutInSeconds: Double) {
-        let exp = expectation(description: "Waiting for \(timeoutInSeconds)")
-        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
     }
 }

@@ -3,14 +3,13 @@ import XCTest
 class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
-    let app = XCUIApplication()
     var view: CardFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
         // Stubs are not enabled so these tests will use the real remote card configuration
-        let app = appLauncher().launch()
+        let app = AppLauncher.launch()
         view = CardFlowViewPageObject(app)
     }
 

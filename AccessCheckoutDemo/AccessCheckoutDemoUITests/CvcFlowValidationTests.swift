@@ -3,13 +3,12 @@ import XCTest
 class CvcFlowCvcValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
-    let app = XCUIApplication()
     var view: CvcFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
-        app.launch()
+        let app = AppLauncher.launch()
 
         view = NavigationViewPageObject(app).navigateToCvcFlow()
     }

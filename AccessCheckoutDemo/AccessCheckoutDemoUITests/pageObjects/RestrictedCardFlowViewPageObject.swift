@@ -28,7 +28,7 @@ class RestrictedCardFlowViewPageObject {
     }
     
     func typeTextIntoPan(_ text: String) {
-        if !panField.isFocused {
+        if !TestUtils.isFocused(panField) {
             panField.tap()
         }
         panField.typeText(text)

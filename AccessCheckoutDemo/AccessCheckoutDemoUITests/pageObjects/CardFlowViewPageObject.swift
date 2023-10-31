@@ -1,6 +1,8 @@
 import XCTest
 
 class CardFlowViewPageObject {
+    private let waitForExistenceTimeoutInSeconds: TimeInterval = 10
+
     private let app: XCUIApplication
 
     var panField: XCUIElement {
@@ -45,8 +47,8 @@ class CardFlowViewPageObject {
 
     var alert: AlertViewPageObject {
         let element = app.alerts.firstMatch
-        XCTAssertTrue(element.waitForExistence(timeout: 10))
-        
+        XCTAssertTrue(element.waitForExistence(timeout: waitForExistenceTimeoutInSeconds))
+
         return AlertViewPageObject(element: element)
     }
 
@@ -71,21 +73,21 @@ class CardFlowViewPageObject {
     }
 
     func typeTextIntoPan(_ text: String) {
-        if !panField.isFocused {
+        if !TestUtils.isFocused(panField) {
             panField.tap()
         }
         panField.typeText(text)
     }
 
     func typeTextIntoExpiryDate(_ text: String) {
-        if !expiryDateField.isFocused {
+        if !TestUtils.isFocused(expiryDateField) {
             expiryDateField.tap()
         }
         expiryDateField.typeText(text)
     }
 
     func typeTextIntoCvc(_ text: String) {
-        if !cvcField.isFocused {
+        if !TestUtils.isFocused(cvcField) {
             cvcField.tap()
         }
         cvcField.typeText(text)
@@ -104,17 +106,12 @@ class CardFlowViewPageObject {
     func clearField(_ field: XCUIElement) {
         field.press(forDuration: 2)
         let selectAllMenu = app.menuItems["Select All"]
-        _ = selectAllMenu.waitForExistence(timeout: 3)
+        _ = selectAllMenu.waitForExistence(timeout: waitForExistenceTimeoutInSeconds)
         selectAllMenu.tap()
 
         let cutMenu = app.menuItems["Cut"]
-        _ = cutMenu.waitForExistence(timeout: 3)
+        _ = cutMenu.waitForExistence(timeout: waitForExistenceTimeoutInSeconds)
         cutMenu.tap()
-        wait(1)
-    }
-
-    private func wait(_ timeoutInSeconds: TimeInterval) {
-        let exp = XCTestCase().expectation(description: "Waiting for \(timeoutInSeconds)")
-        _ = XCTWaiter.wait(for: [exp], timeout: timeoutInSeconds)
+        TestUtils.wait(seconds: 1)
     }
 }
