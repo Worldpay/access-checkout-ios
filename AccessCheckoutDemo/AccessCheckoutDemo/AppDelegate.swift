@@ -4,28 +4,15 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-//    var serviceStubs:ServiceStubs?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        static let DiscoveryStub = "stubDiscovery"
-//        static let VerifiedTokensStub = "stubVerifiedTokens"
-//        static let VerifiedTokensSessionStub = "stubVerifiedTokensSession"
-//        static let CardConfigurationStub = "stubCardConfiguration"
-//        static let SessionsStub = "stubSessions"
-//        static let SessionsPaymentsCvcStub = "stubSessionsPaymentsCvc"
-//        static let DisableStubs = "disableStubs"
-//
-//        static func valueOf(_ argumentName:String) -> String? {
-//            return UserDefaults.standard.string(forKey: argumentName)
-//        }
-//
         Configuration.accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
         if let enableStubsArgumentValue = UserDefaults.standard.string(forKey: "enableStubs") {
             if (enableStubsArgumentValue as NSString).boolValue {
                 Configuration.accessBaseUrl = "http://localhost:8123"
             }
         }
-        
+
         return true
     }
 
@@ -37,13 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-//        serviceStubs?.stop()
-//        serviceStubs = nil
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-//        serviceStubs?.start()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

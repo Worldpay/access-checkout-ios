@@ -58,12 +58,4 @@ class StubUtils {
         let jsonAsData = json.data(using: .utf8)!
         return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
     }
-    
-//    private static func toResponse(responseAsString: String, responseCode: Int) -> (URLRequest) -> Response {
-//        return jsonData(toData(responseAsString), status: responseCode)
-//    }
-//
-//    private static func toData(_ stringData: String) -> Data {
-//        return stringData.data(using: .utf8)!
-//    }
 }
