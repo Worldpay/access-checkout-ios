@@ -65,7 +65,10 @@ workflows:
     - script:
         title: "Install pact client"
         inputs:
-          - content: gem install pact_broker-client
+          - content: |-
+              gem install pact_broker-client
+              # used to fix a problem where ruby is not correctly detected when using pact-broker
+              asdf reshim ruby
     - script:
         title: "Deploy pact file to pact broker"
         inputs:
