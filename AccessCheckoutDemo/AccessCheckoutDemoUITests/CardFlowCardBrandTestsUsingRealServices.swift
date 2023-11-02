@@ -1,21 +1,15 @@
-@testable import AccessCheckoutSDK
-import Foundation
 import XCTest
 
 class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
-    let app = XCUIApplication()
     var view: CardFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
-        // These tests will use the remote card configuration hosted on https://npe.access.worldpay.com/access-checkout/cardTypes.json
-        let app = appLauncher()
-            .disableStubs(true)
-            .launch()
-
+        // Stubs are not enabled so these tests will use the real remote card configuration
+        let app = AppLauncher.launch()
         view = CardFlowViewPageObject(app)
     }
 
@@ -205,7 +199,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
 
     func assertBrand(of pan: String, is brand: String) {
         if let panText = view!.panText, !panText.isEmpty {
-            for _ in 0..<20 {
+            for _ in 0 ..< 20 {
                 view!.typeTextIntoPan(backspace)
             }
 

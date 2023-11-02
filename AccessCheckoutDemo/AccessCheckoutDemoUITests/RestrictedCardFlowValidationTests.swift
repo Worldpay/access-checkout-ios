@@ -1,17 +1,14 @@
-@testable import AccessCheckoutSDK
-import Foundation
 import XCTest
 
 class RestrictedCardFlowValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
-    let app = XCUIApplication()
     var view: RestrictedCardFlowViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
         
-        app.launch()
+        let app = AppLauncher.launch()
         view = NavigationViewPageObject(app).navigateToRestrictedCardFlow()
     }
     

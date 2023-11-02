@@ -1,5 +1,4 @@
 @testable import AccessCheckoutSDK
-import Mockingjay
 import PactConsumerSwift
 import XCTest
 
@@ -55,13 +54,15 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
         }
         """
         
-        let rootResponse = rootResponseJson.data(using: .utf8)!
-        stub(http(.get, uri: "https://root"), jsonData(rootResponse))
+        let serviceStubs = ServiceStubs().get200(path: "", jsonResponse: rootResponseJson)
+        serviceStubs.start()
         
         let discovery = VerifiedTokensApiDiscovery()
         
         verifiedTokensMockService.run(timeout: 3) { testComplete in
-            discovery.discover(baseUrl: "https://root") { result in
+            discovery.discover(baseUrl: serviceStubs.baseUrl) { result in
+                serviceStubs.stop()
+                
                 switch result {
                 case .success(let discoveredUrl):
                     XCTAssertEqual(discoveredUrl, expectedValue)
@@ -212,7 +213,8 @@ class AccessCheckoutSDKtoVTPactTests: XCTestCase {
     private func performTestCase(
         forScenario scenario: String,
         withRequest request: PactRequest,
-        andErrorResponse response: ExpectedPactErrorResponse) {
+        andErrorResponse response: ExpectedPactErrorResponse)
+    {
         let requestJson: [String: Any] = [
             "cvc": request.cvc,
             "identity": request.identity,

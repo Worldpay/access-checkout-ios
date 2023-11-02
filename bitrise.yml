@@ -65,7 +65,10 @@ workflows:
     - script:
         title: "Install pact client"
         inputs:
-          - content: gem install pact_broker-client
+          - content: |-
+              gem install pact_broker-client
+              # used to fix a problem where ruby is not correctly detected when using pact-broker
+              asdf reshim ruby
     - script:
         title: "Deploy pact file to pact broker"
         inputs:
@@ -131,10 +134,6 @@ workflows:
             - variable_injector_version: 0.3.7
             - files: AccessCheckoutDemo/AccessCheckoutDemo/CIVariables.swift
             - verbose: true
-      - xcode-build-for-test:
-          inputs:
-            - scheme: "$DEMO_SCHEME"
-            - project_path: "$DEMO_PROJECT_PATH"
       - xcode-test:
           inputs:
             - project_path: "$DEMO_PROJECT_PATH"

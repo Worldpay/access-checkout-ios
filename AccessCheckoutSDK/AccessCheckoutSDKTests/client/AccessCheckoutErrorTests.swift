@@ -1,5 +1,4 @@
 @testable import AccessCheckoutSDK
-import Mockingjay
 import XCTest
 
 class AccessCheckoutErrorTests: XCTestCase {

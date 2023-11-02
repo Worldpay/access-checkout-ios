@@ -11,11 +11,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/visa.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/visa.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/visa.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/visa.svg"
       }
     ]
   },
@@ -29,11 +29,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/mastercard.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/mastercard.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/mastercard.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/mastercard.svg"
       }
     ]
   },
@@ -47,11 +47,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/amex.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/amex.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/amex.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/amex.svg"
       }
     ]
   },
@@ -68,11 +68,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/jcb.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/jcb.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/jcb.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/jcb.svg"
       }
     ]
   },
@@ -87,11 +87,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/discover.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/discover.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/discover.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/discover.svg"
       }
     ]
   },
@@ -107,11 +107,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/diners.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/diners.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/diners.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/diners.svg"
       }
     ]
   },
@@ -132,11 +132,11 @@
     "images": [
       {
         "type": "image/png",
-        "url": "<BASE_URL>/maestro.png"
+        "url": "https://access.worldpay.com/access-checkout/assets/maestro.png"
       },
       {
         "type": "image/svg+xml",
-        "url": "<BASE_URL>/maestro.svg"
+        "url": "https://access.worldpay.com/access-checkout/assets/maestro.svg"
       }
     ]
   }

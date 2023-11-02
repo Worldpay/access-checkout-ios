@@ -1,5 +1,4 @@
 import AccessCheckoutSDK
-import Mockingjay
 import UIKit
 
 @UIApplicationMain
@@ -7,19 +6,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let disableStubsLaunchArgument = LaunchArguments.valueOf(LaunchArguments.DisableStubs)
-        let disableStubs:Bool = disableStubsLaunchArgument != "" && disableStubsLaunchArgument != nil ? (disableStubsLaunchArgument! as NSString).boolValue : false
-        
-        if !disableStubs {
-            // Stub remote APIs
-            DiscoveryStub(baseUri: Configuration.accessBaseUrl).start()
-            VerifiedTokensStub(baseUri: Configuration.accessBaseUrl).start()
-            VerifiedTokensSessionStub(baseUri: Configuration.accessBaseUrl).start()
-            SessionsStub(baseUri: Configuration.accessBaseUrl).start()
-            SessionsPaymentsCvcStub(baseUri: Configuration.accessBaseUrl).start()
-
-            // Stub remote card configuration
-            CardConfigurationStub(baseUri: Bundle.main.bundleURL.absoluteString, cardConfigurationUri: Configuration.accessCardConfigurationUrl).start()
+        Configuration.accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+        if let enableStubsArgumentValue = UserDefaults.standard.string(forKey: "enableStubs") {
+            if (enableStubsArgumentValue as NSString).boolValue {
+                Configuration.accessBaseUrl = "http://localhost:8123"
+            }
         }
 
         return true

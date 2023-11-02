@@ -1,5 +1,4 @@
 @testable import AccessCheckoutSDK
-import Mockingjay
 import PactConsumerSwift
 import XCTest
 
@@ -56,13 +55,15 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
         }
         """
         
-        let rootResponse = rootResponseJson.data(using: .utf8)!
-        stub(http(.get, uri: "https://root"), jsonData(rootResponse))
+        let serviceStubs = ServiceStubs().get200(path: "", jsonResponse: rootResponseJson)
+        serviceStubs.start()
         
         let discovery = SessionsApiDiscovery()
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            discovery.discover(baseUrl: "https://root") { result in
+            discovery.discover(baseUrl: serviceStubs.baseUrl) { result in
+                serviceStubs.stop()
+                
                 switch result {
                 case .success(let discoveredUrl):
                     XCTAssertEqual(discoveredUrl, expectedValue)
@@ -147,7 +148,8 @@ class AccessCheckoutSDKtoSessionsPactTests: XCTestCase {
     private func performTestCase(
         forScenario scenario: String,
         withRequest request: PactRequest,
-        andErrorResponse response: ExpectedPactErrorResponse) {
+        andErrorResponse response: ExpectedPactErrorResponse)
+    {
         let requestJson: [String: Any] = [
             "cvc": request.cvc,
             "identity": request.identity

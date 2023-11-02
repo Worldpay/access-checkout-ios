@@ -1,17 +1,14 @@
-@testable import AccessCheckoutSDK
-import Foundation
 import XCTest
 
 class CardFlowCardValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
-    let app = XCUIApplication()
     var view: CardFlowViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
-        app.launch()
+        let app = AppLauncher.launch()
         view = CardFlowViewPageObject(app)
     }
 
@@ -60,6 +57,13 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testCompletePanIsValid() {
         view!.typeTextIntoPan("4444333322221111")
+
+        XCTAssertTrue(view!.imageIs("visa"))
+        XCTAssertEqual(view!.panIsValidLabel.label, "valid")
+    }
+
+    func test13DigitsVisaPanIsValid() {
+        view!.typeTextIntoPan("4911830000000")
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")

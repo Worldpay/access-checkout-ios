@@ -3,7 +3,17 @@ import Foundation
 import XCTest
 
 class SingleLinkDiscoveryTests: XCTestCase {
-    private let urlRequest = URLRequest(url: URL(string: "http://localhost")!)
+    private var serviceStubs: ServiceStubs?
+    private var urlRequest: URLRequest?
+    
+    override func setUp() {
+        serviceStubs = ServiceStubs()
+        urlRequest = URLRequest(url: URL(string: serviceStubs!.baseUrl)!)
+    }
+    
+    override func tearDown() {
+        serviceStubs!.stop()
+    }
     
     func testsSuccessfullyDiscoversALink() {
         let expectationToFulfill = expectation(description: "")
@@ -19,8 +29,10 @@ class SingleLinkDiscoveryTests: XCTestCase {
             }
         }
         """
-        StubUtils.stubSuccessfulGetResponse(url: "http://localhost", responseAsString: jsonResponse)
-        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
+        serviceStubs!.get200(path: "", jsonResponse: jsonResponse)
+            .start()
+        
+        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest!)
         
         discovery.discover { result in
             switch result {
@@ -32,7 +44,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 1)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func testReturnsErrorWhenLinkNotFoundInResponse() {
@@ -47,8 +59,10 @@ class SingleLinkDiscoveryTests: XCTestCase {
             }
         }
         """
-        StubUtils.stubSuccessfulGetResponse(url: "http://localhost", responseAsString: jsonResponse)
-        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
+        serviceStubs!.get200(path: "", jsonResponse: jsonResponse)
+            .start()
+        
+        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest!)
         
         discovery.discover { result in
             switch result {
@@ -60,15 +74,18 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 1)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func testReturnsErrorWhenFailsToDeserialiseResponse() {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
-        let jsonResponse = "some-content"
-        StubUtils.stubSuccessfulGetResponse(url: "http://localhost", responseAsString: jsonResponse)
-        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
+        let response = "some-content"
+        
+        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest!)
+
+        serviceStubs!.get200(path: "", textResponse: response)
+            .start()
         
         discovery.discover { result in
             switch result {
@@ -80,14 +97,16 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 1)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
     
     func testReturnsErrorWhenResponseIsAnError() {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
-        StubUtils.stubGetResponse(url: "http://localhost", responseAsString: "An error", responseCode: 400)
-        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest)
+        let discovery = SingleLinkDiscovery(linkToFind: "a:link", urlRequest: urlRequest!)
+        
+        serviceStubs!.get400(path: "", textResponse: "An error")
+            .start()
         
         discovery.discover { result in
             switch result {
@@ -99,6 +118,6 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 1)
+        wait(for: [expectationToFulfill], timeout: 5)
     }
 }
