@@ -49,11 +49,6 @@ workflows:
         inputs:
         - scheme: "$DEMO_SCHEME"
         - project_path: "$DEMO_PROJECT_PATH"
-    - virtual-device-testing-for-ios:
-        inputs:
-        - test_devices: |-
-            iphone8,15.7,en,portrait
-        - test_timeout: 2700
     - script:
         title: "Add version number to env variables"
         inputs:
