@@ -154,13 +154,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1BD0EE9E22CBB59400147A71 /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Stubs;
-			sourceTree = "<group>";
-		};
 		512907EF2AEC0432008A7357 /* stubs */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,7 +217,6 @@
 		C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
-				1BD0EE9E22CBB59400147A71 /* Stubs */,
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
