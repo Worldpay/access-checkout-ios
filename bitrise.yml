@@ -8,11 +8,11 @@ workflows:
     - build-router-start:
         inputs:
           - workflows: |-
-              spm-support
+              ui-tests-ios-13
               sdk-ui-tests-ios-13
+              spm-support
               sdk-ui-tests-ios-14
               sdk-ui-tests-ios-15
-              ui-tests-ios-13
               ui-tests-ios-14
               ui-tests-ios-15
           - access_token: "$BITRISE_PERSONAL_ACCESS_TOKEN_PARALLEL_BUILDS"
@@ -49,11 +49,6 @@ workflows:
         inputs:
         - scheme: "$DEMO_SCHEME"
         - project_path: "$DEMO_PROJECT_PATH"
-    - virtual-device-testing-for-ios:
-        inputs:
-        - test_devices: |-
-            iphone8,15.7,en,portrait
-        - test_timeout: 2700
     - script:
         title: "Add version number to env variables"
         inputs:

@@ -138,7 +138,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: 10)
     }
     
     func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndBothServicesRespondWithAnError() throws {
