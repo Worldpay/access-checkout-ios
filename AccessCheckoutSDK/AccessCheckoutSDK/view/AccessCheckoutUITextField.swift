@@ -61,8 +61,12 @@ public final class AccessCheckoutUITextField: UIView {
 
     /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
-        set { self.uiTextField.isAccessibilityElement = newValue }
-        get { false }
+        set {
+            self.uiTextField.isAccessibilityElement = newValue
+        }
+        get {
+            false
+        }
     }
     
     override public var accessibilityHint: String? {
@@ -71,8 +75,13 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     override public var accessibilityIdentifier: String? {
-        set { self.uiTextField.accessibilityIdentifier = newValue }
-        get { nil }
+        set {
+            super.accessibilityIdentifier = newValue
+            self.uiTextField.accessibilityIdentifier = newValue != nil ? "\(newValue!)-UITextField" : nil
+        }
+        get {
+            super.accessibilityIdentifier
+        }
     }
     
     override public var accessibilityLabel: String? {

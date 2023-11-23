@@ -4,7 +4,7 @@ class RestrictedCardFlowViewPageObject {
     private let app: XCUIApplication
     
     var panField: XCUIElement {
-        return app.textFields["pan"]
+        return app.otherElements["pan"].textFields.firstMatch
     }
     
     var panText: String? {

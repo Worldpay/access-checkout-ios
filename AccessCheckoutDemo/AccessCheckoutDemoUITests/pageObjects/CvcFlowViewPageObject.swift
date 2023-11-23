@@ -5,7 +5,7 @@ class CvcFlowViewPageObject {
     private let app: XCUIApplication
 
     var cvcField: XCUIElement {
-        return app.textFields["cvc"]
+        return app.otherElements["cvc"].textFields.firstMatch
     }
 
     var cvcText: String? {
