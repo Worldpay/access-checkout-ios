@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <rect key="frame" x="16" y="101" width="327" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
                                     <bool key="isElement" value="YES"/>
@@ -30,7 +30,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="145" width="64" height="44"/>
+                                <rect key="frame" x="16" y="165" width="64" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
                                     <bool key="isElement" value="YES"/>
@@ -41,7 +41,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="103" y="145" width="62" height="44"/>
+                                <rect key="frame" x="103" y="165" width="62" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
                                     <bool key="isElement" value="YES"/>
@@ -51,11 +51,11 @@
                                 </constraints>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
-                                <rect key="frame" x="294" y="220" width="51" height="31"/>
+                                <rect key="frame" x="294" y="240" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Verified Tokens + Payments CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
-                                <rect key="frame" x="16" y="254" width="244.5" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                                <rect key="frame" x="16" y="274" width="143.5" height="12"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="lW3-xC-Dsc"/>
@@ -65,7 +65,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="16" y="274" width="49" height="30"/>
+                                <rect key="frame" x="16" y="294" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
@@ -73,29 +73,29 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
-                                <rect key="frame" x="283" y="84" width="57" height="38"/>
+                                <rect key="frame" x="283" y="104" width="57" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="oWu-Sm-NXt"/>
                                     <constraint firstAttribute="width" constant="57" id="vka-X3-DAu"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payments CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                <rect key="frame" x="16" y="220" width="169" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                <rect key="frame" x="16" y="240" width="93.5" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
-                                <rect key="frame" x="16" y="21" width="76" height="21"/>
+                                <rect key="frame" x="16" y="41" width="76" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMM-PP-5OM">
-                                <rect key="frame" x="102" y="21" width="109.5" height="21"/>
+                                <rect key="frame" x="102" y="41" width="109.5" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDateIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
@@ -105,7 +105,7 @@
                                 <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-IN-v4K">
-                                <rect key="frame" x="221.5" y="21" width="74.5" height="21"/>
+                                <rect key="frame" x="221.5" y="41" width="74.5" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
@@ -179,14 +179,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="81" width="327" height="44"/>
+                                <rect key="frame" x="16" y="101" width="327" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
-                                <rect key="frame" x="283" y="84" width="57" height="38"/>
+                                <rect key="frame" x="283" y="104" width="57" height="38"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="57" id="APS-Uj-noq"/>
@@ -194,7 +194,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
-                                <rect key="frame" x="20" y="135" width="261.5" height="14"/>
+                                <rect key="frame" x="20" y="155" width="261.5" height="14"/>
                                 <accessibility key="accessibilityConfiguration" identifier="restrictedCardBrandsLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
@@ -246,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
-                                <rect key="frame" x="291" y="88" width="49" height="30"/>
+                                <rect key="frame" x="291" y="108" width="49" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
@@ -256,7 +256,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
-                                <rect key="frame" x="267" y="93" width="20" height="20"/>
+                                <rect key="frame" x="267" y="113" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-RM-1YK">
                                 <rect key="frame" x="16" y="0.0" width="118" height="21"/>
@@ -267,7 +267,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="81" width="97" height="44"/>
+                                <rect key="frame" x="16" y="101" width="97" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
                                     <bool key="isElement" value="YES"/>
@@ -322,7 +322,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="creditcard" catalog="system" width="32" height="32"/>
+        <image name="creditcard" catalog="system" width="128" height="88"/>
         <image name="macwindow" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

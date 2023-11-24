@@ -1,11 +1,11 @@
 import Foundation
 
 struct LaunchArguments {
-    static let DiscoveryStub = "stubDiscovery"
-    static let VerifiedTokensStub = "stubVerifiedTokens"
-    static let VerifiedTokensSessionStub = "stubVerifiedTokensSession"
     static let CardConfigurationStub = "stubCardConfiguration"
-    static let SessionsStub = "stubSessions"
+
+    static let AccessServicesRootStub = "stubAccessServicesRoot"
+    static let SessionsRootStub = "stubSessionsRoot"
+    static let SessionsCardStub = "stubSessionsCard"
     static let SessionsPaymentsCvcStub = "stubSessionsPaymentsCvc"
     static let EnableStubs = "enableStubs"
     

@@ -9,8 +9,8 @@ class ApiResponseTests: XCTestCase {
         let expectedLink2Name = "link 2 name"
         let expectedLink2Href = "link 2 value"
         
-        let expectedCurie1Href = "https://access.worldpay.com/rels/verifiedTokens/{rel}.json"
-        let expectedCurie1Name = "verifiedTokens"
+        let expectedCurie1Href = "https://access.worldpay.com/rels/sessions/{rel}.json"
+        let expectedCurie1Name = "sessions"
         let expectedCurie1Templated = true
         
         let responseAsJsonString = """

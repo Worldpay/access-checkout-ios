@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-class SessionsApiDiscoveryMock: CvcSessionsApiDiscovery {
+class CardSessionsApiDiscoveryMock: CardSessionsApiDiscovery {
     private var url: String?
     private var error: AccessCheckoutError?
     

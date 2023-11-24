@@ -1,6 +1,6 @@
 struct ApiLinks {
-    static let verifiedTokens =  ApiLinks(service: "service:verifiedTokens", endpoint: "verifiedTokens:sessions", result: "verifiedTokens:session")
-    static let sessions =  ApiLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc", result: "sessions:session")
+    static let cardSessions = ApiLinks(service: "service:sessions", endpoint: "sessions:card", result: "sessions:session")
+    static let cvcSessions = ApiLinks(service: "service:sessions", endpoint: "sessions:paymentsCvc", result: "sessions:session")
     
     let service: String
     let endpoint: String

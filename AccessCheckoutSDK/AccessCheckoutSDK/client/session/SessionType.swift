@@ -4,7 +4,7 @@
 public enum SessionType {
     /**
      Session type that represents a session that represents the card details
-     This token can be further used with the Worldpay verified token service.
+     This token can be further used with the Worldpay verified payments service.
      */
     case card
 

@@ -2,13 +2,13 @@ class CardDetailsForSessionTypeValidator {
     func validate(cardDetails: CardDetails, for sessionType: SessionType) throws {
         switch sessionType {
             case .card:
-                try validateForVerifiedTokensSession(cardDetails)
+                try validateForCardSession(cardDetails)
             case .cvc:
                 try validateForCvcSession(cardDetails)
         }
     }
     
-    private func validateForVerifiedTokensSession(_ cardDetails: CardDetails) throws {
+    private func validateForCardSession(_ cardDetails: CardDetails) throws {
         guard cardDetails.pan != nil else {
             throw AccessCheckoutIllegalArgumentError.missingPan()
         }

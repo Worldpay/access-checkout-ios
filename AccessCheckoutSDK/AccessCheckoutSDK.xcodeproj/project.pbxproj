@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift */; };
 		1BCBFEBA22B8EA3C00A65FAA /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
@@ -29,6 +28,11 @@
 		512F69402AE12A4F002BF7A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512F693E2AE12A4F002BF7A8 /* LaunchScreen.storyboard */; };
 		512F69552AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */; };
 		512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */; };
+		513039A22B10F68800C01B10 /* ApiHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A12B10F68800C01B10 /* ApiHeadersTests.swift */; };
+		513039A42B10F69800C01B10 /* ApiLinksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A32B10F69800C01B10 /* ApiLinksTest.swift */; };
+		513039A62B110DF600C01B10 /* SessionsConsumerPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */; };
+		513039A82B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */; };
+		513039AA2B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */; };
 		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
 		513C04412AE923E0003B3455 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C04402AE923E0003B3455 /* ServiceStubs.swift */; };
 		5166BC8726833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */; };
@@ -44,7 +48,7 @@
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F1E92A2AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F1E9292AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
-		683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */; };
+		683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
@@ -60,7 +64,6 @@
 		C9AFE46822B7AA4800943B3E /* ExpiryDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */; };
 		C9AFE46922B7AA4800943B3E /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45622B7AA4700943B3E /* mastercard.png */; };
 		C9AFE46A22B7AA4800943B3E /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE45722B7AA4700943B3E /* visa.png */; };
-		CC0572552428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */; };
 		D7258632264ABB9D00DB60EB /* PanTextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */; };
 		D7258634264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */; };
 		D72F700424694FF700305480 /* cardTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = D72F700324694FF700305480 /* cardTypes.json */; };
@@ -100,17 +103,17 @@
 		E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */; };
 		E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */; };
 		E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08724642EF80037DED4 /* CuckooExtension.swift */; };
-		E719B08A24643C350037DED4 /* VerifiedTokensApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08924643C350037DED4 /* VerifiedTokensApiDiscovery.swift */; };
-		E719B08C24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08B24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift */; };
+		E719B08A24643C350037DED4 /* CardSessionsApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */; };
+		E719B08C24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */; };
 		E719B08E246449B70037DED4 /* SessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */; };
-		E719B09A24647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09924647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift */; };
-		E719B09C24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09B24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift */; };
-		E719B09E246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09D246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift */; };
-		E719B0A2246483FF0037DED4 /* VerifiedTokensApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A1246483FF0037DED4 /* VerifiedTokensApiClientTests.swift */; };
-		E719B0A4246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A3246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift */; };
-		E719B0AA2464A3B30037DED4 /* VerifiedTokensApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A92464A3B30037DED4 /* VerifiedTokensApiClientMock.swift */; };
+		E719B09A24647D360037DED4 /* CardSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */; };
+		E719B09C24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */; };
+		E719B09E246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */; };
+		E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */; };
+		E719B0A4246484880037DED4 /* CardSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */; };
+		E719B0AA2464A3B30037DED4 /* CardSessionsApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */; };
 		E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */; };
-		E719B0AE2464A4B90037DED4 /* SessionsApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0AD2464A4B90037DED4 /* SessionsApiClientTests.swift */; };
+		E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */; };
 		E72A99E42459E385004FEAD5 /* CardDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72A99E32459E385004FEAD5 /* CardDetails.swift */; };
 		E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72A99E72459E3A8004FEAD5 /* CardDetailsBuilderTests.swift */; };
 		E72C3ED42485B0DF00284A31 /* PanViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */; };
@@ -130,7 +133,7 @@
 		E72C3F02248A78DA00284A31 /* CvcViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */; };
 		E72C3F0B248AB7B800284A31 /* CardBrandModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3F0A248AB7B800284A31 /* CardBrandModelTransformer.swift */; };
 		E72C3F0D248AB84900284A31 /* CardBrandModelTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3F0C248AB84900284A31 /* CardBrandModelTransformerTests.swift */; };
-		E72D9E5D2411424500C94D5B /* SessionsApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */; };
+		E72D9E5D2411424500C94D5B /* CvcSessionsApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D9E5C2411424500C94D5B /* CvcSessionsApiClient.swift */; };
 		E7409D52248F9DE200016AEB /* PanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7409D51248F9DE200016AEB /* PanViewTests.swift */; };
 		E7409D56248FA3C200016AEB /* MockTextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7409D55248FA3C200016AEB /* MockTextChangeHandler.swift */; };
 		E745CC1824856AD8000390CA /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745CC1724856AD8000390CA /* ValidationRule.swift */; };
@@ -159,20 +162,20 @@
 		E77B8B96245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */; };
 		E77B8B99245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */; };
 		E77B8B9B245C2BF700564C19 /* RetrieveSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */; };
-		E77B8B9D245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9C245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift */; };
-		E77B8B9F245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9E245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift */; };
-		E77B8BA5245C516E00564C19 /* VerifiedTokensRetrieveSessionHandlerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BA4245C516E00564C19 /* VerifiedTokensRetrieveSessionHandlerMock.swift */; };
+		E77B8B9D245C2C0E00564C19 /* RetrieveCardSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9C245C2C0E00564C19 /* RetrieveCardSessionHandler.swift */; };
+		E77B8B9F245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8B9E245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift */; };
+		E77B8BA5245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BA4245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift */; };
 		E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BA6245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift */; };
-		E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BA8245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift */; };
-		E77B8BAB245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BAA245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift */; };
+		E77B8BA9245C552200564C19 /* RetrieveCardSessionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BA8245C552200564C19 /* RetrieveCardSessionHandlerTests.swift */; };
+		E77B8BAB245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BAA245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift */; };
 		E77B8BAD245C5A8D00564C19 /* AccessCheckoutClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B8BAC245C5A8D00564C19 /* AccessCheckoutClientTests.swift */; };
-		E7821A7F245864C4003F7231 /* VerifiedTokensApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A7E245864C4003F7231 /* VerifiedTokensApiClient.swift */; };
+		E7821A7F245864C4003F7231 /* CardSessionsApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A7E245864C4003F7231 /* CardSessionsApiClient.swift */; };
 		E7821A812458652F003F7231 /* WpSdkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A802458652F003F7231 /* WpSdkHeader.swift */; };
-		E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A8224586961003F7231 /* VerifiedTokensSessionRequest.swift */; };
+		E7821A8324586961003F7231 /* CardSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A8224586961003F7231 /* CardSessionRequest.swift */; };
 		E7821A85245869A3003F7231 /* ApiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A84245869A3003F7231 /* ApiLinks.swift */; };
 		E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A86245869DB003F7231 /* ApiHeaders.swift */; };
 		E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */; };
-		E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */; };
+		E7821A9B24586C79003F7231 /* CvcSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7821A9A24586C79003F7231 /* CvcSessionRequest.swift */; };
 		E782A6DC24A106EF005904B5 /* LegacyViewTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782A6DB24A106EF005904B5 /* LegacyViewTestSuite.swift */; };
 		E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */; };
 		E78C9AEC24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78C9AEB24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift */; };
@@ -184,7 +187,7 @@
 		E7AC80AC248EB58300E28D76 /* MockPanValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */; };
 		E7AC80AE248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */; };
 		E7AC80B0248EBA3F00E28D76 /* ValidationRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */; };
-		E7AD244A24640E6B00C4C92D /* SessionsApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD244924640E6B00C4C92D /* SessionsApiDiscovery.swift */; };
+		E7AD244A24640E6B00C4C92D /* CvcSessionsApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */; };
 		E7AD24502464111400C4C92D /* SingleLinkDiscoveryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD244F2464111400C4C92D /* SingleLinkDiscoveryFactory.swift */; };
 		E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24512464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift */; };
 		E7AD2454246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD2453246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift */; };
@@ -196,12 +199,12 @@
 		E7D19F622462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F612462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift */; };
 		E7D19F642462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F632462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift */; };
 		E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */; };
-		E7D19F6C24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */; };
+		E7D19F6C24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6B24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift */; };
 		E7D19F6E24632208001EA13A /* ApiResponseLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6D24632208001EA13A /* ApiResponseLinkLookup.swift */; };
 		E7D19F7024632243001EA13A /* ApiResponseLinkLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6F24632243001EA13A /* ApiResponseLinkLookupTests.swift */; };
 		E7D19F72246328BA001EA13A /* SingleLinkDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F71246328BA001EA13A /* SingleLinkDiscovery.swift */; };
 		E7D19F74246328EA001EA13A /* SingleLinkDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F73246328EA001EA13A /* SingleLinkDiscoveryTests.swift */; };
-		E7D19F7A24637237001EA13A /* SessionsApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F7924637237001EA13A /* SessionsApiDiscoveryTests.swift */; };
+		E7D19F7A24637237001EA13A /* CvcSessionsApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */; };
 		E7D19F8124640008001EA13A /* StubUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F8024640008001EA13A /* StubUtils.swift */; };
 		E7D37F7B248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D37F7A248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift */; };
 		E7D37F7E248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D37F7D248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift */; };
@@ -252,7 +255,6 @@
 
 /* Begin PBXFileReference section */
 		1BCBFEB522B8EA3C00A65FAA /* AccessCheckoutSDKPactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKPactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKtoVTPactTests.swift; sourceTree = "<group>"; };
 		1BCBFEB922B8EA3C00A65FAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -277,6 +279,11 @@
 		512F69502AE12A50002BF7A8 /* AccessCheckoutSDKTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessCheckoutSDKTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		512F69542AE12A50002BF7A8 /* PanWithSpacingFieldsExistUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanWithSpacingFieldsExistUITests.swift; sourceTree = "<group>"; };
 		512F69622AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldExtension.swift; sourceTree = "<group>"; };
+		513039A12B10F68800C01B10 /* ApiHeadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeadersTests.swift; sourceTree = "<group>"; };
+		513039A32B10F69800C01B10 /* ApiLinksTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiLinksTest.swift; sourceTree = "<group>"; };
+		513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsConsumerPactTests.swift; sourceTree = "<group>"; };
+		513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
+		513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
 		5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCardSpacingTests.swift; sourceTree = "<group>"; };
 		513C04402AE923E0003B3455 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
 		5166BC8626833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigConstructorLegacyViewTests.swift; sourceTree = "<group>"; };
@@ -297,7 +304,7 @@
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		683DF0FE5331B699757B3D19 /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 		683DFFF2A0D1603232514AD9 /* URLSessionDataTaskMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskMock.swift; sourceTree = "<group>"; };
-		683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactory.swift; sourceTree = "<group>"; };
+		683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CvcSessionURLRequestFactory.swift; sourceTree = "<group>"; };
 		6F228E4B50C5655DF4E7F378 /* Pods-AccessCheckoutSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		7B355B4B411B9052D09D24D3 /* Pods-AccessCheckoutSDKPactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7D16DA602AF1C240EFDD905 /* Pods-AccessCheckoutSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -320,7 +327,6 @@
 		C9AFE45522B7AA4700943B3E /* ExpiryDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiryDateView.swift; sourceTree = "<group>"; };
 		C9AFE45622B7AA4700943B3E /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
 		C9AFE45722B7AA4700943B3E /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
-		CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutSDKtoSessionsPactTests.swift; sourceTree = "<group>"; };
 		D7258631264ABB9D00DB60EB /* PanTextChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanTextChangeHandler.swift; sourceTree = "<group>"; };
 		D7258633264ABFBC00DB60EB /* PanTextChangeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanTextChangeHandlerTests.swift; sourceTree = "<group>"; };
 		D72F700324694FF700305480 /* cardTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardTypes.json; sourceTree = "<group>"; };
@@ -360,17 +366,17 @@
 		E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcOnlyValidationConfig.swift; sourceTree = "<group>"; };
 		E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryMock.swift; sourceTree = "<group>"; };
 		E719B08724642EF80037DED4 /* CuckooExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuckooExtension.swift; sourceTree = "<group>"; };
-		E719B08924643C350037DED4 /* VerifiedTokensApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiDiscovery.swift; sourceTree = "<group>"; };
-		E719B08B24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiDiscoveryTests.swift; sourceTree = "<group>"; };
+		E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscovery.swift; sourceTree = "<group>"; };
+		E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryTests.swift; sourceTree = "<group>"; };
 		E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
-		E719B09924647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensSessionURLRequestFactory.swift; sourceTree = "<group>"; };
-		E719B09B24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
-		E719B09D246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
-		E719B0A1246483FF0037DED4 /* VerifiedTokensApiClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiClientTests.swift; sourceTree = "<group>"; };
-		E719B0A3246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiDiscoveryMock.swift; sourceTree = "<group>"; };
-		E719B0A92464A3B30037DED4 /* VerifiedTokensApiClientMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiClientMock.swift; sourceTree = "<group>"; };
+		E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactory.swift; sourceTree = "<group>"; };
+		E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
+		E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
+		E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiClientTests.swift; sourceTree = "<group>"; };
+		E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
+		E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSessionsApiClientMock.swift; sourceTree = "<group>"; };
 		E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsApiClientMock.swift; sourceTree = "<group>"; };
-		E719B0AD2464A4B90037DED4 /* SessionsApiClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsApiClientTests.swift; sourceTree = "<group>"; };
+		E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiClientTests.swift; sourceTree = "<group>"; };
 		E72A99E32459E385004FEAD5 /* CardDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetails.swift; sourceTree = "<group>"; };
 		E72A99E72459E3A8004FEAD5 /* CardDetailsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsBuilderTests.swift; sourceTree = "<group>"; };
 		E72C3ED32485B0DF00284A31 /* PanViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenter.swift; sourceTree = "<group>"; };
@@ -390,7 +396,7 @@
 		E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcViewPresenterTests.swift; sourceTree = "<group>"; };
 		E72C3F0A248AB7B800284A31 /* CardBrandModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandModelTransformer.swift; sourceTree = "<group>"; };
 		E72C3F0C248AB84900284A31 /* CardBrandModelTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandModelTransformerTests.swift; sourceTree = "<group>"; };
-		E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiClient.swift; sourceTree = "<group>"; };
+		E72D9E5C2411424500C94D5B /* CvcSessionsApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiClient.swift; sourceTree = "<group>"; };
 		E7409D51248F9DE200016AEB /* PanViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewTests.swift; sourceTree = "<group>"; };
 		E7409D55248FA3C200016AEB /* MockTextChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTextChangeHandler.swift; sourceTree = "<group>"; };
 		E745CC1724856AD8000390CA /* ValidationRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
@@ -419,20 +425,20 @@
 		E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandlerDispatcher.swift; sourceTree = "<group>"; };
 		E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandlerDispatcherTests.swift; sourceTree = "<group>"; };
 		E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveSessionHandler.swift; sourceTree = "<group>"; };
-		E77B8B9C245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensRetrieveSessionHandler.swift; sourceTree = "<group>"; };
-		E77B8B9E245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcRetrieveSessionHandler.swift; sourceTree = "<group>"; };
-		E77B8BA4245C516E00564C19 /* VerifiedTokensRetrieveSessionHandlerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensRetrieveSessionHandlerMock.swift; sourceTree = "<group>"; };
+		E77B8B9C245C2C0E00564C19 /* RetrieveCardSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveCardSessionHandler.swift; sourceTree = "<group>"; };
+		E77B8B9E245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveCvcSessionHandler.swift; sourceTree = "<group>"; };
+		E77B8BA4245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveCardSessionHandlerMock.swift; sourceTree = "<group>"; };
 		E77B8BA6245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcRetrieveSessionHandlerMock.swift; sourceTree = "<group>"; };
-		E77B8BA8245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensRetrieveSessionHandlerTests.swift; sourceTree = "<group>"; };
-		E77B8BAA245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcRetrieveSessionHandlerTests.swift; sourceTree = "<group>"; };
+		E77B8BA8245C552200564C19 /* RetrieveCardSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveCardSessionHandlerTests.swift; sourceTree = "<group>"; };
+		E77B8BAA245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveCvcSessionHandlerTests.swift; sourceTree = "<group>"; };
 		E77B8BAC245C5A8D00564C19 /* AccessCheckoutClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutClientTests.swift; sourceTree = "<group>"; };
-		E7821A7E245864C4003F7231 /* VerifiedTokensApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensApiClient.swift; sourceTree = "<group>"; };
+		E7821A7E245864C4003F7231 /* CardSessionsApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiClient.swift; sourceTree = "<group>"; };
 		E7821A802458652F003F7231 /* WpSdkHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WpSdkHeader.swift; sourceTree = "<group>"; };
-		E7821A8224586961003F7231 /* VerifiedTokensSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedTokensSessionRequest.swift; sourceTree = "<group>"; };
+		E7821A8224586961003F7231 /* CardSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionRequest.swift; sourceTree = "<group>"; };
 		E7821A84245869A3003F7231 /* ApiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiLinks.swift; sourceTree = "<group>"; };
 		E7821A86245869DB003F7231 /* ApiHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeaders.swift; sourceTree = "<group>"; };
 		E7821A9424586BF4003F7231 /* AccessCheckoutTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutTextView.swift; sourceTree = "<group>"; };
-		E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionRequest.swift; sourceTree = "<group>"; };
+		E7821A9A24586C79003F7231 /* CvcSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionRequest.swift; sourceTree = "<group>"; };
 		E782A6DB24A106EF005904B5 /* LegacyViewTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyViewTestSuite.swift; sourceTree = "<group>"; };
 		E78C9AE924928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCardValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
 		E78C9AEB24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift; sourceTree = "<group>"; };
@@ -444,7 +450,7 @@
 		E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPanValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockExpiryDateValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRuleTests.swift; sourceTree = "<group>"; };
-		E7AD244924640E6B00C4C92D /* SessionsApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiDiscovery.swift; sourceTree = "<group>"; };
+		E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscovery.swift; sourceTree = "<group>"; };
 		E7AD244F2464111400C4C92D /* SingleLinkDiscoveryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryFactory.swift; sourceTree = "<group>"; };
 		E7AD24512464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
 		E7AD2453246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSingleLinkDiscoveryFactory.swift; sourceTree = "<group>"; };
@@ -454,12 +460,12 @@
 		E7D19F612462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsForSessionTypeValidator.swift; sourceTree = "<group>"; };
 		E7D19F632462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsForSessionTypeValidatorTests.swift; sourceTree = "<group>"; };
 		E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
-		E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCvcSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
+		E7D19F6B24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CvcSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		E7D19F6D24632208001EA13A /* ApiResponseLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseLinkLookup.swift; sourceTree = "<group>"; };
 		E7D19F6F24632243001EA13A /* ApiResponseLinkLookupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseLinkLookupTests.swift; sourceTree = "<group>"; };
 		E7D19F71246328BA001EA13A /* SingleLinkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscovery.swift; sourceTree = "<group>"; };
 		E7D19F73246328EA001EA13A /* SingleLinkDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryTests.swift; sourceTree = "<group>"; };
-		E7D19F7924637237001EA13A /* SessionsApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiDiscoveryTests.swift; sourceTree = "<group>"; };
+		E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscoveryTests.swift; sourceTree = "<group>"; };
 		E7D19F8024640008001EA13A /* StubUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUtils.swift; sourceTree = "<group>"; };
 		E7D37F7A248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutValidationInitialiser.swift; sourceTree = "<group>"; };
 		E7D37F7D248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutValidationInitialiserTests.swift; sourceTree = "<group>"; };
@@ -525,10 +531,11 @@
 			isa = PBXGroup;
 			children = (
 				1BCBFEB922B8EA3C00A65FAA /* Info.plist */,
-				CC0572542428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift */,
-				1BCBFEB722B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift */,
 				512907E92AE98200008A7357 /* ServiceStubs.swift */,
 				5121EC412AF2A50800C8FC72 /* EncodableExtension.swift */,
+				513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */,
+				513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */,
+				513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */,
 			);
 			path = AccessCheckoutSDKPactTests;
 			sourceTree = "<group>";
@@ -643,10 +650,10 @@
 				E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */,
 				683DF0FE5331B699757B3D19 /* URLSessionMock.swift */,
 				683DFFF2A0D1603232514AD9 /* URLSessionDataTaskMock.swift */,
-				E719B0A92464A3B30037DED4 /* VerifiedTokensApiClientMock.swift */,
-				E719B0A3246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift */,
-				E77B8BA4245C516E00564C19 /* VerifiedTokensRetrieveSessionHandlerMock.swift */,
-				E719B09D246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift */,
+				E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */,
+				E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */,
+				E77B8BA4245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift */,
+				E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */,
 				517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */,
 			);
 			path = mock;
@@ -841,8 +848,8 @@
 		E72C3F1D248B04EA00284A31 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				E79EAC4924587A2500A8DDA6 /* sessions */,
-				E79EAC4824587A1900A8DDA6 /* verifiedTokens */,
+				E79EAC4924587A2500A8DDA6 /* cvcSessions */,
+				E79EAC4824587A1900A8DDA6 /* cardSessions */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -850,11 +857,11 @@
 		E72C3F1E248B04EE00284A31 /* workflow */ = {
 			isa = PBXGroup;
 			children = (
-				E77B8B9E245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift */,
+				E77B8B9C245C2C0E00564C19 /* RetrieveCardSessionHandler.swift */,
+				E77B8B9E245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift */,
 				E77B8B9A245C2BF700564C19 /* RetrieveSessionHandler.swift */,
 				E77B8B95245C2B4900564C19 /* RetrieveSessionHandlerDispatcher.swift */,
 				E760196A246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift */,
-				E77B8B9C245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift */,
 			);
 			path = workflow;
 			sourceTree = "<group>";
@@ -871,8 +878,8 @@
 		E72C3F20248B055100284A31 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				E73A20172459D41100D5EB4C /* sessions */,
-				E73A20182459D41D00D5EB4C /* verifiedTokens */,
+				E73A20172459D41100D5EB4C /* cvcSessions */,
+				E73A20182459D41D00D5EB4C /* cardSessions */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -912,6 +919,8 @@
 		E73A20142459D3C600D5EB4C /* api */ = {
 			isa = PBXGroup;
 			children = (
+				513039A12B10F68800C01B10 /* ApiHeadersTests.swift */,
+				513039A32B10F69800C01B10 /* ApiLinksTest.swift */,
 				E7D19F6F24632243001EA13A /* ApiResponseLinkLookupTests.swift */,
 				E7633D2A249D195100FFE190 /* ApiResponseTests.swift */,
 				E70A5E842420C8B200F8B73E /* RestClientTests.swift */,
@@ -932,24 +941,24 @@
 			path = client;
 			sourceTree = "<group>";
 		};
-		E73A20172459D41100D5EB4C /* sessions */ = {
+		E73A20172459D41100D5EB4C /* cvcSessions */ = {
 			isa = PBXGroup;
 			children = (
-				E7D19F6B24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift */,
-				E719B0AD2464A4B90037DED4 /* SessionsApiClientTests.swift */,
-				E7D19F7924637237001EA13A /* SessionsApiDiscoveryTests.swift */,
+				E7D19F6B24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift */,
+				E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */,
+				E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */,
 			);
-			path = sessions;
+			path = cvcSessions;
 			sourceTree = "<group>";
 		};
-		E73A20182459D41D00D5EB4C /* verifiedTokens */ = {
+		E73A20182459D41D00D5EB4C /* cardSessions */ = {
 			isa = PBXGroup;
 			children = (
-				E719B0A1246483FF0037DED4 /* VerifiedTokensApiClientTests.swift */,
-				E719B08B24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift */,
-				E719B09B24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift */,
+				E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */,
+				E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */,
+				E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */,
 			);
-			path = verifiedTokens;
+			path = cardSessions;
 			sourceTree = "<group>";
 		};
 		E73A201A2459D46100D5EB4C /* validation */ = {
@@ -1049,10 +1058,10 @@
 			isa = PBXGroup;
 			children = (
 				E7D19F632462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift */,
-				E77B8BAA245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift */,
+				E77B8BA8245C552200564C19 /* RetrieveCardSessionHandlerTests.swift */,
+				E77B8BAA245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift */,
 				E77B8B98245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift */,
 				E760196C246D7E37004D6F2E /* RetrieveSessionResultsHandlerTests.swift */,
-				E77B8BA8245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift */,
 			);
 			path = workflow;
 			sourceTree = "<group>";
@@ -1072,26 +1081,26 @@
 			path = api;
 			sourceTree = "<group>";
 		};
-		E79EAC4824587A1900A8DDA6 /* verifiedTokens */ = {
+		E79EAC4824587A1900A8DDA6 /* cardSessions */ = {
 			isa = PBXGroup;
 			children = (
-				E7821A7E245864C4003F7231 /* VerifiedTokensApiClient.swift */,
-				E7821A8224586961003F7231 /* VerifiedTokensSessionRequest.swift */,
-				E719B08924643C350037DED4 /* VerifiedTokensApiDiscovery.swift */,
-				E719B09924647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift */,
+				E7821A7E245864C4003F7231 /* CardSessionsApiClient.swift */,
+				E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */,
+				E7821A8224586961003F7231 /* CardSessionRequest.swift */,
+				E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */,
 			);
-			path = verifiedTokens;
+			path = cardSessions;
 			sourceTree = "<group>";
 		};
-		E79EAC4924587A2500A8DDA6 /* sessions */ = {
+		E79EAC4924587A2500A8DDA6 /* cvcSessions */ = {
 			isa = PBXGroup;
 			children = (
-				E72D9E5C2411424500C94D5B /* SessionsApiClient.swift */,
-				E7AD244924640E6B00C4C92D /* SessionsApiDiscovery.swift */,
-				683DFFF3DC25699A1CE15270 /* PaymentsCvcSessionURLRequestFactory.swift */,
-				E7821A9A24586C79003F7231 /* PaymentsCvcSessionRequest.swift */,
+				E72D9E5C2411424500C94D5B /* CvcSessionsApiClient.swift */,
+				E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */,
+				E7821A9A24586C79003F7231 /* CvcSessionRequest.swift */,
+				683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */,
 			);
-			path = sessions;
+			path = cvcSessions;
 			sourceTree = "<group>";
 		};
 		E79EAC4A24587A6A00A8DDA6 /* client */ = {
@@ -1563,10 +1572,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC0572552428C8E9009DFA24 /* AccessCheckoutSDKtoSessionsPactTests.swift in Sources */,
 				5121EC422AF2A50800C8FC72 /* EncodableExtension.swift in Sources */,
-				1BCBFEB822B8EA3C00A65FAA /* AccessCheckoutSDKtoVTPactTests.swift in Sources */,
+				513039A82B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift in Sources */,
+				513039A62B110DF600C01B10 /* SessionsConsumerPactTests.swift in Sources */,
 				512907EA2AE98200008A7357 /* ServiceStubs.swift in Sources */,
+				513039AA2B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1599,7 +1609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7821A7F245864C4003F7231 /* VerifiedTokensApiClient.swift in Sources */,
+				E7821A7F245864C4003F7231 /* CardSessionsApiClient.swift in Sources */,
 				E7D19F6E24632208001EA13A /* ApiResponseLinkLookup.swift in Sources */,
 				E7167EF8248E2F330045158E /* CardValidationConfig.swift in Sources */,
 				D7258632264ABB9D00DB60EB /* PanTextChangeHandler.swift in Sources */,
@@ -1607,22 +1617,22 @@
 				E72A99E42459E385004FEAD5 /* CardDetails.swift in Sources */,
 				D7D6D5E8248116EC00D57D7A /* CardValidationStateHandler.swift in Sources */,
 				E7FC4478245B24A400CD3675 /* AccessCheckoutClient.swift in Sources */,
-				E77B8B9F245C2C1A00564C19 /* PaymentsCvcRetrieveSessionHandler.swift in Sources */,
+				E77B8B9F245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift in Sources */,
 				D7D6D5F124814F5500D57D7A /* PanValidationStateHandler.swift in Sources */,
-				E72D9E5D2411424500C94D5B /* SessionsApiClient.swift in Sources */,
+				E72D9E5D2411424500C94D5B /* CvcSessionsApiClient.swift in Sources */,
 				E7FC447A245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift in Sources */,
-				E719B09A24647D360037DED4 /* VerifiedTokensSessionURLRequestFactory.swift in Sources */,
+				E719B09A24647D360037DED4 /* CardSessionURLRequestFactory.swift in Sources */,
 				D7D6D5D6247FC94900D57D7A /* CvcValidator.swift in Sources */,
 				E7D37F7B248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift in Sources */,
 				E7821A9524586BF4003F7231 /* AccessCheckoutTextView.swift in Sources */,
-				E719B08A24643C350037DED4 /* VerifiedTokensApiDiscovery.swift in Sources */,
+				E719B08A24643C350037DED4 /* CardSessionsApiDiscovery.swift in Sources */,
 				E745CC1824856AD8000390CA /* ValidationRule.swift in Sources */,
 				5182FA752AC485C500976088 /* AccessCheckoutUITextField.swift in Sources */,
 				E749024D247FEEB600889AAA /* TextChangeHandler.swift in Sources */,
 				E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */,
 				E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */,
 				E72C3EEA24879C1C00284A31 /* CardBrand.swift in Sources */,
-				E77B8B9D245C2C0E00564C19 /* VerifiedTokensRetrieveSessionHandler.swift in Sources */,
+				E77B8B9D245C2C0E00564C19 /* RetrieveCardSessionHandler.swift in Sources */,
 				C9AFE46422B7AA4800943B3E /* PanView.swift in Sources */,
 				E7E6758F241AA57A0022292F /* RestClient.swift in Sources */,
 				E7FC4473245B1FD100CD3675 /* SessionType.swift in Sources */,
@@ -1642,7 +1652,7 @@
 				C9AFE46822B7AA4800943B3E /* ExpiryDateView.swift in Sources */,
 				E72C3ED62485B0F500284A31 /* ExpiryDateViewPresenter.swift in Sources */,
 				E77B8B9B245C2BF700564C19 /* RetrieveSessionHandler.swift in Sources */,
-				E7AD244A24640E6B00C4C92D /* SessionsApiDiscovery.swift in Sources */,
+				E7AD244A24640E6B00C4C92D /* CvcSessionsApiDiscovery.swift in Sources */,
 				E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */,
 				E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */,
 				E7D19F622462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift in Sources */,
@@ -1661,16 +1671,16 @@
 				E745CC1C24856E68000390CA /* CardBrandModel.swift in Sources */,
 				E7D37F8024815E0C0039DD98 /* CardBrandsConfigurationFactory.swift in Sources */,
 				D7D6D5F52481550200D57D7A /* PanValidationFlow.swift in Sources */,
-				E7821A9B24586C79003F7231 /* PaymentsCvcSessionRequest.swift in Sources */,
+				E7821A9B24586C79003F7231 /* CvcSessionRequest.swift in Sources */,
 				512F69632AE1309D002BF7A8 /* AccessCheckoutUITextFieldExtension.swift in Sources */,
 				E74EB7432497A77C008743E7 /* ExpiryDateFormatter.swift in Sources */,
 				C9AFE45A22B7AA4800943B3E /* AccessCheckoutError.swift in Sources */,
 				E7A4AB66245B37F6009D586E /* AccessCheckoutIllegalArgumentError.swift in Sources */,
 				D7D6D5D4247EBA1F00D57D7A /* ExpiryDateValidator.swift in Sources */,
-				E7821A8324586961003F7231 /* VerifiedTokensSessionRequest.swift in Sources */,
+				E7821A8324586961003F7231 /* CardSessionRequest.swift in Sources */,
 				E760196B246D7E28004D6F2E /* RetrieveSessionResultsHandler.swift in Sources */,
 				E745CC1E24856EAB000390CA /* CardBrandImageModel.swift in Sources */,
-				683DFBB48F1684E7AFD56E13 /* PaymentsCvcSessionURLRequestFactory.swift in Sources */,
+				683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1679,12 +1689,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E79DAF1724911DB60043CD46 /* ExpiryDateViewTests.swift in Sources */,
-				E77B8BAB245C562200564C19 /* PaymentsCvcRetrieveSessionHandlerTests.swift in Sources */,
+				E77B8BAB245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift in Sources */,
 				E7AD2454246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift in Sources */,
 				E749024B247FEE3C00889AAA /* TextChangeHandlerTests.swift in Sources */,
 				E7409D56248FA3C200016AEB /* MockTextChangeHandler.swift in Sources */,
 				E72C3EFE248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift in Sources */,
-				E7D19F6C24630F34001EA13A /* PaymentsCvcSessionURLRequestFactoryTests.swift in Sources */,
+				E7D19F6C24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift in Sources */,
 				E7AFC3F7241FEBEB00C0E432 /* URLSessionMock.swift in Sources */,
 				E77B8B99245C2B5E00564C19 /* RetrieveSessionHandlerDispatcherTests.swift in Sources */,
 				E75C5E66248E6F7F003A1BDE /* MockAccessCheckoutCvvOnlyValidationDelegate.swift in Sources */,
@@ -1693,7 +1703,7 @@
 				D7C6EE212486A4F000170B92 /* ExpiryDateValidationFlowTests.swift in Sources */,
 				E72C3EE024866B8000284A31 /* MockPanValidator.swift in Sources */,
 				E72C3F0D248AB84900284A31 /* CardBrandModelTransformerTests.swift in Sources */,
-				E719B0AE2464A4B90037DED4 /* SessionsApiClientTests.swift in Sources */,
+				E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */,
 				E72C3EDE248669EF00284A31 /* MockPanValidationStateHandler.swift in Sources */,
 				D7D6D5F3248154B900D57D7A /* PanValidationFlowTests.swift in Sources */,
 				51F1E92A2AC5D11C00AB6F84 /* CardValidationConfigConstructorTests.swift in Sources */,
@@ -1719,8 +1729,8 @@
 				E79EAC6324588D5C00A8DDA6 /* MockCvvValidator.swift in Sources */,
 				E72C3EF524894B2C00284A31 /* MockCardBrandsConfigurationProvider.swift in Sources */,
 				5166BC8726833E3C00648CE8 /* CardValidationConfigConstructorLegacyViewTests.swift in Sources */,
-				E77B8BA5245C516E00564C19 /* VerifiedTokensRetrieveSessionHandlerMock.swift in Sources */,
-				E719B08C24643C930037DED4 /* VerifiedTokensApiDiscoveryTests.swift in Sources */,
+				E77B8BA5245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift in Sources */,
+				E719B08C24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift in Sources */,
 				E7633D2B249D195100FFE190 /* ApiResponseTests.swift in Sources */,
 				E7C4D236249CF4D100D7B9F1 /* EncodableExtension.swift in Sources */,
 				E719B08E246449B70037DED4 /* SessionsApiDiscoveryMock.swift in Sources */,
@@ -1730,18 +1740,19 @@
 				E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */,
 				E7AE68C724195050002380AF /* RestClientMock.swift in Sources */,
 				E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */,
-				E719B0A2246483FF0037DED4 /* VerifiedTokensApiClientTests.swift in Sources */,
-				E719B0A4246484880037DED4 /* VerifiedTokensApiDiscoveryMock.swift in Sources */,
+				E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */,
+				E719B0A4246484880037DED4 /* CardSessionsApiDiscoveryMock.swift in Sources */,
 				D7D6D5EB248117FB00D57D7A /* CardValidationStateHandlerTests.swift in Sources */,
 				E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72C3F02248A78DA00284A31 /* CvcViewPresenterTests.swift in Sources */,
 				E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */,
-				E7D19F7A24637237001EA13A /* SessionsApiDiscoveryTests.swift in Sources */,
+				E7D19F7A24637237001EA13A /* CvcSessionsApiDiscoveryTests.swift in Sources */,
 				E72C3EF324893C6400284A31 /* CardBrandsConfigurationProviderTests.swift in Sources */,
 				E7FC447C245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift in Sources */,
 				E77B8BAD245C5A8D00564C19 /* AccessCheckoutClientTests.swift in Sources */,
 				E745CC1A24856B52000390CA /* CardBrandsConfigurationTests.swift in Sources */,
 				E745CC2E24859DD6000390CA /* ValidationRulesDefaultsTests.swift in Sources */,
+				513039A42B10F69800C01B10 /* ApiLinksTest.swift in Sources */,
 				E745CC28248585E9000390CA /* MockCardBrandDtoTransformer.swift in Sources */,
 				E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */,
 				51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */,
@@ -1749,24 +1760,25 @@
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
 				51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */,
-				E719B09C24647DA80037DED4 /* VerifiedTokensSessionURLRequestFactoryTests.swift in Sources */,
+				E719B09C24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift in Sources */,
 				E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */,
 				E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */,
-				E719B0AA2464A3B30037DED4 /* VerifiedTokensApiClientMock.swift in Sources */,
+				E719B0AA2464A3B30037DED4 /* CardSessionsApiClientMock.swift in Sources */,
 				51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */,
 				D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */,
-				E719B09E246481DA0037DED4 /* VerifiedTokensSessionURLRequestFactoryMock.swift in Sources */,
+				E719B09E246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
 				513C04412AE923E0003B3455 /* ServiceStubs.swift in Sources */,
 				D7C6EE232486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift in Sources */,
 				51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */,
+				513039A22B10F68800C01B10 /* ApiHeadersTests.swift in Sources */,
 				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
 				E7633D2D249D1F4800FFE190 /* AccessCheckoutErrorTests.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,
 				5173EF252970367300770177 /* WpSdkHeaderTests.swift in Sources */,
 				E782A6DC24A106EF005904B5 /* LegacyViewTestSuite.swift in Sources */,
 				5166BC9526833FCA00648CE8 /* CardValidationConfigConstructorLegacyTests.swift in Sources */,
-				E77B8BA9245C552200564C19 /* VerifiedTokensRetrieveSessionHandlerTests.swift in Sources */,
+				E77B8BA9245C552200564C19 /* RetrieveCardSessionHandlerTests.swift in Sources */,
 				D7851B212487B21600461377 /* CvcValidationFlowTests.swift in Sources */,
 				5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */,
 				E72C3EF8248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift in Sources */,

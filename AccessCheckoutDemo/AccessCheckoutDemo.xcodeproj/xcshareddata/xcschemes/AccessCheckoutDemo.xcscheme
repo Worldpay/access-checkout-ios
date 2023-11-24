@@ -71,7 +71,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-stubDiscovery Discovery-success"
+            argument = "-stubAccessServicesRoot Access-services-root-success"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -83,15 +83,11 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-stubVerifiedTokens VerifiedTokens-success"
+            argument = "-stubSessionsCard Sessions-card-success"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-stubVerifiedTokensSession VerifiedTokensSession-success"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-stubSessions sessions-success"
+            argument = "-stubSessionsRoot Sessions-success"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
