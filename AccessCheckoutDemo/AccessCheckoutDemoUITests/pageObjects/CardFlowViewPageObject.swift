@@ -6,7 +6,7 @@ class CardFlowViewPageObject {
     private let app: XCUIApplication
 
     var panField: XCUIElement {
-        return app.textFields["pan"]
+        return app.otherElements["pan"].textFields.firstMatch
     }
 
     var panText: String? {
@@ -18,11 +18,11 @@ class CardFlowViewPageObject {
     }
 
     var expiryDateField: XCUIElement {
-        return app.textFields["expiryDate"]
+        return app.otherElements["expiryDate"].textFields.firstMatch
     }
 
     var cvcField: XCUIElement {
-        return app.textFields["cvc"]
+        return app.otherElements["cvc"].textFields.firstMatch
     }
 
     var cvcText: String? {

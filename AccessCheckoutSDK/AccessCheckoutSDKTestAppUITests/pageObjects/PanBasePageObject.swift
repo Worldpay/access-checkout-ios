@@ -1,4 +1,3 @@
-
 import XCTest
 
 class PanBasePageObject {
@@ -23,7 +22,7 @@ class PanBasePageObject {
     }
 
     var panField: XCUIElement {
-        return app.textFields[panFieldIdentifier]
+        return app.otherElements[panFieldIdentifier].textFields.firstMatch
     }
 
     var panCaretPositionTextField: XCUIElement {

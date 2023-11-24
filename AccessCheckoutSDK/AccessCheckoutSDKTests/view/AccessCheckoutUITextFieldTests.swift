@@ -44,7 +44,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: Accessibility properties tests
 
     // isAccessibilityElement
-    func testIsAccessibilityElementGetterAlwaysReturnsTrue() {
+    func testIsAccessibilityElementGetterAlwaysReturnsFalse() {
         let textField = createTextField()
         XCTAssertFalse(textField.isAccessibilityElement)
         
@@ -78,20 +78,21 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     }
     
     // accessibilityIdentifier
-    func testAccessibilityIdentifierGetterAlwaysReturnsNil() {
+    func testAccessibilityIdentifierGetterReturnsId() {
         let textField = createTextField()
         XCTAssertNil(textField.accessibilityIdentifier)
-         
-        textField.accessibilityHint = "something"
-        XCTAssertNil(textField.accessibilityIdentifier)
-    }
-     
-    func testAccessibilityIdentifierSetterSetsUITextFieldProperty() {
-        let textField = createTextField()
-        XCTAssertNil(textField.uiTextField.accessibilityIdentifier)
          
         textField.accessibilityIdentifier = "something"
-        XCTAssertEqual("something", textField.uiTextField.accessibilityIdentifier)
+        XCTAssertEqual("something", textField.accessibilityIdentifier)
+    }
+    
+    func testAccessibilityIdentifierSetterSetsIdAndUITextFieldIdUsingANamingConvention() {
+        let textField = createTextField()
+        XCTAssertNil(textField.accessibilityIdentifier)
+         
+        textField.accessibilityIdentifier = "something"
+        XCTAssertEqual("something", textField.accessibilityIdentifier)
+        XCTAssertEqual("something-UITextField", textField.uiTextField.accessibilityIdentifier)
     }
     
     // accessibilityLabel
