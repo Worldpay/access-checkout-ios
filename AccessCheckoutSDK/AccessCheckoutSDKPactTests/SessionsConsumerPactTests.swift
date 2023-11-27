@@ -3,7 +3,7 @@ import PactConsumerSwift
 import XCTest
 
 class SessionsConsumerPactTests: XCTestCase {
-    let baseURI: String = Bundle(for: AccessCheckoutSDKtoSessionsPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://pacttest"
+    let baseURI: String = Bundle(for: SessionsConsumerPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"] as? String ?? "http://pacttest"
     
     let requestHeaders: [String: Any] = ["Accept": ApiHeaders.sessionsHeaderValue, "content-type": ApiHeaders.sessionsHeaderValue]
     let responseHeaders: [String: Any] = ["Content-Type": ApiHeaders.sessionsHeaderValue]

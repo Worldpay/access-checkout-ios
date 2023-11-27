@@ -15,7 +15,6 @@
 		5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */; };
 		512907F12AEC0473008A7357 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F02AEC0473008A7357 /* ServiceStubs.swift */; };
 		512907F32AEC048F008A7357 /* StubResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F22AEC048F008A7357 /* StubResponse.swift */; };
-		512907F52AEC04A3008A7357 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F42AEC04A3008A7357 /* LaunchArguments.swift */; };
 		512907F72AEC472B008A7357 /* CardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D737A08424752E0B00D4E872 /* CardConfiguration.json */; };
 		512907F82AEC472B008A7357 /* Access-services-root-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A822B7EE5800943B3E /* Access-services-root-success.json */; };
 		512907FA2AEC472B008A7357 /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
@@ -74,7 +73,6 @@
 		5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		512907F02AEC0473008A7357 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
 		512907F22AEC048F008A7357 /* StubResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubResponse.swift; sourceTree = "<group>"; };
-		512907F42AEC04A3008A7357 /* LaunchArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
 		516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowNoCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		5174649927271F1A00E4902B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				512907F62AEC46FC008A7357 /* responses */,
-				512907F42AEC04A3008A7357 /* LaunchArguments.swift */,
 				512907F02AEC0473008A7357 /* ServiceStubs.swift */,
 				512907F22AEC048F008A7357 /* StubResponse.swift */,
 			);
@@ -492,7 +489,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E74F7C3C24741490005D40FE /* CardFlowUITests.swift in Sources */,
-				512907F52AEC04A3008A7357 /* LaunchArguments.swift in Sources */,
 				E72152842437D9E3009AAFB3 /* CardFlowViewPageObject.swift in Sources */,
 				5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */,
 				E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */,
