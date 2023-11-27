@@ -195,11 +195,11 @@ class SessionsConsumerPactTests: XCTestCase {
             ]
         ]
         
-        let expectedValue = "\(baseURI)/sessions/card/sampleSessionID"
+        let expectedValue = "\(baseURI)/sessions/sampleSessionID"
         let responseJson = [
             "_links": [
                 "sessions:session": [
-                    "href": Matcher.term(matcher: "https?://[^/]+/sessions/card/.+", generate: expectedValue)
+                    "href": Matcher.term(matcher: "https?://[^/]+/sessions/.+", generate: expectedValue)
                 ]
             ]
         ]
