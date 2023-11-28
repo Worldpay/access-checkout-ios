@@ -2,6 +2,8 @@
 import XCTest
 
 class AppLauncher {
+    private let LaunchArgument_enableStubs = "enableStubs"
+    
     private init() {}
     
     static func appLauncher() -> AppLauncher {
@@ -16,7 +18,7 @@ class AppLauncher {
         let app = XCUIApplication()
         
         if let enableStubs = enableStubs {
-            app.launchArguments.append(contentsOf: ["-\(LaunchArguments.EnableStubs)", enableStubs.description])
+            app.launchArguments.append(contentsOf: ["-\(LaunchArgument_enableStubs)", enableStubs.description])
         }
         app.launch()
         

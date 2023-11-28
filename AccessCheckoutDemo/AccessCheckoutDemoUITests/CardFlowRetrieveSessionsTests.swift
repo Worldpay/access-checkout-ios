@@ -2,7 +2,7 @@
 import XCTest
 
 class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
-    private let expectedVtSessionRegex = "http:\\/\\/localhost:\\d{4}\\/verifiedTokens\\/sessions\\/[a-zA-Z0-9\\-]+"
+    private let expectedCardSessionRegex = "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"
     private let expectedCvcSessionRegex = "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"
     
     private let serviceStubs = ServiceStubs()
@@ -12,8 +12,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
               
         _ = serviceStubs
             .cardConfiguration()
-            .discovery(respondWith: .discoverySuccess)
-            .verifiedTokensRoot(respondWith: .verifiedTokensRootSuccess)
+            .accessServicesRoot(respondWith: .accessServicesRootSuccess)
             .sessionsRoot(respondWith: .sessionsRootSuccess)
     }
     
@@ -21,13 +20,13 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         serviceStubs.stop()
     }
     
-    func testRetrievesAVerifiedTokensSession_whenPaymentsCvcSessionToggleIsOff() {
+    func testRetrievesACardSession_whenPaymentsCvcSessionToggleIsOff() {
         serviceStubs
-            .verifiedTokensSessions(respondWith: .verifiedTokensSessionSuccess)
+            .sessionsCard(respondWith: .cardSessionSuccess)
             .start()
         
         let app = AppLauncher.launch(enableStubs: true)
-        let expectedTitle = "Verified Tokens Session"
+        let expectedTitle = "Card Session"
         
         let view = CardFlowViewPageObject(app)
         
@@ -37,18 +36,18 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssertEqual(alert.title, expectedTitle)
-        XCTAssertNotNil(alert.message.range(of: expectedVtSessionRegex, options: .regularExpression))
+        XCTAssertNotNil(alert.message.range(of: expectedCardSessionRegex, options: .regularExpression))
     }
 
-    func testRetrievesAVerifiedTokensSessionAndAPaymentsCvcSessionToken_whenPaymentsCvcSessionToggleIsOn() {
+    func testRetrievesACardSessionAndACvcSessionToken_whenPaymentsCvcSessionToggleIsOn() {
         serviceStubs
-            .verifiedTokensSessions(respondWith: .verifiedTokensSessionSuccess)
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
+            .sessionsCard(respondWith: .cardSessionSuccess)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionSuccess)
             .start()
         
         let app = AppLauncher.launch(enableStubs: true)
         let view = CardFlowViewPageObject(app)
-        let expectedTitle = "Verified Tokens & Payments CVC Sessions"
+        let expectedTitle = "Card & CVC Sessions"
 
         fillUpFormWithValidValues(using: view)
         view.paymentsCvcSessionToggle.toggleOn()
@@ -57,19 +56,19 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         let alert = view.alert
         XCTAssertTrue(alert.exists)
         XCTAssertEqual(alert.title, expectedTitle)
-        XCTAssertNotNil(alert.message.range(of: expectedVtSessionRegex, options: .regularExpression))
+        XCTAssertNotNil(alert.message.range(of: expectedCardSessionRegex, options: .regularExpression))
         XCTAssertNotNil(alert.message.range(of: expectedCvcSessionRegex, options: .regularExpression))
     }
 
     func testClearsFormAndDisablesButtonWhenAlertWithSessionIsClosed() {
         serviceStubs
-            .verifiedTokensSessions(respondWith: .verifiedTokensSessionSuccess)
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
+            .sessionsCard(respondWith: .cardSessionSuccess)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionSuccess)
             .start()
         
         let app = AppLauncher.launch(enableStubs: true)
         let view = CardFlowViewPageObject(app)
-        let expectedTitle = "Verified Tokens Session"
+        let expectedTitle = "Card Session"
 
         fillUpFormWithValidValues(using: view)
         view.submit()
@@ -90,7 +89,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
 
     func testResponse_bodyDoesNotMatchSchema_panFailedLuhnCheck() {
         serviceStubs
-            .verifiedTokensSessions(respondWith: .verifiedTokensSessionsPanFailedLuhnCheck)
+            .sessionsCard(respondWith: .cardSessionsPanFailedLuhnCheck)
             .start()
         
         let app = AppLauncher.launch(enableStubs: true)
@@ -103,7 +102,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
         XCTAssertTrue(alert.exists)
         XCTAssert(alert.title.contains("bodyDoesNotMatchSchema"))
         XCTAssert(alert.title.contains("panFailedLuhnCheck"))
-        XCTAssert(alert.title.contains(VerifiedTokensSessionRequest.Key.cardNumber.rawValue))
+        XCTAssert(alert.title.contains(CardSessionRequest.Key.cardNumber.rawValue))
     }
     
     private func fillUpFormWithValidValues(using view: CardFlowViewPageObject) {

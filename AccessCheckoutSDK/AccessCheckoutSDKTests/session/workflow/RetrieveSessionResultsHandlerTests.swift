@@ -4,14 +4,14 @@ import XCTest
 class RetrieveSessionResultsCollatorTests: XCTestCase {
     func testCompletesWithAllResultsWhenAllSuccessfulResultsReceived() {
         let expectationToFulfill = expectation(description: "")
-        let verifiedTokensSession: Result<String, AccessCheckoutError> = .success("session verified tokens")
-        let paymentsCvcSession: Result<String, AccessCheckoutError> = .success("session payments cvc")
+        let cardSession: Result<String, AccessCheckoutError> = .success("card session")
+        let paymentsCvcSession: Result<String, AccessCheckoutError> = .success("cvc session")
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
             case .success(let sessions):
                 XCTAssertEqual(2, sessions.count)
-                XCTAssertEqual("session verified tokens", sessions[.card])
-                XCTAssertEqual("session payments cvc", sessions[.cvc])
+                XCTAssertEqual("card session", sessions[.card])
+                XCTAssertEqual("cvc session", sessions[.cvc])
             case .failure(let error):
                 XCTFail("Expected successful result but got error \(error)")
             }
@@ -19,7 +19,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)
@@ -28,7 +28,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
     func testCompletesWithAnErrorWhenOneOfTheResultsIsAFailure() {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        let verifiedTokensSession: Result<String, AccessCheckoutError> = .success("session verified tokens")
+        let cardSession: Result<String, AccessCheckoutError> = .success("card session")
         let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
@@ -41,7 +41,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)
@@ -51,7 +51,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let otherError = StubUtils.createError(errorName: "another error", message: "another message")
-        let verifiedTokensSession: Result<String, AccessCheckoutError> = .failure(expectedError)
+        let cardSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(otherError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
             switch result {
@@ -64,7 +64,7 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
         
-        handler.handle(verifiedTokensSession, for: SessionType.card)
+        handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
         
         wait(for: [expectationToFulfill], timeout: 1)

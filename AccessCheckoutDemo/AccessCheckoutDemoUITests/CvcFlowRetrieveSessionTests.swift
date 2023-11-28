@@ -12,18 +12,17 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         
         _ = serviceStubs
             .cardConfiguration()
-            .discovery(respondWith: .discoverySuccess)
-            .verifiedTokensRoot(respondWith: .verifiedTokensRootSuccess)
+            .accessServicesRoot(respondWith: .accessServicesRootSuccess)
             .sessionsRoot(respondWith: .sessionsRootSuccess)
     }
     
     func testSuccessfullyCreatesAndDisplaysACvcSession() {
         serviceStubs
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionSuccess)
             .start()
         let app = AppLauncher.launch(enableStubs: true)
         
-        let expectedTitle = "Payments CVC Session"
+        let expectedTitle = "CVC Session"
         
         let view = NavigationViewPageObject(app).navigateToCvcFlow()
         view.typeTextIntoCvc("123")
@@ -37,7 +36,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
     
     func testClearsCvcAndDisablesButtonWhenAlertWithSessionIsClosed() {
         serviceStubs
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcSuccess)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionSuccess)
             .start()
         let app = AppLauncher.launch(enableStubs: true)
 
@@ -74,7 +73,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
         let expectedMessage = formatStringAsStaticTextLabel(error.localizedDescription)
         
         serviceStubs
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcError)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionError)
             .start()
         let app = AppLauncher.launch(enableStubs: true)
 
@@ -90,7 +89,7 @@ class CvcFlowRetrieveSessionTests: XCTestCase {
     
     func testDoesNotClearCvcWhenAlertWithErrorIsClosed() {
         serviceStubs
-            .sessionsPaymentsCvc(respondWith: .sessionsPaymentsCvcError)
+            .sessionsPaymentsCvc(respondWith: .cvcSessionError)
             .start()
         let app = AppLauncher.launch(enableStubs: true)
 

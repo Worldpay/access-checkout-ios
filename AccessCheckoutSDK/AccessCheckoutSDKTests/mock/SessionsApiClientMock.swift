@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-class SessionsApiClientMock: SessionsApiClient {
+class SessionsApiClientMock: CvcSessionsApiClient {
     var createSessionCalled: Bool = false
     var sessionToReturn: String?
     var error: AccessCheckoutError?
@@ -18,9 +18,9 @@ class SessionsApiClientMock: SessionsApiClient {
     override func createSession(baseUrl: String, merchantId: String, cvc: String, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         createSessionCalled = true
         
-        if let sessionToReturn = self.sessionToReturn {
+        if let sessionToReturn = sessionToReturn {
             completionHandler(.success(sessionToReturn))
-        } else if let error = self.error {
+        } else if let error = error {
             completionHandler(.failure(error))
         }
     }

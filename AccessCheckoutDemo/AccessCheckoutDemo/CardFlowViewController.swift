@@ -48,13 +48,13 @@ class CardFlowViewController: UIViewController {
                     var titleToDisplay: String, messageToDisplay: String
 
                     if sessionTypes.count > 1 {
-                        titleToDisplay = "Verified Tokens & Payments CVC Sessions"
+                        titleToDisplay = "Card & CVC Sessions"
                         messageToDisplay = """
                         \(sessions[SessionType.card]!)
                         \(sessions[SessionType.cvc]!)
                         """
                     } else {
-                        titleToDisplay = "Verified Tokens Session"
+                        titleToDisplay = "Card Session"
                         messageToDisplay = "\(sessions[SessionType.card]!)"
                     }
 

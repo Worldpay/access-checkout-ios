@@ -1,0 +1,14 @@
+{
+    "_links": {
+        "sessions:session": {
+            "href": "<BASE_URI>/sessions/some-card-session"
+        },
+        "curies": [
+            {
+                "href": "<BASE_URI>/rels/sessions/{rel}.json",
+                "name": "sessions",
+                "templated": true
+            }
+        ]
+    }
+}

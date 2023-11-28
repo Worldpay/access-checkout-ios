@@ -15,12 +15,10 @@
 		5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */; };
 		512907F12AEC0473008A7357 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F02AEC0473008A7357 /* ServiceStubs.swift */; };
 		512907F32AEC048F008A7357 /* StubResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F22AEC048F008A7357 /* StubResponse.swift */; };
-		512907F52AEC04A3008A7357 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F42AEC04A3008A7357 /* LaunchArguments.swift */; };
 		512907F72AEC472B008A7357 /* CardConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D737A08424752E0B00D4E872 /* CardConfiguration.json */; };
-		512907F82AEC472B008A7357 /* Discovery-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A822B7EE5800943B3E /* Discovery-success.json */; };
-		512907FA2AEC472B008A7357 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
-		512908002AEC472B008A7357 /* VerifiedTokensSession-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */; };
-		512908012AEC472B008A7357 /* VerifiedTokens-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */; };
+		512907F82AEC472B008A7357 /* Access-services-root-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4A822B7EE5800943B3E /* Access-services-root-success.json */; };
+		512907FA2AEC472B008A7357 /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AE22B7EE5900943B3E /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */; };
+		512908002AEC472B008A7357 /* Sessions-card-success.json in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE4AB22B7EE5800943B3E /* Sessions-card-success.json */; };
 		512908022AEC472B008A7357 /* Sessions-paymentsCvc-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E7993C89243730820082E2C2 /* Sessions-paymentsCvc-error.json */; };
 		512908032AEC472B008A7357 /* Sessions-paymentsCvc-success.json in Resources */ = {isa = PBXBuildFile; fileRef = E7CFBA3F24366AF1009FA24A /* Sessions-paymentsCvc-success.json */; };
 		512908042AEC472B008A7357 /* Sessions-success.json in Resources */ = {isa = PBXBuildFile; fileRef = E7CFBA3B2436663B009FA24A /* Sessions-success.json */; };
@@ -75,7 +73,6 @@
 		5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		512907F02AEC0473008A7357 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
 		512907F22AEC048F008A7357 /* StubResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubResponse.swift; sourceTree = "<group>"; };
-		512907F42AEC04A3008A7357 /* LaunchArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
 		516E31E12694F1F40017E8EB /* CardFlowCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		516E31E7269513940017E8EB /* RestrictedCardFlowNoCardNumberSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowNoCardNumberSpacingTests.swift; sourceTree = "<group>"; };
 		5174649927271F1A00E4902B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -101,10 +98,9 @@
 		C9AFE47922B7C6DA00943B3E /* CardFlowValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowValidationTests.swift; sourceTree = "<group>"; };
 		C9AFE47A22B7C6DA00943B3E /* CardFlowRetrieveSessionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowRetrieveSessionsTests.swift; sourceTree = "<group>"; };
 		C9AFE48322B7C8D700943B3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C9AFE4A822B7EE5800943B3E /* Discovery-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Discovery-success.json"; sourceTree = "<group>"; };
-		C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokensSession-success.json"; sourceTree = "<group>"; };
-		C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-success.json"; sourceTree = "<group>"; };
-		C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
+		C9AFE4A822B7EE5800943B3E /* Access-services-root-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Access-services-root-success.json"; sourceTree = "<group>"; };
+		C9AFE4AB22B7EE5800943B3E /* Sessions-card-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Sessions-card-success.json"; sourceTree = "<group>"; };
+		C9AFE4AE22B7EE5900943B3E /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json"; sourceTree = "<group>"; };
 		CC1BD93A2448BB9200A4C745 /* CIVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIVariables.swift; sourceTree = "<group>"; };
 		D737A08424752E0B00D4E872 /* CardConfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CardConfiguration.json; sourceTree = "<group>"; };
 		E7134D362437AE3900DD842F /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
@@ -158,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				512907F62AEC46FC008A7357 /* responses */,
-				512907F42AEC04A3008A7357 /* LaunchArguments.swift */,
 				512907F02AEC0473008A7357 /* ServiceStubs.swift */,
 				512907F22AEC048F008A7357 /* StubResponse.swift */,
 			);
@@ -169,10 +164,9 @@
 			isa = PBXGroup;
 			children = (
 				D737A08424752E0B00D4E872 /* CardConfiguration.json */,
-				C9AFE4A822B7EE5800943B3E /* Discovery-success.json */,
-				C9AFE4AE22B7EE5900943B3E /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */,
-				C9AFE4AB22B7EE5800943B3E /* VerifiedTokensSession-success.json */,
-				C9AFE4AC22B7EE5900943B3E /* VerifiedTokens-success.json */,
+				C9AFE4A822B7EE5800943B3E /* Access-services-root-success.json */,
+				C9AFE4AE22B7EE5900943B3E /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json */,
+				C9AFE4AB22B7EE5800943B3E /* Sessions-card-success.json */,
 				E7993C89243730820082E2C2 /* Sessions-paymentsCvc-error.json */,
 				E7CFBA3F24366AF1009FA24A /* Sessions-paymentsCvc-success.json */,
 				E7CFBA3B2436663B009FA24A /* Sessions-success.json */,
@@ -382,10 +376,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				512907F72AEC472B008A7357 /* CardConfiguration.json in Resources */,
-				512907F82AEC472B008A7357 /* Discovery-success.json in Resources */,
-				512907FA2AEC472B008A7357 /* VerifiedTokens-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
-				512908002AEC472B008A7357 /* VerifiedTokensSession-success.json in Resources */,
-				512908012AEC472B008A7357 /* VerifiedTokens-success.json in Resources */,
+				512907F82AEC472B008A7357 /* Access-services-root-success.json in Resources */,
+				512907FA2AEC472B008A7357 /* Sessions-card-bodyDoesNotMatchSchema-panFailedLuhnCheck.json in Resources */,
+				512908002AEC472B008A7357 /* Sessions-card-success.json in Resources */,
 				512908022AEC472B008A7357 /* Sessions-paymentsCvc-error.json in Resources */,
 				512908032AEC472B008A7357 /* Sessions-paymentsCvc-success.json in Resources */,
 				512908042AEC472B008A7357 /* Sessions-success.json in Resources */,
@@ -496,7 +489,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E74F7C3C24741490005D40FE /* CardFlowUITests.swift in Sources */,
-				512907F52AEC04A3008A7357 /* LaunchArguments.swift in Sources */,
 				E72152842437D9E3009AAFB3 /* CardFlowViewPageObject.swift in Sources */,
 				5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */,
 				E79A3F1524360C0D00A20555 /* CvcFlowRetrieveSessionTests.swift in Sources */,

@@ -1,5 +1,9 @@
 {
     "_links":{
+        "sessions:card": {
+            "href": "<BASE_URI>/sessions/card"
+            
+        },
         "sessions:paymentsCvc": {
             "href": "<BASE_URI>/sessions/payments/cvc"
             

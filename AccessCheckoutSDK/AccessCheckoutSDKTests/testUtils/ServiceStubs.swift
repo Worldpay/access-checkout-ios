@@ -13,9 +13,8 @@ struct ServiceStubs {
     private let port: UInt16
     private let httpServer: HttpServer
     
-    private let verifiedTokensServicePath = "/verifiedTokens"
-    private let verifiedTokensServiceSessionsPath = "/verifiedTokens/sessions"
     private let sessionsServicePath = "/sessions"
+    private let sessionsServiceCardSessionPath = "/sessions/card"
     private let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
     
     func get200(path: String, jsonResponse: String) -> ServiceStubs {
@@ -62,20 +61,12 @@ struct ServiceStubs {
         return get200(path: "", jsonResponse: successfulDiscoveryResponse())
     }
     
-    func verifiedTokensEndPointsDiscoverySuccess() -> ServiceStubs {
-        return get200(path: verifiedTokensServicePath, jsonResponse: successfulDiscoveryResponse())
+    func cardSessionSuccess(session: String) -> ServiceStubs {
+        return post200(path: sessionsServiceCardSessionPath, jsonResponse: successfulCardSessionResponse(session: session))
     }
     
-    func verifiedTokensEndPointDiscoveryFailure(error: AccessCheckoutError) -> ServiceStubs {
-        return failed400(path: verifiedTokensServicePath, error: error)
-    }
-    
-    func verifiedTokensSessionSuccess(session: String) -> ServiceStubs {
-        return post200(path: verifiedTokensServiceSessionsPath, jsonResponse: successfulVerifiedTokensSessionResponse(session: session))
-    }
-    
-    func verifiedTokensSessionFailure(error: AccessCheckoutError) -> ServiceStubs {
-        return post400(path: verifiedTokensServiceSessionsPath, error: error)
+    func cardSessionFailure(error: AccessCheckoutError) -> ServiceStubs {
+        return post400(path: sessionsServiceCardSessionPath, error: error)
     }
     
     func sessionsEndPointsDiscoverySuccess() -> ServiceStubs {
@@ -107,14 +98,11 @@ struct ServiceStubs {
         return """
         {
             "_links": {
-                "service:verifiedTokens": {
-                    "href": "\(baseUrl)\(verifiedTokensServicePath)"
-                },
-                "verifiedTokens:sessions": {
-                    "href": "\(baseUrl)\(verifiedTokensServiceSessionsPath)"
-                },
                 "service:sessions": {
                     "href": "\(baseUrl)\(sessionsServicePath)"
+                },
+                "sessions:card": {
+                    "href": "\(baseUrl)\(sessionsServiceCardSessionPath)"
                 },
                 "sessions:paymentsCvc": {
                     "href": "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"
@@ -124,11 +112,11 @@ struct ServiceStubs {
         """
     }
     
-    private func successfulVerifiedTokensSessionResponse(session: String) -> String {
+    private func successfulCardSessionResponse(session: String) -> String {
         return """
         {
             "_links": {
-                "verifiedTokens:session": {
+                "sessions:session": {
                     "href": "\(session)"
                 }
             }

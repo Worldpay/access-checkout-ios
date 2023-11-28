@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-class PaymentsCvcRetrieveSessionHandlerMock: PaymentsCvcRetrieveSessionHandler {
+class PaymentsCvcRetrieveSessionHandlerMock: RetrieveCvcSessionHandler {
     private(set) var retrieveSessionCalled = false
 
     init() {

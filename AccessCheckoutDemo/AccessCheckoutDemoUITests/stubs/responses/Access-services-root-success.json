@@ -1,0 +1,14 @@
+{
+    "_links": {
+        "service:sessions": {
+            "href": "<BASE_URI>/sessions"
+        },
+        "curies": [
+            {
+                "href": "<BASE_URI>/rels/payments/{rel}",
+                "name": "payments",
+                "templated": true
+            }
+        ]
+    }
+}

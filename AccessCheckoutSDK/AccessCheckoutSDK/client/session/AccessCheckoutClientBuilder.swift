@@ -36,19 +36,19 @@ public class AccessCheckoutClientBuilder {
      - Throws: `AccessCheckoutIllegalArgumentError` is thrown when a property is missing
      */
     public func build() throws -> AccessCheckoutClient {
-        guard let merchantId = self.merchantId else {
+        guard let merchantId = merchantId else {
             throw AccessCheckoutIllegalArgumentError.missingMerchantId()
         }
         
-        guard let accessBaseUrl = self.accessBaseUrl else {
+        guard let accessBaseUrl = accessBaseUrl else {
             throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl()
         }
         
         let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()
         
-        let verifiedTokensRetrieveSessionHandler = VerifiedTokensRetrieveSessionHandler(apiClient: VerifiedTokensApiClient())
-        let paymentsCvcRetrieveSessionHandler = PaymentsCvcRetrieveSessionHandler(apiClient: SessionsApiClient())
-        let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [verifiedTokensRetrieveSessionHandler, paymentsCvcRetrieveSessionHandler])
+        let retrieveCardSessionHandler = RetrieveCardSessionHandler(apiClient: CardSessionsApiClient())
+        let retrieveCvcSessionHandler = RetrieveCvcSessionHandler(apiClient: CvcSessionsApiClient())
+        let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [retrieveCardSessionHandler, retrieveCvcSessionHandler])
         
         return AccessCheckoutClient(merchantId: merchantId, baseUrl: accessBaseUrl, cardDetailsForSessionTypeValidator, retrieveSessionHandlerDispatcher)
     }

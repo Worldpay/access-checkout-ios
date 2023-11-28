@@ -11,23 +11,23 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
         .build()
     
     let paymentsCvcSessionHandler = PaymentsCvcRetrieveSessionHandlerMock()
-    let verifiedTokensSessionHandler = VerifiedTokensRetrieveSessionHandlerMock()
+    let cardSessionHandler = RetrieveCardSessionHandlerMock()
     
-    func testDispatchesToRetrieveAVerifiedTokensSession() {
-        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, verifiedTokensSessionHandler])
+    func testDispatchesToRetrieveACardSession() {
+        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, cardSessionHandler])
         
         dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.card) { _ in }
         
-        XCTAssertTrue(verifiedTokensSessionHandler.retrieveSessionCalled)
+        XCTAssertTrue(cardSessionHandler.retrieveSessionCalled)
         XCTAssertFalse(paymentsCvcSessionHandler.retrieveSessionCalled)
     }
     
     func testDispatchesToRetrieveAPaymentsCvcSession() {
-        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, verifiedTokensSessionHandler])
+        let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, cardSessionHandler])
         
         dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.cvc) { _ in }
         
-        XCTAssertFalse(verifiedTokensSessionHandler.retrieveSessionCalled)
+        XCTAssertFalse(cardSessionHandler.retrieveSessionCalled)
         XCTAssertTrue(paymentsCvcSessionHandler.retrieveSessionCalled)
     }
 }

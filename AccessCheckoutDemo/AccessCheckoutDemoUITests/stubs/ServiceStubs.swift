@@ -21,32 +21,11 @@ class ServiceStubs {
         return self
     }
 
-    func discovery(respondWith: StubResponse) -> ServiceStubs {
+    func accessServicesRoot(respondWith: StubResponse) -> ServiceStubs {
         let jsonObject = try! jsonResponse(of: respondWith)
 
         httpServer.GET[""] = { _ in .ok(.json(jsonObject)) }
         httpServer.GET["/"] = { _ in .ok(.json(jsonObject)) }
-        return self
-    }
-
-    func verifiedTokensRoot(respondWith: StubResponse) -> ServiceStubs {
-        let jsonObject = try! jsonResponse(of: respondWith)
-
-        httpServer.GET["/verifiedTokens"] = { _ in
-            .ok(.json(jsonObject))
-        }
-        return self
-    }
-
-    func verifiedTokensSessions(respondWith: StubResponse) -> ServiceStubs {
-        let jsonObject = try! jsonResponse(of: respondWith)
-        httpServer.POST["/verifiedTokens/sessions"] = { _ in
-            if respondWith == .verifiedTokensSessionsPanFailedLuhnCheck {
-                return .badRequest(.json(jsonObject))
-            } else {
-                return .ok(.json(jsonObject))
-            }
-        }
         return self
     }
 
@@ -55,6 +34,18 @@ class ServiceStubs {
 
         httpServer.GET["/sessions"] = { _ in
             .ok(.json(jsonObject))
+        }
+        return self
+    }
+
+    func sessionsCard(respondWith: StubResponse) -> ServiceStubs {
+        let jsonObject = try! jsonResponse(of: respondWith)
+        httpServer.POST["/sessions/card"] = { _ in
+            if respondWith == .cardSessionsPanFailedLuhnCheck {
+                return .badRequest(.json(jsonObject))
+            } else {
+                return .ok(.json(jsonObject))
+            }
         }
         return self
     }

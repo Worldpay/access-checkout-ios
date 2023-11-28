@@ -24,7 +24,7 @@ class CvcFlowViewController: UIViewController {
 
                 switch result {
                     case .success(let sessions):
-                        AlertView.display(using: self, title: "Payments CVC Session", message: sessions[SessionType.cvc], closeHandler: {
+                        AlertView.display(using: self, title: "CVC Session", message: sessions[SessionType.cvc], closeHandler: {
                             self.cvcTextField.clear()
                         })
                     case .failure(let error):

@@ -4,7 +4,7 @@ import XCTest
 class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     let validator = CardDetailsForSessionTypeValidator()
 
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenPanIsNotProvided() throws {
+    func testThrowsExceptionForCardSessionTypeWhenPanIsNotProvided() throws {
         let expectedMessage = "Expected pan to be provided but was not"
         let sessionType = SessionType.card
         let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
@@ -16,7 +16,7 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         }
     }
 
-    func testThrowsExceptionForVerifiedTokensSessionTypeWhenExpiryDateIsNotProvided() throws {
+    func testThrowsExceptionForCardSessionTypeWhenExpiryDateIsNotProvided() throws {
         let expectedMessage = "Expected expiry date to be provided but was not"
         let sessionType = SessionType.card
         let cardDetails = try CardDetailsBuilder().pan("pan")
