@@ -2,8 +2,15 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    @IBOutlet internal var uiTextField: UITextField!
+    @IBOutlet internal lazy var uiTextField: UITextField! = {
+           return build();
+       }()
 
+    private func build() -> UITextField {
+           let uiTextField = UITextField();
+           uiTextField.keyboardType = .asciiCapableNumberPad
+           return uiTextField;
+       }
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
@@ -35,16 +42,13 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     private func addSubViews() {
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
-        view.frame = bounds
-        view.autoresizingMask = [
+        uiTextField.frame = bounds
+        uiTextField.autoresizingMask = [
             UIView.AutoresizingMask.flexibleWidth,
             UIView.AutoresizingMask.flexibleHeight
         ]
         
-        addSubview(view)
+        addSubview(uiTextField)
     }
     
     private func setStyles() {
