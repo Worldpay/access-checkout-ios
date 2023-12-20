@@ -2,22 +2,22 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    internal lazy var uiTextField: UITextField! = buildTextField()
+    lazy var uiTextField: UITextField! = buildTextField()
     
     private func buildTextField() -> UITextField {
-        let uiTextField = UITextField();
-        //UITextField defaults
+        let uiTextField = UITextField()
+        // UITextField defaults
         uiTextField.keyboardType = .asciiCapableNumberPad
-        return uiTextField;
+        return uiTextField
     }
     
-    internal init(_ uiTextField: UITextField) {
+    init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
         self.setStyles()
     }
     
-    internal init() {
+    init() {
         super.init(frame: CGRect())
         self.addSubViews()
         self.setStyles()
@@ -41,13 +41,13 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     private func addSubViews() {
-        uiTextField.frame = bounds
-        uiTextField.autoresizingMask = [
+        self.uiTextField.frame = bounds
+        self.uiTextField.autoresizingMask = [
             UIView.AutoresizingMask.flexibleWidth,
             UIView.AutoresizingMask.flexibleHeight
         ]
         
-        addSubview(uiTextField)
+        addSubview(self.uiTextField)
     }
     
     private func setStyles() {
@@ -166,12 +166,12 @@ public final class AccessCheckoutUITextField: UIView {
     
     // MARK: Internal properties
     
-    internal var text: String? {
+    var text: String? {
         get { self.uiTextField.text }
         set { self.uiTextField.text = newValue }
     }
     
-    internal var delegate: UITextFieldDelegate? {
+    var delegate: UITextFieldDelegate? {
         get { self.uiTextField.delegate }
         set { self.uiTextField.delegate = newValue }
     }

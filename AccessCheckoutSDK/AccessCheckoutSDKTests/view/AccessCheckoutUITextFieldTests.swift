@@ -8,7 +8,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testCGRectConstructorInitialiasesTextFieldWithDefaultStyles() {
         let textField = AccessCheckoutUITextField(frame: CGRect())
         
-        //UITextField is initialised in subview
+        // UITextField is initialised in subview
         XCTAssertNotNil(textField.subviews[0])
         
         // Styles set on the view itself
@@ -22,7 +22,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     
     func testDefaultConstructorInitialiasesTextFieldWithDefaultStyles() {
         let textField = AccessCheckoutUITextField()
-        //UITextField is initialised in subview
+        // UITextField is initialised in subview
         XCTAssertNotNil(textField.subviews[0])
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
