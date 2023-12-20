@@ -2,7 +2,7 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    lazy var uiTextField: UITextField! = buildTextField()
+    internal lazy var uiTextField: UITextField! = buildTextField()
     
     private func buildTextField() -> UITextField {
         let uiTextField = UITextField()
@@ -11,13 +11,13 @@ public final class AccessCheckoutUITextField: UIView {
         return uiTextField
     }
     
-    init(_ uiTextField: UITextField) {
+    internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
         self.setStyles()
     }
     
-    init() {
+    internal init() {
         super.init(frame: CGRect())
         self.addSubViews()
         self.setStyles()
@@ -166,12 +166,12 @@ public final class AccessCheckoutUITextField: UIView {
     
     // MARK: Internal properties
     
-    var text: String? {
+    internal var text: String? {
         get { self.uiTextField.text }
         set { self.uiTextField.text = newValue }
     }
     
-    var delegate: UITextFieldDelegate? {
+    internal var delegate: UITextFieldDelegate? {
         get { self.uiTextField.delegate }
         set { self.uiTextField.delegate = newValue }
     }
