@@ -2,15 +2,15 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    internal lazy var uiTextField: UITextField! = {
-           return build();
-       }()
-
-    private func build() -> UITextField {
-           let uiTextField = UITextField();
-           uiTextField.keyboardType = .asciiCapableNumberPad
-           return uiTextField;
-       }
+    internal lazy var uiTextField: UITextField! = buildTextField()
+    
+    private func buildTextField() -> UITextField {
+        let uiTextField = UITextField();
+        //UITextField defaults
+        uiTextField.keyboardType = .asciiCapableNumberPad
+        return uiTextField;
+    }
+    
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
@@ -22,7 +22,7 @@ public final class AccessCheckoutUITextField: UIView {
         self.addSubViews()
         self.setStyles()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.addSubViews()
@@ -61,7 +61,7 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     // MARK: Public properties
-
+    
     /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
         set {
@@ -144,13 +144,13 @@ public final class AccessCheckoutUITextField: UIView {
     public var keyboardType: UIKeyboardType = .numberPad {
         didSet { self.uiTextField.keyboardType = self.keyboardType }
     }
-
+    
     public var keyboardAppearance: UIKeyboardAppearance = .default {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
     
     // MARK: Public methods
-
+    
     public func clear() {
         self.uiTextField.text = ""
         self.uiTextField.sendActions(for: .editingChanged)
@@ -165,7 +165,7 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     // MARK: Internal properties
-
+    
     internal var text: String? {
         get { self.uiTextField.text }
         set { self.uiTextField.text = newValue }
