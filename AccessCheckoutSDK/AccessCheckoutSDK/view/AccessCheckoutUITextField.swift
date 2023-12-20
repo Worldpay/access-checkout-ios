@@ -2,7 +2,7 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    @IBOutlet internal lazy var uiTextField: UITextField! = {
+    internal lazy var uiTextField: UITextField! = {
            return build();
        }()
 
@@ -37,7 +37,6 @@ public final class AccessCheckoutUITextField: UIView {
     
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        
         self.setStyles()
     }
     

@@ -17,6 +17,20 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
     }
     
+    func testDefaultConstructorInitialiasesTextFieldWithDefaultStyles() {
+        let textField = AccessCheckoutUITextField()
+        
+        //UITextField is initialised in subview
+        XCTAssertNotNil(textField.subviews[0])
+        // Styles set on the view itself
+        XCTAssertEqual(5, textField.layer.cornerRadius)
+        XCTAssertEqual(UIColor.gray.cgColor, textField.layer.borderColor)
+        XCTAssertEqual(0.15, textField.layer.borderWidth)
+        
+        // Styles set on the uiTextField
+        XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+    }
+    
     // MARK: interface builder support
 
     func testPrepareForInterfaceBuilderSetsStyles() {
