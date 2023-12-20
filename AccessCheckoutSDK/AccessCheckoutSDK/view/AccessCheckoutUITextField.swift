@@ -2,8 +2,15 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    @IBOutlet internal var uiTextField: UITextField!
-
+    internal lazy var uiTextField: UITextField! = buildTextField()
+    
+    private func buildTextField() -> UITextField {
+        let uiTextField = UITextField()
+        // UITextField defaults
+        uiTextField.keyboardType = .asciiCapableNumberPad
+        return uiTextField
+    }
+    
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
@@ -15,7 +22,7 @@ public final class AccessCheckoutUITextField: UIView {
         self.addSubViews()
         self.setStyles()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.addSubViews()
@@ -30,21 +37,17 @@ public final class AccessCheckoutUITextField: UIView {
     
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        
         self.setStyles()
     }
     
     private func addSubViews() {
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
-        view.frame = bounds
-        view.autoresizingMask = [
+        self.uiTextField.frame = bounds
+        self.uiTextField.autoresizingMask = [
             UIView.AutoresizingMask.flexibleWidth,
             UIView.AutoresizingMask.flexibleHeight
         ]
         
-        addSubview(view)
+        addSubview(self.uiTextField)
     }
     
     private func setStyles() {
@@ -58,7 +61,7 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     // MARK: Public properties
-
+    
     /* Accessibility properties */
     override public var isAccessibilityElement: Bool {
         set {
@@ -141,13 +144,13 @@ public final class AccessCheckoutUITextField: UIView {
     public var keyboardType: UIKeyboardType = .numberPad {
         didSet { self.uiTextField.keyboardType = self.keyboardType }
     }
-
+    
     public var keyboardAppearance: UIKeyboardAppearance = .default {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
     
     // MARK: Public methods
-
+    
     public func clear() {
         self.uiTextField.text = ""
         self.uiTextField.sendActions(for: .editingChanged)
@@ -162,7 +165,7 @@ public final class AccessCheckoutUITextField: UIView {
     }
     
     // MARK: Internal properties
-
+    
     internal var text: String? {
         get { self.uiTextField.text }
         set { self.uiTextField.text = newValue }

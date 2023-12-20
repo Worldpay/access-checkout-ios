@@ -4,9 +4,12 @@ import XCTest
 
 class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: constructors tests
-
+    
     func testCGRectConstructorInitialiasesTextFieldWithDefaultStyles() {
         let textField = AccessCheckoutUITextField(frame: CGRect())
+        
+        // UITextField is initialised in subview
+        XCTAssertNotNil(textField.subviews[0])
         
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
@@ -17,8 +20,21 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
     }
     
+    func testDefaultConstructorInitialiasesTextFieldWithDefaultStyles() {
+        let textField = AccessCheckoutUITextField()
+        // UITextField is initialised in subview
+        XCTAssertNotNil(textField.subviews[0])
+        // Styles set on the view itself
+        XCTAssertEqual(5, textField.layer.cornerRadius)
+        XCTAssertEqual(UIColor.gray.cgColor, textField.layer.borderColor)
+        XCTAssertEqual(0.15, textField.layer.borderWidth)
+        
+        // Styles set on the uiTextField
+        XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+    }
+    
     // MARK: interface builder support
-
+    
     func testPrepareForInterfaceBuilderSetsStyles() {
         let textField = AccessCheckoutUITextField(frame: CGRect())
         textField.cornerRadius = 10
@@ -42,7 +58,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     }
     
     // MARK: Accessibility properties tests
-
+    
     // isAccessibilityElement
     func testIsAccessibilityElementGetterAlwaysReturnsFalse() {
         let textField = createTextField()
@@ -81,7 +97,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testAccessibilityIdentifierGetterReturnsId() {
         let textField = createTextField()
         XCTAssertNil(textField.accessibilityIdentifier)
-         
+        
         textField.accessibilityIdentifier = "something"
         XCTAssertEqual("something", textField.accessibilityIdentifier)
     }
@@ -89,7 +105,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testAccessibilityIdentifierSetterSetsIdAndUITextFieldIdUsingANamingConvention() {
         let textField = createTextField()
         XCTAssertNil(textField.accessibilityIdentifier)
-         
+        
         textField.accessibilityIdentifier = "something"
         XCTAssertEqual("something", textField.accessibilityIdentifier)
         XCTAssertEqual("something-UITextField", textField.uiTextField.accessibilityIdentifier)
@@ -99,15 +115,15 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testAccessibilityLabelGetterAlwaysReturnsNil() {
         let textField = createTextField()
         XCTAssertNil(textField.accessibilityLabel)
-         
+        
         textField.accessibilityLabel = "something"
         XCTAssertNil(textField.accessibilityLabel)
     }
-     
+    
     func testAccessibilityLabelSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         XCTAssertNil(textField.uiTextField.accessibilityLabel)
-         
+        
         textField.accessibilityLabel = "something"
         XCTAssertEqual("something", textField.uiTextField.accessibilityLabel)
     }
@@ -116,28 +132,28 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testAccessibilityLanguageGetterAlwaysReturnsNil() {
         let textField = createTextField()
         XCTAssertNil(textField.accessibilityLanguage)
-         
+        
         textField.accessibilityLabel = "something"
         XCTAssertNil(textField.accessibilityLanguage)
     }
-     
+    
     func testAccessibilityLanguageSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         XCTAssertNil(textField.uiTextField.accessibilityLanguage)
-         
+        
         textField.accessibilityLanguage = "something"
         XCTAssertEqual("something", textField.uiTextField.accessibilityLanguage)
     }
-
+    
     // MARK: Border properties tests
     
     // cornerRadius
     func testCornerRadiusIs5ByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(5, textField.cornerRadius)
     }
-
+    
     func testCornerRadiusGetterReturnsValueSet() {
         let textField = createTextField()
         let expected: CGFloat = 3
@@ -146,23 +162,23 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         
         XCTAssertEqual(expected, textField.cornerRadius)
     }
-       
+    
     func testCornerRadiusSetterSetsLayerProperty() {
         let textField = createTextField()
         let expected: CGFloat = 3
         
         textField.cornerRadius = expected
-         
+        
         XCTAssertEqual(expected, textField.layer.cornerRadius)
     }
     
     // borderWidth
     func testBorderWidthIs0Point15ByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(0.15, textField.borderWidth)
     }
-
+    
     func testBorderWidthGetterReturnsValueSet() {
         let textField = createTextField()
         let expected: CGFloat = 3
@@ -171,38 +187,38 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         
         XCTAssertEqual(expected, textField.borderWidth)
     }
-       
+    
     func testBorderWidthSetterSetsLayerProperty() {
         let textField = createTextField()
         let expected: CGFloat = 3
         
         textField.borderWidth = expected
-         
+        
         XCTAssertEqual(expected, textField.layer.borderWidth)
     }
     
     // borderColor
     func testBorderColorIsGrayByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(.gray, textField.borderColor)
     }
-
+    
     func testBorderColorGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = UIColor.green
         
         textField.borderColor = expected
-
+        
         XCTAssertEqual(expected, textField.borderColor)
     }
-       
+    
     func testBorderColorSetterSetsLayerProperty() {
         let textField = createTextField()
         let expected = UIColor.green
         
         textField.borderColor = expected
-         
+        
         XCTAssertEqual(expected.cgColor, textField.layer.borderColor)
     }
     
@@ -211,127 +227,127 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // textColor
     func testTextColorIsNilByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertNil(textField.textColor)
     }
-
+    
     func testTextColorGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = UIColor.green
         
         textField.textColor = expected
-
+        
         XCTAssertEqual(expected, textField.uiTextField.textColor)
     }
-       
+    
     func testTextColorSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = UIColor.green
         
         textField.textColor = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.textColor)
     }
     
     // font
     func testFontIsNilByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertNil(textField.font)
     }
-
+    
     func testFontGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = UIFont.boldSystemFont(ofSize: 3)
-
+        
         textField.font = expected
-
+        
         XCTAssertEqual(expected, textField.font)
     }
-       
+    
     func testFontSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = UIFont.boldSystemFont(ofSize: 3)
         
         textField.font = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.font)
     }
     
     // textAlignment
     func testTextAlignmentIsLeftByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(NSTextAlignment.left, textField.textAlignment)
     }
-
+    
     func testTextAlignmentGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = NSTextAlignment.right
-
+        
         textField.textAlignment = expected
-
+        
         XCTAssertEqual(expected, textField.textAlignment)
     }
-       
+    
     func testTextAlignmentSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = NSTextAlignment.right
         
         textField.textAlignment = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.textAlignment)
     }
     
     // MARK: Placeholder properties
-
+    
     // textAlignment
     func testPlacholderIsNilByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertNil(textField.placeholder)
     }
-
+    
     func testPlacholderGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = "something"
-
+        
         textField.placeholder = expected
-
+        
         XCTAssertEqual(expected, textField.placeholder)
     }
-       
+    
     func testPlacholderSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = "something"
         
         textField.placeholder = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.placeholder)
     }
     
     // attributedPlacholder
     func testAttributedPlacholderIsNilByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertNil(textField.attributedPlaceholder)
     }
-
+    
     func testAttributedPlacholderGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = NSAttributedString(string: "something")
-
+        
         textField.attributedPlaceholder = expected
-
+        
         XCTAssertEqual(expected, textField.attributedPlaceholder)
     }
-       
+    
     func testAttributedPlacholderSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = NSAttributedString(string: "something")
         
         textField.attributedPlaceholder = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.attributedPlaceholder)
     }
     
@@ -340,55 +356,55 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // keyboardType
     func testKeyboardTypeIsDefaultByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(UIKeyboardType.numberPad, textField.keyboardType)
     }
-
+    
     func testKeyboardTypeGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = UIKeyboardType.namePhonePad
-
+        
         textField.keyboardType = expected
-
+        
         XCTAssertEqual(expected, textField.keyboardType)
     }
-       
+    
     func testKeyboardTypeSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = UIKeyboardType.namePhonePad
         
         textField.keyboardType = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.keyboardType)
     }
     
     // keyboardAppearance
     func testKeyboardAppearanceIsDefaultByDefault() {
         let textField = createTextField()
-
+        
         XCTAssertEqual(UIKeyboardAppearance.default, textField.keyboardAppearance)
     }
-
+    
     func testKeyboardAppearanceGetterReturnsValueSet() {
         let textField = createTextField()
         let expected = UIKeyboardAppearance.dark
-
+        
         textField.keyboardAppearance = expected
-
+        
         XCTAssertEqual(expected, textField.keyboardAppearance)
     }
-       
+    
     func testKeyboardAppearanceSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = UIKeyboardAppearance.dark
         
         textField.keyboardAppearance = expected
-         
+        
         XCTAssertEqual(expected, textField.uiTextField.keyboardAppearance)
     }
     
     // MARK: methods properties
-
+    
     func testClearClearsUITextFieldText_andDispatchesAnEditingChangedEvent() {
         let uiTextFieldMock = UITextFieldMock()
         let textField = AccessCheckoutUITextField(uiTextFieldMock)
@@ -429,16 +445,16 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual("", textField.uiTextField.text)
         
         textField.uiTextField.text = expected
-
+        
         XCTAssertEqual(expected, textField.text)
     }
-       
+    
     func testTextSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = "something"
         
         textField.text = expected
-         
+        
         XCTAssertEqual(expected, textField.text)
     }
     
@@ -450,13 +466,13 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         
         XCTAssertTrue(textField.delegate === expected)
     }
-
+    
     func testDelegateSetterSetsUITextFieldProperty() {
         let textField = createTextField()
         let expected = UITextFieldDelegateMock()
-
+        
         textField.delegate = expected
-
+        
         XCTAssertTrue(textField.delegate === expected)
     }
     
