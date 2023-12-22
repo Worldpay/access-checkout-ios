@@ -36,7 +36,7 @@ public final class AccessCheckoutUITextField: UIView {
     
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
-        self.uiTextField = self.buildTextFieldWithDefaults(textField: uiTextField)
+        self.uiTextField = uiTextField
         self.setStyles()
     }
     
