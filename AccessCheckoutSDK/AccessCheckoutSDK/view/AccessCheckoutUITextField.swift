@@ -1,53 +1,63 @@
 import UIKit
 
+// Field Identifiers helps us identify and tag fields avoiding the use of "magic numbers"
+// Usage: view.viewWithTag(AccessCheckoutUIFieldIdentifier.UITextField)
+// Note: Avoid using 0 as an identifier as it is the default for all views
+public enum AccessCheckoutUIFieldIdentifier: Int {
+    case _UITextField = 1001
+    public static var UITextField: Int { return _UITextField.rawValue }
+}
+
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    internal lazy var uiTextField: UITextField! = buildTextField()
+    internal lazy var uiTextField = buildTextField()
     
     private func buildTextField() -> UITextField {
+        return self.buildTextFieldWithDefaults(textField: UITextField())
+    }
+    
+    private func buildTextFieldWithDefaults(textField: UITextField) -> UITextField {
         let uiTextField = UITextField()
+        // Tag the UITextField which will help us find it using .viewWithTag()
+        uiTextField.tag = AccessCheckoutUIFieldIdentifier.UITextField
+        
         // UITextField defaults
         uiTextField.keyboardType = .asciiCapableNumberPad
+        
+        uiTextField.frame = bounds
+        uiTextField.autoresizingMask = [
+            UIView.AutoresizingMask.flexibleWidth,
+            UIView.AutoresizingMask.flexibleHeight
+        ]
+        
+        addSubview(uiTextField)
         return uiTextField
     }
     
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
-        self.uiTextField = uiTextField
+        self.uiTextField = self.buildTextFieldWithDefaults(textField: uiTextField)
         self.setStyles()
     }
     
     internal init() {
         super.init(frame: CGRect())
-        self.addSubViews()
         self.setStyles()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.addSubViews()
         self.setStyles()
     }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubViews()
         self.setStyles()
     }
     
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         self.setStyles()
-    }
-    
-    private func addSubViews() {
-        self.uiTextField.frame = bounds
-        self.uiTextField.autoresizingMask = [
-            UIView.AutoresizingMask.flexibleWidth,
-            UIView.AutoresizingMask.flexibleHeight
-        ]
-        
-        addSubview(self.uiTextField)
     }
     
     private func setStyles() {

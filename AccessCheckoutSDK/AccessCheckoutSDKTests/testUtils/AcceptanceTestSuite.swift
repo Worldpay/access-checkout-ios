@@ -16,9 +16,10 @@ class AcceptanceTestSuite: XCTestCase {
     }
     
     func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedBrands: [String],
-                                  _ panTextField: AccessCheckoutUITextField,
-                                  _ expiryDateTextField: AccessCheckoutUITextField,
-                                  _ cvcTextField: AccessCheckoutUITextField) -> MockAccessCheckoutCardValidationDelegate {
+                                  _ panAccessCheckoutTextField: AccessCheckoutUITextField,
+                                  _ expiryDateAccessCheckoutTextField:AccessCheckoutUITextField,
+                                  _ cvcAccessCheckoutTextField: AccessCheckoutUITextField) -> MockAccessCheckoutCardValidationDelegate
+    {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
@@ -31,15 +32,15 @@ class AcceptanceTestSuite: XCTestCase {
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any(), acceptedCardBrands: any()).thenDoNothing()
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         
-        let validationConfiguration = try! CardValidationConfig.builder().pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
+        let validationConfiguration = try! CardValidationConfig.builder().pan(panAccessCheckoutTextField)
+            .expiryDate(expiryDateAccessCheckoutTextField)
+            .cvc(cvcAccessCheckoutTextField)
             .accessBaseUrl("a-url")
             .validationDelegate(merchantDelegate)
             .acceptedCardBrands(acceptedBrands)
             .build()
         
-        let validationInitialiser: AccessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
+        let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
         
         validationInitialiser.initialise(validationConfiguration)
         
