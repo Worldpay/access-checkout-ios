@@ -1,13 +1,5 @@
 import UIKit
 
-// Field Identifiers helps us identify and tag fields avoiding the use of "magic numbers"
-// Usage: view.viewWithTag(AccessCheckoutUIFieldIdentifier.UITextField)
-// Note: Avoid using 0 as an identifier as it is the default for all views
-public enum AccessCheckoutUIFieldIdentifier: Int {
-    case _UITextField = 1001
-    public static var UITextField: Int { return _UITextField.rawValue }
-}
-
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
     internal lazy var uiTextField = buildTextField()
@@ -18,8 +10,6 @@ public final class AccessCheckoutUITextField: UIView {
     
     private func buildTextFieldWithDefaults(textField: UITextField) -> UITextField {
         let uiTextField = UITextField()
-        // Tag the UITextField which will help us find it using .viewWithTag()
-        uiTextField.tag = AccessCheckoutUIFieldIdentifier.UITextField
         
         // UITextField defaults
         uiTextField.keyboardType = .asciiCapableNumberPad
