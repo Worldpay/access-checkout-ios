@@ -2,12 +2,25 @@ import UIKit
 
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
-    internal lazy var uiTextField: UITextField! = buildTextField()
+    internal lazy var uiTextField = buildTextField()
     
     private func buildTextField() -> UITextField {
+        return self.buildTextFieldWithDefaults(textField: UITextField())
+    }
+    
+    private func buildTextFieldWithDefaults(textField: UITextField) -> UITextField {
         let uiTextField = UITextField()
+        
         // UITextField defaults
         uiTextField.keyboardType = .asciiCapableNumberPad
+        
+        uiTextField.frame = bounds
+        uiTextField.autoresizingMask = [
+            UIView.AutoresizingMask.flexibleWidth,
+            UIView.AutoresizingMask.flexibleHeight
+        ]
+        
+        addSubview(uiTextField)
         return uiTextField
     }
     
@@ -19,35 +32,22 @@ public final class AccessCheckoutUITextField: UIView {
     
     internal init() {
         super.init(frame: CGRect())
-        self.addSubViews()
         self.setStyles()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.addSubViews()
         self.setStyles()
     }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubViews()
         self.setStyles()
     }
     
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         self.setStyles()
-    }
-    
-    private func addSubViews() {
-        self.uiTextField.frame = bounds
-        self.uiTextField.autoresizingMask = [
-            UIView.AutoresizingMask.flexibleWidth,
-            UIView.AutoresizingMask.flexibleHeight
-        ]
-        
-        addSubview(self.uiTextField)
     }
     
     private func setStyles() {
