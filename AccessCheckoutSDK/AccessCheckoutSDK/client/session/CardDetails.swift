@@ -1,9 +1,7 @@
 /**
- This class is a representation of card information. It cannot be constructed as such, only subclasses conforming to its internal interface can be constructed with a `CardDetailsBuilder`.
- - `pan`: an optional `String` containing the PAN as a numeric string with no spaces
- - `expiryMonth`: an optional `UInt` containing the month part of an expiry date
- - `expiryYear`: an optional `UInt` containing the year part of an expiry date in a 4 digits format
- - `cvc`: an optional `String` containing the cvc as a numeric string
+ A class representing a shopper's card details that can be constructed with a `CardDetailsBuilder`
+ All properties are internal and only accessible to the Access Checkout SDK.
+ This is designed to protect merchants from exposure to the card details so that they can reach the lowest level of compliance (SAQ-A)
  */
 public class CardDetails {
     internal var pan: String? { return nil }
@@ -15,7 +13,7 @@ public class CardDetails {
 }
 
 /**
- This class is a representation of card information that can be constructed with a `CardDetailsBuilder` using plain `String` objects for the PAN and cvc, and plain `UInt` for the expiry month and year
+ An internal class representing a shopper's card details that can be constructed with a `CardDetailsBuilder` using plain `String` objects for the PAN and cvc, and plain `UInt` for the expiry month and year
  
  - `pan`: an optional `String` containing the PAN
  - `expiryMonth`: an optional `UInt` containing the month part of an expiry date
@@ -72,7 +70,7 @@ internal class CardDetailsFromValues: CardDetails {
 }
 
 /**
- This class is a representation of card information that can be constructed with a `CardDetailsBuilder` using instances of `AccessCheckoutUITextField` for the PAN, expiry date and cvc
+ An internal class representing a shopper's card details that can be constructed with a `CardDetailsBuilder` using instances of `AccessCheckoutUITextField` for the PAN, expiry date and cvc
  - `pan`: an optional `AccessCheckoutUITextField` containing the PAN text
  - `expiryDate`: an optional `AccessCheckoutUITextField` containing the expiry date text
  - `cvc`: an optional `AccessCheckoutUITextField` containing the cvc text
@@ -115,9 +113,9 @@ internal class CardDetailsFromUIComponents: CardDetails {
 }
 
 /**
- This builder is designed to create instances of classes that represent the details of a payment card (PAN, expiry date, cvc, all optional).
- Classes of the instances created conform to the internal interface exposed by the `CardDetails` class.
- It is designed to allow merchants to choose to either pass card details directly (higher PCI data footprint), or pass instances of `AccessCheckoutUITextField` which the SDK uses to extract card details (lower PCI data footprint).
+ A builder designed to create an instance of the `CardDetails` class by passing references to:
+ - the `AccessCheckoutUITextField` components used to capture pan, expiry date and cvc (card payment flow)
+ - or the `AccessCheckoutUITextField` component used to capture the cvc (cvc only payment flow)
  */
 public final class CardDetailsBuilder {
     private var pan: String?
@@ -131,45 +129,48 @@ public final class CardDetailsBuilder {
     public init() {}
     
     /**
-     Sets the pan number for the card
+     Sets the pan using an instance of `String`
      
-     - Parameter pan: `String` that represents the pan number
+     - Parameter pan: `String` that represents the pan
      
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
+    @available(*, deprecated, message: "CardDetails should now be built using instances of `AccessCheckoutUITextField` rather than actual card details. The support for passing card details as `String` will be removed in the next major version.")
     public func pan(_ pan: String) -> CardDetailsBuilder {
         self.pan = pan.replacingOccurrences(of: " ", with: "")
         return self
     }
     
     /**
-     Sets the expiry month and year for the card
+     Sets the expiry month and year using an instance of `String`
      
      - Parameter expiryDate: `String` that represents the expiry date in mm/yy format
      
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
+    @available(*, deprecated, message: "CardDetails should now be built using instances of `AccessCheckoutUITextField` rather than actual card details. The support for passing card details as `String` will be removed in the next major version.")
     public func expiryDate(_ expiryDate: String) -> CardDetailsBuilder {
         self.expiryDate = expiryDate
         return self
     }
     
     /**
-     Sets the cvc for the card
+     Sets the cvc using an instance of `String`
      
      - Parameter cvc: `String` that represents the cvc
      
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
+    @available(*, deprecated, message: "CardDetails should now be built using instances of `AccessCheckoutUITextField` rather than actual card details. The support for passing card details as `String` will be removed in the next major version.")
     public func cvc(_ cvc: String) -> CardDetailsBuilder {
         self.cvc = cvc
         return self
     }
     
     /**
-     Sets the instance of `AccessCheckoutUITextField` used to extract the pan for the card
+     Sets the pan using an instance of `AccessCheckoutUITextField`
      
-     - Parameter accessCheckoutUITextField: `AccessCheckoutUITextField` used by the end user to enter the pan
+     - Parameter accessCheckoutUITextField: `AccessCheckoutUITextField` used to capture the pan
 
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
@@ -179,9 +180,9 @@ public final class CardDetailsBuilder {
     }
     
     /**
-     Sets the instance of `AccessCheckoutUITextField` used to extract the expiry date for the card
+     Sets the expiry date using an instance of `AccessCheckoutUITextField`
      
-     - Parameter pan: `AccessCheckoutUITextField` used by the end user to enter the expiry date
+     - Parameter pan: `AccessCheckoutUITextField` used to capture the expiry date
 
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */
@@ -191,9 +192,9 @@ public final class CardDetailsBuilder {
     }
     
     /**
-     Sets the instance of `AccessCheckoutUITextField` used to extract the cvc for the card
+     Sets the cvc using an instance of `AccessCheckoutUITextField`
      
-     - Parameter accessCheckoutUITextField: `AccessCheckoutUITextField` used by the end user to enter the cvc
+     - Parameter accessCheckoutUITextField: `AccessCheckoutUITextField` used to capture the cvc
 
      - Returns: the `CardDetailsBuilder` instance in order to chain further operations
      */

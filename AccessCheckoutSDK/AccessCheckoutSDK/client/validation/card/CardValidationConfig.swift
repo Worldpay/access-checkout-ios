@@ -1,29 +1,15 @@
 import UIKit
 
 /**
- An implementation of the `ValidationConfig` that represents the card validation configuration.
+ An implementation of the `ValidationConfig` that represents the card validation configuration and that can be built using the `CardValidationConfigBuilder`
  
  Use this configuration to register the relevant fields and listener.
  
- - panTextField: `AccessCheckoutUITextField` that represents the pan ui element
- - expiryDateTextField: `AccessCheckoutUITextField` that represents the expiry date ui element
- - cvcTextField: `AccessCheckoutUITextField` that represents the cvc ui element
- - accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
- - validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation delegate that should be notified on validation changes
- - acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
- - panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
+ - Deprecated - using `UITextField` instances to capture card information is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used instead
  
- Deprecated - using the Views below to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField`s should be used instead
- - panView: `PanView` that represents the pan ui element
- - expiryDateView: `ExpiryDateView` that represents the expiry date ui element
- - cvcView: `CvcView` that represents the cvc ui element
- 
- Deprecated - using `UITextField` instances to capture card information is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField`s should be used instead
+ - Deprecated - using `PanView`, `ExpiryDateView` and `CvcView` to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used instead
  
  - SeeAlso: AccessCheckoutUITextField
- - SeeAlso: PanView
- - SeeAlso: ExpiryDateView
- - SeeAlso: CvcView
  - SeeAlso: AccessCheckoutCardValidationDelegate
  */
 public struct CardValidationConfig: ValidationConfig {
@@ -108,7 +94,7 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
      */
-    @available(*, deprecated, message: "Using PanView, ExpiryDateView and CvcView to initialize the validation is deprecated and will not be supported on future major versions of the SDK. `UITextField`s should be used instead.")
+    @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CardValidationConfigBuilder` to create your `CardValidationConfig`.")
     public init(panView: PanView,
                 expiryDateView: ExpiryDateView,
                 cvcView: CvcView,
@@ -180,7 +166,11 @@ public struct CardValidationConfig: ValidationConfig {
 
 /**
  Creates an instance of `CardValidationConfig`
- An instance of this builder can be obtained by calling `CardValidationConfig.builder()`
+ An instance of this builder can be obtained by calling `CardValidationConfig.builder()
+ 
+ - Deprecated - using `UITextField` instances to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used instead
+ 
+ - Deprecated - using `PanView`, `ExpiryDateView` and `CvcView` to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used instead
  */
 public class CardValidationConfigBuilder {
     private var panLegacy: UITextField?
@@ -232,7 +222,8 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter pan: `AccessCheckoutUITextField` that represents the pan ui element
+     Sets the pan ui element to be validatedg
+     - Parameter pan: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
     public func pan(_ pan: AccessCheckoutUITextField) -> CardValidationConfigBuilder {
@@ -241,7 +232,8 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter expiryDate: `AccessCheckoutUITextField` that represents the expiry date ui element
+     Sets the expiry date ui element to be validated
+     - Parameter expiryDate: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
     public func expiryDate(_ expiryDate: AccessCheckoutUITextField) -> CardValidationConfigBuilder {
@@ -250,7 +242,8 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
+     Sets the cvc ui element to be validated
+     - Parameter cvc: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
     public func cvc(_ cvc: AccessCheckoutUITextField) -> CardValidationConfigBuilder {
@@ -259,7 +252,7 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter accessBaseUrl: `String` that represents the base url
+     - Parameter accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
      - Returns: the same instance of the builder
      */
     public func accessBaseUrl(_ accessBaseUrl: String) -> CardValidationConfigBuilder {
@@ -268,7 +261,7 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
+     - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the merchant's delegate that should be notified on validation changes
      - Returns: the same instance of the builder
      */
     public func validationDelegate(_ validationDelegate: AccessCheckoutCardValidationDelegate) -> CardValidationConfigBuilder {
@@ -286,7 +279,7 @@ public class CardValidationConfigBuilder {
     }
     
     /**
-     - Parameter enablePanFormatting: enables the automatic formatting of Pan field
+     - Parameter enablePanFormatting: enables the automatic formatting of the pan field
      - Returns: the same instance of the builder
      */
     public func enablePanFormatting() -> CardValidationConfigBuilder {
