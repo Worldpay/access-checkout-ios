@@ -1,20 +1,15 @@
 import UIKit
 
 /**
- An implementation of the [ValidationConfig] that represents the cvc validation configuration.
+ An implementation of the `ValidationConfig` that represents the cvc validation configuration and that can be built using the `CvcOnlyValidationConfigBuilder`
 
- This configuration should be built to register the relevant fields and the listeners.
- - cvcTextField: `AccessCheckoutUITextField` that represents the cvc ui element
- - accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
- - validationDelegate: `AccessCheckoutCvcOnlyValidationDelegate` that represents the validation delegate that should be notified on validation changes
-
- Deprecated - using the `CvcView` below to initialise the validation is deprecated and will not be supported on future major versions of the SDK.  A `UITextField` should be used as above.
- - cvc:  `CvcView` that represents the cvc ui element
-
- Deprecated - using `UITextField` instances to capture cvc information is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` should be used instead
+ Use this configuration to register the relevant fields and listener.
+ 
+ - Deprecated - using `UITextField` instances to capture cvc information is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` should be used instead
+ 
+ - Deprecated - using `CvcView` to initialise the validation is deprecated and will not be supported on future major versions of the SDK.  A `UITextField` should be used as above. `AccessCheckoutUITextField` should be used instead
 
  - SeeAlso: AccessCheckoutUITextField
- - SeeAlso: CvcView
  - SeeAlso: AccessCheckoutCvcOnlyValidationDelegate
  */
 public struct CvcOnlyValidationConfig: ValidationConfig {
@@ -41,7 +36,7 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
      - Parameter cvcView: `CvcView` that represents the cvc ui element
      - Parameter validationDelegate: `AccessCheckoutCvcOnlyValidationDelegate` that represents the validation events listener
      */
-    @available(*, deprecated, message: "Using CvcView to initialize the validation is deprecated and will not be supported on future major versions of the SDK. A `UITextField` should be used instead.")
+    @available(*, deprecated, message: "This constructor is deprecated and will not be supported on future major versions of the SDK. Instead, use the static `builder()` method to get an instance of a `CvcOnlyValidationConfigBuilder` to create your `CvcOnlyValidationConfig`.")
     public init(cvcView: CvcView, validationDelegate: AccessCheckoutCvcOnlyValidationDelegate) {
         self.cvcView = cvcView
         self.validationDelegate = validationDelegate
@@ -86,6 +81,10 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
 /**
  Creates an instance of `CvcOnlyValidationConfig`
  An instance of this builder can be obtained by calling `CvcOnlyValidationConfig.builder()`
+ 
+ - Deprecated - using `UITextField` instances to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used instead
+ 
+ - Deprecated - using `CvcView` to initialise the validation is deprecated and will not be supported on future major versions of the SDK. `AccessCheckoutUITextField` instances should be used
  */
 public class CvcOnlyValidationConfigBuilder {
     private var cvcLegacy: UITextField?
@@ -106,7 +105,8 @@ public class CvcOnlyValidationConfigBuilder {
     }
 
     /**
-     - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
+     Sets the cvc ui element to be validated
+     - Parameter cvc: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
     public func cvc(_ cvc: AccessCheckoutUITextField) -> CvcOnlyValidationConfigBuilder {
