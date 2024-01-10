@@ -148,6 +148,12 @@ public final class AccessCheckoutUITextField: UIView {
     public var keyboardAppearance: UIKeyboardAppearance = .default {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
+
+    /* Enabled properties */
+    @IBInspectable
+    public var enabled: Bool = true {
+        didSet { self.uiTextField.isEnabled = self.enabled }
+    }
     
     // MARK: Public methods
     
