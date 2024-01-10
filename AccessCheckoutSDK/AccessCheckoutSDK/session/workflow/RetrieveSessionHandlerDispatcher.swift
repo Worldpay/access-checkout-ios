@@ -5,10 +5,10 @@ class RetrieveSessionHandlerDispatcher {
         self.retrieveSessionHandlers = retrieveSessionHandlers
     }
 
-    func dispatch(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, _ sessionType: SessionType, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
+    func dispatch(_ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails, _ sessionType: SessionType, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         for handler in retrieveSessionHandlers {
             if handler.canHandle(sessionType: sessionType) {
-                handler.handle(merchantId, baseUrl, cardDetails, completionHandler: completionHandler)
+                handler.handle(checkoutId, baseUrl, cardDetails, completionHandler: completionHandler)
             }
         }
     }

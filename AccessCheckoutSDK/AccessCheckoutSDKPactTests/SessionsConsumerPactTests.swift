@@ -155,7 +155,7 @@ class SessionsConsumerPactTests: XCTestCase {
         let sessionsClient = CvcSessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(baseUrl: "", merchantId: "identity", cvc: "1234") { result in
+            sessionsClient.createSession(baseUrl: "", checkoutId: "identity", cvc: "1234") { result in
                 switch result {
                 case .success(let session):
                     XCTAssertEqual(session, expectedValue)
@@ -167,7 +167,7 @@ class SessionsConsumerPactTests: XCTestCase {
         }
     }
     
-    func testCvcSessionRequestWithInvalidMerchantId_receives400() {
+    func testCvcSessionRequestWithInvalidCheckoutId_receives400() {
         let request = PactCvcSessionRequest(
             identity: "incorrectValue",
             cvc: "123")
@@ -219,7 +219,7 @@ class SessionsConsumerPactTests: XCTestCase {
         let cardSessionClient = CardSessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            cardSessionClient.createSession(baseUrl: "", merchantId: "identity", pan: "4111111111111111",
+            cardSessionClient.createSession(baseUrl: "", checkoutId: "identity", pan: "4111111111111111",
                                             expiryMonth: 12, expiryYear: 2099, cvc: "123")
             { result in
                 switch result {
@@ -233,7 +233,7 @@ class SessionsConsumerPactTests: XCTestCase {
         }
     }
     
-    func testCardSessionRequestWithInvalidMerchantId_receives400() {
+    func testCardSessionRequestWithInvalidCheckoutId_receives400() {
         let request = PactCardSessionRequest(
             identity: "incorrectValue",
             cvc: "123",
@@ -354,7 +354,7 @@ class SessionsConsumerPactTests: XCTestCase {
         let cardSessionClient = CardSessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            cardSessionClient.createSession(baseUrl: "", merchantId: request.identity, pan: request.cardNumber,
+            cardSessionClient.createSession(baseUrl: "", checkoutId: request.identity, pan: request.cardNumber,
                                             expiryMonth: request.expiryMonth, expiryYear: request.expiryYear, cvc: request.cvc)
             { result in
                 switch result {
@@ -412,7 +412,7 @@ class SessionsConsumerPactTests: XCTestCase {
         let sessionsClient = CvcSessionsApiClient(discovery: mockDiscovery)
         
         sessionsMockService.run(timeout: 10) { testComplete in
-            sessionsClient.createSession(baseUrl: "", merchantId: request.identity, cvc: request.cvc) { result in
+            sessionsClient.createSession(baseUrl: "", checkoutId: request.identity, cvc: request.cvc) { result in
                 switch result {
                 case .success:
                     XCTFail("Service response expected to be unsuccessful")

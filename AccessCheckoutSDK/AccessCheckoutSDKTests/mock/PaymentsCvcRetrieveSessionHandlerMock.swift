@@ -7,7 +7,7 @@ class PaymentsCvcRetrieveSessionHandlerMock: RetrieveCvcSessionHandler {
         super.init(apiClient: SessionsApiClientMock(sessionToReturn: ""))
     }
 
-    override func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
+    override func handle(_ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         retrieveSessionCalled = true
     }
 }

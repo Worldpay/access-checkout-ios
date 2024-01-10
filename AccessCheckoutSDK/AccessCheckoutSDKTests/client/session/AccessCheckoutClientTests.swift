@@ -226,7 +226,7 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     private func createAccessCheckoutClient(baseUrl: String) -> AccessCheckoutClient {
-        return try! AccessCheckoutClientBuilder().merchantId("a-merchant-id")
+        return try! AccessCheckoutClientBuilder().checkoutId("a-checkout-id")
             .accessBaseUrl(baseUrl)
             .build()
     }

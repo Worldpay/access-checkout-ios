@@ -9,9 +9,9 @@ class RetrieveCardSessionHandler: RetrieveSessionHandler {
         return sessionType == SessionType.card
     }
 
-    func handle(_ merchantId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
+    func handle(_ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
         apiClient.createSession(baseUrl: baseUrl,
-                                merchantId: merchantId,
+                                checkoutId: checkoutId,
                                 pan: cardDetails.pan!,
                                 expiryMonth: cardDetails.expiryMonth!,
                                 expiryYear: cardDetails.expiryYear!,

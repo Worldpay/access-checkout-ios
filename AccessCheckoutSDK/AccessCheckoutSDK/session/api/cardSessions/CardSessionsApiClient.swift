@@ -29,14 +29,14 @@ class CardSessionsApiClient {
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    func createSession(baseUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
+    func createSession(baseUrl: String, checkoutId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
                        completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void)
     {
         discovery.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success(let endPointUrl):
                 self.fireRequest(endPointUrl: endPointUrl,
-                                 merchantId: merchantId,
+                                 checkoutId: checkoutId,
                                  pan: pan,
                                  expiryMonth: expiryMonth,
                                  expiryYear: expiryYear,
@@ -58,11 +58,11 @@ class CardSessionsApiClient {
         }
     }
 
-    private func fireRequest(endPointUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
+    private func fireRequest(endPointUrl: String, checkoutId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String,
                              completionHandler: @escaping (Swift.Result<ApiResponse, AccessCheckoutError>) -> Void)
     {
         let request = createRequest(endPointUrl: endPointUrl,
-                                    merchantId: merchantId,
+                                    checkoutId: checkoutId,
                                     pan: pan, expiryMonth:
                                     expiryMonth,
                                     expiryYear: expiryYear,
@@ -72,9 +72,9 @@ class CardSessionsApiClient {
         }
     }
 
-    private func createRequest(endPointUrl: String, merchantId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String) -> URLRequest {
+    private func createRequest(endPointUrl: String, checkoutId: String, pan: String, expiryMonth: UInt, expiryYear: UInt, cvc: String) -> URLRequest {
         return urlRequestFactory.create(url: endPointUrl,
-                                        merchantId: merchantId,
+                                        checkoutId: checkoutId,
                                         pan: pan,
                                         expiryMonth: expiryMonth,
                                         expiryYear: expiryYear,

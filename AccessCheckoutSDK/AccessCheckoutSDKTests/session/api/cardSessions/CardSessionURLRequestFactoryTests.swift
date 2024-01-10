@@ -6,7 +6,7 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
     private let cvc: String = "123"
-    private let merchantId: String = "a-merchant-id"
+    private let checkoutId: String = "a-checkout-id"
 
     private let urlRequestFactory = CardSessionURLRequestFactory()
     private let sdkVersion = WpSdkHeader.sdkVersion
@@ -19,7 +19,7 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
         let expectedURL = URLRequest(url: URL(string: "some-url")!)
 
         let request = urlRequestFactory.create(url: "some-url",
-                                               merchantId: merchantId,
+                                               checkoutId: checkoutId,
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
@@ -32,7 +32,7 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
         // the body fields arein random order in the URL request so we cannot test the body against the expected body using =
         // we just test that expected parts appear in it
         let body = String(decoding: request.httpBody!, as: UTF8.self)
-        XCTAssertTrue(body.contains("\"identity\":\"a-merchant-id\""))
+        XCTAssertTrue(body.contains("\"identity\":\"a-checkout-id\""))
         XCTAssertTrue(body.contains("\"cardNumber\":\"a-pan\""))
         XCTAssertTrue(body.contains("\"cardExpiryDate\":{\"month\":12,\"year\":24}")
             || body.contains("\"cardExpiryDate\":{\"year\":24,\"month\":12}"))
@@ -41,7 +41,7 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
 
     func testHttpMethodIsPost() {
         let request = urlRequestFactory.create(url: "some-url",
-                                               merchantId: merchantId,
+                                               checkoutId: checkoutId,
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,
@@ -56,7 +56,7 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
                                     "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
 
         let request = urlRequestFactory.create(url: "some-url",
-                                               merchantId: merchantId,
+                                               checkoutId: checkoutId,
                                                pan: pan,
                                                expiryMonth: expiryMonth,
                                                expiryYear: expiryYear,

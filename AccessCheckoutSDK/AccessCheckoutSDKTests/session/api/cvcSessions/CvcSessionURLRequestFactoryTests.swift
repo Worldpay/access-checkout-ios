@@ -18,13 +18,13 @@ class CvcSessionURLRequestFactoryTests: XCTestCase {
         expectedRequest.httpMethod = expectedMethod
         expectedRequest.allHTTPHeaderFields = expectedHeaderFields
 
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, merchantIdentity: "some-identity")
+        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request, expectedRequest)
     }
 
     func testHttpMethodIsPost() {
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, merchantIdentity: "some-identity")
+        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request.httpMethod, expectedMethod)
     }
@@ -32,7 +32,7 @@ class CvcSessionURLRequestFactoryTests: XCTestCase {
     func testHeadersAreSetCorrectly() {
         let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue, "Content-Type": ApiHeaders.sessionsHeaderValue, "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
 
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, merchantIdentity: "some-identity")
+        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request.allHTTPHeaderFields, expectedHeaderFields)
     }

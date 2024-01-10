@@ -4,7 +4,7 @@ import UIKit
 struct Configuration {
     static var _accessBaseUrl: String = ""
 
-    static let merchantId = CI.merchantId != "" && CI.merchantId != "$(MERCHANT_ID)" ? CI.merchantId : "identity"
+    static let checkoutId = CI.checkoutId != "" && CI.checkoutId != "$(MERCHANT_ID)" ? CI.checkoutId : "identity"
 
     static var accessBaseUrl: String = ""
 
