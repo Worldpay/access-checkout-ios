@@ -403,6 +403,21 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(expected, textField.uiTextField.keyboardAppearance)
     }
     
+    // MARK: enabled properties
+    
+    func testEnabledIsTrueByDefault() {
+        let textField = createTextField()
+        
+        XCTAssertTrue(textField.enabled)
+    }
+    
+    func testEnabledSetterSetsEnabledProperty() {
+        let textField = createTextField()
+        
+        textField.enabled = false
+        XCTAssertFalse(textField.enabled)
+    }
+    
     // MARK: methods properties
     
     func testClearClearsUITextFieldText_andDispatchesAnEditingChangedEvent() {
