@@ -3,7 +3,7 @@ import Cuckoo
 import XCTest
 
 class RetrieveSessionHandlerDispatcherTests: XCTestCase {
-    let merchantId = "123"
+    let checkoutId = "123"
     let baseUrl = "some-url"
     
     let cardDetails = try! CardDetailsBuilder()
@@ -16,7 +16,7 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     func testDispatchesToRetrieveACardSession() {
         let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, cardSessionHandler])
         
-        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.card) { _ in }
+        dispatcher.dispatch(checkoutId, baseUrl, cardDetails, SessionType.card) { _ in }
         
         XCTAssertTrue(cardSessionHandler.retrieveSessionCalled)
         XCTAssertFalse(paymentsCvcSessionHandler.retrieveSessionCalled)
@@ -25,7 +25,7 @@ class RetrieveSessionHandlerDispatcherTests: XCTestCase {
     func testDispatchesToRetrieveAPaymentsCvcSession() {
         let dispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [paymentsCvcSessionHandler, cardSessionHandler])
         
-        dispatcher.dispatch(merchantId, baseUrl, cardDetails, SessionType.cvc) { _ in }
+        dispatcher.dispatch(checkoutId, baseUrl, cardDetails, SessionType.cvc) { _ in }
         
         XCTAssertFalse(cardSessionHandler.retrieveSessionCalled)
         XCTAssertTrue(paymentsCvcSessionHandler.retrieveSessionCalled)

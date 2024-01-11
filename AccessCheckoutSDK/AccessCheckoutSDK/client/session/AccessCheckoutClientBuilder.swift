@@ -4,18 +4,28 @@
  - SeeAlso: AccessCheckoutClient for more information on how to use the client
  */
 public class AccessCheckoutClientBuilder {
-    private var merchantId: String?
+    private var checkoutId: String?
     private var accessBaseUrl: String?
     
     public init() {}
     
     /**
-     Sets the merchant id of the client
-     
-     - Parameter merchantId: `String` that represents the id of the merchant given to the merchant at time of registration
+     Deprecated - Sets the merchant id of the client
+     - Parameter merchantId: `String` that represents the checkoutId given to the merchant at time of registration
      */
+    @available(*, deprecated, message: "Your checkoutId should now be passed to the builder using checkoutId(). The support for passing your checkoutId using merchantId() will be removed in the next major version")
     public func merchantId(_ merchantId: String) -> AccessCheckoutClientBuilder {
-        self.merchantId = merchantId
+        self.checkoutId = merchantId
+        return self
+    }
+    
+    /**
+     Sets the checkoutId on the client
+     
+     - Parameter checkoutId: `String` that represents the checkoutId given to the merchant at time of registration
+     */
+    public func checkoutId(_ checkoutId: String) -> AccessCheckoutClientBuilder {
+        self.checkoutId = checkoutId
         return self
     }
     
@@ -36,8 +46,8 @@ public class AccessCheckoutClientBuilder {
      - Throws: `AccessCheckoutIllegalArgumentError` is thrown when a property is missing
      */
     public func build() throws -> AccessCheckoutClient {
-        guard let merchantId = merchantId else {
-            throw AccessCheckoutIllegalArgumentError.missingMerchantId()
+        guard let checkoutId = checkoutId else {
+            throw AccessCheckoutIllegalArgumentError.missingCheckoutId()
         }
         
         guard let accessBaseUrl = accessBaseUrl else {
@@ -50,6 +60,6 @@ public class AccessCheckoutClientBuilder {
         let retrieveCvcSessionHandler = RetrieveCvcSessionHandler(apiClient: CvcSessionsApiClient())
         let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(retrieveSessionHandlers: [retrieveCardSessionHandler, retrieveCvcSessionHandler])
         
-        return AccessCheckoutClient(merchantId: merchantId, baseUrl: accessBaseUrl, cardDetailsForSessionTypeValidator, retrieveSessionHandlerDispatcher)
+        return AccessCheckoutClient(checkoutId: checkoutId, baseUrl: accessBaseUrl, cardDetailsForSessionTypeValidator, retrieveSessionHandlerDispatcher)
     }
 }

@@ -15,7 +15,7 @@ class CvcFlowViewController: UIViewController {
             .build()
 
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
-            .merchantId(Configuration.merchantId)
+            .checkoutId(Configuration.checkoutId)
             .build()
 
         try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: [SessionType.cvc]) { result in

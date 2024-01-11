@@ -28,7 +28,7 @@ class CardSessionsApiClientTests: XCTestCase {
         
         let client = CardSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
@@ -54,7 +54,7 @@ class CardSessionsApiClientTests: XCTestCase {
         
         let client = CardSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -74,7 +74,7 @@ class CardSessionsApiClientTests: XCTestCase {
         
         let client = CardSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -94,7 +94,7 @@ class CardSessionsApiClientTests: XCTestCase {
         
         let client = CardSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth, expiryYear: expiryYear, cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")

@@ -24,8 +24,8 @@ public struct AccessCheckoutIllegalArgumentError: Error, Equatable {
         return AccessCheckoutIllegalArgumentError(message: "Expected expiry date to be provided but was not")
     }
     
-    static func missingMerchantId() -> AccessCheckoutIllegalArgumentError {
-        return AccessCheckoutIllegalArgumentError(message: "Expected merchant ID to be provided but was not")
+    static func missingCheckoutId() -> AccessCheckoutIllegalArgumentError {
+        return AccessCheckoutIllegalArgumentError(message: "Expected checkout ID to be provided but was not")
     }
     
     static func missingPan() -> AccessCheckoutIllegalArgumentError {

@@ -7,7 +7,7 @@ class PaymentsCvcSessionURLRequestFactoryMock: CvcSessionURLRequestFactory {
     var cvcPassed = ""
     private var requestToReturn: URLRequest?
 
-    override func create(url: String, cvc: String, merchantIdentity: String) -> URLRequest {
+    override func create(url: String, cvc: String, checkoutId: String) -> URLRequest {
         createCalled = true
         urlStringPassed = url
         cvcPassed = cvc

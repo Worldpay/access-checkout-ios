@@ -1,9 +1,9 @@
 import Foundation
 
 class CvcSessionURLRequestFactory {
-    func create(url: String, cvc: String, merchantIdentity: String) -> URLRequest {
+    func create(url: String, cvc: String, checkoutId: String) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)
-        let sessionRequest = CvcSessionRequest(cvc: cvc, identity: merchantIdentity)
+        let sessionRequest = CvcSessionRequest(cvc: cvc, identity: checkoutId)
         request.httpBody = try? JSONEncoder().encode(sessionRequest)
         request.httpMethod = "POST"
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "Content-type")

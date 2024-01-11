@@ -9,14 +9,14 @@
  - SeeAlso: AccessCheckoutClientBuilder
  */
 public struct AccessCheckoutClient {
-    private let merchantId: String
+    private let checkoutId: String
     private let baseUrl: String
     private let cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator
     private let retrieveSessionHandlerDispatcher: RetrieveSessionHandlerDispatcher
 
-    init(merchantId: String, baseUrl: String, _ cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator,
+    init(checkoutId: String, baseUrl: String, _ cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator,
          _ retrieveSessionHandlerDispatcher: RetrieveSessionHandlerDispatcher) {
-        self.merchantId = merchantId
+        self.checkoutId = checkoutId
         self.baseUrl = baseUrl
         self.cardDetailsForSessionTypeValidator = cardDetailsForSessionTypeValidator
         self.retrieveSessionHandlerDispatcher = retrieveSessionHandlerDispatcher
@@ -39,7 +39,7 @@ public struct AccessCheckoutClient {
 
         let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(numberOfExpectedResults: sessionTypes.count, completeWith: completionHandler)
         sessionTypes.forEach { sessionType in
-            retrieveSessionHandlerDispatcher.dispatch(merchantId, baseUrl, cardDetails, sessionType) { result in
+            retrieveSessionHandlerDispatcher.dispatch(checkoutId, baseUrl, cardDetails, sessionType) { result in
                 resultsHandler.handle(result, for: sessionType)
             }
         }

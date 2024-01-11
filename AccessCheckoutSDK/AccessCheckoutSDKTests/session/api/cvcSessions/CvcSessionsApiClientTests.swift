@@ -25,7 +25,7 @@ class CvcSessionsApiClientTests: XCTestCase {
         
         let client = CvcSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
@@ -48,7 +48,7 @@ class CvcSessionsApiClientTests: XCTestCase {
         
         let client = CvcSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -68,7 +68,7 @@ class CvcSessionsApiClientTests: XCTestCase {
         
         let client = CvcSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -88,7 +88,7 @@ class CvcSessionsApiClientTests: XCTestCase {
         
         let client = CvcSessionsApiClient(discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory, restClient: mockRestClient)
         
-        client.createSession(baseUrl: baseUrl, merchantId: "", cvc: cvc) { result in
+        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
