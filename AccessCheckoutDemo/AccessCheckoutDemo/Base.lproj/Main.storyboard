@@ -30,18 +30,18 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="165" width="64" height="44"/>
+                                <rect key="frame" x="16" y="165" width="68" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="1K6-wM-DAF"/>
+                                    <constraint firstAttribute="width" constant="68" id="1K6-wM-DAF"/>
                                     <constraint firstAttribute="height" constant="44" id="Ute-5x-z9t"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="103" y="165" width="62" height="44"/>
+                                <rect key="frame" x="107" y="165" width="58" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
                                     <bool key="isElement" value="YES"/>

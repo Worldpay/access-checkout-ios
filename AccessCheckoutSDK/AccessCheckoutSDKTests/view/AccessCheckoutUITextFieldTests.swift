@@ -6,31 +6,49 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: constructors tests
     
     func testCGRectConstructorInitialiasesTextFieldWithDefaultStyles() {
-        let textField = AccessCheckoutUITextField(frame: CGRect())
+        let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         
         // UITextField is initialised in subview
         XCTAssertNotNil(textField.subviews[0])
         
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
-        XCTAssertEqual(UIColor.gray.cgColor, textField.layer.borderColor)
-        XCTAssertEqual(0.15, textField.layer.borderWidth)
+        XCTAssertTrue(colorsAreEqual(UIColor(cgColor: textField.layer.borderColor!), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertEqual(1, textField.layer.borderWidth)
         
         // Styles set on the uiTextField
-        XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+        XCTAssertEqual(6, textField.uiTextField.frame.minX)
+        XCTAssertEqual(textField.bounds.width - (6 * 2), textField.uiTextField.frame.width)
+        XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
     }
     
     func testDefaultConstructorInitialiasesTextFieldWithDefaultStyles() {
-        let textField = AccessCheckoutUITextField()
+        let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         // UITextField is initialised in subview
         XCTAssertNotNil(textField.subviews[0])
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
-        XCTAssertEqual(UIColor.gray.cgColor, textField.layer.borderColor)
-        XCTAssertEqual(0.15, textField.layer.borderWidth)
+        XCTAssertTrue(colorsAreEqual(UIColor(cgColor: textField.layer.borderColor!), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertEqual(1, textField.layer.borderWidth)
         
         // Styles set on the uiTextField
-        XCTAssertEqual(UIKeyboardType.numberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+        XCTAssertEqual(6, textField.uiTextField.frame.minX)
+        XCTAssertEqual(textField.bounds.width - (6 * 2), textField.uiTextField.frame.width)
+        XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+    }
+    
+    // MARK: default styles values
+
+    func testDefaultStylesValues() {
+        XCTAssertTrue(colorsAreEqual(.white, AccessCheckoutUITextField.defaults.backgroundColor))
+        XCTAssertTrue(colorsAreEqual(toUIColor(hexadecimal: 0xFBFBFB), AccessCheckoutUITextField.defaults.disabledBackgroundColor))
+        XCTAssertTrue(colorsAreEqual(toUIColor(hexadecimal: 0xE9E9E9), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.borderWidth, 1)
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.cornerRadius, 5)
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.textAlignment, .left)
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.keyboardType, .asciiCapableNumberPad)
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.keyboardAppearance, .default)
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.horizontalPadding, 6)
     }
     
     // MARK: interface builder support
@@ -176,7 +194,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testBorderWidthIs0Point15ByDefault() {
         let textField = createTextField()
         
-        XCTAssertEqual(0.15, textField.borderWidth)
+        XCTAssertEqual(1.0, textField.borderWidth)
     }
     
     func testBorderWidthGetterReturnsValueSet() {
@@ -198,10 +216,10 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     }
     
     // borderColor
-    func testBorderColorIsGrayByDefault() {
+    func testBorderColorHasADefaultValue() {
         let textField = createTextField()
         
-        XCTAssertEqual(.gray, textField.borderColor)
+        XCTAssertTrue(colorsAreEqual(textField.borderColor, AccessCheckoutUITextField.defaults.borderColor))
     }
     
     func testBorderColorGetterReturnsValueSet() {
@@ -357,7 +375,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testKeyboardTypeIsDefaultByDefault() {
         let textField = createTextField()
         
-        XCTAssertEqual(UIKeyboardType.numberPad, textField.keyboardType)
+        XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad, textField.keyboardType)
     }
     
     func testKeyboardTypeGetterReturnsValueSet() {
@@ -405,17 +423,42 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     
     // MARK: enabled properties
     
-    func testEnabledIsTrueByDefault() {
+    func testIsEnabledIsTrueByDefault() {
         let textField = createTextField()
         
-        XCTAssertTrue(textField.enabled)
+        XCTAssertTrue(textField.isEnabled)
     }
     
-    func testEnabledSetterSetsEnabledProperty() {
+    func testIsEnabledSetterSetsIsEnabledProperty() {
         let textField = createTextField()
         
-        textField.enabled = false
-        XCTAssertFalse(textField.enabled)
+        textField.isEnabled = false
+        XCTAssertFalse(textField.isEnabled)
+    }
+    
+    func testIsEnabled_whenToggled_changesBackgroundColor_whenBackgroundColorIsDefault() {
+        let textField = createTextField()
+        textField.backgroundColor = AccessCheckoutUITextField.defaults.backgroundColor
+
+        textField.isEnabled = false
+        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, AccessCheckoutUITextField.defaults.disabledBackgroundColor))
+        
+        textField.isEnabled = true
+        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, AccessCheckoutUITextField.defaults.backgroundColor))
+    }
+    
+    func testIsEnabled_whenToggled_doesNotChangeBackgroundColor_wWhenBackgroundColorIsNotDefault() {
+        let textField = createTextField()
+        textField.backgroundColor = UIColor.red
+
+        textField.isEnabled = false
+        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, UIColor.red))
+        
+        textField.isEnabled = true
+        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, UIColor.red))
+        
+        textField.isEnabled = false
+        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, UIColor.red))
     }
     
     // MARK: methods properties
@@ -493,6 +536,40 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     
     private func createTextField() -> AccessCheckoutUITextField {
         return AccessCheckoutUITextField()
+    }
+    
+    private func toUIColor(hexadecimal: Int) -> UIColor {
+        let red = Double((hexadecimal & 0xFF0000) >> 16) / 255.0
+        let green = Double((hexadecimal & 0xFF00) >> 8) / 255.0
+        let blue = Double(hexadecimal & 0xFF) / 255.0
+        return UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: 1.0)
+    }
+    
+    private func colorsAreEqual(_ color1: UIColor?, _ color2: UIColor?) -> Bool {
+        if color1 == nil && color2 == nil {
+            return true
+        } else if color1 == nil {
+            return false
+        } else if color2 == nil {
+            return false
+        }
+        
+        var lhsR: CGFloat = 0
+        var lhsG: CGFloat = 0
+        var lhsB: CGFloat = 0
+        var lhsA: CGFloat = 0
+        color1!.getRed(&lhsR, green: &lhsG, blue: &lhsB, alpha: &lhsA)
+        
+        var rhsR: CGFloat = 0
+        var rhsG: CGFloat = 0
+        var rhsB: CGFloat = 0
+        var rhsA: CGFloat = 0
+        color2!.getRed(&rhsR, green: &rhsG, blue: &rhsB, alpha: &rhsA)
+        
+        return lhsR == rhsR
+            && lhsG == rhsG
+            && lhsB == rhsB
+            && lhsA == rhsA
     }
 }
 

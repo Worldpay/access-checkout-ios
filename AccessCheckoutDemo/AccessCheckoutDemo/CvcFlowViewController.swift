@@ -8,6 +8,8 @@ class CvcFlowViewController: UIViewController {
     @IBOutlet var cvcIsValidLabel: UILabel!
     
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
+        self.cvcTextField.isEnabled = false
+        
         spinner.startAnimating()
 
         let cardDetails = try! CardDetailsBuilder()
@@ -25,9 +27,11 @@ class CvcFlowViewController: UIViewController {
                 switch result {
                     case .success(let sessions):
                         AlertView.display(using: self, title: "CVC Session", message: sessions[SessionType.cvc], closeHandler: {
+                            self.cvcTextField.isEnabled = true
                             self.cvcTextField.clear()
                         })
                     case .failure(let error):
+                        self.cvcTextField.isEnabled = true
                         self.highlightCvcField(error: error)
 
                         AlertView.display(using: self, title: "Error", message: error.localizedDescription)
