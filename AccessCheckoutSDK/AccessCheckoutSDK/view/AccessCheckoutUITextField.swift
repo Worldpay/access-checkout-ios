@@ -125,6 +125,19 @@ public final class AccessCheckoutUITextField: UIView {
         get { nil }
     }
     
+    /* Padding properties */
+    
+    /**
+     A value that represents the padding between the border and the text
+     */
+    @IBInspectable
+    public var horizontalPadding: CGFloat = defaults.horizontalPadding {
+        didSet {
+            self.uiTextField.frame = bounds.insetBy(dx: horizontalPadding, dy: 0)
+            self.setNeedsLayout()
+        }
+    }
+    
     /* Border properties */
     
     /**

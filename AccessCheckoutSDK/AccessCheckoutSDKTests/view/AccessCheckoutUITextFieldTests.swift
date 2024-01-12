@@ -163,6 +163,18 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual("something", textField.uiTextField.accessibilityLanguage)
     }
     
+    // MARK: Padding properties tests
+    
+    // horizontalPadding
+    func testHorizontalPaddingModifiesTheUITextFieldFrame() {
+        let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        // Asserts padding is default padding to start with
+        XCTAssertEqual(AccessCheckoutUITextField.defaults.horizontalPadding, textField.uiTextField.frame.minX)
+        
+        textField.horizontalPadding = 20
+        XCTAssertEqual(20, textField.uiTextField.frame.minX)
+    }
+    
     // MARK: Border properties tests
     
     // cornerRadius
