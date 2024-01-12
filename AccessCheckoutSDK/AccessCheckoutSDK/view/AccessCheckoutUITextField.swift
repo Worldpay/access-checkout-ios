@@ -6,6 +6,18 @@ import UIKit
  */
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
+    internal static let defaults = AccessCheckoutUITextFieldDefaults(
+        backgroundColor: .white,
+        disabledBackgroundColor: toUIColor(hexadecimal: 0xFBFBFB),
+        borderColor: toUIColor(hexadecimal: 0xE9E9E9),
+        borderWidth: 1,
+        cornerRadius: 5,
+        textAlignment: .left,
+        keyboardType: .asciiCapableNumberPad,
+        keyboardAppearance: .default,
+        horizontalPadding: 6
+    )
+    
     internal lazy var uiTextField = buildTextField()
     
     private func buildTextField() -> UITextField {
@@ -16,9 +28,9 @@ public final class AccessCheckoutUITextField: UIView {
         let uiTextField = UITextField()
         
         // UITextField defaults
-        uiTextField.keyboardType = .asciiCapableNumberPad
+        uiTextField.keyboardType = AccessCheckoutUITextField.defaults.keyboardType
         
-        uiTextField.frame = bounds
+        uiTextField.frame = bounds.insetBy(dx: AccessCheckoutUITextField.defaults.horizontalPadding, dy: 0)
         uiTextField.autoresizingMask = [
             UIView.AutoresizingMask.flexibleWidth,
             UIView.AutoresizingMask.flexibleHeight
@@ -96,6 +108,7 @@ public final class AccessCheckoutUITextField: UIView {
             super.accessibilityIdentifier
         }
     }
+
     /**
      A label that represents this element and that may be used by a screen reader
      */
@@ -103,6 +116,7 @@ public final class AccessCheckoutUITextField: UIView {
         set { self.uiTextField.accessibilityLabel = newValue }
         get { nil }
     }
+
     /**
      The language ISO code that the element's label, value and hint should be spoken in.
      */
@@ -117,14 +131,15 @@ public final class AccessCheckoutUITextField: UIView {
      When positive, the border of this component will be drawn with rounded corners
      */
     @IBInspectable
-    public var cornerRadius: CGFloat = 5 {
+    public var cornerRadius: CGFloat = defaults.cornerRadius {
         didSet { self.layer.cornerRadius = self.cornerRadius }
     }
+
     /**
      The width of the border to be displayed
      */
     @IBInspectable
-    public var borderWidth: CGFloat = 0.15 {
+    public var borderWidth: CGFloat = defaults.borderWidth {
         didSet { self.layer.borderWidth = self.borderWidth }
     }
     
@@ -132,7 +147,7 @@ public final class AccessCheckoutUITextField: UIView {
      The color of the border to be displayed
      */
     @IBInspectable
-    public var borderColor: UIColor = .gray {
+    public var borderColor: UIColor = defaults.borderColor {
         didSet { self.layer.borderColor = self.borderColor.cgColor }
     }
     
@@ -160,7 +175,7 @@ public final class AccessCheckoutUITextField: UIView {
      The alignement of the text displayed in this component
      */
     @IBInspectable
-    public var textAlignment: NSTextAlignment = .left {
+    public var textAlignment: NSTextAlignment = defaults.textAlignment {
         didSet { self.uiTextField.textAlignment = self.textAlignment }
     }
     
@@ -189,21 +204,29 @@ public final class AccessCheckoutUITextField: UIView {
      The type of the keyboard used by the shopper to type in their card details
      By default, this property is a numeric keypad
      */
-    public var keyboardType: UIKeyboardType = .numberPad {
+    public var keyboardType: UIKeyboardType = defaults.keyboardType {
         didSet { self.uiTextField.keyboardType = self.keyboardType }
     }
     
     /**
      The appearance of the keyboard displayed to the shopper
      */
-    public var keyboardAppearance: UIKeyboardAppearance = .default {
+    public var keyboardAppearance: UIKeyboardAppearance = defaults.keyboardAppearance {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
 
     /* Enabled properties */
     @IBInspectable
-    public var enabled: Bool = true {
-        didSet { self.uiTextField.isEnabled = self.enabled }
+    public var isEnabled: Bool = true {
+        didSet {
+            self.uiTextField.isEnabled = self.isEnabled
+            
+            if !self.isEnabled && self.colorsAreEqual(self.backgroundColor, AccessCheckoutUITextField.defaults.backgroundColor) {
+                self.backgroundColor = AccessCheckoutUITextField.defaults.disabledBackgroundColor
+            } else if self.isEnabled && self.colorsAreEqual(self.backgroundColor, AccessCheckoutUITextField.defaults.disabledBackgroundColor) {
+                self.backgroundColor = AccessCheckoutUITextField.defaults.backgroundColor
+            }
+        }
     }
     
     // MARK: Public methods
@@ -235,4 +258,50 @@ public final class AccessCheckoutUITextField: UIView {
         get { self.uiTextField.delegate }
         set { self.uiTextField.delegate = newValue }
     }
+    
+    private static func toUIColor(hexadecimal: Int) -> UIColor {
+        let red = Double((hexadecimal & 0xFF0000) >> 16) / 255.0
+        let green = Double((hexadecimal & 0xFF00) >> 8) / 255.0
+        let blue = Double(hexadecimal & 0xFF) / 255.0
+        return UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: 1.0)
+    }
+    
+    private func colorsAreEqual(_ color1: UIColor?, _ color2: UIColor?) -> Bool {
+        if color1 == nil && color2 == nil {
+            return true
+        } else if color1 == nil {
+            return false
+        } else if color2 == nil {
+            return false
+        }
+        
+        var lhsR: CGFloat = 0
+        var lhsG: CGFloat = 0
+        var lhsB: CGFloat = 0
+        var lhsA: CGFloat = 0
+        color1!.getRed(&lhsR, green: &lhsG, blue: &lhsB, alpha: &lhsA)
+        
+        var rhsR: CGFloat = 0
+        var rhsG: CGFloat = 0
+        var rhsB: CGFloat = 0
+        var rhsA: CGFloat = 0
+        color2!.getRed(&rhsR, green: &rhsG, blue: &rhsB, alpha: &rhsA)
+        
+        return lhsR == rhsR
+            && lhsG == rhsG
+            && lhsB == rhsB
+            && lhsA == rhsA
+    }
+}
+
+struct AccessCheckoutUITextFieldDefaults {
+    let backgroundColor: UIColor
+    let disabledBackgroundColor: UIColor
+    let borderColor: UIColor
+    let borderWidth: CGFloat
+    let cornerRadius: CGFloat
+    let textAlignment: NSTextAlignment
+    let keyboardType: UIKeyboardType
+    let keyboardAppearance: UIKeyboardAppearance
+    let horizontalPadding: CGFloat
 }

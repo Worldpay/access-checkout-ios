@@ -17,22 +17,22 @@ class CardFlowViewController: UIViewController {
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     @IBAction func submit(_ sender: Any) {
-        submitCard(panUITextField: panTextField,
-                   expiryDateUITextField: expiryDateTextField,
-                   cvcUITextField: cvcTextField)
+        submitCard()
     }
 
-    private func submitCard(panUITextField: AccessCheckoutUITextField,
-                            expiryDateUITextField: AccessCheckoutUITextField,
-                            cvcUITextField: AccessCheckoutUITextField)
+    private func submitCard()
     {
+        panTextField.isEnabled = false
+        expiryDateTextField.isEnabled = false
+        cvcTextField.isEnabled = false
+        
         spinner.startAnimating()
 
         let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
-        let cardDetails = try! CardDetailsBuilder().pan(panUITextField)
-            .expiryDate(expiryDateUITextField)
-            .cvc(cvcUITextField)
+        let cardDetails = try! CardDetailsBuilder().pan(panTextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .build()
 
         let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
@@ -77,6 +77,10 @@ class CardFlowViewController: UIViewController {
     }
 
     private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
+        panTextField.isEnabled = true
+        expiryDateTextField.isEnabled = true
+        cvcTextField.isEnabled = true
+        
         if !preserveContent {
             panTextField.clear()
             expiryDateTextField.clear()
@@ -103,22 +107,8 @@ class CardFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        panTextField.layer.borderWidth = 1
-        panTextField.layer.borderColor = UIColor.lightText.cgColor
-        panTextField.layer.cornerRadius = 8
-        panTextField.backgroundColor = UIColor.white
         panTextField.placeholder = "Card Number"
-
-        expiryDateTextField.layer.borderWidth = 1
-        expiryDateTextField.layer.borderColor = UIColor.lightText.cgColor
-        expiryDateTextField.layer.cornerRadius = 8
-        expiryDateTextField.backgroundColor = UIColor.white
         expiryDateTextField.placeholder = "MM/YY"
-
-        cvcTextField.layer.borderWidth = 1
-        cvcTextField.layer.borderColor = UIColor.lightText.cgColor
-        cvcTextField.layer.cornerRadius = 8
-        cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "CVC"
 
         // Controls used as helpers for the automated tests - Start of section
