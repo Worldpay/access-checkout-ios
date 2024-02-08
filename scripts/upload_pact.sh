@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CONTRACT_VERSION="3.0.0"
+CONTRACT_VERSION="4.0.0"
 HASH_CODE=$(git rev-parse --short HEAD)
 
 # Upload PACT contract between SDK and sessions service

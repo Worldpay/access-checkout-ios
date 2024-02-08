@@ -3,16 +3,16 @@ import XCTest
 
 class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     private let builder = CvcOnlyValidationConfig.builder()
-    private let cvcTextField = UITextField()
+    private let cvcAccessCheckoutUITextField = AccessCheckoutUITextField()
     private let validationDelegate = MockAccessCheckoutCvcOnlyValidationDelegate()
 
     func testCanCreateConfig() throws {
         let config = try! CvcOnlyValidationConfig.builder()
-            .cvc(cvcTextField)
+            .cvc(cvcAccessCheckoutUITextField)
             .validationDelegate(validationDelegate)
             .build()
 
-        XCTAssertEqual(cvcTextField, config.cvcTextField)
+        XCTAssertEqual(cvcAccessCheckoutUITextField, config.cvc)
         XCTAssertTrue(config.validationDelegate is MockAccessCheckoutCvcOnlyValidationDelegate)
     }
 
@@ -26,7 +26,7 @@ class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     }
 
     func testThrowsErrorWhenValidationDelegateIsNotSpecified() throws {
-        _ = builder.cvc(cvcTextField)
+        _ = builder.cvc(cvcAccessCheckoutUITextField)
         let expectedMessage = "Expected validation delegate to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in

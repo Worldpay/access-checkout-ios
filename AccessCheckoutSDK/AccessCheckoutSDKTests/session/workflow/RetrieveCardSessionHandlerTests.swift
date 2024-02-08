@@ -18,9 +18,10 @@ class RetrieveCardSessionHandlerTests: XCTestCase {
         let expectationToFulfill = expectation(description: "session retrieved")
         let apiClient = CardSessionsApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = RetrieveCardSessionHandler(apiClient: apiClient)
-        let cardDetails = try CardDetailsBuilder().pan("pan")
-            .expiryDate("12/20")
-            .cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
@@ -41,9 +42,10 @@ class RetrieveCardSessionHandlerTests: XCTestCase {
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let apiClient = CardSessionsApiClientMock(error: expectedError)
         let sessionHandler = RetrieveCardSessionHandler(apiClient: apiClient)
-        let cardDetails = try CardDetailsBuilder().pan("pan")
-            .expiryDate("12/20")
-            .cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in

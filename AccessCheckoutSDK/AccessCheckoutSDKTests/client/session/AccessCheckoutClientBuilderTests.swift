@@ -11,16 +11,7 @@ class AccessCheckoutClientBuilderTests: XCTestCase {
         XCTAssertNotNil(result)
     }
     
-    func testBuildsAnAccessCheckoutClientUsingMerchantId() throws {
-        let builder = AccessCheckoutClientBuilder().merchantId("123")
-            .accessBaseUrl("some-url")
-        
-        let result: AccessCheckoutClient = try builder.build()
-        
-        XCTAssertNotNil(result)
-    }
-    
-    func testCannotBuildAnAccessCheckoutClientWithoutCallToMerchantIdAndCheckoutId() throws {
+    func testCannotBuildAnAccessCheckoutClientWithoutCallToCheckoutId() throws {
         let builder = AccessCheckoutClientBuilder().accessBaseUrl("some-url")
         let expectedMessage = "Expected checkout ID to be provided but was not"
         

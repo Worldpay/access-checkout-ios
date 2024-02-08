@@ -1,7 +1,7 @@
 import Foundation
 
 public struct WpSdkHeader {
-    static let sdkVersion = "3.0.0"
+    static let sdkVersion = "4.0.0"
     static private let valueFormat = "access-checkout-ios/%@"
     
     static let name = "X-WP-SDK"

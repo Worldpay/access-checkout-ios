@@ -199,8 +199,9 @@ class AccessCheckoutClientTests: XCTestCase {
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForCardSession() throws {
         let expectedMessage = "Expected expiry date to be provided but was not"
         let client = createAccessCheckoutClient(baseUrl: serviceStubs!.baseUrl)
-        let cardDetails = try CardDetailsBuilder().pan("pan")
-            .cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
         
         XCTAssertThrowsError(try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.cvc, .card]) { _ in }) { error in
@@ -219,9 +220,10 @@ class AccessCheckoutClientTests: XCTestCase {
     }
     
     private func validCardDetails() -> CardDetails {
-        return try! CardDetailsBuilder().pan("pan")
-            .expiryDate("12/20")
-            .cvc("123")
+        return try! CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
     }
     

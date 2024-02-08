@@ -18,7 +18,8 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
         let expectationToFulfill = expectation(description: "")
         let apiClient = SessionsApiClientMock(sessionToReturn: "expected-session")
         let sessionHandler = RetrieveCvcSessionHandler(apiClient: apiClient)
-        let cardDetails = try CardDetailsBuilder().cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
@@ -39,7 +40,8 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let apiClient = SessionsApiClientMock(error: expectedError)
         let sessionHandler = RetrieveCvcSessionHandler(apiClient: apiClient)
-        let cardDetails = try CardDetailsBuilder().cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in

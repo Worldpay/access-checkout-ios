@@ -7,8 +7,9 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     func testThrowsExceptionForCardSessionTypeWhenPanIsNotProvided() throws {
         let expectedMessage = "Expected pan to be provided but was not"
         let sessionType = SessionType.card
-        let cardDetails = try CardDetailsBuilder().expiryDate("12/20")
-            .cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
@@ -19,8 +20,9 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     func testThrowsExceptionForCardSessionTypeWhenExpiryDateIsNotProvided() throws {
         let expectedMessage = "Expected expiry date to be provided but was not"
         let sessionType = SessionType.card
-        let cardDetails = try CardDetailsBuilder().pan("pan")
-            .cvc("123")
+        let cardDetails = try CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
@@ -31,8 +33,9 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     func testFailsToRetrieveSessionIfCvcIsNotProvided() throws {
         let expectedMessage = "Expected cvc to be provided but was not"
         let sessionType = SessionType.card
-        let cardDetails = try CardDetailsBuilder().pan("pan")
-            .expiryDate("12/20")
+        let cardDetails = try CardDetailsBuilder()
+            .pan(UIUtils.createAccessCheckoutUITextField(withText: "pan"))
+            .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
             .build()
 
         XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
