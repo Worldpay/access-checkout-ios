@@ -6,9 +6,10 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
     
-    let panView = PanView()
-    let expiryDateView = ExpiryDateView()
-    let cvcView = CvcView()
+    let panAccessCheckoutUITextField = AccessCheckoutUITextField()
+    let expiryDateAccessCheckoutUITextField = AccessCheckoutUITextField()
+    let cvcAccessCheckoutUITextField = AccessCheckoutUITextField()
+
     let baseUrl = "some-url"
     let cardValidationDelegateMock = MockAccessCheckoutCardValidationDelegate()
     let cvcOnlyValidationDelegateMock = MockAccessCheckoutCvcOnlyValidationDelegate()
@@ -19,121 +20,48 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(baseUrl: any(), acceptedCardBrands: any()).thenDoNothing()
     }
     
-    func testInitialisationForCardPaymentFlowRetrievesConfiguration() {
-        let validationConfig = CardValidationConfig(panView: panView,
-                                                    expiryDateView: expiryDateView,
-                                                    cvcView: cvcView,
-                                                    accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock,
-                                                    acceptedCardBrands: ["amex", "visa"])
-        
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
-        
-        verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
-    }
-    
-    func testInitialisationForCardPaymentFlowSetsPresentersOnViews() {
-        let validationConfig = CardValidationConfig(panView: panView,
-                                                    expiryDateView: expiryDateView,
-                                                    cvcView: cvcView,
-                                                    accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock,
-                                                    acceptedCardBrands: ["amex", "visa"])
-        
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
-        
-        XCTAssertNotNil(panView.presenter)
-        XCTAssertNotNil(expiryDateView.presenter)
-        XCTAssertNotNil(cvcView.presenter)
-    }
-    
-    func testInitialisationForCvcOnlyFlowSetsPresenterOnView() {
-        let validationConfig = CvcOnlyValidationConfig(cvcView: cvcView, validationDelegate: cvcOnlyValidationDelegateMock)
-        
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
-        
-        XCTAssertNotNil(cvcView.presenter)
-    }
-    
-    // MARK: Tests for using UITextView to initialise
-    
-    let panTextField = UITextField()
-    let cvcTextField = UITextField()
-    let expiryDateTextField = UITextField()
-    
-    let panUITextField = AccessCheckoutUITextField()
-    let cvcUITextField = AccessCheckoutUITextField()
-    let expiryDateUITextField = AccessCheckoutUITextField()
-    
     func testInitialisationForCardPaymentFlowWithTextFieldsRetrievesConfiguration() {
-        let validationConfig = CardValidationConfig(panTextField: panTextField,
-                                                    expiryDateTextField: expiryDateTextField,
-                                                    cvcTextField: cvcTextField,
-                                                    accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock,
-                                                    acceptedCardBrands: ["amex", "visa"])
+        let validationConfig = try! CardValidationConfig.builder()
+            .pan(panAccessCheckoutUITextField)
+            .expiryDate(expiryDateAccessCheckoutUITextField)
+            .cvc(cvcAccessCheckoutUITextField)
+            .accessBaseUrl(baseUrl)
+            .enablePanFormatting()
+            .validationDelegate(cardValidationDelegateMock)
+            .acceptedCardBrands(["amex", "visa"])
+            .build()
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
         verify(configurationProvider).retrieveRemoteConfiguration(baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
     }
     
-    func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
-        let validationConfig = CardValidationConfig(panTextField: panTextField,
-                                                    expiryDateTextField: expiryDateTextField,
-                                                    cvcTextField: cvcTextField,
-                                                    accessBaseUrl: baseUrl,
-                                                    validationDelegate: cardValidationDelegateMock,
-                                                    acceptedCardBrands: ["amex", "visa"])
+    func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegates() {
+        let validationConfig = try! CardValidationConfig.builder()
+            .pan(panAccessCheckoutUITextField)
+            .expiryDate(expiryDateAccessCheckoutUITextField)
+            .cvc(cvcAccessCheckoutUITextField)
+            .accessBaseUrl(baseUrl)
+            .enablePanFormatting()
+            .validationDelegate(cardValidationDelegateMock)
+            .acceptedCardBrands(["amex", "visa"])
+            .build()
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
         
-        XCTAssertTrue(panTextField.delegate is PanViewPresenter)
-        XCTAssertTrue(expiryDateTextField.delegate is ExpiryDateViewPresenter)
-        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
+        XCTAssertTrue(panAccessCheckoutUITextField.uiTextField.delegate is PanViewPresenter)
+        XCTAssertTrue(expiryDateAccessCheckoutUITextField.uiTextField.delegate is ExpiryDateViewPresenter)
+        XCTAssertTrue(cvcAccessCheckoutUITextField.uiTextField.delegate is CvcViewPresenter)
     }
     
     func testInitialisationForCvcOnlyPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegate() {
-        let validationConfig = CvcOnlyValidationConfig(cvcTextField: cvcTextField,
-                                                       validationDelegate: cvcOnlyValidationDelegateMock)
+        let validationConfig = try! CvcOnlyValidationConfig.builder()
+            .cvc(cvcAccessCheckoutUITextField)
+            .validationDelegate(cvcOnlyValidationDelegateMock)
+            .build()
         
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
-        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
-    }
-    
-    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormattingForLegacyUITextField() throws {
-        let config = try! CardValidationConfig.builder()
-            .pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
-            .accessBaseUrl(baseUrl)
-            .validationDelegate(cardValidationDelegateMock)
-            .acceptedCardBrands(["amex", "visa"])
-            .enablePanFormatting()
-            .build()
-        
-        accessCheckoutValidationInitialiser!.initialise(config)
-        
-        XCTAssertTrue(panTextField.delegate is PanViewPresenter)
-        XCTAssertTrue(expiryDateTextField.delegate is ExpiryDateViewPresenter)
-        XCTAssertTrue(cvcTextField.delegate is CvcViewPresenter)
-    }
-    
-    func testInitialisationWithBuilderForCardPaymentFlowSetsCorrectConfigAndCanEnableFormatting() {
-        let config = try! CardValidationConfig.builder()
-            .pan(panUITextField)
-            .expiryDate(expiryDateUITextField)
-            .cvc(cvcUITextField)
-            .accessBaseUrl(baseUrl)
-            .validationDelegate(cardValidationDelegateMock)
-            .acceptedCardBrands(["amex", "visa"])
-            .enablePanFormatting()
-            .build()
-        
-        accessCheckoutValidationInitialiser!.initialise(config)
-        
-        XCTAssertTrue(panUITextField.uiTextField.delegate is PanViewPresenter)
-        XCTAssertTrue(expiryDateUITextField.uiTextField.delegate is ExpiryDateViewPresenter)
-        XCTAssertTrue(cvcUITextField.uiTextField.delegate is CvcViewPresenter)
+
+        XCTAssertTrue(cvcAccessCheckoutUITextField.uiTextField.delegate is CvcViewPresenter)
     }
 }

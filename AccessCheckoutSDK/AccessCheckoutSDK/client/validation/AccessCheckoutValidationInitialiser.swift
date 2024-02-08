@@ -24,7 +24,7 @@ public struct AccessCheckoutValidationInitialiser {
 
     /**
      This function should be used to initialise the validation using a given `ValidationConfig` provided by the merchant
-     - Parameter validationConfig]: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     - Parameter validationConfig: `ValidationConfig` that represents the configuration that should be used to initialise the validation
      */
     public func initialise(_ validationConfiguration: ValidationConfig) {
         if validationConfiguration is CardValidationConfig {
@@ -45,19 +45,9 @@ public struct AccessCheckoutValidationInitialiser {
         let expiryDatePresenter = expiryDateViewPresenter(validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
 
-        if config.accessCheckoutUITextFieldMode {
-            setTextFieldDelegate(textField: config.pan!.uiTextField, delegate: panPresenter)
-            setTextFieldDelegate(textField: config.expiryDate!.uiTextField, delegate: expiryDatePresenter)
-            setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
-        } else if config.textFieldMode {
-            setTextFieldDelegate(textField: config.panTextField!, delegate: panPresenter)
-            setTextFieldDelegate(textField: config.expiryDateTextField!, delegate: expiryDatePresenter)
-            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
-        } else {
-            config.cvcView!.presenter = cvcPresenter
-            config.panView!.presenter = panPresenter
-            config.expiryDateView!.presenter = expiryDatePresenter
-        }
+        setTextFieldDelegate(textField: config.pan!.uiTextField, delegate: panPresenter)
+        setTextFieldDelegate(textField: config.expiryDate!.uiTextField, delegate: expiryDatePresenter)
+        setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
     }
 
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
@@ -66,13 +56,7 @@ public struct AccessCheckoutValidationInitialiser {
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
         let cvcPresenter = CvcViewPresenter(cvcValidationFlow, cvcValidator)
 
-        if config.accessCheckoutUITextFieldMode {
-            setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
-        } else if config.textFieldMode {
-            setTextFieldDelegate(textField: config.cvcTextField!, delegate: cvcPresenter)
-        } else {
-            config.cvcView!.presenter = cvcPresenter
-        }
+        setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
     }
 
     private func panViewPresenter(_ configurationProvider: CardBrandsConfigurationProvider,

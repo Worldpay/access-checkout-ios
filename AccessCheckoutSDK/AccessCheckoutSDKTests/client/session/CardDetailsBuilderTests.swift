@@ -4,7 +4,7 @@ import XCTest
 class CardDetailsBuilderTests: XCTestCase {
     // MARK: tests covering SAQ-A compliant way of instiantiating card details
 
-    func testBuildsCardDetailsUsingUITextFields() throws {
+    func testBuildsCardDetailsSuccessfully() throws {
         let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
         let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/23")
         let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
@@ -21,7 +21,7 @@ class CardDetailsBuilderTests: XCTestCase {
         XCTAssertEqual("123", cardDetails.cvc)
     }
     
-    func testBuildsCardDetailsUsingUITextFieldsWhenPanHasSpaces() throws {
+    func testBuildsCardDetailsAndRemoveSpacesWhenPanHasSpaces() throws {
         let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234 1234 1234 1234")
         let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/23")
         let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
@@ -38,7 +38,7 @@ class CardDetailsBuilderTests: XCTestCase {
         XCTAssertEqual("123", cardDetails.cvc)
     }
     
-    func testBuildsCardDetailsUsingUITextFieldsWhenExpiryDateHasNoSlash() throws {
+    func testBuildsCardDetailsWithCorrectExpiryDateWhenExpiryDateHasNoSlash() throws {
         let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
         let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1023")
         let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
@@ -55,7 +55,7 @@ class CardDetailsBuilderTests: XCTestCase {
         XCTAssertEqual("123", cardDetails.cvc)
     }
     
-    func testBuildsCardDetailsUsingUITextFieldsWhenPassingOnlyUITextFieldForCvc() throws {
+    func testBuildsCardDetailsWhenPassingOnlyCvc() throws {
         let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
         let cardDetailsBuilder = CardDetailsBuilder().cvc(cvcUITextField)
         
@@ -67,7 +67,7 @@ class CardDetailsBuilderTests: XCTestCase {
         XCTAssertEqual("123", cardDetails.cvc)
     }
     
-    func testThrowsErrorWhenUsingUITextFieldsWhenExpiryDateIsInIncorrectFormat() throws {
+    func testThrowsErrorWhenExpiryDateIsInIncorrectFormat() throws {
         let panUITextField = UIUtils.createAccessCheckoutUITextField(withText: "1234123412341234")
         let expiryDateUITextField = UIUtils.createAccessCheckoutUITextField(withText: "10/2023")
         let cvcUITextField = UIUtils.createAccessCheckoutUITextField(withText: "123")
@@ -76,69 +76,6 @@ class CardDetailsBuilderTests: XCTestCase {
         let cardDetailsBuilder = CardDetailsBuilder().pan(panUITextField)
             .expiryDate(expiryDateUITextField)
             .cvc(cvcUITextField)
-        
-        XCTAssertThrowsError(try cardDetailsBuilder.build()) { error in
-            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
-        }
-    }
-    
-    // MARK: tests covering non SAQ-A compliant way of instiantiating card details
-
-    func testBuildsCardDetailsUsingStringValues() throws {
-        let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
-            .expiryDate("10/23")
-            .cvc("123")
-        
-        let cardDetails = try cardDetailsBuilder.build()
-        
-        XCTAssertEqual("1234123412341234", cardDetails.pan)
-        XCTAssertEqual(10, cardDetails.expiryMonth)
-        XCTAssertEqual(2023, cardDetails.expiryYear)
-        XCTAssertEqual("123", cardDetails.cvc)
-    }
-    
-    func testBuildsCardDetailsUsingStringValuesWhenPanHasSpaces() throws {
-        let cardDetailsBuilder = CardDetailsBuilder().pan("1234 1234 1234 1234")
-            .expiryDate("1023")
-            .cvc("123")
-        
-        let cardDetails = try cardDetailsBuilder.build()
-        
-        XCTAssertEqual("1234123412341234", cardDetails.pan)
-        XCTAssertEqual(10, cardDetails.expiryMonth)
-        XCTAssertEqual(2023, cardDetails.expiryYear)
-        XCTAssertEqual("123", cardDetails.cvc)
-    }
-    
-    func testBuildsCardDetailsUsingStringValuesWhenExpiryDateHasNoSlash() throws {
-        let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
-            .expiryDate("1023")
-            .cvc("123")
-        
-        let cardDetails = try cardDetailsBuilder.build()
-        
-        XCTAssertEqual("1234123412341234", cardDetails.pan)
-        XCTAssertEqual(10, cardDetails.expiryMonth)
-        XCTAssertEqual(2023, cardDetails.expiryYear)
-        XCTAssertEqual("123", cardDetails.cvc)
-    }
-    
-    func testBuildsCardDetailsUsingStringValuesWhenPassingOnlyStringValueForCvc() throws {
-        let cardDetailsBuilder = CardDetailsBuilder().cvc("123")
-        
-        let cardDetails = try cardDetailsBuilder.build()
-        
-        XCTAssertNil(cardDetails.pan)
-        XCTAssertNil(cardDetails.expiryMonth)
-        XCTAssertNil(cardDetails.expiryYear)
-        XCTAssertEqual("123", cardDetails.cvc)
-    }
-    
-    func testThrowsErrorWhenUsingStringValuesWhenExpiryDateIsInIncorrectFormat() throws {
-        let expectedMessage = "Expected expiry date in format MM/YY or MMYY but found 10/2023"
-        let cardDetailsBuilder = CardDetailsBuilder().pan("1234123412341234")
-            .expiryDate("10/2023")
-            .cvc("123")
         
         XCTAssertThrowsError(try cardDetailsBuilder.build()) { error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)

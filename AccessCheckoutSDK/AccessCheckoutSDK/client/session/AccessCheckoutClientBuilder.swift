@@ -10,16 +10,6 @@ public class AccessCheckoutClientBuilder {
     public init() {}
     
     /**
-     Deprecated - Sets the merchant id of the client
-     - Parameter merchantId: `String` that represents the checkoutId given to the merchant at time of registration
-     */
-    @available(*, deprecated, message: "Your checkoutId should now be passed to the builder using checkoutId(). The support for passing your checkoutId using merchantId() will be removed in the next major version")
-    public func merchantId(_ merchantId: String) -> AccessCheckoutClientBuilder {
-        self.checkoutId = merchantId
-        return self
-    }
-    
-    /**
      Sets the checkoutId on the client
      
      - Parameter checkoutId: `String` that represents the checkoutId given to the merchant at time of registration
