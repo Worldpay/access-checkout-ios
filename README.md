@@ -22,7 +22,7 @@ Refer to the Worldpay Developers documentation to find out how to integrate the 
 
 ## Getting started with SDK development
 
-<div align="right">
+<div align="right">s
     <b><a href="#access-checkout-sdk-for-ios">↥ back to top</a></b>
 </div>
 
