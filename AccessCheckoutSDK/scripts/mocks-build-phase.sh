@@ -1,3 +1,5 @@
+echo "WLWID"
+
 # This script has been added as a BuildPhase in the AccessCheckoutSDKTests Build Phases.
 # It will run everytime tests are compiled or run.
 #
