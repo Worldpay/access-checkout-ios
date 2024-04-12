@@ -5,7 +5,7 @@
 * [How to integrate the SDK in an iOS app](#how-to-integrate-the-sdk-in-an-ios-app)
 * [Getting started with SDK development](#getting-started-with-sdk-development)
 
-## Project Structure
+## Project Structure test
 
 <div align="right">
     <b><a href="#access-checkout-sdk-for-ios">↥ back to top</a></b>
