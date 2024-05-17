@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '12.0'
 
   spec.homepage     = 'https://github.com/Worldpay/access-checkout-ios'
-  spec.license      = { :type => 'MIT', :file => 'AccessCheckoutSDK/LICENSE' }
+  spec.license      = { :type => 'Proprietary', :file => 'AccessCheckoutSDK/LICENSE' }
 
   spec.author       = 'Access Worldpay'
 
