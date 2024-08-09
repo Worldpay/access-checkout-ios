@@ -1,3 +1,3 @@
 internal struct Configuration {
-    static let accessBaseUrl: String = "https://npe.access.worldpay.com"
+    static let accessBaseUrl: String = "https://try.access.worldpay.com"
 }
