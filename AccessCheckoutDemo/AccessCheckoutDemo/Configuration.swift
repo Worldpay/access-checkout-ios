@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 struct Configuration {
-    static let checkoutId = CI.checkoutId != "" && CI.checkoutId != "$(MERCHANT_ID)" ? CI.checkoutId : "identity"
+    static let checkoutId = CI.checkoutId != "" && CI.checkoutId != "$(CHECKOUT_ID)" ? CI.checkoutId : "identity"
 
     static var accessBaseUrl: String = ""
 
