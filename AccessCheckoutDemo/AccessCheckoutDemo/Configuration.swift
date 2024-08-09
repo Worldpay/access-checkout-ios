@@ -2,8 +2,6 @@ import Foundation
 import UIKit
 
 struct Configuration {
-    static var _accessBaseUrl: String = ""
-
     static let checkoutId = CI.checkoutId != "" && CI.checkoutId != "$(MERCHANT_ID)" ? CI.checkoutId : "identity"
 
     static var accessBaseUrl: String = ""
@@ -14,5 +12,13 @@ struct Configuration {
 
     private static func urlWitoutTrailingSlash(_ url: String) -> String {
         return url.last == "/" ? String(url.dropLast()) : url
+    }
+    
+    static func resetAccessBaseUrl() {
+        if CI.accessBaseUrl != "" && CI.accessBaseUrl != "$(ACCESS_BASE_URL)" {
+            accessBaseUrl = CI.accessBaseUrl
+        } else {
+            accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+        }
     }
 }
