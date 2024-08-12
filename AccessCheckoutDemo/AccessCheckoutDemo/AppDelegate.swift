@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Configuration.accessBaseUrl = Bundle.main.infoDictionary?["AccessBaseURL"] as! String
+        Configuration.resetAccessBaseUrl()
 
         if let enableStubsArgumentValue = UserDefaults.standard.string(forKey: "enableStubs") {
             if (enableStubsArgumentValue as NSString).boolValue {
