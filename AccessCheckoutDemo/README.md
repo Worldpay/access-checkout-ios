@@ -1,4 +1,4 @@
-# Access Checkout Demo for iOS
+## Access Checkout Demo for iOS
 
 A sample App to demonstrate an Access Checkout SDK integration
 
