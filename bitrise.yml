@@ -1,4 +1,4 @@
----
+l---
 format_version: '6'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
@@ -99,7 +99,7 @@ workflows:
   ui-tests-ios-13:
     envs:
       - SIMULATOR_DEVICE: "iPhone 11 Pro"
-      - SIMULATOR_OS_VERSION: "13.7"
+      - SIMULATOR_OS_VERSION: "14.5"
     after_run:
       - ui-tests
   ui-tests-ios-14:
@@ -140,7 +140,7 @@ workflows:
   sdk-ui-tests-ios-13:
     envs:
       - SIMULATOR_DEVICE: "iPhone 11 Pro"
-      - SIMULATOR_OS_VERSION: "13.7"
+      - SIMULATOR_OS_VERSION: "14.5"
     after_run:
       - sdk-ui-tests
   sdk-ui-tests-ios-14:
