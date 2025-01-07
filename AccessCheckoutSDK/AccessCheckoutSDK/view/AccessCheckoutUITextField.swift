@@ -15,7 +15,8 @@ public final class AccessCheckoutUITextField: UIView {
         textAlignment: .left,
         keyboardType: .asciiCapableNumberPad,
         keyboardAppearance: .default,
-        horizontalPadding: 6
+        horizontalPadding: 6,
+        font: .preferredFont(forTextStyle: .caption1)
     )
     
     internal lazy var uiTextField = buildTextField()
@@ -74,6 +75,7 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextField.keyboardType = self.keyboardType
         self.uiTextField.textColor = self.textColor
         self.uiTextField.placeholder = self.placeholder
+        self.uiTextField.font = self.font
     }
     
     // MARK: Public properties
@@ -180,8 +182,11 @@ public final class AccessCheckoutUITextField: UIView {
      Default is nil and uses system font 12 pt
      */
     @IBInspectable
-    public var font: UIFont? {
-        didSet { self.uiTextField.font = self.font }
+    public var font: UIFont = defaults.font {
+        didSet {
+            self.uiTextField.font = self.font
+            self.uiTextField.adjustsFontForContentSizeCategory = true
+        }
     }
     
     /**
@@ -317,4 +322,5 @@ struct AccessCheckoutUITextFieldDefaults {
     let keyboardType: UIKeyboardType
     let keyboardAppearance: UIKeyboardAppearance
     let horizontalPadding: CGFloat
+    let font: UIFont
 }
