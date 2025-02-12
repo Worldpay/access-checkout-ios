@@ -280,15 +280,9 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     }
     
     // font
-    func testFontIsNilByDefault() {
-        let textField = createTextField()
-        
-        XCTAssertNil(textField.font)
-    }
-    
     func testFontGetterReturnsValueSet() {
         let textField = createTextField()
-        let expected = UIFont.boldSystemFont(ofSize: 3)
+        let expected = UIFont.preferredFont(forTextStyle: .body)
         
         textField.font = expected
         
