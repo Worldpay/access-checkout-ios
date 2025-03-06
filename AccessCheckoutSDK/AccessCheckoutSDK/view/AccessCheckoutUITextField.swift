@@ -16,7 +16,7 @@ public final class AccessCheckoutUITextField: UIView {
         keyboardType: .asciiCapableNumberPad,
         keyboardAppearance: .default,
         horizontalPadding: 6,
-        font: .preferredFont(forTextStyle: .caption1)
+        font: .preferredFont(forTextStyle: .body)
     )
     
     internal lazy var uiTextField = buildTextField()
@@ -31,10 +31,10 @@ public final class AccessCheckoutUITextField: UIView {
         // UITextField defaults
         uiTextField.keyboardType = AccessCheckoutUITextField.defaults.keyboardType
         
-        uiTextField.frame = bounds.insetBy(dx: AccessCheckoutUITextField.defaults.horizontalPadding, dy: 0)
+        uiTextField.frame = bounds.insetBy(dx: AccessCheckoutUITextField.defaults.horizontalPadding, dy: -AccessCheckoutUITextField.defaults.font.pointSize)
         uiTextField.autoresizingMask = [
-            UIView.AutoresizingMask.flexibleWidth,
-            UIView.AutoresizingMask.flexibleHeight
+            .flexibleWidth,
+            .flexibleHeight,
         ]
         
         addSubview(uiTextField)
@@ -65,6 +65,12 @@ public final class AccessCheckoutUITextField: UIView {
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         self.setStyles()
+    }
+    
+    override public func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        layer.bounds = layer.visibleRect.insetBy(dx: layer.contentsRect.width, dy: -layer.contentsRect.height)
+        layer.masksToBounds = true
     }
     
     private func setStyles() {
