@@ -69,7 +69,7 @@ public final class AccessCheckoutUITextField: UIView {
     
     override public func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        layer.bounds = layer.visibleRect.insetBy(dx: layer.contentsRect.width, dy: -layer.contentsRect.height)
+        layer.bounds = layer.visibleRect.insetBy(dx: (0), dy: -layer.contentsRect.height)
         layer.masksToBounds = true
     }
     
