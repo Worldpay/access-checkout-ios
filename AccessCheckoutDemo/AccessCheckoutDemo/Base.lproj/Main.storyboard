@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0kh-GD-3gP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,31 +30,21 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="165" width="68" height="44"/>
+                                <rect key="frame" x="16" y="165" width="90" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="1K6-wM-DAF"/>
+                                    <constraint firstAttribute="width" constant="90" id="1K6-wM-DAF"/>
                                     <constraint firstAttribute="height" constant="44" id="Ute-5x-z9t"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="107" y="165" width="58" height="44"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0Pc-45-INQ"/>
                                 </constraints>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
                                 <rect key="frame" x="294" y="240" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
                                 <rect key="frame" x="16" y="274" width="143.5" height="12"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                 <constraints>
@@ -65,8 +55,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="16" y="294" width="49" height="30"/>
+                                <rect key="frame" x="16" y="294" width="54" height="33"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
@@ -80,10 +71,10 @@
                                     <constraint firstAttribute="width" constant="57" id="vka-X3-DAu"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                <rect key="frame" x="16" y="240" width="93.5" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                <rect key="frame" x="16" y="240" width="98" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -111,6 +102,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                <rect key="frame" x="124" y="165" width="60" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0Pc-45-INQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -126,11 +127,12 @@
                             <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JNk-u6-HOu"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="NU8-l2-7jG"/>
-                            <constraint firstItem="A4Q-yr-qYy" firstAttribute="leading" secondItem="ts8-Kj-GhN" secondAttribute="trailing" constant="23" id="Nhx-HB-abn"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="trailing" secondItem="uOE-eK-LJK" secondAttribute="trailing" id="Nj3-lb-6ay"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="A4Q-yr-qYy" secondAttribute="trailing" constant="175" id="RQb-06-6zk"/>
                             <constraint firstItem="MXa-G9-0FX" firstAttribute="baseline" secondItem="FMM-PP-5OM" secondAttribute="baseline" id="TR2-Qk-9VE"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="TYM-8y-gFf"/>
                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="Tct-QG-Q6u"/>
+                            <constraint firstItem="A4Q-yr-qYy" firstAttribute="leading" secondItem="ts8-Kj-GhN" secondAttribute="trailing" constant="18" id="Tml-2X-PPF"/>
                             <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="ts8-Kj-GhN" secondAttribute="bottom" constant="31" id="Unf-nb-35h"/>
                             <constraint firstItem="MXa-G9-0FX" firstAttribute="firstBaseline" secondItem="FMM-PP-5OM" secondAttribute="firstBaseline" id="VWU-cu-ICw"/>
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="top" secondItem="MXa-G9-0FX" secondAttribute="bottom" constant="39" id="YiR-Af-hmt"/>
@@ -140,7 +142,6 @@
                             <constraint firstItem="uOE-eK-LJK" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="gav-x2-6nM"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="centerY" secondItem="gxk-b1-dMa" secondAttribute="centerY" id="her-S7-AFN"/>
                             <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="jQm-i4-aaC"/>
-                            <constraint firstAttribute="trailing" secondItem="A4Q-yr-qYy" secondAttribute="trailing" constant="210" id="jnm-R8-NOg"/>
                             <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="top" id="kje-qL-jla"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uOE-eK-LJK" secondAttribute="trailing" constant="16" id="noD-9L-4qa"/>
                             <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="3" id="sif-5I-mlm"/>
@@ -246,17 +247,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
-                                <rect key="frame" x="291" y="108" width="49" height="30"/>
+                                <rect key="frame" x="286" y="108" width="54" height="33"/>
                                 <accessibility key="accessibilityConfiguration" identifier="submit">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitTouchUpInsideHandler:" destination="ZEX-QF-aID" eventType="touchUpInside" id="cZ5-UI-NCI"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
-                                <rect key="frame" x="267" y="113" width="20" height="20"/>
+                                <rect key="frame" x="262" y="114.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-RM-1YK">
                                 <rect key="frame" x="16" y="0.0" width="118" height="21"/>
@@ -267,7 +269,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="101" width="97" height="44"/>
+                                <rect key="frame" x="16" y="101" width="97" height="47"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
                                     <bool key="isElement" value="YES"/>
