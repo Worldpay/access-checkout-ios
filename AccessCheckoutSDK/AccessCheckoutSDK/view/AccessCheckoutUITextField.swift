@@ -19,7 +19,6 @@ public final class AccessCheckoutUITextField: UIView {
         keyboardAppearance: .default,
         horizontalPadding: 6,
         verticalPadding: 4,
-        font: .preferredFont(forTextStyle: .body)
     )
 
     internal lazy var uiTextField = buildTextFieldWithDefaults()
@@ -92,7 +91,11 @@ public final class AccessCheckoutUITextField: UIView {
     override public var intrinsicContentSize: CGSize
     {
         get {
-            return uiTextField.intrinsicContentSize
+            let width = uiTextField.intrinsicContentSize.height
+            let height = uiTextField.intrinsicContentSize.height
+            + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
+            
+            return CGSize(width: width, height: height)
         }
     }
 
@@ -104,6 +107,9 @@ public final class AccessCheckoutUITextField: UIView {
     }
 
     private func setStyles() {
+        self.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        self.uiTextField.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        
         self.layer.cornerRadius = self.cornerRadius
         self.layer.borderColor = self.borderColor.cgColor
         self.layer.borderWidth = self.borderWidth
@@ -218,13 +224,12 @@ public final class AccessCheckoutUITextField: UIView {
 
     /**
      The font of the text displayed in this component
-     Default is nil and uses system font 12 pt
+     Default is nil
      */
     @IBInspectable
-    public var font: UIFont = defaults.font {
+    public var font: UIFont? {
         didSet {
             self.uiTextField.font = self.font
-            self.invalidateIntrinsicContentSize()
         }
     }
 
@@ -362,5 +367,4 @@ struct AccessCheckoutUITextFieldDefaults {
     let keyboardAppearance: UIKeyboardAppearance
     let horizontalPadding: CGFloat
     let verticalPadding: CGFloat
-    let font: UIFont
 }
