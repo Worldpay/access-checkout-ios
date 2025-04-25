@@ -18,7 +18,7 @@ public final class AccessCheckoutUITextField: UIView {
         keyboardType: .asciiCapableNumberPad,
         keyboardAppearance: .default,
         horizontalPadding: 6,
-        verticalPadding: 4,
+        verticalPadding: 4
     )
 
     internal lazy var uiTextField = buildTextFieldWithDefaults()
