@@ -40,11 +40,12 @@ public final class AccessCheckoutUITextField: UIView {
         return uiTextField
     }
 
+    // this constructor is used only for unit tests so we do not call setLayout()
+    // as otherwise activating constraints fail and that fails the unit tests
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
         self.setStyles()
-        self.setLayout()
     }
 
     internal init() {
