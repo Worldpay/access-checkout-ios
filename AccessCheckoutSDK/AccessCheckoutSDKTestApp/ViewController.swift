@@ -24,7 +24,8 @@ class ViewController: UIViewController {
     // MARK: Event handlers for Methods for pan with spacing
 
     @IBAction func panWithSpacingSetButton_touchHandler(_ sender: Any) {
-        guard let caretPositionText = setPanWithSpacingCaretPositionTextField.text else {
+        guard let caretPositionText = setPanWithSpacingCaretPositionTextField.text,
+            !caretPositionText.isEmpty else {
             return
         }
 
@@ -39,7 +40,8 @@ class ViewController: UIViewController {
     // MARK: Event handlers for Methods for pan without spacing
 
     @IBAction func panWithoutSpacingSetButton_touchHandler(_ sender: Any) {
-        guard let caretPositionText = setPanWithoutSpacingCaretPositionTextField.text else {
+        guard let caretPositionText = setPanWithoutSpacingCaretPositionTextField.text,
+            !caretPositionText.isEmpty else {
             return
         }
 

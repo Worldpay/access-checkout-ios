@@ -4,7 +4,6 @@ import XCTest
 
 class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: constructors tests
-    
     func testCGRectConstructorInitialiasesTextFieldWithDefaultStyles() {
         let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         
@@ -17,8 +16,6 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(1, textField.layer.borderWidth)
         
         // Styles set on the uiTextField
-        XCTAssertEqual(6, textField.uiTextField.frame.minX)
-        XCTAssertEqual(textField.bounds.width - (6 * 2), textField.uiTextField.frame.width)
         XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
     }
     
@@ -32,9 +29,31 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(1, textField.layer.borderWidth)
         
         // Styles set on the uiTextField
-        XCTAssertEqual(6, textField.uiTextField.frame.minX)
-        XCTAssertEqual(textField.bounds.width - (6 * 2), textField.uiTextField.frame.width)
         XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+    }
+    
+    func testCGRectConstructorPositionsInternalTextFieldUsingConstraints() {
+        let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        
+        XCTAssertEqual(4, textField.constraints.count)
+
+        assertConstraints(textField,
+                          top: AccessCheckoutUITextField.defaults.verticalPadding,
+                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+    }
+    
+    func testDefaultConstructorPositionsInternalTextFieldUsingConstraints() {
+        let textField = AccessCheckoutUITextField()
+        
+        XCTAssertEqual(4, textField.constraints.count)
+
+        assertConstraints(textField,
+                          top: AccessCheckoutUITextField.defaults.verticalPadding,
+                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
     }
     
     // MARK: default styles values
@@ -166,13 +185,23 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: Padding properties tests
     
     // horizontalPadding
-    func testHorizontalPaddingModifiesTheUITextFieldFrame() {
-        let textField = AccessCheckoutUITextField(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+    func testHorizontalPaddingModifiesTheLayoutAccordingly() {
+        let textField = createTextField()
+        
         // Asserts padding is default padding to start with
-        XCTAssertEqual(AccessCheckoutUITextField.defaults.horizontalPadding, textField.uiTextField.frame.minX)
+        assertConstraints(textField,
+                          top: AccessCheckoutUITextField.defaults.verticalPadding,
+                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
         
         textField.horizontalPadding = 20
-        XCTAssertEqual(20, textField.uiTextField.frame.minX)
+        
+        assertConstraints(textField,
+                          top: AccessCheckoutUITextField.defaults.verticalPadding,
+                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+                          leading: 20,
+                          trailing: -20)
     }
     
     // MARK: Border properties tests
@@ -576,6 +605,39 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
             && lhsG == rhsG
             && lhsB == rhsB
             && lhsA == rhsA
+    }
+    
+    private func assertConstraints(_ textField:AccessCheckoutUITextField,
+                                          top:CGFloat, bottom:CGFloat, leading:CGFloat, trailing:CGFloat) {
+        XCTAssertEqual(4, textField.constraints.count)
+
+        let topConstraint = textField.constraints[0]
+        XCTAssertEqual(topConstraint.firstItem as? UITextField, textField.uiTextField)
+        XCTAssertEqual(topConstraint.firstAnchor, textField.uiTextField.topAnchor)
+        XCTAssertEqual(topConstraint.secondItem as? AccessCheckoutUITextField, textField)
+        XCTAssertEqual(topConstraint.secondAnchor, textField.topAnchor)
+        XCTAssertEqual(topConstraint.constant, top)
+        
+        let bottomConstraint = textField.constraints[1]
+        XCTAssertEqual(bottomConstraint.firstItem as? UITextField, textField.uiTextField)
+        XCTAssertEqual(bottomConstraint.firstAnchor, textField.uiTextField.bottomAnchor)
+        XCTAssertEqual(bottomConstraint.secondItem as? AccessCheckoutUITextField, textField)
+        XCTAssertEqual(bottomConstraint.secondAnchor, textField.bottomAnchor)
+        XCTAssertEqual(bottomConstraint.constant, bottom)
+        
+        let leadingConstraint = textField.constraints[2]
+        XCTAssertEqual(leadingConstraint.firstItem as? UITextField, textField.uiTextField)
+        XCTAssertEqual(leadingConstraint.firstAnchor, textField.uiTextField.leadingAnchor)
+        XCTAssertEqual(leadingConstraint.secondItem as? AccessCheckoutUITextField, textField)
+        XCTAssertEqual(leadingConstraint.secondAnchor, textField.leadingAnchor)
+        XCTAssertEqual(leadingConstraint.constant, leading)
+        
+        let trailingConstraint = textField.constraints[3]
+        XCTAssertEqual(trailingConstraint.firstItem as? UITextField, textField.uiTextField)
+        XCTAssertEqual(trailingConstraint.firstAnchor, textField.uiTextField.trailingAnchor)
+        XCTAssertEqual(trailingConstraint.secondItem as? AccessCheckoutUITextField, textField)
+        XCTAssertEqual(trailingConstraint.secondAnchor, textField.trailingAnchor)
+        XCTAssertEqual(trailingConstraint.constant, trailing)
     }
 }
 
