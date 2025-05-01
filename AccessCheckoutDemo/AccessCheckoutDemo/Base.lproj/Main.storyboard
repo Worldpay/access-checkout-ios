@@ -26,18 +26,15 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wPl-Cf-tJW" userLabel="vview - card details">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="110"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleAspectFill" verticalCompressionResistancePriority="749" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="f84-qW-zvR" userLabel="hview - pan + image">
+                                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="f84-qW-zvR" userLabel="hview - pan + image">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
                                                 <subviews>
-                                                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
                                                         <rect key="frame" x="0.0" y="0.0" width="297" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
                                                             <bool key="isElement" value="YES"/>
                                                         </accessibility>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="360" id="BLd-hF-2XZ"/>
-                                                        </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="8"/>
@@ -50,17 +47,15 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1" verticalHuggingPriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
                                                         <rect key="frame" x="305" y="7" width="50" height="36"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="50" id="Tfu-ls-ZRh"/>
                                                             <constraint firstAttribute="height" constant="36" id="kLD-g7-Wi8"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="gm2-3w-IAR"/>
-                                                </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J5F-3T-W9N" userLabel="hview - expiry date + cvc">
                                                 <rect key="frame" x="0.0" y="60" width="110" height="50"/>
@@ -116,8 +111,10 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="f84-qW-zvR" secondAttribute="trailing" id="81P-cx-R8Y"/>
                                             <constraint firstItem="ts8-Kj-GhN" firstAttribute="height" secondItem="uOE-eK-LJK" secondAttribute="height" id="9iv-aS-0uD"/>
                                             <constraint firstItem="A4Q-yr-qYy" firstAttribute="height" secondItem="uOE-eK-LJK" secondAttribute="height" id="HJp-od-qsO"/>
+                                            <constraint firstItem="f84-qW-zvR" firstAttribute="leading" secondItem="wPl-Cf-tJW" secondAttribute="leading" id="TNY-A9-J2S"/>
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1K0-cx-Qzy" userLabel="vview - rest">
@@ -126,7 +123,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SKq-mN-17A" userLabel="vview - Cvc session + retrieve card">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="64.5"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7bc-He-eJd" userLabel="hview - cvc session + toggle">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7bc-He-eJd" userLabel="hview - cvc session + toggle">
                                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
@@ -137,7 +134,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fn-RB-apE" userLabel="spacer">
-                                                                <rect key="frame" x="108" y="0.0" width="188" height="50"/>
+                                                                <rect key="frame" x="106" y="0.0" width="192" height="50"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             </view>
                                                             <switch opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
@@ -199,6 +196,9 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="355" id="k2j-K3-rDw"/>
+                                </constraints>
                             </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
                                 <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
@@ -245,18 +245,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iOH-vE-c2u">
                                 <rect key="frame" x="10" y="60" width="355" height="101"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WF5-2O-aC4" userLabel="hview - pan + image">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WF5-2O-aC4" userLabel="hview - pan + image">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                <rect key="frame" x="0.0" y="0.0" width="297" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
                                                     <bool key="isElement" value="YES"/>
                                                 </accessibility>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="360" id="q5D-Jb-K0e"/>
-                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="8"/>
@@ -269,10 +266,11 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
-                                                <rect key="frame" x="328" y="7" width="27" height="36"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
+                                                <rect key="frame" x="305" y="7" width="50" height="36"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="Qfn-Li-DdL"/>
                                                     <constraint firstAttribute="height" constant="36" id="nm0-4R-d6n"/>
                                                 </constraints>
                                             </imageView>
@@ -297,6 +295,8 @@
                                     </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="WF5-2O-aC4" secondAttribute="trailing" id="3C2-Xm-788"/>
+                                    <constraint firstItem="WF5-2O-aC4" firstAttribute="leading" secondItem="iOH-vE-c2u" secondAttribute="leading" id="cRU-Aq-9Zm"/>
                                     <constraint firstAttribute="width" constant="355" id="j4F-k0-soF"/>
                                 </constraints>
                             </stackView>
