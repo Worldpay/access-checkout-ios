@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,134 +20,197 @@
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="101" width="327" height="44"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Olc-Mj-W5U"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="165" width="90" height="44"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="1K6-wM-DAF"/>
-                                    <constraint firstAttribute="height" constant="44" id="Ute-5x-z9t"/>
-                                </constraints>
-                            </view>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
-                                <rect key="frame" x="294" y="240" width="51" height="31"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
-                                <rect key="frame" x="16" y="274" width="143.5" height="12"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="lW3-xC-Dsc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                <rect key="frame" x="16" y="294" width="54" height="33"/>
-                                <accessibility key="accessibilityConfiguration" identifier="submit"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
-                                </connections>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
-                                <rect key="frame" x="283" y="104" width="57" height="38"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="oWu-Sm-NXt"/>
-                                    <constraint firstAttribute="width" constant="57" id="vka-X3-DAu"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                <rect key="frame" x="16" y="240" width="98" height="31"/>
-                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX">
-                                <rect key="frame" x="16" y="41" width="76" height="21"/>
-                                <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMM-PP-5OM">
-                                <rect key="frame" x="102" y="41" width="109.5" height="21"/>
-                                <accessibility key="accessibilityConfiguration" identifier="expiryDateIsValidLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="105" translatesAutoresizingMaskIntoConstraints="NO" id="XLS-S0-UV2" userLabel="vview - main">
+                                <rect key="frame" x="10" y="60" width="355" height="499"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wPl-Cf-tJW" userLabel="vview - card details">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="110"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleAspectFill" verticalCompressionResistancePriority="749" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="f84-qW-zvR" userLabel="hview - pan + image">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
+                                                <subviews>
+                                                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-eK-LJK" userLabel="Pan" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                        <rect key="frame" x="0.0" y="0.0" width="297" height="50"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="360" id="BLd-hF-2XZ"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" systemColor="systemGray5Color"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1" verticalHuggingPriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="4gy-2k-boW">
+                                                        <rect key="frame" x="305" y="7" width="50" height="36"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="36" id="kLD-g7-Wi8"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="gm2-3w-IAR"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J5F-3T-W9N" userLabel="hview - expiry date + cvc">
+                                                <rect key="frame" x="0.0" y="60" width="110" height="50"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="ts8-Kj-GhN" userLabel="Expiry date" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="expiryDate" label="Expiry date">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="1K6-wM-DAF"/>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="nIN-aX-bYI"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" systemColor="systemGray5Color"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                        <rect key="frame" x="60" y="0.0" width="50" height="50"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="170" id="9Q1-HD-XU5"/>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="GQe-kG-UVE"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" systemColor="systemGray5Color"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="9ZJ-Kf-fwt"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="height" secondItem="uOE-eK-LJK" secondAttribute="height" id="9iv-aS-0uD"/>
+                                            <constraint firstItem="A4Q-yr-qYy" firstAttribute="height" secondItem="uOE-eK-LJK" secondAttribute="height" id="HJp-od-qsO"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1K0-cx-Qzy" userLabel="vview - rest">
+                                        <rect key="frame" x="0.0" y="215" width="355" height="117.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SKq-mN-17A" userLabel="vview - Cvc session + retrieve card">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="64.5"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7bc-He-eJd" userLabel="hview - cvc session + toggle">
+                                                        <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                                                <rect key="frame" x="0.0" y="15" width="98" height="20.5"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fn-RB-apE" userLabel="spacer">
+                                                                <rect key="frame" x="108" y="0.0" width="188" height="50"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            </view>
+                                                            <switch opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
+                                                                <rect key="frame" x="306" y="9.5" width="51" height="31"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                                                        <rect key="frame" x="0.0" y="50" width="355" height="14.5"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="7bc-He-eJd" secondAttribute="trailing" id="goU-pA-Rk0"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
+                                                <rect key="frame" x="0.0" y="84.5" width="54" height="33"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="submit"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Submit"/>
+                                                <connections>
+                                                    <action selector="submit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ex7-Xf-fix"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="SKq-mN-17A" secondAttribute="trailing" id="wHk-b9-mmt"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="oxA-Pw-X23" userLabel="hview - ui tests labels">
+                                        <rect key="frame" x="0.0" y="437.5" width="355" height="61.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX" userLabel="Pan Is Valid Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expiryDateIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMM-PP-5OM" userLabel="Expiry Is Valid Label">
+                                                <rect key="frame" x="0.0" y="20.5" width="355" height="20.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="expiryDateIsValidLabel"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-IN-v4K">
+                                                <rect key="frame" x="0.0" y="41" width="355" height="20.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXi-qk-FE5">
                                 <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-IN-v4K">
-                                <rect key="frame" x="221.5" y="41" width="74.5" height="21"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4Q-yr-qYy" userLabel="Cvc" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="124" y="165" width="60" height="44"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0Pc-45-INQ"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1hk-aX-03H"/>
-                            <constraint firstItem="FMM-PP-5OM" firstAttribute="leading" secondItem="MXa-G9-0FX" secondAttribute="trailing" constant="10" id="2EP-cm-V2J"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="A4Q-yr-qYy" secondAttribute="top" id="5Cc-Zm-iER"/>
                             <constraint firstItem="NXi-qk-FE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQx-fs-pkB"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="21" id="BTZ-wR-6MH"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="top" secondItem="UzK-5d-eEZ" secondAttribute="bottom" constant="8" symbolic="YES" id="DX8-Rz-G8c"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="top" secondItem="uOE-eK-LJK" secondAttribute="bottom" constant="20" id="ExN-ri-CWS"/>
-                            <constraint firstItem="NxL-IN-v4K" firstAttribute="leading" secondItem="FMM-PP-5OM" secondAttribute="trailing" constant="10" id="F8e-fc-Av1"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="bottom" secondItem="A4Q-yr-qYy" secondAttribute="bottom" id="HeA-VK-iPK"/>
-                            <constraint firstItem="4gy-2k-boW" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="84" id="J9X-kf-fAJ"/>
-                            <constraint firstItem="uOE-eK-LJK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JNk-u6-HOu"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="NU8-l2-7jG"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="trailing" secondItem="uOE-eK-LJK" secondAttribute="trailing" id="Nj3-lb-6ay"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="A4Q-yr-qYy" secondAttribute="trailing" constant="175" id="RQb-06-6zk"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="baseline" secondItem="FMM-PP-5OM" secondAttribute="baseline" id="TR2-Qk-9VE"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="leading" secondItem="UzK-5d-eEZ" secondAttribute="leading" id="TYM-8y-gFf"/>
-                            <constraint firstItem="ts8-Kj-GhN" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="Tct-QG-Q6u"/>
-                            <constraint firstItem="A4Q-yr-qYy" firstAttribute="leading" secondItem="ts8-Kj-GhN" secondAttribute="trailing" constant="18" id="Tml-2X-PPF"/>
-                            <constraint firstItem="gxk-b1-dMa" firstAttribute="top" secondItem="ts8-Kj-GhN" secondAttribute="bottom" constant="31" id="Unf-nb-35h"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="firstBaseline" secondItem="FMM-PP-5OM" secondAttribute="firstBaseline" id="VWU-cu-ICw"/>
-                            <constraint firstItem="uOE-eK-LJK" firstAttribute="top" secondItem="MXa-G9-0FX" secondAttribute="bottom" constant="39" id="YiR-Af-hmt"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="baseline" secondItem="NxL-IN-v4K" secondAttribute="baseline" id="Z2x-m9-Bof"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4gy-2k-boW" secondAttribute="trailing" constant="19" id="bQl-87-Tli"/>
-                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="e47-Wi-x7e"/>
-                            <constraint firstItem="uOE-eK-LJK" firstAttribute="centerY" secondItem="4gy-2k-boW" secondAttribute="centerY" id="gav-x2-6nM"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="centerY" secondItem="gxk-b1-dMa" secondAttribute="centerY" id="her-S7-AFN"/>
-                            <constraint firstItem="PSJ-iT-v62" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="jQm-i4-aaC"/>
-                            <constraint firstItem="V3W-HP-wPE" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="top" id="kje-qL-jla"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uOE-eK-LJK" secondAttribute="trailing" constant="16" id="noD-9L-4qa"/>
-                            <constraint firstItem="UzK-5d-eEZ" firstAttribute="top" secondItem="gxk-b1-dMa" secondAttribute="bottom" constant="3" id="sif-5I-mlm"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="firstBaseline" secondItem="NxL-IN-v4K" secondAttribute="firstBaseline" id="ufo-rA-fon"/>
-                            <constraint firstItem="MXa-G9-0FX" firstAttribute="leading" secondItem="uOE-eK-LJK" secondAttribute="leading" id="xkS-RO-yot"/>
+                            <constraint firstItem="XLS-S0-UV2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Fbd-TK-JyP"/>
+                            <constraint firstAttribute="trailing" secondItem="XLS-S0-UV2" secondAttribute="trailing" constant="10" id="JD4-Ja-6dV"/>
+                            <constraint firstItem="XLS-S0-UV2" firstAttribute="top" secondItem="hy8-fq-jdj" secondAttribute="bottom" constant="40" id="To0-0j-8KQ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Card Flow" image="creditcard" catalog="system" id="m9y-Ux-VVN"/>
@@ -175,52 +239,73 @@
                         <viewControllerLayoutGuide type="top" id="SLT-ku-F2z"/>
                         <viewControllerLayoutGuide type="bottom" id="UuZ-em-aoB"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Zvz-kn-Pea">
+                    <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zvz-kn-Pea">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="101" width="327" height="44"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                            </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
-                                <rect key="frame" x="283" y="104" width="57" height="38"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iOH-vE-c2u">
+                                <rect key="frame" x="10" y="60" width="355" height="101"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WF5-2O-aC4" userLabel="hview - pan + image">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-DJ-Q7s" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="pan" label="Pan">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="360" id="q5D-Jb-K0e"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" systemColor="systemGray5Color"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iUX-jl-sEW">
+                                                <rect key="frame" x="328" y="7" width="27" height="36"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="cardBrandImage" label="card brand image"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="nm0-4R-d6n"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="aIY-hg-W5p"/>
+                                        </constraints>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
+                                        <rect key="frame" x="0.0" y="58" width="355" height="13.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="restrictedCardBrandsLabel"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-R3-jK5">
+                                        <rect key="frame" x="0.0" y="79.5" width="355" height="21.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="57" id="APS-Uj-noq"/>
-                                    <constraint firstAttribute="height" constant="38" id="abL-ww-6yu"/>
+                                    <constraint firstAttribute="width" constant="355" id="j4F-k0-soF"/>
                                 </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supported Card Brands: Visa, Mastercard &amp; Amex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTi-zG-nFA">
-                                <rect key="frame" x="20" y="155" width="261.5" height="14"/>
-                                <accessibility key="accessibilityConfiguration" identifier="restrictedCardBrandsLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-R3-jK5">
-                                <rect key="frame" x="16" y="0.0" width="126" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="panIsValidLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="centerY" secondItem="iUX-jl-sEW" secondAttribute="centerY" id="2E3-Zy-H8a"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iUX-jl-sEW" secondAttribute="trailing" constant="19" id="6Xp-p5-ilF"/>
-                            <constraint firstItem="dTi-zG-nFA" firstAttribute="top" secondItem="cXc-DJ-Q7s" secondAttribute="bottom" constant="10" id="IKl-TO-cu3"/>
-                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="81" id="JfK-5R-HwU"/>
-                            <constraint firstItem="iUX-jl-sEW" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="84" id="NV3-UH-05j"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cXc-DJ-Q7s" secondAttribute="trailing" constant="16" id="cRA-jE-7WA"/>
-                            <constraint firstItem="iUX-jl-sEW" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="trailing" constant="-92" id="nKU-GJ-Rvf"/>
-                            <constraint firstItem="cXc-DJ-Q7s" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" id="pxW-8y-8a7"/>
-                            <constraint firstItem="dTi-zG-nFA" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leadingMargin" constant="4" id="zx8-Mh-4X2"/>
+                            <constraint firstItem="iOH-vE-c2u" firstAttribute="leading" secondItem="Zvz-kn-Pea" secondAttribute="leading" constant="10" id="HFI-Xp-lgj"/>
+                            <constraint firstItem="iOH-vE-c2u" firstAttribute="top" secondItem="SLT-ku-F2z" secondAttribute="bottom" constant="40" id="mGu-br-1so"/>
+                            <constraint firstAttribute="trailing" secondItem="iOH-vE-c2u" secondAttribute="trailing" constant="10" id="ulk-NH-P06"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Restricted Card Flow" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
@@ -246,48 +331,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
-                                <rect key="frame" x="286" y="108" width="54" height="33"/>
-                                <accessibility key="accessibilityConfiguration" identifier="submit">
-                                    <bool key="isElement" value="NO"/>
-                                </accessibility>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submitTouchUpInsideHandler:" destination="ZEX-QF-aID" eventType="touchUpInside" id="cZ5-UI-NCI"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
-                                <rect key="frame" x="262" y="114.5" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-RM-1YK">
-                                <rect key="frame" x="16" y="0.0" width="118" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
-                                <rect key="frame" x="16" y="101" width="97" height="47"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="gId-03-C4E"/>
-                                </constraints>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PlE-WI-9tS">
+                                <rect key="frame" x="10" y="60" width="355" height="70.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ebC-JE-Qrd">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhF-MI-5Qs" customClass="AccessCheckoutUITextField" customModule="AccessCheckoutSDK">
+                                                <rect key="frame" x="0.0" y="0.0" width="180" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="cvc" label="Cvc">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="gId-03-C4E"/>
+                                                    <constraint firstAttribute="width" constant="180" id="tCP-j7-Sbv"/>
+                                                </constraints>
+                                            </view>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-oa-gkj" userLabel="Spinner">
+                                                <rect key="frame" x="230.5" y="15" width="20" height="20"/>
+                                            </activityIndicatorView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFk-y0-dUk" userLabel="Submit Button">
+                                                <rect key="frame" x="301" y="8.5" width="54" height="33"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="submit">
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Submit"/>
+                                                <connections>
+                                                    <action selector="submitTouchUpInsideHandler:" destination="ZEX-QF-aID" eventType="touchUpInside" id="cZ5-UI-NCI"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvcIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-RM-1YK">
+                                        <rect key="frame" x="0.0" y="50" width="355" height="20.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="cvcIsValidLabel"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xFk-y0-dUk" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="88" id="11c-aF-4Tw"/>
-                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="81" id="1D2-5j-3Fz"/>
-                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leadingMargin" id="6A4-u4-x9e"/>
-                            <constraint firstItem="xFk-y0-dUk" firstAttribute="leading" secondItem="tjE-oa-gkj" secondAttribute="trailing" constant="4" id="Ha2-JX-7UP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xFk-y0-dUk" secondAttribute="trailing" constant="19" id="cOE-Ap-r6F"/>
-                            <constraint firstItem="tjE-oa-gkj" firstAttribute="centerY" secondItem="xFk-y0-dUk" secondAttribute="centerY" id="iQK-kr-5dS"/>
-                            <constraint firstItem="rhF-MI-5Qs" firstAttribute="centerY" secondItem="tjE-oa-gkj" secondAttribute="centerY" id="sEV-tb-E0U"/>
+                            <constraint firstItem="PlE-WI-9tS" firstAttribute="top" secondItem="og0-0P-fDP" secondAttribute="bottom" constant="40" id="L6c-hZ-XfM"/>
+                            <constraint firstAttribute="trailing" secondItem="PlE-WI-9tS" secondAttribute="trailing" constant="10" id="hk9-1D-Vq5"/>
+                            <constraint firstItem="PlE-WI-9tS" firstAttribute="leading" secondItem="y9R-az-JC0" secondAttribute="leading" constant="10" id="lLY-Ou-BQw"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="CVC Flow" image="macwindow" catalog="system" id="YRb-wv-5YY"/>
@@ -300,7 +391,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L8W-88-77L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="714" y="832"/>
+            <point key="canvasLocation" x="712.79999999999995" y="831.63418290854577"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oXd-yx-4Rr">
@@ -328,6 +419,9 @@
         <image name="macwindow" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

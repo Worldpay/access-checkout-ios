@@ -43,11 +43,8 @@ class CvcFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cvcTextField.layer.borderWidth = 1
-        cvcTextField.layer.borderColor = UIColor.lightText.cgColor
-        cvcTextField.layer.cornerRadius = 8
-        cvcTextField.backgroundColor = UIColor.white
         cvcTextField.placeholder = "123"
+        cvcTextField.font = .preferredFont(forTextStyle: .body)
         
         // Control used as helpers for the automated tests - Start of section
         // Label colour is changed to make it invisible

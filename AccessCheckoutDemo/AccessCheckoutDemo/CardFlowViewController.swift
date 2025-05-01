@@ -110,6 +110,10 @@ class CardFlowViewController: UIViewController {
         panTextField.placeholder = "Card Number"
         expiryDateTextField.placeholder = "MM/YY"
         cvcTextField.placeholder = "CVC"
+        
+        panTextField.font = .preferredFont(forTextStyle: .body)
+        expiryDateTextField.font = .preferredFont(forTextStyle: .body)
+        cvcTextField.font = .preferredFont(forTextStyle: .body)
 
         // Controls used as helpers for the automated tests - Start of section
         // Labels colours are changed to make them invisible
