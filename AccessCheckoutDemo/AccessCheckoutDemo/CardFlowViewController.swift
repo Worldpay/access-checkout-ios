@@ -20,67 +20,91 @@ class CardFlowViewController: UIViewController {
         submitCard()
     }
 
-    private func submitCard()
-    {
+    private func submitCard() {
         panTextField.isEnabled = false
         expiryDateTextField.isEnabled = false
         cvcTextField.isEnabled = false
-        
+
         spinner.startAnimating()
 
-        let sessionTypes: Set<SessionType> = paymentsCvcSessionToggle.isOn ? [SessionType.card, SessionType.cvc] : [SessionType.card]
+        let sessionTypes: Set<SessionType> =
+            paymentsCvcSessionToggle.isOn
+            ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
         let cardDetails = try! CardDetailsBuilder().pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
             .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(Configuration.accessBaseUrl)
-            .checkoutId(Configuration.checkoutId)
-            .build()
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(
+            Configuration.accessBaseUrl
+        )
+        .checkoutId(Configuration.checkoutId)
+        .build()
 
-        try? accessCheckoutClient?.generateSessions(cardDetails: cardDetails, sessionTypes: sessionTypes) { result in
+        try? accessCheckoutClient?.generateSessions(
+            cardDetails: cardDetails,
+            sessionTypes: sessionTypes
+        ) { result in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
 
                 switch result {
                 case .success(let sessions):
-                    var titleToDisplay: String, messageToDisplay: String
+                    var titleToDisplay: String
+                    var messageToDisplay: String
 
                     if sessionTypes.count > 1 {
                         titleToDisplay = "Card & CVC Sessions"
                         messageToDisplay = """
-                        \(sessions[SessionType.card]!)
-                        \(sessions[SessionType.cvc]!)
-                        """
+                            \(sessions[SessionType.card]!)
+                            \(sessions[SessionType.cvc]!)
+                            """
                     } else {
                         titleToDisplay = "Card Session"
                         messageToDisplay = "\(sessions[SessionType.card]!)"
                     }
 
-                    AlertView.display(using: self, title: titleToDisplay, message: messageToDisplay, closeHandler: {
-                        self.resetCard(preserveContent: false, validationErrors: nil)
-                    })
+                    AlertView.display(
+                        using: self,
+                        title: titleToDisplay,
+                        message: messageToDisplay,
+                        closeHandler: {
+                            self.resetCard(preserveContent: false, validationErrors: nil)
+                        }
+                    )
                 case .failure(let error):
                     let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
+                    var accessCheckoutClientValidationErrors:
+                        [AccessCheckoutError.AccessCheckoutValidationError]?
                     if error.message.contains("bodyDoesNotMatchSchema") {
                         accessCheckoutClientValidationErrors = error.validationErrors
                     }
 
-                    AlertView.display(using: self, title: title, message: nil, closeHandler: {
-                        self.resetCard(preserveContent: true, validationErrors: accessCheckoutClientValidationErrors)
-                    })
+                    AlertView.display(
+                        using: self,
+                        title: title,
+                        message: nil,
+                        closeHandler: {
+                            self.resetCard(
+                                preserveContent: true,
+                                validationErrors: accessCheckoutClientValidationErrors
+                            )
+                        }
+                    )
                 }
             }
         }
     }
 
-    private func resetCard(preserveContent: Bool, validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?) {
+    private func resetCard(
+        preserveContent: Bool,
+        validationErrors: [AccessCheckoutError.AccessCheckoutValidationError]?
+    ) {
         panTextField.isEnabled = true
         expiryDateTextField.isEnabled = true
         cvcTextField.isEnabled = true
-        
+
         if !preserveContent {
             panTextField.clear()
             expiryDateTextField.clear()
@@ -110,7 +134,7 @@ class CardFlowViewController: UIViewController {
         panTextField.placeholder = "Card Number"
         expiryDateTextField.placeholder = "MM/YY"
         cvcTextField.placeholder = "CVC"
-        
+
         panTextField.font = .preferredFont(forTextStyle: .body)
         expiryDateTextField.font = .preferredFont(forTextStyle: .body)
         cvcTextField.font = .preferredFont(forTextStyle: .body)
@@ -137,9 +161,9 @@ class CardFlowViewController: UIViewController {
 
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
-        panValidChanged(isValid: false)
         expiryDateValidChanged(isValid: false)
         cvcValidChanged(isValid: false)
+        disableSubmitIfNotValid(valid: false)
         cardBrandChanged(cardBrand: nil)
     }
 
@@ -154,17 +178,20 @@ class CardFlowViewController: UIViewController {
     }
 
     private func changePanValidIndicator(isValid: Bool) {
-        panTextField.textColor = isValid ? nil : UIColor.red
+        panTextField.textColor =
+            isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         panIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 
     private func changeExpiryDateValidIndicator(isValid: Bool) {
-        expiryDateTextField.textColor = isValid ? nil : UIColor.red
+        expiryDateTextField.textColor =
+            isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         expiryDateIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 
     private func changeCvcValidIndicator(isValid: Bool) {
-        cvcTextField.textColor = isValid ? nil : UIColor.red
+        cvcTextField.textColor =
+            isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         cvcIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 }
@@ -172,13 +199,16 @@ class CardFlowViewController: UIViewController {
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-           let url = URL(string: imageUrl)
+            let url = URL(string: imageUrl)
         {
             updateCardBrandImage(url: url)
         } else {
             imageView.image = unknownBrandImage
         }
-        imageView.accessibilityLabel = NSLocalizedString(cardBrand?.name ?? "unknown_card_brand", comment: "")
+        imageView.accessibilityLabel = NSLocalizedString(
+            cardBrand?.name ?? "unknown_card_brand",
+            comment: ""
+        )
     }
 
     func panValidChanged(isValid: Bool) {

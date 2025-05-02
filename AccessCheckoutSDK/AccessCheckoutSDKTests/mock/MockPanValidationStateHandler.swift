@@ -25,22 +25,6 @@ import Cuckoo
     
 
     
-    
-    
-    
-     var alreadyNotifiedMerchantOfPanValidationState: Bool {
-        get {
-            return cuckoo_manager.getter("alreadyNotifiedMerchantOfPanValidationState",
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.alreadyNotifiedMerchantOfPanValidationState)
-        }
-        
-    }
-    
-    
 
     
 
@@ -135,13 +119,6 @@ import Cuckoo
         
         
         
-        var alreadyNotifiedMerchantOfPanValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockPanValidationStateHandler, Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfPanValidationState")
-        }
-        
-        
-        
-        
         
         func handlePanValidation<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(isValid: M1, cardBrand: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool, CardBrandModel?)> where M1.MatchedType == Bool, M2.OptionalMatchedType == CardBrandModel {
             let matchers: [Cuckoo.ParameterMatcher<(Bool, CardBrandModel?)>] = [wrap(matchable: isValid) { $0.0 }, wrap(matchable: cardBrand) { $0.1 }]
@@ -199,13 +176,6 @@ import Cuckoo
         }
     
         
-        
-        
-        var alreadyNotifiedMerchantOfPanValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfPanValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
-        }
-        
-        
     
         
         
@@ -261,17 +231,6 @@ import Cuckoo
 
 
  class PanValidationStateHandlerStub: PanValidationStateHandler {
-    
-    
-    
-    
-     var alreadyNotifiedMerchantOfPanValidationState: Bool {
-        get {
-            return DefaultValueRegistry.defaultValue(for: (Bool).self)
-        }
-        
-    }
-    
     
 
     
