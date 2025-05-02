@@ -11,11 +11,8 @@ class RestrictedCardFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        panTextField.layer.borderWidth = 1
-        panTextField.layer.borderColor = UIColor.lightText.cgColor
-        panTextField.layer.cornerRadius = 8
-        panTextField.backgroundColor = UIColor.white
         panTextField.placeholder = "Card Number"
+        panTextField.font = .preferredFont(forTextStyle: .body)
         
         // Control used as helpers for the automated tests - Start of section
         // Label colour is changed to make it invisible
