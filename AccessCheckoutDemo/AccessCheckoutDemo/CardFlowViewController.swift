@@ -114,6 +114,8 @@ class CardFlowViewController: UIViewController {
         panTextField.font = .preferredFont(forTextStyle: .body)
         expiryDateTextField.font = .preferredFont(forTextStyle: .body)
         cvcTextField.font = .preferredFont(forTextStyle: .body)
+        submitButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
 
         // Controls used as helpers for the automated tests - Start of section
         // Labels colours are changed to make them invisible
