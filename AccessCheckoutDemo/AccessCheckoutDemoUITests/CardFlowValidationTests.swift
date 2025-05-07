@@ -50,6 +50,7 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPartialPanIsInvalid() {
         view!.typeTextIntoPan("4")
+        view!.expiryDateField.tap() // we move the focus to another field so that the validation triggers
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")

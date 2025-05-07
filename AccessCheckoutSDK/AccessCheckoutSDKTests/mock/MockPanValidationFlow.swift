@@ -54,19 +54,19 @@ import Foundation
     
     
     
-     override func notifyMerchantIfNotAlreadyNotified()  {
+     override func notifyMerchant()  {
         
     return cuckoo_manager.call(
     """
-    notifyMerchantIfNotAlreadyNotified()
+    notifyMerchant()
     """,
             parameters: (),
             escapingParameters: (),
             superclassCall:
                 
-                super.notifyMerchantIfNotAlreadyNotified()
+                super.notifyMerchant()
                 ,
-            defaultCall: __defaultImplStub!.notifyMerchantIfNotAlreadyNotified())
+            defaultCall: __defaultImplStub!.notifyMerchant())
         
     }
     
@@ -113,11 +113,11 @@ import Foundation
         
         
         
-        func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.ClassStubNoReturnFunction<()> {
+        func notifyMerchant() -> Cuckoo.ClassStubNoReturnFunction<()> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return .init(stub: cuckoo_manager.createStub(for: MockPanValidationFlow.self, method:
     """
-    notifyMerchantIfNotAlreadyNotified()
+    notifyMerchant()
     """, parameterMatchers: matchers))
         }
         
@@ -164,11 +164,11 @@ import Foundation
         
         
         @discardableResult
-        func notifyMerchantIfNotAlreadyNotified() -> Cuckoo.__DoNotUse<(), Void> {
+        func notifyMerchant() -> Cuckoo.__DoNotUse<(), Void> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return cuckoo_manager.verify(
     """
-    notifyMerchantIfNotAlreadyNotified()
+    notifyMerchant()
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -206,7 +206,7 @@ import Foundation
     
     
     
-     override func notifyMerchantIfNotAlreadyNotified()   {
+     override func notifyMerchant()   {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
