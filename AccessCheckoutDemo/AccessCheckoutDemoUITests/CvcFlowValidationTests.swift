@@ -65,7 +65,7 @@ class CvcFlowCvcValidationTests: XCTestCase {
 
     func testPartialCvcIsInvalid() {
         view!.typeTextIntoCvc("12")
-        
+
         // we navigate to another view to force the focus to removed from the current field
         // so that the validation triggers
         _ = self.navigationView?.navigateToCardFlow()

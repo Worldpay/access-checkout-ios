@@ -1,11 +1,9 @@
-import UIKit
 import Foundation
+import UIKit
 import os
 
-/**
- A UI component to capture the pan, expiry date or cvc of a payment card without being exposed to the text entered by the shopper.
- This design is to allow merchants to reach the lowest level of compliance (SAQ-A)
- */
+/// A UI component to capture the pan, expiry date or cvc of a payment card without being exposed to the text entered by the shopper.
+/// This design is to allow merchants to reach the lowest level of compliance (SAQ-A)
 @IBDesignable
 public final class AccessCheckoutUITextField: UIView {
     internal static let defaults = AccessCheckoutUITextFieldDefaults(
@@ -22,10 +20,10 @@ public final class AccessCheckoutUITextField: UIView {
     )
 
     internal lazy var uiTextField = buildTextFieldWithDefaults()
-    
+
     private var uiTextFieldConstraints: [NSLayoutConstraint] = []
-    private var _horizontalPadding:CGFloat = defaults.horizontalPadding
-    
+    private var _horizontalPadding: CGFloat = defaults.horizontalPadding
+
     private func buildTextFieldWithDefaults() -> UITextField {
         let uiTextField = UITextField()
         uiTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -69,34 +67,36 @@ public final class AccessCheckoutUITextField: UIView {
         if !uiTextFieldConstraints.isEmpty {
             NSLayoutConstraint.deactivate(uiTextFieldConstraints)
         }
-        
+
         uiTextFieldConstraints = [
-            uiTextField.topAnchor.constraint(equalTo: topAnchor,
-                                             constant: AccessCheckoutUITextField.defaults.verticalPadding
-                                             ),
-            uiTextField.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                             constant: -AccessCheckoutUITextField.defaults.verticalPadding
-                                             ),
-            uiTextField.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                             constant: self.horizontalPadding
-                                             ),
-            uiTextField.trailingAnchor.constraint(equalTo: trailingAnchor,
-                                             constant: -self.horizontalPadding
-                                             )
-          ]
-        
+            uiTextField.topAnchor.constraint(
+                equalTo: topAnchor,
+                constant: AccessCheckoutUITextField.defaults.verticalPadding
+            ),
+            uiTextField.bottomAnchor.constraint(
+                equalTo: bottomAnchor,
+                constant: -AccessCheckoutUITextField.defaults.verticalPadding
+            ),
+            uiTextField.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: self.horizontalPadding
+            ),
+            uiTextField.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: -self.horizontalPadding
+            ),
+        ]
+
         NSLayoutConstraint.activate(uiTextFieldConstraints)
-      }
-    
-    override public var intrinsicContentSize: CGSize
-    {
-        get {
-            let width = uiTextField.intrinsicContentSize.height
-            let height = uiTextField.intrinsicContentSize.height
+    }
+
+    override public var intrinsicContentSize: CGSize {
+        let width = uiTextField.intrinsicContentSize.height
+        let height =
+            uiTextField.intrinsicContentSize.height
             + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
-            
-            return CGSize(width: width, height: height)
-        }
+
+        return CGSize(width: width, height: height)
     }
 
     override public func prepareForInterfaceBuilder() {
@@ -109,7 +109,7 @@ public final class AccessCheckoutUITextField: UIView {
     private func setStyles() {
         self.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         self.uiTextField.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        
+
         self.layer.cornerRadius = self.cornerRadius
         self.layer.borderColor = self.borderColor.cgColor
         self.layer.borderWidth = self.borderWidth
@@ -146,7 +146,8 @@ public final class AccessCheckoutUITextField: UIView {
     override public var accessibilityIdentifier: String? {
         set {
             super.accessibilityIdentifier = newValue
-            self.uiTextField.accessibilityIdentifier = newValue != nil ? "\(newValue!)-UITextField" : nil
+            self.uiTextField.accessibilityIdentifier =
+                newValue != nil ? "\(newValue!)-UITextField" : nil
         }
         get {
             super.accessibilityIdentifier
@@ -283,9 +284,19 @@ public final class AccessCheckoutUITextField: UIView {
         didSet {
             self.uiTextField.isEnabled = self.isEnabled
 
-            if !self.isEnabled && self.colorsAreEqual(self.backgroundColor, AccessCheckoutUITextField.defaults.backgroundColor) {
+            if !self.isEnabled
+                && self.colorsAreEqual(
+                    self.backgroundColor,
+                    AccessCheckoutUITextField.defaults.backgroundColor
+                )
+            {
                 self.backgroundColor = AccessCheckoutUITextField.defaults.disabledBackgroundColor
-            } else if self.isEnabled && self.colorsAreEqual(self.backgroundColor, AccessCheckoutUITextField.defaults.disabledBackgroundColor) {
+            } else if self.isEnabled
+                && self.colorsAreEqual(
+                    self.backgroundColor,
+                    AccessCheckoutUITextField.defaults.disabledBackgroundColor
+                )
+            {
                 self.backgroundColor = AccessCheckoutUITextField.defaults.backgroundColor
             }
         }

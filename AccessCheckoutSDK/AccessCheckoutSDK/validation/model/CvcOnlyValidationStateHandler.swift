@@ -33,11 +33,12 @@ extension CvcOnlyValidationStateHandler: CvcValidationStateHandler {
 
     func notifyMerchantOfCvcValidationState() {
         if notifyMerchantOfCvcValidationChangeIsPending
-            || merchantNeverNotifiedOfCvcValidationChange{
-            
+            || merchantNeverNotifiedOfCvcValidationChange
+        {
+
             merchantNeverNotifiedOfCvcValidationChange = false
             notifyMerchantOfCvcValidationChangeIsPending = false
-            
+
             merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
         }
     }

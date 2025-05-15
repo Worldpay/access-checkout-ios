@@ -5,7 +5,7 @@ struct CardSessionRequest: Codable {
         case cvc
         case identity
     }
-    
+
     struct CardExpiryDate: Codable {
         enum Key: String, CodingKey {
             case month

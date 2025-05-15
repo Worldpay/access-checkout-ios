@@ -4,10 +4,13 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let stubServicesBaseUrl = "http://localhost:8123"
-    
+
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         Configuration.resetAccessBaseUrl()
 
         if let enableStubsArgumentValue = UserDefaults.standard.string(forKey: "enableStubs") {
@@ -42,7 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
+    func application(
+        _ application: UIApplication,
+        shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication
+            .ExtensionPointIdentifier
+    ) -> Bool {
         return extensionPointIdentifier != UIApplication.ExtensionPointIdentifier.keyboard
     }
 }

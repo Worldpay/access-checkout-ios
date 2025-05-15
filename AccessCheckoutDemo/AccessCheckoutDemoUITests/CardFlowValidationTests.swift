@@ -50,7 +50,7 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPartialPanIsInvalid() {
         view!.typeTextIntoPan("4")
-        view!.expiryDateField.tap() // we move the focus to another field so that the validation triggers
+        view!.expiryDateField.tap()  // we move the focus to another field so that the validation triggers
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
@@ -105,8 +105,8 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPartialExpiryDateIsInvalid() {
         view!.typeTextIntoExpiryDate("12")
-        
-        view!.panField.tap() // we move the focus to another field so that the validation triggers
+
+        view!.panField.tap()  // we move the focus to another field so that the validation triggers
 
         XCTAssertEqual(view!.expiryDateIsValidLabel.label, "invalid")
     }

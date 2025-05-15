@@ -1,13 +1,11 @@
 import UIKit
 
-/**
- An implementation of the `ValidationConfig` that represents the cvc validation configuration and that can be built using the `CvcOnlyValidationConfigBuilder`
-
- Use this configuration to register the relevant fields and listener.
-
- - SeeAlso: AccessCheckoutUITextField
- - SeeAlso: AccessCheckoutCvcOnlyValidationDelegate
- */
+/// An implementation of the `ValidationConfig` that represents the cvc validation configuration and that can be built using the `CvcOnlyValidationConfigBuilder`
+///
+/// Use this configuration to register the relevant fields and listener.
+///
+/// - SeeAlso: AccessCheckoutUITextField
+/// - SeeAlso: AccessCheckoutCvcOnlyValidationDelegate
 public struct CvcOnlyValidationConfig: ValidationConfig {
     let cvc: AccessCheckoutUITextField?
     let validationDelegate: AccessCheckoutCvcOnlyValidationDelegate
@@ -22,20 +20,21 @@ public struct CvcOnlyValidationConfig: ValidationConfig {
 
     /**
      Creates an instance of `CvcOnlyValidationConfig`
-
+    
      - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
      - Parameter validationDelegate: `AccessCheckoutCvcOnlyValidationDelegate` that represents the validation events listener
      */
-    internal init(cvc: AccessCheckoutUITextField, validationDelegate: AccessCheckoutCvcOnlyValidationDelegate) {
+    internal init(
+        cvc: AccessCheckoutUITextField,
+        validationDelegate: AccessCheckoutCvcOnlyValidationDelegate
+    ) {
         self.cvc = cvc
         self.validationDelegate = validationDelegate
     }
 }
 
-/**
- Creates an instance of `CvcOnlyValidationConfig`
- An instance of this builder can be obtained by calling `CvcOnlyValidationConfig.builder()`
- */
+/// Creates an instance of `CvcOnlyValidationConfig`
+/// An instance of this builder can be obtained by calling `CvcOnlyValidationConfig.builder()`
 public class CvcOnlyValidationConfigBuilder {
     private var cvc: AccessCheckoutUITextField?
     private var validationDelegate: AccessCheckoutCvcOnlyValidationDelegate?
@@ -56,7 +55,9 @@ public class CvcOnlyValidationConfigBuilder {
      - Parameter validationDelegate: `AccessCheckoutCvcOnlyValidationDelegate` that represents the validation events listener
      - Returns: the same instance of the builder
      */
-    public func validationDelegate(_ validationDelegate: AccessCheckoutCvcOnlyValidationDelegate) -> CvcOnlyValidationConfigBuilder {
+    public func validationDelegate(_ validationDelegate: AccessCheckoutCvcOnlyValidationDelegate)
+        -> CvcOnlyValidationConfigBuilder
+    {
         self.validationDelegate = validationDelegate
         return self
     }

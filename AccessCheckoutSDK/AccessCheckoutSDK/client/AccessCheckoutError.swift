@@ -1,11 +1,9 @@
 import Foundation
 
-/**
- Represents an error that occurred while attempting to retrieve one or multiple sessions
-
- - message: `String` containing a description of the error that occured
- - validationErrors: an `Array` of `AccessCheckoutValidationError` containing more details about the error that occurred
- */
+/// Represents an error that occurred while attempting to retrieve one or multiple sessions
+///
+/// - message: `String` containing a description of the error that occured
+/// - validationErrors: an `Array` of `AccessCheckoutValidationError` containing more details about the error that occurred
 public struct AccessCheckoutError: Error, Equatable {
     let errorName: String
     public let message: String
@@ -18,15 +16,24 @@ public struct AccessCheckoutError: Error, Equatable {
     }
 
     static func sessionLinkNotFound(linkName: String) -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "sessionLinkNotFound", details: "Failed to find link \(linkName) in response")
+        return AccessCheckoutError(
+            errorName: "sessionLinkNotFound",
+            details: "Failed to find link \(linkName) in response"
+        )
     }
 
     static func discoveryLinkNotFound(linkName: String) -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "discoveryLinkNotFound", details: "Failed to find link \(linkName) in response")
+        return AccessCheckoutError(
+            errorName: "discoveryLinkNotFound",
+            details: "Failed to find link \(linkName) in response"
+        )
     }
 
     static func responseDecodingFailed() -> AccessCheckoutError {
-        return AccessCheckoutError(errorName: "responseDecodingFailed", details: "Failed to decode response data")
+        return AccessCheckoutError(
+            errorName: "responseDecodingFailed",
+            details: "Failed to decode response data"
+        )
     }
 
     static func unexpectedApiError(message: String) -> AccessCheckoutError {
@@ -55,7 +62,11 @@ extension AccessCheckoutError: Decodable {
 
         self.errorName = errorName
         self.message = "\(errorName) : \(message)"
-        self.validationErrors = try container.decodeIfPresent([AccessCheckoutValidationError].self, forKey: .validationErrors) ?? [AccessCheckoutValidationError]()
+        self.validationErrors =
+            try container.decodeIfPresent(
+                [AccessCheckoutValidationError].self,
+                forKey: .validationErrors
+            ) ?? [AccessCheckoutValidationError]()
     }
 }
 
@@ -68,13 +79,11 @@ extension AccessCheckoutError: LocalizedError {
     }
 }
 
-/**
- Represents the details of the failure of a validation in Worldpay API services
-
- - errorName: `String` containing a descriptive name for an error as per Worldpay's internal API services implementation
- - message: `String` containing more details about the error that occurred
- - jsonPath: `String` that contains the field that provoked the validation failure
- */
+/// Represents the details of the failure of a validation in Worldpay API services
+///
+/// - errorName: `String` containing a descriptive name for an error as per Worldpay's internal API services implementation
+/// - message: `String` containing more details about the error that occurred
+/// - jsonPath: `String` that contains the field that provoked the validation failure
 extension AccessCheckoutError.AccessCheckoutValidationError: Decodable {
     enum Key: CodingKey {
         case errorName

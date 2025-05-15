@@ -2,8 +2,11 @@ import Foundation
 
 class ExpiryDateFormatter {
     let separator = "/"
-    
-    private let nonNumericRegex = try! NSRegularExpression(pattern: "[^0-9/]", options: NSRegularExpression.Options.caseInsensitive)
+
+    private let nonNumericRegex = try! NSRegularExpression(
+        pattern: "[^0-9/]",
+        options: NSRegularExpression.Options.caseInsensitive
+    )
     private let maxLength = 5
 
     func format(_ text: String) -> String {
@@ -36,7 +39,12 @@ class ExpiryDateFormatter {
     private func stripNonNumericalCharacters(_ string: String) -> String {
         if !isNumeric(string) {
             let range = NSMakeRange(0, string.count)
-            return nonNumericRegex.stringByReplacingMatches(in: string, options: [], range: range, withTemplate: "")
+            return nonNumericRegex.stringByReplacingMatches(
+                in: string,
+                options: [],
+                range: range,
+                withTemplate: ""
+            )
         }
 
         return string
