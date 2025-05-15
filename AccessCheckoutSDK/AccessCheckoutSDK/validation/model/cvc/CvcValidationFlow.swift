@@ -45,9 +45,7 @@ class CvcValidationFlow {
         validationRule = rule
     }
     
-    func notifyMerchantIfNotAlreadyNotified() {
-        if !cvcValidationStateHandler.alreadyNotifiedMerchantOfCvcValidationState {
-            cvcValidationStateHandler.notifyMerchantOfCvcValidationState()
-        }
+    func notifyMerchant() {
+        cvcValidationStateHandler.notifyMerchantOfCvcValidationState()
     }
 }

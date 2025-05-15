@@ -13,8 +13,9 @@ class CardValidationStateHandler {
     private var notifyMerchantOfExpiryDateValidationChangeIsPending = false
     private var merchantNeverNotifiedOfExpiryDateValidationChange = true
     
-    private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
-
+    private var notifyMerchantOfCvcValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfCvcValidationChange = true
+    
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
         self.cardBrandModelTransformer = CardBrandModelTransformer()
@@ -137,6 +138,7 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     func handleCvcValidation(isValid: Bool) {
         if isValid != cvcIsValid {
             cvcIsValid = isValid
+            notifyMerchantOfCvcValidationChangeIsPending = true
             notifyMerchantOfCvcValidationState()
 
             if allFieldsValid() {
@@ -146,7 +148,15 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     }
 
     func notifyMerchantOfCvcValidationState() {
-        merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
-        alreadyNotifiedMerchantOfCvcValidationState = true
+        if notifyMerchantOfCvcValidationChangeIsPending
+            || merchantNeverNotifiedOfCvcValidationChange{
+            
+            merchantNeverNotifiedOfCvcValidationChange = false
+            notifyMerchantOfCvcValidationChangeIsPending = false
+            
+            merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
+            
+            NSLog("Card flow - Notifying merchant of cvc validation state change with isValid=\(cvcIsValid)")
+        }
     }
 }

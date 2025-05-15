@@ -94,7 +94,7 @@ class CvcValidationFlowTests: XCTestCase {
         let cvcValidationStateHandler = CardValidationStateHandler(merchantDelegate)
         let cvcValidationFlow = CvcValidationFlow(CvcValidator(), cvcValidationStateHandler)
 
-        cvcValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        cvcValidationFlow.notifyMerchant()
 
         verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
@@ -109,7 +109,7 @@ class CvcValidationFlowTests: XCTestCase {
         verify(merchantDelegate).cvcValidChanged(isValid: true)
         clearInvocations(merchantDelegate)
 
-        cvcValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        cvcValidationFlow.notifyMerchant()
 
         verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
     }

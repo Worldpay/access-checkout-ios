@@ -1,7 +1,9 @@
 class CvcOnlyValidationStateHandler {
     private(set) var merchantDelegate: AccessCheckoutCvcOnlyValidationDelegate
     private(set) var cvcIsValid = false
-    private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
+
+    private var notifyMerchantOfCvcValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfCvcValidationChange = true
 
     init(_ merchantDelegate: AccessCheckoutCvcOnlyValidationDelegate) {
         self.merchantDelegate = merchantDelegate
@@ -20,6 +22,7 @@ extension CvcOnlyValidationStateHandler: CvcValidationStateHandler {
     func handleCvcValidation(isValid: Bool) {
         if isValid != cvcIsValid {
             cvcIsValid = isValid
+            notifyMerchantOfCvcValidationChangeIsPending = true
             notifyMerchantOfCvcValidationState()
 
             if cvcIsValid {
@@ -29,7 +32,15 @@ extension CvcOnlyValidationStateHandler: CvcValidationStateHandler {
     }
 
     func notifyMerchantOfCvcValidationState() {
-        merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
-        alreadyNotifiedMerchantOfCvcValidationState = true
+        if notifyMerchantOfCvcValidationChangeIsPending
+            || merchantNeverNotifiedOfCvcValidationChange{
+            
+            merchantNeverNotifiedOfCvcValidationChange = false
+            notifyMerchantOfCvcValidationChangeIsPending = false
+            
+            merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
+
+            NSLog("Cvc only flow - Notifying merchant of cvc validation state change with isValid=\(cvcIsValid)")
+        }
     }
 }
