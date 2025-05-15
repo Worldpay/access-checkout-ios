@@ -159,6 +159,8 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPartialCvcIsInvalid() {
         view!.typeTextIntoCvc("12")
+        
+        view!.panField.tap()  // we move the focus to another field so that the validation triggers
 
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }
