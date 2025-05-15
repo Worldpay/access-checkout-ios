@@ -155,8 +155,6 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
             notifyMerchantOfCvcValidationChangeIsPending = false
             
             merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
-            
-            NSLog("Card flow - Notifying merchant of cvc validation state change with isValid=\(cvcIsValid)")
         }
     }
 }
