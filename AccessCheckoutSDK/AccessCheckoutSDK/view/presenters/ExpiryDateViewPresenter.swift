@@ -19,7 +19,7 @@ class ExpiryDateViewPresenter: NSObject, Presenter {
     }
     
     func onEditEnd(text: String) {
-        validationFlow.notifyMerchantIfNotAlreadyNotified()
+        validationFlow.notifyMerchant()
     }
     
     func canChangeText(with text: String) -> Bool {

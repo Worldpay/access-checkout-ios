@@ -1,16 +1,18 @@
 class CardValidationStateHandler {
     private(set) var merchantDelegate: AccessCheckoutCardValidationDelegate
 
-    private var notifyMerchantOfPanValidationChangeIsPending = false
-    private var merchantNeverNotifiedOfPanValidationChange = true
-
     private(set) var panIsValid = false
-    private(set) var cardBrand: CardBrandModel?
     private(set) var expiryDateIsValid = false
     private(set) var cvcIsValid = false
+    private(set) var cardBrand: CardBrandModel?
     private let cardBrandModelTransformer: CardBrandModelTransformer
 
-    private(set) var alreadyNotifiedMerchantOfExpiryDateValidationState = false
+    private var notifyMerchantOfPanValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfPanValidationChange = true
+    
+    private var notifyMerchantOfExpiryDateValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfExpiryDateValidationChange = true
+    
     private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
 
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
@@ -110,6 +112,7 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     func handleExpiryDateValidation(isValid: Bool) {
         if isValid != expiryDateIsValid {
             expiryDateIsValid = isValid
+            notifyMerchantOfExpiryDateValidationChangeIsPending = true
             notifyMerchantOfExpiryDateValidationState()
 
             if allFieldsValid() {
@@ -119,8 +122,14 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     }
 
     func notifyMerchantOfExpiryDateValidationState() {
-        merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
-        alreadyNotifiedMerchantOfExpiryDateValidationState = true
+        if notifyMerchantOfExpiryDateValidationChangeIsPending
+            || merchantNeverNotifiedOfExpiryDateValidationChange{
+            
+            merchantNeverNotifiedOfExpiryDateValidationChange = false
+            notifyMerchantOfExpiryDateValidationChangeIsPending = false
+            
+            merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
+        }
     }
 }
 

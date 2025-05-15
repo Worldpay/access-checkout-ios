@@ -12,9 +12,7 @@ class ExpiryDateValidationFlow {
         expiryValidationStateHandler.handleExpiryDateValidation(isValid: result)
     }
 
-    func notifyMerchantIfNotAlreadyNotified() {
-        if !expiryValidationStateHandler.alreadyNotifiedMerchantOfExpiryDateValidationState {
-            expiryValidationStateHandler.notifyMerchantOfExpiryDateValidationState()
-        }
+    func notifyMerchant() {
+        expiryValidationStateHandler.notifyMerchantOfExpiryDateValidationState()
     }
 }

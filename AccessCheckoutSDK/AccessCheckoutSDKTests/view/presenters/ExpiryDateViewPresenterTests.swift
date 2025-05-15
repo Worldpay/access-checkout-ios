@@ -8,7 +8,7 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
 
     override func setUp() {
         expiryDateValidationFlow.getStubbingProxy().validate(expiryDate: any()).thenDoNothing()
-        expiryDateValidationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
+        expiryDateValidationFlow.getStubbingProxy().notifyMerchant().thenDoNothing()
         expiryDateValidatorMock.getStubbingProxy().canValidate(any()).thenReturn(true)
     }
 
@@ -27,7 +27,7 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
 
         presenter.onEditEnd(text: expiryDate)
 
-        verify(expiryDateValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(expiryDateValidationFlow).notifyMerchant()
     }
 
     func testCanChangeTextWithEmptyText() {
@@ -75,7 +75,7 @@ class ExpiryDateViewPresenterTests: PresenterTestSuite {
         let presenter = ExpiryDateViewPresenter(expiryDateValidationFlow, expiryDateValidatorMock)
 
         presenter.textFieldDidEndEditing(expiryDateTextField)
-        verify(expiryDateValidationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(expiryDateValidationFlow).notifyMerchant()
     }
 
     // MARK: tests for the text formatting

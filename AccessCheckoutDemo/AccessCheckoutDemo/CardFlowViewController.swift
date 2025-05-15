@@ -161,7 +161,6 @@ class CardFlowViewController: UIViewController {
 
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
-        expiryDateValidChanged(isValid: false)
         cvcValidChanged(isValid: false)
         disableSubmitIfNotValid(valid: false)
         cardBrandChanged(cardBrand: nil)
