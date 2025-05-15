@@ -29,7 +29,6 @@ class RestrictedCardFlowViewController: UIViewController {
 
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
-        panValidChanged(isValid: false)
         cardBrandChanged(cardBrand: nil)
     }
 
