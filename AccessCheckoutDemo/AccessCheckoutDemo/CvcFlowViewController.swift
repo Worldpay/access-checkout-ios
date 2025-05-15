@@ -60,7 +60,7 @@ class CvcFlowViewController: UIViewController {
             .build()
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
         
-        cvcValidChanged(isValid: false)
+        submitButton.isEnabled = false
     }
     
     private func highlightCvcField(error: AccessCheckoutError) {
@@ -86,7 +86,7 @@ class CvcFlowViewController: UIViewController {
     }
     
     private func changeCvcValidIndicator(isValid: Bool) {
-        cvcTextField.textColor = isValid ? nil : UIColor.red
+        cvcTextField.textColor = isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         cvcIsValidLabel.text = isValid ? "valid" : "invalid"
     }
 }
