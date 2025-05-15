@@ -4,12 +4,15 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
     
     var view: RestrictedCardFlowViewPageObject?
+    var navigationView: NavigationViewPageObject?
     
     override func setUp() {
         continueAfterFailure = false
         
         let app = AppLauncher.launch()
-        view = NavigationViewPageObject(app).navigateToRestrictedCardFlow()
+        self.navigationView = NavigationViewPageObject(app)
+        
+        view = self.navigationView!.navigateToRestrictedCardFlow()
     }
     
     // MARK: Testing always displays card brand images independently of brand being accepted
@@ -49,6 +52,11 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     func testPartialPanIsInvalid_visa() {
         view!.typeTextIntoPan("4")
         
+        // we navigate to another view to force the focus to removed from the current field
+        // so that the validation triggers
+        _ = self.navigationView?.navigateToCardFlow()
+        _ = self.navigationView?.navigateToRestrictedCardFlow()
+        
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
@@ -62,6 +70,11 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     
     func testPartialPanIsInvalid_mastercard() {
         view!.typeTextIntoPan("55")
+        
+        // we navigate to another view to force the focus to removed from the current field
+        // so that the validation triggers
+        _ = self.navigationView?.navigateToCardFlow()
+        _ = self.navigationView?.navigateToRestrictedCardFlow()
         
         XCTAssertTrue(view!.imageIs("mastercard"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
@@ -77,6 +90,11 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     func testPartialPanIsInvalid_amex() {
         view!.typeTextIntoPan("34")
         
+        // we navigate to another view to force the focus to removed from the current field
+        // so that the validation triggers
+        _ = self.navigationView?.navigateToCardFlow()
+        _ = self.navigationView?.navigateToRestrictedCardFlow()
+        
         XCTAssertTrue(view!.imageIs("amex"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
@@ -88,17 +106,27 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
     
-    // MARK: Testing non accepted card
+    // MARK: Testing cards that are not accepted due to SDK initialised to accept only visa, mastercard, amex
     
-    func testPartialPanIsInvalid_jccb() {
+    func testPartialPanForCardThatIsNotAcceptedIsInvalid() {
         view!.typeTextIntoPan("352")
+        
+        // we navigate to another view to force the focus to removed from the current field
+        // so that the validation triggers
+        _ = self.navigationView?.navigateToCardFlow()
+        _ = self.navigationView?.navigateToRestrictedCardFlow()
         
         XCTAssertTrue(view!.imageIs("jcb"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
     
-    func testCompletePanIsInValid_jcb() {
+    func testCompletePanForCardThatIsNotAcceptedIsInvalid() {
         view!.typeTextIntoPan("3528000700000000")
+        
+        // we navigate to another view to force the focus to removed from the current field
+        // so that the validation triggers
+        _ = self.navigationView?.navigateToCardFlow()
+        _ = self.navigationView?.navigateToRestrictedCardFlow()
         
         XCTAssertTrue(view!.imageIs("jcb"))
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")

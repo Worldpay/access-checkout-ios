@@ -44,7 +44,7 @@ class RestrictedCardFlowViewController: UIViewController {
     }
     
     private func changePanValidIndicator(isValid: Bool) {
-        panTextField.textColor = isValid ? nil : UIColor.red
+        panTextField.textColor = isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
     }
 }
 
