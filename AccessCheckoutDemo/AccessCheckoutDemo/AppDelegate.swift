@@ -19,6 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+        if let displayDismissKeyboardButtonValue = UserDefaults.standard.string(
+            forKey: "displayDismissKeyboardButton")
+        {
+            if (displayDismissKeyboardButtonValue as NSString).boolValue {
+                Configuration.displayDismissKeyboardButton = true
+            } else {
+                Configuration.displayDismissKeyboardButton = false
+            }
+        } else {
+            Configuration.displayDismissKeyboardButton = false
+        }
+
         NSLog("Application will use base URL \(Configuration.accessBaseUrl)")
         return true
     }

@@ -5,11 +5,22 @@ class RestrictedCardFlowViewController: UIViewController {
     @IBOutlet weak var panTextField: AccessCheckoutUITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var panIsValidLabel: UILabel!
+    @IBOutlet weak var dismissKeyboardButton: UIButton!
+
+    @IBAction func onDismissKeyboardTap(_ sender: Any) {
+        _ = panTextField.resignFirstResponder()
+    }
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // We show the button if the configuration indicates to show it
+        // This configuration property is only ever set up to true
+        // wheh a specific launch argument is set to true
+        // See AppLauncher in the AccessCheckoutDemoUITests
+        self.dismissKeyboardButton.isHidden = !Configuration.displayDismissKeyboardButton
 
         panTextField.placeholder = "Card Number"
         panTextField.font = .preferredFont(forTextStyle: .body)

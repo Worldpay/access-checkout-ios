@@ -7,6 +7,12 @@ class CvcFlowViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var cvcIsValidLabel: UILabel!
 
+    @IBOutlet weak var dismissKeyboardButton: UIButton!
+
+    @IBAction func onDismissKeyboardTap(_ sender: Any) {
+        _ = cvcTextField.resignFirstResponder()
+    }
+
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
         self.cvcTextField.isEnabled = false
 
@@ -49,6 +55,12 @@ class CvcFlowViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // We show the button if the configuration indicates to show it
+        // This configuration property is only ever set up to true
+        // wheh a specific launch argument is set to true
+        // See AppLauncher in the AccessCheckoutDemoUITests
+        self.dismissKeyboardButton.isHidden = !Configuration.displayDismissKeyboardButton
 
         cvcTextField.placeholder = "123"
         cvcTextField.font = .preferredFont(forTextStyle: .body)

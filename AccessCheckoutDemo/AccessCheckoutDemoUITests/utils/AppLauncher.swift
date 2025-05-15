@@ -4,6 +4,7 @@ import XCTest
 
 class AppLauncher {
     private let LaunchArgument_enableStubs = "enableStubs"
+    private let LaunchArgument_displayDismissKeyboardButton = "displayDismissKeyboardButton"
 
     private init() {}
 
@@ -15,7 +16,14 @@ class AppLauncher {
         return AppLauncher().launch(enableStubs: enableStubs)
     }
 
-    private func launch(enableStubs: Bool? = nil) -> XCUIApplication {
+    static func launch(displayDismissKeyboardButton: Bool) -> XCUIApplication {
+        return AppLauncher().launch(
+            enableStubs: false, displayDismissKeyboardButton: displayDismissKeyboardButton)
+    }
+
+    private func launch(enableStubs: Bool? = nil, displayDismissKeyboardButton: Bool? = nil)
+        -> XCUIApplication
+    {
         let app = XCUIApplication()
 
         if let enableStubs = enableStubs {
@@ -23,6 +31,14 @@ class AppLauncher {
                 "-\(LaunchArgument_enableStubs)", enableStubs.description,
             ])
         }
+
+        if let displayDismissKeyboardButton = displayDismissKeyboardButton {
+            app.launchArguments.append(contentsOf: [
+                "-\(LaunchArgument_displayDismissKeyboardButton)",
+                displayDismissKeyboardButton.description,
+            ])
+        }
+
         app.launch()
 
         return app

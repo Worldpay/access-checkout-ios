@@ -4,15 +4,14 @@ class CvcFlowCvcValidationTests: XCTestCase {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: CvcFlowViewPageObject?
-    var navigationView: NavigationViewPageObject?
 
     override func setUp() {
         continueAfterFailure = false
 
-        let app = AppLauncher.launch()
-        self.navigationView = NavigationViewPageObject(app)
+        let app = AppLauncher.launch(displayDismissKeyboardButton: true)
+        let navigationView = NavigationViewPageObject(app)
 
-        view = self.navigationView!.navigateToCvcFlow()
+        view = navigationView.navigateToCvcFlow()
     }
 
     func testCannotTypeAlphabeticalCharactersInCvc() {
@@ -65,11 +64,7 @@ class CvcFlowCvcValidationTests: XCTestCase {
 
     func testPartialCvcIsInvalid() {
         view!.typeTextIntoCvc("12")
-
-        // we navigate to another view to force the focus to removed from the current field
-        // so that the validation triggers
-        _ = self.navigationView?.navigateToCardFlow()
-        _ = self.navigationView?.navigateToCvcFlow()
+        view!.dismissKeyboard()  // removes focus from Cvc
 
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }

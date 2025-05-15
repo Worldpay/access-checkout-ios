@@ -7,6 +7,10 @@ struct Configuration {
         ? CI.checkoutId : Bundle.main.infoDictionary?["AccessCheckoutId"] as! String
 
     static var accessBaseUrl: String = ""
+    // Property used to display a button used to dismiss the keyboard
+    // and remove the focus from the component where the focus dismiss
+    // See AppLauncher in the AccessCheckoutDemoUITests
+    static var displayDismissKeyboardButton: Bool = false
 
     static let accessCardConfigurationUrl: String =
         "\(urlWitoutTrailingSlash(accessBaseUrl))/access-checkout/cardTypes.json"

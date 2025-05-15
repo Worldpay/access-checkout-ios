@@ -23,6 +23,10 @@ class RestrictedCardFlowViewPageObject {
         return app.staticTexts["panIsValidLabel"]
     }
 
+    private var dismissKeyboardButton: XCUIElement {
+        return app.buttons["dismissKeyboardButton"]
+    }
+
     init(_ app: XCUIApplication) {
         self.app = app
     }
@@ -39,5 +43,9 @@ class RestrictedCardFlowViewPageObject {
             brand, bundle: Bundle(for: type(of: self)), comment: "")
 
         return cardBrandImage.label == brandAsLocalizedString
+    }
+
+    func dismissKeyboard() {
+        self.dismissKeyboardButton.tap()
     }
 }
