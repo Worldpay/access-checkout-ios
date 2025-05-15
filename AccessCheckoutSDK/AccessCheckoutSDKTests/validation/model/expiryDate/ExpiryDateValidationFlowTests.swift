@@ -19,14 +19,14 @@ class ExpiryDateValidationFlowTests: XCTestCase {
         verify(expiryDateValidationStateHandler).handleExpiryDateValidation(isValid: expectedResult)
     }
     
-    func testCanNotifyMerchantIfNotAlreadyNotified() {
+    func testCanNotifyMerchant() {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
         let expiryDateValidator = ExpiryDateValidator()
         let expiryDateValidationStateHandler = CardValidationStateHandler(merchantDelegate)
         let expiryDateValidationFlow = ExpiryDateValidationFlow(expiryDateValidator, expiryDateValidationStateHandler)
         
-        expiryDateValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        expiryDateValidationFlow.notifyMerchant()
         
         verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
@@ -42,7 +42,7 @@ class ExpiryDateValidationFlowTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: true)
         clearInvocations(merchantDelegate)
         
-        expiryDateValidationFlow.notifyMerchantIfNotAlreadyNotified()
+        expiryDateValidationFlow.notifyMerchant()
         
         verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
     }

@@ -105,6 +105,8 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPartialExpiryDateIsInvalid() {
         view!.typeTextIntoExpiryDate("12")
+        
+        view!.panField.tap() // we move the focus to another field so that the validation triggers
 
         XCTAssertEqual(view!.expiryDateIsValidLabel.label, "invalid")
     }
