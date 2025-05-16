@@ -1,17 +1,20 @@
 class CardValidationStateHandler {
     private(set) var merchantDelegate: AccessCheckoutCardValidationDelegate
 
+    private(set) var panIsValid = false
+    private(set) var expiryDateIsValid = false
+    private(set) var cvcIsValid = false
+    private(set) var cardBrand: CardBrandModel?
+    private let cardBrandModelTransformer: CardBrandModelTransformer
+
     private var notifyMerchantOfPanValidationChangeIsPending = false
     private var merchantNeverNotifiedOfPanValidationChange = true
 
-    private(set) var panIsValid = false
-    private(set) var cardBrand: CardBrandModel?
-    private(set) var expiryDateIsValid = false
-    private(set) var cvcIsValid = false
-    private let cardBrandModelTransformer: CardBrandModelTransformer
+    private var notifyMerchantOfExpiryDateValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfExpiryDateValidationChange = true
 
-    private(set) var alreadyNotifiedMerchantOfExpiryDateValidationState = false
-    private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
+    private var notifyMerchantOfCvcValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfCvcValidationChange = true
 
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
@@ -110,6 +113,7 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     func handleExpiryDateValidation(isValid: Bool) {
         if isValid != expiryDateIsValid {
             expiryDateIsValid = isValid
+            notifyMerchantOfExpiryDateValidationChangeIsPending = true
             notifyMerchantOfExpiryDateValidationState()
 
             if allFieldsValid() {
@@ -119,8 +123,15 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
     }
 
     func notifyMerchantOfExpiryDateValidationState() {
-        merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
-        alreadyNotifiedMerchantOfExpiryDateValidationState = true
+        if notifyMerchantOfExpiryDateValidationChangeIsPending
+            || merchantNeverNotifiedOfExpiryDateValidationChange
+        {
+
+            merchantNeverNotifiedOfExpiryDateValidationChange = false
+            notifyMerchantOfExpiryDateValidationChangeIsPending = false
+
+            merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
+        }
     }
 }
 
@@ -128,6 +139,7 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     func handleCvcValidation(isValid: Bool) {
         if isValid != cvcIsValid {
             cvcIsValid = isValid
+            notifyMerchantOfCvcValidationChangeIsPending = true
             notifyMerchantOfCvcValidationState()
 
             if allFieldsValid() {
@@ -137,7 +149,14 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     }
 
     func notifyMerchantOfCvcValidationState() {
-        merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
-        alreadyNotifiedMerchantOfCvcValidationState = true
+        if notifyMerchantOfCvcValidationChangeIsPending
+            || merchantNeverNotifiedOfCvcValidationChange
+        {
+
+            merchantNeverNotifiedOfCvcValidationChange = false
+            notifyMerchantOfCvcValidationChangeIsPending = false
+
+            merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
+        }
     }
 }

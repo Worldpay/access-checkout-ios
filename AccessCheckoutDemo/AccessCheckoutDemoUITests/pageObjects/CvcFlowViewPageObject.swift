@@ -20,6 +20,10 @@ class CvcFlowViewPageObject {
         return app.buttons["Submit"]
     }
 
+    var dismissKeyboardButton: XCUIElement {
+        return app.buttons["dismissKeyboardButton"]
+    }
+
     var alert: AlertViewPageObject {
         let element = app.alerts.firstMatch
         XCTAssertTrue(element.waitForExistence(timeout: waitForExistenceTimeoutInSeconds))
@@ -51,5 +55,9 @@ class CvcFlowViewPageObject {
         _ = cutMenu.waitForExistence(timeout: waitForExistenceTimeoutInSeconds)
         cutMenu.tap()
         TestUtils.wait(seconds: 1)
+    }
+
+    func dismissKeyboard() {
+        self.dismissKeyboardButton.tap()
     }
 }

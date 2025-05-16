@@ -228,14 +228,6 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
     
-    func testNotifyMerchantOfExpiryDateValidationState_setsNotificationState() {
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
-        
-        validationStateHandler.notifyMerchantOfExpiryDateValidationState()
-        
-        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfExpiryDateValidationState)
-    }
-    
     func testNotifyMerchantOfExpiryDateValidationState_notifiesMerchantOfValidExpiryDate() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, expiryDateValidationState: true)
         
@@ -292,14 +284,6 @@ class CardValidationStateHandlerTests: XCTestCase {
         
         validationStateHandler.handleCvcValidation(isValid: false)
         verify(merchantDelegate).cvcValidChanged(isValid: false)
-    }
-    
-    func testNotifyMerchantOfCvcValidationState_setsNotificationState() {
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
-        
-        validationStateHandler.notifyMerchantOfCvcValidationState()
-        
-        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvcValidationState)
     }
     
     func testNotifyMerchantOfCvcValidationState_notifiesMerchantOfValidCvc() {

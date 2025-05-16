@@ -25,22 +25,6 @@ import Cuckoo
     
 
     
-    
-    
-    
-     var alreadyNotifiedMerchantOfExpiryDateValidationState: Bool {
-        get {
-            return cuckoo_manager.getter("alreadyNotifiedMerchantOfExpiryDateValidationState",
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.alreadyNotifiedMerchantOfExpiryDateValidationState)
-        }
-        
-    }
-    
-    
 
     
 
@@ -95,13 +79,6 @@ import Cuckoo
         
         
         
-        var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockExpiryDateValidationStateHandler, Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState")
-        }
-        
-        
-        
-        
         
         func handleExpiryDateValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
             let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
@@ -137,13 +114,6 @@ import Cuckoo
         }
     
         
-        
-        
-        var alreadyNotifiedMerchantOfExpiryDateValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfExpiryDateValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
-        }
-        
-        
     
         
         
@@ -175,17 +145,6 @@ import Cuckoo
 
 
  class ExpiryDateValidationStateHandlerStub: ExpiryDateValidationStateHandler {
-    
-    
-    
-    
-     var alreadyNotifiedMerchantOfExpiryDateValidationState: Bool {
-        get {
-            return DefaultValueRegistry.defaultValue(for: (Bool).self)
-        }
-        
-    }
-    
     
 
     

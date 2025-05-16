@@ -68,13 +68,19 @@ class ServiceStubs {
     }
 
     private func jsonResponse(of stubResponseName: StubResponse) throws -> Any {
-        guard let resourceUrl: URL = ServiceStubs.bundle.url(forResource: stubResponseName.rawValue, withExtension: "json"),
-              let stringContent = try? String(contentsOf: resourceUrl)
+        guard
+            let resourceUrl: URL = ServiceStubs.bundle.url(
+                forResource: stubResponseName.rawValue, withExtension: "json"),
+            let stringContent = try? String(contentsOf: resourceUrl)
         else {
-            throw ResourceError(message: "Failed to set up stub. Could not find JSON resource with name '\(stubResponseName)'")
+            throw ResourceError(
+                message:
+                    "Failed to set up stub. Could not find JSON resource with name '\(stubResponseName)'"
+            )
         }
 
-        let data = stringContent
+        let data =
+            stringContent
             .replacingOccurrences(of: "<BASE_URI>", with: ServiceStubs.baseUri)
             .data(using: .utf8)
 

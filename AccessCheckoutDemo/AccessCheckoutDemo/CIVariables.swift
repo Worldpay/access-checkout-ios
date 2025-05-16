@@ -6,7 +6,7 @@ import Foundation
 struct CI {
     /// The checkoutId
     static var checkoutId = "$(CHECKOUT_ID)"
-    
+
     /// The base URL for Access services
     static var accessBaseUrl = "$(ACCESS_BASE_URL)"
 }

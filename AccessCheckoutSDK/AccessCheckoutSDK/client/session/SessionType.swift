@@ -1,6 +1,4 @@
-/**
- An enum containing possible session types that can be requested
- */
+/// An enum containing possible session types that can be requested
 public enum SessionType {
     /**
      Session type that represents a session that represents the card details
