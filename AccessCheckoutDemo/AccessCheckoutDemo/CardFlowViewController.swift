@@ -142,8 +142,6 @@ class CardFlowViewController: UIViewController {
             } else {
                 view.borderColor = hasFocus ? .systemBlue : .systemGray
             }
-            // Will be used for tests
-            view.accessibilityHint = hasFocus ? "focused": "notFocused"
         }
         
         expiryDateTextField.setOnFocusChangedListener{view, hasFocus in
@@ -152,8 +150,6 @@ class CardFlowViewController: UIViewController {
             } else {
                 view.borderColor = hasFocus ? .systemBlue : .systemGray
             }
-            // Will be used for tests
-            view.accessibilityHint = hasFocus ? "focused": "notFocused"
         }
         
         cvcTextField.setOnFocusChangedListener{view, hasFocus in
@@ -163,8 +159,6 @@ class CardFlowViewController: UIViewController {
                 view.borderColor = hasFocus ? .systemBlue : .systemGray
 
             }
-            // Will be used for tests
-            view.accessibilityHint = hasFocus ? "focused": "notFocused"
         }
         
         panTextField.font = .preferredFont(forTextStyle: .body)
