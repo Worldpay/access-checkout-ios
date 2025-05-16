@@ -130,11 +130,37 @@ class CardFlowViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         panTextField.placeholder = "Card Number"
         expiryDateTextField.placeholder = "MM/YY"
         cvcTextField.placeholder = "CVC"
+        
+        //Apply onfocus listeners
+        panTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+        }
+        
+        expiryDateTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+        }
+        
+        cvcTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
 
+            }
+        }
+        
         panTextField.font = .preferredFont(forTextStyle: .body)
         expiryDateTextField.font = .preferredFont(forTextStyle: .body)
         cvcTextField.font = .preferredFont(forTextStyle: .body)

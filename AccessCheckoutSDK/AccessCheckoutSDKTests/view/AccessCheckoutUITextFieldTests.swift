@@ -520,7 +520,20 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertTrue(uiTextFieldMock.becomeFirstResponderCalled)
     }
     
-    func testResignFirstResponderDelegatesCallToUITextField() {
+    func testSetOnFocusChangedListenerAssignsValueToVariable() {
+        let textField = AccessCheckoutUITextField()
+    
+        XCTAssertNil(textField.externalOnFocusChangeListener)
+
+        //Set
+        textField.setOnFocusChangedListener{view, isFocused in
+            //do something
+        }
+        
+        XCTAssertNotNil(textField.externalOnFocusChangeListener)
+    }
+    
+    func testSetOnFocusChangedListener() {
         let uiTextFieldMock = UITextFieldMock()
         let textField = AccessCheckoutUITextField(uiTextFieldMock)
         
@@ -528,6 +541,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         
         XCTAssertTrue(uiTextFieldMock.resignFirstResponderCalled)
     }
+    
     
     // MARK: Internal properties
     

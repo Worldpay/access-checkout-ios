@@ -24,7 +24,16 @@ class RestrictedCardFlowViewController: UIViewController {
 
         panTextField.placeholder = "Card Number"
         panTextField.font = .preferredFont(forTextStyle: .body)
-
+        
+        //Apply onfocus listeners
+        panTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+        }
+        
         // Control used as helpers for the automated tests - Start of section
         // Label colour is changed to make it invisible
         panIsValidLabel.textColor = Configuration.backgroundColor

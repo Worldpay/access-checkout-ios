@@ -64,6 +64,15 @@ class CvcFlowViewController: UIViewController {
 
         cvcTextField.placeholder = "123"
         cvcTextField.font = .preferredFont(forTextStyle: .body)
+        //Apply onfocus listeners
+        cvcTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+
+            }
+        }
 
         submitButton.titleLabel?.adjustsFontForContentSizeCategory = true
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
