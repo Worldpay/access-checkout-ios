@@ -25,18 +25,53 @@ public final class AccessCheckoutUITextField: UIView {
     
     private var uiTextFieldConstraints: [NSLayoutConstraint] = []
     private var _horizontalPadding:CGFloat = defaults.horizontalPadding
+    //Event Support
+    internal var externalOnFocusChangeListener: ((AccessCheckoutUITextField, Bool)-> Void)?
     
     private func buildTextFieldWithDefaults() -> UITextField {
-        let uiTextField = UITextField()
+        let uiTextField = FocusAwareUITextField(owner: self )
+
+        // Apply defaults to UITextField
         uiTextField.translatesAutoresizingMaskIntoConstraints = false
         uiTextField.adjustsFontSizeToFitWidth = false
         uiTextField.adjustsFontForContentSizeCategory = true
-
-        // UITextField defaults
         uiTextField.keyboardType = AccessCheckoutUITextField.defaults.keyboardType
 
         addSubview(uiTextField)
         return uiTextField
+    }
+    
+    private final class FocusAwareUITextField: UITextField {
+        var owner: AccessCheckoutUITextField
+        
+        init(owner: AccessCheckoutUITextField){
+            self.owner = owner
+            //.zero is used to set size via AutoLayout instead
+            super.init(frame: .zero)
+        }
+        
+        //Required initializer for UIKit support when loading from storyboards or XIBs (not supported in this case)
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        override func becomeFirstResponder() -> Bool {
+            let result = super.becomeFirstResponder()
+            //Pass view
+            if result {owner.externalOnFocusChangeListener?(owner, true)}
+            return result
+        }
+        
+        override func resignFirstResponder() -> Bool {
+            let result = super.resignFirstResponder()
+            //Pass view
+            if result {owner.externalOnFocusChangeListener?(owner, false)}
+            return result
+        }
+    }
+
+    public func setOnFocusChangedListener(_ listener: @escaping (AccessCheckoutUITextField, Bool)-> Void) {
+        self.externalOnFocusChangeListener = listener
     }
 
     // this constructor is used only for unit tests so we do not call setLayout()
@@ -119,7 +154,6 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextField.placeholder = self.placeholder
         self.uiTextField.font = self.font
     }
-
     // MARK: Public properties
 
     /* Accessibility properties */
@@ -140,6 +174,7 @@ public final class AccessCheckoutUITextField: UIView {
         get { nil }
     }
 
+    
     /**
      An id that uniquely identifies an instance of this UI component
      */

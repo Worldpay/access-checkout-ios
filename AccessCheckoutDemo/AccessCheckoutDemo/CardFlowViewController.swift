@@ -130,11 +130,43 @@ class CardFlowViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         panTextField.placeholder = "Card Number"
         expiryDateTextField.placeholder = "MM/YY"
         cvcTextField.placeholder = "CVC"
+        
+        //Apply onfocus listeners
+        panTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+            // Will be used for tests
+            view.accessibilityHint = hasFocus ? "focused": "notFocused"
+        }
+        
+        expiryDateTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+            // Will be used for tests
+            view.accessibilityHint = hasFocus ? "focused": "notFocused"
+        }
+        
+        cvcTextField.setOnFocusChangedListener{view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
 
+            }
+            // Will be used for tests
+            view.accessibilityHint = hasFocus ? "focused": "notFocused"
+        }
+        
         panTextField.font = .preferredFont(forTextStyle: .body)
         expiryDateTextField.font = .preferredFont(forTextStyle: .body)
         cvcTextField.font = .preferredFont(forTextStyle: .body)
