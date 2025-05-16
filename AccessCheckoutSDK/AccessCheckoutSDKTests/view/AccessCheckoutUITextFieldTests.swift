@@ -523,6 +523,8 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testSetOnFocusChangedListenerAssignsValueToVariable() {
         let textField = AccessCheckoutUITextField()
     
+        XCTAssertNil(textField.externalOnFocusChangeListener)
+
         //Set
         textField.setOnFocusChangedListener{view, isFocused in
             //do something
