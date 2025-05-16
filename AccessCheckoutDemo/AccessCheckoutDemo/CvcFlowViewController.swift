@@ -64,10 +64,6 @@ class CvcFlowViewController: UIViewController {
 
         cvcTextField.placeholder = "123"
         cvcTextField.font = .preferredFont(forTextStyle: .body)
-<<<<<<< HEAD
-
-=======
-        
         //Apply onfocus listeners
         cvcTextField.setOnFocusChangedListener{view, hasFocus in
             if #available(iOS 13.0, *) {
@@ -77,7 +73,7 @@ class CvcFlowViewController: UIViewController {
 
             }
         }
->>>>>>> f56949a (US2132071: Add method documentation and align demo-app behavior for onfocus)
+
         submitButton.titleLabel?.adjustsFontForContentSizeCategory = true
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
 
