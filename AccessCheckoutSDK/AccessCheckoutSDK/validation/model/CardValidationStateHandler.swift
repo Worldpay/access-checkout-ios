@@ -9,11 +9,12 @@ class CardValidationStateHandler {
 
     private var notifyMerchantOfPanValidationChangeIsPending = false
     private var merchantNeverNotifiedOfPanValidationChange = true
-    
+
     private var notifyMerchantOfExpiryDateValidationChangeIsPending = false
     private var merchantNeverNotifiedOfExpiryDateValidationChange = true
-    
-    private(set) var alreadyNotifiedMerchantOfCvcValidationState = false
+
+    private var notifyMerchantOfCvcValidationChangeIsPending = false
+    private var merchantNeverNotifiedOfCvcValidationChange = true
 
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
@@ -123,11 +124,12 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
 
     func notifyMerchantOfExpiryDateValidationState() {
         if notifyMerchantOfExpiryDateValidationChangeIsPending
-            || merchantNeverNotifiedOfExpiryDateValidationChange{
-            
+            || merchantNeverNotifiedOfExpiryDateValidationChange
+        {
+
             merchantNeverNotifiedOfExpiryDateValidationChange = false
             notifyMerchantOfExpiryDateValidationChangeIsPending = false
-            
+
             merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
         }
     }
@@ -137,6 +139,7 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     func handleCvcValidation(isValid: Bool) {
         if isValid != cvcIsValid {
             cvcIsValid = isValid
+            notifyMerchantOfCvcValidationChangeIsPending = true
             notifyMerchantOfCvcValidationState()
 
             if allFieldsValid() {
@@ -146,7 +149,14 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
     }
 
     func notifyMerchantOfCvcValidationState() {
-        merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
-        alreadyNotifiedMerchantOfCvcValidationState = true
+        if notifyMerchantOfCvcValidationChangeIsPending
+            || merchantNeverNotifiedOfCvcValidationChange
+        {
+
+            merchantNeverNotifiedOfCvcValidationChange = false
+            notifyMerchantOfCvcValidationChangeIsPending = false
+
+            merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
+        }
     }
 }

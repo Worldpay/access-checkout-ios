@@ -286,14 +286,6 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
     
-    func testNotifyMerchantOfCvcValidationState_setsNotificationState() {
-        let validationStateHandler = CardValidationStateHandler(merchantDelegate)
-        
-        validationStateHandler.notifyMerchantOfCvcValidationState()
-        
-        XCTAssertTrue(validationStateHandler.alreadyNotifiedMerchantOfCvcValidationState)
-    }
-    
     func testNotifyMerchantOfCvcValidationState_notifiesMerchantOfValidCvc() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate: merchantDelegate, cvcValidationState: true)
         

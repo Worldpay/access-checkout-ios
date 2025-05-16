@@ -8,9 +8,10 @@ class CvcFlowCvcValidationTests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
 
-        let app = AppLauncher.launch()
+        let app = AppLauncher.launch(displayDismissKeyboardButton: true)
+        let navigationView = NavigationViewPageObject(app)
 
-        view = NavigationViewPageObject(app).navigateToCvcFlow()
+        view = navigationView.navigateToCvcFlow()
     }
 
     func testCannotTypeAlphabeticalCharactersInCvc() {
@@ -63,6 +64,7 @@ class CvcFlowCvcValidationTests: XCTestCase {
 
     func testPartialCvcIsInvalid() {
         view!.typeTextIntoCvc("12")
+        view!.dismissKeyboard()  // removes focus from Cvc
 
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }

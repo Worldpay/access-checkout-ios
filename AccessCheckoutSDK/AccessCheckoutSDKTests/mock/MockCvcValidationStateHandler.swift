@@ -25,22 +25,6 @@ import Cuckoo
     
 
     
-    
-    
-    
-     var alreadyNotifiedMerchantOfCvcValidationState: Bool {
-        get {
-            return cuckoo_manager.getter("alreadyNotifiedMerchantOfCvcValidationState",
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.alreadyNotifiedMerchantOfCvcValidationState)
-        }
-        
-    }
-    
-    
 
     
 
@@ -95,13 +79,6 @@ import Cuckoo
         
         
         
-        var alreadyNotifiedMerchantOfCvcValidationState: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockCvcValidationStateHandler, Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfCvcValidationState")
-        }
-        
-        
-        
-        
         
         func handleCvcValidation<M1: Cuckoo.Matchable>(isValid: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Bool)> where M1.MatchedType == Bool {
             let matchers: [Cuckoo.ParameterMatcher<(Bool)>] = [wrap(matchable: isValid) { $0 }]
@@ -137,13 +114,6 @@ import Cuckoo
         }
     
         
-        
-        
-        var alreadyNotifiedMerchantOfCvcValidationState: Cuckoo.VerifyReadOnlyProperty<Bool> {
-            return .init(manager: cuckoo_manager, name: "alreadyNotifiedMerchantOfCvcValidationState", callMatcher: callMatcher, sourceLocation: sourceLocation)
-        }
-        
-        
     
         
         
@@ -175,17 +145,6 @@ import Cuckoo
 
 
  class CvcValidationStateHandlerStub: CvcValidationStateHandler {
-    
-    
-    
-    
-     var alreadyNotifiedMerchantOfCvcValidationState: Bool {
-        get {
-            return DefaultValueRegistry.defaultValue(for: (Bool).self)
-        }
-        
-    }
-    
     
 
     

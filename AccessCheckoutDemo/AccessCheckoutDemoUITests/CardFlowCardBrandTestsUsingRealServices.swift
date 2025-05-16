@@ -199,7 +199,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
 
     func assertBrand(of pan: String, is brand: String) {
         if let panText = view!.panText, !panText.isEmpty {
-            for _ in 0 ..< 20 {
+            for _ in 0..<20 {
                 view!.typeTextIntoPan(backspace)
             }
 

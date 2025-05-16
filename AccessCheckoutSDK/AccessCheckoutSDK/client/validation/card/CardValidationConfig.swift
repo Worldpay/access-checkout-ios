@@ -1,24 +1,22 @@
 import UIKit
 
-/**
- An implementation of the `ValidationConfig` that represents the card validation configuration and that can be built using the `CardValidationConfigBuilder`
- 
- Use this configuration to register the relevant fields and listener.
- 
- - SeeAlso: AccessCheckoutUITextField
- - SeeAlso: AccessCheckoutCardValidationDelegate
- */
+/// An implementation of the `ValidationConfig` that represents the card validation configuration and that can be built using the `CardValidationConfigBuilder`
+///
+/// Use this configuration to register the relevant fields and listener.
+///
+/// - SeeAlso: AccessCheckoutUITextField
+/// - SeeAlso: AccessCheckoutCardValidationDelegate
 public struct CardValidationConfig: ValidationConfig {
     let pan: AccessCheckoutUITextField?
     let expiryDate: AccessCheckoutUITextField?
     let cvc: AccessCheckoutUITextField?
-    
+
     let accessBaseUrl: String
     let validationDelegate: AccessCheckoutCardValidationDelegate
-    
+
     let acceptedCardBrands: [String]
     let panFormattingEnabled: Bool
-    
+
     /**
      - Returns: an instance of a builder used to create an instance  of `CardValidationConfig`
      - SeeAlso: CardValidationConfigBuilder
@@ -26,10 +24,10 @@ public struct CardValidationConfig: ValidationConfig {
     public static func builder() -> CardValidationConfigBuilder {
         return CardValidationConfigBuilder()
     }
-    
+
     /**
      Creates an instance of `CardValidationConfig`
-     
+    
      - Parameter pan: `AccessCheckoutUITextField` that represents the pan ui element
      - Parameter expiryDate: `AccessCheckoutUITextField` that represents the expiry date ui element
      - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
@@ -38,42 +36,41 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
      */
-    internal init(pan: AccessCheckoutUITextField,
-                  expiryDate: AccessCheckoutUITextField,
-                  cvc: AccessCheckoutUITextField,
-                  accessBaseUrl: String,
-                  validationDelegate: AccessCheckoutCardValidationDelegate,
-                  acceptedCardBrands: [String] = [],
-                  panFormattingEnabled: Bool = false)
-    {
+    internal init(
+        pan: AccessCheckoutUITextField,
+        expiryDate: AccessCheckoutUITextField,
+        cvc: AccessCheckoutUITextField,
+        accessBaseUrl: String,
+        validationDelegate: AccessCheckoutCardValidationDelegate,
+        acceptedCardBrands: [String] = [],
+        panFormattingEnabled: Bool = false
+    ) {
         self.pan = pan
         self.expiryDate = expiryDate
         self.cvc = cvc
 
         self.accessBaseUrl = accessBaseUrl
         self.validationDelegate = validationDelegate
-        
+
         self.acceptedCardBrands = acceptedCardBrands
         self.panFormattingEnabled = panFormattingEnabled
     }
 }
 
-/**
- Creates an instance of `CardValidationConfig`
- An instance of this builder can be obtained by calling `CardValidationConfig.builder()
- */
+/// Creates an instance of `CardValidationConfig`
+/// An instance of this builder can be obtained by calling `CardValidationConfig.builder()
 public class CardValidationConfigBuilder {
     private var pan: AccessCheckoutUITextField?
     private var expiryDate: AccessCheckoutUITextField?
     private var cvc: AccessCheckoutUITextField?
-    
+
     private var accessBaseUrl: String?
     private var validationDelegate: AccessCheckoutCardValidationDelegate?
     private var acceptedCardBrands: [String] = []
     private var panFormattingEnabled: Bool = false
-    
+
     fileprivate init() {}
-    
+
     /**
      Sets the pan ui element to be validatedg
      - Parameter pan: `AccessCheckoutUITextField` to be validated
@@ -83,7 +80,7 @@ public class CardValidationConfigBuilder {
         self.pan = pan
         return self
     }
-    
+
     /**
      Sets the expiry date ui element to be validated
      - Parameter expiryDate: `AccessCheckoutUITextField` to be validated
@@ -93,7 +90,7 @@ public class CardValidationConfigBuilder {
         self.expiryDate = expiryDate
         return self
     }
-    
+
     /**
      Sets the cvc ui element to be validated
      - Parameter cvc: `AccessCheckoutUITextField` to be validated
@@ -103,7 +100,7 @@ public class CardValidationConfigBuilder {
         self.cvc = cvc
         return self
     }
-    
+
     /**
      - Parameter accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
      - Returns: the same instance of the builder
@@ -112,16 +109,18 @@ public class CardValidationConfigBuilder {
         self.accessBaseUrl = accessBaseUrl
         return self
     }
-    
+
     /**
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the merchant's delegate that should be notified on validation changes
      - Returns: the same instance of the builder
      */
-    public func validationDelegate(_ validationDelegate: AccessCheckoutCardValidationDelegate) -> CardValidationConfigBuilder {
+    public func validationDelegate(_ validationDelegate: AccessCheckoutCardValidationDelegate)
+        -> CardValidationConfigBuilder
+    {
         self.validationDelegate = validationDelegate
         return self
     }
-    
+
     /**
      - Parameter acceptedCardBrands: `Array` of `String`that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Returns: the same instance of the builder
@@ -130,7 +129,7 @@ public class CardValidationConfigBuilder {
         self.acceptedCardBrands = acceptedCardBrands
         return self
     }
-    
+
     /**
      - Parameter enablePanFormatting: enables the automatic formatting of the pan field
      - Returns: the same instance of the builder
@@ -139,11 +138,11 @@ public class CardValidationConfigBuilder {
         panFormattingEnabled = true
         return self
     }
-    
+
     /**
      Use this method to create an instance of `CardValidationConfig`
      - Returns: an instance of `CardValidationConfig`
-     
+    
      - Throws: an `AccessCheckoutIllegalArgumentError` if either the pan, expiryDate, cvc, accessBaseUrl or validationDelegate have not been specified
      */
     public func build() throws -> CardValidationConfig {
@@ -162,7 +161,7 @@ public class CardValidationConfigBuilder {
         guard let validationDelegate = validationDelegate else {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
-        
+
         return CardValidationConfig(
             pan: pan!,
             expiryDate: expiryDate!,

@@ -21,12 +21,12 @@ class CvcViewPresenterTests: PresenterTestSuite {
         let cvcValidator = CvcValidator()
         let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
                                                                           CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
-        validationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
+        validationFlow.getStubbingProxy().notifyMerchant().thenDoNothing()
         let presenter = CvcViewPresenter(validationFlow, cvcValidator)
 
         presenter.onEditEnd(text: cvc)
 
-        verify(validationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(validationFlow).notifyMerchant()
     }
 
     func testCanChangeTextChecksIfTheTextCanBeEnteredUsingTheCurrentCvcValidationRuleAndDoesNotTriggerValidationFlow() {
@@ -96,11 +96,11 @@ class CvcViewPresenterTests: PresenterTestSuite {
         let cvcValidator = CvcValidator()
         let validationFlow: MockCvcValidationFlow = MockCvcValidationFlow(cvcValidator,
                                                                           CardValidationStateHandler(MockAccessCheckoutCardValidationDelegate()))
-        validationFlow.getStubbingProxy().notifyMerchantIfNotAlreadyNotified().thenDoNothing()
+        validationFlow.getStubbingProxy().notifyMerchant().thenDoNothing()
         let presenter = CvcViewPresenter(validationFlow, cvcValidator)
 
         presenter.textFieldDidEndEditing(cvcTextField)
 
-        verify(validationFlow).notifyMerchantIfNotAlreadyNotified()
+        verify(validationFlow).notifyMerchant()
     }
 }

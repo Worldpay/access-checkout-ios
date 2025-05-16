@@ -111,6 +111,13 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
 6. Replace the `ACCESS_CHECKOUT_ID` value by the `Checkout ID` that was provided to you when you were on-boarded on Access Worldpay
 7. To run the demo app, click the `Play` button in the top-left corner of the screen to open the demo app in the simulated device of your choice.
 
+## Code formatting
+
+[Swift format](https://github.com/swiftlang/swift-format) is used to format the code and uses the configuration set up in the `.swift-format` file as per the [configuration options available](https://github.com/swiftlang/swift-format/blob/main/Documentation/Configuration.md) in swift format
+The code can be reformatted in command line by using `swift-format --in-place --recursive .`
+
+**Code must be formatted using this tool before raising a PR.**
+
 ## Security
 
 Checkmarx scans are triggered on push via a webhook set up in GitHub, and CRs for new releases must have a valid Checkmarx report attached to the CR

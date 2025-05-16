@@ -243,7 +243,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iOH-vE-c2u">
-                                <rect key="frame" x="10" y="60" width="355" height="101"/>
+                                <rect key="frame" x="10" y="60" width="355" height="143.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WF5-2O-aC4" userLabel="hview - pan + image">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
@@ -293,6 +293,15 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoX-9D-M7C">
+                                        <rect key="frame" x="0.0" y="109" width="355" height="34.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="dismissKeyboardButton"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Dismiss keyboard"/>
+                                        <connections>
+                                            <action selector="onDismissKeyboardTap:" destination="JDj-My-e5H" eventType="touchUpInside" id="Bhh-sD-IfB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="WF5-2O-aC4" secondAttribute="trailing" id="3C2-Xm-788"/>
@@ -310,6 +319,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Restricted Card Flow" image="creditcard" catalog="system" id="1Zs-RC-hnU"/>
                     <connections>
+                        <outlet property="dismissKeyboardButton" destination="IoX-9D-M7C" id="8wH-Bg-S23"/>
                         <outlet property="imageView" destination="iUX-jl-sEW" id="9lP-kL-PiX"/>
                         <outlet property="panIsValidLabel" destination="DcK-R3-jK5" id="3be-3n-4XV"/>
                         <outlet property="panTextField" destination="cXc-DJ-Q7s" id="VN1-U0-875"/>
@@ -332,7 +342,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PlE-WI-9tS">
-                                <rect key="frame" x="10" y="60" width="355" height="70.5"/>
+                                <rect key="frame" x="10" y="60" width="355" height="105"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ebC-JE-Qrd">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
@@ -371,6 +381,15 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vV-fg-qlv">
+                                        <rect key="frame" x="0.0" y="70.5" width="355" height="34.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="dismissKeyboardButton"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Dismiss keyboard"/>
+                                        <connections>
+                                            <action selector="onDismissKeyboardTap:" destination="ZEX-QF-aID" eventType="touchUpInside" id="gg2-LT-C4g"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -385,6 +404,7 @@
                     <connections>
                         <outlet property="cvcIsValidLabel" destination="rhE-RM-1YK" id="8VX-Tu-dTh"/>
                         <outlet property="cvcTextField" destination="rhF-MI-5Qs" id="KuL-TK-MNQ"/>
+                        <outlet property="dismissKeyboardButton" destination="8vV-fg-qlv" id="Iol-tE-8vo"/>
                         <outlet property="spinner" destination="tjE-oa-gkj" id="Uk1-0u-3Vf"/>
                         <outlet property="submitButton" destination="xFk-y0-dUk" id="Dty-Nd-Jvt"/>
                     </connections>
