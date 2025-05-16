@@ -68,7 +68,24 @@ public final class AccessCheckoutUITextField: UIView {
             return result
         }
     }
-
+    
+    /// Sets a listener to be invoked when the focus state of the `AccessCheckoutUITextField` changes.
+    ///
+    /// - Parameter listener: A closure that takes two parameters:
+    ///   - textField: The `AccessCheckoutUITextField` instance whose focus state has changed.
+    ///   - hasFocus: A Boolean indicating whether the `textField` currently has focus.
+    ///
+    /// This method allows you to customize the behavior of the `AccessCheckoutUITextField` when it gains or loses focus.
+    /// You can use this listener to modify the appearance or perform any action based on the focus state.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// myfield.setOnFocusChangedListener { textField, hasFocus in
+    ///     textField.borderColor = hasFocus ? .systemBlue : .systemGray
+    /// }
+    /// ```
+    /// In the example above, the border color of the `myfield` changes to `systemBlue` when it gains focus,
+    /// and reverts to `systemGray` when it loses focus.
     public func setOnFocusChangedListener(_ listener: @escaping (AccessCheckoutUITextField, Bool)-> Void) {
         self.externalOnFocusChangeListener = listener
     }
