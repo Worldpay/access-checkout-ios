@@ -87,6 +87,8 @@ extension CardValidationStateHandler: PanValidationStateHandler {
         if notifyMerchantOfPanValidationChangeIsPending
             || merchantNeverNotifiedOfPanValidationChange
         {
+            NSLog("Notifying merchant of Pan validation state with isValid=\(panIsValid)")
+            
             merchantNeverNotifiedOfPanValidationChange = false
             notifyMerchantOfPanValidationChangeIsPending = false
 
@@ -127,6 +129,8 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
             || merchantNeverNotifiedOfExpiryDateValidationChange
         {
 
+            NSLog("Notifying merchant of expiry date validation state with isValid=\(expiryDateIsValid)")
+            
             merchantNeverNotifiedOfExpiryDateValidationChange = false
             notifyMerchantOfExpiryDateValidationChangeIsPending = false
 
@@ -153,6 +157,8 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
             || merchantNeverNotifiedOfCvcValidationChange
         {
 
+            NSLog("Notifying merchant of cvc validation state with isValid=\(cvcIsValid)")
+            
             merchantNeverNotifiedOfCvcValidationChange = false
             notifyMerchantOfCvcValidationChangeIsPending = false
 

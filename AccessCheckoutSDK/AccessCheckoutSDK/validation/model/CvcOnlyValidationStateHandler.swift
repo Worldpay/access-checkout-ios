@@ -36,6 +36,8 @@ extension CvcOnlyValidationStateHandler: CvcValidationStateHandler {
             || merchantNeverNotifiedOfCvcValidationChange
         {
 
+            NSLog("Notifying merchant of cvc validation state with isValid=\(cvcIsValid)")
+            
             merchantNeverNotifiedOfCvcValidationChange = false
             notifyMerchantOfCvcValidationChangeIsPending = false
 
