@@ -7,14 +7,14 @@ class CvcFlowViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var cvcIsValidLabel: UILabel!
 
-    @IBOutlet weak var dismissKeyboardButton: UIButton!
+    @IBOutlet var dismissKeyboardButton: UIButton!
 
     @IBAction func onDismissKeyboardTap(_ sender: Any) {
         _ = cvcTextField.resignFirstResponder()
     }
 
     @IBAction func submitTouchUpInsideHandler(_ sender: Any) {
-        self.cvcTextField.isEnabled = false
+        cvcTextField.isEnabled = false
 
         spinner.startAnimating()
 
@@ -41,13 +41,15 @@ class CvcFlowViewController: UIViewController {
                         closeHandler: {
                             self.cvcTextField.isEnabled = true
                             self.cvcTextField.clear()
-                        })
+                        }
+                    )
                 case .failure(let error):
                     self.cvcTextField.isEnabled = true
                     self.highlightCvcField(error: error)
 
                     AlertView.display(
-                        using: self, title: "Error", message: error.localizedDescription)
+                        using: self, title: "Error", message: error.localizedDescription
+                    )
                 }
             }
         }
@@ -60,17 +62,22 @@ class CvcFlowViewController: UIViewController {
         // This configuration property is only ever set up to true
         // wheh a specific launch argument is set to true
         // See AppLauncher in the AccessCheckoutDemoUITests
-        self.dismissKeyboardButton.isHidden = !Configuration.displayDismissKeyboardButton
+        dismissKeyboardButton.isHidden = !Configuration.displayDismissKeyboardButton
 
         cvcTextField.placeholder = "123"
         cvcTextField.font = .preferredFont(forTextStyle: .body)
-        //Apply onfocus listeners
-        cvcTextField.setOnFocusChangedListener{view, hasFocus in
+
+        if #available(iOS 17.0, *) {
+            // creditCardSecurityCode is only available in iOS17+
+            cvcTextField.textContentType = UITextContentType.creditCardSecurityCode
+        }
+
+        // Apply onfocus listeners
+        cvcTextField.setOnFocusChangedListener { view, hasFocus in
             if #available(iOS 13.0, *) {
                 view.borderColor = hasFocus ? .systemBlue : .systemGray5
             } else {
                 view.borderColor = hasFocus ? .systemBlue : .systemGray
-
             }
         }
 
@@ -104,9 +111,9 @@ class CvcFlowViewController: UIViewController {
         }
 
         var fieldToReturn: String?
-        validationErrors.forEach { validationError in
+        for validationError in validationErrors {
             if validationError.errorName == "stringFailedRegexCheck",
-                validationError.jsonPath == "$.cvv"
+               validationError.jsonPath == "$.cvv"
             {
                 fieldToReturn = validationError.jsonPath
             }

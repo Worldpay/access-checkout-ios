@@ -29,7 +29,7 @@ class CardFlowViewController: UIViewController {
 
         let sessionTypes: Set<SessionType> =
             paymentsCvcSessionToggle.isOn
-            ? [SessionType.card, SessionType.cvc] : [SessionType.card]
+                ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
         let cardDetails = try! CardDetailsBuilder().pan(panTextField)
             .expiryDate(expiryDateTextField)
@@ -57,9 +57,9 @@ class CardFlowViewController: UIViewController {
                     if sessionTypes.count > 1 {
                         titleToDisplay = "Card & CVC Sessions"
                         messageToDisplay = """
-                            \(sessions[SessionType.card]!)
-                            \(sessions[SessionType.cvc]!)
-                            """
+                        \(sessions[SessionType.card]!)
+                        \(sessions[SessionType.cvc]!)
+                        """
                     } else {
                         titleToDisplay = "Card Session"
                         messageToDisplay = "\(sessions[SessionType.card]!)"
@@ -130,37 +130,43 @@ class CardFlowViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         panTextField.placeholder = "Card Number"
         expiryDateTextField.placeholder = "MM/YY"
         cvcTextField.placeholder = "CVC"
-        
-        //Apply onfocus listeners
-        panTextField.setOnFocusChangedListener{view, hasFocus in
-            if #available(iOS 13.0, *) {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray5
-            } else {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray
-            }
-        }
-        
-        expiryDateTextField.setOnFocusChangedListener{view, hasFocus in
-            if #available(iOS 13.0, *) {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray5
-            } else {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray
-            }
-        }
-        
-        cvcTextField.setOnFocusChangedListener{view, hasFocus in
-            if #available(iOS 13.0, *) {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray5
-            } else {
-                view.borderColor = hasFocus ? .systemBlue : .systemGray
 
+        panTextField.textContentType = UITextContentType.creditCardNumber
+        if #available(iOS 17.0, *) {
+            // creditCardExpiration and creditCardSecurityCode are only available in iOS17+
+            expiryDateTextField.textContentType = UITextContentType.creditCardExpiration
+            cvcTextField.textContentType = UITextContentType.creditCardSecurityCode
+        }
+
+        // Apply onfocus listeners
+        panTextField.setOnFocusChangedListener { view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
             }
         }
-        
+
+        expiryDateTextField.setOnFocusChangedListener { view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+        }
+
+        cvcTextField.setOnFocusChangedListener { view, hasFocus in
+            if #available(iOS 13.0, *) {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray5
+            } else {
+                view.borderColor = hasFocus ? .systemBlue : .systemGray
+            }
+        }
+
         panTextField.font = .preferredFont(forTextStyle: .body)
         expiryDateTextField.font = .preferredFont(forTextStyle: .body)
         cvcTextField.font = .preferredFont(forTextStyle: .body)
@@ -223,7 +229,7 @@ class CardFlowViewController: UIViewController {
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl)
+           let url = URL(string: imageUrl)
         {
             updateCardBrandImage(url: url)
         } else {
