@@ -1,6 +1,6 @@
 import Foundation
-import UIKit
 import os
+import UIKit
 
 /// A UI component to capture the pan, expiry date or cvc of a payment card without being exposed to the text entered by the shopper.
 /// This design is to allow merchants to reach the lowest level of compliance (SAQ-A)
@@ -23,12 +23,12 @@ public final class AccessCheckoutUITextField: UIView {
 
     private var uiTextFieldConstraints: [NSLayoutConstraint] = []
 
-    private var _horizontalPadding:CGFloat = defaults.horizontalPadding
-    //Event Support
-    internal var externalOnFocusChangeListener: ((AccessCheckoutUITextField, Bool)-> Void)?
+    private var _horizontalPadding: CGFloat = defaults.horizontalPadding
+    // Event Support
+    internal var externalOnFocusChangeListener: ((AccessCheckoutUITextField, Bool) -> Void)?
 
     private func buildTextFieldWithDefaults() -> UITextField {
-        let uiTextField = FocusAwareUITextField(owner: self )
+        let uiTextField = FocusAwareUITextField(owner: self)
 
         // Apply defaults to UITextField
         uiTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -39,36 +39,37 @@ public final class AccessCheckoutUITextField: UIView {
         addSubview(uiTextField)
         return uiTextField
     }
-    
+
     private final class FocusAwareUITextField: UITextField {
         var owner: AccessCheckoutUITextField
-        
-        init(owner: AccessCheckoutUITextField){
+
+        init(owner: AccessCheckoutUITextField) {
             self.owner = owner
-            //.zero is used to set size via AutoLayout instead
+            // .zero is used to set size via AutoLayout instead
             super.init(frame: .zero)
         }
-        
-        //Required initializer for UIKit support when loading from storyboards or XIBs (not supported in this case)
+
+        // Required initializer for UIKit support when loading from storyboards or XIBs (not supported in this case)
+        @available(*, unavailable)
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
+
         override func becomeFirstResponder() -> Bool {
             let result = super.becomeFirstResponder()
-            //Pass view
-            if result {owner.externalOnFocusChangeListener?(owner, true)}
+            // Pass view
+            if result { self.owner.externalOnFocusChangeListener?(self.owner, true) }
             return result
         }
-        
+
         override func resignFirstResponder() -> Bool {
             let result = super.resignFirstResponder()
-            //Pass view
-            if result {owner.externalOnFocusChangeListener?(owner, false)}
+            // Pass view
+            if result { self.owner.externalOnFocusChangeListener?(self.owner, false) }
             return result
         }
     }
-    
+
     /// Sets a listener to be invoked when the focus state of the `AccessCheckoutUITextField` changes.
     ///
     /// - Parameter listener: A closure that takes two parameters:
@@ -86,7 +87,7 @@ public final class AccessCheckoutUITextField: UIView {
     /// ```
     /// In the example above, the border color of the `myfield` changes to `systemBlue` when it gains focus,
     /// and reverts to `systemGray` when it loses focus.
-    public func setOnFocusChangedListener(_ listener: @escaping (AccessCheckoutUITextField, Bool)-> Void) {
+    public func setOnFocusChangedListener(_ listener: @escaping (AccessCheckoutUITextField, Bool) -> Void) {
         self.externalOnFocusChangeListener = listener
     }
 
@@ -117,37 +118,37 @@ public final class AccessCheckoutUITextField: UIView {
     }
 
     private func setLayout() {
-        if !uiTextFieldConstraints.isEmpty {
-            NSLayoutConstraint.deactivate(uiTextFieldConstraints)
+        if !self.uiTextFieldConstraints.isEmpty {
+            NSLayoutConstraint.deactivate(self.uiTextFieldConstraints)
         }
 
-        uiTextFieldConstraints = [
-            uiTextField.topAnchor.constraint(
+        self.uiTextFieldConstraints = [
+            self.uiTextField.topAnchor.constraint(
                 equalTo: topAnchor,
                 constant: AccessCheckoutUITextField.defaults.verticalPadding
             ),
-            uiTextField.bottomAnchor.constraint(
+            self.uiTextField.bottomAnchor.constraint(
                 equalTo: bottomAnchor,
                 constant: -AccessCheckoutUITextField.defaults.verticalPadding
             ),
-            uiTextField.leadingAnchor.constraint(
+            self.uiTextField.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
                 constant: self.horizontalPadding
             ),
-            uiTextField.trailingAnchor.constraint(
+            self.uiTextField.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
                 constant: -self.horizontalPadding
             ),
         ]
 
-        NSLayoutConstraint.activate(uiTextFieldConstraints)
+        NSLayoutConstraint.activate(self.uiTextFieldConstraints)
     }
 
     override public var intrinsicContentSize: CGSize {
-        let width = uiTextField.intrinsicContentSize.height
+        let width = self.uiTextField.intrinsicContentSize.height
         let height =
-            uiTextField.intrinsicContentSize.height
-            + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
+            self.uiTextField.intrinsicContentSize.height
+                + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
 
         return CGSize(width: width, height: height)
     }
@@ -172,6 +173,7 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextField.placeholder = self.placeholder
         self.uiTextField.font = self.font
     }
+
     // MARK: Public properties
 
     /* Accessibility properties */
@@ -192,7 +194,6 @@ public final class AccessCheckoutUITextField: UIView {
         get { nil }
     }
 
-    
     /**
      An id that uniquely identifies an instance of this UI component
      */
@@ -329,6 +330,15 @@ public final class AccessCheckoutUITextField: UIView {
      */
     public var keyboardAppearance: UIKeyboardAppearance = defaults.keyboardAppearance {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
+    }
+
+    /**
+     This property is used to improve keyboard suggestions and autofill behavior.
+     Default is nil, which means no specific content type is set.
+     */
+    @IBInspectable
+    public var textContentType: UITextContentType? {
+        didSet { self.uiTextField.textContentType = self.textContentType }
     }
 
     /* Enabled properties */
