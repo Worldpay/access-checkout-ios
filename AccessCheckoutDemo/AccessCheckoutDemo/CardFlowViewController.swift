@@ -136,11 +136,6 @@ class CardFlowViewController: UIViewController {
         cvcTextField.placeholder = "CVC"
 
         panTextField.textContentType = UITextContentType.creditCardNumber
-        if #available(iOS 17.0, *) {
-            // creditCardExpiration and creditCardSecurityCode are only available in iOS17+
-            expiryDateTextField.textContentType = UITextContentType.creditCardExpiration
-            cvcTextField.textContentType = UITextContentType.creditCardSecurityCode
-        }
 
         // Apply onfocus listeners
         panTextField.setOnFocusChangedListener { view, hasFocus in

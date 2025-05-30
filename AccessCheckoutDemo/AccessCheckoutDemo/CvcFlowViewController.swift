@@ -67,11 +67,6 @@ class CvcFlowViewController: UIViewController {
         cvcTextField.placeholder = "123"
         cvcTextField.font = .preferredFont(forTextStyle: .body)
 
-        if #available(iOS 17.0, *) {
-            // creditCardSecurityCode is only available in iOS17+
-            cvcTextField.textContentType = UITextContentType.creditCardSecurityCode
-        }
-
         // Apply onfocus listeners
         cvcTextField.setOnFocusChangedListener { view, hasFocus in
             if #available(iOS 13.0, *) {
