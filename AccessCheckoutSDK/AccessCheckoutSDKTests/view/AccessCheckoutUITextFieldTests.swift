@@ -1,6 +1,7 @@
-@testable import AccessCheckoutSDK
 import Foundation
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: constructors tests
@@ -12,11 +13,16 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
-        XCTAssertTrue(colorsAreEqual(UIColor(cgColor: textField.layer.borderColor!), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                UIColor(cgColor: textField.layer.borderColor!),
+                AccessCheckoutUITextField.defaults.borderColor))
         XCTAssertEqual(1, textField.layer.borderWidth)
 
         // Styles set on the uiTextField
-        XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+        XCTAssertEqual(
+            UIKeyboardType.asciiCapableNumberPad.rawValue,
+            textField.uiTextField.keyboardType.rawValue)
     }
 
     func testDefaultConstructorInitialiasesTextFieldWithDefaultStyles() {
@@ -25,11 +31,16 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertNotNil(textField.subviews[0])
         // Styles set on the view itself
         XCTAssertEqual(5, textField.layer.cornerRadius)
-        XCTAssertTrue(colorsAreEqual(UIColor(cgColor: textField.layer.borderColor!), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                UIColor(cgColor: textField.layer.borderColor!),
+                AccessCheckoutUITextField.defaults.borderColor))
         XCTAssertEqual(1, textField.layer.borderWidth)
 
         // Styles set on the uiTextField
-        XCTAssertEqual(UIKeyboardType.asciiCapableNumberPad.rawValue, textField.uiTextField.keyboardType.rawValue)
+        XCTAssertEqual(
+            UIKeyboardType.asciiCapableNumberPad.rawValue,
+            textField.uiTextField.keyboardType.rawValue)
     }
 
     func testCGRectConstructorPositionsInternalTextFieldUsingConstraints() {
@@ -37,11 +48,12 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         XCTAssertEqual(4, textField.constraints.count)
 
-        assertConstraints(textField,
-                          top: AccessCheckoutUITextField.defaults.verticalPadding,
-                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+        assertConstraints(
+            textField,
+            top: AccessCheckoutUITextField.defaults.verticalPadding,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
     }
 
     func testDefaultConstructorPositionsInternalTextFieldUsingConstraints() {
@@ -49,19 +61,25 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         XCTAssertEqual(4, textField.constraints.count)
 
-        assertConstraints(textField,
-                          top: AccessCheckoutUITextField.defaults.verticalPadding,
-                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+        assertConstraints(
+            textField,
+            top: AccessCheckoutUITextField.defaults.verticalPadding,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
     }
 
     // MARK: default styles values
 
     func testDefaultStylesValues() {
         XCTAssertTrue(colorsAreEqual(.white, AccessCheckoutUITextField.defaults.backgroundColor))
-        XCTAssertTrue(colorsAreEqual(toUIColor(hexadecimal: 0xFBFBFB), AccessCheckoutUITextField.defaults.disabledBackgroundColor))
-        XCTAssertTrue(colorsAreEqual(toUIColor(hexadecimal: 0xE9E9E9), AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                toUIColor(hexadecimal: 0xFBFBFB),
+                AccessCheckoutUITextField.defaults.disabledBackgroundColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                toUIColor(hexadecimal: 0xE9E9E9), AccessCheckoutUITextField.defaults.borderColor))
         XCTAssertEqual(AccessCheckoutUITextField.defaults.borderWidth, 1)
         XCTAssertEqual(AccessCheckoutUITextField.defaults.cornerRadius, 5)
         XCTAssertEqual(AccessCheckoutUITextField.defaults.textAlignment, .left)
@@ -89,7 +107,8 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(2, textField.layer.borderWidth)
 
         // Styles set on the uiTextField
-        XCTAssertEqual(UIKeyboardType.namePhonePad.rawValue, textField.uiTextField.keyboardType.rawValue)
+        XCTAssertEqual(
+            UIKeyboardType.namePhonePad.rawValue, textField.uiTextField.keyboardType.rawValue)
         XCTAssertEqual("some placeholder", textField.uiTextField.placeholder)
         XCTAssertEqual(UIColor.yellow, textField.uiTextField.textColor)
     }
@@ -189,19 +208,21 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         let textField = createTextField()
 
         // Asserts padding is default padding to start with
-        assertConstraints(textField,
-                          top: AccessCheckoutUITextField.defaults.verticalPadding,
-                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-                          leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-                          trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+        assertConstraints(
+            textField,
+            top: AccessCheckoutUITextField.defaults.verticalPadding,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
+            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
 
         textField.horizontalPadding = 20
 
-        assertConstraints(textField,
-                          top: AccessCheckoutUITextField.defaults.verticalPadding,
-                          bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-                          leading: 20,
-                          trailing: -20)
+        assertConstraints(
+            textField,
+            top: AccessCheckoutUITextField.defaults.verticalPadding,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
+            leading: 20,
+            trailing: -20)
     }
 
     // MARK: Border properties tests
@@ -260,7 +281,8 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     func testBorderColorHasADefaultValue() {
         let textField = createTextField()
 
-        XCTAssertTrue(colorsAreEqual(textField.borderColor, AccessCheckoutUITextField.defaults.borderColor))
+        XCTAssertTrue(
+            colorsAreEqual(textField.borderColor, AccessCheckoutUITextField.defaults.borderColor))
     }
 
     func testBorderColorGetterReturnsValueSet() {
@@ -351,7 +373,6 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         XCTAssertEqual(expected, textField.uiTextField.textAlignment)
     }
-
 
     // MARK: Placeholder properties
 
@@ -459,7 +480,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
     func testtextContentTypeByDefaultIsNil() {
         let textField = createTextField()
-        XCTAssertEqual(nil , textField.uiTextField.textContentType)
+        XCTAssertEqual(nil, textField.uiTextField.textContentType)
     }
 
     func testtextContentTypeSetterSetsUITextFieldProperty() {
@@ -515,10 +536,15 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         textField.backgroundColor = AccessCheckoutUITextField.defaults.backgroundColor
 
         textField.isEnabled = false
-        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, AccessCheckoutUITextField.defaults.disabledBackgroundColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                textField.backgroundColor,
+                AccessCheckoutUITextField.defaults.disabledBackgroundColor))
 
         textField.isEnabled = true
-        XCTAssertTrue(colorsAreEqual(textField.backgroundColor, AccessCheckoutUITextField.defaults.backgroundColor))
+        XCTAssertTrue(
+            colorsAreEqual(
+                textField.backgroundColor, AccessCheckoutUITextField.defaults.backgroundColor))
     }
 
     func testIsEnabled_whenToggled_doesNotChangeBackgroundColor_wWhenBackgroundColorIsNotDefault() {
@@ -565,7 +591,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertNil(textField.externalOnFocusChangeListener)
 
         //Set
-        textField.setOnFocusChangedListener{view, isFocused in
+        textField.setOnFocusChangedListener { view, isFocused in
             //do something
         }
 
@@ -580,7 +606,6 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         XCTAssertTrue(uiTextFieldMock.resignFirstResponderCalled)
     }
-
 
     // MARK: Internal properties
 
@@ -660,8 +685,10 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
             && lhsA == rhsA
     }
 
-    private func assertConstraints(_ textField:AccessCheckoutUITextField,
-                                          top:CGFloat, bottom:CGFloat, leading:CGFloat, trailing:CGFloat) {
+    private func assertConstraints(
+        _ textField: AccessCheckoutUITextField,
+        top: CGFloat, bottom: CGFloat, leading: CGFloat, trailing: CGFloat
+    ) {
         XCTAssertEqual(4, textField.constraints.count)
 
         let topConstraint = textField.constraints[0]
@@ -699,7 +726,10 @@ private class UITextFieldDelegateMock: NSObject {}
 extension UITextFieldDelegateMock: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {}
 
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(
+        _ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
         return false
     }
 }

@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class ApiLinksTest: XCTestCase {
     func test_cardSession_discoversSessionServiceAndCardSessionEndPoint() {

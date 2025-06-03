@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class RetrieveSessionResultsCollatorTests: XCTestCase {
     func testCompletesWithAllResultsWhenAllSuccessfulResultsReceived() {
@@ -15,16 +16,16 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             case .failure(let error):
                 XCTFail("Expected successful result but got error \(error)")
             }
-            
+
             expectationToFulfill.fulfill()
         }
-        
+
         handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
-        
+
         wait(for: [expectationToFulfill], timeout: 1)
     }
-    
+
     func testCompletesWithAnErrorWhenOneOfTheResultsIsAFailure() {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
@@ -37,20 +38,21 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(expectedError, error)
             }
-            
+
             expectationToFulfill.fulfill()
         }
-        
+
         handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
-        
+
         wait(for: [expectationToFulfill], timeout: 1)
     }
-    
+
     func testCompletesWithFirstErrorWhenAllResultsAreAFailure() {
         let expectationToFulfill = expectation(description: "")
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        let otherError = StubUtils.createError(errorName: "another error", message: "another message")
+        let otherError = StubUtils.createError(
+            errorName: "another error", message: "another message")
         let cardSession: Result<String, AccessCheckoutError> = .failure(expectedError)
         let paymentsCvcSession: Result<String, AccessCheckoutError> = .failure(otherError)
         let handler = RetrieveSessionResultsHandler(numberOfExpectedResults: 2) { result in
@@ -60,13 +62,13 @@ class RetrieveSessionResultsCollatorTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(expectedError, error)
             }
-            
+
             expectationToFulfill.fulfill()
         }
-        
+
         handler.handle(cardSession, for: SessionType.card)
         handler.handle(paymentsCvcSession, for: SessionType.cvc)
-        
+
         wait(for: [expectationToFulfill], timeout: 1)
     }
 }

@@ -7,7 +7,10 @@ class RetrieveCardSessionHandlerMock: RetrieveCardSessionHandler {
         super.init(apiClient: CardSessionsApiClientMock(sessionToReturn: ""))
     }
 
-    override func handle(_ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails, completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
+    override func handle(
+        _ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails,
+        completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
+    ) {
         retrieveSessionCalled = true
     }
 }

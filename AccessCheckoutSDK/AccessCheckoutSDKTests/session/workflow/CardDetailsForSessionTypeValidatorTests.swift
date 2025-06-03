@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CardDetailsForSessionTypeValidatorTests: XCTestCase {
     let validator = CardDetailsForSessionTypeValidator()
@@ -12,7 +13,8 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
             .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
-        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
+        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) {
+            error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
@@ -25,7 +27,8 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
             .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
-        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
+        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) {
+            error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
@@ -38,7 +41,8 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
             .expiryDate(UIUtils.createAccessCheckoutUITextField(withText: "12/20"))
             .build()
 
-        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
+        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) {
+            error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }
@@ -48,7 +52,8 @@ class CardDetailsForSessionTypeValidatorTests: XCTestCase {
         let sessionType = SessionType.cvc
         let cardDetails = try CardDetailsBuilder().build()
 
-        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) { error in
+        XCTAssertThrowsError(try validator.validate(cardDetails: cardDetails, for: sessionType)) {
+            error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
     }

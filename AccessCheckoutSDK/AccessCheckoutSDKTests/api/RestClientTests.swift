@@ -1,6 +1,7 @@
-@testable import AccessCheckoutSDK
 import Foundation
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class RestClientTests: XCTestCase {
     private var serviceStubs: ServiceStubs?
@@ -20,7 +21,8 @@ class RestClientTests: XCTestCase {
         let urlSessionDataTaskMock = URLSessionDataTaskMock()
         let urlSession = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
 
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { _ in }
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { _ in }
 
         XCTAssertTrue(urlSession.dataTaskCalled)
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
@@ -33,13 +35,14 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result in
             switch result {
-                case .success(let response):
-                    XCTAssertEqual(1, response.id)
-                    XCTAssertEqual("some name", response.name)
-                case .failure(let error):
-                    XCTFail(error.localizedDescription)
+            case .success(let response):
+                XCTAssertEqual(1, response.id)
+                XCTAssertEqual("some name", response.name)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
             }
             expectationToWaitFor.fulfill()
         }
@@ -51,20 +54,23 @@ class RestClientTests: XCTestCase {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = """
-        {
-            "errorName": "bodyDoesNotMatchSchema",
-            "message": "The json body provided does not match the expected schema"
-        }
-        """
+            {
+                "errorName": "bodyDoesNotMatchSchema",
+                "message": "The json body provided does not match the expected schema"
+            }
+            """
         serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result in
             switch result {
-                case .success:
-                    XCTFail("Expected failed response but received successful response")
-                case .failure(let error):
-                    XCTAssertEqual("bodyDoesNotMatchSchema : The json body provided does not match the expected schema", error.message)
+            case .success:
+                XCTFail("Expected failed response but received successful response")
+            case .failure(let error):
+                XCTAssertEqual(
+                    "bodyDoesNotMatchSchema : The json body provided does not match the expected schema",
+                    error.message)
             }
             expectationToWaitFor.fulfill()
         }
@@ -74,18 +80,20 @@ class RestClientTests: XCTestCase {
 
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
-        let expectedError = StubUtils.createError(errorName: "responseDecodingFailed", message: "Failed to decode response data")
+        let expectedError = StubUtils.createError(
+            errorName: "responseDecodingFailed", message: "Failed to decode response data")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let textResponse = "some data returned"
         serviceStubs!.get200(path: "/somewhere", textResponse: textResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result in
             switch result {
-                case .success:
-                    XCTFail("Expected failed response but received successful response")
-                case .failure(let error):
-                    XCTAssertEqual(expectedError, error)
+            case .success:
+                XCTFail("Expected failed response but received successful response")
+            case .failure(let error):
+                XCTAssertEqual(expectedError, error)
             }
             expectationToWaitFor.fulfill()
         }
@@ -98,15 +106,19 @@ class RestClientTests: XCTestCase {
         let request = createRequest(url: "http://localhost/somewhere", method: "GET")
         // On BitRise, the message returned when attempting to connect to an unknown host may occasionally be different
         // Hence why we need to assert on different error messages
-        let expectedError1 = StubUtils.createError(errorName: "unexpectedApiError", message: "Could not connect to the server.")
-        let expectedError2 = StubUtils.createError(errorName: "unexpectedApiError", message: "A server with the specified hostname could not be found.")
+        let expectedError1 = StubUtils.createError(
+            errorName: "unexpectedApiError", message: "Could not connect to the server.")
+        let expectedError2 = StubUtils.createError(
+            errorName: "unexpectedApiError",
+            message: "A server with the specified hostname could not be found.")
 
-        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self) { result in
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result in
             switch result {
-                case .success:
-                    XCTFail("Expected failed response but received successful response")
-                case .failure(let error):
-                    XCTAssert(error == expectedError1 || error == expectedError2)
+            case .success:
+                XCTFail("Expected failed response but received successful response")
+            case .failure(let error):
+                XCTAssert(error == expectedError1 || error == expectedError2)
             }
             expectationToWaitFor.fulfill()
         }

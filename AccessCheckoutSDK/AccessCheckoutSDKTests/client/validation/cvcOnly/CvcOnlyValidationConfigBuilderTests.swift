@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CvcOnlyValidationConfigBuilderTests: XCTestCase {
     private let builder = CvcOnlyValidationConfig.builder()

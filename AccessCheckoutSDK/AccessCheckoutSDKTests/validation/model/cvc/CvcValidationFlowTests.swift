@@ -1,6 +1,7 @@
-@testable import AccessCheckoutSDK
 import Cuckoo
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CvcValidationFlowTests: XCTestCase {
     private let cvcValidationStateHandler = MockCvcValidationStateHandler()
@@ -14,16 +15,20 @@ class CvcValidationFlowTests: XCTestCase {
     )
 
     override func setUp() {
-        cvcValidationStateHandler.getStubbingProxy().handleCvcValidation(isValid: any()).thenDoNothing()
-        cvcValidationStateHandler.getStubbingProxy().notifyMerchantOfCvcValidationState().thenDoNothing()
+        cvcValidationStateHandler.getStubbingProxy().handleCvcValidation(isValid: any())
+            .thenDoNothing()
+        cvcValidationStateHandler.getStubbingProxy().notifyMerchantOfCvcValidationState()
+            .thenDoNothing()
     }
 
-    func testValidateValidatesCvcWithStoredValidationRuleAndCallsValidationStateHandlerWithResult() {
+    func testValidateValidatesCvcWithStoredValidationRuleAndCallsValidationStateHandlerWithResult()
+    {
         let expectedResult = false
         let cvcValidator = createMockCvcValidator(thatReturns: expectedResult)
-        let cvcValidationFlow = CvcValidationFlow(cvcValidator: cvcValidator,
-                                                  cvcValidationStateHandler: cvcValidationStateHandler,
-                                                  validationRule: cvcValidationRule)
+        let cvcValidationFlow = CvcValidationFlow(
+            cvcValidator: cvcValidator,
+            cvcValidationStateHandler: cvcValidationStateHandler,
+            validationRule: cvcValidationRule)
 
         cvcValidationFlow.validate(cvc: "123")
 
@@ -45,7 +50,8 @@ class CvcValidationFlowTests: XCTestCase {
 
         cvcValidationFlow.validate(cvc: "123")
 
-        verify(cvcValidator).validate(cvc: "123", validationRule: ValidationRulesDefaults.instance().cvc)
+        verify(cvcValidator).validate(
+            cvc: "123", validationRule: ValidationRulesDefaults.instance().cvc)
     }
 
     func testUpdateValidationRuleStoresValidationRule() {

@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import Cuckoo
+
+@testable import AccessCheckoutSDK
 
 extension CardBrand: Matchable, OptionalMatchable {}
 
