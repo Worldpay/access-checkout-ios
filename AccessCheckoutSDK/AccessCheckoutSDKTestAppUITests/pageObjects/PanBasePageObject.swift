@@ -8,12 +8,13 @@ class PanBasePageObject {
     private var setPanCaretPositionTextFieldIdentifier: String = ""
     private var setPanCaretPositionButtonIdentifier: String = ""
 
-    init(app: XCUIApplication,
-         panFieldIdentifier: String,
-         panCaretPositionTextFieldIdentifier: String,
-         setPanCaretPositionTextFieldIdentifier: String,
-         setPanCaretPositionButtonIdentifier: String)
-    {
+    init(
+        app: XCUIApplication,
+        panFieldIdentifier: String,
+        panCaretPositionTextFieldIdentifier: String,
+        setPanCaretPositionTextFieldIdentifier: String,
+        setPanCaretPositionButtonIdentifier: String
+    ) {
         self.app = app
         self.panFieldIdentifier = panFieldIdentifier
         self.panCaretPositionTextFieldIdentifier = panCaretPositionTextFieldIdentifier
