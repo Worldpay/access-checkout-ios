@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CvcSessionURLRequestFactoryTests: XCTestCase {
     private let urlRequestFactory = CvcSessionURLRequestFactory()
@@ -10,29 +11,38 @@ class CvcSessionURLRequestFactoryTests: XCTestCase {
 
     func testCreatesACvcSessionRequest() {
         let expectedHttpBody: Data = expectedBodyAsString.data(using: .utf8)!
-        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue,
-                                    "Content-Type": ApiHeaders.sessionsHeaderValue,
-                                    "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
+        let expectedHeaderFields = [
+            "Accept": ApiHeaders.sessionsHeaderValue,
+            "Content-Type": ApiHeaders.sessionsHeaderValue,
+            "X-WP-SDK": "access-checkout-ios/\(sdkVersion)",
+        ]
         var expectedRequest = URLRequest(url: URL(string: "some-url")!)
         expectedRequest.httpBody = expectedHttpBody
         expectedRequest.httpMethod = expectedMethod
         expectedRequest.allHTTPHeaderFields = expectedHeaderFields
 
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
+        let request = urlRequestFactory.create(
+            url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request, expectedRequest)
     }
 
     func testHttpMethodIsPost() {
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
+        let request = urlRequestFactory.create(
+            url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request.httpMethod, expectedMethod)
     }
 
     func testHeadersAreSetCorrectly() {
-        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue, "Content-Type": ApiHeaders.sessionsHeaderValue, "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
+        let expectedHeaderFields = [
+            "Accept": ApiHeaders.sessionsHeaderValue,
+            "Content-Type": ApiHeaders.sessionsHeaderValue,
+            "X-WP-SDK": "access-checkout-ios/\(sdkVersion)",
+        ]
 
-        let request = urlRequestFactory.create(url: "some-url", cvc: cvc, checkoutId: "some-identity")
+        let request = urlRequestFactory.create(
+            url: "some-url", cvc: cvc, checkoutId: "some-identity")
 
         XCTAssertEqual(request.allHTTPHeaderFields, expectedHeaderFields)
     }

@@ -1,15 +1,18 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class RetrieveCvcSessionHandlerTests: XCTestCase {
     func testCannotHandleCardSession() {
-        let sessionHandler = RetrieveCvcSessionHandler(apiClient: SessionsApiClientMock(sessionToReturn: ""))
+        let sessionHandler = RetrieveCvcSessionHandler(
+            apiClient: SessionsApiClientMock(sessionToReturn: ""))
 
         XCTAssertFalse(sessionHandler.canHandle(sessionType: SessionType.card))
     }
 
     func testCanHandlePaymentsCvcSession() {
-        let sessionHandler = RetrieveCvcSessionHandler(apiClient: SessionsApiClientMock(sessionToReturn: ""))
+        let sessionHandler = RetrieveCvcSessionHandler(
+            apiClient: SessionsApiClientMock(sessionToReturn: ""))
 
         XCTAssertTrue(sessionHandler.canHandle(sessionType: SessionType.cvc))
     }
@@ -24,11 +27,11 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
             switch result {
-                case .success(let session):
-                    XCTAssertEqual("expected-session", session)
-                    expectationToFulfill.fulfill()
-                case .failure:
-                    XCTFail("should not have failed to retrieve a session")
+            case .success(let session):
+                XCTAssertEqual("expected-session", session)
+                expectationToFulfill.fulfill()
+            case .failure:
+                XCTFail("should not have failed to retrieve a session")
             }
         }
 
@@ -46,12 +49,12 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
 
         sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
             switch result {
-                case .success:
-                    XCTFail("should have failed to retrieve a session")
-                    expectationToFulfill.fulfill()
-                case .failure(let error):
-                    XCTAssertEqual(expectedError, error)
-                    expectationToFulfill.fulfill()
+            case .success:
+                XCTFail("should have failed to retrieve a session")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                XCTAssertEqual(expectedError, error)
+                expectationToFulfill.fulfill()
             }
         }
 

@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CvcValidatorTests: XCTestCase {
     private let validator = CvcValidator()
@@ -34,19 +35,22 @@ class CvcValidatorTests: XCTestCase {
     func testValidateReturnsFalseIfCvcIsThreeDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvcLength: 4)
 
-        XCTAssertFalse(validator.validate(cvc: "123", validationRule: cardBrandWith4Digits.cvcValidationRule))
+        XCTAssertFalse(
+            validator.validate(cvc: "123", validationRule: cardBrandWith4Digits.cvcValidationRule))
     }
 
     func testValidateReturnstrueIfCvcIsThreeDigitsWithVisaPan() {
         let cardBrandWith3Digits = createCardBrand(cvcLength: 3)
 
-        XCTAssertTrue(validator.validate(cvc: "123", validationRule: cardBrandWith3Digits.cvcValidationRule))
+        XCTAssertTrue(
+            validator.validate(cvc: "123", validationRule: cardBrandWith3Digits.cvcValidationRule))
     }
 
     func testValidateReturnsTrueIfCvcIsFourDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvcLength: 4)
 
-        XCTAssertTrue(validator.validate(cvc: "1234", validationRule: cardBrandWith4Digits.cvcValidationRule))
+        XCTAssertTrue(
+            validator.validate(cvc: "1234", validationRule: cardBrandWith4Digits.cvcValidationRule))
     }
 
     func testValidateReturnsFalseIfCvcIsLongerThanFourDigitsWithEmptyPan() {
@@ -56,7 +60,9 @@ class CvcValidatorTests: XCTestCase {
     func testValidateReturnsFalseIfCvcIsLongerThanFourDigitsWithAmexPan() {
         let cardBrandWith4Digits = createCardBrand(cvcLength: 4)
 
-        XCTAssertFalse(validator.validate(cvc: "12345", validationRule: cardBrandWith4Digits.cvcValidationRule))
+        XCTAssertFalse(
+            validator.validate(cvc: "12345", validationRule: cardBrandWith4Digits.cvcValidationRule)
+        )
     }
 
     // MARK: canValidate()

@@ -15,7 +15,10 @@ class RestClientMock<T: Decodable>: RestClient {
         self.error = error
     }
 
-    override func send<T: Decodable>(urlSession: URLSession, request: URLRequest, responseType: T.Type, completionHandler: @escaping (Result<T, AccessCheckoutError>) -> Void) {
+    override func send<T: Decodable>(
+        urlSession: URLSession, request: URLRequest, responseType: T.Type,
+        completionHandler: @escaping (Result<T, AccessCheckoutError>) -> Void
+    ) {
         sendMethodCalled = true
         requestSent = request
 

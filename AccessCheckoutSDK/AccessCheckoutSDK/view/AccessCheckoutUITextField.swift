@@ -1,6 +1,6 @@
 import Foundation
-import os
 import UIKit
+import os
 
 /// A UI component to capture the pan, expiry date or cvc of a payment card without being exposed to the text entered by the shopper.
 /// This design is to allow merchants to reach the lowest level of compliance (SAQ-A)
@@ -26,6 +26,8 @@ public final class AccessCheckoutUITextField: UIView {
     private var _horizontalPadding: CGFloat = defaults.horizontalPadding
     // Event Support
     internal var externalOnFocusChangeListener: ((AccessCheckoutUITextField, Bool) -> Void)?
+
+    private var _inputAccessoryView: UIView?
 
     private func buildTextFieldWithDefaults() -> UITextField {
         let uiTextField = FocusAwareUITextField(owner: self)
@@ -339,6 +341,19 @@ public final class AccessCheckoutUITextField: UIView {
     @IBInspectable
     public var textContentType: UITextContentType? {
         didSet { self.uiTextField.textContentType = self.textContentType }
+    }
+
+    /**
+     The accessory view to attach to the keyboard when this component receives focus
+     */
+    public override var inputAccessoryView: UIView? {
+        get {
+            _inputAccessoryView
+        }
+        set {
+            _inputAccessoryView = newValue
+            self.uiTextField.inputAccessoryView = _inputAccessoryView
+        }
     }
 
     /* Enabled properties */

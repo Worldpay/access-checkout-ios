@@ -108,7 +108,7 @@ class CvcFlowViewController: UIViewController {
         var fieldToReturn: String?
         for validationError in validationErrors {
             if validationError.errorName == "stringFailedRegexCheck",
-               validationError.jsonPath == "$.cvv"
+                validationError.jsonPath == "$.cvv"
             {
                 fieldToReturn = validationError.jsonPath
             }

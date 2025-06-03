@@ -1,35 +1,40 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CardBrandDtoTransformerTests: XCTestCase {
     func testTransformsToCardBrand() throws {
-        let expectedImages = [CardBrandImageModel(type: "image/png", url: "png-url"), CardBrandImageModel(type: "image/svg+xml", url: "svg-url")]
-        let expectedPanValidationRule = ValidationRule(matcher: "a-pattern", validLengths: [16, 18, 19])
+        let expectedImages = [
+            CardBrandImageModel(type: "image/png", url: "png-url"),
+            CardBrandImageModel(type: "image/svg+xml", url: "svg-url"),
+        ]
+        let expectedPanValidationRule = ValidationRule(
+            matcher: "a-pattern", validLengths: [16, 18, 19])
         let expectedCvcValidationRule = ValidationRule(matcher: "^\\d*$", validLengths: [3])
         let transformer = CardBrandDtoTransformer()
         let decoder = JSONDecoder()
         let json = """
-        {
-            "name": "a-name",
-            "pattern": "a-pattern",
-            "panLengths": [
-                16,
-                18,
-                19
-            ],
-            "cvvLength": 3,
-            "images": [
-                {
-                    "type": "image/png",
-                    "url": "png-url"
-                },
-                {
-                    "type": "image/svg+xml",
-                    "url": "svg-url"
-                }
-            ]
-        }
-        """
+            {
+                "name": "a-name",
+                "pattern": "a-pattern",
+                "panLengths": [
+                    16,
+                    18,
+                    19
+                ],
+                "cvvLength": 3,
+                "images": [
+                    {
+                        "type": "image/png",
+                        "url": "png-url"
+                    },
+                    {
+                        "type": "image/svg+xml",
+                        "url": "svg-url"
+                    }
+                ]
+            }
+            """
         let dto = try decoder.decode(CardBrandDto.self, from: json.data(using: .utf8)!)
 
         let result = transformer.transform(dto)

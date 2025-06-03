@@ -14,18 +14,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        panWithSpacing.addTarget(self, action: #selector(recordPanWithSpacingCaretPosition), for: .editingDidEnd)
+        panWithSpacing.addTarget(
+            self, action: #selector(recordPanWithSpacingCaretPosition), for: .editingDidEnd)
         initialiseValidation(usingCardNumberField: panWithSpacing, cardNumberSpacingEnabled: true)
 
-        panWithoutSpacing.addTarget(self, action: #selector(recordPanWithoutSpacingCaretPosition), for: .editingDidEnd)
-        initialiseValidation(usingCardNumberField: panWithoutSpacing, cardNumberSpacingEnabled: false)
+        panWithoutSpacing.addTarget(
+            self, action: #selector(recordPanWithoutSpacingCaretPosition), for: .editingDidEnd)
+        initialiseValidation(
+            usingCardNumberField: panWithoutSpacing, cardNumberSpacingEnabled: false)
     }
 
     // MARK: Event handlers for Methods for pan with spacing
 
     @IBAction func panWithSpacingSetButton_touchHandler(_ sender: Any) {
         guard let caretPositionText = setPanWithSpacingCaretPositionTextField.text,
-            !caretPositionText.isEmpty else {
+            !caretPositionText.isEmpty
+        else {
             return
         }
 
@@ -41,7 +45,8 @@ class ViewController: UIViewController {
 
     @IBAction func panWithoutSpacingSetButton_touchHandler(_ sender: Any) {
         guard let caretPositionText = setPanWithoutSpacingCaretPositionTextField.text,
-            !caretPositionText.isEmpty else {
+            !caretPositionText.isEmpty
+        else {
             return
         }
 
@@ -53,18 +58,21 @@ class ViewController: UIViewController {
         displayPanCaretPosition(of: sender, in: panWithoutSpacingCaretPositionTextField)
     }
 
-    private func displayPanCaretPosition(of ofUiTextField: UITextField,
-                                         in inTextField: UITextField)
-    {
+    private func displayPanCaretPosition(
+        of ofUiTextField: UITextField,
+        in inTextField: UITextField
+    ) {
         if let textRange = ofUiTextField.selectedTextRange {
-            let caretPosition = ofUiTextField.offset(from: ofUiTextField.beginningOfDocument, to: textRange.start)
+            let caretPosition = ofUiTextField.offset(
+                from: ofUiTextField.beginningOfDocument, to: textRange.start)
             inTextField.text = "\(caretPosition)"
         }
     }
 
-    private func setPanCaret(in accessCheckoutUITextField: AccessCheckoutUITextField,
-                             with caretPositionText: String)
-    {
+    private func setPanCaret(
+        in accessCheckoutUITextField: AccessCheckoutUITextField,
+        with caretPositionText: String
+    ) {
         var caretPositionFrom: UITextPosition
         var caretPositionTo: UITextPosition
 
@@ -73,22 +81,30 @@ class ViewController: UIViewController {
             let split = caretPositionText.split(separator: "|")
             let start = Int(split[0])!
             let length = Int(split[1])!
-            caretPositionFrom = accessCheckoutUITextField.position(from: accessCheckoutUITextField.beginningOfDocument, offset: start)!
-            caretPositionTo = accessCheckoutUITextField.position(from: accessCheckoutUITextField.beginningOfDocument, offset: start + length)!
+            caretPositionFrom = accessCheckoutUITextField.position(
+                from: accessCheckoutUITextField.beginningOfDocument, offset: start)!
+            caretPositionTo = accessCheckoutUITextField.position(
+                from: accessCheckoutUITextField.beginningOfDocument, offset: start + length)!
         } else {
-            caretPositionFrom = accessCheckoutUITextField.position(from: accessCheckoutUITextField.beginningOfDocument, offset: Int(caretPositionText)!)!
-            caretPositionTo = accessCheckoutUITextField.position(from: accessCheckoutUITextField.beginningOfDocument, offset: Int(caretPositionText)!)!
+            caretPositionFrom = accessCheckoutUITextField.position(
+                from: accessCheckoutUITextField.beginningOfDocument, offset: Int(caretPositionText)!
+            )!
+            caretPositionTo = accessCheckoutUITextField.position(
+                from: accessCheckoutUITextField.beginningOfDocument, offset: Int(caretPositionText)!
+            )!
         }
 
         _ = accessCheckoutUITextField.becomeFirstResponder()
-        accessCheckoutUITextField.selectedTextRange = accessCheckoutUITextField.textRange(from: caretPositionFrom, to: caretPositionTo)
+        accessCheckoutUITextField.selectedTextRange = accessCheckoutUITextField.textRange(
+            from: caretPositionFrom, to: caretPositionTo)
     }
 
     // MARK: methods related to Access Checkout SDK
 
-    private func initialiseValidation(usingCardNumberField panAccessCheckoutUITextField: AccessCheckoutUITextField,
-                                      cardNumberSpacingEnabled: Bool)
-    {
+    private func initialiseValidation(
+        usingCardNumberField panAccessCheckoutUITextField: AccessCheckoutUITextField,
+        cardNumberSpacingEnabled: Bool
+    ) {
         let validationConfigBuilder = CardValidationConfig.builder()
             .pan(panAccessCheckoutUITextField)
             .expiryDate(AccessCheckoutUITextField(frame: CGRect()))

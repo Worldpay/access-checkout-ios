@@ -73,7 +73,7 @@ class RestrictedCardFlowViewController: UIViewController {
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-           let url = URL(string: imageUrl)
+            let url = URL(string: imageUrl)
         {
             updateCardBrandImage(url: url)
         } else {

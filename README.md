@@ -114,7 +114,13 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
 ## Code formatting
 
 [Swift format](https://github.com/swiftlang/swift-format) is used to format the code and uses the configuration set up in the `.swift-format` file as per the [configuration options available](https://github.com/swiftlang/swift-format/blob/main/Documentation/Configuration.md) in swift format
-The code can be reformatted in command line by using `swift-format --in-place --recursive .`
+The code can be reformatted in command line by using 
+
+```swift-format -i -r ./AccessCheckoutDemo ./AccessCheckoutSDK```
+
+Note you may see errors due to swift format trying to format swift files in `Pods` directories. You can ignore those. This issue will be solved once swift-format supports ignoring files.
+
+Do not format code using XCode as the indentation settings (and other formatting configuration) would be different to that defined in the .swift-format file.
 
 **Code must be formatted using this tool before raising a PR.**
 

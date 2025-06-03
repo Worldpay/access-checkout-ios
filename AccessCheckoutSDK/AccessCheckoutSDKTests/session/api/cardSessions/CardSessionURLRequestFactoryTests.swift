@@ -1,5 +1,6 @@
-@testable import AccessCheckoutSDK
 import XCTest
+
+@testable import AccessCheckoutSDK
 
 class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
     private let pan: String = "a-pan"
@@ -13,17 +14,20 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
     private let expectedMethod = "POST"
 
     func testCreatesACardSessionRequest() {
-        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue,
-                                    "Content-Type": ApiHeaders.sessionsHeaderValue,
-                                    "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
+        let expectedHeaderFields = [
+            "Accept": ApiHeaders.sessionsHeaderValue,
+            "Content-Type": ApiHeaders.sessionsHeaderValue,
+            "X-WP-SDK": "access-checkout-ios/\(sdkVersion)",
+        ]
         let expectedURL = URLRequest(url: URL(string: "some-url")!)
 
-        let request = urlRequestFactory.create(url: "some-url",
-                                               checkoutId: checkoutId,
-                                               pan: pan,
-                                               expiryMonth: expiryMonth,
-                                               expiryYear: expiryYear,
-                                               cvc: cvc)
+        let request = urlRequestFactory.create(
+            url: "some-url",
+            checkoutId: checkoutId,
+            pan: pan,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cvc: cvc)
 
         XCTAssertEqual(expectedURL.url, request.url)
         XCTAssertEqual(expectedMethod, request.httpMethod)
@@ -34,33 +38,38 @@ class CardSessionsSessionURLRequestFactoryTests: XCTestCase {
         let body = String(decoding: request.httpBody!, as: UTF8.self)
         XCTAssertTrue(body.contains("\"identity\":\"a-checkout-id\""))
         XCTAssertTrue(body.contains("\"cardNumber\":\"a-pan\""))
-        XCTAssertTrue(body.contains("\"cardExpiryDate\":{\"month\":12,\"year\":24}")
-            || body.contains("\"cardExpiryDate\":{\"year\":24,\"month\":12}"))
+        XCTAssertTrue(
+            body.contains("\"cardExpiryDate\":{\"month\":12,\"year\":24}")
+                || body.contains("\"cardExpiryDate\":{\"year\":24,\"month\":12}"))
         XCTAssertTrue(body.contains("\"cvc\":\"123\""))
     }
 
     func testHttpMethodIsPost() {
-        let request = urlRequestFactory.create(url: "some-url",
-                                               checkoutId: checkoutId,
-                                               pan: pan,
-                                               expiryMonth: expiryMonth,
-                                               expiryYear: expiryYear,
-                                               cvc: cvc)
+        let request = urlRequestFactory.create(
+            url: "some-url",
+            checkoutId: checkoutId,
+            pan: pan,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cvc: cvc)
 
         XCTAssertEqual(expectedMethod, request.httpMethod)
     }
 
     func testHeadersAreSetCorrectly() {
-        let expectedHeaderFields = ["Accept": ApiHeaders.sessionsHeaderValue,
-                                    "Content-Type": ApiHeaders.sessionsHeaderValue,
-                                    "X-WP-SDK": "access-checkout-ios/\(sdkVersion)"]
+        let expectedHeaderFields = [
+            "Accept": ApiHeaders.sessionsHeaderValue,
+            "Content-Type": ApiHeaders.sessionsHeaderValue,
+            "X-WP-SDK": "access-checkout-ios/\(sdkVersion)",
+        ]
 
-        let request = urlRequestFactory.create(url: "some-url",
-                                               checkoutId: checkoutId,
-                                               pan: pan,
-                                               expiryMonth: expiryMonth,
-                                               expiryYear: expiryYear,
-                                               cvc: cvc)
+        let request = urlRequestFactory.create(
+            url: "some-url",
+            checkoutId: checkoutId,
+            pan: pan,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cvc: cvc)
 
         XCTAssertEqual(expectedHeaderFields, request.allHTTPHeaderFields)
     }
