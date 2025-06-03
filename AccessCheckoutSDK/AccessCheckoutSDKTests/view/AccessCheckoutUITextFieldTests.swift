@@ -352,6 +352,7 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertEqual(expected, textField.uiTextField.textAlignment)
     }
     
+    
     // MARK: Placeholder properties
     
     // textAlignment
@@ -454,6 +455,19 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         textField.keyboardAppearance = expected
         
         XCTAssertEqual(expected, textField.uiTextField.keyboardAppearance)
+    }
+    
+    func testtextContentTypeByDefaultIsNil() {
+        let textField = createTextField()
+        XCTAssertEqual(nil , textField.uiTextField.textContentType)
+    }
+    
+    func testtextContentTypeSetterSetsUITextFieldProperty() {
+        let textField = createTextField()
+
+        textField.textContentType = UITextContentType.creditCardNumber
+    
+        XCTAssertEqual(UITextContentType.creditCardNumber, textField.uiTextField.textContentType)
     }
     
     // MARK: enabled properties
