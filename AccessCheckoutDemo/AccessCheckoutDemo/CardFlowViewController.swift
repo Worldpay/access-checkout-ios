@@ -29,7 +29,7 @@ class CardFlowViewController: UIViewController {
 
         let sessionTypes: Set<SessionType> =
             paymentsCvcSessionToggle.isOn
-                ? [SessionType.card, SessionType.cvc] : [SessionType.card]
+            ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
         let cardDetails = try! CardDetailsBuilder().pan(panTextField)
             .expiryDate(expiryDateTextField)
@@ -57,9 +57,9 @@ class CardFlowViewController: UIViewController {
                     if sessionTypes.count > 1 {
                         titleToDisplay = "Card & CVC Sessions"
                         messageToDisplay = """
-                        \(sessions[SessionType.card]!)
-                        \(sessions[SessionType.cvc]!)
-                        """
+                            \(sessions[SessionType.card]!)
+                            \(sessions[SessionType.cvc]!)
+                            """
                     } else {
                         titleToDisplay = "Card Session"
                         messageToDisplay = "\(sessions[SessionType.card]!)"
@@ -224,7 +224,7 @@ class CardFlowViewController: UIViewController {
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandChanged(cardBrand: CardBrand?) {
         if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-           let url = URL(string: imageUrl)
+            let url = URL(string: imageUrl)
         {
             updateCardBrandImage(url: url)
         } else {
