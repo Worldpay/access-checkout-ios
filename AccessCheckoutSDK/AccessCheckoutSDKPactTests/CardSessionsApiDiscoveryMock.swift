@@ -8,7 +8,10 @@ class CardSessionsApiDiscoveryMock: CardSessionsApiDiscovery {
         super.init()
     }
 
-    override func discover(baseUrl: String, completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void) {
+    override func discover(
+        baseUrl: String,
+        completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void
+    ) {
         completionHandler(.success(discoveredUrl))
     }
 }
