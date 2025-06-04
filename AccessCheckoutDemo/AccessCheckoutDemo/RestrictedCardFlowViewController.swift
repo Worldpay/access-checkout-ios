@@ -22,7 +22,6 @@ class RestrictedCardFlowViewController: UIViewController {
         // See AppLauncher in the AccessCheckoutDemoUITests
         dismissKeyboardButton.isHidden = !Configuration.displayDismissKeyboardButton
 
-        panTextField.textContentType
         panTextField.placeholder = "Card Number"
         panTextField.font = .preferredFont(forTextStyle: .body)
         panTextField.textContentType = UITextContentType.creditCardNumber
