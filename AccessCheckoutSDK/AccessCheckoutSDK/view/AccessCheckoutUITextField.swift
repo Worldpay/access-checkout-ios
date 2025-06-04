@@ -25,7 +25,7 @@ public final class AccessCheckoutUITextField: UIView {
 
     private var _horizontalPadding: CGFloat = defaults.horizontalPadding
     // Event Support
-    internal var externalOnFocusChangeListener: ((AccessCheckoutUITextField, Bool) -> Void)?
+    internal var externalOnFocusChangedListener: ((AccessCheckoutUITextField, Bool) -> Void)?
 
     private var _inputAccessoryView: UIView?
 
@@ -60,14 +60,14 @@ public final class AccessCheckoutUITextField: UIView {
         override func becomeFirstResponder() -> Bool {
             let result = super.becomeFirstResponder()
             // Pass view
-            if result { self.owner.externalOnFocusChangeListener?(self.owner, true) }
+            if result { self.owner.externalOnFocusChangedListener?(self.owner, true) }
             return result
         }
 
         override func resignFirstResponder() -> Bool {
             let result = super.resignFirstResponder()
             // Pass view
-            if result { self.owner.externalOnFocusChangeListener?(self.owner, false) }
+            if result { self.owner.externalOnFocusChangedListener?(self.owner, false) }
             return result
         }
     }
@@ -89,8 +89,10 @@ public final class AccessCheckoutUITextField: UIView {
     /// ```
     /// In the example above, the border color of the `myfield` changes to `systemBlue` when it gains focus,
     /// and reverts to `systemGray` when it loses focus.
-    public func setOnFocusChangedListener(_ listener: @escaping (AccessCheckoutUITextField, Bool) -> Void) {
-        self.externalOnFocusChangeListener = listener
+    public func setOnFocusChangedListener(
+        _ listener: @escaping (AccessCheckoutUITextField, Bool) -> Void
+    ) {
+        self.externalOnFocusChangedListener = listener
     }
 
     // this constructor is used only for unit tests so we do not call setLayout()
@@ -150,7 +152,7 @@ public final class AccessCheckoutUITextField: UIView {
         let width = self.uiTextField.intrinsicContentSize.height
         let height =
             self.uiTextField.intrinsicContentSize.height
-                + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
+            + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
 
         return CGSize(width: width, height: height)
     }

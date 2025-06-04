@@ -585,17 +585,26 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
         XCTAssertTrue(uiTextFieldMock.becomeFirstResponderCalled)
     }
 
+    func testResignFirstResponderDelegatesCallToUITextField() {
+        let uiTextFieldMock = UITextFieldMock()
+        let textField = AccessCheckoutUITextField(uiTextFieldMock)
+
+        _ = textField.resignFirstResponder()
+
+        XCTAssertTrue(uiTextFieldMock.resignFirstResponderCalled)
+    }
+
     func testSetOnFocusChangedListenerAssignsValueToVariable() {
         let textField = AccessCheckoutUITextField()
 
-        XCTAssertNil(textField.externalOnFocusChangeListener)
+        XCTAssertNil(textField.externalOnFocusChangedListener)
 
         //Set
         textField.setOnFocusChangedListener { view, isFocused in
             //do something
         }
 
-        XCTAssertNotNil(textField.externalOnFocusChangeListener)
+        XCTAssertNotNil(textField.externalOnFocusChangedListener)
     }
 
     func testSetOnFocusChangedListener() {
