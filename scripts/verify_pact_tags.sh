@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CONTRACT_VERSION="4.0.0"
+CONTRACT_VERSION="4.1.0"
 HASH_CODE=$(git rev-parse --short HEAD)
 DESCRIPTION=$(pact-broker describe-version --pacticipant access-checkout-iOS-sdk --version $CONTRACT_VERSION+$HASH_CODE --broker-base-url https://$PACTBROKER_URL -u $PACTBROKER_USERNAME -p $PACTBROKER_PASSWORD)
 
