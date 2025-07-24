@@ -7,4 +7,3 @@ struct CardBinRequest: Codable {
     var cardNumber: String
     var checkoutId: String
 }
-
