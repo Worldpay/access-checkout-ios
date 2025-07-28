@@ -28,7 +28,7 @@ class RestClientTests: XCTestCase {
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
     }
 
-    func testRestClientCanReturnSuccessfulResponse() {
+    func testRestClientInCaseOfSuccessReturnsSuccessfulResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
@@ -50,7 +50,28 @@ class RestClientTests: XCTestCase {
         wait(for: [expectationToWaitFor], timeout: 1)
     }
 
-    func testRestClientCanReturnError() {
+    func testRestClientInCaseOfSuccessReturnStatusCode() {
+        let expectationToWaitFor = XCTestExpectation(description: "")
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
+        serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
+
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result, statusCode in
+            switch result {
+            case .success(_):
+                XCTAssertEqual(200, statusCode)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectationToWaitFor.fulfill()
+        }
+
+        wait(for: [expectationToWaitFor], timeout: 1)
+    }
+
+    func testRestClientInCaseOfErrorReturnsError() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = """
@@ -71,6 +92,32 @@ class RestClientTests: XCTestCase {
                 XCTAssertEqual(
                     "bodyDoesNotMatchSchema : The json body provided does not match the expected schema",
                     error.message)
+            }
+            expectationToWaitFor.fulfill()
+        }
+
+        wait(for: [expectationToWaitFor], timeout: 1)
+    }
+
+    func testRestClientInCaseOfErrorReturnsStatusCode() {
+        let expectationToWaitFor = XCTestExpectation(description: "")
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = """
+            {
+                "errorName": "bodyDoesNotMatchSchema",
+                "message": "The json body provided does not match the expected schema"
+            }
+            """
+        serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
+
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result, statusCode in
+            switch result {
+            case .success:
+                XCTFail("Expected failed response but received successful response")
+            case .failure(_):
+                XCTAssertEqual(400, statusCode)
             }
             expectationToWaitFor.fulfill()
         }
