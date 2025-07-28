@@ -29,7 +29,7 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { _ in
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { _, statusCode in
             XCTAssertEqual(mockRestClient.requestSent, expectedURLRequest)
             self.expectationToFulfill!.fulfill()
         }
@@ -54,7 +54,7 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result, statusCode in
             switch result {
             case .success(let response):
                 XCTAssertEqual(response.brand, expectedCardBinResponse.brand)
@@ -81,7 +81,7 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result, statusCode in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")

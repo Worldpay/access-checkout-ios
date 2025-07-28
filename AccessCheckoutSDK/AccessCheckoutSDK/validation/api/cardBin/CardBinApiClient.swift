@@ -15,11 +15,12 @@ internal struct CardBinApiClient {
         cardNumber: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
+        //TODO: caching mechanism implemented for 12 digits
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
         let request = urlRequestFactory.create(cardNumber: cardNumber)
         restClient.send(
             urlSession: URLSession.shared, request: request, responseType: CardBinResponse.self
-        ) { result in
+        ) { result, _ in
             switch result {
             case .success(let response):
                 completionHandler(.success(response))

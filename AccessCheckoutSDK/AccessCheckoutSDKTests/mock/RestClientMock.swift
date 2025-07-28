@@ -15,17 +15,18 @@ class RestClientMock<T: Decodable>: RestClient {
         self.error = error
     }
 
+    //TODO: fix warning to do with generic parameter 'T'
     override func send<T: Decodable>(
         urlSession: URLSession, request: URLRequest, responseType: T.Type,
-        completionHandler: @escaping (Result<T, AccessCheckoutError>) -> Void
+        completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) {
         sendMethodCalled = true
         requestSent = request
 
         if response != nil {
-            completionHandler(.success(response as! T))
+            completionHandler(.success(response as! T), nil)
         } else if error != nil {
-            completionHandler(.failure(error!))
+            completionHandler(.failure(error!), nil)
         }
     }
 }

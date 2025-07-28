@@ -22,7 +22,7 @@ class RestClientTests: XCTestCase {
         let urlSession = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { _ in }
+        { _, _ in }
 
         XCTAssertTrue(urlSession.dataTaskCalled)
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
@@ -36,7 +36,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success(let response):
                 XCTAssertEqual(1, response.id)
@@ -63,7 +63,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -88,7 +88,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -113,7 +113,7 @@ class RestClientTests: XCTestCase {
             message: "A server with the specified hostname could not be found.")
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
