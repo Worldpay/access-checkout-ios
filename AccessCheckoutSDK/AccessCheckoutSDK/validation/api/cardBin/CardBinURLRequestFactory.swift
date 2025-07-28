@@ -1,6 +1,6 @@
 import Foundation
 
-class CardBinURLRequestFactory {
+internal class CardBinURLRequestFactory {
     private let url: String
     private let checkoutId: String
 

@@ -1,6 +1,6 @@
 import Foundation
 
-struct CardBinApiClient {
+internal struct CardBinApiClient {
     private var url: String
     private var checkoutId: String
     private var restClient: RestClient
@@ -20,7 +20,12 @@ struct CardBinApiClient {
         restClient.send(
             urlSession: URLSession.shared, request: request, responseType: CardBinResponse.self
         ) { result in
-            completionHandler(result)
+            switch result {
+            case .success(let response):
+                completionHandler(.success(response))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 }

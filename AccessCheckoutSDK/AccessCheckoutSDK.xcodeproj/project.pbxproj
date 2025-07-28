@@ -736,7 +736,6 @@
 			isa = PBXGroup;
 			children = (
 				D7851B2F2489010900461377 /* AccessCheckoutCvcOnlyValidationDelegate.swift */,
-				E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */,
 			);
 			path = cvcOnly;
 			sourceTree = "<group>";
@@ -886,6 +885,7 @@
 				E7FC4472245B1FD100CD3675 /* SessionType.swift */,
 				E7FC4477245B24A400CD3675 /* AccessCheckoutClient.swift */,
 				E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */,
+				E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */,
 			);
 			path = session;
 			sourceTree = "<group>";

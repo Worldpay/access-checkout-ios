@@ -9,7 +9,7 @@ class CardBinApiClientTests: XCTestCase {
         let expectedURLRequest = createExpectedURLRequest(
             url: "some-url",
             cardNumber: "444433332222",
-            checkoutId: "123"
+            checkoutId: "00000000-0000-0000-0000-000000000000"
         )
 
         expectationToFulfill = expectation(
@@ -25,18 +25,41 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "123",
+            checkoutId: "00000000-0000-0000-0000-000000000000",
+            restClient: mockRestClient
+        )
+
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { _ in
+                XCTAssertEqual(mockRestClient.requestSent, expectedURLRequest)
+                self.expectationToFulfill!.fulfill()
+            }
+
+        wait(for: [expectationToFulfill!], timeout: 1)
+    }
+
+    func testCallsCompletionHandlerWithTheResponseReceivedFromRestClient() {
+        expectationToFulfill = expectation(
+            description: "should have called completion handler with response from rest client")
+
+        let expectedCardBinResponse = CardBinResponse(
+            brand: ["visa", "mastercard"],
+            fundingType: "debit",
+            luhnCompliant: true
+        )
+
+        let mockRestClient = RestClientMock(replyWith: expectedCardBinResponse)
+        let apiClient = CardBinApiClient(
+            url: "some-url",
+            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
         apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
             switch result {
             case .success(let response):
-                XCTAssertEqual(response.brand, ["visa", "mastercard"])
-                XCTAssertEqual(response.fundingType, "debit")
-                XCTAssertTrue(response.luhnCompliant)
-
-                XCTAssertEqual(mockRestClient.requestSent, expectedURLRequest)
+                XCTAssertEqual(response.brand, expectedCardBinResponse.brand)
+                XCTAssertEqual(response.fundingType, expectedCardBinResponse.fundingType)
+                XCTAssertEqual(response.luhnCompliant, expectedCardBinResponse.luhnCompliant)
             case .failure:
                 XCTFail("Retrieval of card bin info should have succeeded")
             }
@@ -45,9 +68,30 @@ class CardBinApiClientTests: XCTestCase {
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
+    
+    func testCallsCompletionHandlerWithErrorWhenRestClientFails() {
+        expectationToFulfill = expectation(
+            description: "should have called completion handler with error from rest client")
 
-    func testCallsCompletionHandlerWithTheResponseReceivedFromRestClient() {
+        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Network error")
+        let mockRestClient = RestClientMock(replyWith: expectedError)
+        let apiClient = CardBinApiClient(
+            url: "some-url",
+            checkoutId: "00000000-0000-0000-0000-000000000000",
+            restClient: mockRestClient
+        )
+        
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+            }
+            self.expectationToFulfill!.fulfill()
+        }
 
+        wait(for: [expectationToFulfill!], timeout: 1)
     }
 
     private func createExpectedURLRequest(
