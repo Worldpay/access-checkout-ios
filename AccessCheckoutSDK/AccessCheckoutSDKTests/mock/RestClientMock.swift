@@ -4,8 +4,12 @@ class RestClientMock<T: Decodable>: RestClient {
     private(set) var sendMethodCalled = false
     private(set) var expectedRequestSent = false
     private(set) var requestSent: URLRequest?
+    private(set) var numberOfCalls: Int = 0
     private var response: T?
     private var error: AccessCheckoutError?
+
+    override init() {
+    }
 
     init(replyWith response: T) {
         self.response = response
@@ -20,6 +24,7 @@ class RestClientMock<T: Decodable>: RestClient {
         urlSession: URLSession, request: URLRequest, responseType: T.Type,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) {
+        numberOfCalls += 1
         sendMethodCalled = true
         requestSent = request
 
