@@ -50,12 +50,15 @@ public class AccessCheckoutClientBuilder {
         let retrieveCvcSessionHandler = RetrieveCvcSessionHandler(apiClient: CvcSessionsApiClient())
         let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(
             retrieveSessionHandlers: [retrieveCardSessionHandler, retrieveCvcSessionHandler])
-
+        
+        let serviceDiscoveryProvider = ServiceDiscoveryProvider(baseUrl: accessBaseUrl)
+        
         return AccessCheckoutClient(
             checkoutId: checkoutId,
             baseUrl: accessBaseUrl,
             cardDetailsForSessionTypeValidator,
-            retrieveSessionHandlerDispatcher
+            retrieveSessionHandlerDispatcher,
+            serviceDiscoveryProvider
         )
     }
 }
