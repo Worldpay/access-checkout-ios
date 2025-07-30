@@ -1,4 +1,5 @@
 import Dispatch
+import Foundation
 import os
 
 class ServiceDiscoveryProvider {
@@ -16,7 +17,7 @@ class ServiceDiscoveryProvider {
     init(
         baseUrl: String,
         _ factory: ServiceDiscoveryFactory = ServiceDiscoveryFactory(),
-        _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup(),
+        _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
     ) {
         self.baseUrl = baseUrl
         self.factory = factory
@@ -54,7 +55,6 @@ class ServiceDiscoveryProvider {
             guard let self = self, discoveryResponse != nil else { return }
 
             self.baseDiscovery = discoveryResponse
-            NSLog("Base discovery received")
             completionHandler()
         }
     }
@@ -83,9 +83,6 @@ class ServiceDiscoveryProvider {
 
                 self.sessionsCvcDiscovery = self.apiResponseLinkLookup.lookup(
                     link: ApiLinks.cvcSessions.endpoint, in: sessionsDiscoveryResponse)!
-
-                NSLog("Sessions card: \(self.sessionsCardDiscovery!)")
-                NSLog("Sessions cvc: \(self.sessionsCvcDiscovery!)")
             }
         }
     }

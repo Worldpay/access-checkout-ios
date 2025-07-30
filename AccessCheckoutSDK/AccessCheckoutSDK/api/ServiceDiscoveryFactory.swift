@@ -1,3 +1,5 @@
+import Foundation
+
 class ServiceDiscoveryFactory {
     private let restClient: RestClient
 
