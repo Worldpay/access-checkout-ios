@@ -50,6 +50,8 @@
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
+		62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */; };
+		62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */; };
 		683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
@@ -288,6 +290,8 @@
 		51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManagerTests.swift; sourceTree = "<group>"; };
+		62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinCacheManager.swift; sourceTree = "<group>"; };
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		683DF0FE5331B699757B3D19 /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
@@ -519,6 +523,7 @@
 		5115F54D2E327AFA00BC3FDB /* cardBin */ = {
 			isa = PBXGroup;
 			children = (
+				62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */,
 				514A38322E329258000948C3 /* CardBinApiClientTests.swift */,
 				5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */,
 			);
@@ -613,6 +618,7 @@
 		683DF03ADFFF76E72571BEAE /* mock */ = {
 			isa = PBXGroup;
 			children = (
+				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
 				E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */,
 				5125FFC72DD5FCDB00EF7380 /* MockAccessCheckoutCvcOnlyValidationDelegate.swift */,
 				E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */,
@@ -1662,6 +1668,7 @@
 				E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */,
 				E72C3EDE248669EF00284A31 /* MockPanValidationStateHandler.swift in Sources */,
 				D7D6D5F3248154B900D57D7A /* PanValidationFlowTests.swift in Sources */,
+				62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */,
 				E7D19F74246328EA001EA13A /* SingleLinkDiscoveryTests.swift in Sources */,
 				5125FFC82DD5FCDB00EF7380 /* MockAccessCheckoutCvcOnlyValidationDelegate.swift in Sources */,
 				5115F54F2E327B0900BC3FDB /* CardBinURLRequestFactoryTests.swift in Sources */,
@@ -1699,6 +1706,7 @@
 				E72C3F02248A78DA00284A31 /* CvcViewPresenterTests.swift in Sources */,
 				514A38332E329258000948C3 /* CardBinApiClientTests.swift in Sources */,
 				E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */,
+				62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */,
 				E7D19F7A24637237001EA13A /* CvcSessionsApiDiscoveryTests.swift in Sources */,
 				E72C3EF324893C6400284A31 /* CardBrandsConfigurationProviderTests.swift in Sources */,
 				E7FC447C245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift in Sources */,

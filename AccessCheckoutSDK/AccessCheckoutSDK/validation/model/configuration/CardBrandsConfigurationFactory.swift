@@ -27,7 +27,7 @@ class CardBrandsConfigurationFactory {
             urlSession: URLSession.shared,
             request: URLRequest(url: url),
             responseType: [CardBrandDto].self
-        ) { result in
+        ) { result, _ in
             let brands: [CardBrandModel]
 
             switch result {

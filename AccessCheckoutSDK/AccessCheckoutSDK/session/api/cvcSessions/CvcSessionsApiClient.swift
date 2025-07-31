@@ -78,7 +78,7 @@ class CvcSessionsApiClient {
             urlSession: URLSession.shared,
             request: request,
             responseType: ApiResponse.self
-        ) { result in
+        ) { result, _ in
             completionHandler(result)
         }
     }

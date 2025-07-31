@@ -22,13 +22,13 @@ class RestClientTests: XCTestCase {
         let urlSession = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { _ in }
+        { _, _ in }
 
         XCTAssertTrue(urlSession.dataTaskCalled)
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
     }
 
-    func testRestClientCanReturnSuccessfulResponse() {
+    func testRestClientInCaseOfSuccessReturnsSuccessfulResponse() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
@@ -36,7 +36,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success(let response):
                 XCTAssertEqual(1, response.id)
@@ -50,7 +50,28 @@ class RestClientTests: XCTestCase {
         wait(for: [expectationToWaitFor], timeout: 1)
     }
 
-    func testRestClientCanReturnError() {
+    func testRestClientInCaseOfSuccessReturnStatusCode() {
+        let expectationToWaitFor = XCTestExpectation(description: "")
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
+        serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
+
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result, statusCode in
+            switch result {
+            case .success(_):
+                XCTAssertEqual(200, statusCode)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectationToWaitFor.fulfill()
+        }
+
+        wait(for: [expectationToWaitFor], timeout: 1)
+    }
+
+    func testRestClientInCaseOfErrorReturnsError() {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = """
@@ -63,7 +84,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -71,6 +92,32 @@ class RestClientTests: XCTestCase {
                 XCTAssertEqual(
                     "bodyDoesNotMatchSchema : The json body provided does not match the expected schema",
                     error.message)
+            }
+            expectationToWaitFor.fulfill()
+        }
+
+        wait(for: [expectationToWaitFor], timeout: 1)
+    }
+
+    func testRestClientInCaseOfErrorReturnsStatusCode() {
+        let expectationToWaitFor = XCTestExpectation(description: "")
+        let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
+        let jsonResponse = """
+            {
+                "errorName": "bodyDoesNotMatchSchema",
+                "message": "The json body provided does not match the expected schema"
+            }
+            """
+        serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
+            .start()
+
+        restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
+        { result, statusCode in
+            switch result {
+            case .success:
+                XCTFail("Expected failed response but received successful response")
+            case .failure(_):
+                XCTAssertEqual(400, statusCode)
             }
             expectationToWaitFor.fulfill()
         }
@@ -88,7 +135,7 @@ class RestClientTests: XCTestCase {
             .start()
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -113,7 +160,7 @@ class RestClientTests: XCTestCase {
             message: "A server with the specified hostname could not be found.")
 
         restClient.send(urlSession: urlSession, request: request, responseType: DummyResponse.self)
-        { result in
+        { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")

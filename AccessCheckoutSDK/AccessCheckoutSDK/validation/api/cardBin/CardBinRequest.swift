@@ -1,4 +1,4 @@
-struct CardBinRequest: Codable {
+internal struct CardBinRequest: Codable {
     enum Key: String, CodingKey {
         case cardNumber
         case checkoutId
