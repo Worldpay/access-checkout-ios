@@ -18,7 +18,7 @@ class SingleLinkDiscovery {
             urlSession: URLSession.shared,
             request: urlRequest,
             responseType: ApiResponse.self
-        ) { result, statusCode in
+        ) { result, _ in
             switch result {
             case .success(let response):
                 if let linkValue = self.apiResponseLinkLookup.lookup(
