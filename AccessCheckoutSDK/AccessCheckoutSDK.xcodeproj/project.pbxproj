@@ -61,7 +61,6 @@
 		C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */; };
 		C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */; };
 		C2F0F6EA2E3A38A9005F8E49 /* ServiceDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */; };
-		C2F0F6EC2E3A3D6A005F8E49 /* ServiceDiscoveryFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
 		C9AFE3E422B7996200943B3E /* AccessCheckoutSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9AFE45A22B7AA4800943B3E /* AccessCheckoutError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44722B7AA4700943B3E /* AccessCheckoutError.swift */; };
@@ -315,7 +314,6 @@
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
 		C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
-		C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryMock.swift; sourceTree = "<group>"; };
 		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessCheckoutSDK.h; sourceTree = "<group>"; };
@@ -654,7 +652,6 @@
 				E77B8BA6245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift */,
 				E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */,
 				E7AE68C624195050002380AF /* RestClientMock.swift */,
-				C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */,
 				E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */,
 				E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */,
 				E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */,
@@ -1744,7 +1741,6 @@
 				C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */,
 				C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
-				C2F0F6EC2E3A3D6A005F8E49 /* ServiceDiscoveryFactoryMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
 				51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */,
 				E719B09C24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift in Sources */,

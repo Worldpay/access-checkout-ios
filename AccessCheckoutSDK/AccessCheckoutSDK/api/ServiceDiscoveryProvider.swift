@@ -47,31 +47,27 @@ class ServiceDiscoveryProvider {
 
     func discover(completionHandler: @escaping () -> Void) {
         ServiceDiscoveryProvider.serialQueue.async {
-            self.fetchBaseDiscovery {
-                guard let baseDiscoveryResponse = ServiceDiscoveryProvider.baseDiscoveryResponse
-                else {
-                    return
-                }
+            self.fetchBaseDiscovery { response in
+                guard let discoveryResponse = response else { return }
 
-                self.sessionsDiscovery(baseDiscoveryResponse: baseDiscoveryResponse)
+                ServiceDiscoveryProvider.baseDiscoveryResponse = discoveryResponse
+
+                self.sessionsDiscovery(baseDiscoveryResponse: discoveryResponse)
             }
             completionHandler()
         }
     }
 
-    private func fetchBaseDiscovery(completionHandler: @escaping () -> Void) {
+    private func fetchBaseDiscovery(completionHandler: @escaping (ApiResponse?) -> Void) {
         if ServiceDiscoveryProvider.baseDiscoveryResponse != nil {
-            completionHandler()
+            completionHandler(ServiceDiscoveryProvider.baseDiscoveryResponse)
             return
         }
 
         let discoveryRequest = baseDiscoveryRequest()
 
         factory.create(request: discoveryRequest) { response in
-            guard let discoveryResponse = response else { return }
-
-            ServiceDiscoveryProvider.baseDiscoveryResponse = discoveryResponse
-            completionHandler()
+            completionHandler(response)
         }
     }
 
