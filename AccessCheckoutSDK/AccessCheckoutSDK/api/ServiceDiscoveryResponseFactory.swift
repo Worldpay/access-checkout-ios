@@ -1,13 +1,13 @@
 import Foundation
 
-class ServiceDiscoveryFactory {
+class ServiceDiscoveryResponseFactory {
     private let restClient: RestClient
 
     init(restClient: RestClient = RestClient()) {
         self.restClient = restClient
     }
 
-    func getDiscovery(
+    func create(
         request: URLRequest,
         completionHandler: @escaping (ApiResponse?) -> Void
     ) {
@@ -16,7 +16,7 @@ class ServiceDiscoveryFactory {
             request: request,
             responseType: ApiResponse.self
         ) {
-            result in
+            result, _ in
             let apiResponse: ApiResponse?
 
             switch result {
@@ -24,6 +24,7 @@ class ServiceDiscoveryFactory {
                 apiResponse = discoveryResponse
             case .failure:
                 apiResponse = nil
+                NSLog("Service discovery failed: \(result)")
             }
 
             completionHandler(apiResponse)

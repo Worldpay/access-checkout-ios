@@ -9,9 +9,9 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
         let restClientMock = RestClientMock(replyWith: expectedResponse)
         let request = URLRequest(url: URL(string: "http://www.example.com")!)
 
-        let factory = ServiceDiscoveryFactory(restClient: restClientMock)
+        let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)
 
-        factory.getDiscovery(request: request) {
+        factory.create(request: request) {
             result in
             XCTAssertEqual(
                 result?.links.endpoints["some:service"]?.href,
@@ -25,9 +25,9 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
         let restClientMock = RestClientMock<String>(errorWith: expectedError)
 
         let request = URLRequest(url: URL(string: "http://www.example.com")!)
-        let factory = ServiceDiscoveryFactory(restClient: restClientMock)
+        let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)
 
-        factory.getDiscovery(request: request) {
+        factory.create(request: request) {
             result in
             XCTAssertNil(result)
         }

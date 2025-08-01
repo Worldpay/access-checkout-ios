@@ -4,19 +4,20 @@ import os
 
 class ServiceDiscoveryProvider {
     private let baseUrl: String
-    private let factory: ServiceDiscoveryFactory
+    private let factory: ServiceDiscoveryResponseFactory
     private let apiResponseLinkLookup: ApiResponseLinkLookup
-    private let serialQueue = DispatchQueue(
+
+    private static let serialQueue = DispatchQueue(
         label: "com.worldpay.access.checkout.ServiceDiscoveryProvider"
     )
 
-    private var baseDiscovery: ApiResponse?
-    private var sessionsCardDiscovery: String?
-    private var sessionsCvcDiscovery: String?
+    private static var baseDiscoveryResponse: ApiResponse?
+    private static var sessionsCardEndpoint: String?
+    private static var sessionsCvcEndpoint: String?
 
     init(
         baseUrl: String,
-        _ factory: ServiceDiscoveryFactory = ServiceDiscoveryFactory(),
+        _ factory: ServiceDiscoveryResponseFactory = ServiceDiscoveryResponseFactory(),
         _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
     ) {
         self.baseUrl = baseUrl
@@ -24,71 +25,87 @@ class ServiceDiscoveryProvider {
         self.apiResponseLinkLookup = apiResponseLinkLookup
     }
 
-    func getBaseDiscovery() -> ApiResponse? {
-        serialQueue.sync {
-            baseDiscovery
+    func getSessionsCardEndpoint() -> String? {
+        ServiceDiscoveryProvider.serialQueue.sync {
+            ServiceDiscoveryProvider.sessionsCardEndpoint
         }
     }
 
-    func getSessionsCardDiscovery() -> String? {
-        serialQueue.sync {
-            sessionsCardDiscovery
+    func getSessionsCvcEndpoint() -> String? {
+        ServiceDiscoveryProvider.serialQueue.sync {
+            ServiceDiscoveryProvider.sessionsCvcEndpoint
         }
     }
 
-    func getSessionsCvcDiscovery() -> String? {
-        serialQueue.sync {
-            sessionsCvcDiscovery
+    func clearCache() {
+        ServiceDiscoveryProvider.serialQueue.sync {
+            ServiceDiscoveryProvider.baseDiscoveryResponse = nil
+            ServiceDiscoveryProvider.sessionsCardEndpoint = nil
+            ServiceDiscoveryProvider.sessionsCvcEndpoint = nil
         }
     }
 
-    func discover() {
-        fetchBaseDiscovery {
-            self.sessionsDiscovery()
-        }
-    }
+    func discover(completionHandler: @escaping () -> Void) {
+        ServiceDiscoveryProvider.serialQueue.async {
+            self.fetchBaseDiscovery {
+                guard let baseDiscoveryResponse = ServiceDiscoveryProvider.baseDiscoveryResponse
+                else {
+                    return
+                }
 
-    private func fetchBaseDiscovery(completionHandler: @escaping () -> Void) {
-        let discoveryRequest = URLRequest(url: URL(string: baseUrl)!)
-
-        factory.getDiscovery(request: discoveryRequest) { [weak self] discoveryResponse in
-            guard let self = self, discoveryResponse != nil else { return }
-
-            self.baseDiscovery = discoveryResponse
+                self.sessionsDiscovery(baseDiscoveryResponse: baseDiscoveryResponse)
+            }
             completionHandler()
         }
     }
 
-    private func sessionsDiscovery() {
-        guard baseDiscovery != nil else { return }
-
-        guard
-            let sessionsHref = apiResponseLinkLookup.lookup(
-                link: ApiLinks.cardSessions.service, in: baseDiscovery!)
-        else {
+    private func fetchBaseDiscovery(completionHandler: @escaping () -> Void) {
+        if ServiceDiscoveryProvider.baseDiscoveryResponse != nil {
+            completionHandler()
             return
         }
 
-        let sessionsDiscoveryRequest = sessionsDiscoveryRequest(sessionsUrl: sessionsHref)
+        let discoveryRequest = baseDiscoveryRequest()
 
-        factory.getDiscovery(request: sessionsDiscoveryRequest) { discoveryResponse in
-            self.serialQueue.async {
+        factory.create(request: discoveryRequest) { response in
+            guard let discoveryResponse = response else { return }
 
-                guard let sessionsDiscoveryResponse = discoveryResponse else {
-                    return
-                }
-
-                self.sessionsCardDiscovery = self.apiResponseLinkLookup.lookup(
-                    link: ApiLinks.cardSessions.endpoint, in: sessionsDiscoveryResponse)!
-
-                self.sessionsCvcDiscovery = self.apiResponseLinkLookup.lookup(
-                    link: ApiLinks.cvcSessions.endpoint, in: sessionsDiscoveryResponse)!
-            }
+            ServiceDiscoveryProvider.baseDiscoveryResponse = discoveryResponse
+            completionHandler()
         }
     }
 
-    private func sessionsDiscoveryRequest(sessionsUrl: String) -> URLRequest {
-        var request = URLRequest(url: URL(string: sessionsUrl)!)
+    private func sessionsDiscovery(baseDiscoveryResponse: ApiResponse) {
+        if ServiceDiscoveryProvider.sessionsCardEndpoint != nil,
+            ServiceDiscoveryProvider.sessionsCvcEndpoint != nil
+        {
+            return
+        }
+
+        guard
+            let sessionsHref = apiResponseLinkLookup.lookup(
+                link: ApiLinks.cardSessions.service, in: baseDiscoveryResponse)
+        else { return }
+
+        let discoveryRequest = sessionsDiscoveryRequest(url: sessionsHref)
+
+        factory.create(request: discoveryRequest) { response in
+            guard let discoveryResponse = response else { return }
+
+            ServiceDiscoveryProvider.sessionsCardEndpoint = self.apiResponseLinkLookup.lookup(
+                link: ApiLinks.cardSessions.endpoint, in: discoveryResponse)
+
+            ServiceDiscoveryProvider.sessionsCvcEndpoint = self.apiResponseLinkLookup.lookup(
+                link: ApiLinks.cvcSessions.endpoint, in: discoveryResponse)
+        }
+    }
+
+    private func baseDiscoveryRequest() -> URLRequest {
+        return URLRequest(url: URL(string: baseUrl)!)
+    }
+
+    private func sessionsDiscoveryRequest(url: String) -> URLRequest {
+        var request = URLRequest(url: URL(string: url)!)
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
         request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
         return request

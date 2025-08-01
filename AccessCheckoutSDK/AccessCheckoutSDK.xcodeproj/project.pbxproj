@@ -56,11 +56,11 @@
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
 		C213F7772E32853200B89815 /* ServiceDiscoveryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C213F7762E32853200B89815 /* ServiceDiscoveryProvider.swift */; };
+		C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */; };
+		C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */; };
 		C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */; };
-		C253C1112E38DFFD00D01D1F /* ServiceDiscoveryProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253C1102E38DFF300D01D1F /* ServiceDiscoveryProviderMock.swift */; };
-		C2F0F6E32E3907D1005F8E49 /* AdvancedRestClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E22E3907B4005F8E49 /* AdvancedRestClientMock.swift */; };
 		C2F0F6E52E39172F005F8E49 /* ApiResponseLinkLookupMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */; };
-		C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryFactory.swift */; };
+		C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */; };
 		C2F0F6EA2E3A38A9005F8E49 /* ServiceDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */; };
 		C2F0F6EC2E3A3D6A005F8E49 /* ServiceDiscoveryFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
@@ -311,11 +311,11 @@
 		ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B885CDE61870E5A0F3BB91D5 /* Pods-AccessCheckoutSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C213F7762E32853200B89815 /* ServiceDiscoveryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProvider.swift; sourceTree = "<group>"; };
+		C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApiResponseLinkLookup.swift; sourceTree = "<group>"; };
+		C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
-		C253C1102E38DFF300D01D1F /* ServiceDiscoveryProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderMock.swift; sourceTree = "<group>"; };
-		C2F0F6E22E3907B4005F8E49 /* AdvancedRestClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedRestClientMock.swift; sourceTree = "<group>"; };
 		C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseLinkLookupMock.swift; sourceTree = "<group>"; };
-		C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactory.swift; sourceTree = "<group>"; };
+		C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
 		C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryMock.swift; sourceTree = "<group>"; };
 		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -635,8 +635,9 @@
 			isa = PBXGroup;
 			children = (
 				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
+				C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */,
+				C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */,
 				C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */,
-				C253C1102E38DFF300D01D1F /* ServiceDiscoveryProviderMock.swift */,
 				E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */,
 				5125FFC72DD5FCDB00EF7380 /* MockAccessCheckoutCvcOnlyValidationDelegate.swift */,
 				E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */,
@@ -656,7 +657,6 @@
 				E77B8BA6245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift */,
 				E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */,
 				E7AE68C624195050002380AF /* RestClientMock.swift */,
-				C2F0F6E22E3907B4005F8E49 /* AdvancedRestClientMock.swift */,
 				C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */,
 				E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */,
 				E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */,
@@ -1068,7 +1068,7 @@
 		E7821AA2245875C1003F7231 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryFactory.swift */,
+				C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */,
 				E7821A86245869DB003F7231 /* ApiHeaders.swift */,
 				E7821A84245869A3003F7231 /* ApiLinks.swift */,
 				C9AFE44822B7AA4700943B3E /* ApiResponse.swift */,
@@ -1622,7 +1622,7 @@
 				E749024D247FEEB600889AAA /* TextChangeHandler.swift in Sources */,
 				E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */,
 				E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */,
-				C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryFactory.swift in Sources */,
+				C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */,
 				E72C3EEA24879C1C00284A31 /* CardBrand.swift in Sources */,
 				E77B8B9D245C2C0E00564C19 /* RetrieveCardSessionHandler.swift in Sources */,
 				E7E6758F241AA57A0022292F /* RestClient.swift in Sources */,
@@ -1726,7 +1726,6 @@
 				E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */,
 				E7AE68C724195050002380AF /* RestClientMock.swift in Sources */,
 				E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */,
-				C253C1112E38DFFD00D01D1F /* ServiceDiscoveryProviderMock.swift in Sources */,
 				E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */,
 				E719B0A4246484880037DED4 /* CardSessionsApiDiscoveryMock.swift in Sources */,
 				D7D6D5EB248117FB00D57D7A /* CardValidationStateHandlerTests.swift in Sources */,
@@ -1746,6 +1745,8 @@
 				E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */,
 				51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */,
 				E7D19F642462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift in Sources */,
+				C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */,
+				C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
 				C2F0F6EC2E3A3D6A005F8E49 /* ServiceDiscoveryFactoryMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
@@ -1761,7 +1762,6 @@
 				D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */,
 				E719B09E246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
-				C2F0F6E32E3907D1005F8E49 /* AdvancedRestClientMock.swift in Sources */,
 				513C04412AE923E0003B3455 /* ServiceStubs.swift in Sources */,
 				D7C6EE232486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift in Sources */,
 				51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */,

@@ -1,114 +1,288 @@
+import Cuckoo
 import XCTest
 
 @testable import AccessCheckoutSDK
 
 class ServiceDiscoveryProviderTests: XCTestCase {
-    let factoryMock = ServiceDiscoveryFactoryMock()
-    let apiResponseLookUpMock = ApiResponseLinkLookupMock()
+    let baseUrl = "some-url"
+    let factoryMock = MockServiceDiscoveryResponseFactory()
+    let apiResponseLookUpMock = MockApiResponseLinkLookup()
+    private var serviceDiscoveryProvider: ServiceDiscoveryProvider?
+    private var expectationToFulfill: XCTestExpectation?
 
-    func testShouldCallBaseDiscoveryAndSessionsDiscovery() {
-        let baseDiscovryResponse = toBaseDiscoveryResponse()
-        let sessionsDiscoveryResponse = toSessionsDiscoveryResponse()
+    override func setUp() {
+        serviceDiscoveryProvider = ServiceDiscoveryProvider(
+            baseUrl: baseUrl, factoryMock, apiResponseLookUpMock)
+        serviceDiscoveryProvider?.clearCache()
+    }
 
-        factoryMock.mockReturnValue = [
-            baseDiscovryResponse,
-            sessionsDiscoveryResponse,
-        ]
+    func testGettersReturnCardAndCvcEndpoints() {
+        expectationToFulfill = expectation(description: "")
 
-        apiResponseLookUpMock.mockReturnValue = [
-            "validBaseSessionsValue", "validSessionsCardHref", "validSessionsCvcHref",
-        ]
+        // mock base and session discovery responses
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(self.toBaseDiscoveryResponse())
+            }.then {
+                _, completionHandler in
+                completionHandler(self.toSessionsDiscoveryResponse())
+            }
 
-        let expectedBaseRequest = URLRequest(url: URL(string: "some-url")!)
-        var expectedSessionsRequest = URLRequest(
-            url: URL(string: "validBaseSessionsValue")!)
-        expectedSessionsRequest.addValue(
+        // mock api response lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+            .thenReturn("sessionsCardHref")
+            .thenReturn("sessionsCvcHref")
+
+        let expectedBaseDiscoveryRequest = URLRequest(url: URL(string: "some-url")!)
+        var expectedSessionsDiscoveryRequest = URLRequest(
+            url: URL(string: "sessionsServiceLink")!)
+        expectedSessionsDiscoveryRequest.addValue(
             ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
-        expectedSessionsRequest.addValue(
+        expectedSessionsDiscoveryRequest.addValue(
             ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
 
-        // initialise provider
-        let serviceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: "some-url", factoryMock, apiResponseLookUpMock)
-
         // call method
-        serviceDiscoveryProvider.discover()
+        serviceDiscoveryProvider?.discover {
+            // verify calls to factory
+            verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+            verify(self.factoryMock).create(
+                request: expectedBaseDiscoveryRequest, completionHandler: any())
+            verify(self.factoryMock).create(
+                request: expectedSessionsDiscoveryRequest, completionHandler: any())
 
-        // do assertions
-        let base = serviceDiscoveryProvider.getBaseDiscovery()
-        let cardHref = serviceDiscoveryProvider.getSessionsCardDiscovery()
-        let cvcHref = serviceDiscoveryProvider.getSessionsCvcDiscovery()
+            // verify calls to api response lookup
+            verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
+            verify(self.apiResponseLookUpMock, times(1)).lookup(
+                link: ApiLinks.cardSessions.service, in: any())
+            verify(self.apiResponseLookUpMock, times(1)).lookup(
+                link: ApiLinks.cardSessions.endpoint, in: any())
+            verify(self.apiResponseLookUpMock, times(1)).lookup(
+                link: ApiLinks.cardSessions.endpoint, in: any())
 
-        // verify factory was called correctly
-        XCTAssertEqual(factoryMock.getDiscoveryCalledCount, 2)
-        XCTAssertTrue(factoryMock.requestsSent.contains(expectedBaseRequest))
-        XCTAssertTrue(factoryMock.requestsSent.contains(expectedSessionsRequest))
-
-        // verify api response lookup was called correctly
-        XCTAssertEqual(apiResponseLookUpMock.lookupMethodCalledCount, 3)
-        XCTAssertEqual(
-            apiResponseLookUpMock.lookupLinks,
-            [
-                "service:sessions",
-                "sessions:card",
-                "sessions:paymentsCvc",
-            ])
+            self.expectationToFulfill!.fulfill()
+        }
 
         // verify class parameters have correct values
         XCTAssertEqual(
-            baseDiscovryResponse.links.endpoints["service:sessions"]?.href,
-            base?.links.endpoints["service:sessions"]?.href)
-        XCTAssertEqual(cardHref, "validSessionsCardHref")
-        XCTAssertEqual(cvcHref, "validSessionsCvcHref")
+            serviceDiscoveryProvider?.getSessionsCardEndpoint(), "sessionsCardHref")
+        XCTAssertEqual(
+            serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "sessionsCvcHref")
+
+        waitForExpectations(timeout: 1)
     }
 
-    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryFails() {
-        // Simulate base discovery failure
-        factoryMock.mockReturnValue = [nil]
+    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryResponseIsNil() {
+        expectationToFulfill = expectation(description: "")
 
-        let serviceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: "some-url", factoryMock, apiResponseLookUpMock)
+        // Simulate failure in base discovery request/response
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any()).then {
+                _, completionHandler in
+                completionHandler(nil)
+            }
 
-        serviceDiscoveryProvider.discover()
+        serviceDiscoveryProvider?.discover {
+            verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
+            self.expectationToFulfill!.fulfill()
+        }
 
-        XCTAssertEqual(factoryMock.getDiscoveryCalledCount, 1)
-        XCTAssertNil(serviceDiscoveryProvider.getBaseDiscovery())
+        waitForExpectations(timeout: 1)
     }
 
-    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryDoesNotHaveSessionsKey() {
-        factoryMock.mockReturnValue = [toBaseDiscoveryResponse()]
+    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryResponseDoesNotHaveSessionsLink() {
+        expectationToFulfill = expectation(description: "")
 
-        // Simulate no sessions service key in baseDiscovryResponse
-        apiResponseLookUpMock.mockReturnValue = [nil]
+        // mock base discovery response
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any()).then {
+                _, completionHandler in
+                completionHandler(self.toBaseDiscoveryResponse())
+            }
 
-        let serviceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: "some-url", factoryMock, apiResponseLookUpMock)
+        // Simulate no sessions service link in base discovery response
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn(nil)
 
-        serviceDiscoveryProvider.discover()
 
-        XCTAssertEqual(factoryMock.getDiscoveryCalledCount, 1)
-        XCTAssertEqual(apiResponseLookUpMock.lookupMethodCalledCount, 1)
-        XCTAssertEqual(apiResponseLookUpMock.lookupLinks, ["service:sessions"])
+        serviceDiscoveryProvider?.discover {
+            verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
+
+            verify(self.apiResponseLookUpMock, times(1)).lookup(
+                link: ApiLinks.cardSessions.service, in: any())
+            verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+            self.expectationToFulfill!.fulfill()
+        }
+
+        waitForExpectations(timeout: 1)
     }
 
-    func testShouldReturnNilWhenUnableToPerformSessionsDiscoveryRequest() {
-        factoryMock.mockReturnValue = [
-            toBaseDiscoveryResponse(),
-            nil,  // sessions discovery request fails
-        ]
+    func testGettersShouldReturnNilWhenUnableToPerformSessionsDiscoveryRequest() {
+        expectationToFulfill = expectation(description: "")
 
-        let apiResponseLookUpMock = ApiResponseLinkLookupMock()
-        apiResponseLookUpMock.mockReturnValue = ["someKey"]
+        // simulate a successful base discovery response and a failed sessions response
+        factoryMock.getStubbingProxy().create(request: any(), completionHandler: any()).then {
+            _, completionHandler in
+            completionHandler(self.toBaseDiscoveryResponse())
+        }.then {
+            _, completionHandler in
+            completionHandler(nil)
+        }
 
-        let serviceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: "some-url", factoryMock, apiResponseLookUpMock)
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
 
-        serviceDiscoveryProvider.discover()
+        serviceDiscoveryProvider?.discover {
+            verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+            verify(self.apiResponseLookUpMock, times(1)).lookup(link: any(), in: any())
+            self.expectationToFulfill!.fulfill()
+        }
 
-        XCTAssertEqual(factoryMock.getDiscoveryCalledCount, 2)
-        XCTAssertEqual(apiResponseLookUpMock.lookupMethodCalledCount, 1)
-        XCTAssertNil(serviceDiscoveryProvider.getSessionsCardDiscovery())
-        XCTAssertNil(serviceDiscoveryProvider.getSessionsCvcDiscovery())
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testSubsequentCallsToDiscoveryReturnCachedValues() {
+        expectationToFulfill = expectation(description: "")
+        let expectationToFulfill2 = XCTestExpectation(description: "")
+
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(self.toBaseDiscoveryResponse())
+            }.then {
+                _, completionHandler in
+                completionHandler(self.toSessionsDiscoveryResponse())
+            }
+
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("validBaseSessionsValue")
+            .thenReturn("validSessionsCardHref")
+            .thenReturn("validSessionsCvcHref")
+
+
+        serviceDiscoveryProvider?.discover {
+            verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+            verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
+            // clear previous calls to the mocks
+            clearInvocations(self.factoryMock)
+            clearInvocations(self.apiResponseLookUpMock)
+
+            self.expectationToFulfill!.fulfill()
+        }
+
+        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
+        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
+
+        serviceDiscoveryProvider?.discover {
+            // verify no calls have been made to the factory or lookup mocks
+            verify(self.factoryMock, times(0)).create(request: any(), completionHandler: any())
+            verify(self.apiResponseLookUpMock, times(0)).lookup(link: any(), in: any())
+
+            expectationToFulfill2.fulfill()
+        }
+
+        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
+        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
+
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testShouldClearCache() {
+        expectationToFulfill = expectation(description: "")
+
+        // mock base and session discovery responses
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(self.toBaseDiscoveryResponse())
+            }.then {
+                _, completionHandler in
+                completionHandler(self.toSessionsDiscoveryResponse())
+            }
+
+        // mock api response lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+            .thenReturn("sessionsCardHref")
+            .thenReturn("sessionsCvcHref")
+
+        serviceDiscoveryProvider?.discover {
+            self.expectationToFulfill!.fulfill()
+        }
+
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        serviceDiscoveryProvider?.clearCache()
+
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testShouldCallDiscoveryWhenCacheIsCleared() {
+        expectationToFulfill = expectation(description: "")
+        let nextExpectationToFulfill = XCTestExpectation(description: "")
+
+        // mock base and session discovery responses
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(self.toBaseDiscoveryResponse())
+            }.then {
+                _, completionHandler in
+                completionHandler(self.toSessionsDiscoveryResponse())
+            }
+
+        // mock api response lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+            .thenReturn("sessionsCardHref")
+            .thenReturn("sessionsCvcHref")
+
+        serviceDiscoveryProvider?.discover {
+            // verify calls to factory and lookup mocks
+            verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+            verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
+            self.expectationToFulfill!.fulfill()
+        }
+
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        serviceDiscoveryProvider?.clearCache()
+        
+        // verify cached endpoints are cleared
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        serviceDiscoveryProvider?.discover {
+            // verify calls after clearing cached endpoints
+            verify(self.factoryMock, times(4)).create(request: any(), completionHandler: any())
+            verify(self.apiResponseLookUpMock, times(6)).lookup(link: any(), in: any())
+            nextExpectationToFulfill.fulfill()
+        }
+        
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
+        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+
+        waitForExpectations(timeout: 1)
     }
 
     private func toBaseDiscoveryResponse() -> ApiResponse {
