@@ -59,7 +59,6 @@
 		C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */; };
 		C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */; };
 		C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */; };
-		C2F0F6E52E39172F005F8E49 /* ApiResponseLinkLookupMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */; };
 		C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */; };
 		C2F0F6EA2E3A38A9005F8E49 /* ServiceDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */; };
 		C2F0F6EC2E3A3D6A005F8E49 /* ServiceDiscoveryFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */; };
@@ -314,7 +313,6 @@
 		C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApiResponseLinkLookup.swift; sourceTree = "<group>"; };
 		C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
-		C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseLinkLookupMock.swift; sourceTree = "<group>"; };
 		C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
 		C2F0F6EB2E3A3D61005F8E49 /* ServiceDiscoveryFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryMock.swift; sourceTree = "<group>"; };
@@ -637,7 +635,6 @@
 				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
 				C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */,
 				C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */,
-				C2F0F6E42E391729005F8E49 /* ApiResponseLinkLookupMock.swift */,
 				E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */,
 				5125FFC72DD5FCDB00EF7380 /* MockAccessCheckoutCvcOnlyValidationDelegate.swift */,
 				E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */,
@@ -1709,7 +1706,6 @@
 				E7AFC3F8241FEBEB00C0E432 /* URLSessionDataTaskMock.swift in Sources */,
 				E70305A124924AAA00802AF1 /* TestFixtures.swift in Sources */,
 				51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */,
-				C2F0F6E52E39172F005F8E49 /* ApiResponseLinkLookupMock.swift in Sources */,
 				E75C5E6E248E7171003A1BDE /* AccessCheckoutCardValidationDelegate_FocusOut_Tests.swift in Sources */,
 				E75C5E6C248E7041003A1BDE /* AccessCheckoutCvcOnlyValidationDelegate_EditText_Tests.swift in Sources */,
 				D76E4050247D62A1002FAA39 /* PanValidatorTests.swift in Sources */,
