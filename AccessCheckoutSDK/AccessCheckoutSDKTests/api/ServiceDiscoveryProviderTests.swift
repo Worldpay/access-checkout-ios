@@ -183,8 +183,12 @@ class ServiceDiscoveryProviderTests: XCTestCase {
 
         XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
         XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
-
-        serviceDiscoveryProvider?.discover {
+        
+        // create another instance of ServiceDiscoveryProvider to test caching
+        let otherServiceDiscoveryProvider = ServiceDiscoveryProvider(
+            baseUrl: baseUrl, factoryMock, apiResponseLookUpMock)
+        
+        otherServiceDiscoveryProvider.discover {
             // verify no calls have been made to the factory or lookup mocks
             verify(self.factoryMock, times(0)).create(request: any(), completionHandler: any())
             verify(self.apiResponseLookUpMock, times(0)).lookup(link: any(), in: any())
