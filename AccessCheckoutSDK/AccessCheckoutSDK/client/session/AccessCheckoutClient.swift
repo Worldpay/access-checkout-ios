@@ -25,7 +25,7 @@ public struct AccessCheckoutClient {
         self.cardDetailsForSessionTypeValidator = cardDetailsForSessionTypeValidator
         self.retrieveSessionHandlerDispatcher = retrieveSessionHandlerDispatcher
         self.serviceDiscoveryProvider = serviceDiscoveryProvider
-        self.serviceDiscoveryProvider.discover(){}
+        self.serviceDiscoveryProvider.discover {}
     }
     /**
      This function allows the generation of a new session for the client to use in the next phase of the payment flow or other supported flow.
