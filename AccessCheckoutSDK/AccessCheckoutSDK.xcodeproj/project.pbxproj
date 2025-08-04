@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 54git ;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,6 +55,11 @@
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
+		6239F9212E4106BD0053E36C /* CardBinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239F91F2E4106BD0053E36C /* CardBinResponse.swift */; };
+		6239F9222E4106BD0053E36C /* CardBinApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239F9192E4106BD0053E36C /* CardBinApiClient.swift */; };
+		6239F9232E4106BD0053E36C /* CardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239F91A2E4106BD0053E36C /* CardBinCacheManager.swift */; };
+		6239F9242E4106BD0053E36C /* CardBinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239F91C2E4106BD0053E36C /* CardBinRequest.swift */; };
+		6239F9252E4106BD0053E36C /* CardBinURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239F91D2E4106BD0053E36C /* CardBinURLRequestFactory.swift */; };
 		62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */; };
 		62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */; };
 		683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */; };
@@ -306,6 +311,11 @@
 		51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6239F9192E4106BD0053E36C /* CardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClient.swift; sourceTree = "<group>"; };
+		6239F91A2E4106BD0053E36C /* CardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManager.swift; sourceTree = "<group>"; };
+		6239F91C2E4106BD0053E36C /* CardBinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinRequest.swift; sourceTree = "<group>"; };
+		6239F91D2E4106BD0053E36C /* CardBinURLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinURLRequestFactory.swift; sourceTree = "<group>"; };
+		6239F91F2E4106BD0053E36C /* CardBinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinResponse.swift; sourceTree = "<group>"; };
 		62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManagerTests.swift; sourceTree = "<group>"; };
 		62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinCacheManager.swift; sourceTree = "<group>"; };
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
@@ -643,6 +653,42 @@
 				ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6239F9272E41077E0053E36C /* cardBin */ = {
+			isa = PBXGroup;
+			children = (
+				6239F92A2E4107A50053E36C /* response */,
+				6239F9292E4107960053E36C /* request */,
+				6239F9282E41078E0053E36C /* client */,
+			);
+			path = cardBin;
+			sourceTree = "<group>";
+		};
+		6239F9282E41078E0053E36C /* client */ = {
+			isa = PBXGroup;
+			children = (
+				6239F9192E4106BD0053E36C /* CardBinApiClient.swift */,
+				6239F91A2E4106BD0053E36C /* CardBinCacheManager.swift */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+		6239F9292E4107960053E36C /* request */ = {
+			isa = PBXGroup;
+			children = (
+				6239F91C2E4106BD0053E36C /* CardBinRequest.swift */,
+				6239F91D2E4106BD0053E36C /* CardBinURLRequestFactory.swift */,
+			);
+			path = request;
+			sourceTree = "<group>";
+		};
+		6239F92A2E4107A50053E36C /* response */ = {
+			isa = PBXGroup;
+			children = (
+				6239F91F2E4106BD0053E36C /* CardBinResponse.swift */,
+			);
+			path = response;
 			sourceTree = "<group>";
 		};
 		683DF03ADFFF76E72571BEAE /* mock */ = {
@@ -1650,6 +1696,11 @@
 				E745CC2C24859C18000390CA /* ValidationRulesDefaults.swift in Sources */,
 				E72C3ED62485B0F500284A31 /* ExpiryDateViewPresenter.swift in Sources */,
 				E77B8B9B245C2BF700564C19 /* RetrieveSessionHandler.swift in Sources */,
+				6239F9212E4106BD0053E36C /* CardBinResponse.swift in Sources */,
+				6239F9222E4106BD0053E36C /* CardBinApiClient.swift in Sources */,
+				6239F9232E4106BD0053E36C /* CardBinCacheManager.swift in Sources */,
+				6239F9242E4106BD0053E36C /* CardBinRequest.swift in Sources */,
+				6239F9252E4106BD0053E36C /* CardBinURLRequestFactory.swift in Sources */,
 				E7AD244A24640E6B00C4C92D /* CvcSessionsApiDiscovery.swift in Sources */,
 				E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */,
 				E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */,
