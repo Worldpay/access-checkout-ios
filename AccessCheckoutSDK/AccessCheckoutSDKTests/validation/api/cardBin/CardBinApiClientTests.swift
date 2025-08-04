@@ -98,7 +98,7 @@ class CardBinApiClientTests: XCTestCase {
         let apiClient = CardBinApiClient(
             url: "some-url",
             checkoutId: "00000000-0000-0000-0000-000000000000",
-            restClient: mockRestClient,
+            restClient: mockRestClient
         )
 
         apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
