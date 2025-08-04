@@ -127,6 +127,10 @@ class CardBinApiClientTests: XCTestCase {
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
+    
+    
+    
+    
 
 }
 
@@ -148,3 +152,4 @@ extension CardBinApiClientTests {
         return urlRequest
     }
 }
+
