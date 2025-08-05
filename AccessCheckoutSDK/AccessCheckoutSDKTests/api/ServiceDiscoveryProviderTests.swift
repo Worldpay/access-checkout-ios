@@ -108,7 +108,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .lookup(link: any(), in: any())
             .thenReturn(nil)
 
-
         serviceDiscoveryProvider?.discover {
             verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
 
@@ -170,7 +169,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .thenReturn("validSessionsCardHref")
             .thenReturn("validSessionsCvcHref")
 
-
         serviceDiscoveryProvider?.discover {
             verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
             verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
@@ -183,11 +181,11 @@ class ServiceDiscoveryProviderTests: XCTestCase {
 
         XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
         XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
-        
+
         // create another instance of ServiceDiscoveryProvider to test caching
         let otherServiceDiscoveryProvider = ServiceDiscoveryProvider(
             baseUrl: baseUrl, factoryMock, apiResponseLookUpMock)
-        
+
         otherServiceDiscoveryProvider.discover {
             // verify no calls have been made to the factory or lookup mocks
             verify(self.factoryMock, times(0)).create(request: any(), completionHandler: any())
@@ -201,7 +199,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
-    
+
     func testShouldClearCache() {
         expectationToFulfill = expectation(description: "")
 
@@ -237,7 +235,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
-    
+
     func testShouldCallDiscoveryWhenCacheIsCleared() {
         expectationToFulfill = expectation(description: "")
         let nextExpectationToFulfill = XCTestExpectation(description: "")
@@ -271,7 +269,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
 
         serviceDiscoveryProvider?.clearCache()
-        
+
         // verify cached endpoints are cleared
         XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
         XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
@@ -282,7 +280,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             verify(self.apiResponseLookUpMock, times(6)).lookup(link: any(), in: any())
             nextExpectationToFulfill.fulfill()
         }
-        
+
         XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
         XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
 
