@@ -11,12 +11,6 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
-		5115F54F2E327B0900BC3FDB /* CardBinURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */; };
-		511B6C4A2E40EC28005E1457 /* CardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */; };
-		511B6C4B2E40EC28005E1457 /* CardBinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C472E40EC28005E1457 /* CardBinRequest.swift */; };
-		511B6C4C2E40EC28005E1457 /* CardBinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C482E40EC28005E1457 /* CardBinResponse.swift */; };
-		511B6C4D2E40EC28005E1457 /* CardBinURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C492E40EC28005E1457 /* CardBinURLRequestFactory.swift */; };
-		511B6C4E2E40EC28005E1457 /* CardBinApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C452E40EC28005E1457 /* CardBinApiClient.swift */; };
 		5121EC422AF2A50800C8FC72 /* EncodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5121EC412AF2A50800C8FC72 /* EncodableExtension.swift */; };
 		5125FFC22DD5FCAD00EF7380 /* MockCvcValidationStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125FFC12DD5FCAD00EF7380 /* MockCvcValidationStateHandler.swift */; };
 		5125FFC52DD5FCC700EF7380 /* MockCvcValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125FFC32DD5FCC700EF7380 /* MockCvcValidationFlow.swift */; };
@@ -263,12 +257,6 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinURLRequestFactoryTests.swift; sourceTree = "<group>"; };
-		511B6C452E40EC28005E1457 /* CardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClient.swift; sourceTree = "<group>"; };
-		511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManager.swift; sourceTree = "<group>"; };
-		511B6C472E40EC28005E1457 /* CardBinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinRequest.swift; sourceTree = "<group>"; };
-		511B6C482E40EC28005E1457 /* CardBinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinResponse.swift; sourceTree = "<group>"; };
-		511B6C492E40EC28005E1457 /* CardBinURLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinURLRequestFactory.swift; sourceTree = "<group>"; };
 		5121EC412AF2A50800C8FC72 /* EncodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtension.swift; sourceTree = "<group>"; };
 		5125FFC12DD5FCAD00EF7380 /* MockCvcValidationStateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCvcValidationStateHandler.swift; sourceTree = "<group>"; };
 		5125FFC32DD5FCC700EF7380 /* MockCvcValidationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCvcValidationFlow.swift; sourceTree = "<group>"; };
@@ -554,18 +542,6 @@
 				62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */,
 				514A38322E329258000948C3 /* CardBinApiClientTests.swift */,
 				5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */,
-			);
-			path = cardBin;
-			sourceTree = "<group>";
-		};
-		511B6C512E40EC5F005E1457 /* cardBin */ = {
-			isa = PBXGroup;
-			children = (
-				511B6C452E40EC28005E1457 /* CardBinApiClient.swift */,
-				511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */,
-				511B6C472E40EC28005E1457 /* CardBinRequest.swift */,
-				511B6C482E40EC28005E1457 /* CardBinResponse.swift */,
-				511B6C492E40EC28005E1457 /* CardBinURLRequestFactory.swift */,
 			);
 			path = cardBin;
 			sourceTree = "<group>";
@@ -1706,11 +1682,6 @@
 				E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */,
 				E7D19F622462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift in Sources */,
 				D7E536F1264A90B300A476E6 /* PanFormatter.swift in Sources */,
-				511B6C4A2E40EC28005E1457 /* CardBinCacheManager.swift in Sources */,
-				511B6C4B2E40EC28005E1457 /* CardBinRequest.swift in Sources */,
-				511B6C4C2E40EC28005E1457 /* CardBinResponse.swift in Sources */,
-				511B6C4D2E40EC28005E1457 /* CardBinURLRequestFactory.swift in Sources */,
-				511B6C4E2E40EC28005E1457 /* CardBinApiClient.swift in Sources */,
 				E7D37F87248161CD0039DD98 /* CardBrandsConfiguration.swift in Sources */,
 				D7851B302489010900461377 /* AccessCheckoutCvcOnlyValidationDelegate.swift in Sources */,
 				D7851B2C2488EC2800461377 /* CvcOnlyValidationStateHandler.swift in Sources */,
