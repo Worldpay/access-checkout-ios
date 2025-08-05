@@ -57,10 +57,6 @@ internal struct CardBinApiClient {
 
                 if retries < self.maxRetries && shouldRetry {
 
-                    print(
-                        "[\(retries)/\(self.maxRetries)] Could not retrieve response from Card BIN service. Error: \(error)"
-                    )
-
                     self.fetchCardBinResponseWithRetry(
                         cardNumber: cardNumber,
                         cacheKey: cacheKey,
