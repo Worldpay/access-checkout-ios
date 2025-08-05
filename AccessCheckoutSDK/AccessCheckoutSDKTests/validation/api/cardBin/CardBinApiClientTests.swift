@@ -66,7 +66,7 @@ class CardBinApiClientTests: XCTestCase {
         expectationToFulfill = expectation(
             description: "should have called completion handler with error from rest client")
 
-        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Network error")
+        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Failed after 3")
         let mockRestClient = RestClientMock<CardBinResponse>(errorWith: expectedError)
         let apiClient = CardBinApiClient(
             url: "some-url",
@@ -126,6 +126,69 @@ class CardBinApiClientTests: XCTestCase {
         }
 
         wait(for: [expectationToFulfill!], timeout: 1)
+    }
+
+    func testRetriesRequestThreeTimesOn5xxError() {
+        expectationToFulfill = expectation(
+            description: "should retry request three times on server error (5xx)"
+        )
+
+        let serverError = AccessCheckoutError.unexpectedApiError(message: "unexpectedApiError")
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: serverError, statusCode: 500)
+
+        let apiClient = CardBinApiClient(
+            url: "some-url",
+            checkoutId: "00000000-0000-0000-0000-000000000000",
+            restClient: mockRestClient
+        )
+
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(
+                    3, mockRestClient.numberOfCalls, "Rest client should be called three times")
+                XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
+            }
+            self.expectationToFulfill!.fulfill()
+        }
+
+        wait(for: [expectationToFulfill!], timeout: 1)
+
+    }
+
+    func testDoesNotRetryOnClientError() {
+        expectationToFulfill = expectation(
+            description: "should not retry request on client error (4xx)"
+        )
+
+        let serverError = AccessCheckoutError.unexpectedApiError(message: "Bad request")
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: serverError, statusCode: 400)
+
+        let apiClient = CardBinApiClient(
+            url: "some-url",
+            checkoutId: "00000000-0000-0000-0000-000000000000",
+            restClient: mockRestClient
+        )
+
+        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(
+                    1, mockRestClient.numberOfCalls,
+                    "Rest client should be called one time (no retries)")
+                XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
+            }
+            self.expectationToFulfill!.fulfill()
+        }
+
+        wait(for: [expectationToFulfill!], timeout: 1)
+
     }
 
 }

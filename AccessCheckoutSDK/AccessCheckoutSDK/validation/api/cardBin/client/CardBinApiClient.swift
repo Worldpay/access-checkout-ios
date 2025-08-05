@@ -8,7 +8,7 @@ internal struct CardBinApiClient {
     private var restClient: RestClient
     private let cacheManager = CardBinCacheManager()
     private let maxRetries = 3
-    
+
     /// Initialises a new CardBinApiClient instance.
     ///
     /// - Parameters:
@@ -20,7 +20,7 @@ internal struct CardBinApiClient {
         self.checkoutId = checkoutId
         self.restClient = restClient
     }
-    
+
     /// Retrieves BIN information for the provided card number.
     ///
     /// This method first checks the cache for existing BIN data. If not found in cache,
@@ -34,12 +34,12 @@ internal struct CardBinApiClient {
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
         let cacheKey = cacheManager.getCacheKey(from: cardNumber)
-        
+
         if let cachedResponse = cacheManager.getCachedResponse(for: cacheKey) {
             completionHandler(.success(cachedResponse))
             return
         }
-        
+
         fetchCardBinResponseWithRetry(
             cardNumber: cardNumber,
             cacheKey: cacheKey,
@@ -47,7 +47,7 @@ internal struct CardBinApiClient {
             completionHandler: completionHandler
         )
     }
-    
+
     /// Fetches card BIN details from the API with automatic retry mechanism.
     ///
     /// This private method implements exponential backoff retry logic for handling
@@ -68,7 +68,7 @@ internal struct CardBinApiClient {
     ) {
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
         let request = urlRequestFactory.create(cardNumber: cardNumber)
-        
+
         restClient.send(
             urlSession: URLSession.shared, request: request, responseType: CardBinResponse.self
         ) { result, statusCode in
@@ -76,31 +76,31 @@ internal struct CardBinApiClient {
             case .success(let response):
                 self.cacheManager.putInCache(key: cacheKey, response: response)
                 completionHandler(.success(response))
-                
+
             case .failure(let error):
                 let shouldRetry = self.shouldRetry(error: error, statusCode: statusCode)
-                
+
                 if retries < self.maxRetries && shouldRetry {
-                    
+
                     self.fetchCardBinResponseWithRetry(
                         cardNumber: cardNumber,
                         cacheKey: cacheKey,
                         retries: retries + 1,
                         completionHandler: completionHandler
                     )
-                    
+
                 } else {
                     let maxRetriesReached = AccessCheckoutError.unexpectedApiError(
                         message: "Failed after \(self.maxRetries)")
-                    
+
                     completionHandler(.failure(maxRetriesReached))
                 }
-                
+
             }
         }
-        
+
     }
-    
+
     /// Determines whether a failed request should be retried based on the error type and status code.
     ///
     /// Client errors (4xx status codes) are not retried as they indicate issues with the request
@@ -116,6 +116,6 @@ internal struct CardBinApiClient {
             return false
         }
         return true
-        
+
     }
 }
