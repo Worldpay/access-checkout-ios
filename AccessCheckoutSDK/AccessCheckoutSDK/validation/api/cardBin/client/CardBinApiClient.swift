@@ -7,7 +7,7 @@ internal struct CardBinApiClient {
     private var checkoutId: String
     private var restClient: RestClient
     private let cacheManager = CardBinCacheManager()
-    private let maxRetries = 3
+    private let maxAttempts = 3
 
     /// Initialises a new CardBinApiClient instance.
     ///
@@ -43,7 +43,7 @@ internal struct CardBinApiClient {
         fetchCardBinResponseWithRetry(
             cardNumber: cardNumber,
             cacheKey: cacheKey,
-            retries: 1,
+            attempt: 1,
             completionHandler: completionHandler
         )
     }
@@ -63,7 +63,7 @@ internal struct CardBinApiClient {
     private func fetchCardBinResponseWithRetry(
         cardNumber: String,
         cacheKey: String,
-        retries: Int,
+        attempt: UInt,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
@@ -78,22 +78,21 @@ internal struct CardBinApiClient {
                 completionHandler(.success(response))
 
             case .failure(let error):
-                let shouldRetry = self.shouldRetry(error: error, statusCode: statusCode)
-
-                if retries < self.maxRetries && shouldRetry {
-
+                let nextAttempt = attempt + 1
+                if self.shouldRetry(attempt: nextAttempt, statusCode: statusCode) {
                     self.fetchCardBinResponseWithRetry(
                         cardNumber: cardNumber,
                         cacheKey: cacheKey,
-                        retries: retries + 1,
+                        attempt: nextAttempt,
                         completionHandler: completionHandler
                     )
-
                 } else {
-                    let maxRetriesReached = AccessCheckoutError.unexpectedApiError(
-                        message: "Failed after \(self.maxRetries)")
+                    let maxRetriesReachedError = AccessCheckoutError.unexpectedApiError(
+                        message:
+                            "Failed after \(attempt) attempt(s) with error \(String(error.errorDescription!))"
+                    )
 
-                    completionHandler(.failure(maxRetriesReached))
+                    completionHandler(.failure(maxRetriesReachedError))
                 }
 
             }
@@ -101,18 +100,20 @@ internal struct CardBinApiClient {
 
     }
 
-    /// Determines whether a failed request should be retried based on the error type and status code.
+    /// Determines whether a failed request should be retried based on the error type, status code and number of attempts
     ///
     /// Client errors (4xx status codes) are not retried as they indicate issues with the request
     /// that won't be resolved by retrying. Server errors (5xx) and network failures are considered
     /// transient and will trigger a retry.
+    ///  A maximum of 3 attempts are done
     ///
     /// - Parameters:
-    ///   - error: The error that occurred during the request
     ///   - statusCode: The HTTP status code returned by the server, if available
     /// - Returns: `true` if the request should be retried, `false` otherwise
-    private func shouldRetry(error: AccessCheckoutError, statusCode: Int?) -> Bool {
-        if let statusCode = statusCode, (400...499).contains(statusCode) {
+    private func shouldRetry(attempt: UInt, statusCode: Int?) -> Bool {
+        if attempt > self.maxAttempts {
+            return false
+        } else if let statusCode = statusCode, (400...499).contains(statusCode) {
             return false
         }
         return true

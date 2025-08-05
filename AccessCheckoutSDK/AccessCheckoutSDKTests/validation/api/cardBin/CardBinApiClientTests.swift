@@ -66,8 +66,12 @@ class CardBinApiClientTests: XCTestCase {
         expectationToFulfill = expectation(
             description: "should have called completion handler with error from rest client")
 
-        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Failed after 3")
-        let mockRestClient = RestClientMock<CardBinResponse>(errorWith: expectedError)
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: AccessCheckoutError.unexpectedApiError(message: "some error"))
+        let detailedErrorMessage = "Message: unexpectedApiError : some error\n Validation: "
+        let expectedError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error \(detailedErrorMessage)")
+
         let apiClient = CardBinApiClient(
             url: "some-url",
             checkoutId: "00000000-0000-0000-0000-000000000000",
@@ -128,9 +132,9 @@ class CardBinApiClientTests: XCTestCase {
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 
-    func testRetriesRequestThreeTimesOn5xxError() {
+    func testAttemptsRequestThreeTimesOn5xxError() {
         expectationToFulfill = expectation(
-            description: "should retry request three times on server error (5xx)"
+            description: "should attempt request three times on server error (5xx)"
         )
 
         let serverError = AccessCheckoutError.unexpectedApiError(message: "unexpectedApiError")
