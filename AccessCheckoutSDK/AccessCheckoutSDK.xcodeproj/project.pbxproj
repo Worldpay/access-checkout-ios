@@ -551,11 +551,9 @@
 		511B6C512E40EC5F005E1457 /* cardBin */ = {
 			isa = PBXGroup;
 			children = (
-				511B6C452E40EC28005E1457 /* CardBinApiClient.swift */,
-				511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */,
-				511B6C472E40EC28005E1457 /* CardBinRequest.swift */,
-				511B6C482E40EC28005E1457 /* CardBinResponse.swift */,
-				511B6C492E40EC28005E1457 /* CardBinURLRequestFactory.swift */,
+				62A11ECA2E42676500B0B96C /* response */,
+				62A11EC92E42675A00B0B96C /* request */,
+				62A11EC82E42674D00B0B96C /* client */,
 			);
 			path = cardBin;
 			sourceTree = "<group>";
@@ -643,6 +641,32 @@
 				ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		62A11EC82E42674D00B0B96C /* client */ = {
+			isa = PBXGroup;
+			children = (
+				511B6C452E40EC28005E1457 /* CardBinApiClient.swift */,
+				511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+		62A11EC92E42675A00B0B96C /* request */ = {
+			isa = PBXGroup;
+			children = (
+				511B6C492E40EC28005E1457 /* CardBinURLRequestFactory.swift */,
+				511B6C472E40EC28005E1457 /* CardBinRequest.swift */,
+			);
+			path = request;
+			sourceTree = "<group>";
+		};
+		62A11ECA2E42676500B0B96C /* response */ = {
+			isa = PBXGroup;
+			children = (
+				511B6C482E40EC28005E1457 /* CardBinResponse.swift */,
+			);
+			path = response;
 			sourceTree = "<group>";
 		};
 		683DF03ADFFF76E72571BEAE /* mock */ = {
