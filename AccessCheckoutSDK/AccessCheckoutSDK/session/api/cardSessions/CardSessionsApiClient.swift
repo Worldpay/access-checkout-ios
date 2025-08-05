@@ -95,8 +95,7 @@ class CardSessionsApiClient {
         )
         restClient.send(
             urlSession: URLSession.shared,
-            request: request,
-            responseType: ApiResponse.self
+            request: request
         ) { result, _ in
             completionHandler(result)
         }

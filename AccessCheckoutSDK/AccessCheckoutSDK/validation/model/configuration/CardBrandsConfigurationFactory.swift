@@ -25,8 +25,7 @@ class CardBrandsConfigurationFactory {
 
         restClient.send(
             urlSession: URLSession.shared,
-            request: URLRequest(url: url),
-            responseType: [CardBrandDto].self
+            request: URLRequest(url: url)
         ) { result, _ in
             let brands: [CardBrandModel]
 

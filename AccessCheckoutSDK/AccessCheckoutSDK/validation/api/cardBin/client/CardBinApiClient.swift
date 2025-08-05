@@ -70,7 +70,7 @@ internal struct CardBinApiClient {
         let request = urlRequestFactory.create(cardNumber: cardNumber)
 
         restClient.send(
-            urlSession: URLSession.shared, request: request, responseType: CardBinResponse.self
+            urlSession: URLSession.shared, request: request
         ) { result, statusCode in
             switch result {
             case .success(let response):

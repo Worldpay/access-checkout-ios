@@ -13,8 +13,7 @@ class ServiceDiscoveryResponseFactory {
     ) {
         restClient.send(
             urlSession: URLSession.shared,
-            request: request,
-            responseType: ApiResponse.self
+            request: request
         ) {
             result, _ in
             let apiResponse: ApiResponse?

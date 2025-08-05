@@ -4,7 +4,6 @@ internal class RestClient<T: Decodable> {
     func send(
         urlSession: URLSession,
         request: URLRequest,
-        responseType: T.Type,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) {
         urlSession.dataTask(with: request) { data, urlResponse, error in

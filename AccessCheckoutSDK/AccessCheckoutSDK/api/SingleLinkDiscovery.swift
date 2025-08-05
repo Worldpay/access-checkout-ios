@@ -16,8 +16,7 @@ class SingleLinkDiscovery {
     func discover(completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         restClient.send(
             urlSession: URLSession.shared,
-            request: urlRequest,
-            responseType: ApiResponse.self
+            request: urlRequest
         ) { result, _ in
             switch result {
             case .success(let response):

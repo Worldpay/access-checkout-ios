@@ -22,7 +22,7 @@ class RestClientMock<T: Decodable>: RestClient<T> {
     }
 
     override func send(
-        urlSession: URLSession, request: URLRequest, responseType: T.Type,
+        urlSession: URLSession, request: URLRequest,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) {
         numberOfCalls += 1
