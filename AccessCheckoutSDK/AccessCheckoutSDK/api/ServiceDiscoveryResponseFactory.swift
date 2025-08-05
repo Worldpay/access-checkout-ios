@@ -1,9 +1,9 @@
 import Foundation
 
 class ServiceDiscoveryResponseFactory {
-    private let restClient: RestClient
+    private let restClient: RestClient<ApiResponse>
 
-    init(restClient: RestClient = RestClient()) {
+    init(restClient: RestClient<ApiResponse> = RestClient()) {
         self.restClient = restClient
     }
 

@@ -1,6 +1,6 @@
 @testable import AccessCheckoutSDK
 
-class RestClientMock<T: Decodable>: RestClient {
+class RestClientMock<T: Decodable>: RestClient<T> {
     private(set) var sendMethodCalled = false
     private(set) var expectedRequestSent = false
     private(set) var requestSent: URLRequest?
@@ -21,8 +21,7 @@ class RestClientMock<T: Decodable>: RestClient {
         self.statusCode = statusCode
     }
 
-    //TODO: fix warning to do with generic parameter 'T'
-    override func send<T: Decodable>(
+    override func send(
         urlSession: URLSession, request: URLRequest, responseType: T.Type,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) {
@@ -31,7 +30,7 @@ class RestClientMock<T: Decodable>: RestClient {
         requestSent = request
 
         if response != nil {
-            completionHandler(.success(response as! T), 200)
+            completionHandler(.success(response! as T), 200)
         } else if error != nil {
             completionHandler(.failure(error!), statusCode)
         }

@@ -3,10 +3,10 @@ import Foundation
 class CardBrandsConfigurationFactory {
     private let configurationFileRelativePath = "access-checkout/cardTypes.json"
 
-    private let restClient: RestClient
+    private let restClient: RestClient<[CardBrandDto]>
     private let transformer: CardBrandDtoTransformer
 
-    init(_ restClient: RestClient, _ transformer: CardBrandDtoTransformer) {
+    init(_ restClient: RestClient<[CardBrandDto]>, _ transformer: CardBrandDtoTransformer) {
         self.restClient = restClient
         self.transformer = transformer
     }

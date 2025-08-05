@@ -6,7 +6,7 @@ import XCTest
 class RestClientTests: XCTestCase {
     private var serviceStubs: ServiceStubs?
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-    private let restClient = RestClient()
+    private let restClient = RestClient<DummyResponse>()
 
     override func setUp() {
         serviceStubs = ServiceStubs()

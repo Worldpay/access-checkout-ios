@@ -96,7 +96,7 @@ class CvcSessionsApiClientTests: XCTestCase {
     func testReturnsServiceError_whenServiceErrorsOut() {
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        let mockRestClient = RestClientMock<String>(errorWith: expectedError)
+        let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
         let client = CvcSessionsApiClient(
             discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,

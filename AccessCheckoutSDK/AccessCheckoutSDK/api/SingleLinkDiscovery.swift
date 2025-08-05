@@ -1,13 +1,13 @@
 import Foundation
 
 class SingleLinkDiscovery {
-    private let restClient: RestClient
+    private let restClient: RestClient<ApiResponse>
     private let apiResponseLinkLookup: ApiResponseLinkLookup
     private(set) var linkToFind: String
     private(set) var urlRequest: URLRequest
 
     init(linkToFind: String, urlRequest: URLRequest) {
-        self.restClient = RestClient()
+        self.restClient = RestClient<ApiResponse>()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
         self.linkToFind = linkToFind
         self.urlRequest = urlRequest

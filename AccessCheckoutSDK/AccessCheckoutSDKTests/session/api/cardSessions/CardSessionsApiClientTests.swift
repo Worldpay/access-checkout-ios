@@ -110,7 +110,7 @@ class CardSessionsApiClientTests: XCTestCase {
     func testReturnsServiceError_whenServiceErrorsOut() {
         mockDiscovery.willComplete(with: expectedDiscoveredUrl)
         let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
-        let mockRestClient = RestClientMock<String>(errorWith: expectedError)
+        let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
         let client = CardSessionsApiClient(
             discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,

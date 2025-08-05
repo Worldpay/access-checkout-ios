@@ -5,7 +5,7 @@ import Foundation
 internal struct CardBinApiClient {
     private var url: String
     private var checkoutId: String
-    private var restClient: RestClient
+    private var restClient: RestClient<CardBinResponse>
     private let cacheManager = CardBinCacheManager()
     private let maxAttempts = 3
 
@@ -15,7 +15,7 @@ internal struct CardBinApiClient {
     ///   - url: The base URL for the card BIN API endpoint
     ///   - checkoutId: The checkout session identifier used for API authentication
     ///   - restClient: The REST client used to make HTTP requests
-    init(url: String, checkoutId: String, restClient: RestClient) {
+    init(url: String, checkoutId: String, restClient: RestClient<CardBinResponse>) {
         self.url = url
         self.checkoutId = checkoutId
         self.restClient = restClient
