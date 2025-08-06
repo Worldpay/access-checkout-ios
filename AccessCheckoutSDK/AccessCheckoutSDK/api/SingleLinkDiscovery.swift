@@ -1,13 +1,13 @@
 import Foundation
 
 class SingleLinkDiscovery {
-    private let restClient: RestClient
+    private let restClient: RestClient<ApiResponse>
     private let apiResponseLinkLookup: ApiResponseLinkLookup
     private(set) var linkToFind: String
     private(set) var urlRequest: URLRequest
 
     init(linkToFind: String, urlRequest: URLRequest) {
-        self.restClient = RestClient()
+        self.restClient = RestClient<ApiResponse>()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
         self.linkToFind = linkToFind
         self.urlRequest = urlRequest
@@ -16,8 +16,7 @@ class SingleLinkDiscovery {
     func discover(completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void) {
         restClient.send(
             urlSession: URLSession.shared,
-            request: urlRequest,
-            responseType: ApiResponse.self
+            request: urlRequest
         ) { result, _ in
             switch result {
             case .success(let response):

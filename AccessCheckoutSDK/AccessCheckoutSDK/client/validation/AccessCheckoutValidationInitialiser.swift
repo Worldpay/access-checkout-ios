@@ -10,7 +10,7 @@ public struct AccessCheckoutValidationInitialiser {
      This initialiser should be used to create an instance of `AccessCheckoutValidationInitialiser`
      */
     public init() {
-        let restClient = RestClient()
+        let restClient = RestClient<[CardBrandDto]>()
         let transformer = CardBrandDtoTransformer()
         let configurationFactory = CardBrandsConfigurationFactory(restClient, transformer)
         self.configurationProvider = CardBrandsConfigurationProvider(configurationFactory)

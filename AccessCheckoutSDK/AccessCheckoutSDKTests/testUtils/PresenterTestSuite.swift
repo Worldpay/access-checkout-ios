@@ -13,7 +13,8 @@ class PresenterTestSuite: XCTestCase {
     ) {
         let range = NSRange(location: 0, length: 0)
 
-        presenter.textField(uiTextField, shouldChangeCharactersIn: range, replacementString: text)
+        _ = presenter.textField(
+            uiTextField, shouldChangeCharactersIn: range, replacementString: text)
     }
 
     func canEnterExpiryDate(

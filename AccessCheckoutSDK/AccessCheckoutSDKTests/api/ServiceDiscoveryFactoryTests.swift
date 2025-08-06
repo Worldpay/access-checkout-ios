@@ -6,7 +6,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
 
     func testShouldReturnResponseFromDiscoveryRequest() {
         let expectedResponse = toApiResponse()
-        let restClientMock = RestClientMock(replyWith: expectedResponse)
+        let restClientMock = RestClientMock<ApiResponse>(replyWith: expectedResponse)
         let request = URLRequest(url: URL(string: "http://www.example.com")!)
 
         let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)
@@ -22,7 +22,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
     func testShouldReturnNilWhenAFailureOccurredDuringDiscoveryRequest() {
         let expectedError = AccessCheckoutError.unexpectedApiError(message: "An error occurred")
 
-        let restClientMock = RestClientMock<String>(errorWith: expectedError)
+        let restClientMock = RestClientMock<ApiResponse>(errorWith: expectedError)
 
         let request = URLRequest(url: URL(string: "http://www.example.com")!)
         let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)

@@ -7,7 +7,7 @@ class CardSessionsApiClient {
 
     private var discovery: CardSessionsApiDiscovery
     private var urlRequestFactory: CardSessionURLRequestFactory
-    private var restClient: RestClient
+    private var restClient: RestClient<ApiResponse>
     private var apiResponseLinkLookup: ApiResponseLinkLookup
 
     init() {
@@ -27,7 +27,7 @@ class CardSessionsApiClient {
     init(
         discovery: CardSessionsApiDiscovery,
         urlRequestFactory: CardSessionURLRequestFactory,
-        restClient: RestClient
+        restClient: RestClient<ApiResponse>
     ) {
         self.discovery = discovery
         self.urlRequestFactory = urlRequestFactory
@@ -95,8 +95,7 @@ class CardSessionsApiClient {
         )
         restClient.send(
             urlSession: URLSession.shared,
-            request: request,
-            responseType: ApiResponse.self
+            request: request
         ) { result, _ in
             completionHandler(result)
         }
