@@ -9,7 +9,7 @@ class CardSessionsApiClientTests: XCTestCase {
     private let expiryYear: UInt = 24
     private let cvc = "123"
 
-    private let mockDiscovery = CardSessionsApiDiscoveryMock()
+    private let mockDiscovery = MockServiceDiscoveryProvider()
     private let mockURLRequestFactory = CardSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
@@ -24,7 +24,7 @@ class CardSessionsApiClientTests: XCTestCase {
     }
 
     func testDiscoversApiAndCreatesSession() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCardEndpoint().thenReturn(expectedDiscoveredUrl)
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
@@ -55,8 +55,10 @@ class CardSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
-        let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
-        mockDiscovery.willComplete(with: expectedError)
+        let expectedError = StubUtils.createError(
+            errorName: "discoveryLinkNotFound",
+            message: "Failed to find link \(ApiLinks.cardSessions.endpoint) in response")
+        mockDiscovery.getStubbingProxy().getSessionsCardEndpoint().thenReturn(nil)
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
@@ -85,7 +87,7 @@ class CardSessionsApiClientTests: XCTestCase {
             errorName: "sessionLinkNotFound",
             message: "Failed to find link \(ApiLinks.cvcSessions.result) in response")
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCardEndpoint().thenReturn(expectedDiscoveredUrl)
 
         let client = CardSessionsApiClient(
             discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
@@ -108,7 +110,7 @@ class CardSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsServiceError_whenServiceErrorsOut() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCardEndpoint().thenReturn(expectedDiscoveredUrl)
         let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
         let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 

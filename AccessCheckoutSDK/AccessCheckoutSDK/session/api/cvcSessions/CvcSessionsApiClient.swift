@@ -5,19 +5,19 @@ class CvcSessionsApiClient {
         linkName: ApiLinks.cvcSessions.result
     )
 
-    private var discovery: CvcSessionsApiDiscovery
+    private var discovery: ServiceDiscoveryProvider
     private var urlRequestFactory: CvcSessionURLRequestFactory
     private var restClient: RestClient<ApiResponse>
     private var apiResponseLinkLookup: ApiResponseLinkLookup
 
     init() {
-        self.discovery = CvcSessionsApiDiscovery()
+        self.discovery = ServiceDiscoveryProvider()
         self.urlRequestFactory = CvcSessionURLRequestFactory()
         self.restClient = RestClient()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
-    init(discovery: CvcSessionsApiDiscovery) {
+    init(discovery: ServiceDiscoveryProvider) {
         self.discovery = discovery
         self.urlRequestFactory = CvcSessionURLRequestFactory()
         self.restClient = RestClient()
@@ -25,7 +25,7 @@ class CvcSessionsApiClient {
     }
 
     init(
-        discovery: CvcSessionsApiDiscovery,
+        discovery: ServiceDiscoveryProvider,
         urlRequestFactory: CvcSessionURLRequestFactory,
         restClient: RestClient<ApiResponse>
     ) {
@@ -41,24 +41,25 @@ class CvcSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        discovery.discover(baseUrl: baseUrl) { result in
+        guard let endPointUrl = self.discovery.getSessionsCvcEndpoint() else {
+            completionHandler(
+                .failure(
+                    AccessCheckoutError.discoveryLinkNotFound(
+                        linkName: ApiLinks.cvcSessions.endpoint)))
+            return
+        }
+
+        self.fireRequest(endPointUrl: endPointUrl, checkoutId: checkoutId, cvc: cvc) {
+            result in
             switch result {
-            case .success(let endPointUrl):
-                self.fireRequest(endPointUrl: endPointUrl, checkoutId: checkoutId, cvc: cvc) {
-                    result in
-                    switch result {
-                    case .success(let response):
-                        if let session = self.apiResponseLinkLookup.lookup(
-                            link: ApiLinks.cvcSessions.result,
-                            in: response
-                        ) {
-                            completionHandler(.success(session))
-                        } else {
-                            completionHandler(.failure(self.sessionNotFoundError))
-                        }
-                    case .failure(let error):
-                        completionHandler(.failure(error))
-                    }
+            case .success(let response):
+                if let session = self.apiResponseLinkLookup.lookup(
+                    link: ApiLinks.cvcSessions.result,
+                    in: response
+                ) {
+                    completionHandler(.success(session))
+                } else {
+                    completionHandler(.failure(self.sessionNotFoundError))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))

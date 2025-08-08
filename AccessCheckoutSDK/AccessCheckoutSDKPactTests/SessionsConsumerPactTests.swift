@@ -168,8 +168,9 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        let mockDiscovery = CvcSessionsApiDiscoveryMock(
-            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        //        let mockDiscovery = CvcSessionsApiDiscoveryMock(
+        //            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        let mockDiscovery = ServiceDiscoveryProvider()
         let sessionsClient = CvcSessionsApiClient(discovery: mockDiscovery)
 
         sessionsMockService.run(timeout: 10) { testComplete in
@@ -239,8 +240,10 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        let mockDiscovery = CardSessionsApiDiscoveryMock(
-            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/card")
+        //        let mockDiscovery = CardSessionsApiDiscoveryMock(
+        //            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/card")
+        let mockDiscovery = ServiceDiscoveryProvider()
+
         let cardSessionClient = CardSessionsApiClient(discovery: mockDiscovery)
 
         sessionsMockService.run(timeout: 10) { testComplete in
@@ -388,8 +391,10 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        let mockDiscovery = CardSessionsApiDiscoveryMock(
-            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/card")
+        //        let mockDiscovery = CardSessionsApiDiscoveryMock(
+        //            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/card")
+        let mockDiscovery = ServiceDiscoveryProvider()
+
         let cardSessionClient = CardSessionsApiClient(discovery: mockDiscovery)
 
         sessionsMockService.run(timeout: 10) { testComplete in
@@ -457,8 +462,10 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        let mockDiscovery = CvcSessionsApiDiscoveryMock(
-            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        //        let mockDiscovery = CvcSessionsApiDiscoveryMock(
+        //            discoveredUrl: "\(sessionsMockService.baseUrl)/sessions/payments/cvc")
+        let mockDiscovery = ServiceDiscoveryProvider()
+
         let sessionsClient = CvcSessionsApiClient(discovery: mockDiscovery)
 
         sessionsMockService.run(timeout: 10) { testComplete in

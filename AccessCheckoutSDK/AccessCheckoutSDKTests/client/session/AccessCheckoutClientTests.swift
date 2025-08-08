@@ -6,12 +6,14 @@ class AccessCheckoutClientTests: XCTestCase {
     private var serviceStubs: ServiceStubs?
 
     override func setUp() {
-        serviceStubs = ServiceStubs()
+        serviceStubs = ServiceStubs(port: 4000)
     }
 
     override func tearDown() {
         serviceStubs?.stop()
+        ServiceDiscoveryProvider.clearCache2()
     }
+
 
     func testGeneratesACardSession() throws {
         let expectationToFulfill = expectation(description: "Session retrieved")

@@ -6,7 +6,7 @@ class CvcSessionsApiClientTests: XCTestCase {
     private let baseUrl = "http://localhost"
     private let cvc = "123"
 
-    private let mockDiscovery = SessionsApiDiscoveryMock()
+    private let mockDiscovery = MockServiceDiscoveryProvider()
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
@@ -21,7 +21,8 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testDiscoversApiAndCreatesSession() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
+
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
@@ -47,8 +48,10 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
-        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        mockDiscovery.willComplete(with: expectedError)
+        let expectedError = StubUtils.createError(
+            errorName: "discoveryLinkNotFound",
+            message: "Failed to find link \(ApiLinks.cvcSessions.endpoint) in response")
+        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(nil)
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
@@ -70,7 +73,7 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsSessionNotFound_whenExpectedSessionIsNotInResponse() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
         let expectedError = StubUtils.createError(
             errorName: "sessionLinkNotFound",
@@ -94,7 +97,7 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsServiceError_whenServiceErrorsOut() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
