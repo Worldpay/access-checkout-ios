@@ -44,7 +44,7 @@ class CardSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        guard let endPointUrl = self.discovery.getSessionsCardEndpoint() else {
+        guard let endPointUrl = ServiceDiscoveryProvider.getSessionsCardEndpoint() else {
             completionHandler(
                 .failure(
                     AccessCheckoutError.discoveryLinkNotFound(

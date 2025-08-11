@@ -57,6 +57,8 @@ public struct AccessCheckoutValidationInitialiser {
             delegate: expiryDatePresenter
         )
         setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
+        
+        ServiceDiscoveryProvider.discover(baseUrl: config.accessBaseUrl) { result in }
     }
 
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
