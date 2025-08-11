@@ -15,7 +15,10 @@ internal struct CardBinApiClient {
     ///   - url: The base URL for the card BIN API endpoint
     ///   - checkoutId: The checkout session identifier used for API authentication
     ///   - restClient: The REST client used to make HTTP requests
-    init(url: String, checkoutId: String, restClient: RestClient<CardBinResponse>) {
+    init(url: String,
+         checkoutId: String,
+         restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>()
+    ) {
         self.url = url
         self.checkoutId = checkoutId
         self.restClient = restClient
