@@ -51,14 +51,13 @@ public class AccessCheckoutClientBuilder {
         let retrieveSessionHandlerDispatcher = RetrieveSessionHandlerDispatcher(
             retrieveSessionHandlers: [retrieveCardSessionHandler, retrieveCvcSessionHandler])
 
-        let serviceDiscoveryProvider = ServiceDiscoveryProvider(baseUrl: accessBaseUrl)
+//        let serviceDiscoveryProvider = ServiceDiscoveryProvider(baseUrl: accessBaseUrl)
 
         return AccessCheckoutClient(
             checkoutId: checkoutId,
             baseUrl: accessBaseUrl,
             cardDetailsForSessionTypeValidator,
-            retrieveSessionHandlerDispatcher,
-            serviceDiscoveryProvider
+            retrieveSessionHandlerDispatcher
         )
     }
 }

@@ -41,7 +41,7 @@ class CvcSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        guard let endPointUrl = self.discovery.getSessionsCvcEndpoint() else {
+        guard let endPointUrl = ServiceDiscoveryProvider.getSessionsCvcEndpoint() else {
             completionHandler(
                 .failure(
                     AccessCheckoutError.discoveryLinkNotFound(
