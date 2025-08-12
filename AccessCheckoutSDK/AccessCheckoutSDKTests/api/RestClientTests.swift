@@ -21,7 +21,7 @@ class RestClientTests: XCTestCase {
         let urlSessionDataTaskMock = URLSessionDataTaskMock()
         let urlSession = URLSessionMock(forRequest: request, usingDataTask: urlSessionDataTaskMock)
 
-        restClient.send(urlSession: urlSession, request: request) { _, _ in }
+        _ = restClient.send(urlSession: urlSession, request: request) { _, _ in }
 
         XCTAssertTrue(urlSession.dataTaskCalled)
         XCTAssertTrue(urlSessionDataTaskMock.resumeCalled)
@@ -34,7 +34,7 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request) { result, _ in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, _ in
             switch result {
             case .success(let response):
                 XCTAssertEqual(1, response.id)
@@ -55,7 +55,7 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request) { result, statusCode in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, statusCode in
             switch result {
             case .success(_):
                 XCTAssertEqual(200, statusCode)
@@ -80,7 +80,7 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request) { result, _ in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -107,7 +107,7 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get400(path: "/somewhere", jsonResponse: jsonResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request) { result, statusCode in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, statusCode in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -129,7 +129,7 @@ class RestClientTests: XCTestCase {
         serviceStubs!.get200(path: "/somewhere", textResponse: textResponse)
             .start()
 
-        restClient.send(urlSession: urlSession, request: request) { result, _ in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -153,7 +153,7 @@ class RestClientTests: XCTestCase {
             errorName: "unexpectedApiError",
             message: "A server with the specified hostname could not be found.")
 
-        restClient.send(urlSession: urlSession, request: request) { result, _ in
+        _ = restClient.send(urlSession: urlSession, request: request) { result, _ in
             switch result {
             case .success:
                 XCTFail("Expected failed response but received successful response")
@@ -164,6 +164,34 @@ class RestClientTests: XCTestCase {
         }
 
         wait(for: [expectationToWaitFor], timeout: 1)
+    }
+
+    func testRestClientReturnsUrlSessionTask() {
+        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
+        let task: URLSessionTask = restClient.send(urlSession: urlSession, request: request) {
+            result, statusCode in
+        }
+
+        XCTAssertNotNil(task)
+    }
+
+    func testDoesNotCallCompletionHandlerWhenTaskIsCancelled() {
+        serviceStubs!.get200(path: "/somewhere", textResponse: "some response", delay: 0.5)
+            .start()
+
+        var calledCompletionHandler = false
+
+        let request = createRequest(url: "http://localhost/somewhere", method: "GET")
+        let task: URLSessionTask = restClient.send(urlSession: urlSession, request: request) {
+            result, statusCode in
+            calledCompletionHandler = true
+        }
+
+        task.cancel()
+
+        Thread.sleep(forTimeInterval: 1)
+
+        XCTAssertFalse(calledCompletionHandler)
     }
 
     private func createRequest(url: String, method: String) -> URLRequest {

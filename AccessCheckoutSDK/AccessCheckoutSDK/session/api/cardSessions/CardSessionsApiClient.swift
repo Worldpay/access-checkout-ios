@@ -82,7 +82,7 @@ class CardSessionsApiClient {
             expiryYear: expiryYear,
             cvc: cvc
         )
-        restClient.send(
+        _ = restClient.send(
             urlSession: URLSession.shared,
             request: request
         ) { result, _ in

@@ -36,6 +36,21 @@ struct ServiceStubs {
         return self
     }
 
+    func get200(path: String, textResponse: String, delay: TimeInterval) -> ServiceStubs {
+        let response: ((HttpRequest) -> HttpResponse) = { req in
+            return HttpResponse.ok(
+                .custom(
+                    "",
+                    { _ -> String in
+                        Thread.sleep(forTimeInterval: delay)
+                        return ""
+                    }))
+        }
+
+        httpServer.GET[path] = response
+        return self
+    }
+
     func get400(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
         httpServer.GET[path] = { _ in .badRequest(.json(jsonData as AnyObject)) }

@@ -48,6 +48,7 @@
 		517145862AE2CA8D00A73A3F /* UITextFieldMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */; };
 		5173EF252970367300770177 /* WpSdkHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5173EF242970367300770177 /* WpSdkHeaderTests.swift */; };
 		5182FA752AC485C500976088 /* AccessCheckoutUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */; };
+		519F14402E4B7AAA00038113 /* MiscUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519F143F2E4B7AA300038113 /* MiscUtils.swift */; };
 		51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */; };
 		51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */; };
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
@@ -291,6 +292,7 @@
 		517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldMock.swift; sourceTree = "<group>"; };
 		5173EF242970367300770177 /* WpSdkHeaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WpSdkHeaderTests.swift; sourceTree = "<group>"; };
 		5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextField.swift; sourceTree = "<group>"; };
+		519F143F2E4B7AA300038113 /* MiscUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscUtils.swift; sourceTree = "<group>"; };
 		51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
 		51D610D225CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcOnlyValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
 		51E831E12ACDB49900A8FC22 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
@@ -1160,6 +1162,7 @@
 		E7D19F7D2463FEE3001EA13A /* testUtils */ = {
 			isa = PBXGroup;
 			children = (
+				519F143F2E4B7AA300038113 /* MiscUtils.swift */,
 				51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */,
 				E719B08724642EF80037DED4 /* CuckooExtension.swift */,
 				E7C4D235249CF4D100D7B9F1 /* EncodableExtension.swift */,
@@ -1785,6 +1788,7 @@
 				513039A22B10F68800C01B10 /* ApiHeadersTests.swift in Sources */,
 				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
 				E7633D2D249D1F4800FFE190 /* AccessCheckoutErrorTests.swift in Sources */,
+				519F14402E4B7AAA00038113 /* MiscUtils.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,
 				5173EF252970367300770177 /* WpSdkHeaderTests.swift in Sources */,
 				E77B8BA9245C552200564C19 /* RetrieveCardSessionHandlerTests.swift in Sources */,

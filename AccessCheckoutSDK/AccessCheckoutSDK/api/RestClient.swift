@@ -5,21 +5,48 @@ internal class RestClient<T: Decodable> {
         urlSession: URLSession,
         request: URLRequest,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
-    ) {
-        urlSession.dataTask(with: request) { data, urlResponse, error in
+    ) -> URLSessionTask {
+        let onDataTaskComplete = CompletionHandler { result, statusCode in
+            completionHandler(result, statusCode)
+        }
+
+        let task: URLSessionDataTask = urlSession.dataTask(with: request) {
+            data, urlResponse, error in
+            if error?.localizedDescription == "cancelled" {
+                return
+            } else {
+                onDataTaskComplete.handle(data, urlResponse, error)
+            }
+        }
+        task.resume()
+        return task
+    }
+
+    private class CompletionHandler {
+        private var actualCompletionHandler: ((Result<T, AccessCheckoutError>, Int?) -> Void)
+
+        fileprivate init(
+            completionHandler actualCompletionHandler: @escaping (
+                Result<T, AccessCheckoutError>, Int?
+            ) -> Void
+        ) {
+            self.actualCompletionHandler = actualCompletionHandler
+        }
+
+        fileprivate func handle(_ data: Data?, _ urlResponse: URLResponse?, _ error: Error?) {
             let urlResponse = urlResponse as? HTTPURLResponse
             if let responseBody = data {
                 if let decodedResponse = try? JSONDecoder().decode(T.self, from: responseBody) {
-                    completionHandler(.success(decodedResponse), urlResponse?.statusCode)
+                    actualCompletionHandler(.success(decodedResponse), urlResponse?.statusCode)
                 } else if let accessCheckoutClientError = try? JSONDecoder().decode(
                     AccessCheckoutError.self,
                     from: responseBody
                 ) {
-                    completionHandler(
+                    actualCompletionHandler(
                         .failure(accessCheckoutClientError),
                         urlResponse?.statusCode)
                 } else {
-                    completionHandler(
+                    actualCompletionHandler(
                         .failure(AccessCheckoutError.responseDecodingFailed()),
                         urlResponse?.statusCode)
                 }
@@ -30,10 +57,10 @@ internal class RestClient<T: Decodable> {
                 } else {
                     errorMessage = "Unexpected response: no data or error returned"
                 }
-                completionHandler(
+                actualCompletionHandler(
                     .failure(AccessCheckoutError.unexpectedApiError(message: errorMessage)),
                     urlResponse?.statusCode)
             }
-        }.resume()
+        }
     }
 }
