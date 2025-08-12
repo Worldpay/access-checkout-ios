@@ -176,7 +176,7 @@ class RestClientTests: XCTestCase {
     }
 
     func testDoesNotCallCompletionHandlerWhenTaskIsCancelled() {
-        serviceStubs!.get200(path: "/somewhere", textResponse: "some response", delay: 0.5)
+        serviceStubs!.get200(path: "/somewhere", textResponse: "some response", delayInSeconds: 0.5)
             .start()
 
         var calledCompletionHandler = false
@@ -191,7 +191,7 @@ class RestClientTests: XCTestCase {
 
         Thread.sleep(forTimeInterval: 1)
 
-        XCTAssertFalse(calledCompletionHandler)
+        XCTAssertTrue(!calledCompletionHandler)
     }
 
     private func createRequest(url: String, method: String) -> URLRequest {
