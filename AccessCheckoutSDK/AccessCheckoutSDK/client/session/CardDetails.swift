@@ -1,3 +1,6 @@
+import Dispatch
+import Foundation
+
 /// A class representing a shopper's card details that can be constructed with a `CardDetailsBuilder`
 /// All properties are internal and only accessible to the Access Checkout SDK.
 /// This is designed to protect merchants from exposure to the card details so that they can reach the lowest level of compliance (SAQ-A)
@@ -20,25 +23,63 @@ internal class CardDetailsFromUIComponents: CardDetails {
     private let cvcUITextField: AccessCheckoutUITextField?
 
     override internal var pan: String? {
-        return panUITextField?.text?.replacingOccurrences(of: " ", with: "")
+        if Thread.isMainThread {
+            return panUITextField?.text?.replacingOccurrences(of: " ", with: "")
+        } else {
+            var panText: String?
+            DispatchQueue.main.sync {
+                panText = panUITextField?.text?.replacingOccurrences(of: " ", with: "")
+            }
+            return panText
+        }
     }
 
     override internal var expiryMonth: UInt? {
-        guard let expiryDateText = expiryDateUITextField?.text else {
+        var expiryDateText: String?
+        
+        if Thread.isMainThread {
+            expiryDateText = expiryDateUITextField?.text
+        } else {
+            DispatchQueue.main.sync {
+                expiryDateText = expiryDateUITextField?.text
+            }
+        }
+        
+        guard let text = expiryDateText else {
             return nil
         }
-        return ExpiryDateUtils.expiryMonth(of: expiryDateText)
+        return ExpiryDateUtils.expiryMonth(of: text)
     }
 
     override internal var expiryYear: UInt? {
-        guard let expiryDateText = expiryDateUITextField?.text else {
+        var expiryDateText: String?
+        
+        if Thread.isMainThread {
+            expiryDateText = expiryDateUITextField?.text
+        } else {
+            DispatchQueue.main.sync {
+                expiryDateText = expiryDateUITextField?.text
+            }
+        }
+        
+        guard let text = expiryDateText else {
             return nil
         }
-        return ExpiryDateUtils.expiryYearOn4Digits(of: expiryDateText)
+        return ExpiryDateUtils.expiryYearOn4Digits(of: text)
     }
 
     override internal var cvc: String? {
-        return cvcUITextField?.text
+        var cvcText: String?
+        
+        if Thread.isMainThread {
+            cvcText = cvcUITextField?.text
+        } else {
+            DispatchQueue.main.sync {
+                cvcText = cvcUITextField?.text
+            }
+        }
+        
+        return cvcText
     }
 
     fileprivate init(
