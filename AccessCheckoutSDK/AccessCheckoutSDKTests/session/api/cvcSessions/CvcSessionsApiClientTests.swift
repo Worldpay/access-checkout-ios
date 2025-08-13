@@ -99,11 +99,12 @@ class CvcSessionsApiClientTests: XCTestCase {
 
     func testReturnsServiceError_whenServiceErrorsOut() {
         StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
-        
+
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
-        let client = CvcSessionsApiClient(urlRequestFactory: mockURLRequestFactory,
+        let client = CvcSessionsApiClient(
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in

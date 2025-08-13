@@ -39,7 +39,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
             }
         }
     }
-    
+
     private func toApiResponse() -> ApiResponse {
         let jsonString = """
             {
@@ -50,7 +50,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
                 }
             }
             """
-        
+
         let data = Data(jsonString.utf8)
         return try! JSONDecoder().decode(ApiResponse.self, from: data)
     }
