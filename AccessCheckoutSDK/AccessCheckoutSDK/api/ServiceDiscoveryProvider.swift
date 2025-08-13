@@ -32,7 +32,7 @@ class ServiceDiscoveryProvider {
     static func getSessionsCvcEndpoint() -> String? {
         return shared.sessionsCreateCvcSessionUrl
     }
-    
+
     public static func discover(
         baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
@@ -83,13 +83,13 @@ class ServiceDiscoveryProvider {
     }
 
     func clearCache() {
-    ServiceDiscoveryProvider.serialQueue.sync {
-        ServiceDiscoveryProvider.static_accessRootResponse = nil
-        ServiceDiscoveryProvider.static_sessionsServiceUrl = nil
-        ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl = nil
-        ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl = nil
+        ServiceDiscoveryProvider.serialQueue.sync {
+            ServiceDiscoveryProvider.static_accessRootResponse = nil
+            ServiceDiscoveryProvider.static_sessionsServiceUrl = nil
+            ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl = nil
+            ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl = nil
+        }
     }
-}
 
     private func performDiscovery(
         _ baseUrl: String,
@@ -197,7 +197,7 @@ class ServiceDiscoveryProvider {
         _ request: URLRequest,
         completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
     ) {
-        self.factory.create( request: request) {
+        self.factory.create(request: request) {
             result in
             completionHandler(result)
         }

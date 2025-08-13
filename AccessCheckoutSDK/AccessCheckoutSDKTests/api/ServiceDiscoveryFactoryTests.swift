@@ -23,7 +23,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
         }
     }
 
-    func testShouldReturnNilWhenAFailureOccurredDuringDiscoveryRequest() {
+    func testShouldReturnAnErrorWhenAnErrorOccurredDuringDiscoveryRequest() {
         let expectedError = AccessCheckoutError.unexpectedApiError(message: "An error occurred")
         let restClientMock = RestClientMock<ApiResponse>(errorWith: expectedError)
 
@@ -33,7 +33,7 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
         factory.create(request: request) { result in
             switch result {
             case .success(_):
-                XCTFail("Errror should have occurred")
+                XCTFail("An error should have occurred")
             case .failure(let error):
                 XCTAssertEqual(error, expectedError)
             }

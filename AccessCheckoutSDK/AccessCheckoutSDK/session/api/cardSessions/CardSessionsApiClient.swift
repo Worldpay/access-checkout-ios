@@ -61,7 +61,6 @@ class CardSessionsApiClient {
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
-
             }
         }
     }

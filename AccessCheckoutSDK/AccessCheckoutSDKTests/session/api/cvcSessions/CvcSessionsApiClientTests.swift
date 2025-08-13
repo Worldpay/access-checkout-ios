@@ -6,7 +6,6 @@ class CvcSessionsApiClientTests: XCTestCase {
     private let baseUrl = "http://localhost"
     private let cvc = "123"
 
-    private let mockDiscovery = MockServiceDiscoveryProvider()
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
@@ -22,7 +21,6 @@ class CvcSessionsApiClientTests: XCTestCase {
 
     func testDiscoversApiAndCreatesSession() {
         StubUtils.setUpServiceDiscovery(cvcUrlToReturn: expectedDiscoveredUrl)
-
 
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))

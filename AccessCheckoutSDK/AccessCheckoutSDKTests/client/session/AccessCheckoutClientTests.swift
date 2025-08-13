@@ -7,6 +7,7 @@ class AccessCheckoutClientTests: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
+        ServiceDiscoveryProvider.shared.clearCache()
     }
 
     override func tearDown() {
@@ -258,7 +259,6 @@ class AccessCheckoutClientTests: XCTestCase {
 
         serviceStubs!.servicesRootDiscoveryFailure(error: expectedError)
             .start()
-
 
         try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) {
             result in

@@ -17,10 +17,13 @@ class SessionsConsumerPactTests: XCTestCase {
         provider: "sessions",
         consumer: "access-checkout-iOS-sdk")
     
+    override func setUp() {
+        ServiceDiscoveryProvider.shared.clearCache()
+    }
+    
     override func tearDown() {
         ServiceDiscoveryProvider.shared.clearCache()
     }
-            
 
     // MARK: Service discovery
     
