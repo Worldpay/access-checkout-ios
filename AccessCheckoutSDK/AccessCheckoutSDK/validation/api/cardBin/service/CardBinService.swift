@@ -34,32 +34,18 @@ internal class CardBinService {
     func getCardBrands(
         globalBrand: CardBrandModel?,
         cardNumber: String,
-        completion: @escaping (Result<[CardBrandModel], AccessCheckoutError>) -> Void
+        completion: @escaping (Result<[CardBrandModel], Error>) -> Void
     ) {
         let sanitisedCardNumber = cardNumber.replacingOccurrences(of: " ", with: "")
 
         guard !sanitisedCardNumber.isEmpty else {
-            completion(
-                .failure(
-                    AccessCheckoutError.unexpectedApiError(
-                        message: "Invalid card number provided for BIN lookup"
-                    )))
             return
         }
 
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
         let request = CardBinRequest(cardNumber: cardNumberPrefix, checkoutId: checkoutId)
 
-        client.retrieveBinInfo(request: request) { [weak self] result in
-            guard let self = self else {
-                completion(
-                    .failure(
-                        AccessCheckoutError.unexpectedApiError(
-                            message: "Card BIN service instance was deallocated"
-                        )))
-                return
-            }
-
+        client.retrieveBinInfo(request: request) { result in
             switch result {
             case .success(let response):
                 let cardBrands = self.transform(
@@ -68,7 +54,7 @@ internal class CardBinService {
                 )
                 completion(.success(cardBrands))
             case .failure(let error):
-                completion(.failure(error))
+                NSLog("Failed to retrieve Card BIN info: \(error.localizedDescription)")
             }
         }
     }
@@ -99,7 +85,7 @@ internal class CardBinService {
         }
 
         let responseBrands = response.brand.map { brandName in
-            findBrandByName(brandName, in: configuration, default: globalBrand)
+            findBrandByName(brandName, in: configuration, globalBrand: globalBrand)
                 ?? CardBrandModel(
                     name: brandName,
                     images: [],
@@ -130,12 +116,12 @@ internal class CardBinService {
     private func findBrandByName(
         _ brandName: String,
         in configuration: CardBrandsConfiguration,
-        default defaultBrand: CardBrandModel?
+        globalBrand: CardBrandModel?
     ) -> CardBrandModel? {
-        if let defaultBrand = defaultBrand,
-            brandName.caseInsensitiveCompare(defaultBrand.name) == .orderedSame
+        if let globalBrand = globalBrand,
+            brandName.caseInsensitiveCompare(globalBrand.name) == .orderedSame
         {
-            return defaultBrand
+            return globalBrand
         }
 
         return configuration.allCardBrands.first { brand in

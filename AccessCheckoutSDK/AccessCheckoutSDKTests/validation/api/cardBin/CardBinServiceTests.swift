@@ -53,18 +53,6 @@ class CardBinServiceTests: XCTestCase {
         XCTAssertNotNil(service)
     }
 
-    func testShouldInstantiateCardBinServiceWithCustomClient() {
-        let customClient = MockCardBinApiClient(url: baseURL)
-        let configurationProvider = MockCardBrandsConfigurationProvider(mockFactory)
-        let service = CardBinService(
-            checkoutId: "testCheckoutId",
-            baseURL: baseURL,
-            client: customClient,
-            configurationProvider: configurationProvider
-        )
-        XCTAssertNotNil(service)
-    }
-
     func testShouldReturnDistinctListOfBrandsWhenServiceRespondsWithBrands() {
         let expectation = self.expectation(
             description:
@@ -140,11 +128,10 @@ class CardBinServiceTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1) { _ in
-            XCTAssertNotNil(receivedBrands)
             XCTAssertEqual(receivedBrands?.count, 2)
             let brandNames = receivedBrands?.map { $0.name }
-            XCTAssertTrue(brandNames?.contains("discover") ?? false)
-            XCTAssertTrue(brandNames?.contains("diners") ?? false)
+            XCTAssertTrue(brandNames!.contains("discover"))
+            XCTAssertTrue(brandNames!.contains("diners"))
         }
     }
 
@@ -261,11 +248,10 @@ class CardBinServiceTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1) { _ in
-            XCTAssertNotNil(receivedBrands)
             XCTAssertEqual(receivedBrands?.count, 2)
             let brandNames = receivedBrands?.map { $0.name }
-            XCTAssertTrue(brandNames?.contains("discover") ?? false)
-            XCTAssertTrue(brandNames?.contains("mastercard") ?? false)
+            XCTAssertTrue(brandNames!.contains("discover"))
+            XCTAssertTrue(brandNames!.contains("mastercard"))
         }
     }
 
@@ -302,7 +288,6 @@ class CardBinServiceTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1) { _ in
-            XCTAssertNotNil(receivedBrands)
             XCTAssertEqual(receivedBrands?.count, 1)
             let brand = receivedBrands?.first
             XCTAssertEqual(brand?.name, "discovery")
@@ -352,10 +337,8 @@ class CardBinServiceTests: XCTestCase {
         }
     }
 
-    func testShouldReturnErrorWhenApiClientFails() {
-        let expectation = self.expectation(
-            description: "Testing that service correctly propogates error")
-        let apiError = AccessCheckoutError.unexpectedApiError(message: "API error occurred")
+    func testShouldNotCallCompletionHandlerWhenApiClientFails() {
+        var calledCompletionHandler = false
 
         stub(mockClient) { stub in
             when(
@@ -364,17 +347,20 @@ class CardBinServiceTests: XCTestCase {
                     completionHandler: any()
                 )
             ).then { _, completion in
-                completion(.failure(apiError))
+                completion(
+                    .failure(AccessCheckoutError.unexpectedApiError(message: "Network error")))
             }
         }
 
         cardBinService.getCardBrands(
             globalBrand: TestFixtures.discoverBrand(),
             cardNumber: discoverDinersTestPan
-        ) { result in
-            expectation.fulfill()
+        ) { _ in
+            calledCompletionHandler = true
         }
 
-        waitForExpectations(timeout: 1)
+        Thread.sleep(forTimeInterval: 0.2)
+
+        XCTAssertFalse(calledCompletionHandler)
     }
 }
