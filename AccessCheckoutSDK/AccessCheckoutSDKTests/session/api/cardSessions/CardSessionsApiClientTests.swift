@@ -1,5 +1,5 @@
-import XCTest
 import Cuckoo
+import XCTest
 
 @testable import AccessCheckoutSDK
 
@@ -22,18 +22,19 @@ class CardSessionsApiClientTests: XCTestCase {
         mockURLRequestFactory.willReturn(urlRequestFactoryResult)
         expectationToFulfill = expectation(description: "")
     }
-    
+
     override func tearDown() {
         StubUtils.clearServiceDiscoveryCache()
     }
-    
+
     func testDiscoversApiAndCreatesSession() {
         StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
 
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
-        let client = CardSessionsApiClient( urlRequestFactory: mockURLRequestFactory,
+        let client = CardSessionsApiClient(
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(
@@ -64,7 +65,7 @@ class CardSessionsApiClientTests: XCTestCase {
         let expectedError = StubUtils.createError(
             errorName: "discoveryLinkNotFound",
             message: "Failed to find link \(ApiLinks.cardSessions.endpoint) in response")
-        
+
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
@@ -96,7 +97,8 @@ class CardSessionsApiClientTests: XCTestCase {
             message: "Failed to find link \(ApiLinks.cvcSessions.result) in response")
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
 
-        let client = CardSessionsApiClient(urlRequestFactory: mockURLRequestFactory,
+        let client = CardSessionsApiClient(
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(
@@ -121,7 +123,8 @@ class CardSessionsApiClientTests: XCTestCase {
         let expectedError = StubUtils.createError(errorName: "some error", message: "some message")
         let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
-        let client = CardSessionsApiClient( urlRequestFactory: mockURLRequestFactory,
+        let client = CardSessionsApiClient(
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(

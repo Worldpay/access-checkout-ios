@@ -8,7 +8,7 @@ struct ServiceStubs {
         self.httpServer = .init()
         self.baseUrl = "http://localhost:\(port)"
     }
-    
+
     init(port: UInt16) {
         self.port = port
         self.httpServer = .init()
@@ -23,7 +23,7 @@ struct ServiceStubs {
     private let sessionsServicePath = "/sessions"
     private let sessionsServiceCardSessionPath = "/sessions/card"
     private let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
-    
+
     func get200(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
         httpServer.GET[path] = { _ in .ok(.json(jsonData as AnyObject)) }
@@ -67,7 +67,7 @@ struct ServiceStubs {
     func servicesRootDiscoverySuccess() -> ServiceStubs {
         return get200(path: "", jsonResponse: successfulDiscoveryResponse())
     }
-    
+
     func servicesRootDiscoveryFailure(error: AccessCheckoutError) -> ServiceStubs {
         return failed400(path: "", error: error)
     }
