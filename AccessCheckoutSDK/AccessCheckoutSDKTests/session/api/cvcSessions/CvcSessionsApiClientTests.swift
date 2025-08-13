@@ -21,13 +21,14 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testDiscoversApiAndCreatesSession() {
-        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cvcUrlToReturn: expectedDiscoveredUrl)
+
 
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
@@ -48,15 +49,16 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
+        StubUtils.setUpServiceDiscovery(cvcUrlToReturn: nil)
+
         let expectedError = StubUtils.createError(
             errorName: "discoveryLinkNotFound",
             message: "Failed to find link \(ApiLinks.cvcSessions.endpoint) in response")
-        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(nil)
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
@@ -73,14 +75,15 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsSessionNotFound_whenExpectedSessionIsNotInResponse() {
-        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
+
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
         let expectedError = StubUtils.createError(
             errorName: "sessionLinkNotFound",
             message: "Failed to find link \(ApiLinks.cvcSessions.result) in response")
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
@@ -97,12 +100,12 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsServiceError_whenServiceErrorsOut() {
-        mockDiscovery.getStubbingProxy().getSessionsCvcEndpoint().thenReturn(expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
+        
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
         let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
-        let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+        let client = CvcSessionsApiClient(urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
         client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in

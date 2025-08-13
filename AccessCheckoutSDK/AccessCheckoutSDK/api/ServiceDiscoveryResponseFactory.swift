@@ -9,24 +9,15 @@ class ServiceDiscoveryResponseFactory {
 
     func create(
         request: URLRequest,
-        completionHandler: @escaping (ApiResponse?) -> Void
+        completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
     ) {
         restClient.send(
             urlSession: URLSession.shared,
             request: request
         ) {
             result, _ in
-            let apiResponse: ApiResponse?
 
-            switch result {
-            case .success(let discoveryResponse):
-                apiResponse = discoveryResponse
-            case .failure:
-                apiResponse = nil
-                NSLog("Service discovery failed: \(result)")
-            }
-
-            completionHandler(apiResponse)
+            completionHandler(result)
         }
     }
 }

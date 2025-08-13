@@ -11,9 +11,11 @@ class ServiceDiscoveryProviderTests: XCTestCase {
     private var expectationToFulfill: XCTestExpectation?
 
     override func setUp() {
-        serviceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: baseUrl, factoryMock, apiResponseLookUpMock)
-//        serviceDiscoveryProvider?.clearCache()
+        // create an instance of ServiceDiscoveryProvider with mocks
+        // all calls to ServiceDiscoveryProvider will use mocks
+        ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
+            factoryMock, apiResponseLookUpMock)
+        ServiceDiscoveryProvider.shared.clearCache()
     }
 
     func testGettersReturnCardAndCvcEndpoints() {
@@ -24,10 +26,10 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .create(request: any(), completionHandler: any())
             .then {
                 _, completionHandler in
-                completionHandler(self.toBaseDiscoveryResponse())
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
             }.then {
                 _, completionHandler in
-                completionHandler(self.toSessionsDiscoveryResponse())
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
             }
 
         // mock api response lookups
@@ -46,7 +48,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
 
         // call method
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
                 // verify calls to factory
@@ -66,113 +68,119 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                     link: ApiLinks.cardSessions.endpoint, in: any())
                 self.expectationToFulfill!.fulfill()
 
+                //                 verify class parameters have correct values
+                XCTAssertEqual(
+                    ServiceDiscoveryProvider.getSessionsCardEndpoint(), "sessionsCardHref")
+                XCTAssertEqual(
+                    ServiceDiscoveryProvider.getSessionsCvcEndpoint(), "sessionsCvcHref")
+
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
                 self.expectationToFulfill!.fulfill()
             }
         }
 
-        // verify class parameters have correct values
-        XCTAssertEqual(
-            serviceDiscoveryProvider?.getSessionsCardEndpoint(), "sessionsCardHref")
-        XCTAssertEqual(
-            serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "sessionsCvcHref")
-
         waitForExpectations(timeout: 1)
     }
 
-    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryResponseIsNil() {
+
+
+    func testShouldReturnAnErrorWhenAnErrorOccursDuringAccessRootDisovery() {
         expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Unable to fetch base discovery response.")
-        // Simulate failure in base discovery request/response
+        let expectedError = AccessCheckoutError.unexpectedApiError(
+            message: "Unable to fetch access root discovery response.")
+        
+        // Simulate failure in access root discovery
         factoryMock.getStubbingProxy()
             .create(request: any(), completionHandler: any())
             .then {
                 _, completionHandler in
-                completionHandler(nil)
+                completionHandler(Result.failure(expectedError))
             }
 
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
-                XCTFail("Base discovery response should have been nil")
+                XCTFail("Access root discovery should have been nil")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
                 verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
-                XCTAssertEqual(error,expectedError)
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testShouldNotCallSessionsDiscoveryIfBaseDiscoveryResponseDoesNotHaveSessionsLink() {
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
-            linkName: ApiLinks.cardSessions.service)
-
-        // mock base discovery response
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any()).then {
-                _, completionHandler in
-                completionHandler(self.toBaseDiscoveryResponse())
-            }
-
-        // Simulate no sessions service link in base discovery response
-        apiResponseLookUpMock.getStubbingProxy()
-            .lookup(link: any(), in: any())
-            .thenReturn(nil)
-
-        serviceDiscoveryProvider?.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Base discovery response should not have sessions link")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.service, in: any())
-                verifyNoMoreInteractions(self.apiResponseLookUpMock)
-                XCTAssertEqual(error,expectedError)
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testGettersShouldReturnNilWhenSessionsDiscoveryResponseIsNil() {
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.unexpectedApiError(message: "Unable to fetch sessions discovery response.")
-        // simulate a successful base discovery response and a failed sessions response
-        factoryMock.getStubbingProxy().create(request: any(), completionHandler: any()).then {
-            _, completionHandler in
-            completionHandler(self.toBaseDiscoveryResponse())
-        }.then {
-            _, completionHandler in
-            completionHandler(nil)
-        }
-
-        apiResponseLookUpMock.getStubbingProxy()
-            .lookup(link: any(), in: any())
-            .thenReturn("sessionsServiceLink")
-
-        serviceDiscoveryProvider?.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Sessions discovery response should not have been nil")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(link: any(), in: any())
                 XCTAssertEqual(error, expectedError)
                 self.expectationToFulfill!.fulfill()
             }
         }
 
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnAnErorrWhenUnableToLookUpSessionsServiceUrlInAccessRootResponse() {
+        expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cardSessions.service)
+
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+            }
+
+        // Simulate no sessions service link in access root response
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn(nil)
+
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
+            switch result {
+            case .success():
+                XCTFail("Sessions service url should not have been found")
+                self.expectationToFulfill!.fulfill()
+            case .failure(let error):
+                verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
+                verify(self.apiResponseLookUpMock, times(1)).lookup(
+                    link: ApiLinks.cardSessions.service, in: any())
+                XCTAssertEqual(error, expectedError)
+                self.expectationToFulfill!.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnAnErrorWhenAnErrorOccursDuringSessionsDiscovery() {
+        expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.unexpectedApiError(
+            message: "Unable to fetch sessions discovery response")
+
+        // Simulate failure in sessions discovery
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+            }
+            .then {
+                _, completionHandler in
+                completionHandler(Result.failure(expectedError))
+            }
+
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
+            switch result {
+            case .success():
+                XCTFail("Sessions discovery should not have been found")
+                self.expectationToFulfill!.fulfill()
+            case .failure(let error):
+                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.apiResponseLookUpMock, times(1)).lookup(
+                    link: ApiLinks.cardSessions.service, in: any())
+                XCTAssertEqual(error, expectedError)
+                self.expectationToFulfill!.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 1)
     }
@@ -185,10 +193,10 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .create(request: any(), completionHandler: any())
             .then {
                 _, completionHandler in
-                completionHandler(self.toBaseDiscoveryResponse())
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
             }.then {
                 _, completionHandler in
-                completionHandler(self.toSessionsDiscoveryResponse())
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -197,34 +205,30 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .thenReturn("validSessionsCardHref")
             .thenReturn("validSessionsCvcHref")
 
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
-
                 verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
+                
                 // clear previous calls to the mocks
                 clearInvocations(self.factoryMock)
                 clearInvocations(self.apiResponseLookUpMock)
 
                 self.expectationToFulfill!.fulfill()
             case .failure(_):
-                XCTFail("Sessions discovery response should not have been nil")
+                XCTFail("Discovery should have returned mocked value")
                 self.expectationToFulfill!.fulfill()
             }
         }
 
-        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
-        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
+        XCTAssertEqual(ServiceDiscoveryProvider.getSessionsCardEndpoint(), "validSessionsCardHref")
+        XCTAssertEqual(ServiceDiscoveryProvider.getSessionsCvcEndpoint(), "validSessionsCvcHref")
 
-        // create another instance of ServiceDiscoveryProvider to test caching
-        let otherServiceDiscoveryProvider = ServiceDiscoveryProvider(
-            baseUrl: baseUrl, factoryMock, apiResponseLookUpMock)
-
-        otherServiceDiscoveryProvider.discover { result in
+        // subsequent calls should return cached values without calling the factory or lookup mocks
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
-
                 // verify no calls have been made to the factory or lookup mocks
                 verify(self.factoryMock, times(0)).create(request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(0)).lookup(link: any(), in: any())
@@ -236,8 +240,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCardEndpoint(), "validSessionsCardHref")
-        XCTAssertEqual(serviceDiscoveryProvider?.getSessionsCvcEndpoint(), "validSessionsCvcHref")
+        XCTAssertEqual(ServiceDiscoveryProvider.getSessionsCardEndpoint(), "validSessionsCardHref")
+        XCTAssertEqual(ServiceDiscoveryProvider.getSessionsCvcEndpoint(), "validSessionsCvcHref")
 
         waitForExpectations(timeout: 1)
     }
@@ -245,25 +249,23 @@ class ServiceDiscoveryProviderTests: XCTestCase {
     func testShouldClearCache() {
         expectationToFulfill = expectation(description: "")
 
-        // mock base and session discovery responses
         factoryMock.getStubbingProxy()
             .create(request: any(), completionHandler: any())
             .then {
                 _, completionHandler in
-                completionHandler(self.toBaseDiscoveryResponse())
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
             }.then {
                 _, completionHandler in
-                completionHandler(self.toSessionsDiscoveryResponse())
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
             }
 
-        // mock api response lookups
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: any(), in: any())
             .thenReturn("sessionsServiceLink")
             .thenReturn("sessionsCardHref")
             .thenReturn("sessionsCvcHref")
 
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
                 self.expectationToFulfill!.fulfill()
@@ -273,13 +275,13 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             }
         }
 
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCardEndpoint(), "validSessionsCardHref")
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint(), "validSessionsCvcHref")
 
-        serviceDiscoveryProvider?.clearCache()
+        ServiceDiscoveryProvider.shared.clearCache()
 
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
+        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint())
 
         waitForExpectations(timeout: 1)
     }
@@ -288,25 +290,23 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         expectationToFulfill = expectation(description: "")
         let nextExpectationToFulfill = XCTestExpectation(description: "")
 
-        // mock base and session discovery responses
         factoryMock.getStubbingProxy()
             .create(request: any(), completionHandler: any())
             .then {
                 _, completionHandler in
-                completionHandler(self.toBaseDiscoveryResponse())
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
             }.then {
                 _, completionHandler in
-                completionHandler(self.toSessionsDiscoveryResponse())
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
             }
 
-        // mock api response lookups
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: any(), in: any())
             .thenReturn("sessionsServiceLink")
             .thenReturn("sessionsCardHref")
             .thenReturn("sessionsCvcHref")
 
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
                 // verify calls to factory and lookup mocks
@@ -319,16 +319,16 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             }
         }
 
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint())
 
-        serviceDiscoveryProvider?.clearCache()
+        ServiceDiscoveryProvider.shared.clearCache()
 
         // verify cached endpoints are cleared
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
+        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint())
 
-        serviceDiscoveryProvider?.discover { result in
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
                 // verify calls after clearing cached endpoints
@@ -341,8 +341,87 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             }
         }
 
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCardEndpoint())
-        XCTAssertNotNil(serviceDiscoveryProvider?.getSessionsCvcEndpoint())
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
+        XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint())
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnErrorWhenUnableToLookUpSessionsCardUrl() {
+        expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cardSessions.endpoint)
+
+        // Simulate failure in base discovery request/response
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+            }.then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+            }
+
+        // mock api response lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+            .thenReturn(nil)
+
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
+            switch result {
+            case .success():
+                XCTFail("Sessions card URL should not have been found")
+                self.expectationToFulfill!.fulfill()
+            case .failure(let error):
+                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.apiResponseLookUpMock, times(1)).lookup(
+                    link: ApiLinks.cardSessions.endpoint, in: any())
+                XCTAssertEqual(error, expectedError)
+                self.expectationToFulfill!.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnErrorWhenUnableToLookUpSessionsCvsUrl() {
+        expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cvcSessions.endpoint)
+
+        // Simulate failure in base discovery request/response
+        factoryMock.getStubbingProxy()
+            .create(request: any(), completionHandler: any())
+            .then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+            }.then {
+                _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+            }
+
+        // mock api response lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")
+            .thenReturn("sessionsCardHref")
+            .thenReturn(nil)
+
+        ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
+            switch result {
+            case .success():
+                XCTFail("Sessions cvc URL should not have been found")
+                self.expectationToFulfill!.fulfill()
+            case .failure(let error):
+                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.apiResponseLookUpMock, times(1)).lookup(
+                    link: ApiLinks.cvcSessions.endpoint, in: any())
+                XCTAssertEqual(error, expectedError)
+                self.expectationToFulfill!.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 1)
     }

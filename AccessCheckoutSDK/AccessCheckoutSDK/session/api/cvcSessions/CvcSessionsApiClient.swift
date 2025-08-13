@@ -5,31 +5,20 @@ class CvcSessionsApiClient {
         linkName: ApiLinks.cvcSessions.result
     )
 
-    private var discovery: ServiceDiscoveryProvider
     private var urlRequestFactory: CvcSessionURLRequestFactory
     private var restClient: RestClient<ApiResponse>
     private var apiResponseLinkLookup: ApiResponseLinkLookup
 
     init() {
-        self.discovery = ServiceDiscoveryProvider()
-        self.urlRequestFactory = CvcSessionURLRequestFactory()
-        self.restClient = RestClient()
-        self.apiResponseLinkLookup = ApiResponseLinkLookup()
-    }
-
-    init(discovery: ServiceDiscoveryProvider) {
-        self.discovery = discovery
         self.urlRequestFactory = CvcSessionURLRequestFactory()
         self.restClient = RestClient()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
     init(
-        discovery: ServiceDiscoveryProvider,
         urlRequestFactory: CvcSessionURLRequestFactory,
         restClient: RestClient<ApiResponse>
     ) {
-        self.discovery = discovery
         self.urlRequestFactory = urlRequestFactory
         self.restClient = restClient
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
