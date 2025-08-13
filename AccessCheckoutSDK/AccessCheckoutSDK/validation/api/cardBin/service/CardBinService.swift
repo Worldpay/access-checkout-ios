@@ -48,8 +48,9 @@ internal class CardBinService {
         }
 
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
+        let request = CardBinRequest(cardNumber: cardNumberPrefix, checkoutId: checkoutId)
 
-        client.retrieveBinInfo(cardNumber: cardNumberPrefix) { [weak self] result in
+        client.retrieveBinInfo(request: request) { [weak self] result in
             guard let self = self else {
                 completion(
                     .failure(

@@ -9,6 +9,14 @@ class CardBinApiClientTests: XCTestCase {
         fundingType: "debit",
         luhnCompliant: true
     )
+    private let testCardNumber = "444433332222"
+    private let testCheckoutId = "00000000-0000-0000-0000-000000000000"
+    private var request: CardBinRequest!
+
+    override func setUp() {
+        super.setUp()
+        request = CardBinRequest(cardNumber: testCardNumber, checkoutId: testCheckoutId)
+    }
 
     func testCallsRestClientWithRequestCreatedByUrlRequestFactory() {
         expectationToFulfill = expectation(
@@ -16,19 +24,18 @@ class CardBinApiClientTests: XCTestCase {
 
         let expectedURLRequest = createExpectedURLRequest(
             url: "some-url",
-            cardNumber: "444433332222",
-            checkoutId: "00000000-0000-0000-0000-000000000000"
+            cardNumber: testCardNumber,
+            checkoutId: testCheckoutId
         )
 
         let mockRestClient = RestClientMock(replyWith: expectedResponse)
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { _ in
+        apiClient.retrieveBinInfo(request: request) { _ in
             XCTAssertEqual(expectedURLRequest, mockRestClient.requestSent)
             self.expectationToFulfill!.fulfill()
         }
@@ -43,11 +50,10 @@ class CardBinApiClientTests: XCTestCase {
         let mockRestClient = RestClientMock(replyWith: expectedResponse)
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -74,11 +80,10 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")
@@ -101,11 +106,10 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -117,7 +121,7 @@ class CardBinApiClientTests: XCTestCase {
             }
         }
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -143,11 +147,10 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")
@@ -174,11 +177,10 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             url: "some-url",
-            checkoutId: "00000000-0000-0000-0000-000000000000",
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        apiClient.retrieveBinInfo(request: request) { result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")
