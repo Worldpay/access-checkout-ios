@@ -11,28 +11,35 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
 
         let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)
 
-        factory.create(request: request) {
-            result in
-            XCTAssertEqual(
-                result?.links.endpoints["some:service"]?.href,
-                expectedResponse.links.endpoints["some:service"]?.href)
+        factory.create(request: request) { result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(
+                    response.links.endpoints["some:service"]?.href,
+                    expectedResponse.links.endpoints["some:service"]?.href)
+            case .failure(_):
+                XCTFail("Response should have been returned")
+            }
         }
     }
 
     func testShouldReturnNilWhenAFailureOccurredDuringDiscoveryRequest() {
         let expectedError = AccessCheckoutError.unexpectedApiError(message: "An error occurred")
-
         let restClientMock = RestClientMock<ApiResponse>(errorWith: expectedError)
 
         let request = URLRequest(url: URL(string: "http://www.example.com")!)
         let factory = ServiceDiscoveryResponseFactory(restClient: restClientMock)
 
-        factory.create(request: request) {
-            result in
-            XCTAssertNil(result)
+        factory.create(request: request) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Errror should have occurred")
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+            }
         }
     }
-
+    
     private func toApiResponse() -> ApiResponse {
         let jsonString = """
             {
@@ -43,9 +50,8 @@ class ServiceDiscoveryFactoryTests: XCTestCase {
                 }
             }
             """
-
+        
         let data = Data(jsonString.utf8)
         return try! JSONDecoder().decode(ApiResponse.self, from: data)
     }
-
 }

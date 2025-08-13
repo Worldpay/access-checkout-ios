@@ -67,6 +67,10 @@ struct ServiceStubs {
     func servicesRootDiscoverySuccess() -> ServiceStubs {
         return get200(path: "", jsonResponse: successfulDiscoveryResponse())
     }
+    
+    func servicesRootDiscoveryFailure(error: AccessCheckoutError) -> ServiceStubs {
+        return failed400(path: "", error: error)
+    }
 
     func cardSessionSuccess(session: String) -> ServiceStubs {
         return post200(
