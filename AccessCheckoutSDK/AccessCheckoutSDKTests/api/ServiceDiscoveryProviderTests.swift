@@ -5,7 +5,7 @@ import XCTest
 
 class ServiceDiscoveryProviderTests: XCTestCase {
     let baseUrl = "some-url"
-    let factoryMock = MockServiceDiscoveryResponseFactory()
+    let restClient = MockRestClient<ApiResponse>()
     let apiResponseLookUpMock = MockApiResponseLinkLookup()
     private var serviceDiscoveryProvider: ServiceDiscoveryProvider?
     private var expectationToFulfill: XCTestExpectation?
@@ -14,7 +14,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         // create an instance of ServiceDiscoveryProvider with mocks
         // all calls to ServiceDiscoveryProvider will use underlying mocks
         ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
-            factoryMock,
+            restClient,
             apiResponseLookUpMock)
         ServiceDiscoveryProvider.shared.clearCache()
     }
@@ -23,14 +23,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         expectationToFulfill = expectation(description: "")
 
         // mock base and session discovery responses
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
             }
 
         // mock api response lookups
@@ -53,11 +53,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             switch result {
             case .success():
                 // verify calls to factory
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
-                verify(self.factoryMock).create(
-                    request: expectedBaseDiscoveryRequest, completionHandler: any())
-                verify(self.factoryMock).create(
-                    request: expectedSessionsDiscoveryRequest, completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
+                verify(self.restClient).send(
+                    urlSession: any(), request: expectedBaseDiscoveryRequest,
+                    completionHandler: any())
+                verify(self.restClient).send(
+                    urlSession: any(), request: expectedSessionsDiscoveryRequest,
+                    completionHandler: any())
 
                 // verify calls to api response lookup
                 verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
@@ -92,11 +95,11 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             message: "Unable to fetch access root discovery response.")
 
         // Simulate failure in access root discovery
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.failure(expectedError))
+                _, _, completionHandler in
+                completionHandler(Result.failure(expectedError), nil)
             }
 
         ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
@@ -105,7 +108,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 XCTFail("Access root discovery should have returned an error")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
-                verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(1)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 XCTAssertEqual(error, expectedError)
                 self.expectationToFulfill!.fulfill()
             }
@@ -119,11 +123,11 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         let expectedError = AccessCheckoutError.discoveryLinkNotFound(
             linkName: ApiLinks.cardSessions.service)
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }
 
         // Simulate no sessions service link in access root response
@@ -137,7 +141,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 XCTFail("Sessions service url should not have been found")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
-                verify(self.factoryMock, times(1)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(1)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(1)).lookup(
                     link: ApiLinks.cardSessions.service, in: any())
                 XCTAssertEqual(error, expectedError)
@@ -154,15 +159,15 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             message: "Unable to fetch sessions discovery response")
 
         // Simulate failure in sessions discovery
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }
             .then {
-                _, completionHandler in
-                completionHandler(Result.failure(expectedError))
+                _, _, completionHandler in
+                completionHandler(Result.failure(expectedError), nil)
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -175,7 +180,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 XCTFail("Sessions discovery should not have been found")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(1)).lookup(
                     link: ApiLinks.cardSessions.service, in: any())
                 XCTAssertEqual(error, expectedError)
@@ -190,14 +196,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         expectationToFulfill = expectation(description: "")
         let expectationToFulfill2 = XCTestExpectation(description: "")
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -209,7 +215,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         ServiceDiscoveryProvider.discover(baseUrl: baseUrl) { result in
             switch result {
             case .success():
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
 
                 XCTAssertEqual(
@@ -218,7 +225,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                     ServiceDiscoveryProvider.getSessionsCvcEndpoint(), "validSessionsCvcHref")
 
                 // clear previous calls to the mocks
-                clearInvocations(self.factoryMock)
+                clearInvocations(self.restClient)
                 clearInvocations(self.apiResponseLookUpMock)
 
                 self.expectationToFulfill!.fulfill()
@@ -233,7 +240,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             switch result {
             case .success():
                 // verify no calls have been made to the factory or lookup mocks
-                verify(self.factoryMock, times(0)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(0)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(0)).lookup(link: any(), in: any())
 
                 XCTAssertEqual(
@@ -254,14 +262,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
     func testShouldClearCache() {
         expectationToFulfill = expectation(description: "")
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -297,14 +305,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         expectationToFulfill = expectation(description: "")
         let nextExpectationToFulfill = XCTestExpectation(description: "")
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -317,7 +325,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             switch result {
             case .success():
                 // verify calls to factory and lookup mocks
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
 
                 XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
@@ -340,7 +349,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             switch result {
             case .success():
                 // verify calls after clearing cached endpoints
-                verify(self.factoryMock, times(4)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(4)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(6)).lookup(link: any(), in: any())
 
                 XCTAssertNotNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
@@ -361,14 +371,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         let expectedError = AccessCheckoutError.discoveryLinkNotFound(
             linkName: ApiLinks.cardSessions.endpoint)
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
             }
 
         apiResponseLookUpMock.getStubbingProxy()
@@ -382,7 +392,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 XCTFail("Sessions card URL should not have been found")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(1)).lookup(
                     link: ApiLinks.cardSessions.endpoint, in: any())
 
@@ -400,15 +411,16 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         let expectedError = AccessCheckoutError.discoveryLinkNotFound(
             linkName: ApiLinks.cvcSessions.endpoint)
 
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
-            .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toBaseDiscoveryResponse()))
-            }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toSessionsDiscoveryResponse()))
-            }
+        restClient.getStubbingProxy().send(
+            urlSession: any(), request: any(), completionHandler: any()
+        )
+        .then {
+            _, _, completionHandler in
+            completionHandler(Result.success(self.toBaseDiscoveryResponse()), nil)
+        }.then {
+            _, _, completionHandler in
+            completionHandler(Result.success(self.toSessionsDiscoveryResponse()), nil)
+        }
 
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: any(), in: any())
@@ -422,7 +434,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 XCTFail("Sessions cvc URL should not have been found")
                 self.expectationToFulfill!.fulfill()
             case .failure(let error):
-                verify(self.factoryMock, times(2)).create(request: any(), completionHandler: any())
+                verify(self.restClient, times(2)).send(
+                    urlSession: any(), request: any(), completionHandler: any())
                 verify(self.apiResponseLookUpMock, times(1)).lookup(
                     link: ApiLinks.cvcSessions.endpoint, in: any())
 

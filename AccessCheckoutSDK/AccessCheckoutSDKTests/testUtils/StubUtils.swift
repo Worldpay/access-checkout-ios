@@ -71,23 +71,23 @@ class StubUtils {
         cardUrlToReturn: String? = "cardHref",
         cvcUrlToReturn: String? = "cvcHref"
     ) {
-        let factoryMock = MockServiceDiscoveryResponseFactory()
+        let restClientMock = MockRestClient<ApiResponse>()
         let apiResponseLookUpMock = MockApiResponseLinkLookup()
 
         ServiceDiscoveryProvider.shared.clearCache()
         ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
-            factoryMock, apiResponseLookUpMock)
+            restClientMock, apiResponseLookUpMock)
 
         // simulate access root discovery and sessions discovery responses
         // a response with actual links is not needed, just a valid response
-        factoryMock.getStubbingProxy()
-            .create(request: any(), completionHandler: any())
+        restClientMock.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toApiReponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toApiReponse()), nil)
             }.then {
-                _, completionHandler in
-                completionHandler(Result.success(self.toApiReponse()))
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toApiReponse()), nil)
             }
 
         // simulate api response link lookups

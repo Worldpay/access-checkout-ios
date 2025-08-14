@@ -42,5 +42,6 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/api/ApiResponseLinkLookup.swift" \
 "${INPUT_SOURCE_DIR}/api/ServiceDiscoveryResponseFactory.swift" \
 "${INPUT_SOURCE_DIR}/validation/api/cardBin/client/CardBinApiClient.swift"
+"${INPUT_SOURCE_DIR}/api/RestClient.swift"
 
 # all lines of this command must end with a \ apart from the last line

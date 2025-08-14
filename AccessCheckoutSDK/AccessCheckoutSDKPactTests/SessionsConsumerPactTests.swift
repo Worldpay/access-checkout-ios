@@ -79,8 +79,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
     // MARK: CVC session
     func testValidCvcSessionRequest_receivesCvcSession() {
-        setUpSessionsDiscovery(
-            forScenario: "POST request to /sessions/payments/cvc with valid body")
+        setUpSessionsDiscovery()
 
         let requestJson: [String: Any] = [
             "cvc": "1234",
@@ -157,7 +156,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
     // MARK: Card session
     func testValidCardSessionRequest_receivesCardSession() {
-        setUpSessionsDiscovery(forScenario: "POST request to /sessions/card with valid body")
+        setUpSessionsDiscovery()
 
         let requestJson: [String: Any] = [
             "cvc": "123",

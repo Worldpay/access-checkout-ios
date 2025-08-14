@@ -23,63 +23,33 @@ internal class CardDetailsFromUIComponents: CardDetails {
     private let cvcUITextField: AccessCheckoutUITextField?
 
     override internal var pan: String? {
-        if Thread.isMainThread {
-            return panUITextField?.text?.replacingOccurrences(of: " ", with: "")
-        } else {
-            var panText: String?
-            DispatchQueue.main.sync {
-                panText = panUITextField?.text?.replacingOccurrences(of: " ", with: "")
-            }
-            return panText
+        return self.retrieveFieldText {
+            panUITextField?.text?.replacingOccurrences(of: " ", with: "")
         }
     }
 
     override internal var expiryMonth: UInt? {
-        var expiryDateText: String?
-        
-        if Thread.isMainThread {
-            expiryDateText = expiryDateUITextField?.text
-        } else {
-            DispatchQueue.main.sync {
-                expiryDateText = expiryDateUITextField?.text
+        return self.retrieveFieldText {
+            guard let expiryDateText = expiryDateUITextField?.text else {
+                return nil
             }
+            return ExpiryDateUtils.expiryMonth(of: expiryDateText)
         }
-        
-        guard let text = expiryDateText else {
-            return nil
-        }
-        return ExpiryDateUtils.expiryMonth(of: text)
     }
 
     override internal var expiryYear: UInt? {
-        var expiryDateText: String?
-        
-        if Thread.isMainThread {
-            expiryDateText = expiryDateUITextField?.text
-        } else {
-            DispatchQueue.main.sync {
-                expiryDateText = expiryDateUITextField?.text
+        return self.retrieveFieldText {
+            guard let expiryDateText = expiryDateUITextField?.text else {
+                return nil
             }
+            return ExpiryDateUtils.expiryYearOn4Digits(of: expiryDateText)
         }
-        
-        guard let text = expiryDateText else {
-            return nil
-        }
-        return ExpiryDateUtils.expiryYearOn4Digits(of: text)
     }
 
     override internal var cvc: String? {
-        var cvcText: String?
-        
-        if Thread.isMainThread {
-            cvcText = cvcUITextField?.text
-        } else {
-            DispatchQueue.main.sync {
-                cvcText = cvcUITextField?.text
-            }
+        return self.retrieveFieldText {
+            cvcUITextField?.text
         }
-        
-        return cvcText
     }
 
     fileprivate init(
@@ -90,6 +60,26 @@ internal class CardDetailsFromUIComponents: CardDetails {
         self.panUITextField = panUITextField
         self.expiryDateUITextField = expiryDateUITextField
         self.cvcUITextField = cvcUITextField
+    }
+
+    private func retrieveFieldText(closure: () -> String?) -> String? {
+        if Thread.isMainThread {
+            return closure()
+        } else {
+            return DispatchQueue.main.sync {
+                closure()
+            }
+        }
+    }
+
+    private func retrieveFieldText(closure: () -> UInt?) -> UInt? {
+        if Thread.isMainThread {
+            return closure()
+        } else {
+            return DispatchQueue.main.sync {
+                closure()
+            }
+        }
     }
 }
 

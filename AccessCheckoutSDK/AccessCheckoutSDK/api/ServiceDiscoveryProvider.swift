@@ -3,7 +3,7 @@ import Foundation
 import os
 
 class ServiceDiscoveryProvider {
-    private let factory: ServiceDiscoveryResponseFactory
+    private let restClient: RestClient<ApiResponse>
     private let apiResponseLinkLookup: ApiResponseLinkLookup
 
     private static let serialQueue = DispatchQueue(
@@ -18,10 +18,10 @@ class ServiceDiscoveryProvider {
     static var shared: ServiceDiscoveryProvider = ServiceDiscoveryProvider()
 
     init(
-        _ factory: ServiceDiscoveryResponseFactory = ServiceDiscoveryResponseFactory(),
+        _ restClient: RestClient<ApiResponse> = RestClient(),
         _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
     ) {
-        self.factory = factory
+        self.restClient = restClient
         self.apiResponseLinkLookup = apiResponseLinkLookup
     }
 
@@ -96,7 +96,6 @@ class ServiceDiscoveryProvider {
         _ completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
         if hasDiscoveredAllUrls {
-            NSLog("All URLs already discovered")
             completionHandler(.success(()))
             return
         }
@@ -107,7 +106,6 @@ class ServiceDiscoveryProvider {
                 self.performDiscoveryOnSessionsService { resultSessions in
                     switch resultSessions {
                     case .success:
-                        NSLog("Service discovery completed")
                         completionHandler(.success(()))
                     case .failure(let error):
                         completionHandler(.failure(error))
@@ -126,8 +124,6 @@ class ServiceDiscoveryProvider {
             completionHandler(.success(()))
             return
         }
-
-        NSLog("Discovering services and endpoint in Access Root")
 
         sendRequest(Requests.accessRoot(baseUrl)) { result in
             switch result {
@@ -156,8 +152,6 @@ class ServiceDiscoveryProvider {
             completionHandler(.success(()))
             return
         }
-
-        NSLog("Discovering sessions services endpoint")
 
         let request = Requests.sessionsService(sessionsServiceUrl!)
         sendRequest(request) { result in
@@ -197,11 +191,9 @@ class ServiceDiscoveryProvider {
         _ request: URLRequest,
         completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
     ) {
-        self.factory.create(request: request) {
-            result in
+        restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
             completionHandler(result)
         }
-
     }
 
     private class Requests {
