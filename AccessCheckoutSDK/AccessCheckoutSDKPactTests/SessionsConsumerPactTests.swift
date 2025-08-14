@@ -77,6 +77,29 @@ class SessionsConsumerPactTests: XCTestCase {
         }
     }
 
+    func testCardBinEndPointServiceDiscovery() {
+        let expectedCardBinEndpointUrl = "\(sessionsMockService.baseUrl)/public/card/bindetails"
+
+        setUpSessionsDiscovery()
+
+        let service = startService()
+
+        sessionsMockService.run(timeout: 10) { testComplete in
+            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+                switch result {
+                case .success():
+                    XCTAssertEqual(
+                        ServiceDiscoveryProvider.getCardBinEndpoint(), expectedCardBinEndpointUrl)
+                case .failure(let error):
+                    XCTFail(
+                        "Discovery should not have failed with error: \(error.localizedDescription)"
+                    )
+                }
+                testComplete()
+            }
+        }
+    }
+
     // MARK: CVC session
     func testValidCvcSessionRequest_receivesCvcSession() {
         setUpSessionsDiscovery(
@@ -487,6 +510,9 @@ class SessionsConsumerPactTests: XCTestCase {
                 "_links": {
                     "service:sessions": {
                         "href": "\(sessionsMockService.baseUrl)/sessions"
+                    },
+                    "cardBinPublic:binDetails": {
+                        "href": "\(sessionsMockService.baseUrl)/public/card/bindetails"
                     }
                 }
             }

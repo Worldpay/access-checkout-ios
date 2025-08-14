@@ -94,6 +94,7 @@ class StubUtils {
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: any(), in: any())
             .thenReturn("sessionsServiceLink")  // access root discovery lookup
+            .thenReturn("card-bin-url")  // card bin lookup
             .thenReturn(cardUrlToReturn)  // sessions discovery lookup for card sessions
             .thenReturn(cvcUrlToReturn)  // sessions discovery lookup for cvc sessions
 

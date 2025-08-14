@@ -23,6 +23,7 @@ struct ServiceStubs {
     private let sessionsServicePath = "/sessions"
     private let sessionsServiceCardSessionPath = "/sessions/card"
     private let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
+    private let cardBinServicePath = "/public/card/bindetails"
 
     func get200(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
@@ -119,7 +120,10 @@ struct ServiceStubs {
                     },
                     "sessions:paymentsCvc": {
                         "href": "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"
-                    }
+                    },
+                    "cardBinPublic:binDetails": {
+                        "href": "\(baseUrl)\(sessionsServiceCardSessionPath)"
+                    },
                 }
             }
             """

@@ -7,13 +7,50 @@
   },
   "interactions": [
     {
-      "description": "GET request to /sessions to discover card session endpoint",
+      "description": "GET request to /sessions to discover sessions endpoints",
       "request": {
         "method": "get",
         "path": "/sessions",
         "headers": {
           "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
           "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
+        },
+        "body": {
+          "_links": {
+            "sessions:card": {
+              "href": "http://localhost:1234/sessions/card"
+            },
+            "sessions:paymentsCvc": {
+              "href": "http://localhost:1234/sessions/payments/cvc"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.sessions:card.href": {
+            "match": "regex",
+            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/card"
+          },
+          "$.body._links.sessions:paymentsCvc.href": {
+            "match": "regex",
+            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/payments\\/cvc"
+          }
+        }
+      }
+    },
+    {
+      "description": "GET request to /sessions to discover card session endpoint",
+      "request": {
+        "method": "get",
+        "path": "/sessions",
+        "headers": {
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         }
       },
       "response": {
@@ -44,50 +81,13 @@
       }
     },
     {
-      "description": "GET request to /sessions to discover sessions endpoints",
-      "request": {
-        "method": "get",
-        "path": "/sessions",
-        "headers": {
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
-        },
-        "body": {
-          "_links": {
-            "sessions:paymentsCvc": {
-              "href": "http://localhost:1234/sessions/payments/cvc"
-            },
-            "sessions:card": {
-              "href": "http://localhost:1234/sessions/card"
-            }
-          }
-        },
-        "matchingRules": {
-          "$.body._links.sessions:paymentsCvc.href": {
-            "match": "regex",
-            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/payments\\/cvc"
-          },
-          "$.body._links.sessions:card.href": {
-            "match": "regex",
-            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/card"
-          }
-        }
-      }
-    },
-    {
       "description": "POST request to /sessions/card with PAN that does not pass Luhn check",
       "request": {
         "method": "post",
         "path": "/sessions/card",
         "headers": {
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
           "cardExpiryDate": {
@@ -95,8 +95,8 @@
             "year": 2099
           },
           "cvc": "123",
-          "cardNumber": "4111111111111110",
-          "identity": "identity"
+          "identity": "identity",
+          "cardNumber": "4111111111111110"
         }
       },
       "response": {
@@ -105,8 +105,8 @@
           "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "errorName": "bodyDoesNotMatchSchema",
           "message": "The json body provided does not match the expected schema",
+          "errorName": "bodyDoesNotMatchSchema",
           "validationErrors": [
             {
               "errorName": "panFailedLuhnCheck",
@@ -135,13 +135,13 @@
           "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "cvc": "123",
-          "cardNumber": "notACardNumber",
           "cardExpiryDate": {
-            "month": 1,
-            "year": 2099
+            "year": 2099,
+            "month": 1
           },
-          "identity": "identity"
+          "cvc": "123",
+          "identity": "identity",
+          "cardNumber": "notACardNumber"
         }
       },
       "response": {
@@ -150,15 +150,15 @@
           "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
-          "errorName": "bodyDoesNotMatchSchema",
           "validationErrors": [
             {
-              "message": "Card number must be numeric",
               "errorName": "fieldHasInvalidValue",
+              "message": "Card number must be numeric",
               "jsonPath": "$.cardNumber"
             }
           ],
-          "message": "The json body provided does not match the expected schema"
+          "message": "The json body provided does not match the expected schema",
+          "errorName": "bodyDoesNotMatchSchema"
         },
         "matchingRules": {
           "$.body.validationErrors[0].message": {
@@ -180,13 +180,13 @@
           "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
+          "cardNumber": "4111111111111111",
           "cardExpiryDate": {
             "year": 2099,
             "month": 12
           },
           "cvc": "123",
-          "identity": "incorrectValue",
-          "cardNumber": "4111111111111111"
+          "identity": "incorrectValue"
         }
       },
       "response": {
@@ -195,21 +195,21 @@
           "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
+          "errorName": "bodyDoesNotMatchSchema",
+          "message": "The json body provided does not match the expected schema",
           "validationErrors": [
             {
+              "errorName": "fieldHasInvalidValue",
               "message": "Identity is invalid",
-              "jsonPath": "$.identity",
-              "errorName": "fieldHasInvalidValue"
+              "jsonPath": "$.identity"
             }
-          ],
-          "errorName": "bodyDoesNotMatchSchema",
-          "message": "The json body provided does not match the expected schema"
+          ]
         },
         "matchingRules": {
-          "$.body.validationErrors[0].message": {
+          "$.body.message": {
             "match": "type"
           },
-          "$.body.message": {
+          "$.body.validationErrors[0].message": {
             "match": "type"
           }
         }
@@ -221,17 +221,17 @@
         "method": "post",
         "path": "/sessions/card",
         "headers": {
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
           "cvc": "123",
-          "identity": "identity",
-          "cardNumber": "4111111111111111",
           "cardExpiryDate": {
-            "year": 2099,
-            "month": 13
-          }
+            "month": 13,
+            "year": 2099
+          },
+          "identity": "identity",
+          "cardNumber": "4111111111111111"
         }
       },
       "response": {
@@ -240,21 +240,21 @@
           "Content-Type": "application/vnd.worldpay.sessions-v1.hal+json"
         },
         "body": {
+          "message": "The json body provided does not match the expected schema",
+          "errorName": "bodyDoesNotMatchSchema",
           "validationErrors": [
             {
+              "errorName": "integerIsTooLarge",
               "jsonPath": "$.cardExpiryDate.month",
-              "message": "Card expiry month is too large - must be between 1 & 12",
-              "errorName": "integerIsTooLarge"
+              "message": "Card expiry month is too large - must be between 1 & 12"
             }
-          ],
-          "message": "The json body provided does not match the expected schema",
-          "errorName": "bodyDoesNotMatchSchema"
+          ]
         },
         "matchingRules": {
-          "$.body.validationErrors[0].message": {
+          "$.body.message": {
             "match": "type"
           },
-          "$.body.message": {
+          "$.body.validationErrors[0].message": {
             "match": "type"
           }
         }
@@ -266,8 +266,8 @@
         "method": "get",
         "path": "/sessions",
         "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         }
       },
       "response": {
@@ -320,9 +320,9 @@
           "errorName": "bodyDoesNotMatchSchema",
           "validationErrors": [
             {
+              "errorName": "fieldHasInvalidValue",
               "message": "Identity is invalid",
-              "jsonPath": "$.identity",
-              "errorName": "fieldHasInvalidValue"
+              "jsonPath": "$.identity"
             }
           ],
           "message": "The json body provided does not match the expected schema"
@@ -343,8 +343,8 @@
         "method": "get",
         "path": "/sessions",
         "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         }
       },
       "response": {
@@ -380,8 +380,8 @@
         "method": "get",
         "path": "/sessions",
         "headers": {
-          "Accept": "application/vnd.worldpay.sessions-v1.hal+json",
-          "content-type": "application/vnd.worldpay.sessions-v1.hal+json"
+          "content-type": "application/vnd.worldpay.sessions-v1.hal+json",
+          "Accept": "application/vnd.worldpay.sessions-v1.hal+json"
         }
       },
       "response": {
@@ -391,22 +391,22 @@
         },
         "body": {
           "_links": {
-            "sessions:card": {
-              "href": "http://localhost:1234/sessions/card"
-            },
             "sessions:paymentsCvc": {
               "href": "http://localhost:1234/sessions/payments/cvc"
+            },
+            "sessions:card": {
+              "href": "http://localhost:1234/sessions/card"
             }
           }
         },
         "matchingRules": {
-          "$.body._links.sessions:card.href": {
-            "match": "regex",
-            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/card"
-          },
           "$.body._links.sessions:paymentsCvc.href": {
             "match": "regex",
             "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/payments\\/cvc"
+          },
+          "$.body._links.sessions:card.href": {
+            "match": "regex",
+            "regex": "https?:\\/\\/[^\\/]+\\/sessions\\/card"
           }
         }
       }
