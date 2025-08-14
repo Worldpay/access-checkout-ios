@@ -10,6 +10,12 @@ struct ApiLinks {
         result: "sessions:session"
     )
 
+    static let cardBin = ApiLinks(
+        service: "cardBinPublic:binDetails",
+        endpoint: "cardBinPublic:binDetails",
+        result: "cardBinPublic:binDetails"
+    )
+
     let service: String
     let endpoint: String
     let result: String

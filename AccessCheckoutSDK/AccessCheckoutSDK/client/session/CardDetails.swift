@@ -36,7 +36,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
 
     override internal var expiryMonth: UInt? {
         var expiryDateText: String?
-        
+
         if Thread.isMainThread {
             expiryDateText = expiryDateUITextField?.text
         } else {
@@ -44,7 +44,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
                 expiryDateText = expiryDateUITextField?.text
             }
         }
-        
+
         guard let text = expiryDateText else {
             return nil
         }
@@ -53,7 +53,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
 
     override internal var expiryYear: UInt? {
         var expiryDateText: String?
-        
+
         if Thread.isMainThread {
             expiryDateText = expiryDateUITextField?.text
         } else {
@@ -61,7 +61,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
                 expiryDateText = expiryDateUITextField?.text
             }
         }
-        
+
         guard let text = expiryDateText else {
             return nil
         }
@@ -70,7 +70,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
 
     override internal var cvc: String? {
         var cvcText: String?
-        
+
         if Thread.isMainThread {
             cvcText = cvcUITextField?.text
         } else {
@@ -78,7 +78,7 @@ internal class CardDetailsFromUIComponents: CardDetails {
                 cvcText = cvcUITextField?.text
             }
         }
-        
+
         return cvcText
     }
 
