@@ -29,13 +29,15 @@ internal class CardBinApiClient {
     /// it fetches the information from the API with automatic retry logic for transient failures.
     ///
     /// - Parameters:
-    ///   - request: The card number for retrieving the BIN information and the checkoutId 
+    ///   - cardNumber: The card number for retrieving the BIN information
+    ///   - checkoutId: The checkoutId
     ///   - completionHandler: Closure called with the result containing either the BIN response or an error
     func retrieveBinInfo(
-        request: CardBinRequest,
+        cardNumber: String,
+        checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
-        let cacheKey = cacheManager.getCacheKey(from: request.cardNumber)
+        let cacheKey = cacheManager.getCacheKey(from: cardNumber)
 
         if let cachedResponse = cacheManager.getCachedResponse(for: cacheKey) {
             completionHandler(.success(cachedResponse))
@@ -43,8 +45,8 @@ internal class CardBinApiClient {
         }
 
         fetchCardBinResponseWithRetry(
-            cardNumber: request.cardNumber,
-            checkoutId: request.checkoutId,
+            cardNumber: cardNumber,
+            checkoutId: checkoutId,
             cacheKey: cacheKey,
             attempt: 1,
             completionHandler: completionHandler

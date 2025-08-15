@@ -68,10 +68,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -108,10 +109,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -148,10 +150,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -187,10 +190,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -228,10 +232,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -268,10 +273,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -311,10 +317,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(.success(response))
             }
         }
@@ -343,10 +350,11 @@ class CardBinServiceTests: XCTestCase {
         stub(mockClient) { stub in
             when(
                 stub.retrieveBinInfo(
-                    request: any(),
+                    cardNumber: any(),
+                    checkoutId: any(),
                     completionHandler: any()
                 )
-            ).then { _, completion in
+            ).then { _, _, completion in
                 completion(
                     .failure(AccessCheckoutError.unexpectedApiError(message: "Network error")))
             }

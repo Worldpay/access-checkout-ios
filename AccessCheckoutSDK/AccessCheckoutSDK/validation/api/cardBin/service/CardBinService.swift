@@ -43,9 +43,8 @@ internal class CardBinService {
         }
 
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
-        let request = CardBinRequest(cardNumber: cardNumberPrefix, checkoutId: checkoutId)
 
-        client.retrieveBinInfo(request: request) { result in
+        client.retrieveBinInfo(cardNumber: cardNumberPrefix, checkoutId: checkoutId) { result in
             switch result {
             case .success(let response):
                 let cardBrands = self.transform(

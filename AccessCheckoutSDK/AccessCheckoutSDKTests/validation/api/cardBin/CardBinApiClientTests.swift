@@ -35,7 +35,7 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { _ in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) { _ in
             XCTAssertEqual(expectedURLRequest, mockRestClient.requestSent)
             self.expectationToFulfill!.fulfill()
         }
@@ -53,7 +53,8 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -83,7 +84,8 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")
@@ -109,7 +111,8 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -121,7 +124,8 @@ class CardBinApiClientTests: XCTestCase {
             }
         }
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success(let response):
                 XCTAssertEqual(self.expectedResponse.brand, response.brand)
@@ -150,7 +154,8 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")
@@ -180,7 +185,8 @@ class CardBinApiClientTests: XCTestCase {
             restClient: mockRestClient
         )
 
-        apiClient.retrieveBinInfo(request: request) { result in
+        apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
+            result in
             switch result {
             case .success:
                 XCTFail("Retrieval of card bin info should have failed")

@@ -21,21 +21,24 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
     }
 
     override func retrieveBinInfo(
-        request: CardBinRequest,
+        cardNumber: String, checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
 
         return cuckoo_manager.call(
             """
-            retrieveBinInfo(request: CardBinRequest, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+            retrieveBinInfo(cardNumber: String, checkoutId: String, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
             """,
-            parameters: (request, completionHandler),
-            escapingParameters: (request, completionHandler),
+            parameters: (cardNumber, checkoutId, completionHandler),
+            escapingParameters: (cardNumber, checkoutId, completionHandler),
             superclassCall:
 
-                super.retrieveBinInfo(request: request, completionHandler: completionHandler),
+                super.retrieveBinInfo(
+                    cardNumber: cardNumber, checkoutId: checkoutId,
+                    completionHandler: completionHandler),
             defaultCall: __defaultImplStub!.retrieveBinInfo(
-                request: request, completionHandler: completionHandler))
+                cardNumber: cardNumber, checkoutId: checkoutId, completionHandler: completionHandler
+            ))
 
     }
 
@@ -46,28 +49,29 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
             self.cuckoo_manager = manager
         }
 
-        func retrieveBinInfo<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(
-            request: M1, completionHandler: M2
+        func retrieveBinInfo<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable, M3: Cuckoo.Matchable>(
+            cardNumber: M1, checkoutId: M2, completionHandler: M3
         )
             -> Cuckoo.ClassStubNoReturnFunction<
-                (CardBinRequest, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                (String, String, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
             >
         where
-            M1.MatchedType == CardBinRequest,
-            M2.MatchedType == (Result<CardBinResponse, AccessCheckoutError>) -> Void
+            M1.MatchedType == String, M2.MatchedType == String,
+            M3.MatchedType == (Result<CardBinResponse, AccessCheckoutError>) -> Void
         {
             let matchers:
                 [Cuckoo.ParameterMatcher<
-                    (CardBinRequest, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                    (String, String, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
                 >] = [
-                    wrap(matchable: request) { $0.0 }, wrap(matchable: completionHandler) { $0.1 },
+                    wrap(matchable: cardNumber) { $0.0 }, wrap(matchable: checkoutId) { $0.1 },
+                    wrap(matchable: completionHandler) { $0.2 },
                 ]
             return .init(
                 stub: cuckoo_manager.createStub(
                     for: MockCardBinApiClient.self,
                     method:
                         """
-                        retrieveBinInfo(request: CardBinRequest, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                        retrieveBinInfo(cardNumber: String, checkoutId: String, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
                         """, parameterMatchers: matchers))
         }
 
@@ -88,25 +92,26 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
         }
 
         @discardableResult
-        func retrieveBinInfo<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(
-            request: M1, completionHandler: M2
+        func retrieveBinInfo<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable, M3: Cuckoo.Matchable>(
+            cardNumber: M1, checkoutId: M2, completionHandler: M3
         )
             -> Cuckoo.__DoNotUse<
-                (CardBinRequest, (Result<CardBinResponse, AccessCheckoutError>) -> Void), Void
+                (String, String, (Result<CardBinResponse, AccessCheckoutError>) -> Void), Void
             >
         where
-            M1.MatchedType == CardBinRequest,
-            M2.MatchedType == (Result<CardBinResponse, AccessCheckoutError>) -> Void
+            M1.MatchedType == String, M2.MatchedType == String,
+            M3.MatchedType == (Result<CardBinResponse, AccessCheckoutError>) -> Void
         {
             let matchers:
                 [Cuckoo.ParameterMatcher<
-                    (CardBinRequest, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                    (String, String, (Result<CardBinResponse, AccessCheckoutError>) -> Void)
                 >] = [
-                    wrap(matchable: request) { $0.0 }, wrap(matchable: completionHandler) { $0.1 },
+                    wrap(matchable: cardNumber) { $0.0 }, wrap(matchable: checkoutId) { $0.1 },
+                    wrap(matchable: completionHandler) { $0.2 },
                 ]
             return cuckoo_manager.verify(
                 """
-                retrieveBinInfo(request: CardBinRequest, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                retrieveBinInfo(cardNumber: String, checkoutId: String, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
                 """, callMatcher: callMatcher, parameterMatchers: matchers,
                 sourceLocation: sourceLocation)
         }
@@ -117,7 +122,7 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
 class CardBinApiClientStub: CardBinApiClient {
 
     override func retrieveBinInfo(
-        request: CardBinRequest,
+        cardNumber: String, checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
