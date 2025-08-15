@@ -29,7 +29,7 @@ internal class CardBinApiClient {
     /// it fetches the information from the API with automatic retry logic for transient failures.
     ///
     /// - Parameters:
-    ///   - request: The card number to retrieve BIN information for and the checkoutId for authentication
+    ///   - request: The card number for retrieving the BIN information and the checkoutId 
     ///   - completionHandler: Closure called with the result containing either the BIN response or an error
     func retrieveBinInfo(
         request: CardBinRequest,
