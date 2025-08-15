@@ -1,4 +1,5 @@
 import PactConsumerSwift
+import Swifter
 import XCTest
 
 @testable import AccessCheckoutSDK
@@ -13,80 +14,75 @@ class SessionsConsumerPactTests: XCTestCase {
     ]
     let responseHeaders: [String: Any] = ["Content-Type": ApiHeaders.sessionsHeaderValue]
 
-    let sessionsMockService = MockService(
+    let pactServer = MockService(
         provider: "sessions",
         consumer: "access-checkout-iOS-sdk")
 
-    override func setUp() {
+    func testDiscoveryOfSessionsEndPoints() {
         ServiceDiscoveryProvider.shared.clearCache()
-    }
+        let accessRootStub = ServiceStubs().get200(
+            path: "", jsonResponse: accessRootJsonResponse(sessionsBaseUrl: pactServer.baseUrl))
+        accessRootStub.start()
 
-    // MARK: Service discovery
-    func testCvcSessionEndPointServiceDiscovery() {
-        let expectedCardSessionUrl = "\(baseURI)/sessions/card"
-        let expectedPaymentsCvcSessionUrl = "\(baseURI)/sessions/payments/cvc"
+        let expectedCardSessionsEndpoint = "\(pactServer.baseUrl)/sessions/card"
+        let expectedCvcSessionsEndpoint = "\(pactServer.baseUrl)/sessions/payments/cvc"
+        let responseJson = [
+            "_links": [
+                "sessions:card": [
+                    "href": Matcher.term(
+                        matcher: "https?://[^/]+/sessions/card",
+                        generate: expectedCardSessionsEndpoint)
+                ],
+                "sessions:paymentsCvc": [
+                    "href": Matcher.term(
+                        matcher: "https?://[^/]+/sessions/payments/cvc",
+                        generate: expectedCvcSessionsEndpoint)
+                ],
+            ]
+        ]
 
-        setUpSessionsDiscovery(
-            forScenario: "GET request to /sessions to discover cvc session endpoint",
-            cardSessionUrl: expectedCardSessionUrl,
-            cvcSessionUrl: expectedPaymentsCvcSessionUrl)
+        pactServer
+            .uponReceiving("GET request to /sessions to discover sessions endpoints")
+            .withRequest(
+                method: .GET,
+                path: "/sessions",
+                headers: requestHeaders
+            )
+            .willRespondWith(
+                status: 200,
+                headers: responseHeaders,
+                body: responseJson)
 
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+        pactServer.run(timeout: 10) { testComplete in
+            ServiceDiscoveryProvider.discover(baseUrl: accessRootStub.baseUrl) { result in
                 switch result {
                 case .success():
+                    XCTAssertEqual(
+                        ServiceDiscoveryProvider.getSessionsCardEndpoint(),
+                        expectedCardSessionsEndpoint)
                     XCTAssertEqual(
                         ServiceDiscoveryProvider.getSessionsCvcEndpoint(),
-                        expectedPaymentsCvcSessionUrl)
-                case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
+                        expectedCvcSessionsEndpoint)
+                case .failure:
+                    XCTFail("Discovery should not have failed")
                 }
                 testComplete()
             }
         }
-    }
 
-    func testCardSessionEndPointServiceDiscovery() {
-        let expectedCardSessionUrl = "\(baseURI)/sessions/card"
-        let expectedPaymentsCvcSessionUrl = "\(baseURI)/sessions/payments/cvc"
-
-        setUpSessionsDiscovery(
-            forScenario: "GET request to /sessions to discover card session endpoint",
-            cardSessionUrl: expectedCardSessionUrl,
-            cvcSessionUrl: expectedPaymentsCvcSessionUrl)
-
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
-                switch result {
-                case .success():
-                    XCTAssertEqual(
-                        ServiceDiscoveryProvider.getSessionsCardEndpoint(), expectedCardSessionUrl)
-                case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
-                }
-                testComplete()
-            }
-        }
+        accessRootStub.stop()
     }
 
     // MARK: CVC session
     func testValidCvcSessionRequest_receivesCvcSession() {
-        setUpSessionsDiscovery()
+        let serviceDiscoveryStub = stubServiceDiscovery()
 
         let requestJson: [String: Any] = [
             "cvc": "1234",
             "identity": "identity",
         ]
 
-        let expectedValue = "\(baseURI)/sessions/sessionURI"
+        let expectedValue = "\(pactServer.baseUrl)/sessions/sessionURI"
         let responseJson = [
             "_links": [
                 "sessions:session": [
@@ -96,7 +92,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ]
         ]
 
-        sessionsMockService
+        pactServer
             .uponReceiving("POST request to /sessions/payments/cvc with valid body")
             .withRequest(
                 method: .POST,
@@ -111,33 +107,27 @@ class SessionsConsumerPactTests: XCTestCase {
 
         let sessionsClient = CvcSessionsApiClient()
 
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+        pactServer.run(timeout: 10) { testComplete in
+            sessionsClient.createSession(
+                baseUrl: self.pactServer.baseUrl, checkoutId: "identity", cvc: "1234"
+            ) {
+                result in
                 switch result {
-                case .success():
-                    sessionsClient.createSession(baseUrl: "", checkoutId: "identity", cvc: "1234") {
-                        result in
-                        switch result {
-                        case .success(let session):
-                            XCTAssertEqual(session, expectedValue)
-                        case .failure(let error):
-                            XCTFail(error.localizedDescription)
-                        }
-                        testComplete()
-                    }
+                case .success(let session):
+                    XCTAssertEqual(session, expectedValue)
                 case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
-                    testComplete()
+                    XCTFail(error.localizedDescription)
                 }
+                testComplete()
             }
         }
+
+        serviceDiscoveryStub?.stop()
     }
 
     func testCvcSessionRequestWithInvalidCheckoutId_receives400() {
+        let serviceDiscoveryStub = stubServiceDiscovery()
+
         let request = PactCvcSessionRequest(
             identity: "incorrectValue",
             cvc: "123")
@@ -152,11 +142,13 @@ class SessionsConsumerPactTests: XCTestCase {
         performCvcSessionTestCase(
             forScenario: "POST request to /sessions/payments/cvc with invalid identity in body",
             withRequest: request, andErrorResponse: expectedErrorResponse)
+
+        serviceDiscoveryStub?.stop()
     }
 
     // MARK: Card session
     func testValidCardSessionRequest_receivesCardSession() {
-        setUpSessionsDiscovery()
+        let serviceDiscoveryStub = stubServiceDiscovery()
 
         let requestJson: [String: Any] = [
             "cvc": "123",
@@ -168,7 +160,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ],
         ]
 
-        let expectedValue = "\(baseURI)/sessions/sampleSessionID"
+        let expectedValue = "\(pactServer.baseUrl)/sessions/sampleSessionID"
         let responseJson = [
             "_links": [
                 "sessions:session": [
@@ -178,7 +170,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ]
         ]
 
-        sessionsMockService
+        pactServer
             .uponReceiving("POST request to /sessions/card with valid body")
             .withRequest(
                 method: .POST,
@@ -193,35 +185,27 @@ class SessionsConsumerPactTests: XCTestCase {
 
         let cardSessionClient = CardSessionsApiClient()
 
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+        pactServer.run(timeout: 10) { testComplete in
+            cardSessionClient.createSession(
+                baseUrl: "", checkoutId: "identity", pan: "4111111111111111",
+                expiryMonth: 12, expiryYear: 2099, cvc: "123"
+            ) { result in
                 switch result {
-                case .success():
-                    cardSessionClient.createSession(
-                        baseUrl: "", checkoutId: "identity", pan: "4111111111111111",
-                        expiryMonth: 12, expiryYear: 2099, cvc: "123"
-                    ) { result in
-                        switch result {
-                        case .success(let session):
-                            XCTAssertEqual(session, expectedValue)
-                        case .failure(let error):
-                            XCTFail(error.localizedDescription)
-                        }
-                        testComplete()
-                    }
+                case .success(let session):
+                    XCTAssertEqual(session, expectedValue)
                 case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
-                    testComplete()
+                    XCTFail(error.localizedDescription)
                 }
+                testComplete()
             }
         }
+
+        serviceDiscoveryStub?.stop()
     }
 
     func testCardSessionRequestWithInvalidCheckoutId_receives400() {
+        let serviceDiscoveryStub = stubServiceDiscovery()
+
         let request = PactCardSessionRequest(
             identity: "incorrectValue",
             cvc: "123",
@@ -239,9 +223,13 @@ class SessionsConsumerPactTests: XCTestCase {
         performCardSessionTestCase(
             forScenario: "POST request to /sessions/card with invalid identity in body",
             withRequest: request, andErrorResponse: expectedErrorResponse)
+
+        serviceDiscoveryStub?.stop()
     }
 
     func testCardSessionRequestWithCardNumberThatFailsLuhnCheck_receives400() {
+        let serviceDiscoveryStub = stubServiceDiscovery()
+
         let request = PactCardSessionRequest(
             identity: "identity",
             cvc: "123",
@@ -260,9 +248,13 @@ class SessionsConsumerPactTests: XCTestCase {
         performCardSessionTestCase(
             forScenario: "POST request to /sessions/card with PAN that does not pass Luhn check",
             withRequest: request, andErrorResponse: expectedErrorResponse)
+
+        serviceDiscoveryStub?.stop()
     }
 
     func testCardSessionRequestWithInvalidMonthInExpiryDate_receives400() {
+        let serviceDiscoveryStub = stubServiceDiscovery()
+
         let request = PactCardSessionRequest(
             identity: "identity",
             cvc: "123",
@@ -280,9 +272,13 @@ class SessionsConsumerPactTests: XCTestCase {
         performCardSessionTestCase(
             forScenario: "POST request to /sessions/card with expiry date month that is too large",
             withRequest: request, andErrorResponse: expectedErrorResponse)
+
+        serviceDiscoveryStub?.stop()
     }
 
     func testCardSessionRequestWithCardNumberThatIsNotANumber_receives400() {
+        let serviceDiscoveryStub = stubServiceDiscovery()
+
         let request = PactCardSessionRequest(
             identity: "identity",
             cvc: "123",
@@ -300,6 +296,8 @@ class SessionsConsumerPactTests: XCTestCase {
         performCardSessionTestCase(
             forScenario: "POST request to /sessions/card with PAN containing letters",
             withRequest: request, andErrorResponse: expectedErrorResponse)
+
+        serviceDiscoveryStub?.stop()
     }
 
     private struct PactCardSessionRequest {
@@ -337,7 +335,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ],
         ]
 
-        sessionsMockService
+        pactServer
             .uponReceiving(scenario)
             .withRequest(
                 method: .POST,
@@ -350,44 +348,28 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        setUpSessionsDiscovery()
-
-        let cardSessionClient = CardSessionsApiClient()
-
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+        pactServer.run(timeout: 10) { testComplete in
+            CardSessionsApiClient().createSession(
+                baseUrl: "", checkoutId: request.identity, pan: request.cardNumber,
+                expiryMonth: request.expiryMonth, expiryYear: request.expiryYear,
+                cvc: request.cvc
+            ) { result in
                 switch result {
-                case .success():
-                    cardSessionClient.createSession(
-                        baseUrl: "", checkoutId: request.identity, pan: request.cardNumber,
-                        expiryMonth: request.expiryMonth, expiryYear: request.expiryYear,
-                        cvc: request.cvc
-                    ) { result in
-                        switch result {
-                        case .success:
-                            XCTFail("Service response expected to be unsuccessful")
-                        case .failure(let error):
-                            print(error)
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.mainErrorName),
-                                "Error msg must contain general error code")
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.validationErrorName),
-                                "Error msg must contain specific validation error code")
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.validationJsonPath),
-                                "Error msg must contain path to error value")
-                        }
-                        testComplete()
-                    }
+                case .success:
+                    XCTFail("Service response expected to be unsuccessful")
                 case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
-                    testComplete()
+                    print(error)
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.mainErrorName),
+                        "Error msg must contain general error code")
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.validationErrorName),
+                        "Error msg must contain specific validation error code")
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.validationJsonPath),
+                        "Error msg must contain path to error value")
                 }
+                testComplete()
             }
         }
     }
@@ -419,7 +401,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ],
         ]
 
-        sessionsMockService
+        pactServer
             .uponReceiving(scenario)
             .withRequest(
                 method: .POST,
@@ -432,42 +414,26 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        setUpSessionsDiscovery()
-
-        let sessionsClient = CvcSessionsApiClient()
-
-        let service = startService()
-
-        sessionsMockService.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: service.baseUrl) { result in
+        pactServer.run(timeout: 10) { testComplete in
+            CvcSessionsApiClient().createSession(
+                baseUrl: "", checkoutId: request.identity, cvc: request.cvc
+            ) { result in
                 switch result {
-                case .success():
-                    sessionsClient.createSession(
-                        baseUrl: "", checkoutId: request.identity, cvc: request.cvc
-                    ) { result in
-                        switch result {
-                        case .success:
-                            XCTFail("Service response expected to be unsuccessful")
-                        case .failure(let error):
-                            print(error)
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.mainErrorName),
-                                "Error msg must contain general error code")
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.validationErrorName),
-                                "Error msg must contain specific validation error code")
-                            XCTAssertTrue(
-                                error.localizedDescription.contains(response.validationJsonPath),
-                                "Error msg must contain path to error value")
-                        }
-                        testComplete()
-                    }
+                case .success:
+                    XCTFail("Service response expected to be unsuccessful")
                 case .failure(let error):
-                    XCTFail(
-                        "Discovery should not have failed with error: \(error.localizedDescription)"
-                    )
-                    testComplete()
+                    print(error)
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.mainErrorName),
+                        "Error msg must contain general error code")
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.validationErrorName),
+                        "Error msg must contain specific validation error code")
+                    XCTAssertTrue(
+                        error.localizedDescription.contains(response.validationJsonPath),
+                        "Error msg must contain path to error value")
                 }
+                testComplete()
             }
         }
     }
@@ -480,19 +446,64 @@ class SessionsConsumerPactTests: XCTestCase {
         let validationJsonPath: String
     }
 
-    private func startService() -> ServiceStubs {
-        let rootResponseJson = """
+    private func stubServiceDiscovery() -> ServiceStubs? {
+        let serviceStub = ServiceStubs()
+        _ =
+            serviceStub
+            .get200(
+                path: "", jsonResponse: accessRootJsonResponse(sessionsBaseUrl: serviceStub.baseUrl)
+            )
+            .get200(
+                path: "/sessions",
+                jsonResponse: sessionsRootJsonResponse(baseUrl: pactServer.baseUrl))
+        serviceStub.start()
+
+        ServiceDiscoveryProvider.shared.clearCache()
+        ServiceDiscoveryProvider.discover(baseUrl: serviceStub.baseUrl) { _ in }
+
+        let maxAttempts = 10
+        var attempts = 0
+
+        while attempts < maxAttempts {
+            if ServiceDiscoveryProvider.getSessionsCardEndpoint() != nil
+                && ServiceDiscoveryProvider.getSessionsCvcEndpoint() != nil
+            {
+                return serviceStub
+            }
+            Thread.sleep(forTimeInterval: 0.1)
+
+            attempts += 1
+        }
+
+        NSLog("Failed to completed service discovery")
+        return nil
+    }
+
+    private func accessRootJsonResponse(sessionsBaseUrl: String) -> String {
+        return """
             {
                 "_links": {
                     "service:sessions": {
-                        "href": "\(sessionsMockService.baseUrl)/sessions"
+                        "href": "\(sessionsBaseUrl)/sessions"
                     }
                 }
             }
             """
-        let serviceStubs = ServiceStubs().get200(path: "", jsonResponse: rootResponseJson)
-        serviceStubs.start()
-        return serviceStubs
+    }
+
+    private func sessionsRootJsonResponse(baseUrl: String) -> String {
+        return """
+            {
+                "_links": { 
+                    "sessions:card": {
+                        "href": "\(baseUrl)/sessions/card"
+                    },
+                    "sessions:paymentsCvc": {
+                        "href": "\(baseUrl)/sessions/payments/cvc"
+                    }
+                }
+            }
+            """
     }
 
     private func setUpSessionsDiscovery(
@@ -500,8 +511,8 @@ class SessionsConsumerPactTests: XCTestCase {
         cardSessionUrl: String? = nil,
         cvcSessionUrl: String? = nil
     ) {
-        let cardUrl = cardSessionUrl ?? "\(sessionsMockService.baseUrl)/sessions/card"
-        let cvcUrl = cvcSessionUrl ?? "\(sessionsMockService.baseUrl)/sessions/payments/cvc"
+        let cardUrl = cardSessionUrl ?? "\(pactServer.baseUrl)/sessions/card"
+        let cvcUrl = cvcSessionUrl ?? "\(pactServer.baseUrl)/sessions/payments/cvc"
 
         let responseJson = [
             "_links": [
@@ -518,7 +529,7 @@ class SessionsConsumerPactTests: XCTestCase {
             ]
         ]
 
-        sessionsMockService
+        pactServer
             .uponReceiving(scenario)
             .withRequest(
                 method: .GET,
