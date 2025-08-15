@@ -4,7 +4,6 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CardSessionsApiClientTests: XCTestCase {
-    private let baseUrl = "http://localhost"
     private let pan = "a-pan"
     private let expiryMonth: UInt = 12
     private let expiryYear: UInt = 24
@@ -38,7 +37,7 @@ class CardSessionsApiClientTests: XCTestCase {
             restClient: mockRestClient)
 
         client.createSession(
-            baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth,
+            checkoutId: "", pan: pan, expiryMonth: expiryMonth,
             expiryYear: expiryYear, cvc: cvc
         ) { result in
             switch result {
@@ -74,7 +73,7 @@ class CardSessionsApiClientTests: XCTestCase {
             restClient: mockRestClient)
 
         client.createSession(
-            baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth,
+            checkoutId: "", pan: pan, expiryMonth: expiryMonth,
             expiryYear: expiryYear, cvc: cvc
         ) { result in
             switch result {
@@ -102,7 +101,7 @@ class CardSessionsApiClientTests: XCTestCase {
             restClient: mockRestClient)
 
         client.createSession(
-            baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth,
+            checkoutId: "", pan: pan, expiryMonth: expiryMonth,
             expiryYear: expiryYear, cvc: cvc
         ) { result in
             switch result {
@@ -128,7 +127,7 @@ class CardSessionsApiClientTests: XCTestCase {
             restClient: mockRestClient)
 
         client.createSession(
-            baseUrl: baseUrl, checkoutId: "", pan: pan, expiryMonth: expiryMonth,
+            checkoutId: "", pan: pan, expiryMonth: expiryMonth,
             expiryYear: expiryYear, cvc: cvc
         ) { result in
             switch result {

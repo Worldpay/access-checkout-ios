@@ -51,7 +51,7 @@ public struct AccessCheckoutClient {
                 )
                 sessionTypes.forEach { sessionType in
                     retrieveSessionHandlerDispatcher.dispatch(
-                        checkoutId, baseUrl, cardDetails, sessionType
+                        checkoutId, cardDetails, sessionType
                     ) {
                         result in
                         resultsHandler.handle(result, for: sessionType)

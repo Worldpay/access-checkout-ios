@@ -667,7 +667,6 @@
 			isa = PBXGroup;
 			children = (
 				62EBE6112E4CA78C002944BF /* MockCardBinApiClient.swift */,
-				C27A03462E44F4FB00F4F5CA /* MockServiceDiscoveryProvider.swift */,
 				C22B02A32E4F8862004CA273 /* MockRestClient.swift */,
 				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
 				C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */,

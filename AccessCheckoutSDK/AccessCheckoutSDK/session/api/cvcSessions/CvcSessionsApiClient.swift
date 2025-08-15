@@ -25,7 +25,6 @@ class CvcSessionsApiClient {
     }
 
     func createSession(
-        baseUrl: String,
         checkoutId: String,
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void

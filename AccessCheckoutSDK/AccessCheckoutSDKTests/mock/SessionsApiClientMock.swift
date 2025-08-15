@@ -16,7 +16,7 @@ class SessionsApiClientMock: CvcSessionsApiClient {
     }
 
     override func createSession(
-        baseUrl: String, checkoutId: String, cvc: String,
+        checkoutId: String, cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
         createSessionCalled = true

@@ -25,7 +25,6 @@ class CardSessionsApiClient {
     }
 
     func createSession(
-        baseUrl: String,
         checkoutId: String,
         pan: String,
         expiryMonth: UInt,

@@ -3,7 +3,6 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CvcSessionsApiClientTests: XCTestCase {
-    private let baseUrl = "http://localhost"
     private let cvc = "123"
 
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
@@ -29,7 +28,7 @@ class CvcSessionsApiClientTests: XCTestCase {
             urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
@@ -59,7 +58,7 @@ class CvcSessionsApiClientTests: XCTestCase {
             urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -84,7 +83,7 @@ class CvcSessionsApiClientTests: XCTestCase {
             urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -107,7 +106,7 @@ class CvcSessionsApiClientTests: XCTestCase {
             urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")

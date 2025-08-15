@@ -109,7 +109,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         pactServer.run(timeout: 10) { testComplete in
             sessionsClient.createSession(
-                baseUrl: self.pactServer.baseUrl, checkoutId: "identity", cvc: "1234"
+                checkoutId: "identity", cvc: "1234"
             ) {
                 result in
                 switch result {
@@ -187,7 +187,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         pactServer.run(timeout: 10) { testComplete in
             cardSessionClient.createSession(
-                baseUrl: "", checkoutId: "identity", pan: "4111111111111111",
+                checkoutId: "identity", pan: "4111111111111111",
                 expiryMonth: 12, expiryYear: 2099, cvc: "123"
             ) { result in
                 switch result {
@@ -350,7 +350,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         pactServer.run(timeout: 10) { testComplete in
             CardSessionsApiClient().createSession(
-                baseUrl: "", checkoutId: request.identity, pan: request.cardNumber,
+                checkoutId: request.identity, pan: request.cardNumber,
                 expiryMonth: request.expiryMonth, expiryYear: request.expiryYear,
                 cvc: request.cvc
             ) { result in
@@ -416,7 +416,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         pactServer.run(timeout: 10) { testComplete in
             CvcSessionsApiClient().createSession(
-                baseUrl: "", checkoutId: request.identity, cvc: request.cvc
+                checkoutId: request.identity, cvc: request.cvc
             ) { result in
                 switch result {
                 case .success:
