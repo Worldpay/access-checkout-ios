@@ -34,7 +34,7 @@ internal class CardBinService {
     func getCardBrands(
         globalBrand: CardBrandModel?,
         cardNumber: String,
-        completion: @escaping (Result<[CardBrandModel], Error>) -> Void
+        completion: @escaping (Result<[CardBrandModel], AccessCheckoutError>) -> Void
     ) {
         let sanitisedCardNumber = cardNumber.replacingOccurrences(of: " ", with: "")
 

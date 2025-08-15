@@ -12,7 +12,6 @@ internal class CardBinApiClient {
     ///
     /// - Parameters:
     ///   - url: The base URL for the card BIN API endpoint
-    ///   - checkoutId: The checkout session identifier used for API authentication
     ///   - restClient: The REST client used to make HTTP requests
     init(
         url: String,
@@ -30,7 +29,7 @@ internal class CardBinApiClient {
     /// it fetches the information from the API with automatic retry logic for transient failures.
     ///
     /// - Parameters:
-    ///   - cardNumber: The card number to retrieve BIN information for
+    ///   - request: The card number to retrieve BIN information for and the checkoutId for authentication
     ///   - completionHandler: Closure called with the result containing either the BIN response or an error
     func retrieveBinInfo(
         request: CardBinRequest,
