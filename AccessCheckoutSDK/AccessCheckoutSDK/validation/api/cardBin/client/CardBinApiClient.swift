@@ -2,23 +2,25 @@ import Foundation
 
 /// Internal client responsible for retrieving card BIN (Bank Identification Number) information
 /// from an API endpoint with caching and retry capabilities.
-internal struct CardBinApiClient {
-    private var url: String
-    private var checkoutId: String
-    private var restClient: RestClient<CardBinResponse>
-    private let cacheManager = CardBinCacheManager()
+internal class CardBinApiClient {
+    private let url: String
+    private let restClient: RestClient<CardBinResponse>
+    private let cacheManager: CardBinCacheManager
     private let maxAttempts = 3
 
     /// Initialises a new CardBinApiClient instance.
     ///
     /// - Parameters:
     ///   - url: The base URL for the card BIN API endpoint
-    ///   - checkoutId: The checkout session identifier used for API authentication
     ///   - restClient: The REST client used to make HTTP requests
-    init(url: String, checkoutId: String, restClient: RestClient<CardBinResponse>) {
+    init(
+        url: String,
+        restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>(),
+        cacheManager: CardBinCacheManager = CardBinCacheManager()
+    ) {
         self.url = url
-        self.checkoutId = checkoutId
         self.restClient = restClient
+        self.cacheManager = cacheManager
     }
 
     /// Retrieves BIN information for the provided card number.
@@ -27,10 +29,12 @@ internal struct CardBinApiClient {
     /// it fetches the information from the API with automatic retry logic for transient failures.
     ///
     /// - Parameters:
-    ///   - cardNumber: The card number to retrieve BIN information for
+    ///   - cardNumber: The card number for retrieving the BIN information
+    ///   - checkoutId: The checkoutId
     ///   - completionHandler: Closure called with the result containing either the BIN response or an error
     func retrieveBinInfo(
         cardNumber: String,
+        checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
         let cacheKey = cacheManager.getCacheKey(from: cardNumber)
@@ -42,6 +46,7 @@ internal struct CardBinApiClient {
 
         fetchCardBinResponseWithRetry(
             cardNumber: cardNumber,
+            checkoutId: checkoutId,
             cacheKey: cacheKey,
             attempt: 1,
             completionHandler: completionHandler
@@ -62,6 +67,7 @@ internal struct CardBinApiClient {
     ///   - completionHandler: Closure called with the final result after all retry attempts
     private func fetchCardBinResponseWithRetry(
         cardNumber: String,
+        checkoutId: String,
         cacheKey: String,
         attempt: UInt,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
@@ -82,6 +88,7 @@ internal struct CardBinApiClient {
                 if self.shouldRetry(attempt: nextAttempt, statusCode: statusCode) {
                     self.fetchCardBinResponseWithRetry(
                         cardNumber: cardNumber,
+                        checkoutId: checkoutId,
                         cacheKey: cacheKey,
                         attempt: nextAttempt,
                         completionHandler: completionHandler

@@ -55,8 +55,11 @@
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
+		62A11ECD2E44B6BC00B0B96C /* CardBinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A11ECC2E44B6B700B0B96C /* CardBinService.swift */; };
 		62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */; };
 		62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */; };
+		62BF77382E4C975B00369257 /* CardBinServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BF77372E4C975500369257 /* CardBinServiceTests.swift */; };
+		62EBE6122E4CA78C002944BF /* MockCardBinApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EBE6112E4CA78C002944BF /* MockCardBinApiClient.swift */; };
 		683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
@@ -306,8 +309,11 @@
 		51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62A11ECC2E44B6B700B0B96C /* CardBinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinService.swift; sourceTree = "<group>"; };
 		62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManagerTests.swift; sourceTree = "<group>"; };
 		62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinCacheManager.swift; sourceTree = "<group>"; };
+		62BF77372E4C975500369257 /* CardBinServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinServiceTests.swift; sourceTree = "<group>"; };
+		62EBE6112E4CA78C002944BF /* MockCardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinApiClient.swift; sourceTree = "<group>"; };
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		683DF0FE5331B699757B3D19 /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
@@ -541,6 +547,7 @@
 		5115F54D2E327AFA00BC3FDB /* cardBin */ = {
 			isa = PBXGroup;
 			children = (
+				62BF77372E4C975500369257 /* CardBinServiceTests.swift */,
 				62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */,
 				514A38322E329258000948C3 /* CardBinApiClientTests.swift */,
 				5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */,
@@ -551,6 +558,7 @@
 		511B6C512E40EC5F005E1457 /* cardBin */ = {
 			isa = PBXGroup;
 			children = (
+				62A11ECB2E44B64A00B0B96C /* service */,
 				62A11ECA2E42676500B0B96C /* response */,
 				62A11EC92E42675A00B0B96C /* request */,
 				62A11EC82E42674D00B0B96C /* client */,
@@ -669,9 +677,18 @@
 			path = response;
 			sourceTree = "<group>";
 		};
+		62A11ECB2E44B64A00B0B96C /* service */ = {
+			isa = PBXGroup;
+			children = (
+				62A11ECC2E44B6B700B0B96C /* CardBinService.swift */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
 		683DF03ADFFF76E72571BEAE /* mock */ = {
 			isa = PBXGroup;
 			children = (
+				62EBE6112E4CA78C002944BF /* MockCardBinApiClient.swift */,
 				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
 				C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */,
 				C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */,
@@ -1665,6 +1682,7 @@
 				D7C6EE1F2486A47A00170B92 /* ExpiryDateValidationFlow.swift in Sources */,
 				E7AD24502464111400C4C92D /* SingleLinkDiscoveryFactory.swift in Sources */,
 				E7821A85245869A3003F7231 /* ApiLinks.swift in Sources */,
+				62A11ECD2E44B6BC00B0B96C /* CardBinService.swift in Sources */,
 				E72C3EEC24879C6200284A31 /* CardBrandImage.swift in Sources */,
 				E7167EF2248E2ECC0045158E /* ValidationConfig.swift in Sources */,
 				D7D6D5E324810CF100D57D7A /* AccessCheckoutCardValidationDelegate.swift in Sources */,
@@ -1717,6 +1735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E77B8BAB245C562200564C19 /* RetrieveCvcSessionHandlerTests.swift in Sources */,
+				62EBE6122E4CA78C002944BF /* MockCardBinApiClient.swift in Sources */,
 				E7AD2454246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift in Sources */,
 				E749024B247FEE3C00889AAA /* TextChangeHandlerTests.swift in Sources */,
 				E7409D56248FA3C200016AEB /* MockTextChangeHandler.swift in Sources */,
@@ -1761,6 +1780,7 @@
 				E7D19F7024632243001EA13A /* ApiResponseLinkLookupTests.swift in Sources */,
 				E78C9AEC24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */,
+				62BF77382E4C975B00369257 /* CardBinServiceTests.swift in Sources */,
 				E7AE68C724195050002380AF /* RestClientMock.swift in Sources */,
 				E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */,
 				E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */,
