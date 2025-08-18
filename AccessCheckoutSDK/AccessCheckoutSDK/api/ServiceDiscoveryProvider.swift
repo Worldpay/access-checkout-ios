@@ -3,107 +3,209 @@ import Foundation
 import os
 
 class ServiceDiscoveryProvider {
-    private let baseUrl: String
-    private let factory: ServiceDiscoveryResponseFactory
+    private let restClient: RestClient<ApiResponse>
     private let apiResponseLinkLookup: ApiResponseLinkLookup
 
     private static let serialQueue = DispatchQueue(
-        label: "com.worldpay.access.checkout.ServiceDiscoveryProvider"
+        label: "com.worldpay.access.checkout.ServiceDiscoveryProvider", qos: .userInitiated
     )
 
-    private static var baseDiscoveryResponse: ApiResponse?
-    private static var sessionsCardEndpoint: String?
-    private static var sessionsCvcEndpoint: String?
+    private static var static_accessRootResponse: ApiResponse?
+    private static var static_sessionsServiceUrl: String?
+    private static var static_sessionsCreateCardSessionUrl: String?
+    private static var static_sessionsCreateCvcSessionUrl: String?
+
+    static var shared: ServiceDiscoveryProvider = ServiceDiscoveryProvider()
 
     init(
-        baseUrl: String,
-        _ factory: ServiceDiscoveryResponseFactory = ServiceDiscoveryResponseFactory(),
+        _ restClient: RestClient<ApiResponse> = RestClient(),
         _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
     ) {
-        self.baseUrl = baseUrl
-        self.factory = factory
+        self.restClient = restClient
         self.apiResponseLinkLookup = apiResponseLinkLookup
     }
 
-    func getSessionsCardEndpoint() -> String? {
-        ServiceDiscoveryProvider.serialQueue.sync {
-            ServiceDiscoveryProvider.sessionsCardEndpoint
+    static func getSessionsCardEndpoint() -> String? {
+        return shared.sessionsCreateCardSessionUrl
+    }
+
+    static func getSessionsCvcEndpoint() -> String? {
+        return shared.sessionsCreateCvcSessionUrl
+    }
+
+    public static func discover(
+        baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+    ) {
+        shared.performDiscovery(baseUrl, completionHandler)
+    }
+
+    private var hasDiscoveredAllUrls: Bool {
+        return sessionsCreateCardSessionUrl != nil && sessionsCreateCvcSessionUrl != nil
+    }
+
+    private var sessionsCreateCardSessionUrl: String? {
+        get {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl
+            }
+        }
+        set {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl = newValue
+            }
         }
     }
 
-    func getSessionsCvcEndpoint() -> String? {
-        ServiceDiscoveryProvider.serialQueue.sync {
-            ServiceDiscoveryProvider.sessionsCvcEndpoint
+    private var sessionsCreateCvcSessionUrl: String? {
+        get {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl
+            }
+        }
+        set {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl = newValue
+            }
+        }
+    }
+
+    private var sessionsServiceUrl: String? {
+        get {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                return ServiceDiscoveryProvider.static_sessionsServiceUrl
+            }
+        }
+        set {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_sessionsServiceUrl = newValue
+            }
         }
     }
 
     func clearCache() {
         ServiceDiscoveryProvider.serialQueue.sync {
-            ServiceDiscoveryProvider.baseDiscoveryResponse = nil
-            ServiceDiscoveryProvider.sessionsCardEndpoint = nil
-            ServiceDiscoveryProvider.sessionsCvcEndpoint = nil
+            ServiceDiscoveryProvider.static_accessRootResponse = nil
+            ServiceDiscoveryProvider.static_sessionsServiceUrl = nil
+            ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl = nil
+            ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl = nil
         }
     }
 
-    func discover(completionHandler: @escaping () -> Void) {
-        ServiceDiscoveryProvider.serialQueue.async {
-            self.fetchBaseDiscovery { response in
-                guard let discoveryResponse = response else { return }
+    private func performDiscovery(
+        _ baseUrl: String,
+        _ completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+    ) {
+        if hasDiscoveredAllUrls {
+            completionHandler(.success(()))
+            return
+        }
 
-                ServiceDiscoveryProvider.baseDiscoveryResponse = discoveryResponse
-
-                self.sessionsDiscovery(baseDiscoveryResponse: discoveryResponse)
+        performDiscoveryOnAccessRoot(baseUrl) { resultServices in
+            switch resultServices {
+            case .success:
+                self.performDiscoveryOnSessionsService { resultSessions in
+                    switch resultSessions {
+                    case .success:
+                        completionHandler(.success(()))
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
-            completionHandler()
         }
     }
 
-    private func fetchBaseDiscovery(completionHandler: @escaping (ApiResponse?) -> Void) {
-        if ServiceDiscoveryProvider.baseDiscoveryResponse != nil {
-            completionHandler(ServiceDiscoveryProvider.baseDiscoveryResponse)
+    private func performDiscoveryOnAccessRoot(
+        _ baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+    ) {
+        if sessionsServiceUrl != nil {
+            completionHandler(.success(()))
             return
         }
 
-        let discoveryRequest = baseDiscoveryRequest()
-
-        factory.create(request: discoveryRequest) { response in
-            completionHandler(response)
+        sendRequest(Requests.accessRoot(baseUrl)) { result in
+            switch result {
+            case .success(let apiResponse):
+                if let url = self.apiResponseLinkLookup.lookup(
+                    link: ApiLinks.cardSessions.service, in: apiResponse)
+                {
+                    self.sessionsServiceUrl = url
+                    completionHandler(.success(()))
+                } else {
+                    completionHandler(
+                        .failure(
+                            AccessCheckoutError.discoveryLinkNotFound(
+                                linkName: ApiLinks.cardSessions.service)))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 
-    private func sessionsDiscovery(baseDiscoveryResponse: ApiResponse) {
-        if ServiceDiscoveryProvider.sessionsCardEndpoint != nil,
-            ServiceDiscoveryProvider.sessionsCvcEndpoint != nil
-        {
+    private func performDiscoveryOnSessionsService(
+        completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+    ) {
+        if self.hasDiscoveredAllUrls {
+            completionHandler(.success(()))
             return
         }
 
-        guard
-            let sessionsHref = apiResponseLinkLookup.lookup(
-                link: ApiLinks.cardSessions.service, in: baseDiscoveryResponse)
-        else { return }
+        let request = Requests.sessionsService(sessionsServiceUrl!)
+        sendRequest(request) { result in
+            switch result {
+            case .success(let apiResponse):
+                guard
+                    let cardSessionsEndpoint = self.apiResponseLinkLookup.lookup(
+                        link: ApiLinks.cardSessions.endpoint, in: apiResponse)
+                else {
+                    completionHandler(
+                        .failure(
+                            AccessCheckoutError.discoveryLinkNotFound(
+                                linkName: ApiLinks.cardSessions.endpoint)))
+                    return
+                }
+                guard
+                    let cvcSessionsEndpoint = self.apiResponseLinkLookup.lookup(
+                        link: ApiLinks.cvcSessions.endpoint, in: apiResponse)
+                else {
+                    completionHandler(
+                        .failure(
+                            AccessCheckoutError.discoveryLinkNotFound(
+                                linkName: ApiLinks.cvcSessions.endpoint)))
+                    return
+                }
 
-        let discoveryRequest = sessionsDiscoveryRequest(url: sessionsHref)
-
-        factory.create(request: discoveryRequest) { response in
-            guard let discoveryResponse = response else { return }
-
-            ServiceDiscoveryProvider.sessionsCardEndpoint = self.apiResponseLinkLookup.lookup(
-                link: ApiLinks.cardSessions.endpoint, in: discoveryResponse)
-
-            ServiceDiscoveryProvider.sessionsCvcEndpoint = self.apiResponseLinkLookup.lookup(
-                link: ApiLinks.cvcSessions.endpoint, in: discoveryResponse)
+                self.sessionsCreateCardSessionUrl = cardSessionsEndpoint
+                self.sessionsCreateCvcSessionUrl = cvcSessionsEndpoint
+                completionHandler(.success(()))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 
-    private func baseDiscoveryRequest() -> URLRequest {
-        return URLRequest(url: URL(string: baseUrl)!)
+    private func sendRequest(
+        _ request: URLRequest,
+        completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
+    ) {
+        restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
+            completionHandler(result)
+        }
     }
 
-    private func sessionsDiscoveryRequest(url: String) -> URLRequest {
-        var request = URLRequest(url: URL(string: url)!)
-        request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
-        request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
-        return request
+    private class Requests {
+        fileprivate static func accessRoot(_ url: String) -> URLRequest {
+            return URLRequest(url: URL(string: url)!)
+        }
+
+        fileprivate static func sessionsService(_ url: String) -> URLRequest {
+            var request = URLRequest(url: URL(string: url)!)
+            request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
+            request.addValue(ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
+            return request
+        }
     }
 }

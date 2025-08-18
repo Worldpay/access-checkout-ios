@@ -41,8 +41,6 @@
 		513039A22B10F68800C01B10 /* ApiHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A12B10F68800C01B10 /* ApiHeadersTests.swift */; };
 		513039A42B10F69800C01B10 /* ApiLinksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A32B10F69800C01B10 /* ApiLinksTest.swift */; };
 		513039A62B110DF600C01B10 /* SessionsConsumerPactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */; };
-		513039A82B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */; };
-		513039AA2B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */; };
 		5138297026863877001E61B5 /* PanViewPresenterCardSpacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */; };
 		513C04412AE923E0003B3455 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C04402AE923E0003B3455 /* ServiceStubs.swift */; };
 		514A38332E329258000948C3 /* CardBinApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514A38322E329258000948C3 /* CardBinApiClientTests.swift */; };
@@ -64,11 +62,9 @@
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
 		C213F7772E32853200B89815 /* ServiceDiscoveryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C213F7762E32853200B89815 /* ServiceDiscoveryProvider.swift */; };
+		C22B02A42E4F8862004CA273 /* MockRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22B02A32E4F8862004CA273 /* MockRestClient.swift */; };
 		C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */; };
-		C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */; };
 		C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */; };
-		C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */; };
-		C2F0F6EA2E3A38A9005F8E49 /* ServiceDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */; };
 		C9AFE3DD22B7996200943B3E /* AccessCheckoutSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */; };
 		C9AFE3E422B7996200943B3E /* AccessCheckoutSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9AFE45A22B7AA4800943B3E /* AccessCheckoutError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE44722B7AA4700943B3E /* AccessCheckoutError.swift */; };
@@ -112,14 +108,10 @@
 		E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */; };
 		E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */; };
 		E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08724642EF80037DED4 /* CuckooExtension.swift */; };
-		E719B08A24643C350037DED4 /* CardSessionsApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */; };
-		E719B08C24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */; };
-		E719B08E246449B70037DED4 /* SessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */; };
 		E719B09A24647D360037DED4 /* CardSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */; };
 		E719B09C24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */; };
 		E719B09E246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */; };
 		E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */; };
-		E719B0A4246484880037DED4 /* CardSessionsApiDiscoveryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */; };
 		E719B0AA2464A3B30037DED4 /* CardSessionsApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */; };
 		E719B0AC2464A47E0037DED4 /* SessionsApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */; };
 		E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */; };
@@ -189,7 +181,6 @@
 		E7AC80AC248EB58300E28D76 /* MockPanValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */; };
 		E7AC80AE248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */; };
 		E7AC80B0248EBA3F00E28D76 /* ValidationRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */; };
-		E7AD244A24640E6B00C4C92D /* CvcSessionsApiDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */; };
 		E7AD24502464111400C4C92D /* SingleLinkDiscoveryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD244F2464111400C4C92D /* SingleLinkDiscoveryFactory.swift */; };
 		E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24512464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift */; };
 		E7AD2454246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD2453246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift */; };
@@ -206,7 +197,6 @@
 		E7D19F7024632243001EA13A /* ApiResponseLinkLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F6F24632243001EA13A /* ApiResponseLinkLookupTests.swift */; };
 		E7D19F72246328BA001EA13A /* SingleLinkDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F71246328BA001EA13A /* SingleLinkDiscovery.swift */; };
 		E7D19F74246328EA001EA13A /* SingleLinkDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F73246328EA001EA13A /* SingleLinkDiscoveryTests.swift */; };
-		E7D19F7A24637237001EA13A /* CvcSessionsApiDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */; };
 		E7D19F8124640008001EA13A /* StubUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D19F8024640008001EA13A /* StubUtils.swift */; };
 		E7D37F7B248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D37F7A248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift */; };
 		E7D37F7E248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D37F7D248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift */; };
@@ -294,8 +284,6 @@
 		513039A12B10F68800C01B10 /* ApiHeadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHeadersTests.swift; sourceTree = "<group>"; };
 		513039A32B10F69800C01B10 /* ApiLinksTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiLinksTest.swift; sourceTree = "<group>"; };
 		513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsConsumerPactTests.swift; sourceTree = "<group>"; };
-		513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
-		513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
 		5138296F26863877001E61B5 /* PanViewPresenterCardSpacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCardSpacingTests.swift; sourceTree = "<group>"; };
 		513C04402AE923E0003B3455 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
 		514A38322E329258000948C3 /* CardBinApiClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClientTests.swift; sourceTree = "<group>"; };
@@ -325,11 +313,9 @@
 		ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B885CDE61870E5A0F3BB91D5 /* Pods-AccessCheckoutSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C213F7762E32853200B89815 /* ServiceDiscoveryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProvider.swift; sourceTree = "<group>"; };
+		C22B02A32E4F8862004CA273 /* MockRestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRestClient.swift; sourceTree = "<group>"; };
 		C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApiResponseLinkLookup.swift; sourceTree = "<group>"; };
-		C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
-		C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryResponseFactory.swift; sourceTree = "<group>"; };
-		C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
 		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9AFE3D322B7996200943B3E /* AccessCheckoutSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AccessCheckoutSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AFE3D622B7996200943B3E /* AccessCheckoutSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessCheckoutSDK.h; sourceTree = "<group>"; };
@@ -377,14 +363,10 @@
 		E7167F04248E594B0045158E /* CvcOnlyValidationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcOnlyValidationConfig.swift; sourceTree = "<group>"; };
 		E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryMock.swift; sourceTree = "<group>"; };
 		E719B08724642EF80037DED4 /* CuckooExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuckooExtension.swift; sourceTree = "<group>"; };
-		E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscovery.swift; sourceTree = "<group>"; };
-		E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryTests.swift; sourceTree = "<group>"; };
-		E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
 		E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactory.swift; sourceTree = "<group>"; };
 		E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionURLRequestFactoryMock.swift; sourceTree = "<group>"; };
 		E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiClientTests.swift; sourceTree = "<group>"; };
-		E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSessionsApiDiscoveryMock.swift; sourceTree = "<group>"; };
 		E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSessionsApiClientMock.swift; sourceTree = "<group>"; };
 		E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsApiClientMock.swift; sourceTree = "<group>"; };
 		E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiClientTests.swift; sourceTree = "<group>"; };
@@ -454,7 +436,6 @@
 		E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPanValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AD248EB8FE00E28D76 /* MockExpiryDateValidationFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockExpiryDateValidationFlow.swift; sourceTree = "<group>"; };
 		E7AC80AF248EBA3F00E28D76 /* ValidationRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRuleTests.swift; sourceTree = "<group>"; };
-		E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscovery.swift; sourceTree = "<group>"; };
 		E7AD244F2464111400C4C92D /* SingleLinkDiscoveryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryFactory.swift; sourceTree = "<group>"; };
 		E7AD24512464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryFactoryTests.swift; sourceTree = "<group>"; };
 		E7AD2453246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSingleLinkDiscoveryFactory.swift; sourceTree = "<group>"; };
@@ -469,7 +450,6 @@
 		E7D19F6F24632243001EA13A /* ApiResponseLinkLookupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseLinkLookupTests.swift; sourceTree = "<group>"; };
 		E7D19F71246328BA001EA13A /* SingleLinkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscovery.swift; sourceTree = "<group>"; };
 		E7D19F73246328EA001EA13A /* SingleLinkDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkDiscoveryTests.swift; sourceTree = "<group>"; };
-		E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcSessionsApiDiscoveryTests.swift; sourceTree = "<group>"; };
 		E7D19F8024640008001EA13A /* StubUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUtils.swift; sourceTree = "<group>"; };
 		E7D37F7A248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutValidationInitialiser.swift; sourceTree = "<group>"; };
 		E7D37F7D248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutValidationInitialiserTests.swift; sourceTree = "<group>"; };
@@ -538,8 +518,6 @@
 				512907E92AE98200008A7357 /* ServiceStubs.swift */,
 				5121EC412AF2A50800C8FC72 /* EncodableExtension.swift */,
 				513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */,
-				513039A72B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift */,
-				513039A92B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift */,
 			);
 			path = AccessCheckoutSDKPactTests;
 			sourceTree = "<group>";
@@ -689,9 +667,9 @@
 			isa = PBXGroup;
 			children = (
 				62EBE6112E4CA78C002944BF /* MockCardBinApiClient.swift */,
+				C22B02A32E4F8862004CA273 /* MockRestClient.swift */,
 				62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */,
 				C22CF9752E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift */,
-				C22CF9762E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift */,
 				E75C5E65248E6F7F003A1BDE /* MockAccessCheckoutCardValidationDelegate.swift */,
 				5125FFC72DD5FCDB00EF7380 /* MockAccessCheckoutCvcOnlyValidationDelegate.swift */,
 				E745CC27248585E9000390CA /* MockCardBrandDtoTransformer.swift */,
@@ -712,12 +690,10 @@
 				E7D19F6924630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift */,
 				E7AE68C624195050002380AF /* RestClientMock.swift */,
 				E719B0AB2464A47E0037DED4 /* SessionsApiClientMock.swift */,
-				E719B08D246449B70037DED4 /* SessionsApiDiscoveryMock.swift */,
 				E719B083246417110037DED4 /* SingleLinkDiscoveryMock.swift */,
 				683DF0FE5331B699757B3D19 /* URLSessionMock.swift */,
 				683DFFF2A0D1603232514AD9 /* URLSessionDataTaskMock.swift */,
 				E719B0A92464A3B30037DED4 /* CardSessionsApiClientMock.swift */,
-				E719B0A3246484880037DED4 /* CardSessionsApiDiscoveryMock.swift */,
 				E77B8BA4245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift */,
 				E719B09D246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift */,
 				517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */,
@@ -982,7 +958,6 @@
 		E73A20142459D3C600D5EB4C /* api */ = {
 			isa = PBXGroup;
 			children = (
-				C2F0F6E92E3A389A005F8E49 /* ServiceDiscoveryFactoryTests.swift */,
 				C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */,
 				513039A12B10F68800C01B10 /* ApiHeadersTests.swift */,
 				513039A32B10F69800C01B10 /* ApiLinksTest.swift */,
@@ -1011,7 +986,6 @@
 			children = (
 				E7D19F6B24630F34001EA13A /* CvcSessionURLRequestFactoryTests.swift */,
 				E719B0AD2464A4B90037DED4 /* CvcSessionsApiClientTests.swift */,
-				E7D19F7924637237001EA13A /* CvcSessionsApiDiscoveryTests.swift */,
 			);
 			path = cvcSessions;
 			sourceTree = "<group>";
@@ -1021,7 +995,6 @@
 			children = (
 				E719B09B24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift */,
 				E719B0A1246483FF0037DED4 /* CardSessionsApiClientTests.swift */,
-				E719B08B24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift */,
 			);
 			path = cardSessions;
 			sourceTree = "<group>";
@@ -1121,7 +1094,6 @@
 		E7821AA2245875C1003F7231 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				C2F0F6E72E3A297C005F8E49 /* ServiceDiscoveryResponseFactory.swift */,
 				E7821A86245869DB003F7231 /* ApiHeaders.swift */,
 				E7821A84245869A3003F7231 /* ApiLinks.swift */,
 				C9AFE44822B7AA4700943B3E /* ApiResponse.swift */,
@@ -1139,7 +1111,6 @@
 			isa = PBXGroup;
 			children = (
 				E7821A7E245864C4003F7231 /* CardSessionsApiClient.swift */,
-				E719B08924643C350037DED4 /* CardSessionsApiDiscovery.swift */,
 				E7821A8224586961003F7231 /* CardSessionRequest.swift */,
 				E719B09924647D360037DED4 /* CardSessionURLRequestFactory.swift */,
 			);
@@ -1150,7 +1121,6 @@
 			isa = PBXGroup;
 			children = (
 				E72D9E5C2411424500C94D5B /* CvcSessionsApiClient.swift */,
-				E7AD244924640E6B00C4C92D /* CvcSessionsApiDiscovery.swift */,
 				E7821A9A24586C79003F7231 /* CvcSessionRequest.swift */,
 				683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */,
 			);
@@ -1615,10 +1585,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5121EC422AF2A50800C8FC72 /* EncodableExtension.swift in Sources */,
-				513039A82B11150200C01B10 /* CvcSessionsApiDiscoveryMock.swift in Sources */,
 				513039A62B110DF600C01B10 /* SessionsConsumerPactTests.swift in Sources */,
 				512907EA2AE98200008A7357 /* ServiceStubs.swift in Sources */,
-				513039AA2B11152B00C01B10 /* CardSessionsApiDiscoveryMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,13 +1634,11 @@
 				E719B09A24647D360037DED4 /* CardSessionURLRequestFactory.swift in Sources */,
 				D7D6D5D6247FC94900D57D7A /* CvcValidator.swift in Sources */,
 				E7D37F7B248154A10039DD98 /* AccessCheckoutValidationInitialiser.swift in Sources */,
-				E719B08A24643C350037DED4 /* CardSessionsApiDiscovery.swift in Sources */,
 				E745CC1824856AD8000390CA /* ValidationRule.swift in Sources */,
 				5182FA752AC485C500976088 /* AccessCheckoutUITextField.swift in Sources */,
 				E749024D247FEEB600889AAA /* TextChangeHandler.swift in Sources */,
 				E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */,
 				E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */,
-				C2F0F6E82E3A2984005F8E49 /* ServiceDiscoveryResponseFactory.swift in Sources */,
 				E72C3EEA24879C1C00284A31 /* CardBrand.swift in Sources */,
 				E77B8B9D245C2C0E00564C19 /* RetrieveCardSessionHandler.swift in Sources */,
 				E7E6758F241AA57A0022292F /* RestClient.swift in Sources */,
@@ -1692,7 +1658,6 @@
 				E745CC2C24859C18000390CA /* ValidationRulesDefaults.swift in Sources */,
 				E72C3ED62485B0F500284A31 /* ExpiryDateViewPresenter.swift in Sources */,
 				E77B8B9B245C2BF700564C19 /* RetrieveSessionHandler.swift in Sources */,
-				E7AD244A24640E6B00C4C92D /* CvcSessionsApiDiscovery.swift in Sources */,
 				E7167F05248E594B0045158E /* CvcOnlyValidationConfig.swift in Sources */,
 				E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */,
 				E7D19F622462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift in Sources */,
@@ -1773,10 +1738,9 @@
 				E7AC80B0248EBA3F00E28D76 /* ValidationRuleTests.swift in Sources */,
 				E72C3EF524894B2C00284A31 /* MockCardBrandsConfigurationProvider.swift in Sources */,
 				E77B8BA5245C516E00564C19 /* RetrieveCardSessionHandlerMock.swift in Sources */,
-				E719B08C24643C930037DED4 /* CardSessionsApiDiscoveryTests.swift in Sources */,
+				C22B02A42E4F8862004CA273 /* MockRestClient.swift in Sources */,
 				E7633D2B249D195100FFE190 /* ApiResponseTests.swift in Sources */,
 				E7C4D236249CF4D100D7B9F1 /* EncodableExtension.swift in Sources */,
-				E719B08E246449B70037DED4 /* SessionsApiDiscoveryMock.swift in Sources */,
 				E7D19F7024632243001EA13A /* ApiResponseLinkLookupTests.swift in Sources */,
 				E78C9AEC24928CD700381214 /* AccessCheckoutCvcOnlyValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72A99E82459E3A8004FEAD5 /* CardDetailsBuilderTests.swift in Sources */,
@@ -1784,14 +1748,12 @@
 				E7AE68C724195050002380AF /* RestClientMock.swift in Sources */,
 				E7AD24522464112400C4C92D /* SingleLinkDiscoveryFactoryTests.swift in Sources */,
 				E719B0A2246483FF0037DED4 /* CardSessionsApiClientTests.swift in Sources */,
-				E719B0A4246484880037DED4 /* CardSessionsApiDiscoveryMock.swift in Sources */,
 				D7D6D5EB248117FB00D57D7A /* CardValidationStateHandlerTests.swift in Sources */,
 				E78C9AEA24928B0F00381214 /* AccessCheckoutCardValidationDelegate_ClearText_Tests.swift in Sources */,
 				E72C3F02248A78DA00284A31 /* CvcViewPresenterTests.swift in Sources */,
 				514A38332E329258000948C3 /* CardBinApiClientTests.swift in Sources */,
 				E74EB7452497A790008743E7 /* ExpiryDateFormatterTests.swift in Sources */,
 				62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */,
-				E7D19F7A24637237001EA13A /* CvcSessionsApiDiscoveryTests.swift in Sources */,
 				E72C3EF324893C6400284A31 /* CardBrandsConfigurationProviderTests.swift in Sources */,
 				E7FC447C245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift in Sources */,
 				E77B8BAD245C5A8D00564C19 /* AccessCheckoutClientTests.swift in Sources */,
@@ -1803,7 +1765,6 @@
 				51D610D325CD754C00B1B685 /* CvcOnlyValidationConfigBuilderTests.swift in Sources */,
 				E7D19F642462F5FF001EA13A /* CardDetailsForSessionTypeValidatorTests.swift in Sources */,
 				C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */,
-				C22CF9782E3B8B3000D77EBA /* MockServiceDiscoveryResponseFactory.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
 				51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */,
@@ -1839,7 +1800,6 @@
 				E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */,
 				5125FFC22DD5FCAD00EF7380 /* MockCvcValidationStateHandler.swift in Sources */,
 				517145842AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift in Sources */,
-				C2F0F6EA2E3A38A9005F8E49 /* ServiceDiscoveryFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

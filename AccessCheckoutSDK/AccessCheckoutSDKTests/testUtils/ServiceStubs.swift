@@ -9,6 +9,12 @@ struct ServiceStubs {
         self.baseUrl = "http://localhost:\(port)"
     }
 
+    init(port: UInt16) {
+        self.port = port
+        self.httpServer = .init()
+        self.baseUrl = "http://localhost:\(port)"
+    }
+
     let baseUrl: String
 
     private let port: UInt16
@@ -60,6 +66,10 @@ struct ServiceStubs {
 
     func servicesRootDiscoverySuccess() -> ServiceStubs {
         return get200(path: "", jsonResponse: successfulDiscoveryResponse())
+    }
+
+    func servicesRootDiscoveryFailure(error: AccessCheckoutError) -> ServiceStubs {
+        return failed400(path: "", error: error)
     }
 
     func cardSessionSuccess(session: String) -> ServiceStubs {

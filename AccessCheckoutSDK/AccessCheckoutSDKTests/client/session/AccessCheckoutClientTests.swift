@@ -7,10 +7,12 @@ class AccessCheckoutClientTests: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
+        ServiceDiscoveryProvider.shared.clearCache()
     }
 
     override func tearDown() {
         serviceStubs?.stop()
+        ServiceDiscoveryProvider.shared.clearCache()
     }
 
     func testGeneratesACardSession() throws {
@@ -247,6 +249,29 @@ class AccessCheckoutClientTests: XCTestCase {
         ) { error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
+    }
+
+    func testShouldSendBackAnErrorWhenAnErrorOccursDuringDiscovery() throws {
+        let expectationToFulfill = expectation(description: "Error successfully retrieved")
+        let client = createAccessCheckoutClient(baseUrl: serviceStubs!.baseUrl)
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error message")
+        let cardDetails = validCardDetails()
+
+        serviceStubs!.servicesRootDiscoveryFailure(error: expectedError)
+            .start()
+
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) {
+            result in
+            switch result {
+            case .success:
+                XCTFail("Should have failed to discover services")
+            case .failure(let error):
+                XCTAssertEqual("unknown : an error message", error.message)
+            }
+            expectationToFulfill.fulfill()
+        }
+
+        wait(for: [expectationToFulfill], timeout: 5)
     }
 
     private func validCardDetails() -> CardDetails {

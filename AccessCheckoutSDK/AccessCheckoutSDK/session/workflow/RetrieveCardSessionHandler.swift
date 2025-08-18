@@ -11,12 +11,10 @@ class RetrieveCardSessionHandler: RetrieveSessionHandler {
 
     func handle(
         _ checkoutId: String,
-        _ baseUrl: String,
         _ cardDetails: CardDetails,
         completionHandler: @escaping (Swift.Result<String, AccessCheckoutError>) -> Void
     ) {
         apiClient.createSession(
-            baseUrl: baseUrl,
             checkoutId: checkoutId,
             pan: cardDetails.pan!,
             expiryMonth: cardDetails.expiryMonth!,
