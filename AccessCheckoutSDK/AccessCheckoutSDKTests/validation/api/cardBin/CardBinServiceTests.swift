@@ -407,13 +407,11 @@ class CardBinServiceTests: XCTestCase {
             }
         }
 
-        let _ = Result<Void, AccessCheckoutError> {
-            cardBinService.getCardBrands(
-                globalBrand: TestFixtures.discoverBrand(),
-                cardNumber: discoverDinersTestPan
-            ) { _ in
-                expectation.fulfill()
-            }
+        cardBinService.getCardBrands(
+            globalBrand: TestFixtures.discoverBrand(),
+            cardNumber: discoverDinersTestPan
+        ) { _ in
+            expectation.fulfill()
         }
 
         Thread.sleep(forTimeInterval: 0.2)
