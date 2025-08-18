@@ -485,6 +485,9 @@ class SessionsConsumerPactTests: XCTestCase {
                 "_links": {
                     "service:sessions": {
                         "href": "\(sessionsBaseUrl)/sessions"
+                    },
+                    "cardBinPublic:binDetails": {
+                        "href": "\(sessionsBaseUrl)/public/card/bindetails"
                     }
                 }
             }
