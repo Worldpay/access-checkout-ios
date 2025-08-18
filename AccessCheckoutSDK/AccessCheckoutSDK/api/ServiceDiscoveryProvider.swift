@@ -14,6 +14,7 @@ class ServiceDiscoveryProvider {
     private static var static_sessionsServiceUrl: String?
     private static var static_sessionsCreateCardSessionUrl: String?
     private static var static_sessionsCreateCvcSessionUrl: String?
+    private static var static_cardBinUrl: String?
 
     static var shared: ServiceDiscoveryProvider = ServiceDiscoveryProvider()
 
@@ -33,6 +34,10 @@ class ServiceDiscoveryProvider {
         return shared.sessionsCreateCvcSessionUrl
     }
 
+    static func getCardBinEndpoint() -> String? {
+        return shared.cardBinUrl
+    }
+
     public static func discover(
         baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
@@ -41,6 +46,8 @@ class ServiceDiscoveryProvider {
 
     private var hasDiscoveredAllUrls: Bool {
         return sessionsCreateCardSessionUrl != nil && sessionsCreateCvcSessionUrl != nil
+            && cardBinUrl != nil
+
     }
 
     private var sessionsCreateCardSessionUrl: String? {
@@ -82,12 +89,26 @@ class ServiceDiscoveryProvider {
         }
     }
 
+    private var cardBinUrl: String? {
+        get {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                return ServiceDiscoveryProvider.static_cardBinUrl
+            }
+        }
+        set {
+            ServiceDiscoveryProvider.serialQueue.sync {
+                ServiceDiscoveryProvider.static_cardBinUrl = newValue
+            }
+        }
+    }
+
     func clearCache() {
         ServiceDiscoveryProvider.serialQueue.sync {
             ServiceDiscoveryProvider.static_accessRootResponse = nil
             ServiceDiscoveryProvider.static_sessionsServiceUrl = nil
             ServiceDiscoveryProvider.static_sessionsCreateCardSessionUrl = nil
             ServiceDiscoveryProvider.static_sessionsCreateCvcSessionUrl = nil
+            ServiceDiscoveryProvider.static_cardBinUrl = nil
         }
     }
 
@@ -128,17 +149,31 @@ class ServiceDiscoveryProvider {
         sendRequest(Requests.accessRoot(baseUrl)) { result in
             switch result {
             case .success(let apiResponse):
-                if let url = self.apiResponseLinkLookup.lookup(
-                    link: ApiLinks.cardSessions.service, in: apiResponse)
-                {
-                    self.sessionsServiceUrl = url
-                    completionHandler(.success(()))
-                } else {
+                guard
+                    let sessionsServiceUrl = self.apiResponseLinkLookup.lookup(
+                        link: ApiLinks.cardSessions.service, in: apiResponse)
+                else {
                     completionHandler(
                         .failure(
                             AccessCheckoutError.discoveryLinkNotFound(
                                 linkName: ApiLinks.cardSessions.service)))
+                    return
                 }
+
+                guard
+                    let cardBinServiceUrl = self.apiResponseLinkLookup.lookup(
+                        link: ApiLinks.cardBin.service, in: apiResponse)
+                else {
+                    completionHandler(
+                        .failure(
+                            AccessCheckoutError.discoveryLinkNotFound(
+                                linkName: ApiLinks.cardBin.service)))
+                    return
+                }
+
+                self.sessionsServiceUrl = sessionsServiceUrl
+                self.cardBinUrl = cardBinServiceUrl
+                completionHandler(.success(()))
             case .failure(let error):
                 completionHandler(.failure(error))
             }
