@@ -78,6 +78,9 @@ class StubUtils {
         ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
             restClientMock, apiResponseLookUpMock)
 
+        let dummyURLSessionTask = URLSession.shared.dataTask(
+            with: URL(string: "https://dummy-url-session-task.com")!)
+
         // simulate access root discovery and sessions discovery responses
         // a response with actual links is not needed, just a valid response
         restClientMock.getStubbingProxy()
@@ -85,9 +88,11 @@ class StubUtils {
             .then {
                 _, _, completionHandler in
                 completionHandler(Result.success(self.toApiReponse()), nil)
+                return dummyURLSessionTask
             }.then {
                 _, _, completionHandler in
                 completionHandler(Result.success(self.toApiReponse()), nil)
+                return dummyURLSessionTask
             }
 
         // simulate api response link lookups
