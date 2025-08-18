@@ -1,3 +1,4 @@
+import Cuckoo
 import Foundation
 import Swifter
 import XCTest
@@ -6,9 +7,21 @@ import XCTest
 
 class CardBinApiClientTestsWithStubService: XCTestCase {
     private var serviceStubs: ServiceStubs = ServiceStubs()
+    private var cardBinApiClient: CardBinApiClient!
+
+    private let checkoutId = "00000000-0000-0000-000000000000"
+    private let visaTestPan = "444433332222"
+
+    override func setUp() {
+        super.setUp()
+
+        cardBinApiClient = CardBinApiClient(url: "\(serviceStubs.baseUrl)/somewhere")
+    }
 
     override func tearDown() {
+        cardBinApiClient = nil
         serviceStubs.stop()
+        super.tearDown()
     }
 
     /*
@@ -24,16 +37,15 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
 
         var calledCompletionHandler = false
 
-        let cardBinApiClient = CardBinApiClient(
-            url: "\(serviceStubs.baseUrl)/somewhere", checkoutId: "something")
-        cardBinApiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        cardBinApiClient.retrieveBinInfo(cardNumber: visaTestPan, checkoutId: checkoutId) {
+            result in
             calledCompletionHandler = true
         }
         cardBinApiClient.abort()
 
         Thread.sleep(forTimeInterval: 1)
 
-        XCTAssertTrue(!calledCompletionHandler)
+        XCTAssertFalse(calledCompletionHandler)
     }
 
     /*
@@ -51,9 +63,8 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
 
         var calledCompletionHandler = false
 
-        let cardBinApiClient = CardBinApiClient(
-            url: "\(serviceStubs.baseUrl)/somewhere", checkoutId: "something")
-        cardBinApiClient.retrieveBinInfo(cardNumber: "444433332222") { result in
+        cardBinApiClient.retrieveBinInfo(cardNumber: visaTestPan, checkoutId: checkoutId) {
+            result in
             calledCompletionHandler = true
         }
 
@@ -63,6 +74,6 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
 
         // Waiting until the end of any potential future retries
         Thread.sleep(forTimeInterval: 1)
-        XCTAssertTrue(!calledCompletionHandler)
+        XCTAssertFalse(calledCompletionHandler)
     }
 }

@@ -42,6 +42,21 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
 
     }
 
+    override func abort() {
+
+        return cuckoo_manager.call(
+            """
+            abort()
+            """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+
+                super.abort(),
+            defaultCall: __defaultImplStub!.abort())
+
+    }
+
     struct __StubbingProxy_CardBinApiClient: Cuckoo.StubbingProxy {
         private let cuckoo_manager: Cuckoo.MockManager
 
@@ -72,6 +87,17 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
                     method:
                         """
                         retrieveBinInfo(cardNumber: String, checkoutId: String, completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void)
+                        """, parameterMatchers: matchers))
+        }
+
+        func abort() -> Cuckoo.ClassStubNoReturnFunction<()> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(
+                stub: cuckoo_manager.createStub(
+                    for: MockCardBinApiClient.self,
+                    method:
+                        """
+                        abort()
                         """, parameterMatchers: matchers))
         }
 
@@ -116,6 +142,16 @@ class MockCardBinApiClient: CardBinApiClient, Cuckoo.ClassMock {
                 sourceLocation: sourceLocation)
         }
 
+        @discardableResult
+        func abort() -> Cuckoo.__DoNotUse<(), Void> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+                """
+                abort()
+                """, callMatcher: callMatcher, parameterMatchers: matchers,
+                sourceLocation: sourceLocation)
+        }
+
     }
 }
 
@@ -125,6 +161,10 @@ class CardBinApiClientStub: CardBinApiClient {
         cardNumber: String, checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+
+    override func abort() {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
 
