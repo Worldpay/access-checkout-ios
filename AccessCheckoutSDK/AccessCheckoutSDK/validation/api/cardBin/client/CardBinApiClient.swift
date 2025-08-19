@@ -7,6 +7,7 @@ internal class CardBinApiClient {
     private let restClient: RestClient<CardBinResponse>
     private let cacheManager: CardBinCacheManager
     private let maxAttempts = 3
+    private var taskForRequestInFlight: URLSessionTask?
 
     /// Initialises a new CardBinApiClient instance.
     ///
@@ -53,6 +54,10 @@ internal class CardBinApiClient {
         )
     }
 
+    func abort() {
+        self.taskForRequestInFlight?.cancel()
+    }
+
     /// Fetches card BIN details from the API with automatic retry mechanism.
     ///
     /// This private method implements exponential backoff retry logic for handling
@@ -75,11 +80,12 @@ internal class CardBinApiClient {
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
         let request = urlRequestFactory.create(cardNumber: cardNumber)
 
-        restClient.send(
+        self.taskForRequestInFlight = restClient.send(
             urlSession: URLSession.shared, request: request
         ) { result, statusCode in
             switch result {
             case .success(let response):
+                self.taskForRequestInFlight = nil
                 self.cacheManager.putInCache(key: cacheKey, response: response)
                 completionHandler(.success(response))
 
@@ -94,6 +100,7 @@ internal class CardBinApiClient {
                         completionHandler: completionHandler
                     )
                 } else {
+                    self.taskForRequestInFlight = nil
                     let maxRetriesReachedError = AccessCheckoutError.unexpectedApiError(
                         message:
                             "Failed after \(attempt) attempt(s) with error \(String(error.errorDescription!))"

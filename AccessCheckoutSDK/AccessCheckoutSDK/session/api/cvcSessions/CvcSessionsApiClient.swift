@@ -63,7 +63,7 @@ class CvcSessionsApiClient {
     ) {
         let request = createRequest(endPointUrl: endPointUrl, checkoutId: checkoutId, cvc: cvc)
 
-        restClient.send(
+        _ = restClient.send(
             urlSession: URLSession.shared,
             request: request
         ) { result, _ in

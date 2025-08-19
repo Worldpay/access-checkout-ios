@@ -36,6 +36,21 @@ struct ServiceStubs {
         return self
     }
 
+    func get200(path: String, textResponse: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        let response: ((HttpRequest) -> HttpResponse) = { req in
+            return HttpResponse.ok(
+                .custom(
+                    "",
+                    { _ -> String in
+                        Thread.sleep(forTimeInterval: delayInSeconds)
+                        return ""
+                    }))
+        }
+
+        httpServer.GET[path] = response
+        return self
+    }
+
     func get400(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
         httpServer.GET[path] = { _ in .badRequest(.json(jsonData as AnyObject)) }
@@ -59,9 +74,25 @@ struct ServiceStubs {
         return self
     }
 
+    func post200(path: String, textResponse: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        httpServer.POST[path] = { _ in
+            Thread.sleep(forTimeInterval: delayInSeconds)
+            return .ok(.text(textResponse))
+        }
+        return self
+    }
+
     func post400(path: String, error: AccessCheckoutError) -> ServiceStubs {
         let jsonData = try! toJSON(toJSONString(error))
         httpServer.POST[path] = { _ in .badRequest(.json(jsonData as AnyObject)) }
+        return self
+    }
+
+    func post500(path: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        httpServer.POST[path] = { _ in
+            Thread.sleep(forTimeInterval: delayInSeconds)
+            return .internalServerError
+        }
         return self
     }
 

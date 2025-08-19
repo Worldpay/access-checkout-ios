@@ -414,9 +414,11 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .then {
                 _, _, completionHandler in
                 completionHandler(accessRootDiscoveryResult, nil)
+                return URLSessionTask()
             }.then {
                 _, _, completionHandler in
                 completionHandler(sessionsDiscoveryResult, nil)
+                return URLSessionTask()
             }
     }
 

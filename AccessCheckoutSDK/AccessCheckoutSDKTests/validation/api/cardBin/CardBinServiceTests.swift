@@ -16,7 +16,6 @@ class CardBinServiceTests: XCTestCase {
     private let discoverDinersTestPan = "601100040000"
 
     override func setUp() {
-        super.setUp()
 
         mockClient = MockCardBinApiClient(url: baseURL)
         mockFactory = CardBrandsConfigurationFactoryMock()
@@ -38,7 +37,6 @@ class CardBinServiceTests: XCTestCase {
         mockClient = nil
         mockConfigurationProvider = nil
         cardBinService = nil
-        super.tearDown()
     }
 
     func testShouldInstantiateCardBinServiceWithDefaultClient() {
@@ -66,6 +64,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -107,6 +107,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -148,6 +150,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -188,6 +192,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -230,6 +236,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -271,6 +279,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -315,6 +325,8 @@ class CardBinServiceTests: XCTestCase {
         )
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -348,6 +360,8 @@ class CardBinServiceTests: XCTestCase {
         var calledCompletionHandler = false
 
         stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
             when(
                 stub.retrieveBinInfo(
                     cardNumber: any(),
@@ -370,5 +384,130 @@ class CardBinServiceTests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.2)
 
         XCTAssertFalse(calledCompletionHandler)
+    }
+
+    func testShouldCallAbortAndRetrieveBinInfoOnClientWhenRequestIsMade() {
+
+        stub(mockClient) { stub in
+            when(stub.abort()).thenDoNothing()
+
+            when(
+                stub.retrieveBinInfo(
+                    cardNumber: any(),
+                    checkoutId: any(),
+                    completionHandler: any()
+                )
+            ).then { _, _, completion in
+            }
+        }
+
+        cardBinService.getCardBrands(
+            globalBrand: TestFixtures.visaBrand(),
+            cardNumber: visaTestPan
+        ) { _ in }
+
+        Thread.sleep(forTimeInterval: 0.2)
+        verify(self.mockClient).abort()
+        verify(self.mockClient).retrieveBinInfo(
+            cardNumber: any(),
+            checkoutId: any(),
+            completionHandler: any()
+        )
+    }
+
+    func testShouldNotErrorWhenCallingClientAbortMethodIfNoCurrentRequestExists() {
+        let expectation = self.expectation(
+            description: "should handle abort when no current request exists"
+        )
+
+        let response = CardBinResponse(
+            brand: ["visa"],
+            fundingType: "debit",
+            luhnCompliant: true
+        )
+
+        var abortCallCount = 0
+
+        stub(mockClient) { stub in
+            when(stub.abort()).then {
+                abortCallCount += 1
+            }
+
+            when(
+                stub.retrieveBinInfo(
+                    cardNumber: any(),
+                    checkoutId: any(),
+                    completionHandler: any()
+                )
+            ).then { _, _, completion in
+                completion(.success(response))
+            }
+        }
+
+        cardBinService.getCardBrands(
+            globalBrand: nil,
+            cardNumber: visaTestPan
+        ) { _ in
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { _ in
+            XCTAssertEqual(abortCallCount, 1, "Abort method is called (safe no-op)")
+            verify(self.mockClient, times(1)).abort()
+        }
+    }
+
+    func testShouldAbortPreviousClientRequestAndOnlyCompleteSecondRequest() {
+        let secondResponse = CardBinResponse(
+            brand: ["visa"],
+            fundingType: "debit",
+            luhnCompliant: true
+        )
+
+        var callCount = 0
+
+        stub(mockClient) { stub in
+            when(stub.abort()).thenDoNothing()
+
+            when(
+                stub.retrieveBinInfo(
+                    cardNumber: any(),
+                    checkoutId: any(),
+                    completionHandler: any()
+                )
+            ).then { _, _, completion in
+                callCount += 1
+                if callCount == 1 {
+                    // simulating hanging request
+                } else if callCount == 2 {
+                    completion(.success(secondResponse))
+                }
+            }
+        }
+
+        cardBinService.getCardBrands(
+            globalBrand: TestFixtures.visaBrand(),
+            cardNumber: visaTestPan
+        ) { _ in
+        }
+
+        cardBinService.getCardBrands(
+            globalBrand: TestFixtures.visaBrand(),
+            cardNumber: visaTestPan
+        ) { result in
+            if case .success(let brands) = result {
+                XCTAssertEqual(brands.count, 1)
+                XCTAssertEqual(brands.first?.name, "visa")
+            }
+        }
+
+        verify(self.mockClient, atLeastOnce()).abort()
+
+        verify(self.mockClient, times(2)).retrieveBinInfo(
+            cardNumber: any(),
+            checkoutId: any(),
+            completionHandler: any()
+        )
+
     }
 }

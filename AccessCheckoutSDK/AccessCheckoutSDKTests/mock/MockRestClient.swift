@@ -23,11 +23,11 @@ class MockRestClient<T: Decodable>: RestClient<T>, Cuckoo.ClassMock {
     override func send(
         urlSession: URLSession, request: URLRequest,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
-    ) {
+    ) -> URLSessionTask {
 
         return cuckoo_manager.call(
             """
-            send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void)
+            send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void) -> URLSessionTask
             """,
             parameters: (urlSession, request, completionHandler),
             escapingParameters: (urlSession, request, completionHandler),
@@ -50,8 +50,9 @@ class MockRestClient<T: Decodable>: RestClient<T>, Cuckoo.ClassMock {
         func send<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable, M3: Cuckoo.Matchable>(
             urlSession: M1, request: M2, completionHandler: M3
         )
-            -> Cuckoo.ClassStubNoReturnFunction<
-                (URLSession, URLRequest, (Result<T, AccessCheckoutError>, Int?) -> Void)
+            -> Cuckoo.ClassStubFunction<
+                (URLSession, URLRequest, (Result<T, AccessCheckoutError>, Int?) -> Void),
+                URLSessionTask
             >
         where
             M1.MatchedType == URLSession, M2.MatchedType == URLRequest,
@@ -69,7 +70,7 @@ class MockRestClient<T: Decodable>: RestClient<T>, Cuckoo.ClassMock {
                     for: MockRestClient.self,
                     method:
                         """
-                        send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void)
+                        send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void) -> URLSessionTask
                         """, parameterMatchers: matchers))
         }
 
@@ -94,7 +95,8 @@ class MockRestClient<T: Decodable>: RestClient<T>, Cuckoo.ClassMock {
             urlSession: M1, request: M2, completionHandler: M3
         )
             -> Cuckoo.__DoNotUse<
-                (URLSession, URLRequest, (Result<T, AccessCheckoutError>, Int?) -> Void), Void
+                (URLSession, URLRequest, (Result<T, AccessCheckoutError>, Int?) -> Void),
+                URLSessionTask
             >
         where
             M1.MatchedType == URLSession, M2.MatchedType == URLRequest,
@@ -109,7 +111,7 @@ class MockRestClient<T: Decodable>: RestClient<T>, Cuckoo.ClassMock {
                 ]
             return cuckoo_manager.verify(
                 """
-                send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void)
+                send(urlSession: URLSession, request: URLRequest, completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void) -> URLSessionTask
                 """, callMatcher: callMatcher, parameterMatchers: matchers,
                 sourceLocation: sourceLocation)
         }
@@ -122,8 +124,8 @@ class RestClientStub<T: Decodable>: RestClient<T> {
     override func send(
         urlSession: URLSession, request: URLRequest,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
-    ) {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    ) -> URLSessionTask {
+        return DefaultValueRegistry.defaultValue(for: (URLSessionTask).self)
     }
 
 }

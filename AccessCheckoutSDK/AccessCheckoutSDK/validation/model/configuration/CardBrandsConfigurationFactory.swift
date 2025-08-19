@@ -23,7 +23,7 @@ class CardBrandsConfigurationFactory {
             return
         }
 
-        restClient.send(
+        _ = restClient.send(
             urlSession: URLSession.shared,
             request: URLRequest(url: url)
         ) { result, _ in

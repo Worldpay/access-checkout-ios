@@ -85,9 +85,11 @@ class StubUtils {
             .then {
                 _, _, completionHandler in
                 completionHandler(Result.success(self.toApiReponse()), nil)
+                return URLSessionTask()
             }.then {
                 _, _, completionHandler in
                 completionHandler(Result.success(self.toApiReponse()), nil)
+                return URLSessionTask()
             }
 
         // simulate api response link lookups

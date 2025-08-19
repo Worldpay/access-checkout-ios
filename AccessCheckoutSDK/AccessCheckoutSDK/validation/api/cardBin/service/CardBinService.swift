@@ -36,6 +36,8 @@ internal class CardBinService {
         cardNumber: String,
         completion: @escaping (Result<[CardBrandModel], AccessCheckoutError>) -> Void
     ) {
+        client.abort()
+
         let sanitisedCardNumber = cardNumber.replacingOccurrences(of: " ", with: "")
 
         guard !sanitisedCardNumber.isEmpty else {
