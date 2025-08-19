@@ -61,6 +61,7 @@
 		62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */; };
 		62BF77382E4C975B00369257 /* CardBinServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BF77372E4C975500369257 /* CardBinServiceTests.swift */; };
 		62C188872E4F8B5B001F0BDA /* URLSessionDataTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62C188862E4F8B5B001F0BDA /* URLSessionDataTaskMock.swift */; };
+		62E75C5A2E5498B9001FDD73 /* CardBinServiceTestsWithStubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E75C592E5498AD001FDD73 /* CardBinServiceTestsWithStubService.swift */; };
 		683DFBB48F1684E7AFD56E13 /* CvcSessionURLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DFFF3DC25699A1CE15270 /* CvcSessionURLRequestFactory.swift */; };
 		75E83DCA95B5103C9D6B49BA /* Pods_AccessCheckoutSDKPactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */; };
 		8CA5FFEF295CCB1011335D28 /* Pods_AccessCheckoutSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB48EA1E45E15A6C80CC190 /* Pods_AccessCheckoutSDKTests.framework */; };
@@ -307,6 +308,7 @@
 		62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinCacheManager.swift; sourceTree = "<group>"; };
 		62BF77372E4C975500369257 /* CardBinServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinServiceTests.swift; sourceTree = "<group>"; };
 		62C188862E4F8B5B001F0BDA /* URLSessionDataTaskMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskMock.swift; sourceTree = "<group>"; };
+		62E75C592E5498AD001FDD73 /* CardBinServiceTestsWithStubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinServiceTestsWithStubService.swift; sourceTree = "<group>"; };
 		63E9AC2FDE45ABB3E75E6DFE /* Pods-AccessCheckoutSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDK.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDK/Pods-AccessCheckoutSDK.release.xcconfig"; sourceTree = "<group>"; };
 		683DF0BDC6FFC7C2D7F84EED /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		683DF0FE5331B699757B3D19 /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 		5115F54D2E327AFA00BC3FDB /* cardBin */ = {
 			isa = PBXGroup;
 			children = (
+				62E75C592E5498AD001FDD73 /* CardBinServiceTestsWithStubService.swift */,
 				62BF77372E4C975500369257 /* CardBinServiceTests.swift */,
 				62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */,
 				514A38322E329258000948C3 /* CardBinApiClientTests.swift */,
@@ -1466,9 +1469,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1505,9 +1512,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1710,6 +1721,7 @@
 				D7C6EE212486A4F000170B92 /* ExpiryDateValidationFlowTests.swift in Sources */,
 				E72C3EE024866B8000284A31 /* MockPanValidator.swift in Sources */,
 				E72C3F0D248AB84900284A31 /* CardBrandModelTransformerTests.swift in Sources */,
+				62E75C5A2E5498B9001FDD73 /* CardBinServiceTestsWithStubService.swift in Sources */,
 				E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */,
 				E72C3EDE248669EF00284A31 /* MockPanValidationStateHandler.swift in Sources */,
 				D7D6D5F3248154B900D57D7A /* PanValidationFlowTests.swift in Sources */,

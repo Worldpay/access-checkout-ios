@@ -409,19 +409,16 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             ? Result.failure(withSessionsDiscoveryError!)
             : Result.success(self.genericApiResponse())
 
-        let dummyURLSessionTask = URLSession.shared.dataTask(
-            with: URL(string: "https://dummy-url-session-task.com")!)
-
         restClient.getStubbingProxy()
             .send(urlSession: any(), request: any(), completionHandler: any())
             .then {
                 _, _, completionHandler in
                 completionHandler(accessRootDiscoveryResult, nil)
-                return dummyURLSessionTask
+                return URLSessionTask()
             }.then {
                 _, _, completionHandler in
                 completionHandler(sessionsDiscoveryResult, nil)
-                return dummyURLSessionTask
+                return URLSessionTask()
             }
     }
 

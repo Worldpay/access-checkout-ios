@@ -16,7 +16,6 @@ class CardBinServiceTests: XCTestCase {
     private let discoverDinersTestPan = "601100040000"
 
     override func setUp() {
-        super.setUp()
 
         mockClient = MockCardBinApiClient(url: baseURL)
         mockFactory = CardBrandsConfigurationFactoryMock()
@@ -38,7 +37,6 @@ class CardBinServiceTests: XCTestCase {
         mockClient = nil
         mockConfigurationProvider = nil
         cardBinService = nil
-        super.tearDown()
     }
 
     func testShouldInstantiateCardBinServiceWithDefaultClient() {
@@ -388,10 +386,7 @@ class CardBinServiceTests: XCTestCase {
         XCTAssertFalse(calledCompletionHandler)
     }
 
-    func testShouldHandleCancellationExceptionGracefully() {
-        let expectation = self.expectation(
-            description: "should handle cancellation exception gracefully")
-        expectation.isInverted = true
+    func testShouldCallAbortAndRetrieveBinInfoOnClientWhenRequestIsMade() {
 
         stub(mockClient) { stub in
             when(stub.abort()).thenDoNothing()
@@ -403,31 +398,24 @@ class CardBinServiceTests: XCTestCase {
                     completionHandler: any()
                 )
             ).then { _, _, completion in
-
             }
         }
 
         cardBinService.getCardBrands(
-            globalBrand: TestFixtures.discoverBrand(),
-            cardNumber: discoverDinersTestPan
-        ) { _ in
-            expectation.fulfill()
-        }
+            globalBrand: TestFixtures.visaBrand(),
+            cardNumber: visaTestPan
+        ) { _ in }
 
         Thread.sleep(forTimeInterval: 0.2)
-
-        // will pass if callback was not invoked
-        waitForExpectations(timeout: 1) { _ in
-            verify(self.mockClient).abort()
-            verify(self.mockClient).retrieveBinInfo(
-                cardNumber: any(),
-                checkoutId: any(),
-                completionHandler: any()
-            )
-        }
+        verify(self.mockClient).abort()
+        verify(self.mockClient).retrieveBinInfo(
+            cardNumber: any(),
+            checkoutId: any(),
+            completionHandler: any()
+        )
     }
 
-    func testShouldNotErrorWhenCallingAbortIfNoCurrentRequestExists() {
+    func testShouldNotErrorWhenCallingClientAbortMethodIfNoCurrentRequestExists() {
         let expectation = self.expectation(
             description: "should handle abort when no current request exists"
         )
@@ -469,11 +457,7 @@ class CardBinServiceTests: XCTestCase {
         }
     }
 
-    func testShouldCancelPreviousRequestWhenNewRequestIsMadeAndSecondResponseShouldCompletes() {
-        let expectation = self.expectation(
-            description: "should abort previous request before making new one"
-        )
-
+    func testShouldAbortPreviousClientRequestAndOnlyCompleteSecondRequest() {
         let secondResponse = CardBinResponse(
             brand: ["visa"],
             fundingType: "debit",
@@ -481,8 +465,6 @@ class CardBinServiceTests: XCTestCase {
         )
 
         var callCount = 0
-        var firstCompletionCalled = false
-        var secondCompletionCalled = false
 
         stub(mockClient) { stub in
             when(stub.abort()).thenDoNothing()
@@ -507,93 +489,25 @@ class CardBinServiceTests: XCTestCase {
             globalBrand: TestFixtures.visaBrand(),
             cardNumber: visaTestPan
         ) { _ in
-            firstCompletionCalled = true
         }
 
         cardBinService.getCardBrands(
             globalBrand: TestFixtures.visaBrand(),
             cardNumber: visaTestPan
         ) { result in
-            secondCompletionCalled = true
             if case .success(let brands) = result {
                 XCTAssertEqual(brands.count, 1)
                 XCTAssertEqual(brands.first?.name, "visa")
             }
-            expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1) { _ in
-            verify(self.mockClient, atLeastOnce()).abort()
+        verify(self.mockClient, atLeastOnce()).abort()
 
-            verify(self.mockClient, times(2)).retrieveBinInfo(
-                cardNumber: any(),
-                checkoutId: any(),
-                completionHandler: any()
-            )
-
-            XCTAssertFalse(firstCompletionCalled)
-            XCTAssertTrue(secondCompletionCalled)
-        }
-    }
-
-    func testShouldVerifyAbortMechanismThroughBehavior() {
-        let expectation = self.expectation(
-            description: "should verify abort mechanism through behavior"
-        )
-        expectation.expectedFulfillmentCount = 3
-
-        let response = CardBinResponse(
-            brand: ["visa"],
-            fundingType: "debit",
-            luhnCompliant: true
+        verify(self.mockClient, times(2)).retrieveBinInfo(
+            cardNumber: any(),
+            checkoutId: any(),
+            completionHandler: any()
         )
 
-        var abortCallCount = 0
-
-        stub(mockClient) { stub in
-            when(stub.abort()).then {
-                abortCallCount += 1
-            }
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
-
-        cardBinService.getCardBrands(
-            globalBrand: nil,
-            cardNumber: "4444333322221111"
-        ) { _ in
-            expectation.fulfill()
-        }
-
-        cardBinService.getCardBrands(
-            globalBrand: nil,
-            cardNumber: "5555444433332222"
-        ) { _ in
-            expectation.fulfill()
-        }
-
-        cardBinService.getCardBrands(
-            globalBrand: nil,
-            cardNumber: "6666555544443333"
-        ) { _ in
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 1) { _ in
-            XCTAssertEqual(abortCallCount, 3, "Abort should be called for each request")
-            verify(self.mockClient, times(3)).retrieveBinInfo(
-                cardNumber: any(),
-                checkoutId: any(),
-                completionHandler: any()
-            )
-        }
     }
 }

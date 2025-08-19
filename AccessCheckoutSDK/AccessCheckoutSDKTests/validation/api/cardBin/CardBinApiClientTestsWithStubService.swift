@@ -13,15 +13,13 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
     private let visaTestPan = "444433332222"
 
     override func setUp() {
-        super.setUp()
-
+        serviceStubs = ServiceStubs()
         cardBinApiClient = CardBinApiClient(url: "\(serviceStubs.baseUrl)/somewhere")
     }
 
     override func tearDown() {
         cardBinApiClient = nil
         serviceStubs.stop()
-        super.tearDown()
     }
 
     /*
