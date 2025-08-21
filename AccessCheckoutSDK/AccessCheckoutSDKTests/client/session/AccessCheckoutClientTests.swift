@@ -158,6 +158,8 @@ class AccessCheckoutClientTests: XCTestCase {
         let client = createAccessCheckoutClient(baseUrl: serviceStubs!.baseUrl)
         let cardDetails = validCardDetails()
         let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
+        let retryError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error unknown : an error")
 
         serviceStubs!.servicesRootDiscoverySuccess()
             .sessionsEndPointDiscoveryFailure(error: expectedError)
@@ -171,7 +173,7 @@ class AccessCheckoutClientTests: XCTestCase {
             case .success:
                 XCTFail("Should have received an error but received sessions")
             case .failure(let error):
-                XCTAssertEqual(expectedError, error)
+                XCTAssertEqual(retryError, error)
             }
             expectationToFulfill.fulfill()
         }
@@ -257,6 +259,9 @@ class AccessCheckoutClientTests: XCTestCase {
         let expectedError = StubUtils.createError(errorName: "unknown", message: "an error message")
         let cardDetails = validCardDetails()
 
+        let retryError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error unknown : an error message")
+
         serviceStubs!.servicesRootDiscoveryFailure(error: expectedError)
             .start()
 
@@ -266,7 +271,7 @@ class AccessCheckoutClientTests: XCTestCase {
             case .success:
                 XCTFail("Should have failed to discover services")
             case .failure(let error):
-                XCTAssertEqual("unknown : an error message", error.message)
+                XCTAssertEqual(retryError, error)
             }
             expectationToFulfill.fulfill()
         }

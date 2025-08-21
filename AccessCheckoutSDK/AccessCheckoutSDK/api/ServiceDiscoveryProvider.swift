@@ -3,7 +3,7 @@ import Foundation
 import os
 
 class ServiceDiscoveryProvider {
-    private let restClient: RestClient<ApiResponse>
+    private let restClient: RetryRestClientDecorator<ApiResponse>
     private let apiResponseLinkLookup: ApiResponseLinkLookup
 
     private static let serialQueue = DispatchQueue(
@@ -19,7 +19,7 @@ class ServiceDiscoveryProvider {
     static var shared: ServiceDiscoveryProvider = ServiceDiscoveryProvider()
 
     init(
-        _ restClient: RestClient<ApiResponse> = RestClient(),
+        _ restClient: RetryRestClientDecorator<ApiResponse> = RetryRestClientDecorator(),
         _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
     ) {
         self.restClient = restClient

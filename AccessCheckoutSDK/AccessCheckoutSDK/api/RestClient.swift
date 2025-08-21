@@ -1,6 +1,6 @@
 import Foundation
 
-internal class RestClient<T: Decodable> {
+internal class RestClient<T: Decodable>: RestClientProtocol {
     func send(
         urlSession: URLSession,
         request: URLRequest,

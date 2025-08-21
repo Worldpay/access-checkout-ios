@@ -5,7 +5,7 @@ import XCTest
 
 class ServiceDiscoveryProviderTests: XCTestCase {
     let baseUrl = "some-url"
-    let restClient = MockRestClient<ApiResponse>()
+    let restClient = MockRetryRestClientDecorator<ApiResponse>()
     let apiResponseLookUpMock = MockApiResponseLinkLookup()
 
     // default api response values for testing

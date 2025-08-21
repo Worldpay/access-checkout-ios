@@ -71,7 +71,7 @@ class StubUtils {
         cardUrlToReturn: String? = "cardHref",
         cvcUrlToReturn: String? = "cvcHref"
     ) {
-        let restClientMock = MockRestClient<ApiResponse>()
+        let restClientMock = MockRetryRestClientDecorator<ApiResponse>()
         let apiResponseLookUpMock = MockApiResponseLinkLookup()
 
         ServiceDiscoveryProvider.shared.clearCache()
