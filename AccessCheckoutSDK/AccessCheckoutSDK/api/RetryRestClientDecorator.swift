@@ -25,7 +25,10 @@ internal class RetryRestClientDecorator<T: Decodable>: RestClientProtocol {
         attempts: Int,
         completionHandler: @escaping (Result<T, AccessCheckoutError>, Int?) -> Void
     ) -> URLSessionTask {
-        baseRestClient.send(urlSession: urlSession, request: request) { result, statusCode in
+        NSLog(
+            "Attempt \(attempts) to send request to \(request.url?.absoluteString ?? "unknown URL")"
+        )
+        return baseRestClient.send(urlSession: urlSession, request: request) { result, statusCode in
             switch result {
             case .success(let response):
                 completionHandler(.success(response), statusCode)

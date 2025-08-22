@@ -397,9 +397,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -436,9 +440,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -671,7 +679,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8BA50193BD557BCBB2DE4933 /* Pods-AccessCheckoutDemo.debug.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_BASE_URL = "https://try.access.worldpay.com/a-nonexistent-endpoint";
 				ACCESS_CHECKOUT_ID = "<replace-with-your-checkout-id>";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -699,7 +707,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E7FDDA3E36720BDB3959BF7 /* Pods-AccessCheckoutDemo.release.xcconfig */;
 			buildSettings = {
-				ACCESS_BASE_URL = "https://try.access.worldpay.com";
+				ACCESS_BASE_URL = "https://try.access.worldpay.com/a-nonexistent-endpoint";
 				ACCESS_CHECKOUT_ID = "<replace-with-your-checkout-id>";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
