@@ -38,12 +38,19 @@ public struct AccessCheckoutValidationInitialiser {
             acceptedCardBrands: config.acceptedCardBrands
         )
 
+        let cardBinService = CardBinService(
+            checkoutId: config.checkoutId,
+            client: CardBinApiClient(),
+            configurationProvider: configurationProvider
+        )
+
         let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
         let cvcValidator = CvcValidator()
         let cvcValidationFlow = CvcValidationFlow(cvcValidator, validationStateHandler)
 
         let panPresenter = panViewPresenter(
             configurationProvider,
+            cardBinService,
             cvcValidationFlow,
             validationStateHandler,
             config.panFormattingEnabled
@@ -72,6 +79,7 @@ public struct AccessCheckoutValidationInitialiser {
 
     private func panViewPresenter(
         _ configurationProvider: CardBrandsConfigurationProvider,
+        _ cardBinService: CardBinService,
         _ cvcValidationFlow: CvcValidationFlow,
         _ validationStateHandler: PanValidationStateHandler,
         _ panFormattingEnabled: Bool
@@ -80,7 +88,8 @@ public struct AccessCheckoutValidationInitialiser {
         let panValidationFlow = PanValidationFlow(
             panValidator,
             validationStateHandler,
-            cvcValidationFlow
+            cvcValidationFlow,
+            cardBinService
         )
         return PanViewPresenter(
             panValidationFlow,

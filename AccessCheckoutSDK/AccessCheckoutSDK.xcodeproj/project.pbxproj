@@ -680,6 +680,13 @@
 			path = service;
 			sourceTree = "<group>";
 		};
+		62E75C5B2E561E59001FDD73 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		683DF03ADFFF76E72571BEAE /* mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,6 +877,7 @@
 		E72C3F13248AFB5D00284A31 /* pan */ = {
 			isa = PBXGroup;
 			children = (
+				62E75C5B2E561E59001FDD73 /* New Group */,
 				D7D6D5F42481550200D57D7A /* PanValidationFlow.swift */,
 				E72C3EE124866ED200284A31 /* PanValidationResult.swift */,
 				D7D6D5F024814F5500D57D7A /* PanValidationStateHandler.swift */,

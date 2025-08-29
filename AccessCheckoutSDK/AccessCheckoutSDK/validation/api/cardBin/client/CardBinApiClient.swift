@@ -3,7 +3,6 @@ import Foundation
 /// Internal client responsible for retrieving card BIN (Bank Identification Number) information
 /// from an API endpoint with caching and retry capabilities.
 internal class CardBinApiClient {
-    private let url: String
     private let restClient: RestClient<CardBinResponse>
     private let cacheManager: CardBinCacheManager
     private let maxAttempts = 3
@@ -12,14 +11,12 @@ internal class CardBinApiClient {
     /// Initialises a new CardBinApiClient instance.
     ///
     /// - Parameters:
-    ///   - url: The base URL for the card BIN API endpoint
     ///   - restClient: The REST client used to make HTTP requests
+    ///   - cacheManager: The cache manager which is a simple map to improve request performance for repeated numbers
     init(
-        url: String,
         restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>(),
         cacheManager: CardBinCacheManager = CardBinCacheManager()
     ) {
-        self.url = url
         self.restClient = restClient
         self.cacheManager = cacheManager
     }
@@ -38,6 +35,15 @@ internal class CardBinApiClient {
         checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
+        guard let cardBinUrl = ServiceDiscoveryProvider.getCardBinEndpoint() else {
+            completionHandler(
+                .failure(
+                    AccessCheckoutError.discoveryLinkNotFound(
+                        linkName: ApiLinks.cardBin.service
+                    )))
+            return
+        }
+
         let cacheKey = cacheManager.getCacheKey(from: cardNumber)
 
         if let cachedResponse = cacheManager.getCachedResponse(for: cacheKey) {
@@ -46,6 +52,7 @@ internal class CardBinApiClient {
         }
 
         fetchCardBinResponseWithRetry(
+            url: cardBinUrl,
             cardNumber: cardNumber,
             checkoutId: checkoutId,
             cacheKey: cacheKey,
@@ -66,17 +73,20 @@ internal class CardBinApiClient {
     /// for client errors (4xx status codes).
     ///
     /// - Parameters:
+    ///   - url: The url for the card bin endpoint  retirieved via service discovery
     ///   - cardNumber: The card number to retrieve BIN information for
     ///   - cacheKey: The cache key to store the successful response under
     ///   - retries: The current retry attempt number (starts at 1)
     ///   - completionHandler: Closure called with the final result after all retry attempts
     private func fetchCardBinResponseWithRetry(
+        url: String,
         cardNumber: String,
         checkoutId: String,
         cacheKey: String,
         attempt: UInt,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
+        // url passed into this will come from service discovery
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
         let request = urlRequestFactory.create(cardNumber: cardNumber)
 
@@ -93,6 +103,7 @@ internal class CardBinApiClient {
                 let nextAttempt = attempt + 1
                 if self.shouldRetry(attempt: nextAttempt, statusCode: statusCode) {
                     self.fetchCardBinResponseWithRetry(
+                        url: url,
                         cardNumber: cardNumber,
                         checkoutId: checkoutId,
                         cacheKey: cacheKey,

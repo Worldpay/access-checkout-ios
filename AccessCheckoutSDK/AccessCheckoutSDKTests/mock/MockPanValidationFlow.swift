@@ -20,6 +20,21 @@ class MockPanValidationFlow: PanValidationFlow, Cuckoo.ClassMock {
         cuckoo_manager.enableDefaultStubImplementation()
     }
 
+    override func handleCobrandedCards(pan: String) {
+
+        return cuckoo_manager.call(
+            """
+            handleCobrandedCards(pan: String)
+            """,
+            parameters: (pan),
+            escapingParameters: (pan),
+            superclassCall:
+
+                super.handleCobrandedCards(pan: pan),
+            defaultCall: __defaultImplStub!.handleCobrandedCards(pan: pan))
+
+    }
+
     override func validate(pan: String) {
 
         return cuckoo_manager.call(
@@ -70,6 +85,19 @@ class MockPanValidationFlow: PanValidationFlow, Cuckoo.ClassMock {
 
         init(manager: Cuckoo.MockManager) {
             self.cuckoo_manager = manager
+        }
+
+        func handleCobrandedCards<M1: Cuckoo.Matchable>(pan: M1)
+            -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String
+        {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: pan) { $0 }]
+            return .init(
+                stub: cuckoo_manager.createStub(
+                    for: MockPanValidationFlow.self,
+                    method:
+                        """
+                        handleCobrandedCards(pan: String)
+                        """, parameterMatchers: matchers))
         }
 
         func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)>
@@ -123,6 +151,18 @@ class MockPanValidationFlow: PanValidationFlow, Cuckoo.ClassMock {
         }
 
         @discardableResult
+        func handleCobrandedCards<M1: Cuckoo.Matchable>(pan: M1)
+            -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String
+        {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: pan) { $0 }]
+            return cuckoo_manager.verify(
+                """
+                handleCobrandedCards(pan: String)
+                """, callMatcher: callMatcher, parameterMatchers: matchers,
+                sourceLocation: sourceLocation)
+        }
+
+        @discardableResult
         func validate<M1: Cuckoo.Matchable>(pan: M1) -> Cuckoo.__DoNotUse<(String), Void>
         where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: pan) { $0 }]
@@ -157,6 +197,10 @@ class MockPanValidationFlow: PanValidationFlow, Cuckoo.ClassMock {
 }
 
 class PanValidationFlowStub: PanValidationFlow {
+
+    override func handleCobrandedCards(pan: String) {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
 
     override func validate(pan: String) {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
