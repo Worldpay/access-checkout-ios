@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -69,6 +69,7 @@
 		1BCBFED222B8F63300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1BCBFED322B8F63300A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFED522B8F63300A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		462BC04D2E66F7D70049D366 /* AccessCheckoutDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AccessCheckoutDemo.entitlements; sourceTree = "<group>"; };
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		512907F02AEC0473008A7357 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
@@ -120,6 +121,10 @@
 		E7CFBA3F24366AF1009FA24A /* Sessions-paymentsCvc-success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Sessions-paymentsCvc-success.json"; sourceTree = "<group>"; };
 		F05A61772A68844665C943F5 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		462BC0582E6731AD0049D366 /* ApplePay */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApplePay; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C9AFE3F322B799AC00943B3E /* Frameworks */ = {
@@ -211,6 +216,8 @@
 		C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
+				462BC0582E6731AD0049D366 /* ApplePay */,
+				462BC04D2E66F7D70049D366 /* AccessCheckoutDemo.entitlements */,
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
@@ -288,6 +295,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				462BC0582E6731AD0049D366 /* ApplePay */,
 			);
 			name = AccessCheckoutDemo;
 			productName = AccessCheckoutExample;
@@ -683,6 +693,7 @@
 				ACCESS_CHECKOUT_ID = "<replace-with-your-checkout-id>";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AccessCheckoutDemo/AccessCheckoutDemo.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;
@@ -711,6 +722,7 @@
 				ACCESS_CHECKOUT_ID = "<replace-with-your-checkout-id>";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AccessCheckoutDemo/AccessCheckoutDemo.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;

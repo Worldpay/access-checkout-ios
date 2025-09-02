@@ -1,5 +1,6 @@
 import AccessCheckoutSDK
 import UIKit
+import PassKit
 
 class CardFlowViewController: UIViewController {
     @IBOutlet var panTextField: AccessCheckoutUITextField!
@@ -190,6 +191,40 @@ class CardFlowViewController: UIViewController {
 
         disableSubmitIfNotValid(valid: false)
         cardBrandChanged(cardBrand: nil)
+        
+        ApplePayButton()
+    }
+    
+    private func ApplePayButton() {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 16
+
+        //Note there are many styles of buttons which one is best suited
+        let paymentButton1 = PKPaymentButton(paymentButtonType: .checkout, paymentButtonStyle: .black)
+        let paymentButton2 = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .white)
+
+        paymentButton1.addTarget(self, action: #selector(applePayButtonTapped(sender:)), for: .touchUpInside)
+        paymentButton2.addTarget(self, action: #selector(applePayButtonTapped(sender:)), for: .touchUpInside)
+
+        stackView.addArrangedSubview(paymentButton1)
+        stackView.addArrangedSubview(paymentButton2)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+
+        // Constraints: center horizontally and position from top
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90)
+        ])
+    }
+    
+    
+    @objc private func applePayButtonTapped(sender: UIButton) {
+        iniateApplePayment()
     }
 
     private func updateCardBrandImage(url: URL) {
@@ -218,6 +253,58 @@ class CardFlowViewController: UIViewController {
         cvcTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         cvcIsValidLabel.text = isValid ? "valid" : "invalid"
+    }
+}
+
+extension CardFlowViewController {
+    func iniateApplePayment() {
+        let supportedNetworks = [PKPaymentNetwork.amex, PKPaymentNetwork.masterCard, PKPaymentNetwork.visa]
+        
+        if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: supportedNetworks ) {
+            var paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+            // They payment item shows as 
+            let paymentItem = PKPaymentSummaryItem.init(label: "Some Item", amount: 20.0)
+            let request = PKPaymentRequest()
+                           request.currencyCode = "GBP"
+                           request.countryCode = "GB"
+                           request.merchantIdentifier = "<worldpay-merchant-id>"
+                           request.merchantCapabilities = PKMerchantCapability.capability3DS
+                           request.supportedNetworks = paymentNetworks
+            //We can addd items being sold here or a preferred option to keep it more generic would be add just a total
+            request.paymentSummaryItems = [Item(label: "Total", amount: 20.00).summary]
+//            let tshirt = Item(label: "Subtotal", amount: 19.00).summary
+//            let shipping = Item(label: "Shipping", amount: 1.00).summary
+//            let tax = Item(label: "Sales Tax", amount: 0.00).summary
+//            let total = Item(label: "Total", amount: 20.00).summary
+            //            request.paymentSummaryItems = [tshirt, shipping, tax, total]
+
+                    
+            
+            let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request)
+
+            if let viewController = authorizationViewController {
+                viewController.delegate = self
+                present(viewController, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+extension CardFlowViewController : PKPaymentAuthorizationViewControllerDelegate{
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        dismiss(animated: true, completion: nil)
+
+        let token = payment.token
+        let paymentData = token.paymentData
+        let paymentMethod =  token.paymentMethod
+        let transactionIdentifier = token.transactionIdentifier
+
+        //<PKPaymentToken: 0x6000017bc080; transactionIdentifier: Simulated Identifier; paymentData: 0 bytes>
+        print(token)
     }
 }
 
