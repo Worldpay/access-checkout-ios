@@ -41,6 +41,7 @@ class RestrictedCardFlowViewController: UIViewController {
         // Controls used as helpers for the automated tests - End of section
 
         let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
+            .checkoutId(Configuration.checkoutId)
             .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
             .cvc(AccessCheckoutUITextField(frame: CGRect()))
             .accessBaseUrl(Configuration.accessBaseUrl)
