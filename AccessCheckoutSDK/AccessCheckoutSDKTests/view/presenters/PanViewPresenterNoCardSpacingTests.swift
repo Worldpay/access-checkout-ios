@@ -4,9 +4,6 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
-    private let panValidatorMock = mockPanValidator()
-    private let panValidationFlowMock = mockPanValidationFlow()
-
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
     private let unknownBrand = TestFixtures.unknownBrand()
@@ -28,13 +25,35 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
 
     private let visaPanTooLong = TestFixtures.visaPanTooLong
 
+    private var mockCardBinService: MockCardBinService!
+    private var panValidationFlowMock: MockPanValidationFlow!
+
     override func setUp() {
+        super.setUp()
+
+        mockCardBinService = MockCardBinService(
+            checkoutId: "00000000-0000-0000-000000000000",
+            client: MockCardBinApiClient(),
+            configurationProvider: MockCardBrandsConfigurationProvider(
+                CardBrandsConfigurationFactoryMock()
+            )
+        )
+
+        stub(mockCardBinService) { stub in
+            when(stub.getCardBrands(globalBrand: any(), cardNumber: any(), completion: any()))
+                .then { _, _, completion in
+                    completion(.success([]))
+                }
+        }
+
+        panValidationFlowMock = createMockPanValidationFlow()
+
         panValidationFlowMock.getStubbingProxy().validate(pan: any()).thenDoNothing()
         panValidationFlowMock.getStubbingProxy().notifyMerchant().thenDoNothing()
-        panValidatorMock.getStubbingProxy().canValidate(any()).thenReturn(true)
+        panValidationFlowMock.getStubbingProxy().handleCobrandedCards(pan: any()).thenDoNothing()
     }
 
-    private static func mockPanValidationFlow() -> MockPanValidationFlow {
+    private func createMockPanValidationFlow() -> MockPanValidationFlow {
         let validationStateHandler = CardValidationStateHandler(
             MockAccessCheckoutCardValidationDelegate()
         )
@@ -44,16 +63,12 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         )
         let panValidator = PanValidator(configurationProvider)
 
-        return MockPanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
-    }
-
-    static func mockPanValidator() -> MockPanValidator {
-        let configurationProvider = MockCardBrandsConfigurationProvider(
-            CardBrandsConfigurationFactoryMock()
+        return MockPanValidationFlow(
+            panValidator,
+            validationStateHandler,
+            cvcValidationFlow,
+            mockCardBinService
         )
-        let panValidator = MockPanValidator(configurationProvider)
-
-        return panValidator
     }
 
     private func createPresenterWithoutCardSpacing(detectedCardBrand: CardBrandModel?)

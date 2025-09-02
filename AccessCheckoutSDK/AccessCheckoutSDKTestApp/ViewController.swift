@@ -106,12 +106,14 @@ class ViewController: UIViewController {
         cardNumberSpacingEnabled: Bool
     ) {
         let validationConfigBuilder = CardValidationConfig.builder()
+            .checkoutId("00000000-0000-0000-0000-000000000000")
             .pan(panAccessCheckoutUITextField)
             .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
             .cvc(AccessCheckoutUITextField(frame: CGRect()))
             .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+            .checkoutId(Configuration.checkoutId)
 
         if cardNumberSpacingEnabled {
             _ = validationConfigBuilder.enablePanFormatting()

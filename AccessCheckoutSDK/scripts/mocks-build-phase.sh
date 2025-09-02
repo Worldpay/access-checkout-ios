@@ -41,6 +41,7 @@ INPUT_SOURCE_DIR="${PROJECT_DIR}/${PROJECT_NAME}"
 "${INPUT_SOURCE_DIR}/validation/api/cardBin/client/CardBinCacheManager.swift" \
 "${INPUT_SOURCE_DIR}/api/ApiResponseLinkLookup.swift" \
 "${INPUT_SOURCE_DIR}/validation/api/cardBin/client/CardBinApiClient.swift" \
+"${INPUT_SOURCE_DIR}/validation/api/cardBin/service/CardBinService.swift" \
 "${INPUT_SOURCE_DIR}/api/RestClient.swift" \
 "${INPUT_SOURCE_DIR}/api/RetryRestClientDecorator.swift" 
 

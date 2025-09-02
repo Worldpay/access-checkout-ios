@@ -55,7 +55,11 @@
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
+		623C43D52E65955400AAC441 /* MockCardBinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C43D42E65955400AAC441 /* MockCardBinService.swift */; };
+		623C43D92E66760300AAC441 /* PanValidationFlowCobrandedCardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C43D82E6675F700AAC441 /* PanValidationFlowCobrandedCardsTests.swift */; };
+		623C43DB2E66967E00AAC441 /* PanViewPresenterCobrandedCardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C43DA2E66967100AAC441 /* PanViewPresenterCobrandedCardsTests.swift */; };
 		626ED9492E4F932400D34413 /* MockCardBinApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */; };
+		6279FF192E66BE0E002623A5 /* MockPanValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6279FF182E66BE0E002623A5 /* MockPanValidator.swift */; };
 		62A11ECD2E44B6BC00B0B96C /* CardBinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A11ECC2E44B6B700B0B96C /* CardBinService.swift */; };
 		62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */; };
 		62AA43752E39122E0018EAAA /* MockCardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */; };
@@ -129,7 +133,6 @@
 		E72C3ED62485B0F500284A31 /* ExpiryDateViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3ED52485B0F500284A31 /* ExpiryDateViewPresenter.swift */; };
 		E72C3ED82485B2E100284A31 /* CvcViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3ED72485B2E100284A31 /* CvcViewPresenter.swift */; };
 		E72C3EDE248669EF00284A31 /* MockPanValidationStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EDD248669EF00284A31 /* MockPanValidationStateHandler.swift */; };
-		E72C3EE024866B8000284A31 /* MockPanValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EDF24866B8000284A31 /* MockPanValidator.swift */; };
 		E72C3EE224866ED200284A31 /* PanValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EE124866ED200284A31 /* PanValidationResult.swift */; };
 		E72C3EE424866F6D00284A31 /* EquatableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EE324866F6D00284A31 /* EquatableExtension.swift */; };
 		E72C3EEA24879C1C00284A31 /* CardBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C3EE924879C1C00284A31 /* CardBrand.swift */; };
@@ -306,7 +309,11 @@
 		51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		623C43D42E65955400AAC441 /* MockCardBinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinService.swift; sourceTree = "<group>"; };
+		623C43D82E6675F700AAC441 /* PanValidationFlowCobrandedCardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationFlowCobrandedCardsTests.swift; sourceTree = "<group>"; };
+		623C43DA2E66967100AAC441 /* PanViewPresenterCobrandedCardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanViewPresenterCobrandedCardsTests.swift; sourceTree = "<group>"; };
 		626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinApiClient.swift; sourceTree = "<group>"; };
+		6279FF182E66BE0E002623A5 /* MockPanValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPanValidator.swift; sourceTree = "<group>"; };
 		62A11ECC2E44B6B700B0B96C /* CardBinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinService.swift; sourceTree = "<group>"; };
 		62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManagerTests.swift; sourceTree = "<group>"; };
 		62AA43742E39122E0018EAAA /* MockCardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinCacheManager.swift; sourceTree = "<group>"; };
@@ -328,7 +335,6 @@
 		C23DD1322E561E2400506DAE /* RestClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientProtocol.swift; sourceTree = "<group>"; };
 		C23DD1362E56261C00506DAE /* MockRetryRestClientDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRetryRestClientDecorator.swift; sourceTree = "<group>"; };
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
-		C28D9E112E5778EA007100EB /* MockCardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinApiClient.swift; sourceTree = "<group>"; };
 		C2C116A72E5753D600C12A45 /* RetryRestClientDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryRestClientDecoratorTests.swift; sourceTree = "<group>"; };
 		C2C116A92E5754E800C12A45 /* RetryRestClientDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryRestClientDecorator.swift; sourceTree = "<group>"; };
 		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -391,7 +397,6 @@
 		E72C3ED52485B0F500284A31 /* ExpiryDateViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateViewPresenter.swift; sourceTree = "<group>"; };
 		E72C3ED72485B2E100284A31 /* CvcViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvcViewPresenter.swift; sourceTree = "<group>"; };
 		E72C3EDD248669EF00284A31 /* MockPanValidationStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPanValidationStateHandler.swift; sourceTree = "<group>"; };
-		E72C3EDF24866B8000284A31 /* MockPanValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPanValidator.swift; sourceTree = "<group>"; };
 		E72C3EE124866ED200284A31 /* PanValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanValidationResult.swift; sourceTree = "<group>"; };
 		E72C3EE324866F6D00284A31 /* EquatableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquatableExtension.swift; sourceTree = "<group>"; };
 		E72C3EE924879C1C00284A31 /* CardBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrand.swift; sourceTree = "<group>"; };
@@ -683,6 +688,8 @@
 		683DF03ADFFF76E72571BEAE /* mock */ = {
 			isa = PBXGroup;
 			children = (
+				6279FF182E66BE0E002623A5 /* MockPanValidator.swift */,
+				623C43D42E65955400AAC441 /* MockCardBinService.swift */,
 				626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */,
 				C23DD1362E56261C00506DAE /* MockRetryRestClientDecorator.swift */,
 				62C188862E4F8B5B001F0BDA /* URLSessionDataTaskMock.swift */,
@@ -701,7 +708,6 @@
 				D7C6EE222486A69C00170B92 /* MockExpiryDateValidationStateHandler.swift */,
 				E7AC80AB248EB58300E28D76 /* MockPanValidationFlow.swift */,
 				E72C3EDD248669EF00284A31 /* MockPanValidationStateHandler.swift */,
-				E72C3EDF24866B8000284A31 /* MockPanValidator.swift */,
 				E7AD2453246412C800C4C92D /* MockSingleLinkDiscoveryFactory.swift */,
 				E7409D55248FA3C200016AEB /* MockTextChangeHandler.swift */,
 				E7D37F8D24818E210039DD98 /* CardBrandsConfigurationFactoryMock.swift */,
@@ -839,6 +845,7 @@
 		E72C3EF6248A57A400284A31 /* presenters */ = {
 			isa = PBXGroup;
 			children = (
+				623C43DA2E66967100AAC441 /* PanViewPresenterCobrandedCardsTests.swift */,
 				E72C3F01248A78DA00284A31 /* CvcViewPresenterTests.swift */,
 				E72C3EFD248A5CBA00284A31 /* ExpiryDateViewPresenterTests.swift */,
 				E72C3EF7248A57C300284A31 /* PanViewPresenterNoCardSpacingTests.swift */,
@@ -1092,6 +1099,7 @@
 		E7776E2B248B07C4006B57DD /* pan */ = {
 			isa = PBXGroup;
 			children = (
+				623C43D82E6675F700AAC441 /* PanValidationFlowCobrandedCardsTests.swift */,
 				D7D6D5F2248154B900D57D7A /* PanValidationFlowTests.swift */,
 				D76E404F247D62A1002FAA39 /* PanValidatorTests.swift */,
 			);
@@ -1734,7 +1742,6 @@
 				E72C3EE424866F6D00284A31 /* EquatableExtension.swift in Sources */,
 				E7AC80AC248EB58300E28D76 /* MockPanValidationFlow.swift in Sources */,
 				D7C6EE212486A4F000170B92 /* ExpiryDateValidationFlowTests.swift in Sources */,
-				E72C3EE024866B8000284A31 /* MockPanValidator.swift in Sources */,
 				E72C3F0D248AB84900284A31 /* CardBrandModelTransformerTests.swift in Sources */,
 				62E75C5A2E5498B9001FDD73 /* CardBinServiceTestsWithStubService.swift in Sources */,
 				E719B0AE2464A4B90037DED4 /* CvcSessionsApiClientTests.swift in Sources */,
@@ -1751,6 +1758,7 @@
 				519F14422E4B8AB500038113 /* CardBinApiClientTestsWithStubService.swift in Sources */,
 				E7D37F8C248170300039DD98 /* CardBrandDtoTests.swift in Sources */,
 				D7D6D5D8247FC96100D57D7A /* CvcValidatorTests.swift in Sources */,
+				623C43DB2E66967E00AAC441 /* PanViewPresenterCobrandedCardsTests.swift in Sources */,
 				D7E536F3264A90FC00A476E6 /* PanFormatterTests.swift in Sources */,
 				E7D37F852481601B0039DD98 /* CardBrandsConfigurationFactoryTests.swift in Sources */,
 				E7D37F7E248154DF0039DD98 /* AccessCheckoutValidationInitialiserTests.swift in Sources */,
@@ -1801,8 +1809,10 @@
 				C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */,
 				E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */,
 				E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */,
+				623C43D52E65955400AAC441 /* MockCardBinService.swift in Sources */,
 				E719B0AA2464A3B30037DED4 /* CardSessionsApiClientMock.swift in Sources */,
 				51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */,
+				6279FF192E66BE0E002623A5 /* MockPanValidator.swift in Sources */,
 				D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */,
 				E719B09E246481DA0037DED4 /* CardSessionURLRequestFactoryMock.swift in Sources */,
 				E745CC2424857616000390CA /* CardBrandDtoTransformerTests.swift in Sources */,
@@ -1811,6 +1821,7 @@
 				51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */,
 				513039A22B10F68800C01B10 /* ApiHeadersTests.swift in Sources */,
 				E75C5E6A248E7020003A1BDE /* AccessCheckoutCardValidationDelegate_EditText_Tests.swift in Sources */,
+				623C43D92E66760300AAC441 /* PanValidationFlowCobrandedCardsTests.swift in Sources */,
 				E7633D2D249D1F4800FFE190 /* AccessCheckoutErrorTests.swift in Sources */,
 				519F14402E4B7AAA00038113 /* MiscUtils.swift in Sources */,
 				E7D19F8124640008001EA13A /* StubUtils.swift in Sources */,

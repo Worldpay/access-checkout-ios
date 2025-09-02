@@ -2,7 +2,6 @@ import Foundation
 
 internal class CardBinService {
     private let checkoutId: String
-    private let baseURL: String
     private let client: CardBinApiClient
     private let configurationProvider: CardBrandsConfigurationProvider
 
@@ -10,17 +9,14 @@ internal class CardBinService {
     ///
     /// - Parameters:
     ///   - checkoutId: The checkout session identifier
-    ///   - baseURL: The base URL for the card bin API
     ///   - client: The API client for making requests
     ///   - configurationProvider: Provider for card brand configurations
     init(
         checkoutId: String,
-        baseURL: String,
         client: CardBinApiClient,
         configurationProvider: CardBrandsConfigurationProvider
     ) {
         self.checkoutId = checkoutId
-        self.baseURL = baseURL
         self.client = client
         self.configurationProvider = configurationProvider
     }
@@ -38,15 +34,7 @@ internal class CardBinService {
     ) {
         client.abort()
 
-        let sanitisedCardNumber = cardNumber.replacingOccurrences(of: " ", with: "")
-
-        guard !sanitisedCardNumber.isEmpty else {
-            return
-        }
-
-        let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
-
-        client.retrieveBinInfo(cardNumber: cardNumberPrefix, checkoutId: checkoutId) { result in
+        client.retrieveBinInfo(cardNumber: cardNumber, checkoutId: checkoutId) { result in
             switch result {
             case .success(let response):
                 let cardBrands = self.transform(

@@ -9,27 +9,40 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
     private var serviceStubs: ServiceStubs = ServiceStubs()
     private var cardBinApiClient: CardBinApiClient!
 
+    let restClient = MockRetryRestClientDecorator<ApiResponse>()
+    let apiResponseLookUpMock = MockApiResponseLinkLookup()
+
     private let checkoutId = "00000000-0000-0000-000000000000"
     private let visaTestPan = "444433332222"
 
     override func setUp() {
         serviceStubs = ServiceStubs()
-        cardBinApiClient = CardBinApiClient(url: "\(serviceStubs.baseUrl)/somewhere")
+
+        ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
+            restClient,
+            apiResponseLookUpMock)
+        ServiceDiscoveryProvider.shared.clearCache()
+
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups()
+
+        cardBinApiClient = CardBinApiClient()
     }
 
     override func tearDown() {
-        cardBinApiClient = nil
         serviceStubs.stop()
+        ServiceDiscoveryProvider.shared.clearCache()
     }
 
-    /*
-     This test is designed to:
-     - use a stub server
-     - delay the response from a stub server by 0.5 seconds
-     - abort the call to the retrieveBinInfo() method of the CardBinApiClient class
-     - assert that the completion handler passed to the retrieveBinInfo() method was never called
-     */
     func testClientSupportsCancellingRequestInFlight() {
+        let expectation = self.expectation(description: "Discovery should complete")
+
+        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1)
+
         serviceStubs.post200(path: "/somewhere", textResponse: "some response", delayInSeconds: 0.5)
             .start()
 
@@ -46,16 +59,15 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
         XCTAssertFalse(calledCompletionHandler)
     }
 
-    /*
-     This test is designed to:
-     - use a stub server
-     - delay the response from a stub server by 0.2 seconds and always send back a 500
-     - 500s are used to make sure that the CardBinApiClient can retry since it would not if the error is an 4xx
-     - abort the call to the retrieveBinInfo() method of the CardBinApiClient class after 0.3 seconds, i.e. in the middle of the 2nd attempt
-     - wait 1s, for any potential retry to occur although they should not since abort() has been called
-     - assert that the completion handler passed to the retrieveBinInfo() method was never called
-     */
     func testClientSupportsCancellingRequestInFlightWhenRetrying() {
+        let expectation = self.expectation(description: "Discovery should complete")
+
+        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1)
+
         serviceStubs.post500(path: "/somewhere", delayInSeconds: 0.2)
             .start()
 
@@ -66,12 +78,71 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
             calledCompletionHandler = true
         }
 
-        // Aborting the request after the 1st attempt has failed with 500
         Thread.sleep(forTimeInterval: 0.3)
         cardBinApiClient.abort()
 
-        // Waiting until the end of any potential future retries
         Thread.sleep(forTimeInterval: 1)
         XCTAssertFalse(calledCompletionHandler)
+    }
+
+    private func setUpDiscoveryResponses() {
+        restClient.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
+            .then { _, _, completionHandler in
+                completionHandler(.success(self.accessRootApiResponse()), nil)
+                return URLSessionTask()
+            }.then { _, _, completionHandler in
+                completionHandler(.success(self.sessionsApiResponse()), nil)
+                return URLSessionTask()
+            }
+    }
+
+    private func setUpApiResponseLookups() {
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: ApiLinks.cardSessions.service, in: any())
+            .thenReturn("sessions-service-url")
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: ApiLinks.cardBin.service, in: any())
+            .thenReturn("\(serviceStubs.baseUrl)/somewhere")
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: ApiLinks.cardSessions.endpoint, in: any())
+            .thenReturn("sessions-card-href")
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: ApiLinks.cvcSessions.endpoint, in: any())
+            .thenReturn("sessions-cvc-href")
+    }
+
+    private func accessRootApiResponse() -> ApiResponse {
+        let jsonString = """
+            {
+                "_links": {
+                    "service:sessions": {
+                        "href": "sessions-service-url"
+                    },
+                    "service:card-bin": {
+                        "href": "\(serviceStubs.baseUrl)/somewhere"
+                    }
+                }
+            }
+            """
+        let data = Data(jsonString.utf8)
+        return try! JSONDecoder().decode(ApiResponse.self, from: data)
+    }
+
+    private func sessionsApiResponse() -> ApiResponse {
+        let jsonString = """
+            {
+                "_links": {
+                    "sessions:card": {
+                        "href": "sessions-card-href"
+                    },
+                    "sessions:cvc": {
+                        "href": "sessions-cvc-href"
+                    }
+                }
+            }
+            """
+        let data = Data(jsonString.utf8)
+        return try! JSONDecoder().decode(ApiResponse.self, from: data)
     }
 }
