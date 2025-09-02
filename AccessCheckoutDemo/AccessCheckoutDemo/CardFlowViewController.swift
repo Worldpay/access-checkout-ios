@@ -178,6 +178,7 @@ class CardFlowViewController: UIViewController {
         resetCard(preserveContent: false, validationErrors: nil)
 
         let validationConfig = try! CardValidationConfig.builder()
+            .checkoutId(Configuration.checkoutId)
             .pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
