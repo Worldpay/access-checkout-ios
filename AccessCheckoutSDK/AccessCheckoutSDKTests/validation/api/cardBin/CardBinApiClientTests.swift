@@ -32,7 +32,7 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) { _ in
@@ -50,7 +50,7 @@ class CardBinApiClientTests: XCTestCase {
         let mockRestClient = RestClientMock(replyWith: expectedResponse)
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -81,7 +81,7 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -108,7 +108,7 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -151,7 +151,7 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -182,7 +182,7 @@ class CardBinApiClientTests: XCTestCase {
 
         let apiClient = CardBinApiClient(
             restClient: mockRestClient,
-            endpointProvider: { "some-url" }
+            cardBinEndpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {

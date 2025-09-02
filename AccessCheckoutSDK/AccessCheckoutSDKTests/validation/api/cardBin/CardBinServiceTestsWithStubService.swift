@@ -24,7 +24,7 @@ class CardBinServiceTestsWithStubService: XCTestCase {
         }
 
         let cardBinApiClient = CardBinApiClient(
-            endpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
+            cardBinEndpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
         )
 
         cardBinService = CardBinService(

@@ -14,9 +14,8 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
-        // CRITICAL FIX: Use the full URL with the stub service base URL
         cardBinApiClient = CardBinApiClient(
-            endpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
+            cardBinEndpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
         )
     }
 

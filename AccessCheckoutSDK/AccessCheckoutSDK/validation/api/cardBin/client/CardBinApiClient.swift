@@ -5,7 +5,7 @@ import Foundation
 internal class CardBinApiClient {
     private let restClient: RestClient<CardBinResponse>
     private let cacheManager: CardBinCacheManager
-    private let endpointProvider: () -> String?
+    private let cardBinEndpointProvider: () -> String?
     private let maxAttempts = 3
     private var taskForRequestInFlight: URLSessionTask?
 
@@ -14,16 +14,17 @@ internal class CardBinApiClient {
     /// - Parameters:
     ///   - restClient: The REST client used to make HTTP requests
     ///   - cacheManager: The cache manager which is a simple map to improve request performance for repeated numbers
+    ///   - cardBinEndpointProvider: A closure that provides the card BIN endpoint URL, allowing for dependency injection (for testing)
     init(
         restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>(),
         cacheManager: CardBinCacheManager = CardBinCacheManager(),
-        endpointProvider: @escaping () -> String? = {
+        cardBinEndpointProvider: @escaping () -> String? = {
             ServiceDiscoveryProvider.getCardBinEndpoint()
         }
     ) {
         self.restClient = restClient
         self.cacheManager = cacheManager
-        self.endpointProvider = endpointProvider
+        self.cardBinEndpointProvider = cardBinEndpointProvider
     }
 
     /// Retrieves BIN information for the provided card number.
@@ -40,7 +41,7 @@ internal class CardBinApiClient {
         checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
-        guard let cardBinUrl = self.endpointProvider() else {
+        guard let cardBinUrl = self.cardBinEndpointProvider() else {
             completionHandler(
                 .failure(
                     AccessCheckoutError.discoveryLinkNotFound(
