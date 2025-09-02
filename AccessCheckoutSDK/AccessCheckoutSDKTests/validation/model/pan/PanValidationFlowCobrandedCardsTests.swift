@@ -42,11 +42,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockPanValidator = nil
-        mockPanValidationStateHandler = nil
-        mockCvcFlow = nil
-        mockCardBinService = nil
-        panValidationFlow = nil
         super.tearDown()
     }
 
@@ -65,7 +60,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrand()).thenReturn(nil)
         }
 
-        var wasCalled = false
         stub(mockCardBinService) { stub in
             when(
                 stub.getCardBrands(
@@ -74,14 +68,13 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
                     completion: any()
                 )
             ).then { _, _, completion in
-                wasCalled = true
                 completion(.success([]))
             }
         }
 
         panValidationFlow.handleCobrandedCards(pan: shortPan)
 
-        XCTAssertFalse(wasCalled)
+        verifyNoMoreInteractions(mockCardBinService)
     }
 
     func testHandleCobrandedCards_withSpacesInPan_sanitisesBeforeProcessing() {
@@ -122,7 +115,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrand()).thenReturn(nil)
         }
 
-        var callCount = 0
         stub(mockCardBinService) { stub in
             when(
                 stub.getCardBrands(
@@ -131,7 +123,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
                     completion: any()
                 )
             ).then { _, _, completion in
-                callCount += 1
                 completion(.success([]))
             }
         }
@@ -139,7 +130,11 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         panValidationFlow.handleCobrandedCards(pan: pan1)
         panValidationFlow.handleCobrandedCards(pan: pan2)
 
-        XCTAssertEqual(callCount, 1)
+        verify(mockCardBinService, times(1)).getCardBrands(
+            globalBrand: any(),
+            cardNumber: any(),
+            completion: any()
+        )
     }
 
     func testHandleCobrandedCards_withDifferentPrefix_callsServiceForEachPrefix() {
@@ -150,7 +145,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrand()).thenReturn(nil)
         }
 
-        var callCount = 0
         stub(mockCardBinService) { stub in
             when(
                 stub.getCardBrands(
@@ -159,7 +153,6 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
                     completion: any()
                 )
             ).then { _, _, completion in
-                callCount += 1
                 completion(.success([]))
             }
         }
@@ -167,6 +160,10 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         panValidationFlow.handleCobrandedCards(pan: pan1)
         panValidationFlow.handleCobrandedCards(pan: pan2)
 
-        XCTAssertEqual(callCount, 2)
+        verify(mockCardBinService, times(2)).getCardBrands(
+            globalBrand: any(),
+            cardNumber: any(),
+            completion: any()
+        )
     }
 }

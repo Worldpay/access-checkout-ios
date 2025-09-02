@@ -5,7 +5,6 @@ import Foundation
 internal class CardBinApiClient {
     private let restClient: RestClient<CardBinResponse>
     private let cacheManager: CardBinCacheManager
-    private let cardBinEndpointProvider: () -> String?
     private let maxAttempts = 3
     private var taskForRequestInFlight: URLSessionTask?
 
@@ -14,17 +13,12 @@ internal class CardBinApiClient {
     /// - Parameters:
     ///   - restClient: The REST client used to make HTTP requests
     ///   - cacheManager: The cache manager which is a simple map to improve request performance for repeated numbers
-    ///   - cardBinEndpointProvider: A closure that provides the card BIN endpoint URL, allowing for dependency injection (for testing)
     init(
         restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>(),
         cacheManager: CardBinCacheManager = CardBinCacheManager(),
-        cardBinEndpointProvider: @escaping () -> String? = {
-            ServiceDiscoveryProvider.getCardBinEndpoint()
-        }
     ) {
         self.restClient = restClient
         self.cacheManager = cacheManager
-        self.cardBinEndpointProvider = cardBinEndpointProvider
     }
 
     /// Retrieves BIN information for the provided card number.
@@ -41,7 +35,7 @@ internal class CardBinApiClient {
         checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
-        guard let cardBinUrl = self.cardBinEndpointProvider() else {
+        guard let cardBinUrl = ServiceDiscoveryProvider.getCardBinEndpoint() else {
             completionHandler(
                 .failure(
                     AccessCheckoutError.discoveryLinkNotFound(
@@ -69,8 +63,6 @@ internal class CardBinApiClient {
 
     func abort() {
         self.taskForRequestInFlight?.cancel()
-        // log to test abort mechanism for ticket US2128871
-        NSLog("CardBinApiClient: Previous request in flight aborted")
     }
 
     /// Fetches card BIN details from the API with automatic retry mechanism.
@@ -81,7 +73,7 @@ internal class CardBinApiClient {
     /// for client errors (4xx status codes).
     ///
     /// - Parameters:
-    ///   - url: The url for the card bin endpoint  retirieved via service discovery
+    ///   - url: The url for the card bin endpoint retrieved via service discovery
     ///   - cardNumber: The card number to retrieve BIN information for
     ///   - cacheKey: The cache key to store the successful response under
     ///   - retries: The current retry attempt number (starts at 1)

@@ -113,6 +113,7 @@ class ViewController: UIViewController {
             .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+            .checkoutId(Configuration.checkoutId)
 
         if cardNumberSpacingEnabled {
             _ = validationConfigBuilder.enablePanFormatting()
