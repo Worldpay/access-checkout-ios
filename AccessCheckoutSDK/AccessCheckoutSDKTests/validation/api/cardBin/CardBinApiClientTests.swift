@@ -31,8 +31,8 @@ class CardBinApiClientTests: XCTestCase {
         let mockRestClient = RestClientMock(replyWith: expectedResponse)
 
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) { _ in
@@ -49,8 +49,8 @@ class CardBinApiClientTests: XCTestCase {
 
         let mockRestClient = RestClientMock(replyWith: expectedResponse)
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -80,8 +80,8 @@ class CardBinApiClientTests: XCTestCase {
             message: "Failed after 3 attempt(s) with error \(detailedErrorMessage)")
 
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -107,8 +107,8 @@ class CardBinApiClientTests: XCTestCase {
         let mockRestClient = RestClientMock<CardBinResponse>(replyWith: expectedResponse)
 
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -150,8 +150,8 @@ class CardBinApiClientTests: XCTestCase {
             errorWith: serverError, statusCode: 500)
 
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {
@@ -181,8 +181,8 @@ class CardBinApiClientTests: XCTestCase {
             errorWith: serverError, statusCode: 400)
 
         let apiClient = CardBinApiClient(
-            url: "some-url",
-            restClient: mockRestClient
+            restClient: mockRestClient,
+            endpointProvider: { "some-url" }
         )
 
         apiClient.retrieveBinInfo(cardNumber: testCardNumber, checkoutId: testCheckoutId) {

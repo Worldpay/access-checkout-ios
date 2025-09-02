@@ -7,6 +7,7 @@ class AcceptanceTestSuite: XCTestCase {
     let panTextField = AccessCheckoutUITextField()
     let expiryDateTextField = AccessCheckoutUITextField()
     let cvcTextField = AccessCheckoutUITextField()
+    let checkoutId = "0000-0000-0000-0000-000000000000"
 
     func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedCardBrands: [String] = [])
         -> MockAccessCheckoutCardValidationDelegate
@@ -52,6 +53,7 @@ class AcceptanceTestSuite: XCTestCase {
         .accessBaseUrl("a-url")
         .validationDelegate(merchantDelegate)
         .acceptedCardBrands(acceptedBrands)
+        .checkoutId(checkoutId)
         .build()
 
         let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)

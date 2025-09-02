@@ -12,11 +12,10 @@ class CardBinServiceTestsWithStubService: XCTestCase {
     private var cardBinService: CardBinService!
 
     private let checkoutId = "00000000-0000-0000-000000000000"
-    private let baseURL = "http://example.com"
-
     private let visaTestPan = "444433332222"
 
     override func setUp() {
+        serviceStubs = ServiceStubs()
         mockFactory = CardBrandsConfigurationFactoryMock()
         mockConfigurationProvider = MockCardBrandsConfigurationProvider(mockFactory)
 
@@ -24,11 +23,12 @@ class CardBinServiceTestsWithStubService: XCTestCase {
             when(stub.get()).thenReturn(TestFixtures.createDefaultCardConfiguration())
         }
 
-        let cardBinApiClient = CardBinApiClient(url: "\(serviceStubs.baseUrl)/somewhere")
+        let cardBinApiClient = CardBinApiClient(
+            endpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
+        )
 
         cardBinService = CardBinService(
             checkoutId: checkoutId,
-            baseURL: "\(serviceStubs.baseUrl)/somewhere",
             client: cardBinApiClient,
             configurationProvider: mockConfigurationProvider
         )

@@ -14,7 +14,10 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
-        cardBinApiClient = CardBinApiClient(url: "\(serviceStubs.baseUrl)/somewhere")
+        // CRITICAL FIX: Use the full URL with the stub service base URL
+        cardBinApiClient = CardBinApiClient(
+            endpointProvider: { "\(self.serviceStubs.baseUrl)/somewhere" }
+        )
     }
 
     override func tearDown() {
@@ -56,7 +59,7 @@ class CardBinApiClientTestsWithStubService: XCTestCase {
      - assert that the completion handler passed to the retrieveBinInfo() method was never called
      */
     func testClientSupportsCancellingRequestInFlightWhenRetrying() {
-        serviceStubs.post500(path: "/somewhere", delayInSeconds: 0.2)
+        serviceStubs.post500(path: "/somewhere", delayInSeconds: 0.5)
             .start()
 
         var calledCompletionHandler = false

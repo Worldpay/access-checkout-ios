@@ -55,6 +55,7 @@
 		51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E831E12ACDB49900A8FC22 /* UIUtils.swift */; };
 		51EEC2BC2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */; };
 		51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */; };
+		623C43D52E65955400AAC441 /* MockCardBinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C43D42E65955400AAC441 /* MockCardBinService.swift */; };
 		626ED9492E4F932400D34413 /* MockCardBinApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */; };
 		62A11ECD2E44B6BC00B0B96C /* CardBinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A11ECC2E44B6B700B0B96C /* CardBinService.swift */; };
 		62AA43732E390E760018EAAA /* CardBinCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */; };
@@ -306,6 +307,7 @@
 		51EEC2BB2AE1EC55000BA998 /* AccessCheckoutUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextFieldTests.swift; sourceTree = "<group>"; };
 		51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTestSuite.swift; sourceTree = "<group>"; };
 		5744B765A4A0CEB7971CB446 /* Pods_AccessCheckoutSDKPactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutSDKPactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		623C43D42E65955400AAC441 /* MockCardBinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinService.swift; sourceTree = "<group>"; };
 		626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinApiClient.swift; sourceTree = "<group>"; };
 		62A11ECC2E44B6B700B0B96C /* CardBinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinService.swift; sourceTree = "<group>"; };
 		62AA43722E390E6B0018EAAA /* CardBinCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManagerTests.swift; sourceTree = "<group>"; };
@@ -328,7 +330,6 @@
 		C23DD1322E561E2400506DAE /* RestClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientProtocol.swift; sourceTree = "<group>"; };
 		C23DD1362E56261C00506DAE /* MockRetryRestClientDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRetryRestClientDecorator.swift; sourceTree = "<group>"; };
 		C253C10E2E38D68500D01D1F /* ServiceDiscoveryProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderTests.swift; sourceTree = "<group>"; };
-		C28D9E112E5778EA007100EB /* MockCardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardBinApiClient.swift; sourceTree = "<group>"; };
 		C2C116A72E5753D600C12A45 /* RetryRestClientDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryRestClientDecoratorTests.swift; sourceTree = "<group>"; };
 		C2C116A92E5754E800C12A45 /* RetryRestClientDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryRestClientDecorator.swift; sourceTree = "<group>"; };
 		C981F8AC51B8A59C0F308006 /* Pods-AccessCheckoutSDKPactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -690,6 +691,7 @@
 		683DF03ADFFF76E72571BEAE /* mock */ = {
 			isa = PBXGroup;
 			children = (
+				623C43D42E65955400AAC441 /* MockCardBinService.swift */,
 				626ED9482E4F932400D34413 /* MockCardBinApiClient.swift */,
 				C23DD1362E56261C00506DAE /* MockRetryRestClientDecorator.swift */,
 				62C188862E4F8B5B001F0BDA /* URLSessionDataTaskMock.swift */,
@@ -1809,6 +1811,7 @@
 				C253C10F2E38D69100D01D1F /* ServiceDiscoveryProviderTests.swift in Sources */,
 				E719B084246417110037DED4 /* SingleLinkDiscoveryMock.swift in Sources */,
 				E719B08824642EF80037DED4 /* CuckooExtension.swift in Sources */,
+				623C43D52E65955400AAC441 /* MockCardBinService.swift in Sources */,
 				E719B0AA2464A3B30037DED4 /* CardSessionsApiClientMock.swift in Sources */,
 				51E831E22ACDB49900A8FC22 /* UIUtils.swift in Sources */,
 				D74028332592136700104B32 /* PresenterTestSuite.swift in Sources */,

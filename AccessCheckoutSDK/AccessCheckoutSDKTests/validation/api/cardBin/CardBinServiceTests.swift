@@ -11,13 +11,12 @@ class CardBinServiceTests: XCTestCase {
     private var cardBinService: CardBinService!
 
     private let checkoutId = "00000000-0000-0000-000000000000"
-    private let baseURL = "some-url"
     private let visaTestPan = "444433332222"
     private let discoverDinersTestPan = "601100040000"
 
     override func setUp() {
 
-        mockClient = MockCardBinApiClient(url: baseURL)
+        mockClient = MockCardBinApiClient()
         mockFactory = CardBrandsConfigurationFactoryMock()
         mockConfigurationProvider = MockCardBrandsConfigurationProvider(mockFactory)
 
@@ -27,7 +26,6 @@ class CardBinServiceTests: XCTestCase {
 
         cardBinService = CardBinService(
             checkoutId: checkoutId,
-            baseURL: baseURL,
             client: mockClient,
             configurationProvider: mockConfigurationProvider
         )
@@ -40,11 +38,10 @@ class CardBinServiceTests: XCTestCase {
     }
 
     func testShouldInstantiateCardBinServiceWithDefaultClient() {
-        let client = CardBinApiClient(url: baseURL)
+        let client = CardBinApiClient()
         let configurationProvider = MockCardBrandsConfigurationProvider(mockFactory)
         let service = CardBinService(
             checkoutId: "testCheckoutId",
-            baseURL: baseURL,
             client: client,
             configurationProvider: configurationProvider
         )

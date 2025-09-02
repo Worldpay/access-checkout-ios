@@ -14,20 +14,49 @@ class PanValidationFlowTests: XCTestCase {
         cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
     )
 
+    private var mockCardBinService: MockCardBinService!
     private let panValidationStateHandler = MockPanValidationStateHandler()
 
     override func setUp() {
+        super.setUp()
+
+        mockCardBinService = MockCardBinService(
+            checkoutId: "test-checkout-id",
+            client: MockCardBinApiClient(),
+            configurationProvider: MockCardBrandsConfigurationProvider(
+                CardBrandsConfigurationFactoryMock()
+            )
+        )
+
+        stub(mockCardBinService) { stub in
+            when(
+                stub.getCardBrands(
+                    globalBrand: any(),
+                    cardNumber: any(),
+                    completion: any())
+            )
+            .then { _, _, completion in
+                completion(.success([]))
+            }
+        }
+
         panValidationStateHandler.getStubbingProxy().handlePanValidation(
             isValid: any(),
             cardBrand: any()
         ).thenDoNothing()
     }
 
+    override func tearDown() {
+        mockCardBinService = nil
+        super.tearDown()
+    }
+
     func testValidateValidatesPanAndCallsValidationStateHandlerWithResult() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
-        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvcFlow)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
             .thenReturn(false)
 
@@ -44,7 +73,8 @@ class PanValidationFlowTests: XCTestCase {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
-        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvcFlow)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
             .thenReturn(true)
         cvcFlow.getStubbingProxy().updateValidationRule(with: any()).thenDoNothing()
@@ -62,7 +92,8 @@ class PanValidationFlowTests: XCTestCase {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, nil)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
-        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvcFlow)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
             .thenReturn(true)
         cvcFlow.getStubbingProxy().resetValidationRule().thenDoNothing()
@@ -79,7 +110,8 @@ class PanValidationFlowTests: XCTestCase {
 
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
-        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvcFlow)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
         panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
             .thenReturn(false)
 
@@ -95,7 +127,8 @@ class PanValidationFlowTests: XCTestCase {
             CardBrandsConfigurationProvider(CardBrandsConfigurationFactoryMock())
         )
         let panValidationStateHandler = CardValidationStateHandler(merchantDelegate)
-        let panValidationFlow = PanValidationFlow(panValidator, panValidationStateHandler, cvcFlow)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
 
         panValidationFlow.notifyMerchant()
 
