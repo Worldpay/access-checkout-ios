@@ -15,7 +15,7 @@ internal class CardBinApiClient {
     ///   - cacheManager: The cache manager which is a simple map to improve request performance for repeated numbers
     init(
         restClient: RestClient<CardBinResponse> = RestClient<CardBinResponse>(),
-        cacheManager: CardBinCacheManager = CardBinCacheManager(),
+        cacheManager: CardBinCacheManager = CardBinCacheManager()
     ) {
         self.restClient = restClient
         self.cacheManager = cacheManager
