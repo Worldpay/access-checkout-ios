@@ -68,6 +68,8 @@ internal class CardBinApiClient {
 
     func abort() {
         self.taskForRequestInFlight?.cancel()
+        // log to test abort mechanism for ticket US2128871
+        NSLog("CardBinApiClient: Previous request in flight aborted")
     }
 
     /// Fetches card BIN details from the API with automatic retry mechanism.
@@ -91,7 +93,6 @@ internal class CardBinApiClient {
         attempt: UInt,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
-        // url passed into this will come from service discovery
         let urlRequestFactory = CardBinURLRequestFactory(url: url, checkoutId: checkoutId)
         let request = urlRequestFactory.create(cardNumber: cardNumber)
 

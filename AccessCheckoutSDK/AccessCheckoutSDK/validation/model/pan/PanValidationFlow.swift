@@ -23,12 +23,12 @@ class PanValidationFlow {
     func handleCobrandedCards(pan: String) {
         let sanitisedCardNumber = pan.replacingOccurrences(of: " ", with: "")
 
-        let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
-
-        guard !cardNumberPrefix.isEmpty else {
+        guard sanitisedCardNumber.count >= 12 else {
             lastCheckedPanPrefix = ""
             return
         }
+
+        let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
 
         let hasChanged = cardNumberPrefix != lastCheckedPanPrefix
 
@@ -37,6 +37,8 @@ class PanValidationFlow {
 
             let globalBrand = panValidationStateHandler.getCardBrand()
 
+            // currently logs out card bin lookup result for debugging purposes
+            // will call PanValidationStateHandler to handle updating merchant delegeate with returned card brands
             cardBinService.getCardBrands(
                 globalBrand: globalBrand,
                 cardNumber: cardNumberPrefix

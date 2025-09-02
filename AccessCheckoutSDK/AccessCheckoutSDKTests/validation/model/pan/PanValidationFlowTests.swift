@@ -4,15 +4,7 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class PanValidationFlowTests: XCTestCase {
-    let visaBrand = CardBrandModel(
-        name: "visa",
-        images: [],
-        panValidationRule: ValidationRule(
-            matcher: "^(?!^493698\\d*$)4\\d*$",
-            validLengths: [16, 18, 19]
-        ),
-        cvcValidationRule: ValidationRule(matcher: nil, validLengths: [3])
-    )
+    let visaBrand = TestFixtures.visaBrand()
 
     private var mockCardBinService: MockCardBinService!
     private let panValidationStateHandler = MockPanValidationStateHandler()
@@ -21,7 +13,7 @@ class PanValidationFlowTests: XCTestCase {
         super.setUp()
 
         mockCardBinService = MockCardBinService(
-            checkoutId: "test-checkout-id",
+            checkoutId: "0000-0000-0000-0000-000000000000",
             client: MockCardBinApiClient(),
             configurationProvider: MockCardBrandsConfigurationProvider(
                 CardBrandsConfigurationFactoryMock()
