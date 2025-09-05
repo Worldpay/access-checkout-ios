@@ -3,11 +3,11 @@ public protocol AccessCheckoutCardValidationDelegate {
     /**
      Called whenever the SDK detects that the PAN entered by the user corresponds to a different card brand than the one it is already aware of
     
-     - Parameter cardBrand: the card brand which has been identified by the SDK using the PAN entered by the user, or nil if no card brand has been identified
+     - Parameter cardBrand: the card brand(s) which has been identified by the SDK using the PAN entered by the user, or nil if no card brand has been identified, or multiple brands returned from card bin service
     
      - SeeAlso: CardBrand
      */
-    func cardBrandChanged(cardBrand: CardBrand?)
+    func cardBrandsChanged(cardBrands: [CardBrand])
 
     /**
      Called whenever the PAN entered by the user becomes valid or invalid

@@ -30,22 +30,18 @@ class PanValidationFlow {
 
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
 
-        let hasChanged = cardNumberPrefix != lastCheckedPanPrefix
-
-        if hasChanged {
+        if cardNumberPrefix != lastCheckedPanPrefix {
             lastCheckedPanPrefix = cardNumberPrefix
 
-            let globalBrand = panValidationStateHandler.getCardBrand()
-
-            // currently logs out card bin lookup result for debugging purposes
-            // will call PanValidationStateHandler to handle updating merchant delegeate with returned card brands
             cardBinService.getCardBrands(
-                globalBrand: globalBrand,
+                globalBrand: panValidationStateHandler.getCardBrand(),
                 cardNumber: cardNumberPrefix
             ) { result in
                 switch result {
                 case .success(let cardBrands):
-                    NSLog("Card BIN lookup succeeded: \(cardBrands)")
+                    if let handler = self.panValidationStateHandler as? CardValidationStateHandler {
+                        handler.handleCobrandedCardsUpdate(brands: cardBrands)
+                    }
                 case .failure(_):
                     NSLog("Card BIN lookup failed:")
                 }

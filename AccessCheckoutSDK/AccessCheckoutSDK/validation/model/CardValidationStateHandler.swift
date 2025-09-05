@@ -59,6 +59,17 @@ class CardValidationStateHandler {
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
+    private func handleCardBrandsUpdate(_ brands: [CardBrandModel]) {
+        let newCardBrand = brands.first
+
+        if self.cardBrand?.name != newCardBrand?.name {
+            self.cardBrand = newCardBrand
+
+            let transformedBrands = brands.map { cardBrandModelTransformer.transform($0) }
+            merchantDelegate.cardBrandsChanged(cardBrands: transformedBrands)
+        }
+    }
+
     func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
         if isValid != panIsValid {
             panIsValid = isValid
@@ -70,17 +81,15 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        if self.cardBrand?.name != cardBrand?.name {
-            self.cardBrand = cardBrand
-
-            if let cardBrand = cardBrand {
-                merchantDelegate.cardBrandChanged(
-                    cardBrand: cardBrandModelTransformer.transform(cardBrand)
-                )
-            } else {
-                merchantDelegate.cardBrandChanged(cardBrand: nil)
-            }
+        if let brand = cardBrand {
+            handleCardBrandsUpdate([brand])
+        } else {
+            handleCardBrandsUpdate([])
         }
+    }
+
+    func handleCobrandedCardsUpdate(brands: [CardBrandModel]) {
+        handleCardBrandsUpdate(brands)
     }
 
     func notifyMerchantOfPanValidationState() {
