@@ -91,6 +91,7 @@ internal class CardBinService {
                 }
             }
             .map { $0.value }
+            .sorted { $0.name < $1.name }
 
         return allBrands
     }

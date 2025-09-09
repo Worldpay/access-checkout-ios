@@ -1,120 +1,121 @@
 class CardValidationStateHandler {
     private(set) var merchantDelegate: AccessCheckoutCardValidationDelegate
-
+    
     private(set) var panIsValid = false
     private(set) var expiryDateIsValid = false
     private(set) var cvcIsValid = false
-    private(set) var cardBrand: CardBrandModel?
+    private(set) var cardBrands: [CardBrandModel] = []
     private let cardBrandModelTransformer: CardBrandModelTransformer
-
+    
     private var notifyMerchantOfPanValidationChangeIsPending = false
     private var merchantNeverNotifiedOfPanValidationChange = true
-
+    
     private var notifyMerchantOfExpiryDateValidationChangeIsPending = false
     private var merchantNeverNotifiedOfExpiryDateValidationChange = true
-
+    
     private var notifyMerchantOfCvcValidationChangeIsPending = false
     private var merchantNeverNotifiedOfCvcValidationChange = true
-
+    
     init(_ merchantDelegate: AccessCheckoutCardValidationDelegate) {
         self.merchantDelegate = merchantDelegate
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
-
+    
     /**
      Convenience constructors used by unit tests
      */
     init(
         merchantDelegate: AccessCheckoutCardValidationDelegate,
         panValidationState: Bool,
-        cardBrand: CardBrandModel?
+        cardBrands: [CardBrandModel]
     ) {
         self.merchantDelegate = merchantDelegate
         self.panIsValid = panValidationState
-        self.cardBrand = cardBrand
+        self.cardBrands = cardBrands
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
-
+    
     init(merchantDelegate: AccessCheckoutCardValidationDelegate, panValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.panIsValid = panValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
-
+    
     init(merchantDelegate: AccessCheckoutCardValidationDelegate, expiryDateValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.expiryDateIsValid = expiryDateValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
-
+    
     init(merchantDelegate: AccessCheckoutCardValidationDelegate, cvcValidationState: Bool) {
         self.merchantDelegate = merchantDelegate
         self.cvcIsValid = cvcValidationState
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
-
+    
     private func allFieldsValid() -> Bool {
         return panIsValid && expiryDateIsValid && cvcIsValid
+    }
+    
+    /// Updates card brands and notifies merchant if changed
+    /// - Parameter brands: Array of card brands to update
+    /// - Returns: True if brands were different and update occurred
+    private func updateCardBrandsIfChanged(_ brands: [CardBrandModel]) {
+        if !areCardBrandsEqual(cardBrands, brands) {
+            self.cardBrands = brands
+            
+            let transformedBrands = brands.map { cardBrandModelTransformer.transform($0) }
+            merchantDelegate.cardBrandsChanged(
+                cardBrands: transformedBrands.isEmpty ? [] : transformedBrands
+            )
+        }
+    }
+    
+    private func areCardBrandsEqual(_ currentBrands: [CardBrandModel], _ newBrands: [CardBrandModel]) -> Bool {
+        guard currentBrands.count == newBrands.count else { return false }
+        
+        let currentBrands = Set(currentBrands.map { $0.name.lowercased() })
+        let newBrands = Set(newBrands.map { $0.name.lowercased() })
+        
+        return currentBrands == newBrands
     }
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
-    private func handleCardBrandsUpdate(_ brands: [CardBrandModel]) {
-        let newCardBrand = brands.first
-
-        if self.cardBrand?.name != newCardBrand?.name {
-            self.cardBrand = newCardBrand
-
-            let transformedBrands = brands.map { cardBrandModelTransformer.transform($0) }
-            merchantDelegate.cardBrandsChanged(cardBrands: transformedBrands)
-        }
-    }
-
-    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
+    func handlePanValidation(isValid: Bool, cardBrands: [CardBrandModel]) {
         if isValid != panIsValid {
             panIsValid = isValid
             notifyMerchantOfPanValidationChangeIsPending = true
             notifyMerchantOfPanValidationState()
-
+            
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
             }
         }
-
-        if let brand = cardBrand {
-            handleCardBrandsUpdate([brand])
-        } else {
-            handleCardBrandsUpdate([])
-        }
+        
+        updateCardBrandsIfChanged(cardBrands)
     }
-
+    
     func handleCobrandedCardsUpdate(brands: [CardBrandModel]) {
-        handleCardBrandsUpdate(brands)
+        updateCardBrandsIfChanged(brands)
     }
-
+    
     func notifyMerchantOfPanValidationState() {
         if notifyMerchantOfPanValidationChangeIsPending
-            || merchantNeverNotifiedOfPanValidationChange
-        {
+            || merchantNeverNotifiedOfPanValidationChange {
             merchantNeverNotifiedOfPanValidationChange = false
             notifyMerchantOfPanValidationChangeIsPending = false
-
+            
             merchantDelegate.panValidChanged(isValid: panIsValid)
         }
     }
-
-    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
-        if let currentBrand = self.cardBrand, let newBrand = cardBrand {
-            return currentBrand.name != newBrand.name
-        } else if cardBrand != nil || self.cardBrand != nil {
-            return true
-        } else {
-            return false
-        }
+    
+    func areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool {
+        return !areCardBrandsEqual(self.cardBrands, cardBrands)
     }
-
-    func getCardBrand() -> CardBrandModel? {
-        return self.cardBrand
+    
+    func getCardBrands() -> [CardBrandModel] {
+        return self.cardBrands
     }
 }
 
@@ -124,21 +125,20 @@ extension CardValidationStateHandler: ExpiryDateValidationStateHandler {
             expiryDateIsValid = isValid
             notifyMerchantOfExpiryDateValidationChangeIsPending = true
             notifyMerchantOfExpiryDateValidationState()
-
+            
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
             }
         }
     }
-
+    
     func notifyMerchantOfExpiryDateValidationState() {
         if notifyMerchantOfExpiryDateValidationChangeIsPending
-            || merchantNeverNotifiedOfExpiryDateValidationChange
-        {
-
+            || merchantNeverNotifiedOfExpiryDateValidationChange {
+            
             merchantNeverNotifiedOfExpiryDateValidationChange = false
             notifyMerchantOfExpiryDateValidationChangeIsPending = false
-
+            
             merchantDelegate.expiryDateValidChanged(isValid: expiryDateIsValid)
         }
     }
@@ -150,21 +150,20 @@ extension CardValidationStateHandler: CvcValidationStateHandler {
             cvcIsValid = isValid
             notifyMerchantOfCvcValidationChangeIsPending = true
             notifyMerchantOfCvcValidationState()
-
+            
             if allFieldsValid() {
                 merchantDelegate.validationSuccess()
             }
         }
     }
-
+    
     func notifyMerchantOfCvcValidationState() {
         if notifyMerchantOfCvcValidationChangeIsPending
-            || merchantNeverNotifiedOfCvcValidationChange
-        {
-
+            || merchantNeverNotifiedOfCvcValidationChange {
+            
             merchantNeverNotifiedOfCvcValidationChange = false
             notifyMerchantOfCvcValidationChangeIsPending = false
-
+            
             merchantDelegate.cvcValidChanged(isValid: cvcIsValid)
         }
     }
