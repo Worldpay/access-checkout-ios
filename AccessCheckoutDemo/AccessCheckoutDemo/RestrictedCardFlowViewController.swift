@@ -51,7 +51,7 @@ class RestrictedCardFlowViewController: UIViewController {
 
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
-        cardBrandChanged(cardBrand: nil)
+        cardBrandsChanged(cardBrands: [])
     }
 
     private func updateCardBrandImage(url: URL) {
@@ -71,21 +71,21 @@ class RestrictedCardFlowViewController: UIViewController {
 }
 
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {
-        if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
+    func cardBrandsChanged(cardBrands: [CardBrand]) {
+        if let cardBrand = cardBrands.first,
+            let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
             let url = URL(string: imageUrl)
         {
             updateCardBrandImage(url: url)
+            imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
         } else {
             imageView.image = unknownBrandImage
+            imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
         }
-        imageView.accessibilityLabel = NSLocalizedString(
-            cardBrand?.name ?? "unknown_card_brand", comment: "")
     }
 
     func panValidChanged(isValid: Bool) {
         panIsValidLabel.text = isValid ? "valid" : "invalid"
-
         changePanValidIndicator(isValid: isValid)
     }
 
