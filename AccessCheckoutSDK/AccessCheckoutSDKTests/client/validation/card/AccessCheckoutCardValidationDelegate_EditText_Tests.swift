@@ -12,8 +12,6 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     private let validMasterCardPan = TestFixtures.validMasterCardPan
     private let validAmexPan = TestFixtures.validAmexPan
 
-    // MARK: PAN validation tests
-
     func testMerchantDelegateIsNotifiedWhenPANBecomesValid() {
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
@@ -32,8 +30,8 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotifiedOfInvalidPANWhenPANIsValidButBrandIsNotAcceptedByMerchant() {
-        let expectedVisaBrand = createCardBrand(from: visaBrand)
-        let expectedAmexBrand = createCardBrand(from: amexBrand)
+        let expectedVisaBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedAmexBrands = [createCardBrand(from: amexBrand)].compactMap { $0 }
         let merchantDelegate = initialiseCardValidation(
             cardBrands: [visaBrand, amexBrand], acceptedCardBrands: ["visa"])
 
@@ -41,10 +39,12 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
         editPan(text: validAmexPan)
 
         verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedVisaBrands))
 
         verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedAmexBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedAmexBrands))
     }
 
     func testMerchantDelegateIsNotifiedOnlyOnceWhenSubsequentValidPANsAreEntered() {
@@ -59,37 +59,50 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     // MARK: Card brand changes
 
     func testMerchantDelegateIsNotifiedWhenCardBrandChanges() {
-        let expectedCardBrand = createCardBrand(from: visaBrand)
+        let expectedCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "4")
 
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedCardBrands))
     }
 
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButBrandRemainsTheSame() {
-        let expectedCardBrand = createCardBrand(from: visaBrand)
+        let expectedCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "4")
         editPan(text: "49")
 
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedCardBrands))
     }
 
     func testMerchantDelegateIsNotifiedOfAVisaToMaestroCardBrandChange() {
-        let expectedVisaBrand = createCardBrand(from: visaBrand)
-        let expectedMaestroBrand = createCardBrand(from: maestroBrand)
+        let expectedVisaBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedMaestroBrands = [createCardBrand(from: maestroBrand)].compactMap { $0 }
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "49369")
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedVisaBrands))
 
         editPan(text: "493698")
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedMaestroBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedMaestroBrands))
     }
 
-    // MARK: Expiry Date validation tests
+    func testMerchantDelegateIsNotifiedWithNilWhenNoBrandIsIdentified() {
+        let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
+
+        editPan(text: "4")
+        clearInvocations(merchantDelegate)
+
+        editPan(text: "")
+
+        verify(merchantDelegate, times(1)).cardBrandsChanged(cardBrands: [])
+    }
 
     func testMerchantDelegateIsNotifiedWhenExpiryDateBecomesValid() {
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
@@ -116,8 +129,6 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
 
         verify(merchantDelegate, times(1)).expiryDateValidChanged(isValid: true)
     }
-
-    // MARK: Cvc validation tests
 
     func testMerchantDelegateIsNotifiedWhenCvcBecomesValid() {
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
@@ -160,19 +171,21 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotNotifiedWhenThePanIsChangedAndRequiresACvcOfTheSameLength() {
-        let expectedVisaCardBrand = createCardBrand(from: visaBrand)
-        let expectedMaestroCardBrand = createCardBrand(from: maestroBrand)
+        let expectedVisaCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedMaestroCardBrands = [createCardBrand(from: maestroBrand)].compactMap { $0 }
 
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "49369")
         editCvc(text: "123")
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedVisaCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedVisaCardBrands))
         verify(merchantDelegate, times(1)).cvcValidChanged(isValid: true)
         clearInvocations(merchantDelegate)
 
         editPan(text: "493698")
-        verify(merchantDelegate, times(1)).cardBrandChanged(cardBrand: expectedMaestroCardBrand)
+        verify(merchantDelegate, times(1)).cardBrandsChanged(
+            cardBrands: equal(to: expectedMaestroCardBrands))
         verify(merchantDelegate, never()).cvcValidChanged(isValid: true)
     }
 

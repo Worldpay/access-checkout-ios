@@ -5,6 +5,7 @@ import XCTest
 
 class PanValidationFlowTests: XCTestCase {
     let visaBrand = TestFixtures.visaBrand()
+    let maestroBrand = TestFixtures.maestroBrand()
 
     private var mockCardBinService: MockCardBinService!
     private let panValidationStateHandler = MockPanValidationStateHandler()
@@ -34,40 +35,57 @@ class PanValidationFlowTests: XCTestCase {
 
         panValidationStateHandler.getStubbingProxy().handlePanValidation(
             isValid: any(),
-            cardBrand: any()
+            cardBrands: any()
         ).thenDoNothing()
     }
 
     override func tearDown() {
-        mockCardBinService = nil
         super.tearDown()
     }
 
-    func testValidateValidatesPanAndCallsValidationStateHandlerWithResult() {
+    func testValidate_callsHandlerWithArrayOfBrands() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(
             panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
-        panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
+        panValidationStateHandler.getStubbingProxy().areCardBrandsDifferentFrom(cardBrands: any())
             .thenReturn(false)
 
         panValidationFlow.validate(pan: "1234")
 
         verify(panValidator).validate(pan: "1234")
         verify(panValidationStateHandler).handlePanValidation(
-            isValid: expectedResult.isValid,
-            cardBrand: expectedResult.cardBrand
+            isValid: true,
+            cardBrands: equal(to: [visaBrand])
         )
     }
 
-    func testValidateUpdatesCvcValidationRuleAndRevalidatesCvcWhenCardBrandHasChanged() {
+    func testValidate_withNoBrand_callsHandlerWithEmptyArray() {
+        let cvcFlow = mockCvcFlow()
+        let expectedResult = PanValidationResult(false, nil)
+        let panValidator = createMockPanValidator(thatReturns: expectedResult)
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
+        panValidationStateHandler.getStubbingProxy().areCardBrandsDifferentFrom(cardBrands: any())
+            .thenReturn(false)
+
+        panValidationFlow.validate(pan: "999")
+
+        verify(panValidationStateHandler).handlePanValidation(
+            isValid: false,
+            cardBrands: equal(to: [])
+        )
+    }
+
+    func testValidate_whenBrandsChange_updatesCvcRulesWithFirstBrand() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(
             panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
-        panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
+
+        panValidationStateHandler.getStubbingProxy().areCardBrandsDifferentFrom(cardBrands: any())
             .thenReturn(true)
         cvcFlow.getStubbingProxy().updateValidationRule(with: any()).thenDoNothing()
         cvcFlow.getStubbingProxy().revalidate().thenDoNothing()
@@ -78,15 +96,14 @@ class PanValidationFlowTests: XCTestCase {
         verify(cvcFlow).revalidate()
     }
 
-    func
-        testValidateResetsCvcValidationRuleAndRevalidatesCvcWhenCardBrandHasChangedAndNoBrandHasBeenIdentified()
-    {
+    func testValidate_whenBrandsChangeToNone_resetsCvcRules() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, nil)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(
             panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
-        panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
+
+        panValidationStateHandler.getStubbingProxy().areCardBrandsDifferentFrom(cardBrands: any())
             .thenReturn(true)
         cvcFlow.getStubbingProxy().resetValidationRule().thenDoNothing()
         cvcFlow.getStubbingProxy().revalidate().thenDoNothing()
@@ -97,21 +114,38 @@ class PanValidationFlowTests: XCTestCase {
         verify(cvcFlow).revalidate()
     }
 
-    func testValidateDoesNotAffectCvcValidationWhenCardBrandHasNotChanged() {
+    func testValidate_whenBrandsAreSame_doesNotUpdateCvcRules() {
         let cvcFlow = mockCvcFlow()
-
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
         let panValidationFlow = PanValidationFlow(
             panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
-        panValidationStateHandler.getStubbingProxy().isCardBrandDifferentFrom(cardBrand: any())
+
+        panValidationStateHandler.getStubbingProxy().areCardBrandsDifferentFrom(cardBrands: any())
             .thenReturn(false)
 
         panValidationFlow.validate(pan: "1234")
+
         verifyNoMoreInteractions(cvcFlow)
     }
 
-    func testCanNotifyMerchant() {
+    func testGetCardBrands_returnsArrayFromStateHandler() {
+        let cvcFlow = mockCvcFlow()
+        let panValidator = createMockPanValidator(thatReturns: PanValidationResult(true, visaBrand))
+        let panValidationFlow = PanValidationFlow(
+            panValidator, panValidationStateHandler, cvcFlow, mockCardBinService)
+
+        let expectedBrands = [visaBrand, maestroBrand]
+        panValidationStateHandler.getStubbingProxy().getCardBrands().thenReturn(expectedBrands)
+
+        let result = panValidationFlow.getCardBrands()
+
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0].name, visaBrand.name)
+        XCTAssertEqual(result[1].name, maestroBrand.name)
+    }
+
+    func testNotifyMerchant_callsStateHandler() {
         let merchantDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         let cvcFlow = mockCvcFlow()
@@ -133,14 +167,8 @@ class PanValidationFlowTests: XCTestCase {
             CardBrandsConfigurationFactoryMock()
         )
         let mock = MockPanValidator(configurationProvider)
-
         mock.getStubbingProxy().validate(pan: any()).thenReturn(result)
-
         return mock
-    }
-
-    private func mockCardConfiguration() -> CardBrandsConfiguration {
-        return CardBrandsConfiguration(allCardBrands: [visaBrand], acceptedCardBrands: [])
     }
 
     private func mockCvcFlow() -> MockCvcValidationFlow {

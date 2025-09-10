@@ -5,9 +5,9 @@ class PanValidationFlow {
     private let panValidationStateHandler: PanValidationStateHandler
     private let cvcFlow: CvcValidationFlow
     private let cardBinService: CardBinService
-    
+
     private var lastCheckedPanPrefix: String = ""
-    
+
     init(
         _ panValidator: PanValidator,
         _ panValidationStateHandler: PanValidationStateHandler,
@@ -19,44 +19,47 @@ class PanValidationFlow {
         self.cvcFlow = cvcFlow
         self.cardBinService = cardBinService
     }
-    
+
     func validate(pan: String) {
         let result = panValidator.validate(pan: pan)
-        
+
         let validationBrands: [CardBrandModel] = result.cardBrand != nil ? [result.cardBrand!] : []
-        
+
         if panValidationStateHandler.areCardBrandsDifferentFrom(cardBrands: validationBrands) {
             updateCvcValidationRule(for: validationBrands)
         }
-        
+
         panValidationStateHandler.handlePanValidation(
             isValid: result.isValid,
             cardBrands: validationBrands
         )
     }
-    
+
     func handleCobrandedCards(pan: String) {
         let sanitisedCardNumber = pan.replacingOccurrences(of: " ", with: "")
-        
+
         guard sanitisedCardNumber.count >= 12 else {
             lastCheckedPanPrefix = ""
             return
         }
-        
+
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
-        
+
         if cardNumberPrefix != lastCheckedPanPrefix {
             lastCheckedPanPrefix = cardNumberPrefix
-            
+
             cardBinService.getCardBrands(
                 globalBrand: getFirstCardBrand(),
                 cardNumber: cardNumberPrefix
             ) { result in
                 switch result {
                 case .success(let cardBrands):
-                    if self.panValidationStateHandler.areCardBrandsDifferentFrom(cardBrands: cardBrands) {
+                    if self.panValidationStateHandler.areCardBrandsDifferentFrom(
+                        cardBrands: cardBrands)
+                    {
                         self.updateCvcValidationRule(for: cardBrands)
-                        self.panValidationStateHandler.handleCobrandedCardsUpdate(brands: cardBrands)
+                        self.panValidationStateHandler.handleCobrandedCardsUpdate(
+                            cardBrands: cardBrands)
                     }
                 case .failure(_):
                     NSLog("Card BIN lookup failed")
@@ -64,9 +67,7 @@ class PanValidationFlow {
             }
         }
     }
-    
-    /// Updates CVC validation rule based on card brands
-    /// Uses the first brand's CVC rule if available, otherwise resets to default
+
     private func updateCvcValidationRule(for cardBrands: [CardBrandModel]) {
         if let firstBrand = cardBrands.first {
             cvcFlow.updateValidationRule(with: firstBrand.cvcValidationRule)
@@ -75,15 +76,15 @@ class PanValidationFlow {
         }
         cvcFlow.revalidate()
     }
-    
+
     func notifyMerchant() {
         panValidationStateHandler.notifyMerchantOfPanValidationState()
     }
-    
+
     func getCardBrands() -> [CardBrandModel] {
         return panValidationStateHandler.getCardBrands()
     }
-    
+
     func getFirstCardBrand() -> CardBrandModel? {
         return panValidationStateHandler.getCardBrands().first
     }

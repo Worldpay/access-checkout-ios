@@ -33,7 +33,7 @@ class AcceptanceTestSuite: XCTestCase {
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandsChanged(cardBrands: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
 
         let cardBrandsConfiguration = createConfiguration(
