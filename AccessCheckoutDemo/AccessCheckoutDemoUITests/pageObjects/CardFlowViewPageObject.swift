@@ -115,12 +115,12 @@ class CardFlowViewPageObject {
         cutMenu.tap()
         TestUtils.wait(seconds: 1)
     }
-    
+
     func typeTextIntoPanWithKeystrokePause(_ text: String, pause: TimeInterval) {
         if !TestUtils.isFocused(panField) {
             panField.tap()
         }
-        
+
         for char in text {
             panField.typeText(String(char))
             Thread.sleep(forTimeInterval: pause)

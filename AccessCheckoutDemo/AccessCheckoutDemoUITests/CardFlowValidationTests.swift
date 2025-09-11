@@ -42,9 +42,8 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testPAN_acceptsUpTo19Characters_plusSpaces() {
-        let pan = "111122223333444455556666"
-        view!.typeTextIntoPanWithKeystrokePause(pan , pause: 0.01)
-
+        view!.typeTextIntoPanWithKeystrokePause("111122223333444455556666", pause: 0.01)
+        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
 
         XCTAssertEqual(view!.panText!, "1111 2222 3333 4444 555")
         XCTAssertEqual(view!.panText!.count, 23)
