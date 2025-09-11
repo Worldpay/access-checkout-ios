@@ -158,25 +158,23 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
     }
 
     func testFormatsUnknownBrandPan() {
-        view!.typeTextIntoPanWithKeystrokePause("12200", pause: 0.01)
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
+        view!.typeTextIntoPanByIndividualCharacter("12200")
+        
         XCTAssertTrue(view!.imageIs("unknown_card_brand"))
 
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
+        
         XCTAssertEqual(view!.panText!, "1220 0")
 
-        view!.typeTextIntoPanWithKeystrokePause("0000", pause: 0.01)
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
+        view!.typeTextIntoPanByIndividualCharacter("0000")
+        
         XCTAssertEqual(view!.panText!, "1220 0000 0")
 
-        view!.typeTextIntoPanWithKeystrokePause("0000", pause: 0.01)
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
+        view!.typeTextIntoPanByIndividualCharacter("0000")
+        
         XCTAssertEqual(view!.panText!, "1220 0000 0000 0")
 
         view!.typeTextIntoPan(backspace)
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
         view!.typeTextIntoPan(backspace)
-        XCTAssertTrue(view!.panField.waitForExistence(timeout: 1.0))
         XCTAssertEqual(view!.panText!, "1220 0000 000")
     }
 }

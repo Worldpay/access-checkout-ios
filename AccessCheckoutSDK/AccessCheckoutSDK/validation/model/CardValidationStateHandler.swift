@@ -69,14 +69,14 @@ class CardValidationStateHandler {
     }
 
     private func areCardBrandsEqual(
-        _ currentBrands: [CardBrandModel], _ newBrands: [CardBrandModel]
+        _ cardBrands: [CardBrandModel], _ latestCardBrands: [CardBrandModel]
     ) -> Bool {
-        guard currentBrands.count == newBrands.count else { return false }
+        guard cardBrands.count == latestCardBrands.count else { return false }
 
-        let currentBrands = Set(currentBrands.map { $0.name.lowercased() })
-        let newBrands = Set(newBrands.map { $0.name.lowercased() })
+        let cardBrands = Set(cardBrands.map { $0.name.lowercased() })
+        let latestCardBrands = Set(latestCardBrands.map { $0.name.lowercased() })
 
-        return currentBrands == newBrands
+        return cardBrands == latestCardBrands
     }
 }
 
