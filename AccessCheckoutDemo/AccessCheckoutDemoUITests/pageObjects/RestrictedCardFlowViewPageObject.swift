@@ -38,11 +38,26 @@ class RestrictedCardFlowViewPageObject {
         panField.typeText(text)
     }
 
-    func imageIs(_ brand: String) -> Bool {
+    // This function is designed to assert the card brand displayed in the UI and contains a retry mechanism to cater
+    // for what appears to be the slowness of BitRise
+    func assertCardBrandIs(_ brand: String) {
         let brandAsLocalizedString = NSLocalizedString(
             brand, bundle: Bundle(for: type(of: self)), comment: "")
 
-        return cardBrandImage.label == brandAsLocalizedString
+        let maxAttempts = 10
+        let sleepTimeBetweenAttemptsInSeconds = 0.2
+
+        var currentAttempt = 1
+        while brandAsLocalizedString != cardBrandImage.label && currentAttempt <= maxAttempts {
+
+            // sleeping until next attempt
+            currentAttempt += 1
+            TestUtils.wait(seconds: sleepTimeBetweenAttemptsInSeconds)
+
+            NSLog("Expected card brand \(brandAsLocalizedString) but received \(cardBrandImage.label). Retrying, attempt \(currentAttempt)/\(maxAttempts)")
+        }
+
+        XCTAssertEqual(brandAsLocalizedString, cardBrandImage.label)
     }
 
     func dismissKeyboard() {

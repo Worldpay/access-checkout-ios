@@ -186,7 +186,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
         view!.typeTextIntoPan("493698")
 
         XCTAssertEqual("4936 98", view!.panText)
-        XCTAssertFalse(view!.imageIs("visa"))
+        view!.assertCardBrandIsNot("visa")
     }
 
     // MARK: UNKNOWN CARD BRAND
@@ -206,13 +206,13 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
             view!.typeTextIntoPan(deleteString)
 
             XCTAssertEqual("Card Number", view!.panText)
-            XCTAssertTrue(view!.imageIs("unknown_card_brand"))
+            view!.assertCardBrandIs("unknown_card_brand")
         }
 
         view!.typeTextIntoPan(pan)
 
         let panViewText = view!.panText?.replacingOccurrences(of: " ", with: "")
         XCTAssertEqual(pan, panViewText)
-        XCTAssertTrue(view!.imageIs(brand))
+        view!.assertCardBrandIs(brand)
     }
 }
