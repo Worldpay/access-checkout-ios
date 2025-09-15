@@ -254,7 +254,7 @@ class CardValidationStateHandlerTests: XCTestCase {
 
     // MARK: PAN Validation State Notification Tests
 
-    func testNotifyMerchantOfPanValidationState_notifiesMerchantOfValidPan() {
+    func testNotifyMerchantOfPanValidationState_notifiesMerchantDelegate() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
 
@@ -264,7 +264,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testNotifyMerchantOfPanValidationState_notifiesMerchantOfValidPanOnlyOnceWhenCalledMultipleTimes()
+        testNotifyMerchantOfPanValidationState_notifiesMerchantDelegateOnlyOnceWhenCalledMultipleTimes()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
