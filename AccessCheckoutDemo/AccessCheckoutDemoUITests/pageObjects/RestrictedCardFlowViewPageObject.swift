@@ -44,7 +44,8 @@ class RestrictedCardFlowViewPageObject {
         let brandAsLocalizedString = NSLocalizedString(
             brand, bundle: Bundle(for: type(of: self)), comment: "")
 
-        let maxAttempts = 10
+        // 25 attempts over 5 seconds
+        let maxAttempts = 25
         let sleepTimeBetweenAttemptsInSeconds = 0.2
 
         var currentAttempt = 1
