@@ -278,7 +278,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     // MARK: ExpiryDateValidationStateHandler (unchanged)
 
     func
-        testHandleExpiryDateValidation_shouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse()
+        testHandleExpiryDateValidation_shouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChange()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -290,7 +290,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testHandleExpiryDateValidation_shouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromFalse()
+        testHandleExpiryDateValidation_shouldNotifyMerchantDelegateWhenExpiryValidationStateChanges()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
