@@ -33,7 +33,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
     }
 
-    // MARK: PanValidationStateHandler - Updated for Arrays
+    // MARK: PanValidationStateHandler
 
     func
         testHandlePanValidation_shouldNotNotifyMerchantDelegateWhenPanValidationDoesNotChangeFromFalse()
@@ -76,7 +76,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func testHandlePanValidation_shouldNotifyMerchantDelegateWithSingleBrandArray() {
-        let expectedCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedCardBrands = [createCardBrand(from: visaBrand)]
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: true,
@@ -372,7 +372,7 @@ class CardValidationStateHandlerTests: XCTestCase {
 
     // MARK: Helper Methods
 
-    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {
+    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand {
         var images = [CardBrandImage]()
 
         for imageToConvert in cardBrandModel.images {

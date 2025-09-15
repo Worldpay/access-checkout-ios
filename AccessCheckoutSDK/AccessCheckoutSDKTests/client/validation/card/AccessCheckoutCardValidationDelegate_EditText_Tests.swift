@@ -30,8 +30,8 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotifiedOfInvalidPANWhenPANIsValidButBrandIsNotAcceptedByMerchant() {
-        let expectedVisaBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
-        let expectedAmexBrands = [createCardBrand(from: amexBrand)].compactMap { $0 }
+        let expectedVisaBrands = [createCardBrand(from: visaBrand)]
+        let expectedAmexBrands = [createCardBrand(from: amexBrand)]
         let merchantDelegate = initialiseCardValidation(
             cardBrands: [visaBrand, amexBrand], acceptedCardBrands: ["visa"])
 
@@ -59,7 +59,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     // MARK: Card brand changes
 
     func testMerchantDelegateIsNotifiedWhenCardBrandChanges() {
-        let expectedCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedCardBrands = [createCardBrand(from: visaBrand)]
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "4")
@@ -69,7 +69,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotNotifiedWhenPanChangesButBrandRemainsTheSame() {
-        let expectedCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
+        let expectedCardBrands = [createCardBrand(from: visaBrand)]
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "4")
@@ -80,8 +80,8 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotifiedOfAVisaToMaestroCardBrandChange() {
-        let expectedVisaBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
-        let expectedMaestroBrands = [createCardBrand(from: maestroBrand)].compactMap { $0 }
+        let expectedVisaBrands = [createCardBrand(from: visaBrand)]
+        let expectedMaestroBrands = [createCardBrand(from: maestroBrand)]
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "49369")
@@ -171,8 +171,8 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
     }
 
     func testMerchantDelegateIsNotNotifiedWhenThePanIsChangedAndRequiresACvcOfTheSameLength() {
-        let expectedVisaCardBrands = [createCardBrand(from: visaBrand)].compactMap { $0 }
-        let expectedMaestroCardBrands = [createCardBrand(from: maestroBrand)].compactMap { $0 }
+        let expectedVisaCardBrands = [createCardBrand(from: visaBrand)]
+        let expectedMaestroCardBrands = [createCardBrand(from: maestroBrand)]
 
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
@@ -231,7 +231,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
         verify(merchantDelegate, never()).validationSuccess()
     }
 
-    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {
+    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand {
         var images = [CardBrandImage]()
 
         for imageToConvert in cardBrandModel.images {
