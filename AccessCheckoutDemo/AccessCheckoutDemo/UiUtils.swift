@@ -10,10 +10,13 @@ final class UiUtils {
             let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
             let url = URL(string: imageUrl)
         {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    imageView.image = UIImage(data: data)
-                    imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
+            let serialQueue = DispatchQueue(label: "worldpay.demo.uiutils")
+            serialQueue.async {
+                if let data = try? Data(contentsOf: url) {
+                    DispatchQueue.main.async {
+                        imageView.image = UIImage(data: data)
+                        imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
+                    }
                 }
             }
         } else {
