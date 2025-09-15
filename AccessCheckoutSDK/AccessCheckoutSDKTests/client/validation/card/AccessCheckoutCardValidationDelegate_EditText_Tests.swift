@@ -93,7 +93,7 @@ class AccessCheckoutCardValidationDelegate_EditText_Tests: AcceptanceTestSuite {
             cardBrands: equal(to: expectedMaestroBrands))
     }
 
-    func testMerchantDelegateIsNotifiedWithNilWhenNoBrandIsIdentified() {
+    func testMerchantDelegateIsNotifiedWithEmptyArrayWhenNoBrandIsIdentified() {
         let merchantDelegate = initialiseCardValidation(cardBrands: [visaBrand, maestroBrand])
 
         editPan(text: "4")
