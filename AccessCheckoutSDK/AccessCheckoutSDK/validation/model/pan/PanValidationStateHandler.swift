@@ -1,5 +1,5 @@
 protocol PanValidationStateHandler {
-    func handlePanValidation(isValid: Bool, cardBrands: [CardBrandModel])
+    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)
 
     func updateCardBrandsIfChanged(cardBrands: [CardBrandModel])
 
@@ -8,4 +8,6 @@ protocol PanValidationStateHandler {
     func notifyMerchantOfPanValidationState()
 
     func getCardBrands() -> [CardBrandModel]
+
+    func getGlobalBrand() -> CardBrandModel?
 }

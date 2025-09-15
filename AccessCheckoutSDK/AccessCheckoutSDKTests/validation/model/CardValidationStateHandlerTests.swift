@@ -41,7 +41,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: false)
 
-        validationStateHandler.handlePanValidation(isValid: false, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
 
         verify(merchantDelegate, never()).panValidChanged(isValid: any())
     }
@@ -52,7 +52,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
 
         verify(merchantDelegate, never()).panValidChanged(isValid: any())
     }
@@ -61,7 +61,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
 
-        validationStateHandler.handlePanValidation(isValid: false, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: nil)
 
         verify(merchantDelegate).panValidChanged(isValid: false)
     }
@@ -70,7 +70,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: false)
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
 
         verify(merchantDelegate).panValidChanged(isValid: true)
     }
@@ -83,7 +83,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: []
         )
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [visaBrand])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: visaBrand)
 
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
@@ -95,7 +95,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: [visaBrand]
         )
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
 
         let expectedCardBrands: [CardBrand] = []
 
@@ -109,14 +109,34 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: [visaBrand]
         )
 
-        validationStateHandler.handlePanValidation(isValid: false, cardBrands: [visaBrand])
+        validationStateHandler.handlePanValidation(isValid: false, cardBrand: visaBrand)
 
         verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
     }
 
+    func testGetGlobalBrand_shouldReturnFirstBrandStored() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand, maestroBrand]
+        )
+
+        XCTAssertEqual(visaBrand, validationStateHandler.getGlobalBrand())
+    }
+
+    func testGetGlobalBrand_shouldReturnNilWhenNoBrandsAreStored() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: []
+        )
+
+        XCTAssertNil(validationStateHandler.getGlobalBrand())
+    }
+
     // MARK: Cards brands change tests including co-branded cards Tests
 
-    func testHandleCobrandedCardsUpdate_shouldUpdateWhenBrandsAreDifferent() {
+    func testUpdateCardBrandsIfChanged_shouldUpdateWhenBrandsAreDifferent() {
         let expectedCardBrands = [
             createCardBrand(from: visaBrand), createCardBrand(from: maestroBrand),
         ].compactMap { $0 }
@@ -131,7 +151,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func testHandleCobrandedCardsUpdate_shouldNotUpdateWhenBrandsAreSameButDifferentOrder() {
+    func testUpdateCardBrandsIfChanged_shouldNotUpdateWhenBrandsAreSameButDifferentOrder() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
@@ -143,7 +163,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
     }
 
-    func testHandleCobrandedCardsUpdate_shouldUpdateFromEmptyToMultipleBrands() {
+    func testUpdateCardBrandsIfChanged_shouldUpdateFromEmptyToMultipleBrands() {
         let expectedCardBrands = [
             createCardBrand(from: visaBrand), createCardBrand(from: maestroBrand),
         ].compactMap { $0 }
@@ -350,7 +370,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     func testShouldNotifyMerchantDelegateWhenAllFieldsAreValid() {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate)
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         validationStateHandler.handleExpiryDateValidation(isValid: true)
         validationStateHandler.handleCvcValidation(isValid: true)
 
@@ -362,7 +382,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     {
         let validationStateHandler = CardValidationStateHandler(merchantDelegate)
 
-        validationStateHandler.handlePanValidation(isValid: true, cardBrands: [])
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
         validationStateHandler.handleExpiryDateValidation(isValid: true)
         validationStateHandler.handleCvcValidation(isValid: true)
         validationStateHandler.handleCvcValidation(isValid: true)

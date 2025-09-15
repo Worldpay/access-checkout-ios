@@ -4,7 +4,7 @@ class CardValidationStateHandler {
     private(set) var panIsValid = false
     private(set) var expiryDateIsValid = false
     private(set) var cvcIsValid = false
-    private(set) var cardBrands: [CardBrandModel] = []
+    private var cardBrands: [CardBrandModel] = []
     private let cardBrandModelTransformer: CardBrandModelTransformer
 
     private var notifyMerchantOfPanValidationChangeIsPending = false
@@ -70,7 +70,7 @@ class CardValidationStateHandler {
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
-    func handlePanValidation(isValid: Bool, cardBrands: [CardBrandModel]) {
+    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
         if isValid != panIsValid {
             panIsValid = isValid
             notifyMerchantOfPanValidationChangeIsPending = true
@@ -81,7 +81,7 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        updateCardBrandsIfChanged(cardBrands: cardBrands)
+        updateCardBrandsIfChanged(cardBrands: cardBrand != nil ? [cardBrand!] : [])
     }
 
     func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {
@@ -111,6 +111,10 @@ extension CardValidationStateHandler: PanValidationStateHandler {
 
     func getCardBrands() -> [CardBrandModel] {
         return self.cardBrands
+    }
+
+    func getGlobalBrand() -> CardBrandModel? {
+        return self.cardBrands.first
     }
 }
 

@@ -22,16 +22,17 @@ class PanValidationFlow {
 
     func validate(pan: String) {
         let result = panValidator.validate(pan: pan)
+        let globalBrand: CardBrandModel? = result.cardBrand
 
-        let validationBrands: [CardBrandModel] = result.cardBrand != nil ? [result.cardBrand!] : []
-
-        if panValidationStateHandler.areCardBrandsDifferentFrom(cardBrands: validationBrands) {
-            updateCvcValidationRule(for: validationBrands)
+        if panValidationStateHandler.areCardBrandsDifferentFrom(
+            cardBrands: globalBrand != nil ? [globalBrand!] : [])
+        {
+            updateCvcValidationRule(for: globalBrand)
         }
 
         panValidationStateHandler.handlePanValidation(
             isValid: result.isValid,
-            cardBrands: validationBrands
+            cardBrand: globalBrand
         )
     }
 
@@ -49,7 +50,7 @@ class PanValidationFlow {
             lastCheckedPanPrefix = cardNumberPrefix
 
             cardBinService.getCardBrands(
-                globalBrand: getFirstCardBrand(),
+                globalBrand: self.panValidationStateHandler.getGlobalBrand(),
                 cardNumber: cardNumberPrefix
             ) { result in
                 switch result {
@@ -57,7 +58,8 @@ class PanValidationFlow {
                     if self.panValidationStateHandler.areCardBrandsDifferentFrom(
                         cardBrands: cardBrands)
                     {
-                        self.updateCvcValidationRule(for: cardBrands)
+                        // The global brand always appear first in the list of brands returned by OUR CardBinService class
+                        self.updateCvcValidationRule(for: cardBrands.first)
                         self.panValidationStateHandler.updateCardBrandsIfChanged(
                             cardBrands: cardBrands)
                     }
@@ -68,9 +70,9 @@ class PanValidationFlow {
         }
     }
 
-    private func updateCvcValidationRule(for cardBrands: [CardBrandModel]) {
-        if let firstBrand = cardBrands.first {
-            cvcFlow.updateValidationRule(with: firstBrand.cvcValidationRule)
+    private func updateCvcValidationRule(for cardBrand: CardBrandModel?) {
+        if let cardBrand = cardBrand {
+            cvcFlow.updateValidationRule(with: cardBrand.cvcValidationRule)
         } else {
             cvcFlow.resetValidationRule()
         }
@@ -83,9 +85,5 @@ class PanValidationFlow {
 
     func getCardBrands() -> [CardBrandModel] {
         return panValidationStateHandler.getCardBrands()
-    }
-
-    func getFirstCardBrand() -> CardBrandModel? {
-        return panValidationStateHandler.getCardBrands().first
     }
 }

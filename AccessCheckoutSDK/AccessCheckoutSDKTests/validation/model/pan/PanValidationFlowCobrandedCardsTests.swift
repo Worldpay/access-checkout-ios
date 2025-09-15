@@ -42,6 +42,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         stub(mockPanValidationStateHandler) { stub in
             when(stub.getCardBrands()).thenReturn([])
+            when(stub.getGlobalBrand()).thenReturn(nil)
             when(stub.areCardBrandsDifferentFrom(cardBrands: any())).thenReturn(false)
             when(stub.updateCardBrandsIfChanged(cardBrands: any())).thenDoNothing()
         }
@@ -72,6 +73,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         stub(mockPanValidationStateHandler) { stub in
             when(stub.getCardBrands()).thenReturn([self.visaBrand])
+            when(stub.getGlobalBrand()).thenReturn(self.visaBrand)
         }
 
         stub(mockCardBinService) { stub in
@@ -132,7 +134,9 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
     // MARK: - Brand Update and CVC Rule Tests
 
-    func testHandleCobrandedCards_whenBrandsChange_updatesHandlerAndCvcRules() {
+    func
+        testHandleCobrandedCards_whenBrandsChange_updatesHandlerAndCvcRulesUsingFirstBrandReturnedByCardBinService()
+    {
         let pan = "444433332222"
         let returnedBrands = [visaBrand, maestroBrand]
         let expectation = XCTestExpectation(description: "Card bin service callback")
@@ -163,7 +167,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
 
         // Verifies first brand's CVC rule is used
-        verify(mockCvcFlow).updateValidationRule(with: visaBrand.cvcValidationRule)
+        verify(mockCvcFlow).updateValidationRule(with: returnedBrands.first!.cvcValidationRule)
         verify(mockCvcFlow).revalidate()
         verify(mockPanValidationStateHandler).updateCardBrandsIfChanged(
             cardBrands: equal(to: returnedBrands))
@@ -175,6 +179,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         stub(mockPanValidationStateHandler) { stub in
             when(stub.getCardBrands()).thenReturn(currentBrands)
+            when(stub.getGlobalBrand()).thenReturn(visaBrand)
             when(stub.areCardBrandsDifferentFrom(cardBrands: equal(to: currentBrands)))
                 .thenReturn(false)
         }
@@ -209,6 +214,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         stub(mockPanValidationStateHandler) { stub in
             when(stub.getCardBrands()).thenReturn([self.visaBrand])
+            when(stub.getGlobalBrand()).thenReturn(visaBrand)
             when(stub.areCardBrandsDifferentFrom(cardBrands: equal(to: [])))
                 .thenReturn(true)
             when(stub.updateCardBrandsIfChanged(cardBrands: equal(to: [])))

@@ -48,7 +48,7 @@ class CardBinServiceTests: XCTestCase {
         XCTAssertNotNil(service)
     }
 
-    func testShouldReturnDistinctListOfBrandsWhenServiceRespondsWithBrands() {
+    func testShouldReturnDistinctListOfBrandsWhenClientRespondsWithBrands() {
         let expectation = self.expectation(
             description:
                 "should return a distinct list of brands when card-bin-service responds with brands"
@@ -60,19 +60,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -103,19 +91,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -146,19 +122,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -188,19 +152,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -232,19 +184,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -275,19 +215,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -321,19 +249,7 @@ class CardBinServiceTests: XCTestCase {
             luhnCompliant: true
         )
 
-        stub(mockClient) { stub in
-            stub.abort().thenDoNothing()
-
-            when(
-                stub.retrieveBinInfo(
-                    cardNumber: any(),
-                    checkoutId: any(),
-                    completionHandler: any()
-                )
-            ).then { _, _, completion in
-                completion(.success(response))
-            }
-        }
+        setUpMockClientToReturnSuccess(with: response)
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
@@ -506,5 +422,21 @@ class CardBinServiceTests: XCTestCase {
             completionHandler: any()
         )
 
+    }
+
+    private func setUpMockClientToReturnSuccess(with response: CardBinResponse) {
+        stub(mockClient) { stub in
+            stub.abort().thenDoNothing()
+
+            when(
+                stub.retrieveBinInfo(
+                    cardNumber: any(),
+                    checkoutId: any(),
+                    completionHandler: any()
+                )
+            ).then { _, _, completion in
+                completion(.success(response))
+            }
+        }
     }
 }

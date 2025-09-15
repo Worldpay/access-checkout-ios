@@ -35,7 +35,7 @@ class PanValidationFlowTests: XCTestCase {
 
         panValidationStateHandler.getStubbingProxy().handlePanValidation(
             isValid: any(),
-            cardBrands: any()
+            cardBrand: any()
         ).thenDoNothing()
     }
 
@@ -57,7 +57,7 @@ class PanValidationFlowTests: XCTestCase {
         verify(panValidator).validate(pan: "1234")
         verify(panValidationStateHandler).handlePanValidation(
             isValid: true,
-            cardBrands: equal(to: [visaBrand])
+            cardBrand: equal(to: visaBrand)
         )
     }
 
@@ -74,11 +74,11 @@ class PanValidationFlowTests: XCTestCase {
 
         verify(panValidationStateHandler).handlePanValidation(
             isValid: false,
-            cardBrands: equal(to: [])
+            cardBrand: equal(to: nil)
         )
     }
 
-    func testValidate_whenBrandsChange_updatesCvcRulesWithFirstBrand() {
+    func testValidate_whenBrandsChange_updatesCvcRulesWithBrandFromValidationResult() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(true, visaBrand)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)
