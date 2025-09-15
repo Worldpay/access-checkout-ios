@@ -112,6 +112,37 @@ class CardBinServiceTests: XCTestCase {
         }
     }
 
+    func testShouldNotSortBrandsPassedInCallback() {
+        let expectation = self.expectation(
+            description: "should not sort brands passed in callback")
+        let discoverBrand = TestFixtures.discoverBrand()
+        let response = CardBinResponse(
+            brand: ["visa", "discover"],
+            fundingType: "debit",
+            luhnCompliant: true
+        )
+
+        setUpMockClientToReturnSuccess(with: response)
+
+        var receivedBrands: [CardBrandModel]?
+        cardBinService.getCardBrands(
+            globalBrand: discoverBrand,
+            cardNumber: discoverDinersTestPan
+        ) { result in
+            if case .success(let brands) = result {
+                receivedBrands = brands
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { _ in
+            XCTAssertNotNil(receivedBrands)
+            XCTAssertEqual(receivedBrands!.count, 2)
+            XCTAssertEqual(receivedBrands![0].name, "visa")
+            XCTAssertEqual(receivedBrands![1].name, "discover")
+        }
+    }
+
     func testShouldInvokeCallbackWhenResponseReturnsNoBrandsForPan() {
         let expectation = self.expectation(
             description: "should invoke callback when response returns no brands for pan")
