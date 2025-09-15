@@ -10,7 +10,9 @@ final class UiUtils {
             let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
             let url = URL(string: imageUrl)
         {
-            let serialQueue = DispatchQueue(label: "worldpay.demo.uiutils")
+            // User interactive QOS is chosen to make the task below a high priority task
+            // This contributes strongly to seeing updates to the UI made faster
+            let serialQueue = DispatchQueue(label: "worldpay.demo.uiutils", qos: .userInteractive)
             serialQueue.async {
                 if let data = try? Data(contentsOf: url) {
                     DispatchQueue.main.async {
