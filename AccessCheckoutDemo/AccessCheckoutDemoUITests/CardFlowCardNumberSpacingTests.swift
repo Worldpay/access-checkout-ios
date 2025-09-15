@@ -158,19 +158,18 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
     }
 
     func testFormatsUnknownBrandPan() {
-        view!.typeTextIntoPanByIndividualCharacter("12200")
-        
+        view!.typeTextIntoPan("12200")
+
         XCTAssertTrue(view!.imageIs("unknown_card_brand"))
 
-        
         XCTAssertEqual(view!.panText!, "1220 0")
 
-        view!.typeTextIntoPanByIndividualCharacter("0000")
-        
+        view!.typeTextIntoPan("0000")
+
         XCTAssertEqual(view!.panText!, "1220 0000 0")
 
-        view!.typeTextIntoPanByIndividualCharacter("0000")
-        
+        view!.typeTextIntoPan("0000")
+
         XCTAssertEqual(view!.panText!, "1220 0000 0000 0")
 
         view!.typeTextIntoPan(backspace)

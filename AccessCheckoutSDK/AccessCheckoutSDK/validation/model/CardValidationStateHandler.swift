@@ -57,17 +57,6 @@ class CardValidationStateHandler {
         return panIsValid && expiryDateIsValid && cvcIsValid
     }
 
-    private func updateCardBrandsIfChanged(_ latestCardBrands: [CardBrandModel]) {
-        if !areCardBrandsEqual(cardBrands, latestCardBrands) {
-            self.cardBrands = latestCardBrands
-
-            let transformedBrands = latestCardBrands.map { cardBrandModelTransformer.transform($0) }
-            merchantDelegate.cardBrandsChanged(
-                cardBrands: transformedBrands.isEmpty ? [] : transformedBrands
-            )
-        }
-    }
-
     private func areCardBrandsEqual(
         _ cardBrands: [CardBrandModel], _ latestCardBrands: [CardBrandModel]
     ) -> Bool {
@@ -92,11 +81,17 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        updateCardBrandsIfChanged(cardBrands)
+        updateCardBrandsIfChanged(cardBrands: cardBrands)
     }
 
-    func handleCobrandedCardsUpdate(cardBrands: [CardBrandModel]) {
-        updateCardBrandsIfChanged(cardBrands)
+    func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {
+        if !areCardBrandsEqual(self.cardBrands, cardBrands) {
+            self.cardBrands = cardBrands
+
+            merchantDelegate.cardBrandsChanged(
+                cardBrands: cardBrands.map { cardBrandModelTransformer.transform($0) }
+            )
+        }
     }
 
     func notifyMerchantOfPanValidationState() {

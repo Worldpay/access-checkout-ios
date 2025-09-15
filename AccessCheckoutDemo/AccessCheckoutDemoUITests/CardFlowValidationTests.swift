@@ -42,8 +42,8 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testPAN_acceptsUpTo19Characters_plusSpaces() {
-        view!.typeTextIntoPanByIndividualCharacter("111122223333444455556666")
-        
+        view!.typeTextIntoPan("111122223333444455556666")
+
         XCTAssertEqual(view!.panText!, "1111 2222 3333 4444 555")
         XCTAssertEqual(view!.panText!.count, 23)
     }
@@ -119,7 +119,7 @@ class CardFlowCardValidationTests: XCTestCase {
 
     // MARK: Cvc validation
 
-    func testCvc_doesNotAccepteAlphabeticalCharacters() {
+    func testCvc_doesNotAcceptAlphabeticalCharacters() {
         view!.typeTextIntoCvc("A")
 
         XCTAssertEqual(view!.cvcField.placeholderValue, view!.cvcText)

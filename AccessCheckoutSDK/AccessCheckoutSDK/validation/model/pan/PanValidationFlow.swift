@@ -58,7 +58,7 @@ class PanValidationFlow {
                         cardBrands: cardBrands)
                     {
                         self.updateCvcValidationRule(for: cardBrands)
-                        self.panValidationStateHandler.handleCobrandedCardsUpdate(
+                        self.panValidationStateHandler.updateCardBrandsIfChanged(
                             cardBrands: cardBrands)
                     }
                 case .failure(_):

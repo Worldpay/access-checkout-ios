@@ -35,18 +35,18 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
 
     }
 
-    func handleCobrandedCardsUpdate(cardBrands: [CardBrandModel]) {
+    func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {
 
         return cuckoo_manager.call(
             """
-            handleCobrandedCardsUpdate(cardBrands: [CardBrandModel])
+            updateCardBrandsIfChanged(cardBrands: [CardBrandModel])
             """,
             parameters: (cardBrands),
             escapingParameters: (cardBrands),
             superclassCall:
 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall(),
-            defaultCall: __defaultImplStub!.handleCobrandedCardsUpdate(cardBrands: cardBrands))
+            defaultCall: __defaultImplStub!.updateCardBrandsIfChanged(cardBrands: cardBrands))
 
     }
 
@@ -118,7 +118,7 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
                         """, parameterMatchers: matchers))
         }
 
-        func handleCobrandedCardsUpdate<M1: Cuckoo.Matchable>(cardBrands: M1)
+        func updateCardBrandsIfChanged<M1: Cuckoo.Matchable>(cardBrands: M1)
             -> Cuckoo.ProtocolStubNoReturnFunction<([CardBrandModel])>
         where M1.MatchedType == [CardBrandModel] {
             let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
@@ -129,7 +129,7 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
                     for: MockPanValidationStateHandler.self,
                     method:
                         """
-                        handleCobrandedCardsUpdate(cardBrands: [CardBrandModel])
+                        updateCardBrandsIfChanged(cardBrands: [CardBrandModel])
                         """, parameterMatchers: matchers))
         }
 
@@ -202,7 +202,7 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
         }
 
         @discardableResult
-        func handleCobrandedCardsUpdate<M1: Cuckoo.Matchable>(cardBrands: M1)
+        func updateCardBrandsIfChanged<M1: Cuckoo.Matchable>(cardBrands: M1)
             -> Cuckoo.__DoNotUse<([CardBrandModel]), Void>
         where M1.MatchedType == [CardBrandModel] {
             let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
@@ -210,7 +210,7 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
             ]
             return cuckoo_manager.verify(
                 """
-                handleCobrandedCardsUpdate(cardBrands: [CardBrandModel])
+                updateCardBrandsIfChanged(cardBrands: [CardBrandModel])
                 """, callMatcher: callMatcher, parameterMatchers: matchers,
                 sourceLocation: sourceLocation)
         }
@@ -258,7 +258,7 @@ class PanValidationStateHandlerStub: PanValidationStateHandler {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
 
-    func handleCobrandedCardsUpdate(cardBrands: [CardBrandModel]) {
+    func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
 

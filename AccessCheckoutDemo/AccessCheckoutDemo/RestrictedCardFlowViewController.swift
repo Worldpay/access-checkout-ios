@@ -54,16 +54,6 @@ class RestrictedCardFlowViewController: UIViewController {
         cardBrandsChanged(cardBrands: [])
     }
 
-    private func updateCardBrandImage(url: URL) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: data)
-                }
-            }
-        }
-    }
-
     private func changePanValidIndicator(isValid: Bool) {
         panTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
@@ -72,16 +62,7 @@ class RestrictedCardFlowViewController: UIViewController {
 
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandsChanged(cardBrands: [CardBrand]) {
-        if let cardBrand = cardBrands.first,
-            let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
-            let url = URL(string: imageUrl)
-        {
-            updateCardBrandImage(url: url)
-            imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
-        } else {
-            imageView.image = unknownBrandImage
-            imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
-        }
+        UiUtils.updateCardBrandImage(self.imageView, with: cardBrands.first)
     }
 
     func panValidChanged(isValid: Bool) {

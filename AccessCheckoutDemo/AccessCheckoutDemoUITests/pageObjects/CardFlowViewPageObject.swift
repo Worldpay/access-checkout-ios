@@ -115,14 +115,4 @@ class CardFlowViewPageObject {
         cutMenu.tap()
         TestUtils.wait(seconds: 1)
     }
-
-    func typeTextIntoPanByIndividualCharacter(_ text: String) {
-        if !TestUtils.isFocused(panField) {
-            panField.tap()
-        }
-
-        for char in text {
-            panField.typeText(String(char))
-        }
-    }
 }

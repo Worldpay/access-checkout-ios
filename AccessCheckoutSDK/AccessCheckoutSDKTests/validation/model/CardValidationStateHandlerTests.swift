@@ -88,7 +88,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func testHandlePanValidation_shouldNotifyMerchantDelegateWithNilWhenNoBrands() {
+    func testHandlePanValidation_shouldNotifyMerchantDelegateWithEmptyArrayWhenNoBrands() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: true,
@@ -114,7 +114,7 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
     }
 
-    // MARK: Cobranded Cards Tests
+    // MARK: Cards brands change tests including co-branded cards Tests
 
     func testHandleCobrandedCardsUpdate_shouldUpdateWhenBrandsAreDifferent() {
         let expectedCardBrands = [
@@ -126,7 +126,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: [visaBrand]
         )
 
-        validationStateHandler.handleCobrandedCardsUpdate(cardBrands: [visaBrand, maestroBrand])
+        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [visaBrand, maestroBrand])
 
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
@@ -138,7 +138,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: [visaBrand, maestroBrand]
         )
 
-        validationStateHandler.handleCobrandedCardsUpdate(cardBrands: [maestroBrand, visaBrand])
+        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [maestroBrand, visaBrand])
 
         verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
     }
@@ -153,7 +153,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: []
         )
 
-        validationStateHandler.handleCobrandedCardsUpdate(cardBrands: [visaBrand, maestroBrand])
+        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [visaBrand, maestroBrand])
 
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
