@@ -310,10 +310,10 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: true)
     }
 
-    // MARK: CvcValidationStateHandler (unchanged)
+    // MARK: CvcValidationStateHandler
 
     func
-        testHandleCvcValidation_shouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChangeFromFalse()
+        testHandleCvcValidation_shouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChange()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -325,7 +325,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testHandleCvcValidation_shouldNotifyMerchantDelegateWhenCvcValidationStateChangesFromFalse()
+        testHandleCvcValidation_shouldNotifyMerchantDelegateWhenCvcValidationStateChanges()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
