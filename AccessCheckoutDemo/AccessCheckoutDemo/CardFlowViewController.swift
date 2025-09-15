@@ -228,11 +228,15 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
             let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
             let url = URL(string: imageUrl)
         {
-            updateCardBrandImage(url: url)
-            imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
+            DispatchQueue.main.async {
+                self.updateCardBrandImage(url: url)
+                self.imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
+            }
         } else {
-            imageView.image = unknownBrandImage
-            imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
+            DispatchQueue.main.async {
+                self.imageView.image = self.unknownBrandImage
+                self.imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
+            }
         }
     }
 
