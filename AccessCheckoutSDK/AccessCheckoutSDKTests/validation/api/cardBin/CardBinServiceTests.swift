@@ -115,9 +115,9 @@ class CardBinServiceTests: XCTestCase {
     func testShouldNotSortBrandsPassedInCallback() {
         let expectation = self.expectation(
             description: "should not sort brands passed in callback")
-        let discoverBrand = TestFixtures.discoverBrand()
+        let visaBrand = TestFixtures.visaBrand()
         let response = CardBinResponse(
-            brand: ["visa", "discover"],
+            brand: ["visa", "hypercard"],
             fundingType: "debit",
             luhnCompliant: true
         )
@@ -126,8 +126,8 @@ class CardBinServiceTests: XCTestCase {
 
         var receivedBrands: [CardBrandModel]?
         cardBinService.getCardBrands(
-            globalBrand: discoverBrand,
-            cardNumber: discoverDinersTestPan
+            globalBrand: visaBrand,
+            cardNumber: visaTestPan
         ) { result in
             if case .success(let brands) = result {
                 receivedBrands = brands
@@ -139,7 +139,7 @@ class CardBinServiceTests: XCTestCase {
             XCTAssertNotNil(receivedBrands)
             XCTAssertEqual(receivedBrands!.count, 2)
             XCTAssertEqual(receivedBrands![0].name, "visa")
-            XCTAssertEqual(receivedBrands![1].name, "discover")
+            XCTAssertEqual(receivedBrands![1].name, "hypercard")
         }
     }
 

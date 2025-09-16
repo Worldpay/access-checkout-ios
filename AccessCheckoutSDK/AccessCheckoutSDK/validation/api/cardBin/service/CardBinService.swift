@@ -93,7 +93,7 @@ internal class CardBinService {
                 }
             }
 
-            return responseBrands
+            return allBrands
         } else {
             return responseBrands
         }
