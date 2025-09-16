@@ -208,6 +208,9 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         verify(mockPanValidationStateHandler, never()).updateCardBrands(cardBrands: any())
     }
 
+    // This test is left here for coverage - there should not be a case where the CardValidationStateHandler
+    // has card brands in memory and the CardBinService returns an empty array of brands because
+    // the CardBinService is always called with the global brand
     func testHandleCobrandedCards_withEmptyResponse_resetsCvcRules() {
         let pan = "444433332222"
         let expectation = XCTestExpectation(description: "Card bin service callback")

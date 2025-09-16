@@ -64,6 +64,7 @@ class PanValidationFlow {
                             cardBrands: cardBrands)
                     }
                 case .failure(_):
+                    // code not reachable as the CardBinService never calls the callback in case of failure
                     NSLog("Card BIN lookup failed")
                 }
             }

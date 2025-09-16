@@ -81,7 +81,7 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
         )
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
         panValidationFlowMock.getStubbingProxy().getCardBrands().thenReturn(
-            detectedCardBrand.map { [$0] } ?? [])
+            detectedCardBrand != nil ? [detectedCardBrand!] : [])
 
         let panValidator = PanValidator(configurationProvider)
         return PanViewPresenter(

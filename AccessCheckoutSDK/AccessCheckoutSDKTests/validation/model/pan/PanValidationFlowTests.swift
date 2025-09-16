@@ -56,12 +56,12 @@ class PanValidationFlowTests: XCTestCase {
 
         verify(panValidator).validate(pan: "1234")
         verify(panValidationStateHandler).handlePanValidation(
-            isValid: true,
-            cardBrand: equal(to: visaBrand)
+            isValid: expectedResult.isValid,
+            cardBrand: equal(to: expectedResult.cardBrand)
         )
     }
 
-    func testValidate_withNoBrand_callsHandlerWithEmptyArray() {
+    func testValidate_callsHandlerWithNoBrand_whenNoBrandHasBeenDetected() {
         let cvcFlow = mockCvcFlow()
         let expectedResult = PanValidationResult(false, nil)
         let panValidator = createMockPanValidator(thatReturns: expectedResult)

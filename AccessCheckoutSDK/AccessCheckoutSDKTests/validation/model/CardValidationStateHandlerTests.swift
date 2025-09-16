@@ -139,7 +139,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     func testUpdateCardBrandsIfChanged_shouldUpdateWhenBrandsAreDifferent() {
         let expectedCardBrands = [
             createCardBrand(from: visaBrand), createCardBrand(from: maestroBrand),
-        ].compactMap { $0 }
+        ]
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
