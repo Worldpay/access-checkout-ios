@@ -6,6 +6,8 @@ final class UiUtils {
     private static let unknownBrandImage = UIImage(named: "card_unknown")!
     private static var cardBrandsImagesCache: [String: CachedImage] = [:]
 
+    // This function and the one below are designed to assert the card brand displayed in the UI
+    // and use a retry mechanism to cater for what appears to be the slowness of BitRise
     public static func updateCardBrandImage(_ imageView: UIImageView, with cardBrand: CardBrand?) {
         if let cardBrand = cardBrand,
             let urlAsString = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
@@ -13,7 +15,7 @@ final class UiUtils {
         {
             if let cachedImage = cardBrandsImagesCache[urlAsString] {
                 setImageSourceAndLabel(
-                    imageView, source: UIImage(data: cachedImage.uiImage)!, label: cachedImage.label
+                    imageView, source: cachedImage.uiImage, label: cachedImage.label
                 )
             } else {
                 // User interactive QOS is chosen to make the task below a high priority task
@@ -22,25 +24,20 @@ final class UiUtils {
                     label: "worldpay.demo.uiutils", qos: .userInteractive)
                 serialQueue.async {
                     if let data = try? Data(contentsOf: url) {
-                        let cachedImage = CachedImage(uiImage: data, label: cardBrand.name)
+                        let cachedImage = CachedImage(
+                            uiImage: UIImage(data: data)!, label: cardBrand.name)
                         cardBrandsImagesCache[urlAsString] = cachedImage
 
-                        DispatchQueue.main.async {
-                            setImageSourceAndLabel(
-                                imageView, source: UIImage(data: cachedImage.uiImage)!,
-                                label: cachedImage.label)
-                        }
+                        setImageSourceAndLabel(
+                            imageView, source: cachedImage.uiImage,
+                            label: cachedImage.label
+                        )
                     }
                 }
             }
         } else {
-            DispatchQueue.main.async {
-                setImageSourceAndLabel(
-                    imageView, source: unknownBrandImage, label: "unknown_card_brand")
-
-                imageView.image = unknownBrandImage
-                imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
-            }
+            setImageSourceAndLabel(
+                imageView, source: unknownBrandImage, label: "unknown_card_brand")
         }
     }
 
@@ -54,7 +51,7 @@ final class UiUtils {
     }
 
     private struct CachedImage {
-        fileprivate let uiImage: Data
+        fileprivate let uiImage: UIImage
         fileprivate let label: String
     }
 }

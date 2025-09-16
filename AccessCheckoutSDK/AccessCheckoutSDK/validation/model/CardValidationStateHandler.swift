@@ -70,7 +70,7 @@ class CardValidationStateHandler {
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
-    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
+    func handlePanValidation(isValid: Bool, cardBrand globalBrand: CardBrandModel?) {
         if isValid != panIsValid {
             panIsValid = isValid
             notifyMerchantOfPanValidationChangeIsPending = true
@@ -81,7 +81,8 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        updateCardBrandsIfChanged(cardBrands: cardBrand != nil ? [cardBrand!] : [])
+        let cardBrandAsArray = globalBrand != nil ? [globalBrand!] : []
+        updateCardBrandsIfChanged(cardBrands: cardBrandAsArray)
     }
 
     func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {

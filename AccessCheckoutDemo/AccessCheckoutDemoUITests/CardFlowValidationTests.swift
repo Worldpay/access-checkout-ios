@@ -52,21 +52,21 @@ class CardFlowCardValidationTests: XCTestCase {
         view!.typeTextIntoPan("4")
         view!.expiryDateField.tap()  // we move the focus to another field so that the validation triggers
 
-        view!.assertCardBrandIs("visa")
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
     func testCompletePanIsValid() {
         view!.typeTextIntoPan("4444333322221111")
 
-        view!.assertCardBrandIs("visa")
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
     func test13DigitsVisaPanIsValid() {
         view!.typeTextIntoPan("4911830000000")
 
-        view!.assertCardBrandIs("visa")
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
