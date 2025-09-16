@@ -112,7 +112,9 @@ class CardFlowViewPageObject {
             currentAttempt += 1
             TestUtils.wait(seconds: sleepTimeBetweenAttemptsInSeconds)
 
-            NSLog("Expected card brand \(brandAsLocalizedString) but received \(cardBrandImage.label). Retrying, attempt \(currentAttempt)/\(maxAttempts)")
+            NSLog(
+                "Expected card brand \(brandAsLocalizedString) but received \(cardBrandImage.label). Retrying, attempt \(currentAttempt)/\(maxAttempts)"
+            )
         }
 
         XCTAssertEqual(brandAsLocalizedString, cardBrandImage.label)
@@ -132,7 +134,9 @@ class CardFlowViewPageObject {
             currentAttempt += 1
             TestUtils.wait(seconds: sleepTimeBetweenAttemptsInSeconds)
 
-            NSLog("Expected card brand to be different from \(brandAsLocalizedString). Retrying, attempt \(currentAttempt)/\(maxAttempts)")
+            NSLog(
+                "Expected card brand to be different from \(brandAsLocalizedString). Retrying, attempt \(currentAttempt)/\(maxAttempts)"
+            )
         }
 
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
