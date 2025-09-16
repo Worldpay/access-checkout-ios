@@ -124,7 +124,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {}
+    func cardBrandsChanged(cardBrands: [CardBrand]) {}
     func panValidChanged(isValid: Bool) {}
     func expiryDateValidChanged(isValid: Bool) {}
     func cvcValidChanged(isValid: Bool) {}

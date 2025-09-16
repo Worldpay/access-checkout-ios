@@ -80,7 +80,8 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
             acceptedCardBrands: []
         )
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        panValidationFlowMock.getStubbingProxy().getCardBrand().thenReturn(detectedCardBrand)
+        panValidationFlowMock.getStubbingProxy().getCardBrands().thenReturn(
+            detectedCardBrand != nil ? [detectedCardBrand!] : [])
 
         let panValidator = PanValidator(configurationProvider)
         return PanViewPresenter(
@@ -258,8 +259,11 @@ class PanViewPresenterNoCardSpacingTests: PresenterTestSuite {
             allCardBrands: [visaBrand, maestroBrand],
             acceptedCardBrands: []
         )
+        let detectedCardBrand: CardBrandModel? = maestroBrand
+
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        panValidationFlowMock.getStubbingProxy().getCardBrand().thenReturn(maestroBrand)
+        panValidationFlowMock.getStubbingProxy().getCardBrands().thenReturn(
+            detectedCardBrand != nil ? [detectedCardBrand!] : [])
 
         let panValidator = PanValidator(configurationProvider)
         let presenter = PanViewPresenter(

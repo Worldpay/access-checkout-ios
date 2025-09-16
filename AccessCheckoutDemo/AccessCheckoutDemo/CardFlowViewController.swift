@@ -190,17 +190,7 @@ class CardFlowViewController: UIViewController {
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
         disableSubmitIfNotValid(valid: false)
-        cardBrandChanged(cardBrand: nil)
-    }
-
-    private func updateCardBrandImage(url: URL) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: data)
-                }
-            }
-        }
+        cardBrandsChanged(cardBrands: [])
     }
 
     private func changePanValidIndicator(isValid: Bool) {
@@ -223,18 +213,8 @@ class CardFlowViewController: UIViewController {
 }
 
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {
-        if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl)
-        {
-            updateCardBrandImage(url: url)
-        } else {
-            imageView.image = unknownBrandImage
-        }
-        imageView.accessibilityLabel = NSLocalizedString(
-            cardBrand?.name ?? "unknown_card_brand",
-            comment: ""
-        )
+    func cardBrandsChanged(cardBrands: [CardBrand]) {
+        UiUtils.updateCardBrandImage(self.imageView, with: cardBrands.first)
     }
 
     func panValidChanged(isValid: Bool) {

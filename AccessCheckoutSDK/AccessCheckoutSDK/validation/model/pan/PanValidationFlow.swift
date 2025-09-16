@@ -20,6 +20,22 @@ class PanValidationFlow {
         self.cardBinService = cardBinService
     }
 
+    func validate(pan: String) {
+        let result = panValidator.validate(pan: pan)
+        let globalBrand: CardBrandModel? = result.cardBrand
+
+        if panValidationStateHandler.areCardBrandsDifferentFrom(
+            cardBrands: globalBrand != nil ? [globalBrand!] : [])
+        {
+            updateCvcValidationRule(for: globalBrand)
+        }
+
+        panValidationStateHandler.handlePanValidation(
+            isValid: result.isValid,
+            cardBrand: globalBrand
+        )
+    }
+
     func handleCobrandedCards(pan: String) {
         let sanitisedCardNumber = pan.replacingOccurrences(of: " ", with: "")
 
@@ -30,52 +46,45 @@ class PanValidationFlow {
 
         let cardNumberPrefix = String(sanitisedCardNumber.prefix(12))
 
-        let hasChanged = cardNumberPrefix != lastCheckedPanPrefix
-
-        if hasChanged {
+        if cardNumberPrefix != lastCheckedPanPrefix {
             lastCheckedPanPrefix = cardNumberPrefix
 
-            let globalBrand = panValidationStateHandler.getCardBrand()
-
-            // currently logs out card bin lookup result for debugging purposes
-            // will call PanValidationStateHandler to handle updating merchant delegeate with returned card brands
             cardBinService.getCardBrands(
-                globalBrand: globalBrand,
+                globalBrand: self.panValidationStateHandler.getGlobalBrand(),
                 cardNumber: cardNumberPrefix
             ) { result in
                 switch result {
                 case .success(let cardBrands):
-                    NSLog("Card BIN lookup succeeded: \(cardBrands)")
+                    if self.panValidationStateHandler.areCardBrandsDifferentFrom(
+                        cardBrands: cardBrands)
+                    {
+                        // The global brand always appear first in the list of brands returned by OUR CardBinService class
+                        self.updateCvcValidationRule(for: cardBrands.first)
+                        self.panValidationStateHandler.updateCardBrands(
+                            cardBrands: cardBrands)
+                    }
                 case .failure(_):
-                    NSLog("Card BIN lookup failed:")
+                    // code not reachable as the CardBinService never calls the callback in case of failure
+                    NSLog("Card BIN lookup failed")
                 }
             }
         }
     }
 
-    func validate(pan: String) {
-        let result = panValidator.validate(pan: pan)
-        if panValidationStateHandler.isCardBrandDifferentFrom(cardBrand: result.cardBrand) {
-            if let cardBrand = result.cardBrand {
-                cvcFlow.updateValidationRule(with: cardBrand.cvcValidationRule)
-            } else {
-                cvcFlow.resetValidationRule()
-            }
-
-            cvcFlow.revalidate()
+    private func updateCvcValidationRule(for cardBrand: CardBrandModel?) {
+        if let cardBrand = cardBrand {
+            cvcFlow.updateValidationRule(with: cardBrand.cvcValidationRule)
+        } else {
+            cvcFlow.resetValidationRule()
         }
-
-        panValidationStateHandler.handlePanValidation(
-            isValid: result.isValid,
-            cardBrand: result.cardBrand
-        )
+        cvcFlow.revalidate()
     }
 
     func notifyMerchant() {
         panValidationStateHandler.notifyMerchantOfPanValidationState()
     }
 
-    func getCardBrand() -> CardBrandModel? {
-        return panValidationStateHandler.getCardBrand()
+    func getCardBrands() -> [CardBrandModel] {
+        return panValidationStateHandler.getCardBrands()
     }
 }

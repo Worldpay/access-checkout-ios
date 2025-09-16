@@ -35,18 +35,33 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
 
     }
 
-    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
+    func updateCardBrands(cardBrands: [CardBrandModel]) {
 
         return cuckoo_manager.call(
             """
-            isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool
+            updateCardBrands(cardBrands: [CardBrandModel])
             """,
-            parameters: (cardBrand),
-            escapingParameters: (cardBrand),
+            parameters: (cardBrands),
+            escapingParameters: (cardBrands),
             superclassCall:
 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall(),
-            defaultCall: __defaultImplStub!.isCardBrandDifferentFrom(cardBrand: cardBrand))
+            defaultCall: __defaultImplStub!.updateCardBrands(cardBrands: cardBrands))
+
+    }
+
+    func areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool {
+
+        return cuckoo_manager.call(
+            """
+            areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool
+            """,
+            parameters: (cardBrands),
+            escapingParameters: (cardBrands),
+            superclassCall:
+
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall(),
+            defaultCall: __defaultImplStub!.areCardBrandsDifferentFrom(cardBrands: cardBrands))
 
     }
 
@@ -65,18 +80,33 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
 
     }
 
-    func getCardBrand() -> CardBrandModel? {
+    func getCardBrands() -> [CardBrandModel] {
 
         return cuckoo_manager.call(
             """
-            getCardBrand() -> CardBrandModel?
+            getCardBrands() -> [CardBrandModel]
             """,
             parameters: (),
             escapingParameters: (),
             superclassCall:
 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall(),
-            defaultCall: __defaultImplStub!.getCardBrand())
+            defaultCall: __defaultImplStub!.getCardBrands())
+
+    }
+
+    func getGlobalBrand() -> CardBrandModel? {
+
+        return cuckoo_manager.call(
+            """
+            getGlobalBrand() -> CardBrandModel?
+            """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall(),
+            defaultCall: __defaultImplStub!.getGlobalBrand())
 
     }
 
@@ -103,18 +133,33 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
                         """, parameterMatchers: matchers))
         }
 
-        func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1)
-            -> Cuckoo.ProtocolStubFunction<(CardBrandModel?), Bool>
-        where M1.OptionalMatchedType == CardBrandModel {
-            let matchers: [Cuckoo.ParameterMatcher<(CardBrandModel?)>] = [
-                wrap(matchable: cardBrand) { $0 }
+        func updateCardBrands<M1: Cuckoo.Matchable>(cardBrands: M1)
+            -> Cuckoo.ProtocolStubNoReturnFunction<([CardBrandModel])>
+        where M1.MatchedType == [CardBrandModel] {
+            let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
+                wrap(matchable: cardBrands) { $0 }
             ]
             return .init(
                 stub: cuckoo_manager.createStub(
                     for: MockPanValidationStateHandler.self,
                     method:
                         """
-                        isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool
+                        updateCardBrands(cardBrands: [CardBrandModel])
+                        """, parameterMatchers: matchers))
+        }
+
+        func areCardBrandsDifferentFrom<M1: Cuckoo.Matchable>(cardBrands: M1)
+            -> Cuckoo.ProtocolStubFunction<([CardBrandModel]), Bool>
+        where M1.MatchedType == [CardBrandModel] {
+            let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
+                wrap(matchable: cardBrands) { $0 }
+            ]
+            return .init(
+                stub: cuckoo_manager.createStub(
+                    for: MockPanValidationStateHandler.self,
+                    method:
+                        """
+                        areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool
                         """, parameterMatchers: matchers))
         }
 
@@ -129,14 +174,25 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
                         """, parameterMatchers: matchers))
         }
 
-        func getCardBrand() -> Cuckoo.ProtocolStubFunction<(), CardBrandModel?> {
+        func getCardBrands() -> Cuckoo.ProtocolStubFunction<(), [CardBrandModel]> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return .init(
                 stub: cuckoo_manager.createStub(
                     for: MockPanValidationStateHandler.self,
                     method:
                         """
-                        getCardBrand() -> CardBrandModel?
+                        getCardBrands() -> [CardBrandModel]
+                        """, parameterMatchers: matchers))
+        }
+
+        func getGlobalBrand() -> Cuckoo.ProtocolStubFunction<(), CardBrandModel?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(
+                stub: cuckoo_manager.createStub(
+                    for: MockPanValidationStateHandler.self,
+                    method:
+                        """
+                        getGlobalBrand() -> CardBrandModel?
                         """, parameterMatchers: matchers))
         }
 
@@ -172,15 +228,29 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
         }
 
         @discardableResult
-        func isCardBrandDifferentFrom<M1: Cuckoo.OptionalMatchable>(cardBrand: M1)
-            -> Cuckoo.__DoNotUse<(CardBrandModel?), Bool>
-        where M1.OptionalMatchedType == CardBrandModel {
-            let matchers: [Cuckoo.ParameterMatcher<(CardBrandModel?)>] = [
-                wrap(matchable: cardBrand) { $0 }
+        func updateCardBrands<M1: Cuckoo.Matchable>(cardBrands: M1)
+            -> Cuckoo.__DoNotUse<([CardBrandModel]), Void>
+        where M1.MatchedType == [CardBrandModel] {
+            let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
+                wrap(matchable: cardBrands) { $0 }
             ]
             return cuckoo_manager.verify(
                 """
-                isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool
+                updateCardBrands(cardBrands: [CardBrandModel])
+                """, callMatcher: callMatcher, parameterMatchers: matchers,
+                sourceLocation: sourceLocation)
+        }
+
+        @discardableResult
+        func areCardBrandsDifferentFrom<M1: Cuckoo.Matchable>(cardBrands: M1)
+            -> Cuckoo.__DoNotUse<([CardBrandModel]), Bool>
+        where M1.MatchedType == [CardBrandModel] {
+            let matchers: [Cuckoo.ParameterMatcher<([CardBrandModel])>] = [
+                wrap(matchable: cardBrands) { $0 }
+            ]
+            return cuckoo_manager.verify(
+                """
+                areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool
                 """, callMatcher: callMatcher, parameterMatchers: matchers,
                 sourceLocation: sourceLocation)
         }
@@ -196,11 +266,21 @@ class MockPanValidationStateHandler: PanValidationStateHandler, Cuckoo.ProtocolM
         }
 
         @discardableResult
-        func getCardBrand() -> Cuckoo.__DoNotUse<(), CardBrandModel?> {
+        func getCardBrands() -> Cuckoo.__DoNotUse<(), [CardBrandModel]> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return cuckoo_manager.verify(
                 """
-                getCardBrand() -> CardBrandModel?
+                getCardBrands() -> [CardBrandModel]
+                """, callMatcher: callMatcher, parameterMatchers: matchers,
+                sourceLocation: sourceLocation)
+        }
+
+        @discardableResult
+        func getGlobalBrand() -> Cuckoo.__DoNotUse<(), CardBrandModel?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+                """
+                getGlobalBrand() -> CardBrandModel?
                 """, callMatcher: callMatcher, parameterMatchers: matchers,
                 sourceLocation: sourceLocation)
         }
@@ -214,7 +294,11 @@ class PanValidationStateHandlerStub: PanValidationStateHandler {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
 
-    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
+    func updateCardBrands(cardBrands: [CardBrandModel]) {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+
+    func areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool {
         return DefaultValueRegistry.defaultValue(for: (Bool).self)
     }
 
@@ -222,7 +306,11 @@ class PanValidationStateHandlerStub: PanValidationStateHandler {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
 
-    func getCardBrand() -> CardBrandModel? {
+    func getCardBrands() -> [CardBrandModel] {
+        return DefaultValueRegistry.defaultValue(for: ([CardBrandModel]).self)
+    }
+
+    func getGlobalBrand() -> CardBrandModel? {
         return DefaultValueRegistry.defaultValue(for: (CardBrandModel?).self)
     }
 

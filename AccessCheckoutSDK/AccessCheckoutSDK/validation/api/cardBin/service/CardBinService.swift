@@ -83,16 +83,20 @@ internal class CardBinService {
                 )
         }
 
-        let allBrands = ([globalBrand].compactMap { $0 } + responseBrands)
-            .reduce(into: [String: CardBrandModel]()) { result, brand in
-                let key = brand.name.lowercased()
-                if result[key] == nil {
-                    result[key] = brand
+        if let globalBrand = globalBrand {
+            var allBrands: [CardBrandModel] = []
+            allBrands.append(globalBrand)
+
+            for responseBrand in responseBrands {
+                if responseBrand.name.lowercased() != globalBrand.name.lowercased() {
+                    allBrands.append(responseBrand)
                 }
             }
-            .map { $0.value }
 
-        return allBrands
+            return allBrands
+        } else {
+            return responseBrands
+        }
     }
 
     /// Searches for a card brand by name within the provided configuration.

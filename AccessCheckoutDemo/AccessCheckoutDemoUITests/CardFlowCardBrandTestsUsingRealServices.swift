@@ -186,7 +186,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
         view!.typeTextIntoPan("493698")
 
         XCTAssertEqual("4936 98", view!.panText)
-        XCTAssertFalse(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, isNot: "unknown_card_brand")
     }
 
     // MARK: UNKNOWN CARD BRAND
@@ -198,19 +198,21 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
     // MARK: utils
 
     func assertBrand(of pan: String, is brand: String) {
-        if let panText = view!.panText, !panText.isEmpty {
-            for _ in 0..<20 {
-                view!.typeTextIntoPan(backspace)
+        if let panText = view!.panText, panText != "Card Number" {
+            var deleteString = String()
+            for _ in 0..<panText.count {
+                deleteString += XCUIKeyboardKey.delete.rawValue
             }
+            view!.typeTextIntoPan(deleteString)
 
             XCTAssertEqual("Card Number", view!.panText)
-            XCTAssertTrue(view!.imageIs("unknown_card_brand"))
+            TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "unknown_card_brand")
         }
 
         view!.typeTextIntoPan(pan)
 
         let panViewText = view!.panText?.replacingOccurrences(of: " ", with: "")
         XCTAssertEqual(pan, panViewText)
-        XCTAssertTrue(view!.imageIs(brand))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: brand)
     }
 }
