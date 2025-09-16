@@ -60,7 +60,7 @@ class PanValidationFlow {
                     {
                         // The global brand always appear first in the list of brands returned by OUR CardBinService class
                         self.updateCvcValidationRule(for: cardBrands.first)
-                        self.panValidationStateHandler.updateCardBrandsIfChanged(
+                        self.panValidationStateHandler.updateCardBrands(
                             cardBrands: cardBrands)
                     }
                 case .failure(_):

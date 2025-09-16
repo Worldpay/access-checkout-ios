@@ -82,17 +82,17 @@ extension CardValidationStateHandler: PanValidationStateHandler {
         }
 
         let cardBrandAsArray = globalBrand != nil ? [globalBrand!] : []
-        updateCardBrandsIfChanged(cardBrands: cardBrandAsArray)
+        if !areCardBrandsEqual(self.cardBrands, cardBrandAsArray) {
+            updateCardBrands(cardBrands: cardBrandAsArray)
+        }
     }
 
-    func updateCardBrandsIfChanged(cardBrands: [CardBrandModel]) {
-        if !areCardBrandsEqual(self.cardBrands, cardBrands) {
-            self.cardBrands = cardBrands
+    func updateCardBrands(cardBrands: [CardBrandModel]) {
+        self.cardBrands = cardBrands
 
-            merchantDelegate.cardBrandsChanged(
-                cardBrands: cardBrands.map { cardBrandModelTransformer.transform($0) }
-            )
-        }
+        merchantDelegate.cardBrandsChanged(
+            cardBrands: cardBrands.map { cardBrandModelTransformer.transform($0) }
+        )
     }
 
     func notifyMerchantOfPanValidationState() {

@@ -146,21 +146,21 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: [visaBrand]
         )
 
-        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [visaBrand, maestroBrand])
+        validationStateHandler.updateCardBrands(cardBrands: [visaBrand, maestroBrand])
 
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func testUpdateCardBrandsIfChanged_shouldNotUpdateWhenBrandsAreSameButDifferentOrder() {
+    func testUpdateCardBrands_shouldAlwaysUpdateEvenWhenBrandsAreSameButDifferentOrder() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
             cardBrands: [visaBrand, maestroBrand]
         )
 
-        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [maestroBrand, visaBrand])
+        validationStateHandler.updateCardBrands(cardBrands: [maestroBrand, visaBrand])
 
-        verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
+        verify(merchantDelegate, times(1)).cardBrandsChanged(cardBrands: any())
     }
 
     func testUpdateCardBrandsIfChanged_shouldUpdateFromEmptyToMultipleBrands() {
@@ -173,7 +173,7 @@ class CardValidationStateHandlerTests: XCTestCase {
             cardBrands: []
         )
 
-        validationStateHandler.updateCardBrandsIfChanged(cardBrands: [visaBrand, maestroBrand])
+        validationStateHandler.updateCardBrands(cardBrands: [visaBrand, maestroBrand])
 
         verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }

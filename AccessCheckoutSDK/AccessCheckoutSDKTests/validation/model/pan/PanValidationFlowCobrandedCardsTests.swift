@@ -44,7 +44,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrands()).thenReturn([])
             when(stub.getGlobalBrand()).thenReturn(nil)
             when(stub.areCardBrandsDifferentFrom(cardBrands: any())).thenReturn(false)
-            when(stub.updateCardBrandsIfChanged(cardBrands: any())).thenDoNothing()
+            when(stub.updateCardBrands(cardBrands: any())).thenDoNothing()
         }
 
         stub(mockCvcFlow) { stub in
@@ -145,7 +145,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrands()).thenReturn([])
             when(stub.areCardBrandsDifferentFrom(cardBrands: equal(to: returnedBrands)))
                 .thenReturn(true)
-            when(stub.updateCardBrandsIfChanged(cardBrands: equal(to: returnedBrands)))
+            when(stub.updateCardBrands(cardBrands: equal(to: returnedBrands)))
                 .then { _ in
                     expectation.fulfill()
                 }
@@ -169,7 +169,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         // Verifies first brand's CVC rule is used
         verify(mockCvcFlow).updateValidationRule(with: returnedBrands.first!.cvcValidationRule)
         verify(mockCvcFlow).revalidate()
-        verify(mockPanValidationStateHandler).updateCardBrandsIfChanged(
+        verify(mockPanValidationStateHandler).updateCardBrands(
             cardBrands: equal(to: returnedBrands))
     }
 
@@ -205,7 +205,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         verify(mockCvcFlow, never()).updateValidationRule(with: any())
         verify(mockCvcFlow, never()).revalidate()
-        verify(mockPanValidationStateHandler, never()).updateCardBrandsIfChanged(cardBrands: any())
+        verify(mockPanValidationStateHandler, never()).updateCardBrands(cardBrands: any())
     }
 
     func testHandleCobrandedCards_withEmptyResponse_resetsCvcRules() {
@@ -217,7 +217,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getGlobalBrand()).thenReturn(visaBrand)
             when(stub.areCardBrandsDifferentFrom(cardBrands: equal(to: [])))
                 .thenReturn(true)
-            when(stub.updateCardBrandsIfChanged(cardBrands: equal(to: [])))
+            when(stub.updateCardBrands(cardBrands: equal(to: [])))
                 .then { _ in
                     expectation.fulfill()
                 }
@@ -240,7 +240,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
 
         verify(mockCvcFlow).resetValidationRule()
         verify(mockCvcFlow).revalidate()
-        verify(mockPanValidationStateHandler).updateCardBrandsIfChanged(cardBrands: equal(to: []))
+        verify(mockPanValidationStateHandler).updateCardBrands(cardBrands: equal(to: []))
     }
 
     func testHandleCobrandedCards_onFailure_doesNotUpdate() {
@@ -269,7 +269,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.5)
 
-        verify(mockPanValidationStateHandler, never()).updateCardBrandsIfChanged(cardBrands: any())
+        verify(mockPanValidationStateHandler, never()).updateCardBrands(cardBrands: any())
         verify(mockCvcFlow, never()).updateValidationRule(with: any())
         verify(mockCvcFlow, never()).resetValidationRule()
     }
@@ -283,7 +283,7 @@ class PanValidationFlowCobrandedCardsTests: XCTestCase {
             when(stub.getCardBrands()).thenReturn([])
             when(stub.areCardBrandsDifferentFrom(cardBrands: equal(to: brandsWithDifferentRules)))
                 .thenReturn(true)
-            when(stub.updateCardBrandsIfChanged(cardBrands: equal(to: brandsWithDifferentRules)))
+            when(stub.updateCardBrands(cardBrands: equal(to: brandsWithDifferentRules)))
                 .then { _ in
                     expectation.fulfill()
                 }

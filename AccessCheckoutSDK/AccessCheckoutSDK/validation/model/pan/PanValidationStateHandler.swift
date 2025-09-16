@@ -1,7 +1,7 @@
 protocol PanValidationStateHandler {
     func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?)
 
-    func updateCardBrandsIfChanged(cardBrands: [CardBrandModel])
+    func updateCardBrands(cardBrands: [CardBrandModel])
 
     func areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool
 
