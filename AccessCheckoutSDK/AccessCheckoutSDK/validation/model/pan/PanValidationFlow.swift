@@ -7,6 +7,7 @@ class PanValidationFlow {
     private let cardBinService: CardBinService
 
     private var lastCheckedPanPrefix: String = ""
+    private var hasBinServiceResponse: Bool = false
 
     init(
         _ panValidator: PanValidator,
@@ -20,26 +21,13 @@ class PanValidationFlow {
         self.cardBinService = cardBinService
     }
 
-    func validate(pan: String) {
-        let result = panValidator.validate(pan: pan)
-
-        let validationBrands: [CardBrandModel] = result.cardBrand != nil ? [result.cardBrand!] : []
-
-        if panValidationStateHandler.areCardBrandsDifferentFrom(cardBrands: validationBrands) {
-            updateCvcValidationRule(for: validationBrands)
-        }
-
-        panValidationStateHandler.handlePanValidation(
-            isValid: result.isValid,
-            cardBrands: validationBrands
-        )
-    }
-
     func handleCobrandedCards(pan: String) {
         let sanitisedCardNumber = pan.replacingOccurrences(of: " ", with: "")
 
+        // will only send request to card bin service when 12 or more digits
         guard sanitisedCardNumber.count >= 12 else {
             lastCheckedPanPrefix = ""
+            hasBinServiceResponse = false
             return
         }
 
@@ -54,17 +42,48 @@ class PanValidationFlow {
             ) { result in
                 switch result {
                 case .success(let cardBrands):
-                    if self.panValidationStateHandler.areCardBrandsDifferentFrom(
-                        cardBrands: cardBrands)
-                    {
+                    self.hasBinServiceResponse = true
+                    if let handler = self.panValidationStateHandler as? CardValidationStateHandler {
                         self.updateCvcValidationRule(for: cardBrands)
-                        self.panValidationStateHandler.handleCobrandedCardsUpdate(
-                            cardBrands: cardBrands)
+                        handler.handleCobrandedCardsUpdate(cardBrands: cardBrands)
                     }
                 case .failure(_):
+                    self.hasBinServiceResponse = false
                     NSLog("Card BIN lookup failed")
                 }
             }
+        }
+    }
+
+    func validate(pan: String) {
+        let sanitisedCardNumber = pan.replacingOccurrences(of: " ", with: "")
+        let result = panValidator.validate(pan: sanitisedCardNumber)
+        let validationBrands: [CardBrandModel] = result.cardBrand != nil ? [result.cardBrand!] : []
+
+        if sanitisedCardNumber.count < 12 {
+            hasBinServiceResponse = false
+        }
+
+        // will only send results to merchant when less than 12 digits or no response for card bin service
+        if sanitisedCardNumber.count < 12 || !hasBinServiceResponse {
+            if panValidationStateHandler.areCardBrandsDifferentFrom(cardBrands: validationBrands) {
+                if let cardBrand = result.cardBrand {
+                    cvcFlow.updateValidationRule(with: cardBrand.cvcValidationRule)
+                } else {
+                    cvcFlow.resetValidationRule()
+                }
+                cvcFlow.revalidate()
+            }
+
+            panValidationStateHandler.handlePanValidation(
+                isValid: result.isValid,
+                cardBrands: hasBinServiceResponse ? [] : validationBrands
+            )
+        } else {
+            panValidationStateHandler.handlePanValidation(
+                isValid: result.isValid,
+                cardBrands: []
+            )
         }
     }
 
