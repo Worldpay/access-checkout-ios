@@ -6,6 +6,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet var expiryDateTextField: AccessCheckoutUITextField!
     @IBOutlet var cvcTextField: AccessCheckoutUITextField!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var cardBrandsLabel: UILabel!
     @IBOutlet var submitButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var paymentsCvcSessionToggle: UISwitch!
@@ -109,6 +110,9 @@ class CardFlowViewController: UIViewController {
             panTextField.clear()
             expiryDateTextField.clear()
             cvcTextField.clear()
+
+            cardBrandsLabel?.text = ""
+            imageView.image = unknownBrandImage
         }
 
         validationErrors?.forEach { error in
@@ -191,6 +195,31 @@ class CardFlowViewController: UIViewController {
 
         disableSubmitIfNotValid(valid: false)
         cardBrandsChanged(cardBrands: [])
+
+        if cardBrandsLabel == nil {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(label)
+
+            NSLayoutConstraint.activate([
+                label.trailingAnchor.constraint(equalTo: panTextField.trailingAnchor),
+                label.topAnchor.constraint(equalTo: panTextField.bottomAnchor, constant: 8),
+                label.leadingAnchor.constraint(greaterThanOrEqualTo: panTextField.leadingAnchor),
+                label.heightAnchor.constraint(greaterThanOrEqualToConstant: 21),
+            ])
+
+            cardBrandsLabel = label
+        }
+
+        cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
+        if #available(iOS 13.0, *) {
+            cardBrandsLabel?.textColor = .label
+        } else {
+            cardBrandsLabel?.textColor = .black
+        }
+        cardBrandsLabel?.numberOfLines = 1
+        cardBrandsLabel?.textAlignment = .left
+        cardBrandsLabel?.text = ""
     }
 
     private func updateCardBrandImage(url: URL) {
@@ -224,15 +253,39 @@ class CardFlowViewController: UIViewController {
 
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandsChanged(cardBrands: [CardBrand]) {
-        if let cardBrand = cardBrands.first,
-            let imageUrl = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
-            let url = URL(string: imageUrl)
-        {
-            updateCardBrandImage(url: url)
-            imageView.accessibilityLabel = NSLocalizedString(cardBrand.name, comment: "")
-        } else {
-            imageView.image = unknownBrandImage
-            imageView.accessibilityLabel = NSLocalizedString("unknown_card_brand", comment: "")
+        // main thread used for the UI updates
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            if cardBrands.isEmpty {
+                self.imageView.image = self.unknownBrandImage
+                self.imageView.accessibilityLabel = NSLocalizedString(
+                    "unknown_card_brand", comment: "")
+                self.cardBrandsLabel?.text = ""
+                return
+            }
+
+            // attemps to find image of first brand if not any other brand in the list
+            var imageFound = false
+            for brand in cardBrands {
+                if let imageUrl = brand.images.first(where: { $0.type == "image/png" })?.url,
+                    let url = URL(string: imageUrl)
+                {
+                    self.updateCardBrandImage(url: url)
+                    self.imageView.accessibilityLabel = NSLocalizedString(brand.name, comment: "")
+                    imageFound = true
+                    break
+                }
+            }
+
+            if !imageFound {
+                self.imageView.image = self.unknownBrandImage
+                self.imageView.accessibilityLabel = NSLocalizedString(
+                    "unknown_card_brand", comment: "")
+            }
+
+            let brandNames = cardBrands.map { $0.name }.joined(separator: ", ")
+            self.cardBrandsLabel?.text = brandNames
         }
     }
 
