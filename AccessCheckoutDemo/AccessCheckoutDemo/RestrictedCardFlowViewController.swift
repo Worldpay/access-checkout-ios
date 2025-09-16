@@ -62,7 +62,7 @@ class RestrictedCardFlowViewController: UIViewController {
 
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandsChanged(cardBrands: [CardBrand]) {
-        UiUtils.updateCardBrandImage(self.imageView, with: cardBrands.first)
+        UiUtils.updateCardBrandImage(self.imageView, using: cardBrands)
     }
 
     func panValidChanged(isValid: Bool) {

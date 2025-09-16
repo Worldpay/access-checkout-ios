@@ -8,10 +8,11 @@ final class UiUtils {
 
     // This function and the one below are designed to assert the card brand displayed in the UI
     // and use a retry mechanism to cater for what appears to be the slowness of BitRise
-    public static func updateCardBrandImage(_ imageView: UIImageView, with cardBrand: CardBrand?) {
-        if let cardBrand = cardBrand,
-            let urlAsString = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
-            let url = URL(string: urlAsString)
+    public static func updateCardBrandImage(_ imageView: UIImageView, using cardBrands: [CardBrand]) {
+        if !cardBrands.isEmpty,
+           let cardBrand = cardBrands.first,
+           let urlAsString = cardBrand.images.first(where: { $0.type == "image/png" })?.url,
+           let url = URL(string: urlAsString)
         {
             if let cachedImage = cardBrandsImagesCache[urlAsString] {
                 setImageSourceAndLabel(
