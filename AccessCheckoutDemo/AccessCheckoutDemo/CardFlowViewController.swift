@@ -210,16 +210,12 @@ class CardFlowViewController: UIViewController {
 
             cardBrandsLabel = label
         }
-
-        cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
-        if #available(iOS 13.0, *) {
-            cardBrandsLabel?.textColor = .label
-        } else {
-            cardBrandsLabel?.textColor = .black
-        }
+        
         cardBrandsLabel?.numberOfLines = 1
-        cardBrandsLabel?.textAlignment = .left
+        cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
         cardBrandsLabel?.text = ""
+        cardBrandsLabel?.textAlignment = .left
+        cardBrandsLabel?.textColor = .black
     }
 
     private func changePanValidIndicator(isValid: Bool) {
