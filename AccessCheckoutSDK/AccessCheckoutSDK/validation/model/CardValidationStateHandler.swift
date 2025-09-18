@@ -67,6 +67,14 @@ class CardValidationStateHandler {
 
         return cardBrands == latestCardBrands
     }
+
+    private func cardBrandsContainGlobalBrand(_ globalBrand: CardBrandModel?) -> Bool {
+        guard let globalBrand = globalBrand else {
+            return false
+        }
+
+        return globalBrand.name.lowercased() == cardBrands.first?.name.lowercased()
+    }
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
@@ -81,9 +89,14 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        let cardBrandAsArray = globalBrand != nil ? [globalBrand!] : []
-        if !areCardBrandsEqual(self.cardBrands, cardBrandAsArray) {
-            updateCardBrands(cardBrands: cardBrandAsArray)
+        if let globalBrand = globalBrand {
+            if self.cardBrands.isEmpty || self.cardBrands.first?.name != globalBrand.name {
+                updateCardBrands(cardBrands: [globalBrand])
+            }
+        } else {
+            if !self.cardBrands.isEmpty {
+                updateCardBrands(cardBrands: [])
+            }
         }
     }
 

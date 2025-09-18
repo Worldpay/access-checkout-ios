@@ -6,6 +6,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet var expiryDateTextField: AccessCheckoutUITextField!
     @IBOutlet var cvcTextField: AccessCheckoutUITextField!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var cardBrandsLabel: UILabel!
     @IBOutlet var submitButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var paymentsCvcSessionToggle: UISwitch!
@@ -109,6 +110,9 @@ class CardFlowViewController: UIViewController {
             panTextField.clear()
             expiryDateTextField.clear()
             cvcTextField.clear()
+
+            cardBrandsLabel?.text = ""
+            imageView.image = unknownBrandImage
         }
 
         validationErrors?.forEach { error in
@@ -191,6 +195,27 @@ class CardFlowViewController: UIViewController {
 
         disableSubmitIfNotValid(valid: false)
         cardBrandsChanged(cardBrands: [])
+
+        if cardBrandsLabel == nil {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(label)
+
+            NSLayoutConstraint.activate([
+                label.trailingAnchor.constraint(equalTo: panTextField.trailingAnchor),
+                label.topAnchor.constraint(equalTo: panTextField.bottomAnchor, constant: 8),
+                label.leadingAnchor.constraint(greaterThanOrEqualTo: panTextField.leadingAnchor),
+                label.heightAnchor.constraint(greaterThanOrEqualToConstant: 21),
+            ])
+
+            cardBrandsLabel = label
+        }
+        
+        cardBrandsLabel?.numberOfLines = 1
+        cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
+        cardBrandsLabel?.text = ""
+        cardBrandsLabel?.textAlignment = .left
+        cardBrandsLabel?.textColor = .black
     }
 
     private func changePanValidIndicator(isValid: Bool) {
@@ -214,7 +239,12 @@ class CardFlowViewController: UIViewController {
 
 extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
     func cardBrandsChanged(cardBrands: [CardBrand]) {
-        UiUtils.updateCardBrandImage(self.imageView, with: cardBrands.first)
+        UiUtils.updateCardBrandImage(imageView, using: cardBrands)
+
+        let brandNames = cardBrands.map { $0.name }.joined(separator: ", ")
+        DispatchQueue.main.async {
+            self.cardBrandsLabel?.text = brandNames
+        }
     }
 
     func panValidChanged(isValid: Bool) {

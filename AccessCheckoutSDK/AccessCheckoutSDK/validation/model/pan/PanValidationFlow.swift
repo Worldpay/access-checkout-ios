@@ -41,6 +41,15 @@ class PanValidationFlow {
 
         guard sanitisedCardNumber.count >= 12 else {
             lastCheckedPanPrefix = ""
+
+            let globalBrand = panValidationStateHandler.getGlobalBrand()
+            if panValidationStateHandler.areCardBrandsDifferentFrom(
+                cardBrands: globalBrand != nil ? [globalBrand!] : []
+            ) {
+                panValidationStateHandler.updateCardBrands(
+                    cardBrands: globalBrand != nil ? [globalBrand!] : []
+                )
+            }
             return
         }
 
