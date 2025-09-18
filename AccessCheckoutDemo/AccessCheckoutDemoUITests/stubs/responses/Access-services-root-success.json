@@ -3,6 +3,9 @@
         "service:sessions": {
             "href": "<BASE_URI>/sessions"
         },
+        "cardBinPublic:binDetails": {
+            "href": "<BASE_URI>/public/card/bindetails"
+        },
         "curies": [
             {
                 "href": "<BASE_URI>/rels/payments/{rel}",

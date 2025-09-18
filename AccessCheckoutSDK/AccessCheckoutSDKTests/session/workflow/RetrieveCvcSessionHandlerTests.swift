@@ -25,7 +25,7 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
             .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
-        sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-checkout-id", cardDetails) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual("expected-session", session)
@@ -47,7 +47,7 @@ class RetrieveCvcSessionHandlerTests: XCTestCase {
             .cvc(UIUtils.createAccessCheckoutUITextField(withText: "123"))
             .build()
 
-        sessionHandler.handle("a-checkout-id", "some-url", cardDetails) { result in
+        sessionHandler.handle("a-checkout-id", cardDetails) { result in
             switch result {
             case .success:
                 XCTFail("should have failed to retrieve a session")

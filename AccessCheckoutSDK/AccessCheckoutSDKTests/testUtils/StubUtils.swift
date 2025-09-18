@@ -1,3 +1,4 @@
+import Cuckoo
 import Swifter
 import XCTest
 
@@ -64,5 +65,61 @@ class StubUtils {
 
         let jsonAsData = json.data(using: .utf8)!
         return try! JSONDecoder().decode(AccessCheckoutError.self, from: jsonAsData)
+    }
+
+    static func setUpServiceDiscovery(
+        cardUrlToReturn: String? = "cardHref",
+        cvcUrlToReturn: String? = "cvcHref"
+    ) {
+        let restClientMock = MockRetryRestClientDecorator<ApiResponse>()
+        let apiResponseLookUpMock = MockApiResponseLinkLookup()
+
+        ServiceDiscoveryProvider.shared.clearCache()
+        ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
+            restClientMock, apiResponseLookUpMock)
+
+        // simulate access root discovery and sessions discovery responses
+        // a response with actual links is not needed, just a valid response
+        restClientMock.getStubbingProxy()
+            .send(urlSession: any(), request: any(), completionHandler: any())
+            .then {
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toApiReponse()), nil)
+                return URLSessionTask()
+            }.then {
+                _, _, completionHandler in
+                completionHandler(Result.success(self.toApiReponse()), nil)
+                return URLSessionTask()
+            }
+
+        // simulate api response link lookups
+        apiResponseLookUpMock.getStubbingProxy()
+            .lookup(link: any(), in: any())
+            .thenReturn("sessionsServiceLink")  // access root discovery lookup
+            .thenReturn("card-bin-url")  // card bin lookup
+            .thenReturn(cardUrlToReturn)  // sessions discovery lookup for card sessions
+            .thenReturn(cvcUrlToReturn)  // sessions discovery lookup for cvc sessions
+
+        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { result in }
+    }
+
+    static func clearServiceDiscoveryCache() {
+        ServiceDiscoveryProvider.shared.clearCache()
+    }
+
+    private static func toApiReponse() -> ApiResponse {
+        let responseAsString =
+            """
+                {
+                    "_links": {
+                        "some:service": {
+                            "href": "some-href"
+                        }
+                    }
+                }
+            """
+
+        let responseAsData = responseAsString.data(using: .utf8)!
+        return try! JSONDecoder().decode(ApiResponse.self, from: responseAsData)
     }
 }

@@ -22,6 +22,13 @@ public struct AccessCheckoutError: Error, Equatable {
         )
     }
 
+    static func illegalArgumentError(message: String) -> AccessCheckoutError {
+        return AccessCheckoutError(
+            errorName: "illegalArgumentError",
+            details: message
+        )
+    }
+
     static func discoveryLinkNotFound(linkName: String) -> AccessCheckoutError {
         return AccessCheckoutError(
             errorName: "discoveryLinkNotFound",

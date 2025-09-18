@@ -3,10 +3,10 @@ import Foundation
 class CardBrandsConfigurationFactory {
     private let configurationFileRelativePath = "access-checkout/cardTypes.json"
 
-    private let restClient: RestClient
+    private let restClient: RestClient<[CardBrandDto]>
     private let transformer: CardBrandDtoTransformer
 
-    init(_ restClient: RestClient, _ transformer: CardBrandDtoTransformer) {
+    init(_ restClient: RestClient<[CardBrandDto]>, _ transformer: CardBrandDtoTransformer) {
         self.restClient = restClient
         self.transformer = transformer
     }
@@ -23,11 +23,10 @@ class CardBrandsConfigurationFactory {
             return
         }
 
-        restClient.send(
+        _ = restClient.send(
             urlSession: URLSession.shared,
-            request: URLRequest(url: url),
-            responseType: [CardBrandDto].self
-        ) { result in
+            request: URLRequest(url: url)
+        ) { result, _ in
             let brands: [CardBrandModel]
 
             switch result {

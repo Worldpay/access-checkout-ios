@@ -8,7 +8,7 @@ class RetrieveCardSessionHandlerMock: RetrieveCardSessionHandler {
     }
 
     override func handle(
-        _ checkoutId: String, _ baseUrl: String, _ cardDetails: CardDetails,
+        _ checkoutId: String, _ cardDetails: CardDetails,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
         retrieveSessionCalled = true

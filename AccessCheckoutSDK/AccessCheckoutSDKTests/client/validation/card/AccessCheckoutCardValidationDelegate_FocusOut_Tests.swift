@@ -6,8 +6,6 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: AcceptanceTestSuite {
     private let validVisaPan1 = "4111111111111111"
     private let invalidVisaPan = "123"
 
-    // MARK: PAN validation tests
-
     func testMerchantDelegateIsNotNotifiedWhenPanComponentWithValidPanLosesFocus() {
         let merchantDelegate = initialiseCardValidation()
         editPan(text: validVisaPan1)
@@ -42,8 +40,6 @@ class AccessCheckoutCardValidationDelegate_FocusOut_Tests: AcceptanceTestSuite {
 
         verify(merchantDelegate, never()).panValidChanged(isValid: false)
     }
-
-    // MARK: Expiry Date validation tests
 
     func testMerchantDelegateIsNotNotifiedWhenExpiryDateComponentWithValidExpiryDateLosesFocus() {
         let merchantDelegate = initialiseCardValidation()

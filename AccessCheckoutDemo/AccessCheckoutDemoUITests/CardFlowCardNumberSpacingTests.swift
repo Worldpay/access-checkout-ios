@@ -17,7 +17,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsAmexPan() {
         view!.typeTextIntoPan("37178")
-        XCTAssertTrue(view!.imageIs("amex"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "amex")
 
         XCTAssertEqual(view!.panText!, "3717 8")
 
@@ -39,7 +39,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsVisaPan() {
         view!.typeTextIntoPan("41111")
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
 
         XCTAssertEqual(view!.panText!, "4111 1")
 
@@ -59,7 +59,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsMastercardPan() {
         view!.typeTextIntoPan("54545")
-        XCTAssertTrue(view!.imageIs("mastercard"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "mastercard")
 
         XCTAssertEqual(view!.panText!, "5454 5")
 
@@ -79,7 +79,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsJcbPan() {
         view!.typeTextIntoPan("35280")
-        XCTAssertTrue(view!.imageIs("jcb"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "jcb")
 
         XCTAssertEqual(view!.panText!, "3528 0")
 
@@ -99,7 +99,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsDiscoverPan() {
         view!.typeTextIntoPan("60110")
-        XCTAssertTrue(view!.imageIs("discover"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "discover")
 
         XCTAssertEqual(view!.panText!, "6011 0")
 
@@ -119,7 +119,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsDinersPan() {
         view!.typeTextIntoPan("36700")
-        XCTAssertTrue(view!.imageIs("diners"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "diners")
 
         XCTAssertEqual(view!.panText!, "3670 0")
 
@@ -139,7 +139,7 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsMaestroPan() {
         view!.typeTextIntoPan("67596")
-        XCTAssertTrue(view!.imageIs("maestro"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "maestro")
 
         XCTAssertEqual(view!.panText!, "6759 6")
 
@@ -159,7 +159,8 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
     func testFormatsUnknownBrandPan() {
         view!.typeTextIntoPan("12200")
-        XCTAssertTrue(view!.imageIs("unknown_card_brand"))
+
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "unknown_card_brand")
 
         XCTAssertEqual(view!.panText!, "1220 0")
 
@@ -173,7 +174,6 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
 
         view!.typeTextIntoPan(backspace)
         view!.typeTextIntoPan(backspace)
-
         XCTAssertEqual(view!.panText!, "1220 0000 000")
     }
 }

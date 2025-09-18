@@ -23,6 +23,7 @@ class PanViewPresenter: NSObject, Presenter {
 
     func onEditing(text: String) {
         validationFlow.validate(pan: text)
+        validationFlow.handleCobrandedCards(pan: text)
     }
 
     func onEditEnd() {

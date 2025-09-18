@@ -3,7 +3,6 @@ protocol RetrieveSessionHandler {
 
     func handle(
         _ checkoutId: String,
-        _ baseUrl: String,
         _ cardDetails: CardDetails,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     )

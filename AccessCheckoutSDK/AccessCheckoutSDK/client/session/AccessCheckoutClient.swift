@@ -23,7 +23,6 @@ public struct AccessCheckoutClient {
         self.cardDetailsForSessionTypeValidator = cardDetailsForSessionTypeValidator
         self.retrieveSessionHandlerDispatcher = retrieveSessionHandlerDispatcher
     }
-
     /**
      This function allows the generation of a new session for the client to use in the next phase of the payment flow or other supported flow.
     
@@ -43,15 +42,23 @@ public struct AccessCheckoutClient {
             try cardDetailsForSessionTypeValidator.validate(cardDetails: cardDetails, for: $0)
         }
 
-        let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(
-            numberOfExpectedResults: sessionTypes.count,
-            completeWith: completionHandler
-        )
-        sessionTypes.forEach { sessionType in
-            retrieveSessionHandlerDispatcher.dispatch(checkoutId, baseUrl, cardDetails, sessionType)
-            {
-                result in
-                resultsHandler.handle(result, for: sessionType)
+        ServiceDiscoveryProvider.discover(baseUrl: self.baseUrl) { result in
+            switch result {
+            case .success():
+                let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(
+                    numberOfExpectedResults: sessionTypes.count,
+                    completeWith: completionHandler
+                )
+                sessionTypes.forEach { sessionType in
+                    retrieveSessionHandlerDispatcher.dispatch(
+                        checkoutId, cardDetails, sessionType
+                    ) {
+                        result in
+                        resultsHandler.handle(result, for: sessionType)
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
         }
     }

@@ -52,21 +52,21 @@ class CardFlowCardValidationTests: XCTestCase {
         view!.typeTextIntoPan("4")
         view!.expiryDateField.tap()  // we move the focus to another field so that the validation triggers
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
     func testCompletePanIsValid() {
         view!.typeTextIntoPan("4444333322221111")
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
     func test13DigitsVisaPanIsValid() {
         view!.typeTextIntoPan("4911830000000")
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
@@ -119,7 +119,7 @@ class CardFlowCardValidationTests: XCTestCase {
 
     // MARK: Cvc validation
 
-    func testCvc_doesNotAccepteAlphabeticalCharacters() {
+    func testCvc_doesNotAcceptAlphabeticalCharacters() {
         view!.typeTextIntoCvc("A")
 
         XCTAssertEqual(view!.cvcField.placeholderValue, view!.cvcText)

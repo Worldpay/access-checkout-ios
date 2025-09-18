@@ -16,6 +16,7 @@ public struct CardValidationConfig: ValidationConfig {
 
     let acceptedCardBrands: [String]
     let panFormattingEnabled: Bool
+    let checkoutId: String
 
     /**
      - Returns: an instance of a builder used to create an instance  of `CardValidationConfig`
@@ -35,6 +36,7 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
+     - Parameter checkoutId: `String` that represents the checkout ID for the merchant
      */
     internal init(
         pan: AccessCheckoutUITextField,
@@ -43,7 +45,8 @@ public struct CardValidationConfig: ValidationConfig {
         accessBaseUrl: String,
         validationDelegate: AccessCheckoutCardValidationDelegate,
         acceptedCardBrands: [String] = [],
-        panFormattingEnabled: Bool = false
+        panFormattingEnabled: Bool = false,
+        checkoutId: String
     ) {
         self.pan = pan
         self.expiryDate = expiryDate
@@ -54,6 +57,7 @@ public struct CardValidationConfig: ValidationConfig {
 
         self.acceptedCardBrands = acceptedCardBrands
         self.panFormattingEnabled = panFormattingEnabled
+        self.checkoutId = checkoutId
     }
 }
 
@@ -68,11 +72,12 @@ public class CardValidationConfigBuilder {
     private var validationDelegate: AccessCheckoutCardValidationDelegate?
     private var acceptedCardBrands: [String] = []
     private var panFormattingEnabled: Bool = false
+    private var checkoutId: String?
 
     fileprivate init() {}
 
     /**
-     Sets the pan ui element to be validatedg
+     Sets the pan ui element to be validated
      - Parameter pan: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
@@ -140,6 +145,15 @@ public class CardValidationConfigBuilder {
     }
 
     /**
+     - Parameter checkoutId: checkoutId of the merchant
+     - Returns: the same instance of the builder
+     */
+    public func checkoutId(_ checkoutId: String) -> CardValidationConfigBuilder {
+        self.checkoutId = checkoutId
+        return self
+    }
+
+    /**
      Use this method to create an instance of `CardValidationConfig`
      - Returns: an instance of `CardValidationConfig`
     
@@ -161,6 +175,10 @@ public class CardValidationConfigBuilder {
         guard let validationDelegate = validationDelegate else {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
+        guard let checkoutId = checkoutId else {
+            throw
+                AccessCheckoutIllegalArgumentError.missingCheckoutId()
+        }
 
         return CardValidationConfig(
             pan: pan!,
@@ -169,7 +187,8 @@ public class CardValidationConfigBuilder {
             accessBaseUrl: accessBaseUrl,
             validationDelegate: validationDelegate,
             acceptedCardBrands: acceptedCardBrands,
-            panFormattingEnabled: panFormattingEnabled
+            panFormattingEnabled: panFormattingEnabled,
+            checkoutId: checkoutId
         )
     }
 }

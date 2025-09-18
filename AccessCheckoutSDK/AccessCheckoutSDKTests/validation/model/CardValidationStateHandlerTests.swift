@@ -27,7 +27,7 @@ class CardValidationStateHandlerTests: XCTestCase {
 
     override func setUp() {
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandsChanged(cardBrands: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
@@ -75,90 +75,206 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).panValidChanged(isValid: true)
     }
 
-    func testHandlePanValidation_shouldNotifyMerchantDelegateWhenCardBrandChanges() {
-        let expectedCardBrand = createCardBrand(from: visaBrand)
+    func testHandlePanValidation_shouldNotifyMerchantDelegateWithSingleBrandArray() {
+        let expectedCardBrands = [createCardBrand(from: visaBrand)]
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: true,
-            cardBrand: nil
+            cardBrands: []
         )
 
         validationStateHandler.handlePanValidation(isValid: true, cardBrand: visaBrand)
 
-        verify(merchantDelegate).cardBrandChanged(cardBrand: expectedCardBrand)
+        verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func testHandlePanValidation_shouldNotNotifyMerchantDelegateWhenCardBrandDoesNotChange() {
+    func testHandlePanValidation_shouldNotifyMerchantDelegateWithEmptyArrayWhenNoBrands() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: true,
+            cardBrands: [visaBrand]
+        )
+
+        validationStateHandler.handlePanValidation(isValid: true, cardBrand: nil)
+
+        let expectedCardBrands: [CardBrand] = []
+
+        verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
+    }
+
+    func testHandlePanValidation_shouldNotNotifyMerchantDelegateWhenCardBrandsDoNotChange() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: visaBrand
+            cardBrands: [visaBrand]
         )
 
         validationStateHandler.handlePanValidation(isValid: false, cardBrand: visaBrand)
 
-        verify(merchantDelegate, never()).cardBrandChanged(cardBrand: any())
+        verify(merchantDelegate, never()).cardBrandsChanged(cardBrands: any())
     }
 
-    func
-        testIsCardBrandDifferentFrom_shouldReturnFalseWhenCardBrandInStateIsSameAsCardBrandInParameter()
-    {
+    func testGetGlobalBrand_shouldReturnFirstBrandStored() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: visaBrand
+            cardBrands: [visaBrand, maestroBrand]
         )
 
-        XCTAssertFalse(validationStateHandler.isCardBrandDifferentFrom(cardBrand: visaBrand))
+        XCTAssertEqual(visaBrand, validationStateHandler.getGlobalBrand())
     }
 
-    func
-        testIsCardBrandDifferentFrom_shouldReturnTrueWhenCardBrandInStateIsNilAndCardBrandInParameterIsNot()
-    {
+    func testGetGlobalBrand_shouldReturnNilWhenNoBrandsAreStored() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: nil
+            cardBrands: []
         )
 
-        XCTAssertTrue(validationStateHandler.isCardBrandDifferentFrom(cardBrand: visaBrand))
+        XCTAssertNil(validationStateHandler.getGlobalBrand())
     }
 
-    func
-        testIsCardBrandDifferentFrom_shouldReturnTrueWhenCardBrandInStateIsDifferentFromCardBrandInParameter()
-    {
+    // MARK: Cards brands change tests including co-branded cards Tests
+
+    func testUpdateCardBrandsIfChanged_shouldUpdateWhenBrandsAreDifferent() {
+        let expectedCardBrands = [
+            createCardBrand(from: visaBrand), createCardBrand(from: maestroBrand),
+        ]
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: visaBrand
+            cardBrands: [visaBrand]
         )
 
-        XCTAssertTrue(validationStateHandler.isCardBrandDifferentFrom(cardBrand: maestroBrand))
+        validationStateHandler.updateCardBrands(cardBrands: [visaBrand, maestroBrand])
+
+        verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func
-        testIsCardBrandDifferentFrom_shouldReturnTrueWhenCardBrandInStateIsNotNilAndCardBrandInParameterIs()
-    {
+    func testUpdateCardBrands_shouldAlwaysUpdateEvenWhenBrandsAreSameButDifferentOrder() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: visaBrand
+            cardBrands: [visaBrand, maestroBrand]
         )
 
-        XCTAssertTrue(validationStateHandler.isCardBrandDifferentFrom(cardBrand: nil))
+        validationStateHandler.updateCardBrands(cardBrands: [maestroBrand, visaBrand])
+
+        verify(merchantDelegate, times(1)).cardBrandsChanged(cardBrands: any())
     }
 
-    func testIsCardBrandDifferentFrom_shouldReturnFalseWhenCardBrandRemainsNil() {
+    func testUpdateCardBrandsIfChanged_shouldUpdateFromEmptyToMultipleBrands() {
+        let expectedCardBrands = [
+            createCardBrand(from: visaBrand), createCardBrand(from: maestroBrand),
+        ].compactMap { $0 }
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
             panValidationState: false,
-            cardBrand: nil
+            cardBrands: []
         )
 
-        XCTAssertFalse(validationStateHandler.isCardBrandDifferentFrom(cardBrand: nil))
+        validationStateHandler.updateCardBrands(cardBrands: [visaBrand, maestroBrand])
+
+        verify(merchantDelegate).cardBrandsChanged(cardBrands: equal(to: expectedCardBrands))
     }
 
-    func testNotifyMerchantOfPanValidationState_notifiesMerchantOfValidPan() {
+    // MARK: Card Brand Comparison Tests
+
+    func testAreCardBrandsDifferentFrom_shouldReturnFalseWhenBrandsAreSame() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand]
+        )
+
+        XCTAssertFalse(validationStateHandler.areCardBrandsDifferentFrom(cardBrands: [visaBrand]))
+    }
+
+    func testAreCardBrandsDifferentFrom_shouldReturnFalseWhenBrandsAreSameButDifferentOrder() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand, maestroBrand]
+        )
+
+        XCTAssertFalse(
+            validationStateHandler.areCardBrandsDifferentFrom(cardBrands: [maestroBrand, visaBrand])
+        )
+    }
+
+    func testAreCardBrandsDifferentFrom_shouldReturnTrueWhenBrandsAreDifferent() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand]
+        )
+
+        XCTAssertTrue(validationStateHandler.areCardBrandsDifferentFrom(cardBrands: [maestroBrand]))
+    }
+
+    func testAreCardBrandsDifferentFrom_shouldReturnTrueWhenDifferentNumberOfBrands() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand]
+        )
+
+        XCTAssertTrue(
+            validationStateHandler.areCardBrandsDifferentFrom(cardBrands: [visaBrand, maestroBrand])
+        )
+    }
+
+    func testAreCardBrandsDifferentFrom_shouldReturnTrueWhenEmptyToNonEmpty() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: []
+        )
+
+        XCTAssertTrue(validationStateHandler.areCardBrandsDifferentFrom(cardBrands: [visaBrand]))
+    }
+
+    func testAreCardBrandsDifferentFrom_shouldReturnFalseWhenBothEmpty() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: []
+        )
+
+        XCTAssertFalse(validationStateHandler.areCardBrandsDifferentFrom(cardBrands: []))
+    }
+
+    // MARK: Get Card Brands Tests
+
+    func testGetCardBrands_shouldReturnArrayOfBrands() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: [visaBrand, maestroBrand]
+        )
+
+        let brands = validationStateHandler.getCardBrands()
+
+        XCTAssertEqual(brands.count, 2)
+        XCTAssertEqual(brands[0].name, "visa")
+        XCTAssertEqual(brands[1].name, "maestro")
+    }
+
+    func testGetCardBrands_shouldReturnEmptyArrayWhenNoBrands() {
+        let validationStateHandler = CardValidationStateHandler(
+            merchantDelegate: merchantDelegate,
+            panValidationState: false,
+            cardBrands: []
+        )
+
+        let brands = validationStateHandler.getCardBrands()
+
+        XCTAssertTrue(brands.isEmpty)
+    }
+
+    // MARK: PAN Validation State Notification Tests
+
+    func testNotifyMerchantOfPanValidationState_notifiesMerchantDelegate() {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
 
@@ -168,7 +284,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testNotifyMerchantOfPanValidationState_notifiesMerchantOfValidPanOnlyOnceWhenCalledMultipleTimes()
+        testNotifyMerchantOfPanValidationState_notifiesMerchantDelegateOnlyOnceWhenCalledMultipleTimes()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate, panValidationState: true)
@@ -179,45 +295,10 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate, times(1)).panValidChanged(isValid: true)
     }
 
-    func testNotifyMerchantOfPanValidationState_notifiesMerchantOfInvalidPan() {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, panValidationState: false)
-
-        validationStateHandler.notifyMerchantOfPanValidationState()
-
-        verify(merchantDelegate).panValidChanged(isValid: false)
-    }
+    // MARK: ExpiryDateValidationStateHandler (unchanged)
 
     func
-        testNotifyMerchantOfPanValidationState_notifiesMerchantOfInvalidPanOnlyOnceWhenCalledMultipleTimes()
-    {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, panValidationState: false)
-
-        validationStateHandler.notifyMerchantOfPanValidationState()
-        validationStateHandler.notifyMerchantOfPanValidationState()
-
-        verify(merchantDelegate, times(1)).panValidChanged(isValid: false)
-    }
-
-    func testGetCardBrand_shouldReturnCardBrandIfKnownBrand() {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, panValidationState: false, cardBrand: visaBrand)
-
-        XCTAssertEqual(validationStateHandler.getCardBrand(), visaBrand)
-    }
-
-    func testGetCardBrand_shouldReturnNilCardBrandIfUnknownBrand() {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, panValidationState: false, cardBrand: nil)
-
-        XCTAssertEqual(validationStateHandler.getCardBrand(), nil)
-    }
-
-    // MARK: ExpiryDateValidationStateHandler
-
-    func
-        testHandleExpiryDateValidation_shouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromFalse()
+        testHandleExpiryDateValidation_shouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChange()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -229,19 +310,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testHandleExpiryDateValidation_shouldNotNotifyMerchantDelegateWhenExpiryValidationStateDoesNotChangeFromTrue()
-    {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate,
-            expiryDateValidationState: true
-        )
-
-        validationStateHandler.handleExpiryDateValidation(isValid: true)
-        verify(merchantDelegate, never()).expiryDateValidChanged(isValid: any())
-    }
-
-    func
-        testHandleExpiryDateValidation_shouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromFalse()
+        testHandleExpiryDateValidation_shouldNotifyMerchantDelegateWhenExpiryValidationStateChanges()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -250,18 +319,6 @@ class CardValidationStateHandlerTests: XCTestCase {
 
         validationStateHandler.handleExpiryDateValidation(isValid: true)
         verify(merchantDelegate).expiryDateValidChanged(isValid: true)
-    }
-
-    func
-        testHandleExpiryDateValidation_shouldNotifyMerchantDelegateWhenExpiryValidationStateChangesFromTrue()
-    {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate,
-            expiryDateValidationState: true
-        )
-
-        validationStateHandler.handleExpiryDateValidation(isValid: false)
-        verify(merchantDelegate).expiryDateValidChanged(isValid: false)
     }
 
     func testNotifyMerchantOfExpiryDateValidationState_notifiesMerchantOfValidExpiryDate() {
@@ -273,19 +330,10 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate).expiryDateValidChanged(isValid: true)
     }
 
-    func testNotifyMerchantOfExpiryDateValidationState_notifiesMerchantOfInvalidExpiryDate() {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, expiryDateValidationState: false)
-
-        validationStateHandler.notifyMerchantOfExpiryDateValidationState()
-
-        verify(merchantDelegate).expiryDateValidChanged(isValid: false)
-    }
-
     // MARK: CvcValidationStateHandler
 
     func
-        testHandleCvcValidation_shouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChangeFromFalse()
+        testHandleCvcValidation_shouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChange()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -297,19 +345,7 @@ class CardValidationStateHandlerTests: XCTestCase {
     }
 
     func
-        testHandleCvcValidation_shouldNotNotifyMerchantDelegateWhenCvcValidationStateDoesNotChangeFromTrue()
-    {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate,
-            cvcValidationState: true
-        )
-
-        validationStateHandler.handleCvcValidation(isValid: true)
-        verify(merchantDelegate, never()).cvcValidChanged(isValid: any())
-    }
-
-    func
-        testHandleCvcValidation_shouldNotifyMerchantDelegateWhenCvcValidationStateChangesFromFalse()
+        testHandleCvcValidation_shouldNotifyMerchantDelegateWhenCvcValidationStateChanges()
     {
         let validationStateHandler = CardValidationStateHandler(
             merchantDelegate: merchantDelegate,
@@ -318,17 +354,6 @@ class CardValidationStateHandlerTests: XCTestCase {
 
         validationStateHandler.handleCvcValidation(isValid: true)
         verify(merchantDelegate).cvcValidChanged(isValid: true)
-    }
-
-    func testHandleCvcValidation_shouldNotifyMerchantDelegateWhenCvcValidationStateChangesFromTrue()
-    {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate,
-            cvcValidationState: true
-        )
-
-        validationStateHandler.handleCvcValidation(isValid: false)
-        verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
 
     func testNotifyMerchantOfCvcValidationState_notifiesMerchantOfValidCvc() {
@@ -338,15 +363,6 @@ class CardValidationStateHandlerTests: XCTestCase {
         validationStateHandler.notifyMerchantOfCvcValidationState()
 
         verify(merchantDelegate).cvcValidChanged(isValid: true)
-    }
-
-    func testNotifyMerchantOfCvcValidationState_notifiesMerchantOfInvalidCvc() {
-        let validationStateHandler = CardValidationStateHandler(
-            merchantDelegate: merchantDelegate, cvcValidationState: false)
-
-        validationStateHandler.notifyMerchantOfCvcValidationState()
-
-        verify(merchantDelegate).cvcValidChanged(isValid: false)
     }
 
     // MARK: Tests for notification that all fields are valid
@@ -374,7 +390,9 @@ class CardValidationStateHandlerTests: XCTestCase {
         verify(merchantDelegate, times(1)).validationSuccess()
     }
 
-    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand? {
+    // MARK: Helper Methods
+
+    private func createCardBrand(from cardBrandModel: CardBrandModel) -> CardBrand {
         var images = [CardBrandImage]()
 
         for imageToConvert in cardBrandModel.images {

@@ -41,6 +41,7 @@ class RestrictedCardFlowViewController: UIViewController {
         // Controls used as helpers for the automated tests - End of section
 
         let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
+            .checkoutId(Configuration.checkoutId)
             .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
             .cvc(AccessCheckoutUITextField(frame: CGRect()))
             .accessBaseUrl(Configuration.accessBaseUrl)
@@ -50,17 +51,7 @@ class RestrictedCardFlowViewController: UIViewController {
 
         AccessCheckoutValidationInitialiser().initialise(validationConfig)
 
-        cardBrandChanged(cardBrand: nil)
-    }
-
-    private func updateCardBrandImage(url: URL) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: data)
-                }
-            }
-        }
+        cardBrandsChanged(cardBrands: [])
     }
 
     private func changePanValidIndicator(isValid: Bool) {
@@ -70,21 +61,12 @@ class RestrictedCardFlowViewController: UIViewController {
 }
 
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {
-        if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl)
-        {
-            updateCardBrandImage(url: url)
-        } else {
-            imageView.image = unknownBrandImage
-        }
-        imageView.accessibilityLabel = NSLocalizedString(
-            cardBrand?.name ?? "unknown_card_brand", comment: "")
+    func cardBrandsChanged(cardBrands: [CardBrand]) {
+        UiUtils.updateCardBrandImage(self.imageView, using: cardBrands)
     }
 
     func panValidChanged(isValid: Bool) {
         panIsValidLabel.text = isValid ? "valid" : "invalid"
-
         changePanValidIndicator(isValid: isValid)
     }
 

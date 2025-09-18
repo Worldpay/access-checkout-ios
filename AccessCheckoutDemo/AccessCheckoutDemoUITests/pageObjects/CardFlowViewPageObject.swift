@@ -97,13 +97,6 @@ class CardFlowViewPageObject {
         submitButton.tap()
     }
 
-    func imageIs(_ brand: String) -> Bool {
-        let brandAsLocalizedString = NSLocalizedString(
-            brand, bundle: Bundle(for: type(of: self)), comment: "")
-
-        return cardBrandImage.label == brandAsLocalizedString
-    }
-
     func clearField(_ field: XCUIElement) {
         field.press(forDuration: 2)
         let selectAllMenu = app.menuItems["Select All"]

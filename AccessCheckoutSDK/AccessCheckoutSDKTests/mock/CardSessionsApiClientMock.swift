@@ -16,7 +16,7 @@ class CardSessionsApiClientMock: CardSessionsApiClient {
     }
 
     override func createSession(
-        baseUrl: String, checkoutId: String, pan: String, expiryMonth: UInt, expiryYear: UInt,
+        checkoutId: String, pan: String, expiryMonth: UInt, expiryYear: UInt,
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {

@@ -9,6 +9,12 @@ struct ServiceStubs {
         self.baseUrl = "http://localhost:\(port)"
     }
 
+    init(port: UInt16) {
+        self.port = port
+        self.httpServer = .init()
+        self.baseUrl = "http://localhost:\(port)"
+    }
+
     let baseUrl: String
 
     private let port: UInt16
@@ -17,6 +23,7 @@ struct ServiceStubs {
     private let sessionsServicePath = "/sessions"
     private let sessionsServiceCardSessionPath = "/sessions/card"
     private let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
+    private let cardBinServicePath = "/public/card/bindetails"
 
     func get200(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
@@ -26,6 +33,21 @@ struct ServiceStubs {
 
     func get200(path: String, textResponse: String) -> ServiceStubs {
         httpServer.GET[path] = { _ in .ok(.text(textResponse)) }
+        return self
+    }
+
+    func get200(path: String, textResponse: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        let response: ((HttpRequest) -> HttpResponse) = { req in
+            return HttpResponse.ok(
+                .custom(
+                    "",
+                    { _ -> String in
+                        Thread.sleep(forTimeInterval: delayInSeconds)
+                        return ""
+                    }))
+        }
+
+        httpServer.GET[path] = response
         return self
     }
 
@@ -52,14 +74,34 @@ struct ServiceStubs {
         return self
     }
 
+    func post200(path: String, textResponse: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        httpServer.POST[path] = { _ in
+            Thread.sleep(forTimeInterval: delayInSeconds)
+            return .ok(.text(textResponse))
+        }
+        return self
+    }
+
     func post400(path: String, error: AccessCheckoutError) -> ServiceStubs {
         let jsonData = try! toJSON(toJSONString(error))
         httpServer.POST[path] = { _ in .badRequest(.json(jsonData as AnyObject)) }
         return self
     }
 
+    func post500(path: String, delayInSeconds: TimeInterval) -> ServiceStubs {
+        httpServer.POST[path] = { _ in
+            Thread.sleep(forTimeInterval: delayInSeconds)
+            return .internalServerError
+        }
+        return self
+    }
+
     func servicesRootDiscoverySuccess() -> ServiceStubs {
         return get200(path: "", jsonResponse: successfulDiscoveryResponse())
+    }
+
+    func servicesRootDiscoveryFailure(error: AccessCheckoutError) -> ServiceStubs {
+        return failed400(path: "", error: error)
     }
 
     func cardSessionSuccess(session: String) -> ServiceStubs {
@@ -109,7 +151,10 @@ struct ServiceStubs {
                     },
                     "sessions:paymentsCvc": {
                         "href": "\(baseUrl)\(sessionsServicePaymentsCvcSessionPath)"
-                    }
+                    },
+                    "cardBinPublic:binDetails": {
+                        "href": "\(baseUrl)\(cardBinServicePath)"
+                    },
                 }
             }
             """

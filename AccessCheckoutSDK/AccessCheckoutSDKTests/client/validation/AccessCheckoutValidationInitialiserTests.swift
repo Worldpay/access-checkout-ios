@@ -13,6 +13,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let cvcAccessCheckoutUITextField = AccessCheckoutUITextField()
 
     let baseUrl = "some-url"
+    let checkoutId = "0000-0000-0000-0000-000000000000"
     let cardValidationDelegateMock = MockAccessCheckoutCardValidationDelegate()
     let cvcOnlyValidationDelegateMock = MockAccessCheckoutCvcOnlyValidationDelegate()
 
@@ -35,6 +36,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
+            .checkoutId(checkoutId)
             .build()
 
         accessCheckoutValidationInitialiser!.initialise(validationConfig)
@@ -52,6 +54,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
+            .checkoutId(checkoutId)
             .build()
 
         accessCheckoutValidationInitialiser!.initialise(validationConfig)

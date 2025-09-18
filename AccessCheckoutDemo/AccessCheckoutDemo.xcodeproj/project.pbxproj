@@ -12,6 +12,7 @@
 		1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED522B8F63300A65FAA /* CHANGELOG.md */; };
 		1BCBFEDA22B903A300A65FAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
 		3252C7E3E64EB3E46052A5D2 /* Pods_AccessCheckoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */; };
+		512096852E78802E0065AD3B /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512096842E7880290065AD3B /* UiUtils.swift */; };
 		5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */; };
 		512907F12AEC0473008A7357 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F02AEC0473008A7357 /* ServiceStubs.swift */; };
 		512907F32AEC048F008A7357 /* StubResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F22AEC048F008A7357 /* StubResponse.swift */; };
@@ -70,6 +71,7 @@
 		1BCBFED322B8F63300A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFED522B8F63300A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		464068C5BC81234ABB466626 /* Pods_AccessCheckoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccessCheckoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		512096842E7880290065AD3B /* UiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiUtils.swift; sourceTree = "<group>"; };
 		5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		512907F02AEC0473008A7357 /* ServiceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStubs.swift; sourceTree = "<group>"; };
 		512907F22AEC048F008A7357 /* StubResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubResponse.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */,
 				E7B9A349243393C400137BCF /* CvcFlowViewController.swift */,
 				CC1BD93A2448BB9200A4C745 /* CIVariables.swift */,
+				512096842E7880290065AD3B /* UiUtils.swift */,
 				C9AFE47222B7C62700943B3E /* Main.storyboard */,
 				C9AFE47422B7C62700943B3E /* LaunchScreen.storyboard */,
 				C9AFE46E22B7C5A600943B3E /* Assets.xcassets */,
@@ -397,9 +400,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -436,9 +443,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -481,6 +492,7 @@
 				5174649A27271F1A00E4902B /* Configuration.swift in Sources */,
 				E7B9A34A243393C400137BCF /* CvcFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
+				512096852E78802E0065AD3B /* UiUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

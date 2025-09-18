@@ -8,7 +8,7 @@ class CardBrandsConfigurationFactoryMock: CardBrandsConfigurationFactory {
         allCardBrands: [], acceptedCardBrands: [])
 
     init() {
-        super.init(RestClientMock<String>(replyWith: ""), MockCardBrandDtoTransformer())
+        super.init(RestClientMock<[CardBrandDto]>(replyWith: []), MockCardBrandDtoTransformer())
     }
 
     func willReturn(_ expectedConfiguration: CardBrandsConfiguration) {
