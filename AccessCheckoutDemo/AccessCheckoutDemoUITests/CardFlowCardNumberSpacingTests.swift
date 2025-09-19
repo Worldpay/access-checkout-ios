@@ -16,7 +16,6 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
     // MARK: Card numbers spacing per brand
 
     func testFormatsAmexPan() {
-//        view!.typeTextIntoPanCharByChar("37178")
         view!.typeTextIntoPanCharByChar("37178")
         XCTAssertTrue(view!.imageIs("amex"))
 
@@ -119,7 +118,6 @@ class CardFlowCardNumberSpacingTests: XCTestCase {
     }
 
     func testFormatsDinersPan() {
-//        view!.typeTextIntoPan("36700")
         view!.typeTextIntoPanCharByChar("36700")
         XCTAssertTrue(view!.imageIs("diners"))
 
