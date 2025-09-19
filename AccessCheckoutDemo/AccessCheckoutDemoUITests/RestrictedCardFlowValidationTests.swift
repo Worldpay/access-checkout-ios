@@ -57,7 +57,8 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     }
 
     func testCompletePanIsValid_visa() {
-        view!.typeTextIntoPan("4444333322221111")
+//        view!.typeTextIntoPan("4444333322221111")
+        view!.typeTextIntoPanCharByChar("4444333322221111")
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
@@ -87,7 +88,8 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     }
 
     func testCompletePanIsValid_amex() {
-        view!.typeTextIntoPan("343434343434343")
+//        view!.typeTextIntoPan("343434343434343")
+        view!.typeTextIntoPanCharByChar("343434343434343")
 
         XCTAssertTrue(view!.imageIs("amex"))
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
