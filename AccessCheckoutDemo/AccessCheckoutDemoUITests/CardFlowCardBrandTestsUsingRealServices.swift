@@ -183,7 +183,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
     }
 
     func testDisplaysBrandImage_NOT_VISA_For493698() {
-//        view!.typeTextIntoPan("493698")
+//        view!.typeTextIntoPanCharByChar("493698")
         view!.typeTextIntoPanCharByChar("493698")
 
         XCTAssertEqual("4936 98", view!.panText)
@@ -208,7 +208,7 @@ class CardFlowCardBrandTestsUsingRealServices: XCTestCase {
             XCTAssertTrue(view!.imageIs("unknown_card_brand"))
         }
 
-        view!.typeTextIntoPan(pan)
+        view!.typeTextIntoPanCharByChar(pan)
 
         let panViewText = view!.panText?.replacingOccurrences(of: " ", with: "")
         XCTAssertEqual(pan, panViewText)

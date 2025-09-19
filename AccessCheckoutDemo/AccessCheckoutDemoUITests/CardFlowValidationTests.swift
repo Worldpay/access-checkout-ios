@@ -21,7 +21,7 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testPAN_canDeleteDigits() {
-        view!.typeTextIntoPan("1000")
+        view!.typeTextIntoPanCharByChar("1000")
         XCTAssertEqual(view!.panText, "1000")
 
         view!.typeTextIntoPan(backspace)
@@ -32,7 +32,7 @@ class CardFlowCardValidationTests: XCTestCase {
 
     func testPAN_isInvalidAfterAllTextIsCleared() {
         let pan = "4444333322221111"
-        view!.typeTextIntoPan(pan)
+        view!.typeTextIntoPanCharByChar(pan)
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
 
         view!.clearField(view!.panField)
@@ -50,7 +50,7 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testPartialPanIsInvalid() {
-        view!.typeTextIntoPan("4")
+        view!.typeTextIntoPanCharByChar("4")
         view!.expiryDateField.tap()  // we move the focus to another field so that the validation triggers
 
         XCTAssertTrue(view!.imageIs("visa"))
@@ -58,14 +58,14 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testCompletePanIsValid() {
-        view!.typeTextIntoPan("4444333322221111")
+        view!.typeTextIntoPanCharByChar("4444333322221111")
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
     func test13DigitsVisaPanIsValid() {
-        view!.typeTextIntoPan("4911830000000")
+        view!.typeTextIntoPanCharByChar("4911830000000")
 
         XCTAssertTrue(view!.imageIs("visa"))
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
@@ -152,7 +152,7 @@ class CardFlowCardValidationTests: XCTestCase {
     }
 
     func testCvc_acceptsAsManyCharactersAsAllowedByCardBrand() {
-        view!.typeTextIntoPan("4")
+        view!.typeTextIntoPanCharByChar("4")
         view!.typeTextIntoCvc("1234")
 
         XCTAssertEqual(view!.cvcText!, "123")
@@ -180,7 +180,7 @@ class CardFlowCardValidationTests: XCTestCase {
         XCTAssertEqual(view!.cvcIsValidLabel.label, "valid")
 
         // changes to visa which only acceptes 3 digits long Cvcs
-        view!.typeTextIntoPan("4")
+        view!.typeTextIntoPanCharByChar("4")
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }
 
@@ -189,7 +189,7 @@ class CardFlowCardValidationTests: XCTestCase {
     func testSubmit_isEnabledWhenCardDetailsAreValid() {
         XCTAssertFalse(view!.submitButton.isEnabled)
 
-        view!.typeTextIntoPan("4111111111111111")
+        view!.typeTextIntoPanCharByChar("4111111111111111")
         view!.typeTextIntoExpiryDate("01/34")
         view!.typeTextIntoCvc("123")
 

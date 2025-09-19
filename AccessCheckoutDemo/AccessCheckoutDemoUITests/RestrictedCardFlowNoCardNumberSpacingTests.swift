@@ -14,19 +14,19 @@ class RestrictedCardFlowNoCardNumberSpacingTests: XCTestCase {
     // MARK: Testing disabled PAN formatting
 
     func testDoesNotFormatPan() {
-        view!.typeTextIntoPan("4111111111111111")
+        view!.typeTextIntoPanCharByChar("4111111111111111")
 
         XCTAssertEqual(view!.panText, "4111111111111111")
     }
 
     func testCanEnterOnlyDigitsInPan() {
-        view!.typeTextIntoPan("4abc11111111   1111blahblah   111")
+        view!.typeTextIntoPanCharByChar("4abc11111111   1111blahblah   111")
 
         XCTAssertEqual(view!.panText, "4111111111111111")
     }
 
     func testCanDeleteDigits() {
-        view!.typeTextIntoPan("4111")
+        view!.typeTextIntoPanCharByChar("4111")
         XCTAssertEqual(view!.panText, "4111")
 
         view!.typeTextIntoPan(backspace)
