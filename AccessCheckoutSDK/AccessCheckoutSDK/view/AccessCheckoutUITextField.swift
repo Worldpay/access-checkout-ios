@@ -315,6 +315,7 @@ public final class AccessCheckoutUITextField: UIView {
      A rich text enabled hint that will be displayed when text is empty
      */
     @available(iOS 6.0, *)
+    @IBInspectable
     public var attributedPlaceholder: NSAttributedString? {
         didSet { self.uiTextField.attributedPlaceholder = self.attributedPlaceholder }
     }
@@ -325,6 +326,7 @@ public final class AccessCheckoutUITextField: UIView {
      The type of the keyboard used by the shopper to type in their card details
      By default, this property is a numeric keypad
      */
+    @IBInspectable
     public var keyboardType: UIKeyboardType = defaults.keyboardType {
         didSet { self.uiTextField.keyboardType = self.keyboardType }
     }
@@ -332,6 +334,7 @@ public final class AccessCheckoutUITextField: UIView {
     /**
      The appearance of the keyboard displayed to the shopper
      */
+    @IBInspectable
     public var keyboardAppearance: UIKeyboardAppearance = defaults.keyboardAppearance {
         didSet { self.uiTextField.keyboardAppearance = self.keyboardAppearance }
     }
@@ -348,6 +351,7 @@ public final class AccessCheckoutUITextField: UIView {
     /**
      The accessory view to attach to the keyboard when this component receives focus
      */
+    @IBInspectable
     public override var inputAccessoryView: UIView? {
         get {
             _inputAccessoryView
