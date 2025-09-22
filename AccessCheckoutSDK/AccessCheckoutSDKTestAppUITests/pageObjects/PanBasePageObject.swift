@@ -48,6 +48,16 @@ class PanBasePageObject {
         }
         panField.typeText(text)
     }
+    
+    func typeTextIntoPanCharByChar(_ text: String) {
+        if !panField.hasFocus {
+            panField.tap()
+        }
+        
+        for char in text {
+            panField.typeText(String(char))
+        }
+    }
 
     func panCaretPosition() -> Int {
         let textField = panCaretPositionTextField

@@ -19,28 +19,28 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     // MARK: Tests by inserting deleting text
 
     func testCorrectlyFormatsWhenTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4111")
+        view!.typeTextIntoPanCharByChar("4111")
         view!.setPanCaretAtAndTypeIn(position: 3, text: ["4"])
 
         XCTAssertEqual(view!.panText!, "4114 1")
     }
 
     func testCorrectlyFormatsWhenPastingAndTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4111")
+        view!.typeTextIntoPanCharByChar("4111")
         view!.setPanCaretAtAndTypeIn(position: 3, text: ["123", "5"])
 
         XCTAssertEqual(view!.panText!, "4111 2351")
     }
 
     func testCorrectlyFormatsWhenDeletingInMiddleOfPan() {
-        view!.typeTextIntoPan("4321 4321")
+        view!.typeTextIntoPanCharByChar("4321 4321")
         view!.setPanCaretAtAndTypeIn(position: 3, text: [backspace])
 
         XCTAssertEqual(view!.panText!, "4314 321")
     }
 
     func testCorrectlyFormatsWhenDeletingAndThenTypingInMiddleOfPan() {
-        view!.typeTextIntoPan("4321 4321")
+        view!.typeTextIntoPanCharByChar("4321 4321")
         view!.setPanCaretAtAndTypeIn(
             position: 3, text: [backspace, backspace, "3", "1234", backspace])
 
@@ -48,7 +48,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testCanDeleteSingleDigitAfterSpace() {
-        view!.typeTextIntoPan("43214")
+        view!.typeTextIntoPanCharByChar("43214")
         XCTAssertEqual(view!.panText!, "4321 4")
 
         view!.typeTextIntoPan(backspace)
@@ -57,7 +57,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testCanDeleteFirstDigit() {
-        view!.typeTextIntoPan("432145")
+        view!.typeTextIntoPanCharByChar("432145")
         XCTAssertEqual(view!.panText!, "4321 45")
 
         view!.setPanCaretAtAndTypeIn(position: 1, text: [backspace])
@@ -67,7 +67,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testReformatsCardWhenBrandChanges() {
-        view!.typeTextIntoPan("34567890123")
+        view!.typeTextIntoPanCharByChar("34567890123")
         XCTAssertEqual(view!.panText!, "3456 789012 3")
 
         view!.setPanCaretAtAndTypeIn(position: 0, text: ["4"])
@@ -80,7 +80,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     // MARK: Tests with text that contains digits and letters and spaces
 
     func testExtractsDigitsOnlyFromAlphanumericEntry() {
-        view!.typeTextIntoPan("123abc456defghi789zzzzzzzzzzz       zzzzzzzzz000")
+        view!.typeTextIntoPanCharByChar("123abc456defghi789zzzzzzzzzzz       zzzzzzzzz000")
 
         XCTAssertEqual(view!.panText!, "1234 5678 9000")
     }
@@ -88,7 +88,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     // MARK: Tests specific to spaces and caret position
 
     func testDeletesSpaceAndPreviousDigitWhenDeletingSpace() {
-        view!.typeTextIntoPan("123456")
+        view!.typeTextIntoPanCharByChar("123456")
         XCTAssertEqual(view!.panText!, "1234 56")
 
         view!.setPanCaretAtAndTypeIn(position: 5, text: [backspace])
@@ -98,7 +98,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testDeletesSpaceAndPreviousDigitWhenDeletingSelectedSpace() {
-        view!.typeTextIntoPan("123456")
+        view!.typeTextIntoPanCharByChar("123456")
         XCTAssertEqual(view!.panText!, "1234 56")
 
         view!.selectPanAndTypeIn(position: 4, selectionLength: 1, text: [backspace])
@@ -108,7 +108,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testMovesCaretAfterSpaceWhenInsertingDigitAtEndOfDigitsGroup() {
-        view!.typeTextIntoPan("12345")
+        view!.typeTextIntoPanCharByChar("12345")
         XCTAssertEqual(view!.panText!, "1234 5")
 
         view!.setPanCaretAtAndTypeIn(position: 3, text: ["6"])
@@ -118,7 +118,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testLeavesCaretAfterSpaceWhenDeletingDigitWhichIsJustAfterSpace() {
-        view!.typeTextIntoPan("123456")
+        view!.typeTextIntoPanCharByChar("123456")
         XCTAssertEqual(view!.panText!, "1234 56")
 
         view!.setPanCaretAtAndTypeIn(position: 6, text: [backspace])
@@ -128,7 +128,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
     }
 
     func testLeavesCaretAtSamePositionWhenSelectingTextThatStartsWithSpaceAndDeletingIt() {
-        view!.typeTextIntoPan("123456789012")
+        view!.typeTextIntoPanCharByChar("123456789012")
         XCTAssertEqual(view!.panText!, "1234 5678 9012")
 
         view!.selectPanAndTypeIn(position: 4, selectionLength: 3, text: [backspace])
