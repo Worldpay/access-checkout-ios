@@ -112,7 +112,7 @@ class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
     }
 
     private func fillUpFormWithValidValues(using view: CardFlowViewPageObject) {
-        view.typeTextIntoPan("4111111111111111")
+        view.typeTextIntoPanCharByChar("4111111111111111")
         view.typeTextIntoExpiryDate("01/99")
         view.typeTextIntoCvc("123")
     }

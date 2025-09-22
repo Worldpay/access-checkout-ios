@@ -78,6 +78,16 @@ class CardFlowViewPageObject {
         }
         panField.typeText(text)
     }
+    
+    func typeTextIntoPanCharByChar(_ text: String) {
+        if !panField.hasFocus {
+            panField.tap()
+        }
+        
+        for char in text {
+            panField.typeText(String(char))
+        }
+    }
 
     func typeTextIntoExpiryDate(_ text: String) {
         if !TestUtils.isFocused(expiryDateField) {
