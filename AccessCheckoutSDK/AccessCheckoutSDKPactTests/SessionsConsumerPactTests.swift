@@ -19,7 +19,7 @@ class SessionsConsumerPactTests: XCTestCase {
         consumer: "access-checkout-iOS-sdk")
 
     func testDiscoveryOfSessionsEndPoints() {
-        ServiceDiscoveryProvider.shared.clearCache()
+        ServiceDiscoveryProvider.sharedInstance?.clearCache()
         let accessRootStub = ServiceStubs().get200(
             path: "", jsonResponse: accessRootJsonResponse(sessionsBaseUrl: pactServer.baseUrl))
         accessRootStub.start()
@@ -54,7 +54,9 @@ class SessionsConsumerPactTests: XCTestCase {
                 body: responseJson)
 
         pactServer.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: accessRootStub.baseUrl) { result in
+            try? ServiceDiscoveryProvider.initialise(accessRootStub.baseUrl)
+
+            ServiceDiscoveryProvider.discover { result in
                 switch result {
                 case .success():
                     XCTAssertEqual(
@@ -458,8 +460,10 @@ class SessionsConsumerPactTests: XCTestCase {
                 jsonResponse: sessionsRootJsonResponse(baseUrl: pactServer.baseUrl))
         serviceStub.start()
 
-        ServiceDiscoveryProvider.shared.clearCache()
-        ServiceDiscoveryProvider.discover(baseUrl: serviceStub.baseUrl) { _ in }
+        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+
+        try? ServiceDiscoveryProvider.initialise(serviceStub.baseUrl)
+        ServiceDiscoveryProvider.discover { _ in }
 
         let maxAttempts = 10
         var attempts = 0

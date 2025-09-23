@@ -74,9 +74,8 @@ class StubUtils {
         let restClientMock = MockRetryRestClientDecorator<ApiResponse>()
         let apiResponseLookUpMock = MockApiResponseLinkLookup()
 
-        ServiceDiscoveryProvider.shared.clearCache()
-        ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
-            restClientMock, apiResponseLookUpMock)
+        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        try? ServiceDiscoveryProvider.initialise("some-url", restClientMock, apiResponseLookUpMock)
 
         // simulate access root discovery and sessions discovery responses
         // a response with actual links is not needed, just a valid response
@@ -100,11 +99,11 @@ class StubUtils {
             .thenReturn(cardUrlToReturn)  // sessions discovery lookup for card sessions
             .thenReturn(cvcUrlToReturn)  // sessions discovery lookup for cvc sessions
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { result in }
+        ServiceDiscoveryProvider.discover { result in }
     }
 
     static func clearServiceDiscoveryCache() {
-        ServiceDiscoveryProvider.shared.clearCache()
+        ServiceDiscoveryProvider.sharedInstance?.clearCache()
     }
 
     private static func toApiReponse() -> ApiResponse {

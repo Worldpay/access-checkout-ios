@@ -42,7 +42,9 @@ public struct AccessCheckoutClient {
             try cardDetailsForSessionTypeValidator.validate(cardDetails: cardDetails, for: $0)
         }
 
-        ServiceDiscoveryProvider.discover(baseUrl: self.baseUrl) { result in
+        try? ServiceDiscoveryProvider.initialise(self.baseUrl)
+
+        ServiceDiscoveryProvider.discover { result in
             switch result {
             case .success():
                 let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(

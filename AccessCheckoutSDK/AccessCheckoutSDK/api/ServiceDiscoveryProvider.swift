@@ -16,7 +16,9 @@ class ServiceDiscoveryProvider {
     private static var static_sessionsCreateCvcSessionUrl: String?
     private static var static_cardBinUrl: String?
 
-    static var shared: ServiceDiscoveryProvider = ServiceDiscoveryProvider()
+    private var baseUrl: URL? = nil
+
+    static var sharedInstance: ServiceDiscoveryProvider? = nil
 
     init(
         _ restClient: RetryRestClientDecorator<ApiResponse> = RetryRestClientDecorator(),
@@ -26,22 +28,58 @@ class ServiceDiscoveryProvider {
         self.apiResponseLinkLookup = apiResponseLinkLookup
     }
 
+    private init(
+        _ baseUrl: URL,
+        _ restClient: RetryRestClientDecorator<ApiResponse> = RetryRestClientDecorator(),
+        _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
+    ) {
+        self.baseUrl = baseUrl
+        self.restClient = restClient
+        self.apiResponseLinkLookup = apiResponseLinkLookup
+    }
+
+    static func initialise(
+        _ baseUrl: String,
+        _ restClient: RetryRestClientDecorator<ApiResponse> = RetryRestClientDecorator(),
+        _ apiResponseLinkLookup: ApiResponseLinkLookup = ApiResponseLinkLookup()
+    ) throws {
+        sharedInstance = ServiceDiscoveryProvider()
+
+        guard let baseUrlAsUrl = URL(string: baseUrl) else {
+            throw AccessCheckoutIllegalArgumentError.malformedAccessBaseUrl()
+        }
+
+        sharedInstance = ServiceDiscoveryProvider(baseUrlAsUrl, restClient, apiResponseLinkLookup)
+    }
+
+    internal static var isInitialised: Bool {
+        return sharedInstance != nil
+    }
+
     static func getSessionsCardEndpoint() -> String? {
-        return shared.sessionsCreateCardSessionUrl
+        return sharedInstance!.sessionsCreateCardSessionUrl
     }
 
     static func getSessionsCvcEndpoint() -> String? {
-        return shared.sessionsCreateCvcSessionUrl
+        return sharedInstance!.sessionsCreateCvcSessionUrl
     }
 
     static func getCardBinEndpoint() -> String? {
-        return shared.cardBinUrl
+        return sharedInstance!.cardBinUrl
     }
 
     public static func discover(
-        baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+        completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
-        shared.performDiscovery(baseUrl, completionHandler)
+        guard let instance = sharedInstance else {
+            completionHandler(
+                .failure(
+                    AccessCheckoutError.internalError(
+                        message: "Service discovery has not been initialised")))
+            return
+        }
+
+        instance.performDiscovery(completionHandler)
     }
 
     private var hasDiscoveredAllUrls: Bool {
@@ -113,7 +151,13 @@ class ServiceDiscoveryProvider {
     }
 
     private func performDiscovery(
-        _ baseUrl: String,
+        _ completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+    ) {
+        self.performDiscovery(self.baseUrl!, completionHandler)
+    }
+
+    private func performDiscovery(
+        _ baseUrl: URL,
         _ completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
         if hasDiscoveredAllUrls {
@@ -139,7 +183,7 @@ class ServiceDiscoveryProvider {
     }
 
     private func performDiscoveryOnAccessRoot(
-        _ baseUrl: String, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
+        _ baseUrl: URL, completionHandler: @escaping (Result<Void, AccessCheckoutError>) -> Void
     ) {
         if sessionsServiceUrl != nil {
             completionHandler(.success(()))
@@ -226,14 +270,14 @@ class ServiceDiscoveryProvider {
         _ request: URLRequest,
         completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
     ) {
-        restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
+        _ = restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
             completionHandler(result)
         }
     }
 
     private class Requests {
-        fileprivate static func accessRoot(_ url: String) -> URLRequest {
-            return URLRequest(url: URL(string: url)!)
+        fileprivate static func accessRoot(_ url: URL) -> URLRequest {
+            return URLRequest(url: url)
         }
 
         fileprivate static func sessionsService(_ url: String) -> URLRequest {

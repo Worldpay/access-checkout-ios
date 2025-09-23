@@ -21,10 +21,10 @@ class CardBinApiClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
         request = CardBinRequest(cardNumber: testCardNumber, checkoutId: testCheckoutId)
-        ServiceDiscoveryProvider.shared = ServiceDiscoveryProvider(
-            restClient,
-            apiResponseLookUpMock)
-        ServiceDiscoveryProvider.shared.clearCache()
+
+        try? ServiceDiscoveryProvider.initialise("some-url", restClient, apiResponseLookUpMock)
+
+        ServiceDiscoveryProvider.sharedInstance?.clearCache()
 
         setUpDiscoveryResponses()
         setUpApiResponseLookups()
@@ -34,7 +34,7 @@ class CardBinApiClientTests: XCTestCase {
         expectationToFulfill = expectation(
             description: "should have called mock rest client with expected request")
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let expectedURLRequest = self.createExpectedURLRequest(
                 url: self.cardBinServiceUrl,
                 cardNumber: self.testCardNumber,
@@ -59,7 +59,7 @@ class CardBinApiClientTests: XCTestCase {
         expectationToFulfill = expectation(
             description: "should have called completion handler with response from rest client")
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let mockRestClient = RestClientMock(replyWith: self.expectedResponse)
             let apiClient = CardBinApiClient(restClient: mockRestClient)
 
@@ -86,7 +86,7 @@ class CardBinApiClientTests: XCTestCase {
         expectationToFulfill = expectation(
             description: "should have called completion handler with error from rest client")
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let mockRestClient = RestClientMock<CardBinResponse>(
                 errorWith: AccessCheckoutError.unexpectedApiError(message: "some error"))
             let detailedErrorMessage = "Message: unexpectedApiError : some error\n Validation: "
@@ -118,7 +118,7 @@ class CardBinApiClientTests: XCTestCase {
                 "should return bin info from cache manager if it exists and rest client is not called"
         )
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let mockRestClient = RestClientMock<CardBinResponse>(replyWith: self.expectedResponse)
             let apiClient = CardBinApiClient(restClient: mockRestClient)
 
@@ -161,7 +161,7 @@ class CardBinApiClientTests: XCTestCase {
             description: "should attempt request three times on server error (5xx)"
         )
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let serverError = AccessCheckoutError.unexpectedApiError(message: "unexpectedApiError")
             let mockRestClient = RestClientMock<CardBinResponse>(
                 errorWith: serverError, statusCode: 500)
@@ -192,7 +192,7 @@ class CardBinApiClientTests: XCTestCase {
             description: "should not retry request on client error (4xx)"
         )
 
-        ServiceDiscoveryProvider.discover(baseUrl: "some-url") { _ in
+        ServiceDiscoveryProvider.discover { _ in
             let serverError = AccessCheckoutError.unexpectedApiError(message: "Bad request")
             let mockRestClient = RestClientMock<CardBinResponse>(
                 errorWith: serverError, statusCode: 400)
