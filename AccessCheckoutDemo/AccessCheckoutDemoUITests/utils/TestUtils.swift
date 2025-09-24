@@ -13,6 +13,17 @@ struct TestUtils {
     static func isFocused(_ element: XCUIElement) -> Bool {
         return (element.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
     }
+    
+    static func assertLabelText(of element: XCUIElement, equals expectedText: String) {
+        var currentAttempt = 1
+        while element.label != expectedText && currentAttempt <= assertCardBrandMaxAttempts {
+            currentAttempt += 1
+            TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
+        }
+        
+        XCTAssertEqual(element.label, expectedText,
+                      "Expected label text '\(expectedText)' but found '\(element.label)'")
+    }
 
     static func assertCardBrand(of cardBrandImage: XCUIElement, is brand: String) {
         let brandAsLocalizedString = NSLocalizedString(

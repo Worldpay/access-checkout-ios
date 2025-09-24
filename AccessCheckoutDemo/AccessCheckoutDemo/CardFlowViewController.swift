@@ -112,6 +112,7 @@ class CardFlowViewController: UIViewController {
             cvcTextField.clear()
 
             cardBrandsLabel?.text = ""
+            cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
             imageView.image = unknownBrandImage
         }
 
@@ -211,6 +212,7 @@ class CardFlowViewController: UIViewController {
             cardBrandsLabel = label
         }
         
+        cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
         cardBrandsLabel?.numberOfLines = 1
         cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
         cardBrandsLabel?.text = ""
@@ -244,6 +246,7 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
         let brandNames = cardBrands.map { $0.name }.joined(separator: ", ")
         DispatchQueue.main.async {
             self.cardBrandsLabel?.text = brandNames
+            self.cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
         }
     }
 

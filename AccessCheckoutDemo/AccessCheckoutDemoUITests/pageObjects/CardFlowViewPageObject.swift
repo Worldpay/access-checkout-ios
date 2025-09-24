@@ -67,6 +67,10 @@ class CardFlowViewPageObject {
     var cvcIsValidLabel: XCUIElement {
         return app.staticTexts["cvcIsValidLabel"]
     }
+    
+    var cardBrandsLabel: XCUIElement {
+        return app.staticTexts["cardBrandsLabel"]
+    }
 
     init(_ app: XCUIApplication) {
         self.app = app
