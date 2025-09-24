@@ -27,10 +27,7 @@ class PanWithSpacingFormattingUITests: XCTestCase {
 
     func testCorrectlyFormatsWhenPastingAndTypingInMiddleOfPan() {
         view!.typeTextIntoPanCharByChar("4111")
-        view!.setPanCaretAtAndTypeIn(
-            position: 3, text: [backspace, backspace, "123", "5", backspace]
-        )
-
+        view!.setPanCaretAtAndTypeIn(position: 3, text: ["123", "5"])
         XCTAssertEqual(view!.panText!, "4111 2351")
     }
 
