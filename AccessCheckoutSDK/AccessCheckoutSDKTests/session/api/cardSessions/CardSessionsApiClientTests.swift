@@ -12,12 +12,14 @@ class CardSessionsApiClientTests: XCTestCase {
     private let mockURLRequestFactory = CardSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
-    private let expectedDiscoveredUrl = "http://and-end-point"
+    private let expectedDiscoveredUrl = "https://example.com"
 
     private let urlRequestFactoryResult = URLRequest(url: URL(string: "a-url")!)
     private var expectationToFulfill: XCTestExpectation?
 
     override func setUp() {
+        ServiceDiscoveryProvider.clearCache()
+
         mockURLRequestFactory.willReturn(urlRequestFactoryResult)
         expectationToFulfill = expectation(description: "")
     }
@@ -49,8 +51,10 @@ class CardSessionsApiClientTests: XCTestCase {
                 XCTAssertEqual(self.expiryYear, self.mockURLRequestFactory.expiryYearPassed)
                 XCTAssertEqual(self.cvc, self.mockURLRequestFactory.cvcPassed)
                 XCTAssertEqual(self.expectedDiscoveredUrl, self.mockURLRequestFactory.urlPassed)
-            case .failure:
-                XCTFail("Creation of session shoul have succeeded")
+            case .failure(let error):
+                XCTFail(
+                    "Creation of session shoul have succeeded, error is: \(String(describing: error.errorDescription))"
+                )
             }
             self.expectationToFulfill!.fulfill()
         }

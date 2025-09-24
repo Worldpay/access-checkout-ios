@@ -4,54 +4,61 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class ServiceDiscoveryProviderTests: XCTestCase {
-    // NOT COVERING
-    //    fun `should throw exception when attempting to use discovery without initialising it`() =
-    //    fun `reset() should mark the ApiDiscoveryClient as not initialised and reset the discovery cache`() { (used only in test code)
-
-    // COVERED
-    //    fun `should throw exception when initialising discovery with a malformed URL`() {
-
-    // TODO
-
-    //    fun `should retrieve endpoint from cache when one exists`() = runTest {
-    //    fun `should save endpoint to cache when endpoint discovery is successful`() = runTest {
-    //    fun `should be able to return endpoint on first attempt`() = runTest {
-    //    fun `should be able to return endpoint on second attempt`() = runTest {
-    //    fun `should throw exception when unable to return endpoint after second attempt`() = runTest {
-    //    fun `should cache responses received during service discovery`() = runTest {
-    //    fun `should use responses cached across multiple end points discoveries`() = runTest {
-
-    let baseUrlAsString = "some-url"
-    let restClientMock = MockRetryRestClientDecorator<ApiResponse>()
-    let apiResponseLookUpMock = MockApiResponseLinkLookup()
+    private let baseUrlAsString = "access-root-url"
+    private let restClientMock = MockRetryRestClientDecorator<ApiResponse>()
+    private let apiResponseLookUpMock = MockApiResponseLinkLookup()
 
     // default api response values for testing
-    let sessionsServiceUrl = "sessions-service-url"
-    let cardBinServiceUrl = "card-bin-service-url"
-    let sessionsCardHref = "sessions-card-href"
-    let sessionsCvcHref = "sessions-cvc-href"
+    private let expectedBaseUrl = URL(string: "access-root-url")!
+    private let expectedSessionsServiceUrl = URL(string: "sessions-service-url")!
+    private let expectedCardBinDetailsUrl = URL(string: "card-bin-details-url")!
+    private let expectedCreateCardSessionsUrl = URL(string: "create-card-sessions-url")!
+    private let expectedCreateCvcSessionsUrl = URL(string: "create-cvc-sessions-url")!
+
+    private var expectedBaseUrlRequest: URLRequest!
+    private var expectedSessionsServiceRequest: URLRequest!
 
     private var serviceDiscoveryProvider: ServiceDiscoveryProvider?
-    private var expectationToFulfill: XCTestExpectation?
 
     override func setUp() {
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
         ServiceDiscoveryProvider.sharedInstance = nil
+        ServiceDiscoveryProvider.cachedResults = [:]
+        ServiceDiscoveryProvider.cachedResponses = [:]
+
+        expectedBaseUrlRequest = URLRequest(url: URL(string: baseUrlAsString)!)
+
+        expectedSessionsServiceRequest = URLRequest(
+            url: URL(string: expectedSessionsServiceUrl.absoluteString)!)
+        expectedSessionsServiceRequest.addValue(
+            ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
+        expectedSessionsServiceRequest.addValue(
+            ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
     }
 
-    func testInitialiseMarksDiscoveryAsInitialised() {
-        XCTAssertFalse(ServiceDiscoveryProvider.isInitialised)
+    func testDiscoverCallsCompletionHandlerWithErrorWhenDiscoveryHasNotBeenInitialised() {
+        let expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.internalError(
+            message: "Service discovery has not been initialised")
 
-        try? ServiceDiscoveryProvider.initialise("https://try.access.worldpay.com")
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Access root discovery should have returned an error")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+                expectationToFulfill.fulfill()
+            }
+        }
 
-        XCTAssertTrue(ServiceDiscoveryProvider.isInitialised)
+        waitForExpectations(timeout: 1)
     }
 
+    // MARK: Initialise tests
     // An invalid URL in swift is a URL which is emtpy or contains invalid characters
     // It won't fail though if the URL has valid characters but is not in the form of a URL (e.g. blah is considered valid)
     func testInitialiseThrowsErrorWhenURLIsEmpty() {
-        XCTAssertFalse(ServiceDiscoveryProvider.isInitialised)
-
         do {
             try ServiceDiscoveryProvider.initialise("")
 
@@ -65,336 +72,335 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         }
     }
 
-    func testGettersReturnCardAndCvcEndpoints() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-
+    // MARK: Tests for the discovery of all URLs
+    func testDiscoverAllDiscoversAndCachesAllUrls() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
         setUpDiscoveryResponses()
+        setUpApiResponseLookups()
 
-        setUpApiResponseLookups(withDefaults: true)
-
-        let expectedBaseDiscoveryRequest = URLRequest(url: URL(string: baseUrlAsString)!)
-        var expectedSessionsDiscoveryRequest = URLRequest(
-            url: URL(string: sessionsServiceUrl)!)
-        expectedSessionsDiscoveryRequest.addValue(
-            ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "content-type")
-        expectedSessionsDiscoveryRequest.addValue(
-            ApiHeaders.sessionsHeaderValue, forHTTPHeaderField: "accept")
-
-        // call method
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discoverAll { result in
             switch result {
-            case .success():
-                // verify calls to factory
-                verify(self.restClientMock, times(2)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.restClientMock).send(
-                    urlSession: any(), request: expectedBaseDiscoveryRequest,
-                    completionHandler: any())
-                verify(self.restClientMock).send(
-                    urlSession: any(), request: expectedSessionsDiscoveryRequest,
-                    completionHandler: any())
+            case .success(_):
+                expectationToFulfill.fulfill()
+
+                XCTAssertNotNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCardSessions])
+                XCTAssertNotNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCvcSessions])
+                XCTAssertNotNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.cardBinDetails])
+            case .failure(_):
+                XCTFail("Failed to discover all end points")
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testDiscoverAllCachesOnlySuccessfulUrlsWhenFailing() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups(createCvcSessionsNotFound: true)
+
+        ServiceDiscoveryProvider.discoverAll { result in
+            switch result {
+            case .success(_):
+                XCTFail("Should have failed to discover all URLs")
+                expectationToFulfill.fulfill()
+            case .failure(_):
+                XCTAssertNotNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCardSessions])
+                XCTAssertNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCvcSessions])
+                XCTAssertNotNil(
+                    ServiceDiscoveryProvider.cachedResults[UrlToDiscover.cardBinDetails])
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    // MARK: Tests for the discovery of a single URL
+    func
+        testDiscoverCardSessionsUrlPerformsDiscoveryOfSessionsServiceAndCardSessionsEndPointAndCompletesWithCreateCardSessionsUrl()
+    {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(let discoveredUrl):
+                expectationToFulfill.fulfill()
+
+                XCTAssertEqual(discoveredUrl, self.expectedCreateCardSessionsUrl)
+
+                // verify calls made with rest client
+                self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest)
+                self.verifyRestClientHasSentRequest(self.expectedSessionsServiceRequest)
+                verifyNoMoreInteractions(self.restClientMock)
 
                 // verify calls to api response lookup
-                verify(self.apiResponseLookUpMock, times(4)).lookup(link: any(), in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.service, in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.endpoint, in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.endpoint, in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardBin.service, in: any())
-                self.expectationToFulfill!.fulfill()
-
-                // verify endpoints have been discovered
-                self.assertDiscoveredEndpoints()
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.service)
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.endpoint)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
         waitForExpectations(timeout: 1)
     }
 
-    func testDiscoverCallsCompletionHandlerWithErrorWhenDiscoveryHasNotBeenInitialised() {
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.internalError(
-            message: "Service discovery has not been initialised")
-
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Access root discovery should have returned an error")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                XCTAssertEqual(error, expectedError)
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testShouldReturnAnErrorWhenAnErrorOccursDuringAccessRootDisocvery() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.unexpectedApiError(
-            message: "Unable to fetch access root discovery response.")
-
-        // Simulate failure in access root discovery
-        setUpDiscoveryResponses(withAccessRootDiscoveryError: expectedError)
-
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Access root discovery should have returned an error")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(1)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                XCTAssertEqual(error, expectedError)
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testShouldReturnAnErrorWhenUnableToLookUpSessionsServiceUrlInAccessRootResponse() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
-            linkName: ApiLinks.cardSessions.service)
-
+    func
+        testDiscoverCvcSessionsUrlPerformsDiscoveryOfSessionsServiceAndCvcSessionsEndPointAndCompletesWithCreateCvcSessionsUrl()
+    {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
         setUpDiscoveryResponses()
+        setUpApiResponseLookups()
 
-        // Simulate no sessions service link in access root response
-        setUpApiResponseLookups(sessionsServiceLookup: nil)
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
             switch result {
-            case .success():
-                XCTFail("Sessions service url should not have been found")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(1)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(link: any(), in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.service, in: any())
+            case .success(let discoveredUrl):
+                expectationToFulfill.fulfill()
 
-                XCTAssertEqual(error, expectedError)
+                XCTAssertEqual(discoveredUrl, self.expectedCreateCvcSessionsUrl)
 
-                self.expectationToFulfill!.fulfill()
-            }
-        }
+                // verify calls made with rest client
+                self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest)
+                self.verifyRestClientHasSentRequest(self.expectedSessionsServiceRequest)
+                verifyNoMoreInteractions(self.restClientMock)
 
-        waitForExpectations(timeout: 1)
-    }
+                // verify calls to api response lookup
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.service)
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.endpoint)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
-    func testShouldReturnAnErorrWhenUnableToLookUpCardBinServiceUrlInAccessRootResponse() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
-            linkName: ApiLinks.cardBin.service)
-
-        setUpDiscoveryResponses()
-
-        // Simulate no card bin service url in access root response
-        setUpApiResponseLookups(
-            sessionsServiceLookup: sessionsServiceUrl,
-            cardEndpointLookup: nil)
-
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Card bin service url should not have been found")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(1)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(2)).lookup(link: any(), in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardBin.service, in: any())
-
-                XCTAssertEqual(error, expectedError)
-
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testShouldReturnAnErrorWhenAnErrorOccursDuringSessionsDiscovery() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.unexpectedApiError(
-            message: "Unable to fetch sessions discovery response")
-
-        // Simulate failure in sessions discovery
-        setUpDiscoveryResponses(withSessionsDiscoveryError: expectedError)
-
-        setUpApiResponseLookups(
-            sessionsServiceLookup: sessionsServiceUrl,
-            cardBinServiceLookup: cardBinServiceUrl)
-
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                XCTFail("Sessions discovery should not have been found")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(2)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(2)).lookup(link: any(), in: any())
-
-                XCTAssertEqual(error, expectedError)
-
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testSubsequentCallsToDiscoveryReturnCachedValues() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let nextExpectationToFulfil = XCTestExpectation(description: "")
-
-        setUpDiscoveryResponses()
-
-        setUpApiResponseLookups(withDefaults: true)
-
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                verify(self.restClientMock, times(2)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(4)).lookup(link: any(), in: any())
-
-                self.assertDiscoveredEndpoints()
-
-                // clear previous calls to the mocks
-                clearInvocations(self.restClientMock)
-                clearInvocations(self.apiResponseLookUpMock)
-
-                self.expectationToFulfill!.fulfill()
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
-                self.expectationToFulfill!.fulfill()
-            }
-        }
-
-        // subsequent calls should return cached values without calling the factory or lookup mocks
-        ServiceDiscoveryProvider.discover { result in
-            switch result {
-            case .success():
-                // verify no calls have been made to the factory or lookup mocks
-                verify(self.restClientMock, times(0)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(0)).lookup(link: any(), in: any())
-
-                self.assertDiscoveredEndpoints()
-
-                nextExpectationToFulfil.fulfill()
-            case .failure(_):
-                XCTFail("Discovery should have returned mocked value")
-                nextExpectationToFulfil.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
         waitForExpectations(timeout: 1)
     }
 
-    func testClearCacheShouldClearDiscoverdEndpoints() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-
+    func
+        testDiscoverCvcSessionsUrlPerformsDiscoveryOfRootAndCvcSessionsEndPointAndCompletesWithCardBinDetailsUrl()
+    {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
         setUpDiscoveryResponses()
+        setUpApiResponseLookups()
 
-        setUpApiResponseLookups(withDefaults: true)
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
             switch result {
-            case .success():
-                self.assertDiscoveredEndpoints()
+            case .success(let discoveredUrl):
+                expectationToFulfill.fulfill()
 
-                self.expectationToFulfill!.fulfill()
+                XCTAssertEqual(discoveredUrl, self.expectedCardBinDetailsUrl)
+
+                // verify calls made with rest client
+                self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                // verify calls to api response lookup
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardBin.service)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        waitForExpectations(timeout: 1)
+    }
 
-        self.assertDiscoveredEndpointsAreNil()
+    // MARK - cache tests
+    func testDiscoverRetrievesUrlToBeDiscoveredFromCacheWhenItHasAlreadyBeenDiscovered() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(let discoveredUrl1):
+                XCTAssertEqual(discoveredUrl1, self.expectedCreateCardSessionsUrl)
+
+                self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest, times: 1)
+                self.verifyRestClientHasSentRequest(self.expectedSessionsServiceRequest, times: 1)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.service, times: 1)
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.endpoint, times: 1)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+                    switch result {
+                    case .success(let discoveredUrl2):
+                        expectationToFulfill.fulfill()
+
+                        XCTAssertEqual(discoveredUrl2, self.expectedCreateCardSessionsUrl)
+
+                        // Verify mocks were not called anymore confirming URLs have been taken from cache
+                        verifyNoMoreInteractions(self.restClientMock)
+                        verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                    case .failure(_):
+                        XCTFail("Discovery should have returned mocked value")
+                        expectationToFulfill.fulfill()
+                    }
+                }
+            case .failure(_):
+                XCTFail("Discovery should have returned mocked value")
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testDiscoverUsesCachedAccessRootResponseWhenItHasBeenCachedByPreviousCall() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(let discoveredUrl1):
+                ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
+                    switch result {
+                    case .success(let discoveredUrl2):
+                        expectationToFulfill.fulfill()
+
+                        XCTAssertEqual(discoveredUrl1, self.expectedCreateCardSessionsUrl)
+                        XCTAssertEqual(discoveredUrl2, self.expectedCardBinDetailsUrl)
+
+                        // verify calls made with rest client
+                        self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest, times: 1)
+                        self.verifyRestClientHasSentRequest(
+                            self.expectedSessionsServiceRequest, times: 1)
+                        verifyNoMoreInteractions(self.restClientMock)
+
+                        // verify calls to api response lookup
+                        self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.service)
+                        self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.endpoint)
+                        self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardBin.endpoint)
+                        verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                    case .failure(_):
+                        XCTFail("Discovery should have returned mocked value")
+                        expectationToFulfill.fulfill()
+                    }
+                }
+
+            case .failure(_):
+                XCTFail("Discovery should have returned mocked value")
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testDiscoverUsesCachedSessionsServiceResponseWhenItExistsInCache() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(let discoveredUrl1):
+                ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
+                    switch result {
+                    case .success(let discoveredUrl2):
+                        expectationToFulfill.fulfill()
+
+                        XCTAssertEqual(discoveredUrl1, self.expectedCreateCardSessionsUrl)
+                        XCTAssertEqual(discoveredUrl2, self.expectedCreateCvcSessionsUrl)
+
+                        // verify calls made with rest client
+                        self.verifyRestClientHasSentRequest(self.expectedBaseUrlRequest, times: 1)
+                        self.verifyRestClientHasSentRequest(
+                            self.expectedSessionsServiceRequest, times: 1)
+                        verifyNoMoreInteractions(self.restClientMock)
+
+                        // verify calls to api response lookup
+                        self.verifyApiResponseLookUpHasLookedUp(
+                            key: ApiLinks.cardSessions.service, times: 2)
+                        self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.endpoint)
+                        self.verifyApiResponseLookUpHasLookedUp(
+                            key: ApiLinks.cvcSessions.service, times: 2)
+                        self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.endpoint)
+                        verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                    case .failure(_):
+                        XCTFail("Discovery should have returned mocked value")
+                        expectationToFulfill.fulfill()
+                    }
+                }
+
+            case .failure(_):
+                XCTFail("Discovery should have returned mocked value")
+                expectationToFulfill.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 1)
     }
 
     // Tests that discovery calls are made again after clearing the cache.
-    func testShouldCallDiscoveryWhenCacheIsCleared() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
+    func testShouldSendRequestUsingRestClientAgainWhenCacheIsCleared() {
+        let expectationToFulfill = expectation(description: "")
         let nextExpectationToFulfill = XCTestExpectation(description: "")
-
+        initialiseServiceDiscovery()
         setUpDiscoveryResponses()
+        setUpApiResponseLookups()
 
-        setUpApiResponseLookups(withDefaults: true)
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success():
+            case .success(let discoveredUrl):
+                XCTAssertEqual(discoveredUrl, self.expectedCreateCardSessionsUrl)
+
                 // verify calls to factory and lookup mocks
                 verify(self.restClientMock, times(2)).send(
                     urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(4)).lookup(link: any(), in: any())
+                verify(self.apiResponseLookUpMock, times(2)).lookup(link: any(), in: any())
 
-                self.assertDiscoveredEndpoints()
-
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        // Clearing cache
+        ServiceDiscoveryProvider.cachedResponses = [:]
+        ServiceDiscoveryProvider.cachedResults = [:]
 
-        // verify cached endpoints are cleared
-        self.assertDiscoveredEndpointsAreNil()
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success():
+            case .success(let discoveredUrl):
+                XCTAssertEqual(discoveredUrl, self.expectedCreateCardSessionsUrl)
+
                 // verify calls after clearing cached endpoints
                 verify(self.restClientMock, times(4)).send(
                     urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(8)).lookup(link: any(), in: any())
-
-                self.assertDiscoveredEndpoints()
+                verify(self.apiResponseLookUpMock, times(4)).lookup(link: any(), in: any())
 
                 nextExpectationToFulfill.fulfill()
             case .failure(_):
@@ -406,79 +412,251 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testShouldReturnAnErrorWhenUnableToLookUpSessionsCardUrl() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
+    func testErrorResponsesAreNotCached() {
+        let expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.unexpectedApiError(message: "some error")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses(withAccessRootDiscoveryError: expectedError)
+        setUpApiResponseLookups(sessionsServiceNotFound: true)
 
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
-            linkName: ApiLinks.cardSessions.endpoint)
-
-        setUpDiscoveryResponses()
-
-        // simulate no lookup value for sessions card endpoint
-        setUpApiResponseLookups(
-            sessionsServiceLookup: sessionsServiceUrl,
-            cardBinServiceLookup: cardBinServiceUrl,
-            cardEndpointLookup: nil)
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success():
-                XCTFail("Sessions card url should not have been found")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(2)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(3)).lookup(link: any(), in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cardSessions.endpoint, in: any())
+            case .success(_):
+                XCTFail("URL should not have been discovered")
+                expectationToFulfill.fulfill()
+            case .failure(_):
+                self.verifyRestClientHasSentAnyRequest(times: 1)
+                verifyNoMoreInteractions(self.restClientMock)
 
-                XCTAssertEqual(error, expectedError)
+                XCTAssertTrue(ServiceDiscoveryProvider.cachedResponses.isEmpty)
 
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
         waitForExpectations(timeout: 1)
     }
 
-    func testShouldReturnErrorWhenUnableToLookUpSessionsCvcUrl() {
-        try? ServiceDiscoveryProvider.initialise(
-            baseUrlAsString, restClientMock, apiResponseLookUpMock)
-
-        expectationToFulfill = expectation(description: "")
-        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
-            linkName: ApiLinks.cvcSessions.endpoint)
-
+    func testResponseWhereKeyCouldNotBeFoundIsNotCached() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
         setUpDiscoveryResponses()
+        setUpApiResponseLookups(createCardSessionsNotFound: true)
 
-        // simulate no lookup value for sessions cvc endpoint
-        setUpApiResponseLookups(
-            sessionsServiceLookup: sessionsServiceUrl,
-            cardBinServiceLookup: cardBinServiceUrl,
-            cardEndpointLookup: sessionsCardHref,
-            cvcEndpointLookup: nil)
-
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success():
-                XCTFail("Sessions cvc url should not have been found")
-                self.expectationToFulfill!.fulfill()
-            case .failure(let error):
-                verify(self.restClientMock, times(2)).send(
-                    urlSession: any(), request: any(), completionHandler: any())
-                verify(self.apiResponseLookUpMock, times(4)).lookup(link: any(), in: any())
-                verify(self.apiResponseLookUpMock, times(1)).lookup(
-                    link: ApiLinks.cvcSessions.endpoint, in: any())
+            case .success(_):
+                XCTFail("URL should not have been discovered")
+                expectationToFulfill.fulfill()
+            case .failure(_):
+                self.verifyRestClientHasSentAnyRequest(times: 2)
+                verifyNoMoreInteractions(self.restClientMock)
 
-                XCTAssertEqual(error, expectedError)
+                XCTAssertFalse(ServiceDiscoveryProvider.cachedResponses.isEmpty)
+                XCTAssertNotNil(ServiceDiscoveryProvider.cachedResponses[self.expectedBaseUrl])
+                XCTAssertNil(
+                    ServiceDiscoveryProvider.cachedResponses[self.expectedSessionsServiceUrl])
 
-                self.expectationToFulfill!.fulfill()
+                expectationToFulfill.fulfill()
             }
         }
 
         waitForExpectations(timeout: 1)
+    }
+
+    // MARK: Test error scenarios
+    func testShouldReturnErrorWhenErrorResponseReceivedForRequestToBaseUrl() {
+        let expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.unexpectedApiError(message: "some error")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses(withAccessRootDiscoveryError: expectedError)
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("URL should not have been discovered")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                self.verifyRestClientHasSentAnyRequest(times: 1)
+                verifyNoMoreInteractions(self.restClientMock)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                XCTAssertEqual(error, expectedError)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnErrorWhenErrorResponseReceivedForRequestToSessionsServiceUrl() {
+        let expectationToFulfill = expectation(description: "")
+        let expectedError = AccessCheckoutError.unexpectedApiError(message: "some error")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses(withSessionsDiscoveryError: expectedError)
+        setUpApiResponseLookups()
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("URL should not have been discovered")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+
+                self.verifyRestClientHasSentAnyRequest(times: 2)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.service, times: 1)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnAnErrorWhenUnableToFindSessionsServiceUrlInBaseUrlResponse() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups(sessionsServiceNotFound: true)
+
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cardSessions.service)
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Sessions card url should not have been found")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+
+                self.verifyRestClientHasSentAnyRequest(times: 1)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.service, times: 1)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnAnErrorWhenUnableToFindCardBindDetailsUrlInBaseUrlResponse() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups(cardBinDetailsNotFound: true)
+
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cardBin.service)
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Card bin details url should not have been found")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+
+                self.verifyRestClientHasSentAnyRequest(times: 1)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardBin.service, times: 1)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnAnErrorWhenUnableToFindSessionsCardUrlInSessionsServiceResponse() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups(createCardSessionsNotFound: true)
+
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cardSessions.endpoint)
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Sessions card url should not have been found")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                self.verifyRestClientHasSentAnyRequest(times: 2)
+                verifyNoMoreInteractions(self.restClientMock)
+
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.service, times: 1)
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cardSessions.endpoint, times: 1)
+                verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                XCTAssertEqual(error, expectedError)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testShouldReturnErrorWhenUnableToFindSessionsCvcUrlInSessionsServiceResponse() {
+        let expectationToFulfill = expectation(description: "")
+        initialiseServiceDiscovery()
+        setUpDiscoveryResponses()
+        setUpApiResponseLookups(createCvcSessionsNotFound: true)
+
+        let expectedError = AccessCheckoutError.discoveryLinkNotFound(
+            linkName: ApiLinks.cvcSessions.endpoint)
+
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Sessions cvc url should not have been found")
+                expectationToFulfill.fulfill()
+            case .failure(let error):
+                self.verifyRestClientHasSentAnyRequest(times: 2)
+                self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.service, times: 1)
+                self.verifyApiResponseLookUpHasLookedUp(
+                    key: ApiLinks.cvcSessions.endpoint, times: 1)
+
+                XCTAssertEqual(error, expectedError)
+
+                expectationToFulfill.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    private func verifyRestClientHasSentAnyRequest(times numberOfCalls: Int = 1) {
+        verify(self.restClientMock, times(numberOfCalls)).send(
+            urlSession: any(), request: any(), completionHandler: any())
+    }
+
+    private func verifyRestClientHasSentRequest(
+        _ urlRequest: URLRequest, times numberOfCalls: Int = 1
+    ) {
+        verify(self.restClientMock, times(numberOfCalls)).send(
+            urlSession: any(), request: urlRequest, completionHandler: any())
+    }
+
+    private func verifyApiResponseLookUpHasLookedUp(key: String, times numberOfCalls: Int = 1) {
+        verify(self.apiResponseLookUpMock, times(numberOfCalls)).lookup(link: key, in: any())
     }
 
     private func setUpDiscoveryResponses(
@@ -509,16 +687,17 @@ class ServiceDiscoveryProviderTests: XCTestCase {
     }
 
     private func setUpApiResponseLookups(
-        withDefaults: Bool = false,
-        sessionsServiceLookup: String? = nil,
-        cardBinServiceLookup: String? = nil,
-        cardEndpointLookup: String? = nil,
-        cvcEndpointLookup: String? = nil
+        sessionsServiceNotFound: Bool = false,
+        cardBinDetailsNotFound: Bool = false,
+        createCardSessionsNotFound: Bool = false,
+        createCvcSessionsNotFound: Bool = false,
     ) {
-        let sessionsUrl = withDefaults ? sessionsServiceUrl : sessionsServiceLookup
-        let cardBinUrl = withDefaults ? cardBinServiceUrl : cardBinServiceLookup
-        let sessionsCardHref = withDefaults ? self.sessionsCardHref : cardEndpointLookup
-        let sessionsCvcHref = withDefaults ? self.sessionsCvcHref : cvcEndpointLookup
+        let sessionsUrl = sessionsServiceNotFound ? nil : expectedSessionsServiceUrl.absoluteString
+        let cardBinUrl = cardBinDetailsNotFound ? nil : expectedCardBinDetailsUrl.absoluteString
+        let createdCardSessionsUrl =
+            createCardSessionsNotFound ? nil : expectedCreateCardSessionsUrl.absoluteString
+        let createCvcSessionsUrl =
+            createCvcSessionsNotFound ? nil : expectedCreateCvcSessionsUrl.absoluteString
 
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: ApiLinks.cardSessions.service, in: any())
@@ -528,28 +707,10 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             .thenReturn(cardBinUrl)
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: ApiLinks.cardSessions.endpoint, in: any())
-            .thenReturn(sessionsCardHref)
+            .thenReturn(createdCardSessionsUrl)
         apiResponseLookUpMock.getStubbingProxy()
             .lookup(link: ApiLinks.cvcSessions.endpoint, in: any())
-            .thenReturn(sessionsCvcHref)
-    }
-
-    private func assertDiscoveredEndpoints() {
-        XCTAssertEqual(
-            ServiceDiscoveryProvider.getSessionsCardEndpoint(),
-            self.sessionsCardHref)
-        XCTAssertEqual(
-            ServiceDiscoveryProvider.getSessionsCvcEndpoint(),
-            self.sessionsCvcHref)
-        XCTAssertEqual(
-            ServiceDiscoveryProvider.getCardBinEndpoint(),
-            self.cardBinServiceUrl)
-    }
-
-    private func assertDiscoveredEndpointsAreNil() {
-        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCardEndpoint())
-        XCTAssertNil(ServiceDiscoveryProvider.getSessionsCvcEndpoint())
-        XCTAssertNil(ServiceDiscoveryProvider.getCardBinEndpoint())
+            .thenReturn(createCvcSessionsUrl)
     }
 
     private func genericApiResponse() -> ApiResponse {
@@ -557,7 +718,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
             {
                 "_links": {
                     "a:service": {
-                        "href": "http://www.a-service.co.uk"
+                        "href": "https://www.example.com"
                     },
                 },
             }
@@ -565,5 +726,46 @@ class ServiceDiscoveryProviderTests: XCTestCase {
 
         let data = Data(jsonString.utf8)
         return try! JSONDecoder().decode(ApiResponse.self, from: data)
+    }
+
+    private func accessRootResponse() -> ApiResponse {
+        let jsonString = """
+            {
+                "_links": {
+                    "sessions:service": {
+                        "href": "\(expectedSessionsServiceUrl.absoluteString)"
+                    },
+                    "cardBinPublic:binDetails": {
+                        "href": "\(expectedCardBinDetailsUrl.absoluteString)"
+                    }
+                },
+            }
+            """
+
+        let data = Data(jsonString.utf8)
+        return try! JSONDecoder().decode(ApiResponse.self, from: data)
+    }
+
+    private func sessionsServiceResponse() -> ApiResponse {
+        let jsonString = """
+            {
+                "_links": {
+                    "sessions:card": {
+                        "href": "\(expectedCreateCardSessionsUrl.absoluteString)"
+                    },
+                    "sessions:paymentsCvc": {
+                        "href": "\(expectedCreateCvcSessionsUrl.absoluteString)"
+                    },
+                },
+            }
+            """
+
+        let data = Data(jsonString.utf8)
+        return try! JSONDecoder().decode(ApiResponse.self, from: data)
+    }
+
+    private func initialiseServiceDiscovery() {
+        try? ServiceDiscoveryProvider.initialise(
+            baseUrlAsString, restClientMock, apiResponseLookUpMock)
     }
 }

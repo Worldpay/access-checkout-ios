@@ -11,6 +11,7 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
+		5110467D2E831295002AA11C /* UrlToDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5110467C2E83128C002AA11C /* UrlToDiscover.swift */; };
 		5115F54F2E327B0900BC3FDB /* CardBinURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */; };
 		511B6C4A2E40EC28005E1457 /* CardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */; };
 		511B6C4B2E40EC28005E1457 /* CardBinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C472E40EC28005E1457 /* CardBinRequest.swift */; };
@@ -48,6 +49,8 @@
 		517145862AE2CA8D00A73A3F /* UITextFieldMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */; };
 		5173EF252970367300770177 /* WpSdkHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5173EF242970367300770177 /* WpSdkHeaderTests.swift */; };
 		5182FA752AC485C500976088 /* AccessCheckoutUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */; };
+		5196B71C2E8440C700DEF1A8 /* ServiceDiscoveryProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196B71B2E8440BC00DEF1A8 /* ServiceDiscoveryProviderExtension.swift */; };
+		5196B71E2E84428400DEF1A8 /* ServiceDiscoveryProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196B71D2E84428400DEF1A8 /* ServiceDiscoveryProviderExtension.swift */; };
 		519F14402E4B7AAA00038113 /* MiscUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519F143F2E4B7AA300038113 /* MiscUtils.swift */; };
 		519F14422E4B8AB500038113 /* CardBinApiClientTestsWithStubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519F14412E4B8AA300038113 /* CardBinApiClientTestsWithStubService.swift */; };
 		51D610D125CD750A00B1B685 /* CardValidationConfigBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */; };
@@ -261,6 +264,7 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5110467C2E83128C002AA11C /* UrlToDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlToDiscover.swift; sourceTree = "<group>"; };
 		5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		511B6C452E40EC28005E1457 /* CardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClient.swift; sourceTree = "<group>"; };
 		511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinCacheManager.swift; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 		517145852AE2CA8D00A73A3F /* UITextFieldMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldMock.swift; sourceTree = "<group>"; };
 		5173EF242970367300770177 /* WpSdkHeaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WpSdkHeaderTests.swift; sourceTree = "<group>"; };
 		5182FA742AC485C500976088 /* AccessCheckoutUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessCheckoutUITextField.swift; sourceTree = "<group>"; };
+		5196B71B2E8440BC00DEF1A8 /* ServiceDiscoveryProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderExtension.swift; sourceTree = "<group>"; };
+		5196B71D2E84428400DEF1A8 /* ServiceDiscoveryProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDiscoveryProviderExtension.swift; sourceTree = "<group>"; };
 		519F143F2E4B7AA300038113 /* MiscUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscUtils.swift; sourceTree = "<group>"; };
 		519F14412E4B8AA300038113 /* CardBinApiClientTestsWithStubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClientTestsWithStubService.swift; sourceTree = "<group>"; };
 		51D610D025CD750A00B1B685 /* CardValidationConfigBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardValidationConfigBuilderTests.swift; sourceTree = "<group>"; };
@@ -537,6 +543,7 @@
 				1BCBFEB922B8EA3C00A65FAA /* Info.plist */,
 				512907E92AE98200008A7357 /* ServiceStubs.swift */,
 				5121EC412AF2A50800C8FC72 /* EncodableExtension.swift */,
+				5196B71D2E84428400DEF1A8 /* ServiceDiscoveryProviderExtension.swift */,
 				513039A52B110DF600C01B10 /* SessionsConsumerPactTests.swift */,
 			);
 			path = AccessCheckoutSDKPactTests;
@@ -1130,6 +1137,7 @@
 				E7E6758E241AA57A0022292F /* RestClient.swift */,
 				E7D19F71246328BA001EA13A /* SingleLinkDiscovery.swift */,
 				E7AD244F2464111400C4C92D /* SingleLinkDiscoveryFactory.swift */,
+				5110467C2E83128C002AA11C /* UrlToDiscover.swift */,
 				C213F7762E32853200B89815 /* ServiceDiscoveryProvider.swift */,
 				E7821A802458652F003F7231 /* WpSdkHeader.swift */,
 			);
@@ -1189,6 +1197,7 @@
 		E7D19F7D2463FEE3001EA13A /* testUtils */ = {
 			isa = PBXGroup;
 			children = (
+				5196B71B2E8440BC00DEF1A8 /* ServiceDiscoveryProviderExtension.swift */,
 				519F143F2E4B7AA300038113 /* MiscUtils.swift */,
 				51F7EEEB25C88E41002FE45F /* AcceptanceTestSuite.swift */,
 				E719B08724642EF80037DED4 /* CuckooExtension.swift */,
@@ -1490,9 +1499,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1529,9 +1542,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1609,6 +1626,7 @@
 				5121EC422AF2A50800C8FC72 /* EncodableExtension.swift in Sources */,
 				513039A62B110DF600C01B10 /* SessionsConsumerPactTests.swift in Sources */,
 				512907EA2AE98200008A7357 /* ServiceStubs.swift in Sources */,
+				5196B71E2E84428400DEF1A8 /* ServiceDiscoveryProviderExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1660,6 +1678,7 @@
 				5182FA752AC485C500976088 /* AccessCheckoutUITextField.swift in Sources */,
 				E749024D247FEEB600889AAA /* TextChangeHandler.swift in Sources */,
 				E72C3EF124893C0100284A31 /* CardBrandsConfigurationProvider.swift in Sources */,
+				5110467D2E831295002AA11C /* UrlToDiscover.swift in Sources */,
 				E7821A87245869DB003F7231 /* ApiHeaders.swift in Sources */,
 				E72C3EEA24879C1C00284A31 /* CardBrand.swift in Sources */,
 				E77B8B9D245C2C0E00564C19 /* RetrieveCardSessionHandler.swift in Sources */,
@@ -1832,6 +1851,7 @@
 				E70A5E852420C8B200F8B73E /* RestClientTests.swift in Sources */,
 				5125FFC22DD5FCAD00EF7380 /* MockCvcValidationStateHandler.swift in Sources */,
 				517145842AE2CA4500A73A3F /* AccessCheckoutUITextFieldExtensionTests.swift in Sources */,
+				5196B71C2E8440C700DEF1A8 /* ServiceDiscoveryProviderExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

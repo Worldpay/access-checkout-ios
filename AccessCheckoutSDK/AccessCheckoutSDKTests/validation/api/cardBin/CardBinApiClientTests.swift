@@ -23,133 +23,118 @@ class CardBinApiClientTests: XCTestCase {
         request = CardBinRequest(cardNumber: testCardNumber, checkoutId: testCheckoutId)
 
         try? ServiceDiscoveryProvider.initialise("some-url", restClient, apiResponseLookUpMock)
-
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
 
         setUpDiscoveryResponses()
         setUpApiResponseLookups()
     }
 
     func testCallsRestClientWithRequestCreatedByUrlRequestFactory() {
-        expectationToFulfill = expectation(
-            description: "should have called mock rest client with expected request")
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let expectedURLRequest = self.createExpectedURLRequest(
-                url: self.cardBinServiceUrl,
-                cardNumber: self.testCardNumber,
-                checkoutId: self.testCheckoutId
-            )
+        let expectedURLRequest = self.createExpectedURLRequest(
+            url: self.cardBinServiceUrl,
+            cardNumber: self.testCardNumber,
+            checkoutId: self.testCheckoutId
+        )
 
-            let mockRestClient = RestClientMock(replyWith: self.expectedResponse)
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let mockRestClient = RestClientMock(replyWith: self.expectedResponse)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) { _ in
-                XCTAssertEqual(expectedURLRequest, mockRestClient.requestSent)
-                self.expectationToFulfill!.fulfill()
-            }
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) { _ in
+            XCTAssertEqual(expectedURLRequest, mockRestClient.requestSent)
+            self.expectationToFulfill!.fulfill()
         }
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 
     func testCallsCompletionHandlerWithTheResponseReceivedFromRestClient() {
-        expectationToFulfill = expectation(
-            description: "should have called completion handler with response from rest client")
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let mockRestClient = RestClientMock(replyWith: self.expectedResponse)
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let mockRestClient = RestClientMock(replyWith: self.expectedResponse)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success(let response):
-                    XCTAssertEqual(self.expectedResponse.brand, response.brand)
-                    XCTAssertEqual(self.expectedResponse.fundingType, response.fundingType)
-                    XCTAssertEqual(self.expectedResponse.luhnCompliant, response.luhnCompliant)
-                case .failure:
-                    XCTFail("Retrieval of card bin info should have succeeded")
-                }
-                self.expectationToFulfill!.fulfill()
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(self.expectedResponse.brand, response.brand)
+                XCTAssertEqual(self.expectedResponse.fundingType, response.fundingType)
+                XCTAssertEqual(self.expectedResponse.luhnCompliant, response.luhnCompliant)
+            case .failure:
+                XCTFail("Retrieval of card bin info should have succeeded")
             }
+            self.expectationToFulfill!.fulfill()
         }
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 
     func testCallsCompletionHandlerWithErrorWhenRestClientFails() {
-        expectationToFulfill = expectation(
-            description: "should have called completion handler with error from rest client")
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let mockRestClient = RestClientMock<CardBinResponse>(
-                errorWith: AccessCheckoutError.unexpectedApiError(message: "some error"))
-            let detailedErrorMessage = "Message: unexpectedApiError : some error\n Validation: "
-            let expectedError = AccessCheckoutError.unexpectedApiError(
-                message: "Failed after 3 attempt(s) with error \(detailedErrorMessage)")
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: AccessCheckoutError.unexpectedApiError(message: "some error"))
+        let detailedErrorMessage = "Message: unexpectedApiError : some error\n Validation: "
+        let expectedError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error \(detailedErrorMessage)")
 
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success:
-                    XCTFail("Retrieval of card bin info should have failed")
-                case .failure(let error):
-                    XCTAssertEqual(expectedError, error)
-                }
-                self.expectationToFulfill!.fulfill()
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(expectedError, error)
             }
+            self.expectationToFulfill!.fulfill()
         }
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 
     func testCallsToCacheManagerWhenRetrievingBinInfo() {
-        expectationToFulfill = expectation(
-            description:
-                "should return bin info from cache manager if it exists and rest client is not called"
-        )
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let mockRestClient = RestClientMock<CardBinResponse>(replyWith: self.expectedResponse)
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let mockRestClient = RestClientMock<CardBinResponse>(replyWith: self.expectedResponse)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success(let response):
-                    XCTAssertEqual(self.expectedResponse.brand, response.brand)
-                    XCTAssertEqual(
-                        mockRestClient.numberOfCalls, 1,
-                        "Rest client is called once on new card bin number")
-                case .failure:
-                    XCTFail("Retrieval of card bin info failed")
-                }
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(self.expectedResponse.brand, response.brand)
+                XCTAssertEqual(
+                    mockRestClient.numberOfCalls, 1,
+                    "Rest client is called once on new card bin number")
+            case .failure:
+                XCTFail("Retrieval of card bin info failed")
             }
+        }
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success(let response):
-                    XCTAssertEqual(self.expectedResponse.brand, response.brand)
-                    XCTAssertEqual(
-                        mockRestClient.numberOfCalls, 1, "Rest client should not be called again")
-                    self.expectationToFulfill!.fulfill()
-                case .failure:
-                    XCTFail("Retrieval of card bin info failed")
-                }
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(self.expectedResponse.brand, response.brand)
+                XCTAssertEqual(
+                    mockRestClient.numberOfCalls, 1, "Rest client should not be called again")
+                self.expectationToFulfill!.fulfill()
+            case .failure:
+                XCTFail("Retrieval of card bin info failed")
             }
         }
 
@@ -157,65 +142,56 @@ class CardBinApiClientTests: XCTestCase {
     }
 
     func testAttemptsRequestThreeTimesOn5xxError() {
-        expectationToFulfill = expectation(
-            description: "should attempt request three times on server error (5xx)"
-        )
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let serverError = AccessCheckoutError.unexpectedApiError(message: "unexpectedApiError")
-            let mockRestClient = RestClientMock<CardBinResponse>(
-                errorWith: serverError, statusCode: 500)
+        let serverError = AccessCheckoutError.unexpectedApiError(message: "unexpectedApiError")
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: serverError, statusCode: 500)
 
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success:
-                    XCTFail("Retrieval of card bin info should have failed")
-                case .failure(let error):
-                    XCTAssertEqual(
-                        3, mockRestClient.numberOfCalls, "Rest client should be called three times")
-                    XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
-                }
-                self.expectationToFulfill!.fulfill()
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(
+                    3, mockRestClient.numberOfCalls, "Rest client should be called three times")
+                XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
             }
+            self.expectationToFulfill!.fulfill()
         }
 
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 
     func testDoesNotRetryOnClientError() {
-        expectationToFulfill = expectation(
-            description: "should not retry request on client error (4xx)"
-        )
+        expectationToFulfill = expectation(description: "")
 
-        ServiceDiscoveryProvider.discover { _ in
-            let serverError = AccessCheckoutError.unexpectedApiError(message: "Bad request")
-            let mockRestClient = RestClientMock<CardBinResponse>(
-                errorWith: serverError, statusCode: 400)
+        let serverError = AccessCheckoutError.unexpectedApiError(message: "Bad request")
+        let mockRestClient = RestClientMock<CardBinResponse>(
+            errorWith: serverError, statusCode: 400)
 
-            let apiClient = CardBinApiClient(restClient: mockRestClient)
+        let apiClient = CardBinApiClient(restClient: mockRestClient)
 
-            apiClient.retrieveBinInfo(
-                cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
-            ) {
-                result in
-                switch result {
-                case .success:
-                    XCTFail("Retrieval of card bin info should have failed")
-                case .failure(let error):
-                    XCTAssertEqual(
-                        1, mockRestClient.numberOfCalls,
-                        "Rest client should be called one time (no retries)")
-                    XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
-                }
-                self.expectationToFulfill!.fulfill()
+        apiClient.retrieveBinInfo(
+            cardNumber: self.testCardNumber, checkoutId: self.testCheckoutId
+        ) {
+            result in
+            switch result {
+            case .success:
+                XCTFail("Retrieval of card bin info should have failed")
+            case .failure(let error):
+                XCTAssertEqual(
+                    1, mockRestClient.numberOfCalls,
+                    "Rest client should be called one time (no retries)")
+                XCTAssertTrue(error.localizedDescription.contains("unexpectedApiError"))
             }
+            self.expectationToFulfill!.fulfill()
         }
-
         wait(for: [expectationToFulfill!], timeout: 1)
     }
 }

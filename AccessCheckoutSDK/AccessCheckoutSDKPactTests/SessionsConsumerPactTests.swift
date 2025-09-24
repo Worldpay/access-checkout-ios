@@ -19,7 +19,7 @@ class SessionsConsumerPactTests: XCTestCase {
         consumer: "access-checkout-iOS-sdk")
 
     func testDiscoveryOfSessionsEndPoints() {
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
         let accessRootStub = ServiceStubs().get200(
             path: "", jsonResponse: accessRootJsonResponse(sessionsBaseUrl: pactServer.baseUrl))
         accessRootStub.start()
@@ -56,14 +56,14 @@ class SessionsConsumerPactTests: XCTestCase {
         pactServer.run(timeout: 10) { testComplete in
             try? ServiceDiscoveryProvider.initialise(accessRootStub.baseUrl)
 
-            ServiceDiscoveryProvider.discover { result in
+            ServiceDiscoveryProvider.discoverAll { result in
                 switch result {
-                case .success():
+                case .success(let urlsDiscovered):
                     XCTAssertEqual(
-                        ServiceDiscoveryProvider.getSessionsCardEndpoint(),
+                        urlsDiscovered[UrlToDiscover.createCardSessions]!.absoluteString,
                         expectedCardSessionsEndpoint)
                     XCTAssertEqual(
-                        ServiceDiscoveryProvider.getSessionsCvcEndpoint(),
+                        urlsDiscovered[UrlToDiscover.createCvcSessions]!.absoluteString,
                         expectedCvcSessionsEndpoint)
                 case .failure:
                     XCTFail("Discovery should not have failed")
@@ -460,17 +460,17 @@ class SessionsConsumerPactTests: XCTestCase {
                 jsonResponse: sessionsRootJsonResponse(baseUrl: pactServer.baseUrl))
         serviceStub.start()
 
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
 
         try? ServiceDiscoveryProvider.initialise(serviceStub.baseUrl)
-        ServiceDiscoveryProvider.discover { _ in }
+        ServiceDiscoveryProvider.discoverAll { _ in }
 
         let maxAttempts = 10
         var attempts = 0
 
         while attempts < maxAttempts {
-            if ServiceDiscoveryProvider.getSessionsCardEndpoint() != nil
-                && ServiceDiscoveryProvider.getSessionsCvcEndpoint() != nil
+            if ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCardSessions] != nil
+                && ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCvcSessions] != nil
             {
                 return serviceStub
             }

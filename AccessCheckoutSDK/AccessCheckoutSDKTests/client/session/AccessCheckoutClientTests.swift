@@ -7,12 +7,12 @@ class AccessCheckoutClientTests: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
     }
 
     override func tearDown() {
         serviceStubs?.stop()
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
     }
 
     func testGeneratesACardSession() throws {

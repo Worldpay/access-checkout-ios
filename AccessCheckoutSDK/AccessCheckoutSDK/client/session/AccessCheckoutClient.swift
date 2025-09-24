@@ -44,9 +44,9 @@ public struct AccessCheckoutClient {
 
         try? ServiceDiscoveryProvider.initialise(self.baseUrl)
 
-        ServiceDiscoveryProvider.discover { result in
+        ServiceDiscoveryProvider.discoverAll { result in
             switch result {
-            case .success():
+            case .success(_):
                 let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(
                     numberOfExpectedResults: sessionTypes.count,
                     completeWith: completionHandler

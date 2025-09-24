@@ -32,31 +32,30 @@ class CardSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        guard let endPointUrl = ServiceDiscoveryProvider.getSessionsCardEndpoint() else {
-            completionHandler(
-                .failure(
-                    AccessCheckoutError.discoveryLinkNotFound(
-                        linkName: ApiLinks.cardSessions.endpoint)))
-            return
-        }
-
-        self.fireRequest(
-            endPointUrl: endPointUrl,
-            checkoutId: checkoutId,
-            pan: pan,
-            expiryMonth: expiryMonth,
-            expiryYear: expiryYear,
-            cvc: cvc
-        ) { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success(let response):
-                if let session = self.apiResponseLinkLookup.lookup(
-                    link: ApiLinks.cardSessions.result,
-                    in: response
-                ) {
-                    completionHandler(.success(session))
-                } else {
-                    completionHandler(.failure(self.sessionNotFoundError))
+            case .success(let createCardSessionsUrl):
+                self.fireRequest(
+                    endPointUrl: createCardSessionsUrl.absoluteString,
+                    checkoutId: checkoutId,
+                    pan: pan,
+                    expiryMonth: expiryMonth,
+                    expiryYear: expiryYear,
+                    cvc: cvc
+                ) { result in
+                    switch result {
+                    case .success(let response):
+                        if let session = self.apiResponseLinkLookup.lookup(
+                            link: ApiLinks.cardSessions.result,
+                            in: response
+                        ) {
+                            completionHandler(.success(session))
+                        } else {
+                            completionHandler(.failure(self.sessionNotFoundError))
+                        }
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
                 }
             case .failure(let error):
                 completionHandler(.failure(error))

@@ -27,7 +27,7 @@ class CardBinServiceTestsWithStubService: XCTestCase {
         }
 
         try? ServiceDiscoveryProvider.initialise("some-url", restClient, apiResponseLookUpMock)
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
 
         setUpDiscoveryResponses()
         setUpApiResponseLookups()
@@ -43,13 +43,13 @@ class CardBinServiceTestsWithStubService: XCTestCase {
 
     override func tearDown() {
         serviceStubs.stop()
-        ServiceDiscoveryProvider.sharedInstance?.clearCache()
+        ServiceDiscoveryProvider.clearCache()
     }
 
     func testServiceCancelsFirstRequestAndOnlyCompletesSecond_withSwifter() {
         let expectation = self.expectation(description: "Discovery should complete")
 
-        ServiceDiscoveryProvider.discover { _ in
+        ServiceDiscoveryProvider.discoverAll { _ in
             expectation.fulfill()
         }
 
