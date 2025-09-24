@@ -81,8 +81,10 @@ class PanBasePageObject {
         let button = setPanCaretPositionButton
         button.tap()
 
-        for character in text {
-            panField.typeText(character)
+        for string in text {
+            for character in string {
+                panField.typeText(String(character))
+            }
         }
     }
 
