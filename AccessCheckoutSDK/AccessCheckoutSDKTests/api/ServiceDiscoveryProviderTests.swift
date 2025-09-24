@@ -690,7 +690,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         sessionsServiceNotFound: Bool = false,
         cardBinDetailsNotFound: Bool = false,
         createCardSessionsNotFound: Bool = false,
-        createCvcSessionsNotFound: Bool = false,
+        createCvcSessionsNotFound: Bool = false
     ) {
         let sessionsUrl = sessionsServiceNotFound ? nil : expectedSessionsServiceUrl.absoluteString
         let cardBinUrl = cardBinDetailsNotFound ? nil : expectedCardBinDetailsUrl.absoluteString
