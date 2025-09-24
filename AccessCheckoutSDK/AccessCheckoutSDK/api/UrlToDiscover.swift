@@ -1,11 +1,11 @@
 struct UrlToDiscover: Hashable {
-    public static let createCardSessions = UrlToDiscover([
+    static let createCardSessions = UrlToDiscover([
         sessionsServiceKey, createCardSessionEndpointKey,
     ])
-    public static let createCvcSessions = UrlToDiscover([
+    static let createCvcSessions = UrlToDiscover([
         sessionsServiceKey, createCvcSessionEndpointKey,
     ])
-    public static let cardBinDetails = UrlToDiscover([cardBinDetailsKey])
+    static let cardBinDetails = UrlToDiscover([cardBinDetailsKey])
 
     internal let keys: [KeyToDiscover]
 
