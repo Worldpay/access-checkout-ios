@@ -13,16 +13,31 @@ struct TestUtils {
     static func isFocused(_ element: XCUIElement) -> Bool {
         return (element.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
     }
-    
+
     static func assertLabelText(of element: XCUIElement, equals expectedText: String) {
         var currentAttempt = 1
         while element.label != expectedText && currentAttempt <= assertCardBrandMaxAttempts {
             currentAttempt += 1
-            TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
+            TestUtils.wait(seconds: 0.1)
         }
-        
-        XCTAssertEqual(element.label, expectedText,
-                      "Expected label text '\(expectedText)' but found '\(element.label)'")
+
+        XCTAssertEqual(
+            element.label, expectedText,
+            "Expected label text '\(expectedText)' but found '\(element.label)'")
+    }
+
+    static func simulatePaste(text: String, into textField: XCUIElement) {
+        UIPasteboard.general.string = text
+
+        textField.tap()
+        textField.press(forDuration: 1.0)
+
+        let pasteMenuItem = XCUIApplication().menuItems["Paste"]
+        if pasteMenuItem.waitForExistence(timeout: 2.0) {
+            pasteMenuItem.tap()
+        }
+
+        wait(seconds: 0.2)
     }
 
     static func assertCardBrand(of cardBrandImage: XCUIElement, is brand: String) {
@@ -58,5 +73,4 @@ struct TestUtils {
 
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
     }
-
 }

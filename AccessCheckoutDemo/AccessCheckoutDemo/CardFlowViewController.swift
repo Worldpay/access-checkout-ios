@@ -211,7 +211,7 @@ class CardFlowViewController: UIViewController {
 
             cardBrandsLabel = label
         }
-        
+
         cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
         cardBrandsLabel?.numberOfLines = 1
         cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
