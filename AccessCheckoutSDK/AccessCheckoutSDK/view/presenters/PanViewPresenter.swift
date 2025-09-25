@@ -6,6 +6,8 @@ class PanViewPresenter: NSObject, Presenter {
     private let validator: PanValidator
     private let panTextChangeHandler: PanTextChangeHandler
     private let panFormatter: PanFormatter
+    private var newText:String = ""
+    private var newCaretPosition:Int = -1
 
     init(
         _ validationFlow: PanValidationFlow,
@@ -39,11 +41,16 @@ class PanViewPresenter: NSObject, Presenter {
 
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        guard let pan = textField.text else {
+        guard let currentText = textField.text else {
             return
         }
 
-        onEditing(text: pan)
+        if newText != currentText {
+            textField.text = newText
+            setCaretPosition(textField, newCaretPosition)
+        }
+
+        onEditing(text: textField.text!)
     }
 
     private func countNumberOfDigitsBeforeCaret(_ text: String, _ caretPosition: Int) -> Int {
@@ -106,6 +113,7 @@ extension PanViewPresenter: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
+
         let digitsOnly = stripAllCharsButDigits(string)
         if digitsOnly.isEmpty, !string.isEmpty {
             setCaretPosition(textField, range.location)
@@ -132,9 +140,6 @@ extension PanViewPresenter: UITextFieldDelegate {
         )
 
         if canChangeText(with: resultingText) {
-            textField.text = resultingText
-            onEditing(text: resultingText)
-
             let numberOfDigitsBeforeNewCaretPosition =
                 countNumberOfDigitsBeforeCaret(originalText, caretPosition) + digitsOnly.count
             var newCaretPosition = findIndexOfNthDigit(
@@ -157,13 +162,15 @@ extension PanViewPresenter: UITextFieldDelegate {
                 newCaretPosition = newCaretPosition + 1
             }
 
-            setCaretPosition(textField, newCaretPosition)
-            textField.sendActions(for: UIControl.Event.editingChanged)
+            if textField.text != resultingText {
+                newText = resultingText
+                self.newCaretPosition = newCaretPosition
+            }
+            return true
         } else {
             setCaretPosition(textField, range.location)
+            return false
         }
-
-        return false
     }
 
     private func isDeletingSpace(
