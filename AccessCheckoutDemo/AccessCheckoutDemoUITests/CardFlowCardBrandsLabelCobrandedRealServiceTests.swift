@@ -33,7 +33,6 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
 
         view!.typeTextIntoPan("1")
-        TestUtils.wait(seconds: 1.0)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
     }
@@ -68,7 +67,6 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
     func testDelegateNotification_remove1DigitFrom12_twoNotifications() {
         view!.typeTextIntoPan("415058099651")
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
-        TestUtils.wait(seconds: 1.0)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
 
@@ -84,12 +82,10 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
         view!.typeTextIntoPan("7927")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
-        TestUtils.wait(seconds: 1.0)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
 
         view!.clearField(view!.panField)
-        TestUtils.wait(seconds: 1.0)
 
         // asserting that the label does not exist (i.e. empty) as it is removed from UI if it is empty
         XCTAssertFalse(view!.cardBrandsLabel.waitForExistence(timeout: 1))
