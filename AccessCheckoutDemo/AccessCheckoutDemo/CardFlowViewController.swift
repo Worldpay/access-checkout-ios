@@ -210,7 +210,7 @@ class CardFlowViewController: UIViewController {
 
             cardBrandsLabel = label
         }
-        
+
         cardBrandsLabel?.numberOfLines = 1
         cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
         cardBrandsLabel?.text = ""

@@ -19,7 +19,7 @@ class SessionsConsumerPactTests: XCTestCase {
         consumer: "access-checkout-iOS-sdk")
 
     func testDiscoveryOfSessionsEndPoints() {
-        ServiceDiscoveryProvider.shared.clearCache()
+        ServiceDiscoveryProvider.clearCache()
         let accessRootStub = ServiceStubs().get200(
             path: "", jsonResponse: accessRootJsonResponse(sessionsBaseUrl: pactServer.baseUrl))
         accessRootStub.start()
@@ -54,14 +54,16 @@ class SessionsConsumerPactTests: XCTestCase {
                 body: responseJson)
 
         pactServer.run(timeout: 10) { testComplete in
-            ServiceDiscoveryProvider.discover(baseUrl: accessRootStub.baseUrl) { result in
+            try? ServiceDiscoveryProvider.initialise(accessRootStub.baseUrl)
+
+            ServiceDiscoveryProvider.discoverAll { result in
                 switch result {
-                case .success():
+                case .success(let urlsDiscovered):
                     XCTAssertEqual(
-                        ServiceDiscoveryProvider.getSessionsCardEndpoint(),
+                        urlsDiscovered[UrlToDiscover.createCardSessions]!.absoluteString,
                         expectedCardSessionsEndpoint)
                     XCTAssertEqual(
-                        ServiceDiscoveryProvider.getSessionsCvcEndpoint(),
+                        urlsDiscovered[UrlToDiscover.createCvcSessions]!.absoluteString,
                         expectedCvcSessionsEndpoint)
                 case .failure:
                     XCTFail("Discovery should not have failed")
@@ -458,15 +460,17 @@ class SessionsConsumerPactTests: XCTestCase {
                 jsonResponse: sessionsRootJsonResponse(baseUrl: pactServer.baseUrl))
         serviceStub.start()
 
-        ServiceDiscoveryProvider.shared.clearCache()
-        ServiceDiscoveryProvider.discover(baseUrl: serviceStub.baseUrl) { _ in }
+        ServiceDiscoveryProvider.clearCache()
+
+        try? ServiceDiscoveryProvider.initialise(serviceStub.baseUrl)
+        ServiceDiscoveryProvider.discoverAll { _ in }
 
         let maxAttempts = 10
         var attempts = 0
 
         while attempts < maxAttempts {
-            if ServiceDiscoveryProvider.getSessionsCardEndpoint() != nil
-                && ServiceDiscoveryProvider.getSessionsCvcEndpoint() != nil
+            if ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCardSessions] != nil
+                && ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCvcSessions] != nil
             {
                 return serviceStub
             }

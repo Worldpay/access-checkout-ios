@@ -35,30 +35,28 @@ internal class CardBinApiClient {
         checkoutId: String,
         completionHandler: @escaping (Result<CardBinResponse, AccessCheckoutError>) -> Void
     ) {
-        guard let cardBinUrl = ServiceDiscoveryProvider.getCardBinEndpoint() else {
-            completionHandler(
-                .failure(
-                    AccessCheckoutError.discoveryLinkNotFound(
-                        linkName: ApiLinks.cardBin.service
-                    )))
-            return
+        ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
+            switch result {
+            case .success(let cardBinDetailsUrl):
+                let cacheKey = self.cacheManager.getCacheKey(from: cardNumber)
+
+                if let cachedResponse = self.cacheManager.getCachedResponse(for: cacheKey) {
+                    completionHandler(.success(cachedResponse))
+                    return
+                }
+
+                self.fetchCardBinResponseWithRetry(
+                    url: cardBinDetailsUrl.absoluteString,
+                    cardNumber: cardNumber,
+                    checkoutId: checkoutId,
+                    cacheKey: cacheKey,
+                    attempt: 1,
+                    completionHandler: completionHandler
+                )
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
-
-        let cacheKey = cacheManager.getCacheKey(from: cardNumber)
-
-        if let cachedResponse = cacheManager.getCachedResponse(for: cacheKey) {
-            completionHandler(.success(cachedResponse))
-            return
-        }
-
-        fetchCardBinResponseWithRetry(
-            url: cardBinUrl,
-            cardNumber: cardNumber,
-            checkoutId: checkoutId,
-            cacheKey: cacheKey,
-            attempt: 1,
-            completionHandler: completionHandler
-        )
     }
 
     func abort() {

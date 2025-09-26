@@ -65,7 +65,8 @@ public struct AccessCheckoutValidationInitialiser {
         )
         setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
 
-        ServiceDiscoveryProvider.discover(baseUrl: config.accessBaseUrl) { result in }
+        try? ServiceDiscoveryProvider.initialise(config.accessBaseUrl)
+        ServiceDiscoveryProvider.discoverAll { result in }
     }
 
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
