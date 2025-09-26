@@ -23,8 +23,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
     override func setUp() {
         ServiceDiscoveryProvider.clearCache()
         ServiceDiscoveryProvider.sharedInstance = nil
-        ServiceDiscoveryProvider.cachedResults = [:]
-        ServiceDiscoveryProvider.cachedResponses = [:]
 
         expectedBaseUrlRequest = URLRequest(url: URL(string: baseUrlAsString)!)
 
@@ -82,14 +80,14 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         ServiceDiscoveryProvider.discoverAll { result in
             switch result {
             case .success(_):
-                expectationToFulfill.fulfill()
-
                 XCTAssertNotNil(
                     ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCardSessions])
                 XCTAssertNotNil(
                     ServiceDiscoveryProvider.cachedResults[UrlToDiscover.createCvcSessions])
                 XCTAssertNotNil(
                     ServiceDiscoveryProvider.cachedResults[UrlToDiscover.cardBinDetails])
+
+                expectationToFulfill.fulfill()
             case .failure(_):
                 XCTFail("Failed to discover all end points")
                 expectationToFulfill.fulfill()
@@ -137,8 +135,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
             case .success(let discoveredUrl):
-                expectationToFulfill.fulfill()
-
                 XCTAssertEqual(discoveredUrl, self.expectedCreateCardSessionsUrl)
 
                 // verify calls made with rest client
@@ -151,6 +147,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardSessions.endpoint)
                 verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
+                expectationToFulfill.fulfill()
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
                 expectationToFulfill.fulfill()
@@ -171,8 +168,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
             switch result {
             case .success(let discoveredUrl):
-                expectationToFulfill.fulfill()
-
                 XCTAssertEqual(discoveredUrl, self.expectedCreateCvcSessionsUrl)
 
                 // verify calls made with rest client
@@ -185,6 +180,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.endpoint)
                 verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
+                expectationToFulfill.fulfill()
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
                 expectationToFulfill.fulfill()
@@ -205,8 +201,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
         ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
             switch result {
             case .success(let discoveredUrl):
-                expectationToFulfill.fulfill()
-
                 XCTAssertEqual(discoveredUrl, self.expectedCardBinDetailsUrl)
 
                 // verify calls made with rest client
@@ -216,6 +210,8 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 // verify calls to api response lookup
                 self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardBin.service)
                 verifyNoMoreInteractions(self.apiResponseLookUpMock)
+
+                expectationToFulfill.fulfill()
             case .failure(_):
                 XCTFail("Discovery should have returned mocked value")
                 expectationToFulfill.fulfill()
@@ -250,14 +246,13 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
                     switch result {
                     case .success(let discoveredUrl2):
-                        expectationToFulfill.fulfill()
-
                         XCTAssertEqual(discoveredUrl2, self.expectedCreateCardSessionsUrl)
 
                         // Verify mocks were not called anymore confirming URLs have been taken from cache
                         verifyNoMoreInteractions(self.restClientMock)
                         verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
+                        expectationToFulfill.fulfill()
                     case .failure(_):
                         XCTFail("Discovery should have returned mocked value")
                         expectationToFulfill.fulfill()
@@ -284,8 +279,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 ServiceDiscoveryProvider.discover(UrlToDiscover.cardBinDetails) { result in
                     switch result {
                     case .success(let discoveredUrl2):
-                        expectationToFulfill.fulfill()
-
                         XCTAssertEqual(discoveredUrl1, self.expectedCreateCardSessionsUrl)
                         XCTAssertEqual(discoveredUrl2, self.expectedCardBinDetailsUrl)
 
@@ -301,6 +294,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                         self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cardBin.endpoint)
                         verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
+                        expectationToFulfill.fulfill()
                     case .failure(_):
                         XCTFail("Discovery should have returned mocked value")
                         expectationToFulfill.fulfill()
@@ -328,8 +322,6 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                 ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
                     switch result {
                     case .success(let discoveredUrl2):
-                        expectationToFulfill.fulfill()
-
                         XCTAssertEqual(discoveredUrl1, self.expectedCreateCardSessionsUrl)
                         XCTAssertEqual(discoveredUrl2, self.expectedCreateCvcSessionsUrl)
 
@@ -348,6 +340,7 @@ class ServiceDiscoveryProviderTests: XCTestCase {
                         self.verifyApiResponseLookUpHasLookedUp(key: ApiLinks.cvcSessions.endpoint)
                         verifyNoMoreInteractions(self.apiResponseLookUpMock)
 
+                        expectationToFulfill.fulfill()
                     case .failure(_):
                         XCTFail("Discovery should have returned mocked value")
                         expectationToFulfill.fulfill()

@@ -10,12 +10,6 @@ class ServiceDiscoveryProvider {
         label: "com.worldpay.access.checkout.ServiceDiscoveryProvider", qos: .userInitiated
     )
 
-    private static var static_accessRootResponse: ApiResponse?
-    private static var static_sessionsServiceUrl: String?
-    private static var static_sessionsCreateCardSessionUrl: String?
-    private static var static_sessionsCreateCvcSessionUrl: String?
-    private static var static_cardBinUrl: String?
-
     private var baseUrl: URL? = nil
     static var sharedInstance: ServiceDiscoveryProvider? = nil
 
@@ -109,11 +103,7 @@ class ServiceDiscoveryProvider {
                     if let errorToReturn = errorToReturn {
                         completionHandler(.failure(errorToReturn))
                     } else {
-                        var results: [UrlToDiscover: URL] = [:]
-                        for cacheKey in cachedResults {
-                            results[cacheKey.key] = cacheKey.value
-                        }
-                        completionHandler(.success(results))
+                        completionHandler(.success(cachedResults))
                     }
                 }
             }
@@ -209,7 +199,8 @@ class ServiceDiscoveryProvider {
 
             completionHandler(.success(URL(string: discoveredURLAsString)!))
         } else {
-            sendRequest(createRequest(using: requestURL, for: keyToDiscover)) { result in
+            let request = createRequest(using: requestURL, for: keyToDiscover)
+            _ = restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
                 switch result {
                 case .success(let apiResponse):
                     guard
@@ -230,15 +221,6 @@ class ServiceDiscoveryProvider {
                     completionHandler(.failure(error))
                 }
             }
-        }
-    }
-
-    private func sendRequest(
-        _ request: URLRequest,
-        completionHandler: @escaping (Result<ApiResponse, AccessCheckoutError>) -> Void
-    ) {
-        _ = restClient.send(urlSession: URLSession.shared, request: request) { result, _ in
-            completionHandler(result)
         }
     }
 
