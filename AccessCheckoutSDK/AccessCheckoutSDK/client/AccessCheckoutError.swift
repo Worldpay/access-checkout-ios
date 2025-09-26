@@ -47,6 +47,10 @@ public struct AccessCheckoutError: Error, Equatable {
         return AccessCheckoutError(errorName: "unexpectedApiError", details: message)
     }
 
+    static func internalError(message: String) -> AccessCheckoutError {
+        return AccessCheckoutError(errorName: "internalError", details: message)
+    }
+
     public struct AccessCheckoutValidationError: Error, Equatable {
         public let errorName: String
         public let message: String

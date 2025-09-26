@@ -29,25 +29,27 @@ class CvcSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        guard let endPointUrl = ServiceDiscoveryProvider.getSessionsCvcEndpoint() else {
-            completionHandler(
-                .failure(
-                    AccessCheckoutError.discoveryLinkNotFound(
-                        linkName: ApiLinks.cvcSessions.endpoint)))
-            return
-        }
-
-        self.fireRequest(endPointUrl: endPointUrl, checkoutId: checkoutId, cvc: cvc) {
-            result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCvcSessions) { result in
             switch result {
-            case .success(let response):
-                if let session = self.apiResponseLinkLookup.lookup(
-                    link: ApiLinks.cvcSessions.result,
-                    in: response
+            case .success(let createCvcSessionsUrl):
+                self.fireRequest(
+                    endPointUrl: createCvcSessionsUrl.absoluteString, checkoutId: checkoutId,
+                    cvc: cvc
                 ) {
-                    completionHandler(.success(session))
-                } else {
-                    completionHandler(.failure(self.sessionNotFoundError))
+                    result in
+                    switch result {
+                    case .success(let response):
+                        if let session = self.apiResponseLinkLookup.lookup(
+                            link: ApiLinks.cvcSessions.result,
+                            in: response
+                        ) {
+                            completionHandler(.success(session))
+                        } else {
+                            completionHandler(.failure(self.sessionNotFoundError))
+                        }
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
                 }
             case .failure(let error):
                 completionHandler(.failure(error))

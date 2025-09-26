@@ -8,12 +8,14 @@ class CvcSessionsApiClientTests: XCTestCase {
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
-    private let expectedDiscoveredUrl = "http://and-end-point"
+    private let expectedDiscoveredUrl = "https://example.com"
 
     private let urlRequestFactoryResult = URLRequest(url: URL(string: "a-url")!)
     private var expectationToFulfill: XCTestExpectation?
 
     override func setUp() {
+        ServiceDiscoveryProvider.clearCache()
+
         mockURLRequestFactory.willReturn(urlRequestFactoryResult)
         expectationToFulfill = expectation(description: "")
     }
