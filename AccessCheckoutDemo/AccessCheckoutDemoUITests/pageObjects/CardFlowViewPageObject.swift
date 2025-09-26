@@ -68,6 +68,10 @@ class CardFlowViewPageObject {
         return app.staticTexts["cvcIsValidLabel"]
     }
 
+    var cardBrandsLabel: XCUIElement {
+        return app.staticTexts["cardBrandsLabel"]
+    }
+
     init(_ app: XCUIApplication) {
         self.app = app
     }
@@ -107,5 +111,9 @@ class CardFlowViewPageObject {
         _ = cutMenu.waitForExistence(timeout: waitForExistenceTimeoutInSeconds)
         cutMenu.tap()
         TestUtils.wait(seconds: 1)
+    }
+
+    func simulatePasteIntoPan(_ text: String) {
+        TestUtils.simulatePaste(text: text, into: panField)
     }
 }
