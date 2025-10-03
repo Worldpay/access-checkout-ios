@@ -111,11 +111,15 @@ class CardFlowViewPageObject {
         submitButton.tap()
     }
     
-    func imageIs(_ brand: String) -> Bool {
+    func imageIs(_ brand: String, timeout: TimeInterval = 2.0) -> Bool {
         let brandAsLocalizedString = NSLocalizedString(
             brand, bundle: Bundle(for: type(of: self)), comment: "")
-
-        return cardBrandImage.label == brandAsLocalizedString
+        
+        let predicate = NSPredicate(format: "label == %@", brandAsLocalizedString)
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: cardBrandImage)
+        
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
     }
 
     func clearField(_ field: XCUIElement) {
