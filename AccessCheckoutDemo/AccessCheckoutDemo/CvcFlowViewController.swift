@@ -9,6 +9,8 @@ class CvcFlowViewController: UIViewController {
 
     @IBOutlet var dismissKeyboardButton: UIButton!
 
+    private var accessCheckoutClient: AccessCheckoutClient?
+
     @IBAction func onDismissKeyboardTap(_ sender: Any) {
         _ = cvcTextField.resignFirstResponder()
     }
@@ -22,13 +24,7 @@ class CvcFlowViewController: UIViewController {
             .cvc(cvcTextField)
             .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(
-            Configuration.accessBaseUrl
-        )
-        .checkoutId(Configuration.checkoutId)
-        .build()
-
-        try? accessCheckoutClient?.generateSessions(
+        try? self.accessCheckoutClient?.generateSessions(
             cardDetails: cardDetails, sessionTypes: [SessionType.cvc]
         ) { result in
             DispatchQueue.main.async {
@@ -84,11 +80,17 @@ class CvcFlowViewController: UIViewController {
         cvcIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
+        self.accessCheckoutClient = try? AccessCheckoutClientBuilder()
+            .accessBaseUrl(Configuration.accessBaseUrl)
+            .checkoutId(Configuration.checkoutId)
+            .build()
+
         let validationConfig = try! CvcOnlyValidationConfig.builder()
             .cvc(cvcTextField)
             .validationDelegate(self)
             .build()
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+
+        accessCheckoutClient!.initialiseValidation(validationConfig)
 
         submitButton.isEnabled = false
     }

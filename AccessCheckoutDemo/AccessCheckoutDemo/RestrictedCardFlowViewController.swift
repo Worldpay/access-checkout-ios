@@ -40,16 +40,20 @@ class RestrictedCardFlowViewController: UIViewController {
         panIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
-        let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
+        let accessCheckoutClient = try? AccessCheckoutClientBuilder()
+            .accessBaseUrl(Configuration.accessBaseUrl)
             .checkoutId(Configuration.checkoutId)
+            .build()
+
+        let validationConfig = try! CardValidationConfig.builder()
+            .pan(panTextField)
             .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
             .cvc(AccessCheckoutUITextField(frame: CGRect()))
-            .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
             .build()
 
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+        accessCheckoutClient!.initialiseValidation(validationConfig)
 
         cardBrandsChanged(cardBrands: [])
     }

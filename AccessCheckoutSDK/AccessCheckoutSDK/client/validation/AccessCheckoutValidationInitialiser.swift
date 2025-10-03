@@ -1,45 +1,55 @@
 import UIKit
 
 /// Class that is responsible for initialising validation using a given `ValidationConfig`
-public struct AccessCheckoutValidationInitialiser {
+internal struct AccessCheckoutValidationInitialiser {
     private static var presenters = [Presenter]()
 
     private var configurationProvider: CardBrandsConfigurationProvider
-
     /**
      This initialiser should be used to create an instance of `AccessCheckoutValidationInitialiser`
      */
-    public init() {
+    internal init() {
         let restClient = RestClient<[CardBrandDto]>()
         let transformer = CardBrandDtoTransformer()
         let configurationFactory = CardBrandsConfigurationFactory(restClient, transformer)
         self.configurationProvider = CardBrandsConfigurationProvider(configurationFactory)
     }
 
-    init(_ cardBrandsConfigurationProvider: CardBrandsConfigurationProvider) {
+    internal init(_ cardBrandsConfigurationProvider: CardBrandsConfigurationProvider) {
         self.configurationProvider = cardBrandsConfigurationProvider
     }
 
     /**
      This function should be used to initialise the validation using a given `ValidationConfig` provided by the merchant
-     - Parameter validationConfig: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     - Parameter validationConfiguration: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     - Parameter accessCheckoutClient: `AccessCheckoutClient` instance to access checkoutId and base URL
      */
-    public func initialise(_ validationConfiguration: ValidationConfig) {
+    internal func initialise(
+        _ validationConfiguration: ValidationConfig, accessCheckoutClient: AccessCheckoutClient
+    ) {
         if validationConfiguration is CardValidationConfig {
-            initialiseForCardPaymentFlow(validationConfiguration as! CardValidationConfig)
+            initialiseForCardPaymentFlow(
+                validationConfiguration as! CardValidationConfig,
+                accessCheckoutClient: accessCheckoutClient
+            )
         } else if validationConfiguration is CvcOnlyValidationConfig {
             initialiseForCvcOnlyFlow(validationConfiguration as! CvcOnlyValidationConfig)
         }
     }
 
-    private func initialiseForCardPaymentFlow(_ config: CardValidationConfig) {
+    private func initialiseForCardPaymentFlow(
+        _ config: CardValidationConfig, accessCheckoutClient: AccessCheckoutClient
+    ) {
+        let baseUrl = accessCheckoutClient.internalBaseUrl
+        let checkoutId = accessCheckoutClient.internalCheckoutId
+
         configurationProvider.retrieveRemoteConfiguration(
-            baseUrl: config.accessBaseUrl,
+            baseUrl: baseUrl,
             acceptedCardBrands: config.acceptedCardBrands
         )
 
         let cardBinService = CardBinService(
-            checkoutId: config.checkoutId,
+            checkoutId: checkoutId,
             client: CardBinApiClient(),
             configurationProvider: configurationProvider
         )
@@ -65,7 +75,7 @@ public struct AccessCheckoutValidationInitialiser {
         )
         setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
 
-        try? ServiceDiscoveryProvider.initialise(config.accessBaseUrl)
+        try? ServiceDiscoveryProvider.initialise(baseUrl)
         ServiceDiscoveryProvider.discoverAll { result in }
     }
 

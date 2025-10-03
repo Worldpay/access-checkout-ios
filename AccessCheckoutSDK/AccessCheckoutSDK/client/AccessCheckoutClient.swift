@@ -64,4 +64,26 @@ public struct AccessCheckoutClient {
             }
         }
     }
+
+    /**
+     Initialises the validation for card details using the provided validation configuration.
+    
+     This method sets up the validation logic for the UI fields specified in the configuration.
+     It passes accessCheckoutClient as an argument to validationInitialiser to prevent memory leaks, rather than storing it as a property.
+    
+     - Parameter validationConfiguration: The `ValidationConfig` that specifies which fields to validate,
+                                         the validation rules to apply, and the delegate to notify of validation events
+     */
+    public func initialiseValidation(_ validationConfiguration: ValidationConfig) {
+        let validationInitialiser = AccessCheckoutValidationInitialiser()
+        validationInitialiser.initialise(validationConfiguration, accessCheckoutClient: self)
+    }
+
+    internal var internalCheckoutId: String {
+        return checkoutId
+    }
+
+    internal var internalBaseUrl: String {
+        return baseUrl
+    }
 }

@@ -16,6 +16,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet var cvcIsValidLabel: UILabel!
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
+    private var accessCheckoutClient: AccessCheckoutClient?
 
     @IBAction func submit(_ sender: Any) {
         submitCard()
@@ -37,13 +38,7 @@ class CardFlowViewController: UIViewController {
             .cvc(cvcTextField)
             .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(
-            Configuration.accessBaseUrl
-        )
-        .checkoutId(Configuration.checkoutId)
-        .build()
-
-        try? accessCheckoutClient?.generateSessions(
+        try? self.accessCheckoutClient?.generateSessions(
             cardDetails: cardDetails,
             sessionTypes: sessionTypes
         ) { result in
@@ -182,17 +177,21 @@ class CardFlowViewController: UIViewController {
 
         resetCard(preserveContent: false, validationErrors: nil)
 
-        let validationConfig = try! CardValidationConfig.builder()
+        // The accessCheckoutClient is initialised here and reused within the submitCard method
+        self.accessCheckoutClient = try? AccessCheckoutClientBuilder()
+            .accessBaseUrl(Configuration.accessBaseUrl)
             .checkoutId(Configuration.checkoutId)
+            .build()
+
+        let validationConfig = try! CardValidationConfig.builder()
             .pan(panTextField)
             .expiryDate(expiryDateTextField)
             .cvc(cvcTextField)
-            .accessBaseUrl(Configuration.accessBaseUrl)
             .validationDelegate(self)
             .enablePanFormatting()
             .build()
 
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+        accessCheckoutClient?.initialiseValidation(validationConfig)
 
         disableSubmitIfNotValid(valid: false)
         cardBrandsChanged(cardBrands: [])
@@ -211,7 +210,7 @@ class CardFlowViewController: UIViewController {
 
             cardBrandsLabel = label
         }
-      
+
         cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
         cardBrandsLabel?.numberOfLines = 1
         cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)

@@ -813,7 +813,6 @@
 				D7D6D5E224810CF100D57D7A /* AccessCheckoutCardValidationDelegate.swift */,
 				E72C3EE924879C1C00284A31 /* CardBrand.swift */,
 				E72C3EEB24879C6200284A31 /* CardBrandImage.swift */,
-				E7167EF7248E2F330045158E /* CardValidationConfig.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -971,8 +970,6 @@
 				E72A99E32459E385004FEAD5 /* CardDetails.swift */,
 				E7D19F612462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift */,
 				E7FC4472245B1FD100CD3675 /* SessionType.swift */,
-				E7FC4477245B24A400CD3675 /* AccessCheckoutClient.swift */,
-				E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */,
 			);
 			path = session;
 			sourceTree = "<group>";
@@ -1171,6 +1168,9 @@
 				E747CAAC2458B069000CAF6A /* validation */,
 				C9AFE44722B7AA4700943B3E /* AccessCheckoutError.swift */,
 				E7A4AB65245B37F6009D586E /* AccessCheckoutIllegalArgumentError.swift */,
+				E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */,
+				E7167EF7248E2F330045158E /* CardValidationConfig.swift */,
+				E7FC4477245B24A400CD3675 /* AccessCheckoutClient.swift */,
 			);
 			path = client;
 			sourceTree = "<group>";

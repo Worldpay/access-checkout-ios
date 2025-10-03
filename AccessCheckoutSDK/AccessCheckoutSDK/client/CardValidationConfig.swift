@@ -11,12 +11,10 @@ public struct CardValidationConfig: ValidationConfig {
     let expiryDate: AccessCheckoutUITextField?
     let cvc: AccessCheckoutUITextField?
 
-    let accessBaseUrl: String
     let validationDelegate: AccessCheckoutCardValidationDelegate
 
     let acceptedCardBrands: [String]
     let panFormattingEnabled: Bool
-    let checkoutId: String
 
     /**
      - Returns: an instance of a builder used to create an instance  of `CardValidationConfig`
@@ -32,32 +30,26 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter pan: `AccessCheckoutUITextField` that represents the pan ui element
      - Parameter expiryDate: `AccessCheckoutUITextField` that represents the expiry date ui element
      - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
-     - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
-     - Parameter checkoutId: `String` that represents the checkout ID for the merchant
      */
     internal init(
         pan: AccessCheckoutUITextField,
         expiryDate: AccessCheckoutUITextField,
         cvc: AccessCheckoutUITextField,
-        accessBaseUrl: String,
         validationDelegate: AccessCheckoutCardValidationDelegate,
         acceptedCardBrands: [String] = [],
-        panFormattingEnabled: Bool = false,
-        checkoutId: String
+        panFormattingEnabled: Bool = false
     ) {
         self.pan = pan
         self.expiryDate = expiryDate
         self.cvc = cvc
 
-        self.accessBaseUrl = accessBaseUrl
         self.validationDelegate = validationDelegate
 
         self.acceptedCardBrands = acceptedCardBrands
         self.panFormattingEnabled = panFormattingEnabled
-        self.checkoutId = checkoutId
     }
 }
 
@@ -68,11 +60,9 @@ public class CardValidationConfigBuilder {
     private var expiryDate: AccessCheckoutUITextField?
     private var cvc: AccessCheckoutUITextField?
 
-    private var accessBaseUrl: String?
     private var validationDelegate: AccessCheckoutCardValidationDelegate?
     private var acceptedCardBrands: [String] = []
     private var panFormattingEnabled: Bool = false
-    private var checkoutId: String?
 
     fileprivate init() {}
 
@@ -107,15 +97,6 @@ public class CardValidationConfigBuilder {
     }
 
     /**
-     - Parameter accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
-     - Returns: the same instance of the builder
-     */
-    public func accessBaseUrl(_ accessBaseUrl: String) -> CardValidationConfigBuilder {
-        self.accessBaseUrl = accessBaseUrl
-        return self
-    }
-
-    /**
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the merchant's delegate that should be notified on validation changes
      - Returns: the same instance of the builder
      */
@@ -145,15 +126,6 @@ public class CardValidationConfigBuilder {
     }
 
     /**
-     - Parameter checkoutId: checkoutId of the merchant
-     - Returns: the same instance of the builder
-     */
-    public func checkoutId(_ checkoutId: String) -> CardValidationConfigBuilder {
-        self.checkoutId = checkoutId
-        return self
-    }
-
-    /**
      Use this method to create an instance of `CardValidationConfig`
      - Returns: an instance of `CardValidationConfig`
     
@@ -169,26 +141,16 @@ public class CardValidationConfigBuilder {
         if cvc == nil {
             throw AccessCheckoutIllegalArgumentError.missingCvc()
         }
-        guard let accessBaseUrl = accessBaseUrl else {
-            throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl()
-        }
         guard let validationDelegate = validationDelegate else {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
-        guard let checkoutId = checkoutId else {
-            throw
-                AccessCheckoutIllegalArgumentError.missingCheckoutId()
-        }
-
         return CardValidationConfig(
             pan: pan!,
             expiryDate: expiryDate!,
             cvc: cvc!,
-            accessBaseUrl: accessBaseUrl,
             validationDelegate: validationDelegate,
             acceptedCardBrands: acceptedCardBrands,
-            panFormattingEnabled: panFormattingEnabled,
-            checkoutId: checkoutId
+            panFormattingEnabled: panFormattingEnabled
         )
     }
 }
