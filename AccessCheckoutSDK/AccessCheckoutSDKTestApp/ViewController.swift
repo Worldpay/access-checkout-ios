@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     @IBOutlet var setPanWithoutSpacingCaretPositionTextField: UITextField!
     @IBOutlet var setPanWithoutSpacingCaretPositionButton: UIButton!
 
+    private var accessCheckoutClient: AccessCheckoutClient?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         panWithSpacing.addTarget(
@@ -105,21 +107,28 @@ class ViewController: UIViewController {
         usingCardNumberField panAccessCheckoutUITextField: AccessCheckoutUITextField,
         cardNumberSpacingEnabled: Bool
     ) {
-        let validationConfigBuilder = CardValidationConfig.builder()
-            .checkoutId("00000000-0000-0000-0000-000000000000")
-            .pan(panAccessCheckoutUITextField)
-            .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
-            .cvc(AccessCheckoutUITextField(frame: CGRect()))
+        self.accessCheckoutClient = try? AccessCheckoutClientBuilder()
             .accessBaseUrl(Configuration.accessBaseUrl)
-            .validationDelegate(self)
-            .acceptedCardBrands(["visa", "mastercard", "AMEX"])
             .checkoutId(Configuration.checkoutId)
+            .build()
+
+        let expiryDateTextField = AccessCheckoutUITextField(frame: CGRect())
+        let cvcTextField = AccessCheckoutUITextField(frame: CGRect())
+
+        let validationConfigBuilder = CardValidationConfig.builder()
+            .pan(panAccessCheckoutUITextField)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
+            .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+            .validationDelegate(self)
 
         if cardNumberSpacingEnabled {
             _ = validationConfigBuilder.enablePanFormatting()
         }
 
-        AccessCheckoutValidationInitialiser().initialise(try! validationConfigBuilder.build())
+        let validationConfig = try! validationConfigBuilder.build()
+
+        accessCheckoutClient?.initialiseValidation(validationConfig)
     }
 }
 
