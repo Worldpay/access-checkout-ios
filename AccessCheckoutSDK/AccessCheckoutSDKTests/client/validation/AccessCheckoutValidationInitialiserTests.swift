@@ -7,6 +7,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(
         CardBrandsConfigurationFactoryMock())
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
+    var accessCheckoutClient: AccessCheckoutClient!
 
     let panAccessCheckoutUITextField = AccessCheckoutUITextField()
     let expiryDateAccessCheckoutUITextField = AccessCheckoutUITextField()
@@ -20,6 +21,12 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(
             configurationProvider)
+
+        accessCheckoutClient = try! AccessCheckoutClientBuilder()
+            .checkoutId(checkoutId)
+            .accessBaseUrl(baseUrl)
+            .build()
+
         cardValidationDelegateMock.getStubbingProxy().panValidChanged(isValid: any())
             .thenDoNothing()
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(
@@ -32,17 +39,20 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(baseUrl)
-            .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
-            .checkoutId(checkoutId)
+            .enablePanFormatting()
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            accessCheckoutClient: accessCheckoutClient
+        )
 
         verify(configurationProvider).retrieveRemoteConfiguration(
-            baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
+            baseUrl: baseUrl,
+            acceptedCardBrands: ["amex", "visa"]
+        )
     }
 
     func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegates() {
@@ -50,14 +60,15 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(baseUrl)
-            .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
-            .checkoutId(checkoutId)
+            .enablePanFormatting()
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            accessCheckoutClient: accessCheckoutClient
+        )
 
         XCTAssertTrue(panAccessCheckoutUITextField.uiTextField.delegate is PanViewPresenter)
         XCTAssertTrue(
@@ -72,7 +83,10 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .validationDelegate(cvcOnlyValidationDelegateMock)
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            accessCheckoutClient: accessCheckoutClient
+        )
 
         XCTAssertTrue(cvcAccessCheckoutUITextField.uiTextField.delegate is CvcViewPresenter)
     }
