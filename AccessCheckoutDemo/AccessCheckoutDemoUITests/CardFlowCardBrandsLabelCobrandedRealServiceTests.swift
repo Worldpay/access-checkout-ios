@@ -29,10 +29,10 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
     // MARK: Twelve Digits Cobranded Card Two Notifications
 
     func testDelegateNotification_12DigitsCobrandedCard_twoNotifications() {
-        view!.typeTextIntoPan("41505809965")
+        view!.typeTextIntoPanCharByChar("41505809965")
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
 
-        view!.typeTextIntoPan("1")
+        view!.typeTextIntoPanCharByChar("1")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
     }
@@ -40,10 +40,10 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
     // MARK: Full Card Number Cobranded Two Notifications
 
     func testDelegateNotification_fullCardNumberCobrandedCard_twoNotifications() {
-        view!.typeTextIntoPan("41505809965")
+        view!.typeTextIntoPanCharByChar("41505809965")
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
 
-        view!.typeTextIntoPan("17927")
+        view!.typeTextIntoPanCharByChar("17927")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
     }
@@ -53,7 +53,7 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
     // wait added as test occasionally times out
     func testCardBrands_whenCardNumberPastedWith12Digits_showsCobrandedCards() {
         view!.simulatePasteIntoPan("415058099651")
-        
+
         TestUtils.wait(seconds: 0.2)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
@@ -69,14 +69,12 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
 
     // wait added as test occasionally times out
     func testDelegateNotification_remove1DigitFrom12_twoNotifications() {
-        view!.typeTextIntoPan("415058099651")
+        view!.typeTextIntoPanCharByChar("41505809965")
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
-        
-        TestUtils.wait(seconds: 0.2)
+
+        view!.typeTextIntoPanCharByChar("1")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
-        
-        TestUtils.wait(seconds: 0.2)
 
         view!.typeTextIntoPan(backspace)
 
@@ -87,16 +85,13 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
 
     // wait added as test occasionally times out
     func testDelegateNotification_clearFullCard_threeNotifications() {
-        view!.typeTextIntoPan("415058099651")
-        view!.typeTextIntoPan("7927")
+        view!.typeTextIntoPanCharByChar("41505809965")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
-        
-        TestUtils.wait(seconds: 0.2)
+
+        view!.typeTextIntoPanCharByChar("17927")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
-        
-        TestUtils.wait(seconds: 0.2)
 
         view!.clearField(view!.panField)
 
