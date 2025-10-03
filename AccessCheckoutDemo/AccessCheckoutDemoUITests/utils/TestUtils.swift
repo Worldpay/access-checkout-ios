@@ -3,6 +3,7 @@ import XCTest
 struct TestUtils {
     // 25 attempts over 5 seconds
     private static let assertCardBrandMaxAttempts = 25
+    private static let assertLabelMaxAttemps = 50
     private static let assertCardBrandSleeptBetweenAttemptsInMs = 0.2
 
     static func wait(seconds timeoutInSeconds: TimeInterval) {
@@ -16,7 +17,7 @@ struct TestUtils {
 
     static func assertLabelText(of element: XCUIElement, equals expectedText: String) {
         var currentAttempt = 1
-        while element.label != expectedText && currentAttempt <= assertCardBrandMaxAttempts {
+        while element.label != expectedText && currentAttempt <= assertLabelMaxAttemps {
             currentAttempt += 1
             TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
         }

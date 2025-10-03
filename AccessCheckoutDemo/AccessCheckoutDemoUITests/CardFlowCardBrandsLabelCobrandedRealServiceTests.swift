@@ -50,8 +50,11 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
 
     // MARK: Pasted Card Number Returns Notifications
 
+    // wait added as test occasionally times out
     func testCardBrands_whenCardNumberPastedWith12Digits_showsCobrandedCards() {
         view!.simulatePasteIntoPan("415058099651")
+        
+        TestUtils.wait(seconds: 0.2)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
     }
@@ -64,11 +67,16 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
 
     // MARK: Remove Digit from Twelve Two Notifications
 
+    // wait added as test occasionally times out
     func testDelegateNotification_remove1DigitFrom12_twoNotifications() {
         view!.typeTextIntoPan("415058099651")
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
+        
+        TestUtils.wait(seconds: 0.2)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
+        
+        TestUtils.wait(seconds: 0.2)
 
         view!.typeTextIntoPan(backspace)
 
@@ -77,13 +85,18 @@ class CardFlowCardBrandsLabelCobrandedRealServiceTests: XCTestCase {
 
     // MARK: Clear Full Card Three Notifications
 
+    // wait added as test occasionally times out
     func testDelegateNotification_clearFullCard_threeNotifications() {
         view!.typeTextIntoPan("415058099651")
         view!.typeTextIntoPan("7927")
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa")
+        
+        TestUtils.wait(seconds: 0.2)
 
         TestUtils.assertLabelText(of: view!.cardBrandsLabel, equals: "visa, cartesBancaires")
+        
+        TestUtils.wait(seconds: 0.2)
 
         view!.clearField(view!.panField)
 
