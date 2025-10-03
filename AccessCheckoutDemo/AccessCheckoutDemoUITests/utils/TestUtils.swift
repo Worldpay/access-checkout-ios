@@ -18,7 +18,7 @@ struct TestUtils {
         var currentAttempt = 1
         while element.label != expectedText && currentAttempt <= assertCardBrandMaxAttempts {
             currentAttempt += 1
-            TestUtils.wait(seconds: 0.1)
+            TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
         }
 
         XCTAssertEqual(
