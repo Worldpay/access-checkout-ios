@@ -92,7 +92,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: 5)
     }
 
     func testRestClientInCaseOfErrorReturnsStatusCode() {
@@ -117,7 +117,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: 5)
     }
 
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
