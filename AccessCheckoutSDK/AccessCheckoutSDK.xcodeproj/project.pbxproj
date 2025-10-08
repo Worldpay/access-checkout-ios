@@ -810,6 +810,7 @@
 		E7167EFB248E30080045158E /* card */ = {
 			isa = PBXGroup;
 			children = (
+				E7167EF7248E2F330045158E /* CardValidationConfig.swift */,
 				D7D6D5E224810CF100D57D7A /* AccessCheckoutCardValidationDelegate.swift */,
 				E72C3EE924879C1C00284A31 /* CardBrand.swift */,
 				E72C3EEB24879C6200284A31 /* CardBrandImage.swift */,
@@ -1169,7 +1170,6 @@
 				C9AFE44722B7AA4700943B3E /* AccessCheckoutError.swift */,
 				E7A4AB65245B37F6009D586E /* AccessCheckoutIllegalArgumentError.swift */,
 				E7FC4479245B25BB00CD3675 /* AccessCheckoutClientBuilder.swift */,
-				E7167EF7248E2F330045158E /* CardValidationConfig.swift */,
 				E7FC4477245B24A400CD3675 /* AccessCheckoutClient.swift */,
 			);
 			path = client;
@@ -1499,9 +1499,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKTests/Pods-AccessCheckoutSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1538,9 +1542,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutSDKPactTests/Pods-AccessCheckoutSDKPactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

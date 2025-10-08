@@ -11,6 +11,7 @@ public struct AccessCheckoutClient {
     private let baseUrl: String
     private let cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator
     private let retrieveSessionHandlerDispatcher: RetrieveSessionHandlerDispatcher
+    private let validationInitialiser = AccessCheckoutValidationInitialiser()
 
     init(
         checkoutId: String,
@@ -66,16 +67,10 @@ public struct AccessCheckoutClient {
     }
 
     /**
-     Initialises the validation for card details using the provided validation configuration.
-    
-     This method sets up the validation logic for the UI fields specified in the configuration.
-     It passes accessCheckoutClient as an argument to validationInitialiser to prevent memory leaks, rather than storing it as a property.
-    
-     - Parameter validationConfiguration: The `ValidationConfig` that specifies which fields to validate,
-                                         the validation rules to apply, and the delegate to notify of validation events
+         This function should be used to initialise the validation using an instance of `ValidationConfig`
+         - Parameter validationConfig: an instance of `CardValidationConfig` or `CvcOnlyValidationConfig` that represents the fields to validate and the delegate used during validation.
      */
     public func initialiseValidation(_ validationConfiguration: ValidationConfig) {
-        let validationInitialiser = AccessCheckoutValidationInitialiser()
         validationInitialiser.initialise(
             validationConfiguration, checkoutId: self.checkoutId, baseUrl: self.baseUrl)
     }
