@@ -82,12 +82,12 @@ class CardFlowViewPageObject {
         }
         panField.typeText(text)
     }
-    
+
     func typeTextIntoPanCharByChar(_ text: String) {
         if !panField.hasFocus {
             panField.tap()
         }
-        
+
         for char in text {
             panField.typeText(String(char))
         }
@@ -109,6 +109,17 @@ class CardFlowViewPageObject {
 
     func submit() {
         submitButton.tap()
+    }
+    
+    func imageIs(_ brand: String, timeout: TimeInterval = 2.0) -> Bool {
+        let brandAsLocalizedString = NSLocalizedString(
+            brand, bundle: Bundle(for: type(of: self)), comment: "")
+        
+        let predicate = NSPredicate(format: "label == %@", brandAsLocalizedString)
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: cardBrandImage)
+        
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
     }
 
     func clearField(_ field: XCUIElement) {

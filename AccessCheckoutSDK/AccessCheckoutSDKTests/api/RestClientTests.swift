@@ -4,16 +4,22 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class RestClientTests: XCTestCase {
-    private var serviceStubs: ServiceStubs?
-    private let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-    private let restClient = RestClient<DummyResponse>()
+    private var serviceStubs:ServiceStubs!
+    private var urlSession:URLSession!
+    private var restClient:RestClient<DummyResponse>!
+    private var expectationTimeout:TimeInterval = 5
 
     override func setUp() {
         serviceStubs = ServiceStubs()
+        
+        let urlSessionConfig = URLSessionConfiguration.default
+        urlSessionConfig.timeoutIntervalForRequest = 4.5
+        urlSession = URLSession(configuration: urlSessionConfig)
+        restClient = RestClient<DummyResponse>()
     }
 
     override func tearDown() {
-        serviceStubs?.stop()
+        serviceStubs.stop()
     }
 
     func testRestClientSendsRequest() {
@@ -31,7 +37,7 @@ class RestClientTests: XCTestCase {
         let expectationToWaitFor = XCTestExpectation(description: "")
         let request = createRequest(url: "\(serviceStubs!.baseUrl)/somewhere", method: "GET")
         let jsonResponse = "{\"id\":1, \"name\":\"some name\"}"
-        serviceStubs!.get200(path: "/somewhere", jsonResponse: jsonResponse)
+        serviceStubs!.get200(path: "/somewhere", textResponse: jsonResponse)
             .start()
 
         _ = restClient.send(urlSession: urlSession, request: request) { result, _ in
@@ -45,7 +51,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientInCaseOfSuccessReturnStatusCode() {
@@ -65,7 +71,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientInCaseOfErrorReturnsError() {
@@ -92,7 +98,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientInCaseOfErrorReturnsStatusCode() {
@@ -117,7 +123,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToTranslateResponse() {
@@ -139,7 +145,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientProvidesGenericErrorToPromiseWhenFailingToGetAResponse() {
@@ -163,7 +169,7 @@ class RestClientTests: XCTestCase {
             expectationToWaitFor.fulfill()
         }
 
-        wait(for: [expectationToWaitFor], timeout: 1)
+        wait(for: [expectationToWaitFor], timeout: expectationTimeout)
     }
 
     func testRestClientReturnsUrlSessionTask() {

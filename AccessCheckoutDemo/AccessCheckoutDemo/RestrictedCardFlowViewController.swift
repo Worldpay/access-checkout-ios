@@ -40,18 +40,31 @@ class RestrictedCardFlowViewController: UIViewController {
         panIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
-        let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
-            .checkoutId(Configuration.checkoutId)
-            .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
-            .cvc(AccessCheckoutUITextField(frame: CGRect()))
-            .accessBaseUrl(Configuration.accessBaseUrl)
-            .validationDelegate(self)
-            .acceptedCardBrands(["visa", "mastercard", "AMEX"])
-            .build()
+        do {
+            let accessCheckoutClient = try AccessCheckoutClientBuilder()
+                .accessBaseUrl(Configuration.accessBaseUrl)
+                .checkoutId(Configuration.checkoutId)
+                .build()
 
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+            let validationConfig = try CardValidationConfig.builder()
+                .pan(panTextField)
+                .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
+                .cvc(AccessCheckoutUITextField(frame: CGRect()))
+                .validationDelegate(self)
+                .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+                .build()
 
-        cardBrandsChanged(cardBrands: [])
+            accessCheckoutClient.initialiseValidation(validationConfig)
+            
+            cardBrandsChanged(cardBrands: [])
+        } catch {
+            AlertView.display(
+                using: self,
+                title: "Initialization Error",
+                message: "Failed to initialize AccessCheckout: \(error.localizedDescription)",
+            )
+            return
+        }
     }
 
     private func changePanValidIndicator(isValid: Bool) {

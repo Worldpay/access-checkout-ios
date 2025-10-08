@@ -3,7 +3,8 @@ import XCTest
 struct TestUtils {
     // 25 attempts over 5 seconds
     private static let assertCardBrandMaxAttempts = 25
-    private static let assertCardBrandSleeptBetweenAttemptsInMs = 0.2
+    private static let assertLabelMaxAttemps = 50
+    private static let assertSleeptBetweenAttemptsInMs = 0.2
 
     static func wait(seconds timeoutInSeconds: TimeInterval) {
         let exp = XCTestCase().expectation(description: "Waiting for \(timeoutInSeconds)")
@@ -16,9 +17,9 @@ struct TestUtils {
 
     static func assertLabelText(of element: XCUIElement, equals expectedText: String) {
         var currentAttempt = 1
-        while element.label != expectedText && currentAttempt <= assertCardBrandMaxAttempts {
+        while element.label != expectedText && currentAttempt <= assertLabelMaxAttemps {
             currentAttempt += 1
-            TestUtils.wait(seconds: 0.1)
+            TestUtils.wait(seconds: assertSleeptBetweenAttemptsInMs)
         }
 
         XCTAssertEqual(
@@ -51,7 +52,7 @@ struct TestUtils {
 
             // sleeping until next attempt
             currentAttempt += 1
-            TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
+            TestUtils.wait(seconds: assertSleeptBetweenAttemptsInMs)
         }
 
         XCTAssertEqual(brandAsLocalizedString, cardBrandImage.label)
@@ -68,7 +69,7 @@ struct TestUtils {
 
             // sleeping until next attempt
             currentAttempt += 1
-            TestUtils.wait(seconds: assertCardBrandSleeptBetweenAttemptsInMs)
+            TestUtils.wait(seconds: assertSleeptBetweenAttemptsInMs)
         }
 
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)

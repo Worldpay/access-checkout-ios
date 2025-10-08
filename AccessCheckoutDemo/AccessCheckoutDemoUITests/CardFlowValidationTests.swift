@@ -178,7 +178,7 @@ class CardFlowCardValidationTests: XCTestCase {
         view!.typeTextIntoCvc(cvc)
         XCTAssertEqual(view!.cvcIsValidLabel.label, "valid")
 
-        // changes to visa which only acceptes 3 digits long Cvcs
+        // changes to visa which only accepts 3 digits long Cvcs
         view!.typeTextIntoPanCharByChar("4")
         XCTAssertEqual(view!.cvcIsValidLabel.label, "invalid")
     }

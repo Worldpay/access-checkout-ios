@@ -20,6 +20,7 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(
             configurationProvider)
+
         cardValidationDelegateMock.getStubbingProxy().panValidChanged(isValid: any())
             .thenDoNothing()
         configurationProvider.getStubbingProxy().retrieveRemoteConfiguration(
@@ -32,17 +33,21 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(baseUrl)
-            .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
-            .checkoutId(checkoutId)
+            .enablePanFormatting()
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
+        )
 
         verify(configurationProvider).retrieveRemoteConfiguration(
-            baseUrl: "some-url", acceptedCardBrands: ["amex", "visa"])
+            baseUrl: baseUrl,
+            acceptedCardBrands: ["amex", "visa"]
+        )
     }
 
     func testInitialisationForCardPaymentFlowWithTextFieldsSetsPresentersOnTextFieldAsDelegates() {
@@ -50,14 +55,16 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(baseUrl)
-            .enablePanFormatting()
             .validationDelegate(cardValidationDelegateMock)
             .acceptedCardBrands(["amex", "visa"])
-            .checkoutId(checkoutId)
+            .enablePanFormatting()
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
+        )
 
         XCTAssertTrue(panAccessCheckoutUITextField.uiTextField.delegate is PanViewPresenter)
         XCTAssertTrue(
@@ -72,7 +79,11 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
             .validationDelegate(cvcOnlyValidationDelegateMock)
             .build()
 
-        accessCheckoutValidationInitialiser!.initialise(validationConfig)
+        accessCheckoutValidationInitialiser!.initialise(
+            validationConfig,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
+        )
 
         XCTAssertTrue(cvcAccessCheckoutUITextField.uiTextField.delegate is CvcViewPresenter)
     }

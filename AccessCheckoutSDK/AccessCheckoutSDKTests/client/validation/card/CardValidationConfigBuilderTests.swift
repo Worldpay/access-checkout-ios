@@ -18,9 +18,7 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
-            .checkoutId(checkoutId)
             .build()
 
         XCTAssertFalse(config.panFormattingEnabled)
@@ -32,10 +30,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .enablePanFormatting()
-            .checkoutId(checkoutId)
             .build()
 
         XCTAssertTrue(config.panFormattingEnabled)
@@ -47,15 +43,12 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
-            .checkoutId(checkoutId)
             .build()
 
         XCTAssertEqual(panAccessCheckoutUITextField, config.pan)
         XCTAssertEqual(expiryDateAccessCheckoutUITextField, config.expiryDate)
         XCTAssertEqual(cvcAccessCheckoutUITextField, config.cvc)
-        XCTAssertEqual(accessBaseUrl, config.accessBaseUrl)
         XCTAssertTrue(config.validationDelegate is MockAccessCheckoutCardValidationDelegate)
         XCTAssertEqual([], config.acceptedCardBrands)
     }
@@ -66,16 +59,13 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
             .build()
 
         XCTAssertEqual(panAccessCheckoutUITextField, config.pan)
         XCTAssertEqual(expiryDateAccessCheckoutUITextField, config.expiryDate)
         XCTAssertEqual(cvcAccessCheckoutUITextField, config.cvc)
-        XCTAssertEqual(accessBaseUrl, config.accessBaseUrl)
         XCTAssertTrue(config.validationDelegate is MockAccessCheckoutCardValidationDelegate)
         XCTAssertEqual(acceptedCardBrands, config.acceptedCardBrands)
     }
@@ -85,10 +75,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
             builder
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
         let expectedMessage = "Expected pan to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in
@@ -101,10 +89,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
             builder
             .pan(panAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
         let expectedMessage = "Expected expiry date to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in
@@ -117,27 +103,9 @@ class CardValidationConfigBuilderTests: XCTestCase {
             builder
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .validationDelegate(validationDelegate)
             .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
         let expectedMessage = "Expected cvc to be provided but was not"
-
-        XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
-        }
-    }
-
-    func testThrowsErrorWhenAccessBaseUrlIsNotSpecified() throws {
-        _ =
-            builder
-            .pan(panAccessCheckoutUITextField)
-            .expiryDate(expiryDateAccessCheckoutUITextField)
-            .cvc(cvcAccessCheckoutUITextField)
-            .validationDelegate(validationDelegate)
-            .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
-        let expectedMessage = "Expected base url to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
@@ -150,26 +118,8 @@ class CardValidationConfigBuilderTests: XCTestCase {
             .pan(panAccessCheckoutUITextField)
             .expiryDate(expiryDateAccessCheckoutUITextField)
             .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
             .acceptedCardBrands(acceptedCardBrands)
-            .checkoutId(checkoutId)
         let expectedMessage = "Expected validation delegate to be provided but was not"
-
-        XCTAssertThrowsError(try builder.build()) { error in
-            XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
-        }
-    }
-
-    func testThrowsErrorWhenCheckoutIdIsNotSpecified() throws {
-        _ =
-            builder
-            .pan(panAccessCheckoutUITextField)
-            .expiryDate(expiryDateAccessCheckoutUITextField)
-            .cvc(cvcAccessCheckoutUITextField)
-            .accessBaseUrl(accessBaseUrl)
-            .acceptedCardBrands(acceptedCardBrands)
-            .validationDelegate(validationDelegate)
-        let expectedMessage = "Expected checkout ID to be provided but was not"
 
         XCTAssertThrowsError(try builder.build()) { error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)

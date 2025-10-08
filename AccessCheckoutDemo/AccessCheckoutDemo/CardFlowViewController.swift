@@ -16,6 +16,7 @@ class CardFlowViewController: UIViewController {
     @IBOutlet var cvcIsValidLabel: UILabel!
 
     private let unknownBrandImage = UIImage(named: "card_unknown")
+    private var accessCheckoutClient: AccessCheckoutClient!
 
     @IBAction func submit(_ sender: Any) {
         submitCard()
@@ -32,68 +33,76 @@ class CardFlowViewController: UIViewController {
             paymentsCvcSessionToggle.isOn
             ? [SessionType.card, SessionType.cvc] : [SessionType.card]
 
-        let cardDetails = try! CardDetailsBuilder().pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
-            .build()
+        do {
+            let cardDetails = try CardDetailsBuilder().pan(panTextField)
+                .expiryDate(expiryDateTextField)
+                .cvc(cvcTextField)
+                .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(
-            Configuration.accessBaseUrl
-        )
-        .checkoutId(Configuration.checkoutId)
-        .build()
+            try accessCheckoutClient.generateSessions(
+                cardDetails: cardDetails,
+                sessionTypes: sessionTypes
+            ) { result in
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
 
-        try? accessCheckoutClient?.generateSessions(
-            cardDetails: cardDetails,
-            sessionTypes: sessionTypes
-        ) { result in
+                    switch result {
+                    case .success(let sessions):
+                        var titleToDisplay: String
+                        var messageToDisplay: String
+
+                        if sessionTypes.count > 1 {
+                            titleToDisplay = "Card & CVC Sessions"
+                            messageToDisplay = """
+                                \(sessions[SessionType.card]!)
+                                \(sessions[SessionType.cvc]!)
+                                """
+                        } else {
+                            titleToDisplay = "Card Session"
+                            messageToDisplay = "\(sessions[SessionType.card]!)"
+                        }
+
+                        AlertView.display(
+                            using: self,
+                            title: titleToDisplay,
+                            message: messageToDisplay,
+                            closeHandler: {
+                                self.resetCard(preserveContent: false, validationErrors: nil)
+                            }
+                        )
+                    case .failure(let error):
+                        let title = error.localizedDescription
+                        var accessCheckoutClientValidationErrors:
+                            [AccessCheckoutError.AccessCheckoutValidationError]?
+                        if error.message.contains("bodyDoesNotMatchSchema") {
+                            accessCheckoutClientValidationErrors = error.validationErrors
+                        }
+
+                        AlertView.display(
+                            using: self,
+                            title: title,
+                            message: nil,
+                            closeHandler: {
+                                self.resetCard(
+                                    preserveContent: true,
+                                    validationErrors: accessCheckoutClientValidationErrors
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+        } catch {
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
-
-                switch result {
-                case .success(let sessions):
-                    var titleToDisplay: String
-                    var messageToDisplay: String
-
-                    if sessionTypes.count > 1 {
-                        titleToDisplay = "Card & CVC Sessions"
-                        messageToDisplay = """
-                            \(sessions[SessionType.card]!)
-                            \(sessions[SessionType.cvc]!)
-                            """
-                    } else {
-                        titleToDisplay = "Card Session"
-                        messageToDisplay = "\(sessions[SessionType.card]!)"
+                AlertView.display(
+                    using: self,
+                    title: "Error",
+                    message: error.localizedDescription,
+                    closeHandler: {
+                        self.resetCard(preserveContent: true, validationErrors: nil)
                     }
-
-                    AlertView.display(
-                        using: self,
-                        title: titleToDisplay,
-                        message: messageToDisplay,
-                        closeHandler: {
-                            self.resetCard(preserveContent: false, validationErrors: nil)
-                        }
-                    )
-                case .failure(let error):
-                    let title = error.localizedDescription
-                    var accessCheckoutClientValidationErrors:
-                        [AccessCheckoutError.AccessCheckoutValidationError]?
-                    if error.message.contains("bodyDoesNotMatchSchema") {
-                        accessCheckoutClientValidationErrors = error.validationErrors
-                    }
-
-                    AlertView.display(
-                        using: self,
-                        title: title,
-                        message: nil,
-                        closeHandler: {
-                            self.resetCard(
-                                preserveContent: true,
-                                validationErrors: accessCheckoutClientValidationErrors
-                            )
-                        }
-                    )
-                }
+                )
             }
         }
     }
@@ -182,20 +191,32 @@ class CardFlowViewController: UIViewController {
 
         resetCard(preserveContent: false, validationErrors: nil)
 
-        let validationConfig = try! CardValidationConfig.builder()
-            .checkoutId(Configuration.checkoutId)
-            .pan(panTextField)
-            .expiryDate(expiryDateTextField)
-            .cvc(cvcTextField)
-            .accessBaseUrl(Configuration.accessBaseUrl)
-            .validationDelegate(self)
-            .enablePanFormatting()
-            .build()
+        do {
+            self.accessCheckoutClient = try AccessCheckoutClientBuilder()
+                .accessBaseUrl(Configuration.accessBaseUrl)
+                .checkoutId(Configuration.checkoutId)
+                .build()
+            
+            let validationConfig = try CardValidationConfig.builder()
+                .pan(panTextField)
+                .expiryDate(expiryDateTextField)
+                .cvc(cvcTextField)
+                .validationDelegate(self)
+                .enablePanFormatting()
+                .build()
 
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
-
-        disableSubmitIfNotValid(valid: false)
-        cardBrandsChanged(cardBrands: [])
+            accessCheckoutClient.initialiseValidation(validationConfig)
+            
+            disableSubmitIfNotValid(valid: false)
+            cardBrandsChanged(cardBrands: [])
+        } catch {
+            AlertView.display(
+                using: self,
+                title: "Initialization Error",
+                message: "Failed to initialize AccessCheckout: \(error.localizedDescription)",
+            )
+            return
+        }
 
         if cardBrandsLabel == nil {
             let label = UILabel()
@@ -211,7 +232,7 @@ class CardFlowViewController: UIViewController {
 
             cardBrandsLabel = label
         }
-      
+
         cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
         cardBrandsLabel?.numberOfLines = 1
         cardBrandsLabel?.font = .preferredFont(forTextStyle: .caption1)
