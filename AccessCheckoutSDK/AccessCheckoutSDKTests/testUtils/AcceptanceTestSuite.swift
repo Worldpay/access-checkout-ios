@@ -54,14 +54,11 @@ class AcceptanceTestSuite: XCTestCase {
             .acceptedCardBrands(acceptedBrands)
             .build()
 
-        let accessCheckoutClient = try! AccessCheckoutClientBuilder()
-            .checkoutId(checkoutId)
-            .accessBaseUrl(baseUrl)
-            .build()
-
         let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
         validationInitialiser.initialise(
-            validationConfiguration, accessCheckoutClient: accessCheckoutClient
+            validationConfiguration,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
         )
 
         return merchantDelegate
@@ -86,14 +83,11 @@ class AcceptanceTestSuite: XCTestCase {
             .validationDelegate(merchantDelegate)
             .build()
 
-        let accessCheckoutClient = try! AccessCheckoutClientBuilder()
-            .checkoutId(checkoutId)
-            .accessBaseUrl(baseUrl)
-            .build()
-
         let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
         validationInitialiser.initialise(
-            validationConfiguration, accessCheckoutClient: accessCheckoutClient
+            validationConfiguration,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
         )
 
         return merchantDelegate

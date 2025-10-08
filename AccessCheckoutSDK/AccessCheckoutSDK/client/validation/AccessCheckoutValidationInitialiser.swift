@@ -22,15 +22,19 @@ internal struct AccessCheckoutValidationInitialiser {
     /**
      This function should be used to initialise the validation using a given `ValidationConfig` provided by the merchant
      - Parameter validationConfiguration: `ValidationConfig` that represents the configuration that should be used to initialise the validation
-     - Parameter accessCheckoutClient: `AccessCheckoutClient` instance to access checkoutId and base URL
+     - Parameter checkoutId: The checkout identifier
+     - Parameter baseUrl: The base URL for the service
      */
     internal func initialise(
-        _ validationConfiguration: ValidationConfig, accessCheckoutClient: AccessCheckoutClient
+        _ validationConfiguration: ValidationConfig,
+        checkoutId: String,
+        baseUrl: String
     ) {
         if validationConfiguration is CardValidationConfig {
             initialiseForCardPaymentFlow(
                 validationConfiguration as! CardValidationConfig,
-                accessCheckoutClient: accessCheckoutClient
+                checkoutId: checkoutId,
+                baseUrl: baseUrl
             )
         } else if validationConfiguration is CvcOnlyValidationConfig {
             initialiseForCvcOnlyFlow(validationConfiguration as! CvcOnlyValidationConfig)
@@ -38,11 +42,10 @@ internal struct AccessCheckoutValidationInitialiser {
     }
 
     private func initialiseForCardPaymentFlow(
-        _ config: CardValidationConfig, accessCheckoutClient: AccessCheckoutClient
+        _ config: CardValidationConfig,
+        checkoutId: String,
+        baseUrl: String
     ) {
-        let baseUrl = accessCheckoutClient.internalBaseUrl
-        let checkoutId = accessCheckoutClient.internalCheckoutId
-
         configurationProvider.retrieveRemoteConfiguration(
             baseUrl: baseUrl,
             acceptedCardBrands: config.acceptedCardBrands

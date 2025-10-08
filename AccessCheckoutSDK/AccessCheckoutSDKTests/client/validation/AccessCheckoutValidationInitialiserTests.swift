@@ -7,7 +7,6 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     let configurationProvider = MockCardBrandsConfigurationProvider(
         CardBrandsConfigurationFactoryMock())
     var accessCheckoutValidationInitialiser: AccessCheckoutValidationInitialiser?
-    var accessCheckoutClient: AccessCheckoutClient!
 
     let panAccessCheckoutUITextField = AccessCheckoutUITextField()
     let expiryDateAccessCheckoutUITextField = AccessCheckoutUITextField()
@@ -21,11 +20,6 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
     override func setUp() {
         accessCheckoutValidationInitialiser = AccessCheckoutValidationInitialiser(
             configurationProvider)
-
-        accessCheckoutClient = try! AccessCheckoutClientBuilder()
-            .checkoutId(checkoutId)
-            .accessBaseUrl(baseUrl)
-            .build()
 
         cardValidationDelegateMock.getStubbingProxy().panValidChanged(isValid: any())
             .thenDoNothing()
@@ -46,7 +40,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
 
         accessCheckoutValidationInitialiser!.initialise(
             validationConfig,
-            accessCheckoutClient: accessCheckoutClient
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
         )
 
         verify(configurationProvider).retrieveRemoteConfiguration(
@@ -67,7 +62,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
 
         accessCheckoutValidationInitialiser!.initialise(
             validationConfig,
-            accessCheckoutClient: accessCheckoutClient
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
         )
 
         XCTAssertTrue(panAccessCheckoutUITextField.uiTextField.delegate is PanViewPresenter)
@@ -85,7 +81,8 @@ class AccessCheckoutValidationInitialiserTests: XCTestCase {
 
         accessCheckoutValidationInitialiser!.initialise(
             validationConfig,
-            accessCheckoutClient: accessCheckoutClient
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
         )
 
         XCTAssertTrue(cvcAccessCheckoutUITextField.uiTextField.delegate is CvcViewPresenter)

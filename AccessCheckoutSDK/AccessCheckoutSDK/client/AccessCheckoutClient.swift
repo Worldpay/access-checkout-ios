@@ -76,14 +76,7 @@ public struct AccessCheckoutClient {
      */
     public func initialiseValidation(_ validationConfiguration: ValidationConfig) {
         let validationInitialiser = AccessCheckoutValidationInitialiser()
-        validationInitialiser.initialise(validationConfiguration, accessCheckoutClient: self)
-    }
-
-    internal var internalCheckoutId: String {
-        return checkoutId
-    }
-
-    internal var internalBaseUrl: String {
-        return baseUrl
+        validationInitialiser.initialise(
+            validationConfiguration, checkoutId: self.checkoutId, baseUrl: self.baseUrl)
     }
 }
