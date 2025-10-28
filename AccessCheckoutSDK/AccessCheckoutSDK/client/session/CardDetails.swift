@@ -1,3 +1,6 @@
+import Dispatch
+import Foundation
+
 /// A class representing a shopper's card details that can be constructed with a `CardDetailsBuilder`
 /// All properties are internal and only accessible to the Access Checkout SDK.
 /// This is designed to protect merchants from exposure to the card details so that they can reach the lowest level of compliance (SAQ-A)
@@ -20,25 +23,33 @@ internal class CardDetailsFromUIComponents: CardDetails {
     private let cvcUITextField: AccessCheckoutUITextField?
 
     override internal var pan: String? {
-        return panUITextField?.text?.replacingOccurrences(of: " ", with: "")
+        return self.retrieveFieldText {
+            panUITextField?.text?.replacingOccurrences(of: " ", with: "")
+        }
     }
 
     override internal var expiryMonth: UInt? {
-        guard let expiryDateText = expiryDateUITextField?.text else {
-            return nil
+        return self.retrieveFieldText {
+            guard let expiryDateText = expiryDateUITextField?.text else {
+                return nil
+            }
+            return ExpiryDateUtils.expiryMonth(of: expiryDateText)
         }
-        return ExpiryDateUtils.expiryMonth(of: expiryDateText)
     }
 
     override internal var expiryYear: UInt? {
-        guard let expiryDateText = expiryDateUITextField?.text else {
-            return nil
+        return self.retrieveFieldText {
+            guard let expiryDateText = expiryDateUITextField?.text else {
+                return nil
+            }
+            return ExpiryDateUtils.expiryYearOn4Digits(of: expiryDateText)
         }
-        return ExpiryDateUtils.expiryYearOn4Digits(of: expiryDateText)
     }
 
     override internal var cvc: String? {
-        return cvcUITextField?.text
+        return self.retrieveFieldText {
+            cvcUITextField?.text
+        }
     }
 
     fileprivate init(
@@ -49,6 +60,26 @@ internal class CardDetailsFromUIComponents: CardDetails {
         self.panUITextField = panUITextField
         self.expiryDateUITextField = expiryDateUITextField
         self.cvcUITextField = cvcUITextField
+    }
+
+    private func retrieveFieldText(closure: () -> String?) -> String? {
+        if Thread.isMainThread {
+            return closure()
+        } else {
+            return DispatchQueue.main.sync {
+                closure()
+            }
+        }
+    }
+
+    private func retrieveFieldText(closure: () -> UInt?) -> UInt? {
+        if Thread.isMainThread {
+            return closure()
+        } else {
+            return DispatchQueue.main.sync {
+                closure()
+            }
+        }
     }
 }
 

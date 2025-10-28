@@ -7,6 +7,8 @@ class AcceptanceTestSuite: XCTestCase {
     let panTextField = AccessCheckoutUITextField()
     let expiryDateTextField = AccessCheckoutUITextField()
     let cvcTextField = AccessCheckoutUITextField()
+    let checkoutId = "0000-0000-0000-0000-000000000000"
+    let baseUrl = "a-url"
 
     func initialiseCardValidation(cardBrands: [CardBrandModel], acceptedCardBrands: [String] = [])
         -> MockAccessCheckoutCardValidationDelegate
@@ -32,7 +34,7 @@ class AcceptanceTestSuite: XCTestCase {
         merchantDelegate.getStubbingProxy().panValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().expiryDateValidChanged(isValid: any()).thenDoNothing()
-        merchantDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any()).thenDoNothing()
+        merchantDelegate.getStubbingProxy().cardBrandsChanged(cardBrands: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
 
         let cardBrandsConfiguration = createConfiguration(
@@ -44,19 +46,20 @@ class AcceptanceTestSuite: XCTestCase {
         ).thenDoNothing()
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
 
-        let validationConfiguration = try! CardValidationConfig.builder().pan(
-            panAccessCheckoutTextField
-        )
-        .expiryDate(expiryDateAccessCheckoutTextField)
-        .cvc(cvcAccessCheckoutTextField)
-        .accessBaseUrl("a-url")
-        .validationDelegate(merchantDelegate)
-        .acceptedCardBrands(acceptedBrands)
-        .build()
+        let validationConfiguration = try! CardValidationConfig.builder()
+            .pan(panAccessCheckoutTextField)
+            .expiryDate(expiryDateAccessCheckoutTextField)
+            .cvc(cvcAccessCheckoutTextField)
+            .validationDelegate(merchantDelegate)
+            .acceptedCardBrands(acceptedBrands)
+            .build()
 
         let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
-
-        validationInitialiser.initialise(validationConfiguration)
+        validationInitialiser.initialise(
+            validationConfiguration,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
+        )
 
         return merchantDelegate
     }
@@ -75,12 +78,17 @@ class AcceptanceTestSuite: XCTestCase {
         merchantDelegate.getStubbingProxy().cvcValidChanged(isValid: any()).thenDoNothing()
         merchantDelegate.getStubbingProxy().validationSuccess().thenDoNothing()
 
-        let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
         let validationConfiguration = try! CvcOnlyValidationConfig.builder()
             .cvc(cvcTextField)
             .validationDelegate(merchantDelegate)
             .build()
-        validationInitialiser.initialise(validationConfiguration)
+
+        let validationInitialiser = AccessCheckoutValidationInitialiser(configurationProvider)
+        validationInitialiser.initialise(
+            validationConfiguration,
+            checkoutId: checkoutId,
+            baseUrl: baseUrl
+        )
 
         return merchantDelegate
     }

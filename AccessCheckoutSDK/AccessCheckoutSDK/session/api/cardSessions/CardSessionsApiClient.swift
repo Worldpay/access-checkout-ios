@@ -5,38 +5,26 @@ class CardSessionsApiClient {
         linkName: ApiLinks.cvcSessions.result
     )
 
-    private var discovery: CardSessionsApiDiscovery
     private var urlRequestFactory: CardSessionURLRequestFactory
-    private var restClient: RestClient
+    private var restClient: RestClient<ApiResponse>
     private var apiResponseLinkLookup: ApiResponseLinkLookup
 
     init() {
-        self.discovery = CardSessionsApiDiscovery()
-        self.urlRequestFactory = CardSessionURLRequestFactory()
-        self.restClient = RestClient()
-        self.apiResponseLinkLookup = ApiResponseLinkLookup()
-    }
-
-    init(discovery: CardSessionsApiDiscovery) {
-        self.discovery = discovery
         self.urlRequestFactory = CardSessionURLRequestFactory()
         self.restClient = RestClient()
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
     init(
-        discovery: CardSessionsApiDiscovery,
         urlRequestFactory: CardSessionURLRequestFactory,
-        restClient: RestClient
+        restClient: RestClient<ApiResponse>
     ) {
-        self.discovery = discovery
         self.urlRequestFactory = urlRequestFactory
         self.restClient = restClient
         self.apiResponseLinkLookup = ApiResponseLinkLookup()
     }
 
     func createSession(
-        baseUrl: String,
         checkoutId: String,
         pan: String,
         expiryMonth: UInt,
@@ -44,11 +32,11 @@ class CardSessionsApiClient {
         cvc: String,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
     ) {
-        discovery.discover(baseUrl: baseUrl) { result in
+        ServiceDiscoveryProvider.discover(UrlToDiscover.createCardSessions) { result in
             switch result {
-            case .success(let endPointUrl):
+            case .success(let createCardSessionsUrl):
                 self.fireRequest(
-                    endPointUrl: endPointUrl,
+                    endPointUrl: createCardSessionsUrl.absoluteString,
                     checkoutId: checkoutId,
                     pan: pan,
                     expiryMonth: expiryMonth,
@@ -93,11 +81,10 @@ class CardSessionsApiClient {
             expiryYear: expiryYear,
             cvc: cvc
         )
-        restClient.send(
+        _ = restClient.send(
             urlSession: URLSession.shared,
-            request: request,
-            responseType: ApiResponse.self
-        ) { result in
+            request: request
+        ) { result, _ in
             completionHandler(result)
         }
     }

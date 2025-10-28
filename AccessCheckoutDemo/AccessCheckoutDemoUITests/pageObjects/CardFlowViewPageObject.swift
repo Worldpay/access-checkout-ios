@@ -68,6 +68,10 @@ class CardFlowViewPageObject {
         return app.staticTexts["cvcIsValidLabel"]
     }
 
+    var cardBrandsLabel: XCUIElement {
+        return app.staticTexts["cardBrandsLabel"]
+    }
+
     init(_ app: XCUIApplication) {
         self.app = app
     }
@@ -78,12 +82,12 @@ class CardFlowViewPageObject {
         }
         panField.typeText(text)
     }
-    
+
     func typeTextIntoPanCharByChar(_ text: String) {
         if !panField.hasFocus {
             panField.tap()
         }
-        
+
         for char in text {
             panField.typeText(String(char))
         }
@@ -106,12 +110,16 @@ class CardFlowViewPageObject {
     func submit() {
         submitButton.tap()
     }
-
-    func imageIs(_ brand: String) -> Bool {
+    
+    func imageIs(_ brand: String, timeout: TimeInterval = 2.0) -> Bool {
         let brandAsLocalizedString = NSLocalizedString(
             brand, bundle: Bundle(for: type(of: self)), comment: "")
-
-        return cardBrandImage.label == brandAsLocalizedString
+        
+        let predicate = NSPredicate(format: "label == %@", brandAsLocalizedString)
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: cardBrandImage)
+        
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
     }
 
     func clearField(_ field: XCUIElement) {
@@ -124,5 +132,9 @@ class CardFlowViewPageObject {
         _ = cutMenu.waitForExistence(timeout: waitForExistenceTimeoutInSeconds)
         cutMenu.tap()
         TestUtils.wait(seconds: 1)
+    }
+
+    func simulatePasteIntoPan(_ text: String) {
+        TestUtils.simulatePaste(text: text, into: panField)
     }
 }

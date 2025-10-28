@@ -3,33 +3,34 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CvcSessionsApiClientTests: XCTestCase {
-    private let baseUrl = "http://localhost"
     private let cvc = "123"
 
-    private let mockDiscovery = SessionsApiDiscoveryMock()
     private let mockURLRequestFactory = PaymentsCvcSessionURLRequestFactoryMock()
 
     private let expectedSession = "a-session"
-    private let expectedDiscoveredUrl = "http://and-end-point"
+    private let expectedDiscoveredUrl = "https://example.com"
 
     private let urlRequestFactoryResult = URLRequest(url: URL(string: "a-url")!)
     private var expectationToFulfill: XCTestExpectation?
 
     override func setUp() {
+        ServiceDiscoveryProvider.clearCache()
+
         mockURLRequestFactory.willReturn(urlRequestFactoryResult)
         expectationToFulfill = expectation(description: "")
     }
 
     func testDiscoversApiAndCreatesSession() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cvcUrlToReturn: expectedDiscoveredUrl)
+
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success(let session):
                 XCTAssertEqual(self.expectedSession, session)
@@ -47,16 +48,19 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsDiscoveryErrorWhenApiDiscoveryFails() {
-        let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        mockDiscovery.willComplete(with: expectedError)
+        StubUtils.setUpServiceDiscovery(cvcUrlToReturn: nil)
+
+        let expectedError = StubUtils.createError(
+            errorName: "discoveryLinkNotFound",
+            message: "Failed to find link \(ApiLinks.cvcSessions.endpoint) in response")
         let mockRestClient = RestClientMock(
             replyWith: successResponse(withSession: expectedSession))
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -70,17 +74,18 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsSessionNotFound_whenExpectedSessionIsNotInResponse() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
+
         let mockRestClient = RestClientMock(replyWith: responseWithoutExpectedLink())
         let expectedError = StubUtils.createError(
             errorName: "sessionLinkNotFound",
             message: "Failed to find link \(ApiLinks.cvcSessions.result) in response")
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")
@@ -94,15 +99,16 @@ class CvcSessionsApiClientTests: XCTestCase {
     }
 
     func testReturnsServiceError_whenServiceErrorsOut() {
-        mockDiscovery.willComplete(with: expectedDiscoveredUrl)
+        StubUtils.setUpServiceDiscovery(cardUrlToReturn: expectedDiscoveredUrl)
+
         let expectedError = StubUtils.createError(errorName: "an error", message: "a message")
-        let mockRestClient = RestClientMock<String>(errorWith: expectedError)
+        let mockRestClient = RestClientMock<ApiResponse>(errorWith: expectedError)
 
         let client = CvcSessionsApiClient(
-            discovery: mockDiscovery, urlRequestFactory: mockURLRequestFactory,
+            urlRequestFactory: mockURLRequestFactory,
             restClient: mockRestClient)
 
-        client.createSession(baseUrl: baseUrl, checkoutId: "", cvc: cvc) { result in
+        client.createSession(checkoutId: "", cvc: cvc) { result in
             switch result {
             case .success:
                 XCTFail("Creation of session should have failed")

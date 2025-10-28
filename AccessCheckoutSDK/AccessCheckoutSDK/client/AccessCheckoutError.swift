@@ -22,6 +22,13 @@ public struct AccessCheckoutError: Error, Equatable {
         )
     }
 
+    static func illegalArgumentError(message: String) -> AccessCheckoutError {
+        return AccessCheckoutError(
+            errorName: "illegalArgumentError",
+            details: message
+        )
+    }
+
     static func discoveryLinkNotFound(linkName: String) -> AccessCheckoutError {
         return AccessCheckoutError(
             errorName: "discoveryLinkNotFound",
@@ -38,6 +45,10 @@ public struct AccessCheckoutError: Error, Equatable {
 
     static func unexpectedApiError(message: String) -> AccessCheckoutError {
         return AccessCheckoutError(errorName: "unexpectedApiError", details: message)
+    }
+
+    static func internalError(message: String) -> AccessCheckoutError {
+        return AccessCheckoutError(errorName: "internalError", details: message)
     }
 
     public struct AccessCheckoutValidationError: Error, Equatable {

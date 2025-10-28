@@ -7,10 +7,12 @@ class AccessCheckoutClientTests: XCTestCase {
 
     override func setUp() {
         serviceStubs = ServiceStubs()
+        ServiceDiscoveryProvider.clearCache()
     }
 
     override func tearDown() {
         serviceStubs?.stop()
+        ServiceDiscoveryProvider.clearCache()
     }
 
     func testGeneratesACardSession() throws {
@@ -156,6 +158,8 @@ class AccessCheckoutClientTests: XCTestCase {
         let client = createAccessCheckoutClient(baseUrl: serviceStubs!.baseUrl)
         let cardDetails = validCardDetails()
         let expectedError = StubUtils.createError(errorName: "unknown", message: "an error")
+        let retryError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error unknown : an error")
 
         serviceStubs!.servicesRootDiscoverySuccess()
             .sessionsEndPointDiscoveryFailure(error: expectedError)
@@ -169,7 +173,7 @@ class AccessCheckoutClientTests: XCTestCase {
             case .success:
                 XCTFail("Should have received an error but received sessions")
             case .failure(let error):
-                XCTAssertEqual(expectedError, error)
+                XCTAssertEqual(retryError, error)
             }
             expectationToFulfill.fulfill()
         }
@@ -247,6 +251,32 @@ class AccessCheckoutClientTests: XCTestCase {
         ) { error in
             XCTAssertEqual(expectedMessage, (error as! AccessCheckoutIllegalArgumentError).message)
         }
+    }
+
+    func testShouldSendBackAnErrorWhenAnErrorOccursDuringDiscovery() throws {
+        let expectationToFulfill = expectation(description: "Error successfully retrieved")
+        let client = createAccessCheckoutClient(baseUrl: serviceStubs!.baseUrl)
+        let expectedError = StubUtils.createError(errorName: "unknown", message: "an error message")
+        let cardDetails = validCardDetails()
+
+        let retryError = AccessCheckoutError.unexpectedApiError(
+            message: "Failed after 3 attempt(s) with error unknown : an error message")
+
+        serviceStubs!.servicesRootDiscoveryFailure(error: expectedError)
+            .start()
+
+        try client.generateSessions(cardDetails: cardDetails, sessionTypes: [.card, .cvc]) {
+            result in
+            switch result {
+            case .success:
+                XCTFail("Should have failed to discover services")
+            case .failure(let error):
+                XCTAssertEqual(retryError, error)
+            }
+            expectationToFulfill.fulfill()
+        }
+
+        wait(for: [expectationToFulfill], timeout: 5)
     }
 
     private func validCardDetails() -> CardDetails {

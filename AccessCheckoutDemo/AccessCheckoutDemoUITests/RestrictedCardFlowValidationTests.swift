@@ -19,31 +19,31 @@ class RestrictedCardFlowValidationTests: XCTestCase {
     func testDisplaysAcceptedBrand_visa() {
         view!.typeTextIntoPanCharByChar("4")
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
     }
 
     func testDisplaysAcceptedBrand_mastercard() {
         view!.typeTextIntoPanCharByChar("55")
 
-        XCTAssertTrue(view!.imageIs("mastercard"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "mastercard")
     }
 
     func testDisplaysAcceptedBrand_amex() {
         view!.typeTextIntoPanCharByChar("34")
 
-        XCTAssertTrue(view!.imageIs("amex"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "amex")
     }
 
     func testDisplaysNonAcceptedBrand_jcb() {
         view!.typeTextIntoPanCharByChar("352")
 
-        XCTAssertTrue(view!.imageIs("jcb"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "jcb")
     }
 
     func testDisplaysUnknownBrand() {
         view!.typeTextIntoPanCharByChar("0")
 
-        XCTAssertTrue(view!.imageIs("unknown_card_brand"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "unknown_card_brand")
     }
 
     // MARK: Testing accepted cards
@@ -52,14 +52,14 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         view!.typeTextIntoPanCharByChar("4")
         view!.dismissKeyboard()  // removes focus from Pan
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
     func testCompletePanIsValid_visa() {
         view!.typeTextIntoPanCharByChar("4444333322221111")
 
-        XCTAssertTrue(view!.imageIs("visa"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "visa")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
@@ -67,14 +67,14 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         view!.typeTextIntoPanCharByChar("55")
         view!.dismissKeyboard()  // removes focus from Pan
 
-        XCTAssertTrue(view!.imageIs("mastercard"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "mastercard")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
     func testCompletePanIsValid_mastercard() {
         view!.typeTextIntoPanCharByChar("5555555555554444")
 
-        XCTAssertTrue(view!.imageIs("mastercard"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "mastercard")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
@@ -82,14 +82,14 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         view!.typeTextIntoPanCharByChar("34")
         view!.dismissKeyboard()  // removes focus from Pan
 
-        XCTAssertTrue(view!.imageIs("amex"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "amex")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
     func testCompletePanIsValid_amex() {
         view!.typeTextIntoPanCharByChar("343434343434343")
 
-        XCTAssertTrue(view!.imageIs("amex"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "amex")
         XCTAssertEqual(view!.panIsValidLabel.label, "valid")
     }
 
@@ -99,7 +99,7 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         view!.typeTextIntoPanCharByChar("352")
         view!.dismissKeyboard()  // removes focus from Pan
 
-        XCTAssertTrue(view!.imageIs("jcb"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "jcb")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 
@@ -107,7 +107,7 @@ class RestrictedCardFlowValidationTests: XCTestCase {
         view!.typeTextIntoPanCharByChar("3528000700000000")
         view!.dismissKeyboard()  // removes focus from Pan
 
-        XCTAssertTrue(view!.imageIs("jcb"))
+        TestUtils.assertCardBrand(of: view!.cardBrandImage, is: "jcb")
         XCTAssertEqual(view!.panIsValidLabel.label, "invalid")
     }
 }

@@ -4,7 +4,7 @@ class CardValidationStateHandler {
     private(set) var panIsValid = false
     private(set) var expiryDateIsValid = false
     private(set) var cvcIsValid = false
-    private(set) var cardBrand: CardBrandModel?
+    private var cardBrands: [CardBrandModel] = []
     private let cardBrandModelTransformer: CardBrandModelTransformer
 
     private var notifyMerchantOfPanValidationChangeIsPending = false
@@ -27,11 +27,11 @@ class CardValidationStateHandler {
     init(
         merchantDelegate: AccessCheckoutCardValidationDelegate,
         panValidationState: Bool,
-        cardBrand: CardBrandModel?
+        cardBrands: [CardBrandModel]
     ) {
         self.merchantDelegate = merchantDelegate
         self.panIsValid = panValidationState
-        self.cardBrand = cardBrand
+        self.cardBrands = cardBrands
         self.cardBrandModelTransformer = CardBrandModelTransformer()
     }
 
@@ -56,10 +56,29 @@ class CardValidationStateHandler {
     private func allFieldsValid() -> Bool {
         return panIsValid && expiryDateIsValid && cvcIsValid
     }
+
+    private func areCardBrandsEqual(
+        _ cardBrands: [CardBrandModel], _ latestCardBrands: [CardBrandModel]
+    ) -> Bool {
+        guard cardBrands.count == latestCardBrands.count else { return false }
+
+        let cardBrands = Set(cardBrands.map { $0.name.lowercased() })
+        let latestCardBrands = Set(latestCardBrands.map { $0.name.lowercased() })
+
+        return cardBrands == latestCardBrands
+    }
+
+    private func cardBrandsContainGlobalBrand(_ globalBrand: CardBrandModel?) -> Bool {
+        guard let globalBrand = globalBrand else {
+            return false
+        }
+
+        return globalBrand.name.lowercased() == cardBrands.first?.name.lowercased()
+    }
 }
 
 extension CardValidationStateHandler: PanValidationStateHandler {
-    func handlePanValidation(isValid: Bool, cardBrand: CardBrandModel?) {
+    func handlePanValidation(isValid: Bool, cardBrand globalBrand: CardBrandModel?) {
         if isValid != panIsValid {
             panIsValid = isValid
             notifyMerchantOfPanValidationChangeIsPending = true
@@ -70,17 +89,23 @@ extension CardValidationStateHandler: PanValidationStateHandler {
             }
         }
 
-        if self.cardBrand?.name != cardBrand?.name {
-            self.cardBrand = cardBrand
-
-            if let cardBrand = cardBrand {
-                merchantDelegate.cardBrandChanged(
-                    cardBrand: cardBrandModelTransformer.transform(cardBrand)
-                )
-            } else {
-                merchantDelegate.cardBrandChanged(cardBrand: nil)
+        if let globalBrand = globalBrand {
+            if self.cardBrands.isEmpty || self.cardBrands.first?.name != globalBrand.name {
+                updateCardBrands(cardBrands: [globalBrand])
+            }
+        } else {
+            if !self.cardBrands.isEmpty {
+                updateCardBrands(cardBrands: [])
             }
         }
+    }
+
+    func updateCardBrands(cardBrands: [CardBrandModel]) {
+        self.cardBrands = cardBrands
+
+        merchantDelegate.cardBrandsChanged(
+            cardBrands: cardBrands.map { cardBrandModelTransformer.transform($0) }
+        )
     }
 
     func notifyMerchantOfPanValidationState() {
@@ -94,18 +119,16 @@ extension CardValidationStateHandler: PanValidationStateHandler {
         }
     }
 
-    func isCardBrandDifferentFrom(cardBrand: CardBrandModel?) -> Bool {
-        if let currentBrand = self.cardBrand, let newBrand = cardBrand {
-            return currentBrand.name != newBrand.name
-        } else if cardBrand != nil || self.cardBrand != nil {
-            return true
-        } else {
-            return false
-        }
+    func areCardBrandsDifferentFrom(cardBrands: [CardBrandModel]) -> Bool {
+        return !areCardBrandsEqual(self.cardBrands, cardBrands)
     }
 
-    func getCardBrand() -> CardBrandModel? {
-        return self.cardBrand
+    func getCardBrands() -> [CardBrandModel] {
+        return self.cardBrands
+    }
+
+    func getGlobalBrand() -> CardBrandModel? {
+        return self.cardBrands.first
     }
 }
 

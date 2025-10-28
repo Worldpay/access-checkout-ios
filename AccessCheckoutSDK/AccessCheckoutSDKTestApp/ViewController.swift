@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     @IBOutlet var setPanWithoutSpacingCaretPositionTextField: UITextField!
     @IBOutlet var setPanWithoutSpacingCaretPositionButton: UIButton!
 
+    private var accessCheckoutClient: AccessCheckoutClient?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         panWithSpacing.addTarget(
@@ -105,24 +107,33 @@ class ViewController: UIViewController {
         usingCardNumberField panAccessCheckoutUITextField: AccessCheckoutUITextField,
         cardNumberSpacingEnabled: Bool
     ) {
+        self.accessCheckoutClient = try? AccessCheckoutClientBuilder()
+            .accessBaseUrl(Configuration.accessBaseUrl)
+            .checkoutId(Configuration.checkoutId)
+            .build()
+
+        let expiryDateTextField = AccessCheckoutUITextField(frame: CGRect())
+        let cvcTextField = AccessCheckoutUITextField(frame: CGRect())
+
         let validationConfigBuilder = CardValidationConfig.builder()
             .pan(panAccessCheckoutUITextField)
-            .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
-            .cvc(AccessCheckoutUITextField(frame: CGRect()))
-            .accessBaseUrl(Configuration.accessBaseUrl)
-            .validationDelegate(self)
+            .expiryDate(expiryDateTextField)
+            .cvc(cvcTextField)
             .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+            .validationDelegate(self)
 
         if cardNumberSpacingEnabled {
             _ = validationConfigBuilder.enablePanFormatting()
         }
 
-        AccessCheckoutValidationInitialiser().initialise(try! validationConfigBuilder.build())
+        let validationConfig = try! validationConfigBuilder.build()
+
+        accessCheckoutClient?.initialiseValidation(validationConfig)
     }
 }
 
 extension ViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {}
+    func cardBrandsChanged(cardBrands: [CardBrand]) {}
     func panValidChanged(isValid: Bool) {}
     func expiryDateValidChanged(isValid: Bool) {}
     func cvcValidChanged(isValid: Bool) {}

@@ -9,6 +9,8 @@ class CvcFlowViewController: UIViewController {
 
     @IBOutlet var dismissKeyboardButton: UIButton!
 
+    private var accessCheckoutClient: AccessCheckoutClient!
+
     @IBAction func onDismissKeyboardTap(_ sender: Any) {
         _ = cvcTextField.resignFirstResponder()
     }
@@ -18,39 +20,45 @@ class CvcFlowViewController: UIViewController {
 
         spinner.startAnimating()
 
-        let cardDetails = try! CardDetailsBuilder()
-            .cvc(cvcTextField)
-            .build()
+        do {
+            let cardDetails = try CardDetailsBuilder()
+                .cvc(cvcTextField)
+                .build()
 
-        let accessCheckoutClient = try? AccessCheckoutClientBuilder().accessBaseUrl(
-            Configuration.accessBaseUrl
-        )
-        .checkoutId(Configuration.checkoutId)
-        .build()
+            try accessCheckoutClient.generateSessions(
+                cardDetails: cardDetails, sessionTypes: [SessionType.cvc]
+            ) { result in
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
 
-        try? accessCheckoutClient?.generateSessions(
-            cardDetails: cardDetails, sessionTypes: [SessionType.cvc]
-        ) { result in
+                    switch result {
+                    case .success(let sessions):
+                        AlertView.display(
+                            using: self, title: "CVC Session", message: sessions[SessionType.cvc],
+                            closeHandler: {
+                                self.cvcTextField.isEnabled = true
+                                self.cvcTextField.clear()
+                            }
+                        )
+                    case .failure(let error):
+                        self.cvcTextField.isEnabled = true
+                        self.highlightCvcField(error: error)
+
+                        AlertView.display(
+                            using: self, title: "Error", message: error.localizedDescription
+                        )
+                    }
+                }
+            }
+        } catch {
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
-
-                switch result {
-                case .success(let sessions):
-                    AlertView.display(
-                        using: self, title: "CVC Session", message: sessions[SessionType.cvc],
-                        closeHandler: {
-                            self.cvcTextField.isEnabled = true
-                            self.cvcTextField.clear()
-                        }
-                    )
-                case .failure(let error):
-                    self.cvcTextField.isEnabled = true
-                    self.highlightCvcField(error: error)
-
-                    AlertView.display(
-                        using: self, title: "Error", message: error.localizedDescription
-                    )
-                }
+                self.cvcTextField.isEnabled = true
+                AlertView.display(
+                    using: self,
+                    title: "Error",
+                    message: error.localizedDescription
+                )
             }
         }
     }
@@ -84,13 +92,29 @@ class CvcFlowViewController: UIViewController {
         cvcIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
-        let validationConfig = try! CvcOnlyValidationConfig.builder()
-            .cvc(cvcTextField)
-            .validationDelegate(self)
-            .build()
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+        // Initialize - if this fails, dismiss the view
+        do {
+            self.accessCheckoutClient = try AccessCheckoutClientBuilder()
+                .accessBaseUrl(Configuration.accessBaseUrl)
+                .checkoutId(Configuration.checkoutId)
+                .build()
 
-        submitButton.isEnabled = false
+            let validationConfig = try CvcOnlyValidationConfig.builder()
+                .cvc(cvcTextField)
+                .validationDelegate(self)
+                .build()
+
+            accessCheckoutClient.initialiseValidation(validationConfig)
+            
+            submitButton.isEnabled = false
+        } catch {
+            AlertView.display(
+                using: self,
+                title: "Initialization Error",
+                message: "Failed to initialize AccessCheckout: \(error.localizedDescription)",
+            )
+            return
+        }
     }
 
     private func highlightCvcField(error: AccessCheckoutError) {

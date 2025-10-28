@@ -4,8 +4,6 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class PanViewPresenterCardSpacingTests: PresenterTestSuite {
-    private let panValidationFlowMock = mockPanValidationFlow()
-
     private let amexBrand = TestFixtures.amexBrand()
     private let visaBrand = TestFixtures.visaBrand()
     private let maestroBrand = TestFixtures.maestroBrand()
@@ -29,12 +27,35 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
     private let visaPanTooLong = TestFixtures.visaPanTooLong
     private let visaPanTooLongWithSpaces = TestFixtures.visaPanTooLongWithSpaces
 
+    private var mockCardBinService: MockCardBinService!
+    private var panValidationFlowMock: MockPanValidationFlow!
+
     override func setUp() {
+        super.setUp()
+
+        mockCardBinService = MockCardBinService(
+            checkoutId: "00000000-0000-0000-000000000000",
+            client: MockCardBinApiClient(),
+            configurationProvider: MockCardBrandsConfigurationProvider(
+                CardBrandsConfigurationFactoryMock()
+            )
+        )
+
+        stub(mockCardBinService) { stub in
+            when(stub.getCardBrands(globalBrand: any(), cardNumber: any(), completion: any()))
+                .then { _, _, completion in
+                    completion(.success([]))
+                }
+        }
+
+        panValidationFlowMock = createMockPanValidationFlow()
+
         panValidationFlowMock.getStubbingProxy().validate(pan: any()).thenDoNothing()
         panValidationFlowMock.getStubbingProxy().notifyMerchant().thenDoNothing()
+        panValidationFlowMock.getStubbingProxy().handleCobrandedCards(pan: any()).thenDoNothing()
     }
 
-    private static func mockPanValidationFlow() -> MockPanValidationFlow {
+    private func createMockPanValidationFlow() -> MockPanValidationFlow {
         let validationStateHandler = CardValidationStateHandler(
             MockAccessCheckoutCardValidationDelegate()
         )
@@ -44,7 +65,12 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         )
         let panValidator = PanValidator(configurationProvider)
 
-        return MockPanValidationFlow(panValidator, validationStateHandler, cvcValidationFlow)
+        return MockPanValidationFlow(
+            panValidator,
+            validationStateHandler,
+            cvcValidationFlow,
+            mockCardBinService
+        )
     }
 
     private func createPresenterWithCardSpacing(detectedCardBrand: CardBrandModel?)
@@ -56,7 +82,8 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
             acceptedCardBrands: []
         )
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        panValidationFlowMock.getStubbingProxy().getCardBrand().thenReturn(detectedCardBrand)
+        panValidationFlowMock.getStubbingProxy().getCardBrands().thenReturn(
+            detectedCardBrand != nil ? [detectedCardBrand!] : [])
 
         let panValidator = PanValidator(configurationProvider)
         return PanViewPresenter(
@@ -74,7 +101,7 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let merchantValidationDelegate = MockAccessCheckoutCardValidationDelegate()
         merchantValidationDelegate.getStubbingProxy().panValidChanged(isValid: any())
             .thenDoNothing()
-        merchantValidationDelegate.getStubbingProxy().cardBrandChanged(cardBrand: any())
+        merchantValidationDelegate.getStubbingProxy().cardBrandsChanged(cardBrands: any())
             .thenDoNothing()
 
         let configuration = CardBrandsConfiguration(
@@ -96,7 +123,8 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
         let panValidationFlow = PanValidationFlow(
             panValidator,
             validationStateHandler,
-            cvcValidationFlow
+            cvcValidationFlow,
+            mockCardBinService
         )
 
         return PanViewPresenter(panValidationFlow, panValidator, panFormattingEnabled: true)
@@ -298,8 +326,11 @@ class PanViewPresenterCardSpacingTests: PresenterTestSuite {
             allCardBrands: [visaBrand, maestroBrand],
             acceptedCardBrands: []
         )
+
+        let detectedCardBrand: CardBrandModel? = maestroBrand
         configurationProvider.getStubbingProxy().get().thenReturn(cardBrandsConfiguration)
-        panValidationFlowMock.getStubbingProxy().getCardBrand().thenReturn(maestroBrand)
+        panValidationFlowMock.getStubbingProxy().getCardBrands().thenReturn(
+            detectedCardBrand != nil ? [detectedCardBrand!] : [])
 
         let panValidator = PanValidator(configurationProvider)
         let presenter = PanViewPresenter(

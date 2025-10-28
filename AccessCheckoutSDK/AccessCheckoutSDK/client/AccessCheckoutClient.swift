@@ -11,6 +11,7 @@ public struct AccessCheckoutClient {
     private let baseUrl: String
     private let cardDetailsForSessionTypeValidator: CardDetailsForSessionTypeValidator
     private let retrieveSessionHandlerDispatcher: RetrieveSessionHandlerDispatcher
+    private let validationInitialiser = AccessCheckoutValidationInitialiser()
 
     init(
         checkoutId: String,
@@ -23,7 +24,6 @@ public struct AccessCheckoutClient {
         self.cardDetailsForSessionTypeValidator = cardDetailsForSessionTypeValidator
         self.retrieveSessionHandlerDispatcher = retrieveSessionHandlerDispatcher
     }
-
     /**
      This function allows the generation of a new session for the client to use in the next phase of the payment flow or other supported flow.
     
@@ -43,16 +43,35 @@ public struct AccessCheckoutClient {
             try cardDetailsForSessionTypeValidator.validate(cardDetails: cardDetails, for: $0)
         }
 
-        let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(
-            numberOfExpectedResults: sessionTypes.count,
-            completeWith: completionHandler
-        )
-        sessionTypes.forEach { sessionType in
-            retrieveSessionHandlerDispatcher.dispatch(checkoutId, baseUrl, cardDetails, sessionType)
-            {
-                result in
-                resultsHandler.handle(result, for: sessionType)
+        try? ServiceDiscoveryProvider.initialise(self.baseUrl)
+
+        ServiceDiscoveryProvider.discoverAll { result in
+            switch result {
+            case .success(_):
+                let resultsHandler: RetrieveSessionResultsHandler = RetrieveSessionResultsHandler(
+                    numberOfExpectedResults: sessionTypes.count,
+                    completeWith: completionHandler
+                )
+                sessionTypes.forEach { sessionType in
+                    retrieveSessionHandlerDispatcher.dispatch(
+                        checkoutId, cardDetails, sessionType
+                    ) {
+                        result in
+                        resultsHandler.handle(result, for: sessionType)
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
         }
+    }
+
+    /**
+         This function should be used to initialise the validation using an instance of `ValidationConfig`
+         - Parameter validationConfig: an instance of `CardValidationConfig` or `CvcOnlyValidationConfig` that represents the fields to validate and the delegate used during validation.
+     */
+    public func initialiseValidation(_ validationConfiguration: ValidationConfig) {
+        validationInitialiser.initialise(
+            validationConfiguration, checkoutId: self.checkoutId, baseUrl: self.baseUrl)
     }
 }

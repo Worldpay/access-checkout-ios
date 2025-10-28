@@ -40,26 +40,30 @@ class RestrictedCardFlowViewController: UIViewController {
         panIsValidLabel.textColor = Configuration.backgroundColor
         // Controls used as helpers for the automated tests - End of section
 
-        let validationConfig = try! CardValidationConfig.builder().pan(panTextField)
-            .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
-            .cvc(AccessCheckoutUITextField(frame: CGRect()))
-            .accessBaseUrl(Configuration.accessBaseUrl)
-            .validationDelegate(self)
-            .acceptedCardBrands(["visa", "mastercard", "AMEX"])
-            .build()
+        do {
+            let accessCheckoutClient = try AccessCheckoutClientBuilder()
+                .accessBaseUrl(Configuration.accessBaseUrl)
+                .checkoutId(Configuration.checkoutId)
+                .build()
 
-        AccessCheckoutValidationInitialiser().initialise(validationConfig)
+            let validationConfig = try CardValidationConfig.builder()
+                .pan(panTextField)
+                .expiryDate(AccessCheckoutUITextField(frame: CGRect()))
+                .cvc(AccessCheckoutUITextField(frame: CGRect()))
+                .validationDelegate(self)
+                .acceptedCardBrands(["visa", "mastercard", "AMEX"])
+                .build()
 
-        cardBrandChanged(cardBrand: nil)
-    }
-
-    private func updateCardBrandImage(url: URL) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: data)
-                }
-            }
+            accessCheckoutClient.initialiseValidation(validationConfig)
+            
+            cardBrandsChanged(cardBrands: [])
+        } catch {
+            AlertView.display(
+                using: self,
+                title: "Initialization Error",
+                message: "Failed to initialize AccessCheckout: \(error.localizedDescription)",
+            )
+            return
         }
     }
 
@@ -70,21 +74,12 @@ class RestrictedCardFlowViewController: UIViewController {
 }
 
 extension RestrictedCardFlowViewController: AccessCheckoutCardValidationDelegate {
-    func cardBrandChanged(cardBrand: CardBrand?) {
-        if let imageUrl = cardBrand?.images.filter({ $0.type == "image/png" }).first?.url,
-            let url = URL(string: imageUrl)
-        {
-            updateCardBrandImage(url: url)
-        } else {
-            imageView.image = unknownBrandImage
-        }
-        imageView.accessibilityLabel = NSLocalizedString(
-            cardBrand?.name ?? "unknown_card_brand", comment: "")
+    func cardBrandsChanged(cardBrands: [CardBrand]) {
+        UiUtils.updateCardBrandImage(self.imageView, using: cardBrands)
     }
 
     func panValidChanged(isValid: Bool) {
         panIsValidLabel.text = isValid ? "valid" : "invalid"
-
         changePanValidIndicator(isValid: isValid)
     }
 

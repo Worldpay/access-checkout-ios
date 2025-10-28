@@ -7,7 +7,6 @@ class RetrieveSessionHandlerDispatcher {
 
     func dispatch(
         _ checkoutId: String,
-        _ baseUrl: String,
         _ cardDetails: CardDetails,
         _ sessionType: SessionType,
         completionHandler: @escaping (Result<String, AccessCheckoutError>) -> Void
@@ -16,7 +15,6 @@ class RetrieveSessionHandlerDispatcher {
             if handler.canHandle(sessionType: sessionType) {
                 handler.handle(
                     checkoutId,
-                    baseUrl,
                     cardDetails,
                     completionHandler: completionHandler
                 )

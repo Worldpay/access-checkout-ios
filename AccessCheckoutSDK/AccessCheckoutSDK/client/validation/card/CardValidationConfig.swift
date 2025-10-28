@@ -11,7 +11,6 @@ public struct CardValidationConfig: ValidationConfig {
     let expiryDate: AccessCheckoutUITextField?
     let cvc: AccessCheckoutUITextField?
 
-    let accessBaseUrl: String
     let validationDelegate: AccessCheckoutCardValidationDelegate
 
     let acceptedCardBrands: [String]
@@ -31,7 +30,6 @@ public struct CardValidationConfig: ValidationConfig {
      - Parameter pan: `AccessCheckoutUITextField` that represents the pan ui element
      - Parameter expiryDate: `AccessCheckoutUITextField` that represents the expiry date ui element
      - Parameter cvc: `AccessCheckoutUITextField` that represents the cvc ui element
-     - Parameter accessBaseUrl: `String` that represents the base url
      - Parameter validationDelegate: `AccessCheckoutCardValidationDelegate` that represents the validation events listener
      - Parameter acceptedCardBrands: `Array` of `String` that represents the list of card brands to accept for validation. Any unrecognised card brand will be accepted at all times.
      - Parameter panFormattingEnabled: `Bool` that represents whether the PAN field will be formatted.
@@ -40,7 +38,6 @@ public struct CardValidationConfig: ValidationConfig {
         pan: AccessCheckoutUITextField,
         expiryDate: AccessCheckoutUITextField,
         cvc: AccessCheckoutUITextField,
-        accessBaseUrl: String,
         validationDelegate: AccessCheckoutCardValidationDelegate,
         acceptedCardBrands: [String] = [],
         panFormattingEnabled: Bool = false
@@ -49,7 +46,6 @@ public struct CardValidationConfig: ValidationConfig {
         self.expiryDate = expiryDate
         self.cvc = cvc
 
-        self.accessBaseUrl = accessBaseUrl
         self.validationDelegate = validationDelegate
 
         self.acceptedCardBrands = acceptedCardBrands
@@ -64,7 +60,6 @@ public class CardValidationConfigBuilder {
     private var expiryDate: AccessCheckoutUITextField?
     private var cvc: AccessCheckoutUITextField?
 
-    private var accessBaseUrl: String?
     private var validationDelegate: AccessCheckoutCardValidationDelegate?
     private var acceptedCardBrands: [String] = []
     private var panFormattingEnabled: Bool = false
@@ -72,7 +67,7 @@ public class CardValidationConfigBuilder {
     fileprivate init() {}
 
     /**
-     Sets the pan ui element to be validatedg
+     Sets the pan ui element to be validated
      - Parameter pan: `AccessCheckoutUITextField` to be validated
      - Returns: the same instance of the builder
      */
@@ -98,15 +93,6 @@ public class CardValidationConfigBuilder {
      */
     public func cvc(_ cvc: AccessCheckoutUITextField) -> CardValidationConfigBuilder {
         self.cvc = cvc
-        return self
-    }
-
-    /**
-     - Parameter accessBaseUrl: `String` that represents the base url to use when calling Worldpay services
-     - Returns: the same instance of the builder
-     */
-    public func accessBaseUrl(_ accessBaseUrl: String) -> CardValidationConfigBuilder {
-        self.accessBaseUrl = accessBaseUrl
         return self
     }
 
@@ -155,18 +141,13 @@ public class CardValidationConfigBuilder {
         if cvc == nil {
             throw AccessCheckoutIllegalArgumentError.missingCvc()
         }
-        guard let accessBaseUrl = accessBaseUrl else {
-            throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl()
-        }
         guard let validationDelegate = validationDelegate else {
             throw AccessCheckoutIllegalArgumentError.missingValidationDelegate()
         }
-
         return CardValidationConfig(
             pan: pan!,
             expiryDate: expiryDate!,
             cvc: cvc!,
-            accessBaseUrl: accessBaseUrl,
             validationDelegate: validationDelegate,
             acceptedCardBrands: acceptedCardBrands,
             panFormattingEnabled: panFormattingEnabled

@@ -1,41 +1,60 @@
 import UIKit
 
 /// Class that is responsible for initialising validation using a given `ValidationConfig`
-public struct AccessCheckoutValidationInitialiser {
+internal struct AccessCheckoutValidationInitialiser {
     private static var presenters = [Presenter]()
 
     private var configurationProvider: CardBrandsConfigurationProvider
-
     /**
      This initialiser should be used to create an instance of `AccessCheckoutValidationInitialiser`
      */
-    public init() {
-        let restClient = RestClient()
+    internal init() {
+        let restClient = RestClient<[CardBrandDto]>()
         let transformer = CardBrandDtoTransformer()
         let configurationFactory = CardBrandsConfigurationFactory(restClient, transformer)
         self.configurationProvider = CardBrandsConfigurationProvider(configurationFactory)
     }
 
-    init(_ cardBrandsConfigurationProvider: CardBrandsConfigurationProvider) {
+    internal init(_ cardBrandsConfigurationProvider: CardBrandsConfigurationProvider) {
         self.configurationProvider = cardBrandsConfigurationProvider
     }
 
     /**
      This function should be used to initialise the validation using a given `ValidationConfig` provided by the merchant
-     - Parameter validationConfig: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     - Parameter validationConfiguration: `ValidationConfig` that represents the configuration that should be used to initialise the validation
+     - Parameter checkoutId: The checkout identifier
+     - Parameter baseUrl: The base URL for the service
      */
-    public func initialise(_ validationConfiguration: ValidationConfig) {
+    internal func initialise(
+        _ validationConfiguration: ValidationConfig,
+        checkoutId: String,
+        baseUrl: String
+    ) {
         if validationConfiguration is CardValidationConfig {
-            initialiseForCardPaymentFlow(validationConfiguration as! CardValidationConfig)
+            initialiseForCardPaymentFlow(
+                validationConfiguration as! CardValidationConfig,
+                checkoutId: checkoutId,
+                baseUrl: baseUrl
+            )
         } else if validationConfiguration is CvcOnlyValidationConfig {
             initialiseForCvcOnlyFlow(validationConfiguration as! CvcOnlyValidationConfig)
         }
     }
 
-    private func initialiseForCardPaymentFlow(_ config: CardValidationConfig) {
+    private func initialiseForCardPaymentFlow(
+        _ config: CardValidationConfig,
+        checkoutId: String,
+        baseUrl: String
+    ) {
         configurationProvider.retrieveRemoteConfiguration(
-            baseUrl: config.accessBaseUrl,
+            baseUrl: baseUrl,
             acceptedCardBrands: config.acceptedCardBrands
+        )
+
+        let cardBinService = CardBinService(
+            checkoutId: checkoutId,
+            client: CardBinApiClient(),
+            configurationProvider: configurationProvider
         )
 
         let validationStateHandler = CardValidationStateHandler(config.validationDelegate)
@@ -44,6 +63,7 @@ public struct AccessCheckoutValidationInitialiser {
 
         let panPresenter = panViewPresenter(
             configurationProvider,
+            cardBinService,
             cvcValidationFlow,
             validationStateHandler,
             config.panFormattingEnabled
@@ -57,6 +77,9 @@ public struct AccessCheckoutValidationInitialiser {
             delegate: expiryDatePresenter
         )
         setTextFieldDelegate(textField: config.cvc!.uiTextField, delegate: cvcPresenter)
+
+        try? ServiceDiscoveryProvider.initialise(baseUrl)
+        ServiceDiscoveryProvider.discoverAll { result in }
     }
 
     private func initialiseForCvcOnlyFlow(_ config: CvcOnlyValidationConfig) {
@@ -70,6 +93,7 @@ public struct AccessCheckoutValidationInitialiser {
 
     private func panViewPresenter(
         _ configurationProvider: CardBrandsConfigurationProvider,
+        _ cardBinService: CardBinService,
         _ cvcValidationFlow: CvcValidationFlow,
         _ validationStateHandler: PanValidationStateHandler,
         _ panFormattingEnabled: Bool
@@ -78,7 +102,8 @@ public struct AccessCheckoutValidationInitialiser {
         let panValidationFlow = PanValidationFlow(
             panValidator,
             validationStateHandler,
-            cvcValidationFlow
+            cvcValidationFlow,
+            cardBinService
         )
         return PanViewPresenter(
             panValidationFlow,

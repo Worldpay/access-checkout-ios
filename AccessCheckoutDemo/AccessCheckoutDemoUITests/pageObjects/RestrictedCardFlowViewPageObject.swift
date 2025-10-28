@@ -48,13 +48,6 @@ class RestrictedCardFlowViewPageObject {
         }
     }
 
-    func imageIs(_ brand: String) -> Bool {
-        let brandAsLocalizedString = NSLocalizedString(
-            brand, bundle: Bundle(for: type(of: self)), comment: "")
-
-        return cardBrandImage.label == brandAsLocalizedString
-    }
-
     func dismissKeyboard() {
         self.dismissKeyboardButton.tap()
     }

@@ -18,6 +18,12 @@ public struct AccessCheckoutIllegalArgumentError: Error, Equatable {
         )
     }
 
+    static func malformedAccessBaseUrl() -> AccessCheckoutIllegalArgumentError {
+        return AccessCheckoutIllegalArgumentError(
+            message: "Expected base url is invalid"
+        )
+    }
+
     static func missingCvc() -> AccessCheckoutIllegalArgumentError {
         return AccessCheckoutIllegalArgumentError(
             message: "Expected cvc to be provided but was not"
