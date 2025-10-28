@@ -1,5 +1,5 @@
 PODS:
-  - AccessCheckoutSDK (4.1.1)
+  - AccessCheckoutSDK (5.0.0)
   - Swifter (1.5.0)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AccessCheckoutSDK: 5110651cbd062aeef82216f33065b5fbb6cccdb6
+  AccessCheckoutSDK: 0e1326c191cb4dd077219b8beb8b89d8a7e70dbf
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
 
 PODFILE CHECKSUM: 24652dffd7039c8e362695563b3df7d5a3304e04
