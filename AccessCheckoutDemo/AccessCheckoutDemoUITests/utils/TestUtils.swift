@@ -27,16 +27,23 @@ struct TestUtils {
             "Expected label text '\(expectedText)' but found '\(element.label)'")
     }
 
-    static func simulatePaste(text: String, into textField: XCUIElement) {
+    static func simulatePasteOrFail(text: String, into textField: XCUIElement) {
         UIPasteboard.general.string = text
+        guard UIPasteboard.general.string == text else {
+            XCTFail("Pasteboard did not copy the value correctly")
+            return
+        }
 
         textField.tap()
         textField.press(forDuration: 1.0)
 
         let pasteMenuItem = XCUIApplication().menuItems["Paste"]
-        if pasteMenuItem.waitForExistence(timeout: 2.0) {
-            pasteMenuItem.tap()
+        guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
+            XCTFail("Failed to paste from the pasteboard")
+            return
         }
+        
+        pasteMenuItem.tap()
 
         wait(seconds: 0.2)
     }

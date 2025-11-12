@@ -135,6 +135,6 @@ class CardFlowViewPageObject {
     }
 
     func simulatePasteIntoPan(_ text: String) {
-        TestUtils.simulatePaste(text: text, into: panField)
+        TestUtils.simulatePasteOrFail(text: text, into: panField)
     }
 }
