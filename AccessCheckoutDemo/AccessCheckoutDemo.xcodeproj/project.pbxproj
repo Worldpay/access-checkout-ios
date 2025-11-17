@@ -13,6 +13,7 @@
 		1BCBFED922B8F63300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFED522B8F63300A65FAA /* CHANGELOG.md */; };
 		1BCBFEDA22B903A300A65FAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9AFE48422B7C8D700943B3E /* Localizable.strings */; };
 		26F42A84ADF46DA41FE619E3 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BA745E821226873007D0F0 /* Pods_AccessCheckoutDemo_AccessCheckoutDemoUITests.framework */; };
+		33777EBC2EC73E6E0058E083 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33777EBB2EC73E630058E083 /* TabBarViewController.swift */; };
 		512096852E78802E0065AD3B /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512096842E7880290065AD3B /* UiUtils.swift */; };
 		5121EC402AF1BC7700C8FC72 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */; };
 		512907F12AEC0473008A7357 /* ServiceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512907F02AEC0473008A7357 /* ServiceStubs.swift */; };
@@ -75,6 +76,7 @@
 		1BCBFED322B8F63300A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFED522B8F63300A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		279ECBC132A07E6E616179E9 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		33777EBB2EC73E630058E083 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		44EF61ADB85C22F64E091349 /* Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		512096842E7880290065AD3B /* UiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiUtils.swift; sourceTree = "<group>"; };
 		5121EC3F2AF1BC7700C8FC72 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
+				33777EBB2EC73E630058E083 /* TabBarViewController.swift */,
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
 				C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */,
@@ -447,9 +450,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -464,9 +471,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests/Pods-AccessCheckoutDemo-AccessCheckoutDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -484,6 +495,7 @@
 				CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,
 				E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */,
+				33777EBC2EC73E6E0058E083 /* TabBarViewController.swift in Sources */,
 				5174649A27271F1A00E4902B /* Configuration.swift in Sources */,
 				E7B9A34A243393C400137BCF /* CvcFlowViewController.swift in Sources */,
 				C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */,
