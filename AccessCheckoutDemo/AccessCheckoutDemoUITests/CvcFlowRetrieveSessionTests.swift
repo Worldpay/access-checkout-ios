@@ -2,7 +2,7 @@ import XCTest
 
 @testable import AccessCheckoutSDK
 
-class CvcFlowRetrieveSessionTests: XCTestCase {
+class CvcFlowRetrieveSessionTests: BaseUITest {
     private let expectedCvcSessionRegex = "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"
 
     private var view: CvcFlowViewPageObject?

@@ -1,6 +1,6 @@
 import XCTest
 
-class CvcFlowCvcValidationTests: XCTestCase {
+class CvcFlowCvcValidationTests: BaseUITest {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: CvcFlowViewPageObject?

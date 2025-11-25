@@ -1,6 +1,6 @@
 import XCTest
 
-class CardPaymentFlowUITests: XCTestCase {
+class CardPaymentFlowUITests: BaseUITest {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: CardFlowViewPageObject?

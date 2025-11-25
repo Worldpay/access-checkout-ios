@@ -1,6 +1,6 @@
 import XCTest
 
-class NavigationTests: XCTestCase {
+class NavigationTests: BaseUITest {
     var view: NavigationViewPageObject?
 
     override func setUp() {

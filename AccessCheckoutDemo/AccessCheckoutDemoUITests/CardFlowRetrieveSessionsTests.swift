@@ -2,7 +2,7 @@ import XCTest
 
 @testable import AccessCheckoutSDK
 
-class CardPaymentFlowRetrieveSessionsTests: XCTestCase {
+class CardPaymentFlowRetrieveSessionsTests: BaseUITest {
     private let expectedCardSessionRegex =
         "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"
     private let expectedCvcSessionRegex = "http:\\/\\/localhost:\\d{4}\\/sessions\\/[a-zA-Z0-9\\-]+"

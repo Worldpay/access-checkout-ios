@@ -1,6 +1,6 @@
 import XCTest
 
-class CvcFlowUITests: XCTestCase {
+class CvcFlowUITests: BaseUITest {
     var view: CvcFlowViewPageObject?
 
     override func setUp() {
