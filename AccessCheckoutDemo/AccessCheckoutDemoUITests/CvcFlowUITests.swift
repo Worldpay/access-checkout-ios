@@ -4,10 +4,7 @@ class CvcFlowUITests: BaseUITest {
     var view: CvcFlowViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch()
-
+        super.setUp()
         view = NavigationViewPageObject(app).navigateToCvcFlow()
     }
 

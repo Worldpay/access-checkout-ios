@@ -6,10 +6,8 @@ class CardFlowCardNumberSpacingTests: BaseUITest {
     var view: CardFlowViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
+        super.setUp()
         // Stubs are not enabled so these tests will use the real remote card configuration
-        let app = AppLauncher.launch()
         view = CardFlowViewPageObject(app)
     }
 

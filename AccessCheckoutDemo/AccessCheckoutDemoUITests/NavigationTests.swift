@@ -4,9 +4,7 @@ class NavigationTests: BaseUITest {
     var view: NavigationViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch()
+        super.setUp()
         view = NavigationViewPageObject(app)
     }
 

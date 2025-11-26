@@ -9,8 +9,7 @@ class CvcFlowRetrieveSessionTests: BaseUITest {
     private let serviceStubs = ServiceStubs()
 
     override func setUp() {
-        continueAfterFailure = false
-
+        super.setUp()
         _ =
             serviceStubs
             .cardConfiguration()

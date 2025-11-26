@@ -5,9 +5,7 @@ class RestrictedCardFlowNoCardNumberSpacingTests: BaseUITest {
     var view: RestrictedCardFlowViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch()
+        super.setUp()
         view = NavigationViewPageObject(app).navigateToRestrictedCardFlow()
     }
 
