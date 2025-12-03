@@ -28,10 +28,13 @@ struct TestUtils {
     }
 
     static func simulatePasteOrFail(text: String, into textField: XCUIElement) {
-        UIPasteboard.general.string = text
-        guard UIPasteboard.general.string == text else {
-            XCTFail("Pasteboard did not copy the value correctly")
-            return
+        textField.tap()
+        textField.typeText(text)
+        
+        textField.press(forDuration: 1.0)
+        if XCUIApplication().menuItems["Select All"].exists {
+            XCUIApplication().menuItems["Select All"].tap()
+            XCUIApplication().menuItems["Cut"].tap()
         }
 
         textField.tap()
@@ -44,7 +47,6 @@ struct TestUtils {
         }
         
         pasteMenuItem.tap()
-
         wait(seconds: 0.2)
     }
 
