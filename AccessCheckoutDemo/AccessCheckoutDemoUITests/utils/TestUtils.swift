@@ -38,11 +38,12 @@ struct TestUtils {
         }
         
         textField.press(forDuration: 1.0)
-        if XCUIApplication().menuItems["Select All"].exists {
-            XCUIApplication().menuItems["Select All"].tap()
-            XCUIApplication().menuItems["Cut"].tap()
-        }
-        
+        textField.typeText(XCUIKeyboardKey.delete.rawValue)
+//        if XCUIApplication().menuItems["Select All"].exists {
+//            XCUIApplication().menuItems["Select All"].tap()
+//            XCUIApplication().menuItems["Cut"].tap()
+//        }
+//        
         textField.tap()
         textField.press(forDuration: 1.0)
 
