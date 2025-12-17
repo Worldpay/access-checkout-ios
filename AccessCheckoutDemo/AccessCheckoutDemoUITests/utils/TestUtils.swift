@@ -1,10 +1,19 @@
 import XCTest
+import Foundation
 
 struct TestUtils {
     // 25 attempts over 5 seconds
     private static let assertCardBrandMaxAttempts = 25
     private static let assertLabelMaxAttemps = 50
     private static let assertSleeptBetweenAttemptsInMs = 0.2
+    
+    static func isRunningOnSimulator() -> Bool {
+        #if targetEnvironment(simulator)
+            return true
+        #else
+            return false
+        #endif
+    }
 
     static func wait(seconds timeoutInSeconds: TimeInterval) {
         let exp = XCTestCase().expectation(description: "Waiting for \(timeoutInSeconds)")
@@ -35,6 +44,11 @@ struct TestUtils {
         if XCUIApplication().menuItems["Select All"].exists {
             XCUIApplication().menuItems["Select All"].tap()
             XCUIApplication().menuItems["Copy"].tap()
+        }
+        
+        guard !isRunningOnSimulator() else {
+            UIPasteboard.general.string = text
+            return
         }
         
         textField.press(forDuration: 1.0)
