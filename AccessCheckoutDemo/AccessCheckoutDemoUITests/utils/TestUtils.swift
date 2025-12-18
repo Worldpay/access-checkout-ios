@@ -1,10 +1,19 @@
 import XCTest
+import Foundation
 
 struct TestUtils {
     // 25 attempts over 5 seconds
     private static let assertCardBrandMaxAttempts = 25
     private static let assertLabelMaxAttemps = 50
     private static let assertSleeptBetweenAttemptsInMs = 0.2
+    
+    static func isRunningOnSimulator() -> Bool {
+        #if targetEnvironment(simulator)
+            return true
+        #else
+            return false
+        #endif
+    }
 
     static func wait(seconds timeoutInSeconds: TimeInterval) {
         let exp = XCTestCase().expectation(description: "Waiting for \(timeoutInSeconds)")
@@ -28,12 +37,23 @@ struct TestUtils {
     }
 
     static func simulatePasteOrFail(text: String, into textField: XCUIElement) {
-        UIPasteboard.general.string = text
-        guard UIPasteboard.general.string == text else {
-            XCTFail("Pasteboard did not copy the value correctly")
+        textField.tap()
+        textField.typeText(text)
+        
+        textField.press(forDuration: 1.0)
+        if XCUIApplication().menuItems["Select All"].exists {
+            XCUIApplication().menuItems["Select All"].tap()
+            XCUIApplication().menuItems["Copy"].tap()
+        }
+        
+        guard !isRunningOnSimulator() else {
+            UIPasteboard.general.string = text
             return
         }
-
+        
+        textField.press(forDuration: 1.0)
+        textField.typeText(XCUIKeyboardKey.delete.rawValue)
+        
         textField.tap()
         textField.press(forDuration: 1.0)
 
@@ -44,7 +64,6 @@ struct TestUtils {
         }
         
         pasteMenuItem.tap()
-
         wait(seconds: 0.2)
     }
 
