@@ -1,14 +1,12 @@
 import XCTest
 
-class CardFlowCardValidationTests: XCTestCase {
+class CardFlowCardValidationTests: BaseUITest {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: CardFlowViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch()
+        super.setUp()
         view = CardFlowViewPageObject(app)
     }
 

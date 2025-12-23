@@ -1,16 +1,17 @@
 import XCTest
 
-class CvcFlowCvcValidationTests: XCTestCase {
+class CvcFlowCvcValidationTests: BaseUITest {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: CvcFlowViewPageObject?
+    
+    override var customLaunchArguments: [String: String] {
+        return ["displayDismissKeyboardButton": "true"]
+    }
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch(displayDismissKeyboardButton: true)
+        super.setUp()
         let navigationView = NavigationViewPageObject(app)
-
         view = navigationView.navigateToCvcFlow()
     }
 

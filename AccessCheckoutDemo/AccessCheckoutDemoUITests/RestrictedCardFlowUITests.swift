@@ -1,14 +1,12 @@
 import XCTest
 
-class RestrictedCardFlowUITests: XCTestCase {
+class RestrictedCardFlowUITests: BaseUITest {
     private let backspace = String(XCUIKeyboardKey.delete.rawValue)
 
     var view: RestrictedCardFlowViewPageObject?
 
     override func setUp() {
-        continueAfterFailure = false
-
-        let app = AppLauncher.launch()
+        super.setUp()
         view = NavigationViewPageObject(app).navigateToRestrictedCardFlow()
     }
 
