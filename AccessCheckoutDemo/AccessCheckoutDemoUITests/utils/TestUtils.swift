@@ -41,10 +41,17 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-        if XCUIApplication().menuItems["Select All"].exists {
-            XCUIApplication().menuItems["Select All"].tap()
-            XCUIApplication().menuItems["Copy"].tap()
+        guard !isRunningOnSimulator() else {
+            wait(seconds: 0.2)
+            return
         }
+        
+        guard !XCUIApplication().menuItems["Select All"].exists else {
+            XCTFail("Could not select all")
+            return
+        }
+        XCUIApplication().menuItems["Select All"].tap()
+        XCUIApplication().menuItems["Copy"].tap()
         
         guard !isRunningOnSimulator() else {
             UIPasteboard.general.string = text
@@ -52,10 +59,24 @@ struct TestUtils {
         }
         
         textField.press(forDuration: 1.0)
+        guard !isRunningOnSimulator() else {
+            wait(seconds: 0.2)
+            return
+        }
+        
+        guard !XCUIApplication().menuItems["Select All"].exists else {
+            XCTFail("Could not select all")
+            return
+        }
+        XCUIApplication().menuItems["Select All"].tap()
         textField.typeText(XCUIKeyboardKey.delete.rawValue)
         
         textField.tap()
         textField.press(forDuration: 1.0)
+        guard !isRunningOnSimulator() else {
+            wait(seconds: 0.2)
+            return
+        }
 
         let pasteMenuItem = XCUIApplication().menuItems["Paste"]
         guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
