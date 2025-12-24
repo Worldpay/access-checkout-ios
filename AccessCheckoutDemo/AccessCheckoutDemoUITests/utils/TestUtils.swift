@@ -46,7 +46,7 @@ struct TestUtils {
             return
         }
         
-        guard let selectAllButton = findSelectAllButton() else{
+        guard var selectAllButton = findSelectAllButton() else {
             XCTFail("Could not select all")
             return
         }
@@ -54,7 +54,7 @@ struct TestUtils {
         selectAllButton.tap()
         XCUIApplication().buttons["Copy"].tap()
         
-        guard !isRunningOnSimulator() else {
+        guard isRunningOnSimulator() else {
             UIPasteboard.general.string = text
             return
         }
@@ -65,7 +65,7 @@ struct TestUtils {
             return
         }
         
-        guard !selectAllButton.waitForExistence(timeout: 3) else {
+        guard selectAllButton.waitForExistence(timeout: 3) else {
             XCTFail("Could not select all")
             return
         }
@@ -128,7 +128,7 @@ struct TestUtils {
         let app = XCUIApplication()
         
         let menuItem = app.menuItems["Select All"]
-        if menuItem.waitForExistence(timeout: 3.0) {
+        if menuItem.waitForExistence(timeout: 2.0) {
             return menuItem
         }
         
@@ -140,6 +140,11 @@ struct TestUtils {
         let staticText = app.staticTexts["Select All"]
         if staticText.waitForExistence(timeout: 1.0) {
             return staticText
+        }
+        
+        let otherElements = app.otherElements["Select All"]
+        if otherElements.waitForExistence(timeout: 1.0) {
+            return otherElements
         }
         
         return nil
