@@ -41,10 +41,10 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+//        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-            return
-        }
+//            return
+//        }
         
         guard !XCUIApplication().menuItems["Select All"].exists else {
             XCTFail("Could not select all")
@@ -59,10 +59,10 @@ struct TestUtils {
         }
         
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+//        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-            return
-        }
+//            return
+//        }
         
         guard !XCUIApplication().menuItems["Select All"].exists else {
             XCTFail("Could not select all")
@@ -73,10 +73,10 @@ struct TestUtils {
         
         textField.tap()
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+//        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-            return
-        }
+//            return
+//        }
 
         let pasteMenuItem = XCUIApplication().menuItems["Paste"]
         guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
