@@ -42,7 +42,7 @@ struct TestUtils {
         
         textField.press(forDuration: 1.0)
         guard !isRunningOnSimulator() else {
-            wait(seconds: 0.2)
+            wait(seconds: 1.0)
             return
         }
         
@@ -60,7 +60,7 @@ struct TestUtils {
         
         textField.press(forDuration: 1.0)
         guard !isRunningOnSimulator() else {
-            wait(seconds: 0.2)
+            wait(seconds: 1.0)
             return
         }
         
@@ -74,7 +74,7 @@ struct TestUtils {
         textField.tap()
         textField.press(forDuration: 1.0)
         guard !isRunningOnSimulator() else {
-            wait(seconds: 0.2)
+            wait(seconds: 1.0)
             return
         }
 
