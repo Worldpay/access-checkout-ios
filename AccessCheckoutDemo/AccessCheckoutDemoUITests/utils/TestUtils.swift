@@ -41,17 +41,18 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-//        guard !isRunningOnSimulator() else {
+        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-//            return
-//        }
+            return
+        }
         
-        guard !XCUIApplication().menuItems["Select All"].exists else {
+        guard let selectAllButton = findSelectAllButton() else{
             XCTFail("Could not select all")
             return
         }
-        XCUIApplication().menuItems["Select All"].tap()
-        XCUIApplication().menuItems["Copy"].tap()
+        
+        selectAllButton.tap()
+        XCUIApplication().buttons["Copy"].tap()
         
         guard !isRunningOnSimulator() else {
             UIPasteboard.general.string = text
@@ -59,24 +60,25 @@ struct TestUtils {
         }
         
         textField.press(forDuration: 1.0)
-//        guard !isRunningOnSimulator() else {
+        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-//            return
-//        }
+            return
+        }
         
-        guard !XCUIApplication().menuItems["Select All"].exists else {
+        guard !selectAllButton.waitForExistence(timeout: 3) else {
             XCTFail("Could not select all")
             return
         }
-        XCUIApplication().menuItems["Select All"].tap()
+        
+        selectAllButton.tap()
         textField.typeText(XCUIKeyboardKey.delete.rawValue)
         
         textField.tap()
         textField.press(forDuration: 1.0)
-//        guard !isRunningOnSimulator() else {
+        guard !isRunningOnSimulator() else {
             wait(seconds: 1.0)
-//            return
-//        }
+            return
+        }
 
         let pasteMenuItem = XCUIApplication().menuItems["Paste"]
         guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
@@ -120,5 +122,26 @@ struct TestUtils {
         }
 
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
+    }
+    
+    static func findSelectAllButton() -> XCUIElement? {
+        let app = XCUIApplication()
+        
+        let menuItem = app.menuItems["Select All"]
+        if menuItem.waitForExistence(timeout: 3.0) {
+            return menuItem
+        }
+        
+        let button = app.buttons["Select All"]
+        if button.waitForExistence(timeout: 1.0) {
+            return button
+        }
+        
+        let staticText = app.staticTexts["Select All"]
+        if staticText.waitForExistence(timeout: 1.0) {
+            return staticText
+        }
+        
+        return nil
     }
 }
