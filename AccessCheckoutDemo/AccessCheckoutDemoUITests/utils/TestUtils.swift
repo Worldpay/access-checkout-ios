@@ -41,26 +41,30 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+        guard isRunningOnSimulator() else {
             wait(seconds: 1.0)
             return
         }
         
-        guard var selectAllButton = findSelectAllButton() else {
+        guard var selectAllButton = findButtonByLabel("Select All") else {
             XCTFail("Could not select all")
             return
         }
-        
         selectAllButton.tap()
-        XCUIApplication().buttons["Copy"].tap()
         
-        guard isRunningOnSimulator() else {
+        guard var copyButton = findButtonByLabel("Copy") else {
+            XCTFail("Could not select copy")
+            return
+        }
+        copyButton.tap()
+        
+        guard !isRunningOnSimulator() else {
             UIPasteboard.general.string = text
             return
         }
         
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+        guard isRunningOnSimulator() else {
             wait(seconds: 1.0)
             return
         }
@@ -80,11 +84,11 @@ struct TestUtils {
             return
         }
 
-        let pasteMenuItem = XCUIApplication().menuItems["Paste"]
-        guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
+        guard let pasteMenuItem = findButtonByLabel("Paste") else {
             XCTFail("Failed to paste from the pasteboard")
             return
         }
+        pasteMenuItem.waitForExistence(timeout: 2.0)
         
         pasteMenuItem.tap()
         wait(seconds: 0.2)
@@ -124,25 +128,25 @@ struct TestUtils {
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
     }
     
-    static func findSelectAllButton() -> XCUIElement? {
+    static func findButtonByLabel(_ label: String) -> XCUIElement? {
         let app = XCUIApplication()
         
-        let menuItem = app.menuItems["Select All"]
+        let menuItem = app.menuItems[label]
         if menuItem.waitForExistence(timeout: 2.0) {
             return menuItem
         }
         
-        let button = app.buttons["Select All"]
+        let button = app.buttons[label]
         if button.waitForExistence(timeout: 1.0) {
             return button
         }
         
-        let staticText = app.staticTexts["Select All"]
+        let staticText = app.staticTexts[label]
         if staticText.waitForExistence(timeout: 1.0) {
             return staticText
         }
         
-        let otherElements = app.otherElements["Select All"]
+        let otherElements = app.otherElements[label]
         if otherElements.waitForExistence(timeout: 1.0) {
             return otherElements
         }
