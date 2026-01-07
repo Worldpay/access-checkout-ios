@@ -58,6 +58,9 @@ struct TestUtils {
             XCTFail("Could not select copy")
         }
         
+        textField.tap()
+        textField.tap()
+        
         if isRunningOnSimulator() {
             UIPasteboard.general.string = text
         }
