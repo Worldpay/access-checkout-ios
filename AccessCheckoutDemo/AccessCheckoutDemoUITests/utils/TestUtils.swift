@@ -58,26 +58,29 @@ struct TestUtils {
             XCTFail("Could not select copy")
         }
         
-        textField.tap()
-        textField.tap()
+//        textField.tap()
+//        textField.tap()
         
         if isRunningOnSimulator() {
             UIPasteboard.general.string = text
         }
         
-        textField.press(forDuration: 1.0)
+//        textField.press(forDuration: 1.0)
         
         if !isRunningOnSimulator() {
             wait(seconds: 1.0)
         }
         
-        if let selectAllButton = findButtonByLabel("Select All") {
-            selectAllButton.tap()
-        } else {
-            XCTFail("Could not select all")
-        }
+//        if let selectAllButton = findButtonByLabel("Select All") {
+//            selectAllButton.tap()
+//        } else {
+//            XCTFail("Could not select all")
+//        }
         
-        textField.typeText(XCUIKeyboardKey.delete.rawValue)
+//        textField.typeText(XCUIKeyboardKey.delete.rawValue)
+        
+        let currentText = textField.value as? String ?? ""
+        deleteAllCharactersBackwards(textField: textField, count: currentText.count)
         
         textField.tap()
         textField.press(forDuration: 1.0)
@@ -153,6 +156,23 @@ struct TestUtils {
         }
         
         return nil
+    }
+    
+    static func deleteAllCharactersBackwards(textField: XCUIElement, count: Int) {
+        let batchSize = 20
+        let fullBatches = count / batchSize
+        let remainder = count % batchSize
+        
+        for _ in 0..<fullBatches {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: batchSize)
+            textField.typeText(deleteString)
+            wait(seconds: 0.1)
+        }
+        
+        if remainder > 0 {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: remainder)
+            textField.typeText(deleteString)
+        }
     }
     
 //    static func clearAllText(from textField: XCUIElement) {
