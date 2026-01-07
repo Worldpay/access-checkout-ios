@@ -41,56 +41,54 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-        guard isRunningOnSimulator() else {
+        
+        if !isRunningOnSimulator() {
             wait(seconds: 1.0)
-            return
         }
         
-        guard var selectAllButton = findButtonByLabel("Select All") else {
+        if let selectAllButton = findButtonByLabel("Select All") {
+            selectAllButton.tap()
+        } else {
             XCTFail("Could not select all")
-            return
         }
-        selectAllButton.tap()
         
-        guard var copyButton = findButtonByLabel("Copy") else {
+        if let copyButton = findButtonByLabel("Copy") {
+            copyButton.tap()
+        } else {
             XCTFail("Could not select copy")
-            return
         }
-        copyButton.tap()
         
-        guard !isRunningOnSimulator() else {
+        if isRunningOnSimulator() {
             UIPasteboard.general.string = text
-            return
         }
         
         textField.press(forDuration: 1.0)
-        guard isRunningOnSimulator() else {
+        
+        if !isRunningOnSimulator() {
             wait(seconds: 1.0)
-            return
         }
         
-        guard selectAllButton.waitForExistence(timeout: 3) else {
+        if let selectAllButton = findButtonByLabel("Select All") {
+            selectAllButton.tap()
+        } else {
             XCTFail("Could not select all")
-            return
         }
         
-        selectAllButton.tap()
         textField.typeText(XCUIKeyboardKey.delete.rawValue)
         
         textField.tap()
         textField.press(forDuration: 1.0)
-        guard !isRunningOnSimulator() else {
+        
+        if !isRunningOnSimulator() {
             wait(seconds: 1.0)
-            return
         }
 
-        guard let pasteMenuItem = findButtonByLabel("Paste") else {
+        if let pasteMenuItem = findButtonByLabel("Paste") {
+            pasteMenuItem.tap()
+        } else {
             XCTFail("Failed to paste from the pasteboard")
-            return
         }
-        pasteMenuItem.waitForExistence(timeout: 2.0)
         
-        pasteMenuItem.tap()
         wait(seconds: 0.2)
     }
 
@@ -153,4 +151,21 @@ struct TestUtils {
         
         return nil
     }
+    
+    static func clearAllText(from textField: XCUIElement) {
+        guard textField.exists else {
+            XCTFail("Text field does not exist")
+            return
+        }
+        
+        let currentText = textField.value as? String ?? ""
+        guard !currentText.isEmpty else { return }
+        
+        textField.tap()
+        
+        // Use realistic user gestures on both simulator and real device
+        clearTextWithUserGestures(textField: textField, textLength: currentText.count)
+    }
+    
+    
 }
