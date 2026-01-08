@@ -58,26 +58,13 @@ struct TestUtils {
             XCTFail("Could not select copy")
         }
         
-//        textField.tap()
-//        textField.tap()
-        
         if isRunningOnSimulator() {
             UIPasteboard.general.string = text
         }
         
-//        textField.press(forDuration: 1.0)
-        
         if !isRunningOnSimulator() {
             wait(seconds: 1.0)
         }
-        
-//        if let selectAllButton = findButtonByLabel("Select All") {
-//            selectAllButton.tap()
-//        } else {
-//            XCTFail("Could not select all")
-//        }
-        
-//        textField.typeText(XCUIKeyboardKey.delete.rawValue)
         
         let currentText = textField.value as? String ?? ""
         deleteAllCharactersBackwards(textField: textField, count: currentText.count)
@@ -174,64 +161,4 @@ struct TestUtils {
             textField.typeText(deleteString)
         }
     }
-    
-//    static func clearAllText(from textField: XCUIElement) {
-//        guard textField.exists else {
-//            XCTFail("Text field does not exist")
-//            return
-//        }
-//        
-//        let currentText = textField.value as? String ?? ""
-//        guard !currentText.isEmpty else { return }
-//        
-//        textField.tap()
-//        
-//        clearTextWithUserGestures(textField: textField, textLength: currentText.count)
-//    }
-//    
-//    static func clearTextWithUserGestures(textField: XCUIElement, textLength: Int) {
-//        // Method 1: Try long press to get Select All menu (most realistic)
-//        textField.press(forDuration: 1.0)
-//        
-//        if let selectAllElement = findButtonByLabel("Select All") {
-//            selectAllElement.tap()
-//            textField.typeText(XCUIKeyboardKey.delete.rawValue)
-//            return
-//        }
-//        
-//        // Method 2: Try triple-tap to select all text (realistic user gesture)
-//        textField.tap()
-//        textField.tap()
-//        textField.tap()
-//        
-//        // After triple-tap, try to find Select All in menu
-//        if let selectAllElement = findSelectAllElement() {
-//            selectAllElement.tap()
-//            textField.typeText(XCUIKeyboardKey.delete.rawValue)
-//            return
-//        }
-//        
-//        // Check if triple-tap already selected the text
-//        let app = XCUIApplication()
-//        if app.menuItems["Cut"].exists || app.menuItems["Copy"].exists {
-//            // Text is selected, just delete
-//            textField.typeText(XCUIKeyboardKey.delete.rawValue)
-//            return
-//        }
-//        
-//        // Method 3: Double-tap to select word, then try to extend to Select All
-//        textField.doubleTap()
-//        wait(seconds: 0.5) // Give menu time to appear
-//        
-//        if let selectAllElement = findSelectAllElement() {
-//            selectAllElement.tap()
-//            textField.typeText(XCUIKeyboardKey.delete.rawValue)
-//            return
-//        }
-//        
-//        // Method 4: Position cursor and delete backwards (most reliable fallback)
-//        positionCursorAtEnd(textField: textField)
-//        deleteAllCharactersBackwards(textField: textField, count: textLength)
-//    }
-    
 }
