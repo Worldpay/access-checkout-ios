@@ -11,7 +11,7 @@ class ExpiryDateValidator {
             return false
         }
 
-        let dateComponents = Calendar.current.dateComponents([.month, .year], from: Date())
+        let dateComponents = Calendar(identifier: .gregorian).dateComponents([.month, .year], from: Date())
         let currentMonth = dateComponents.month!
         let currentYear = dateComponents.year!
 
