@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'AccessCheckoutSDK'
-  spec.version      = "5.0.0"
+  spec.version      = "5.0.1"
   spec.summary      = 'Worldpay Access Checkout iOS SDK'
   spec.description  = <<-DESC
   iOS SDK library for Worldpay Access Checkout.
@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.author       = 'Access Worldpay'
 
-  spec.source       = { :git => "https://github.com/Worldpay/access-checkout-ios.git", :tag => "v5.0.0" }
+  spec.source       = { :git => "https://github.com/Worldpay/access-checkout-ios.git", :tag => "v5.0.1" }
   spec.source_files = 'AccessCheckoutSDK/AccessCheckoutSDK/**/*.{h,swift,xib,strings}'
   spec.exclude_files = 'AccessCheckoutSDK/AccessCheckoutSDK/excluded/**/*.*'
   spec.public_header_files = 'AccessCheckoutSDK/AccessCheckoutSDK/AccessCheckoutSDK.h'
