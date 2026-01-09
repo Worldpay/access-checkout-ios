@@ -47,6 +47,410 @@
                BlueprintName = "AccessCheckoutDemoUITests"
                ReferencedContainer = "container:AccessCheckoutDemo.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImageFor_unknownCardBrand()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_AMEX_ForRange_34()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_AMEX_ForRange_37()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DINERS_ForRange_300_305()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DINERS_ForRange_3095()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DINERS_ForRange_36()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DINERS_ForRange_38()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DINERS_ForRange_39()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DISCOVER_ForRange_6011()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DISCOVER_ForRange_644_649()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_DISCOVER_ForRange_65()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_1800()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_2131()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_3088_3094()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_3096_3102()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_3112_3120()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_3158_3159()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_3337_3349()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_JCB_ForRange_352_358()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_493698()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_50000_50599()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_5060_5065()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_5066()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_50677_50679()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_50680_50699()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_50700_50899()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_56_59()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_63()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MAESTRO_ForRange_67()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MASTERCARD_ForRange_22_27()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_MASTERCARD_ForRange_51_55()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_NOT_VISA_For493698()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardBrandTestsUsingRealServices/testDisplaysBrandImage_VISA_ForRange4()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsAmexPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsDinersPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsDiscoverPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsJcbPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsMaestroPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsMastercardPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsUnknownBrandPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardNumberSpacingTests/testFormatsVisaPan()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/test13DigitsVisaPanIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCompleteCvcIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCompleteExpiryDateIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCompletePanIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_acceptsAsManyCharactersAsAllowedByCardBrand()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_acceptsUpTo4CharactersByDefault()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_brandValidLength()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_canDeleteDigits()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_doesNotAccepteAlphabeticalCharacters()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testCvc_isInvalidAfterAllTextIsCleared()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testExpiryDate_acceptsUpTo5Characters()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testExpiryDate_canDeleteDigits()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testExpiryDate_doesNotAccepteAlphabeticalCharacters()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testExpiryDate_isInvalidAfterAllTextIsCleared()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPAN_acceptsUpTo19Characters_plusSpaces()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPAN_canDeleteDigits()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPAN_doesNotAccepteAlphabeticalCharacters()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPAN_isInvalidAfterAllTextIsCleared()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPartialCvcIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPartialExpiryDateIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testPartialPanIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "CardFlowCardValidationTests/testSubmit_isEnabledWhenCardDetailsAreValid()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowRetrieveSessionsTests">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowRetrieveSessionsTests/testClearsFormAndDisablesButtonWhenAlertWithSessionIsClosed()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowRetrieveSessionsTests/testResponse_bodyDoesNotMatchSchema_panFailedLuhnCheck()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowRetrieveSessionsTests/testRetrievesACardSessionAndACvcSessionToken_whenPaymentsCvcSessionToggleIsOn()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowRetrieveSessionsTests/testRetrievesACardSession_whenPaymentsCvcSessionToggleIsOff()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testCardBrandImageView_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testCardNumberTextField_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testCvcIsValidLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testCvcTextFieldPlaceholder_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testCvcTextField_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testExpiryDateIsValidLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testExpiryDateView_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testPanIsValidLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testPaymentsCvcSessionToggleHintLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testPaymentsCvcSessionToggleIsOffByDefault()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testPaymentsCvcSessionToggleLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CardPaymentFlowUITests/testPaymentsCvcSessionToggle_exists()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCanEnterNumericalCharactersInCvc()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCanEnterUpTo4NumericalCharactersInCvc()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCanEnterValidCvcOf3Characters()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCanEnterValidCvcOf4Characters()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCannotTypeAlphabeticalCharactersInCvc()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testComplete3DigitsLongCvcIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testComplete4DigitsLongCvcIsValid()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCvc_canDeleteDigits()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testCvc_isInvalidAfterAllTextIsCleared()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testPartialCvcIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testSubmitButtonIsDisabledByDefault()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testSubmitButtonIsEnabledWhenValidCvcIsEntered()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowCvcValidationTests/testSubmitButtonRemainsDisabledWhenIncompleteCvcIsEntered()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowRetrieveSessionTests">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowRetrieveSessionTests/testClearsCvcAndDisablesButtonWhenAlertWithSessionIsClosed()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowRetrieveSessionTests/testDoesNotClearCvcWhenAlertWithErrorIsClosed()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowRetrieveSessionTests/testSuccessfullyCreatesAndDisplaysACvcSession()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowRetrieveSessionTests/testSuccessfullyDisplaysErrorFromService()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowUITests">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowUITests/testCvcField_exists()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowUITests/testCvcIsValidLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "CvcFlowUITests/testSubmitButton_exists()">
+               </Test>
+               <Test
+                  Identifier = "NavigationTests">
+               </Test>
+               <Test
+                  Identifier = "NavigationTests/testHasButtonToNavigateToCardFlow()">
+               </Test>
+               <Test
+                  Identifier = "NavigationTests/testHasButtonToNavigateToRestrictedCardFlow()">
+               </Test>
+               <Test
+                  Identifier = "NavigationTests/testHasButtonsToNavigateToCvcFlow()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowNoCardNumberSpacingTests">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowNoCardNumberSpacingTests/testCanDeleteDigits()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowNoCardNumberSpacingTests/testCanEnterOnlyDigitsInPan()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowNoCardNumberSpacingTests/testDoesNotFormatPan()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowUITests">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowUITests/testCardBrandImageView_exists()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowUITests/testCardNumberTextField_exists()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowUITests/testPanIsValidLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowUITests/testRestrictedCardBrandsLabel_exists()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testCompletePanForCardThatIsNotAcceptedIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testCompletePanIsValid_amex()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testCompletePanIsValid_mastercard()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testCompletePanIsValid_visa()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testDisplaysAcceptedBrand_amex()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testDisplaysAcceptedBrand_mastercard()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testDisplaysAcceptedBrand_visa()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testDisplaysNonAcceptedBrand_jcb()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testDisplaysUnknownBrand()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testPartialPanForCardThatIsNotAcceptedIsInvalid()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testPartialPanIsInvalid_amex()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testPartialPanIsInvalid_mastercard()">
+               </Test>
+               <Test
+                  Identifier = "RestrictedCardFlowValidationTests/testPartialPanIsInvalid_visa()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
