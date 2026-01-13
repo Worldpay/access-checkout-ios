@@ -34,6 +34,7 @@
 		51CBC4A325A46F5A000D0363 /* RestrictedCardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */; };
 		51CBC4A725A480DC000D0363 /* RestrictedCardFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A625A480DC000D0363 /* RestrictedCardFlowUITests.swift */; };
 		51CBC4A925A480F0000D0363 /* RestrictedCardFlowValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CBC4A825A480F0000D0363 /* RestrictedCardFlowValidationTests.swift */; };
+		6222C5842F1679D9006F3670 /* LiquidGlassCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6222C5832F1679C3006F3670 /* LiquidGlassCardView.swift */; };
 		62AB4D8C2E818D1A00582220 /* CardFlowCardBrandsLabelCobrandedRealServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AB4D8B2E818D1A00582220 /* CardFlowCardBrandsLabelCobrandedRealServiceTests.swift */; };
 		C9AFE46F22B7C5A600943B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */; };
 		C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFE46D22B7C5A600943B3E /* CardFlowViewController.swift */; };
@@ -91,6 +92,7 @@
 		51CBC4A225A46F5A000D0363 /* RestrictedCardFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowViewController.swift; sourceTree = "<group>"; };
 		51CBC4A625A480DC000D0363 /* RestrictedCardFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowUITests.swift; sourceTree = "<group>"; };
 		51CBC4A825A480F0000D0363 /* RestrictedCardFlowValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedCardFlowValidationTests.swift; sourceTree = "<group>"; };
+		6222C5832F1679C3006F3670 /* LiquidGlassCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassCardView.swift; sourceTree = "<group>"; };
 		62AB4D8B2E818D1A00582220 /* CardFlowCardBrandsLabelCobrandedRealServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlowCardBrandsLabelCobrandedRealServiceTests.swift; sourceTree = "<group>"; };
 		B35D7BA4AAA0CC70912BE65E /* Pods-AccessCheckoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccessCheckoutDemo.release.xcconfig"; path = "Target Support Files/Pods-AccessCheckoutDemo/Pods-AccessCheckoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C9AFE3F622B799AC00943B3E /* AccessCheckoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessCheckoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +219,7 @@
 		C9AFE3F822B799AC00943B3E /* AccessCheckoutDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6222C5832F1679C3006F3670 /* LiquidGlassCardView.swift */,
 				33777EBB2EC73E630058E083 /* TabBarViewController.swift */,
 				E7A09297243CB24100BCABC8 /* AlertView.swift */,
 				C9AFE46C22B7C5A600943B3E /* AppDelegate.swift */,
@@ -492,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51CBC4A325A46F5A000D0363 /* RestrictedCardFlowViewController.swift in Sources */,
+				6222C5842F1679D9006F3670 /* LiquidGlassCardView.swift in Sources */,
 				CC1BD93B2448BB9200A4C745 /* CIVariables.swift in Sources */,
 				C9AFE47022B7C5A600943B3E /* CardFlowViewController.swift in Sources */,
 				E7A09298243CB24100BCABC8 /* AlertView.swift in Sources */,
@@ -622,7 +626,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -677,7 +681,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -699,7 +703,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;
 				INFOPLIST_FILE = "$(SRCROOT)/AccessCheckoutDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -727,7 +731,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;
 				INFOPLIST_FILE = "$(SRCROOT)/AccessCheckoutDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -750,7 +754,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;
 				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -775,7 +779,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K4S6DW85W7;
 				INFOPLIST_FILE = AccessCheckoutDemoUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
