@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="105" translatesAutoresizingMaskIntoConstraints="NO" id="XLS-S0-UV2" userLabel="vview - main">
-                                <rect key="frame" x="10" y="60" width="355" height="499"/>
+                                <rect key="frame" x="10" y="60" width="355" height="534.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wPl-Cf-tJW" userLabel="vview - card details">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="110"/>
@@ -118,33 +118,33 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1K0-cx-Qzy" userLabel="vview - rest">
-                                        <rect key="frame" x="0.0" y="215" width="355" height="117.5"/>
+                                        <rect key="frame" x="0.0" y="215" width="355" height="153"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SKq-mN-17A" userLabel="vview - Cvc session + retrieve card">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="64.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7bc-He-eJd" userLabel="hview - cvc session + toggle">
                                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVC Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
-                                                                <rect key="frame" x="0.0" y="15" width="98" height="20.5"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxk-b1-dMa">
+                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleLabel"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fn-RB-apE" userLabel="spacer">
-                                                                <rect key="frame" x="106" y="0.0" width="192" height="50"/>
+                                                                <rect key="frame" x="58" y="0.0" width="228" height="50"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             </view>
                                                             <switch opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V3W-HP-wPE">
-                                                                <rect key="frame" x="306" y="11" width="51" height="28"/>
+                                                                <rect key="frame" x="294" y="11" width="63" height="28"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggle"/>
                                                             </switch>
                                                         </subviews>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retrieve Card + CVC sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
-                                                        <rect key="frame" x="0.0" y="50" width="355" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UzK-5d-eEZ">
+                                                        <rect key="frame" x="0.0" y="50" width="355" height="50"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="paymentsCvcSessionToggleHintLabel"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <nil key="textColor"/>
@@ -156,7 +156,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-iT-v62">
-                                                <rect key="frame" x="0.0" y="84.5" width="54" height="33"/>
+                                                <rect key="frame" x="0.0" y="120" width="54" height="33"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="submit"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Submit"/>
@@ -170,7 +170,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="oxA-Pw-X23" userLabel="hview - ui tests labels">
-                                        <rect key="frame" x="0.0" y="437.5" width="355" height="61.5"/>
+                                        <rect key="frame" x="0.0" y="473" width="355" height="61.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="panIsValidLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXa-G9-0FX" userLabel="Pan Is Valid Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="20.5"/>

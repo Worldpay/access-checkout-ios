@@ -2,9 +2,10 @@ import AccessCheckoutSDK
 import UIKit
 
 // MARK: - CardFlowViewController with iOS 26 Liquid Glass Design
-/// Two floating glass islands:
+/// Three floating glass islands:
 /// 1. Settings (CVC Session toggle) - at the top
-/// 2. Card Form (icon, logo, card number, expiry/cvc, submit button)
+/// 2. Card Form (icon, logo, card number, expiry/cvc)
+/// 3. Submit Button - separate island below the form
 
 class CardFlowViewController: UIViewController {
     
@@ -32,8 +33,11 @@ class CardFlowViewController: UIViewController {
     /// Island 1: Settings (CVC Session toggle) - at the top
     private var settingsIsland: LiquidGlassCardView!
     
-    /// Island 2: Card form (includes submit button)
+    /// Island 2: Card form
     private var formIsland: LiquidGlassCardView!
+    
+    /// Island 3: Submit button
+    private var submitIsland: LiquidGlassCardView!
     
     /// Background view
     private var backgroundView: GradientBackgroundView!
@@ -70,8 +74,9 @@ class CardFlowViewController: UIViewController {
     private func setupUI() {
         setupBackground()
         setupMainStack()
+        setupSettingsIsland()
         setupFormIsland()
-        setupSettingsIsland() // This will insert at index 0 to appear above form
+        setupSubmitIsland()
         setupSpinner()
     }
     
@@ -104,7 +109,7 @@ class CardFlowViewController: UIViewController {
         ])
     }
     
-    // MARK: - Island 2: Card Form (with Submit Button)
+    // MARK: - Island 2: Card Form
     
     private func setupFormIsland() {
         formIsland = LiquidGlassCardView()
@@ -136,10 +141,6 @@ class CardFlowViewController: UIViewController {
         let expiryCvcRow = createExpiryCvcRow()
         formStack.addArrangedSubview(expiryCvcRow)
         
-        // Row 4: Submit Button (inside form)
-        let submitSection = createSubmitSection()
-        formStack.addArrangedSubview(submitSection)
-        
         formIsland.contentView.addSubview(formStack)
         NSLayoutConstraint.activate([
             formStack.topAnchor.constraint(equalTo: formIsland.contentView.topAnchor),
@@ -149,8 +150,6 @@ class CardFlowViewController: UIViewController {
         ])
         
         mainStackView.addArrangedSubview(formIsland)
-        
-        updateButtonState()
     }
     
     private func createIconRow() -> UIView {
@@ -189,7 +188,7 @@ class CardFlowViewController: UIViewController {
     private func createCardNumberSection() -> UIView {
         let container = UIStackView()
         container.axis = .vertical
-        container.spacing = 8
+        container.spacing = 4
         
         // Label
         let labelView = UILabel()
@@ -216,7 +215,7 @@ class CardFlowViewController: UIViewController {
         // Expiry Date section
         let expirySection = UIStackView()
         expirySection.axis = .vertical
-        expirySection.spacing = 8
+        expirySection.spacing = 4
         
         let expiryLabel = UILabel()
         expiryLabel.text = "EXPIRY DATE"
@@ -232,7 +231,7 @@ class CardFlowViewController: UIViewController {
         // CVC section
         let cvcSection = UIStackView()
         cvcSection.axis = .vertical
-        cvcSection.spacing = 8
+        cvcSection.spacing = 4
         
         let cvcLabel = UILabel()
         cvcLabel.text = "CVC"
@@ -255,13 +254,23 @@ class CardFlowViewController: UIViewController {
         return container
     }
     
-    // MARK: - Submit Button Section (inside form)
+    // MARK: - Island 3: Submit Button
     
-    private func createSubmitSection() -> UIView {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
+    private func setupSubmitIsland() {
+        submitIsland = LiquidGlassCardView()
+        submitIsland.translatesAutoresizingMaskIntoConstraints = false
+        submitIsland.cardCornerRadius = 16
         
-        // Configure submit button
+        if #available(iOS 26.0, *) {
+            submitIsland.glassStyle = .translucent
+        }
+        
+        // Button container
+        let buttonContainer = UIView()
+        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Remove submit button from storyboard superview and configure
+        submitButton.removeFromSuperview()
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.setTitle("SUBMIT", for: .normal)
         submitButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
@@ -273,17 +282,27 @@ class CardFlowViewController: UIViewController {
             submitButton.layer.cornerCurve = .continuous
         }
         
-        container.addSubview(submitButton)
+        buttonContainer.addSubview(submitButton)
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: container.topAnchor),
-            submitButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            submitButton.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            submitButton.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            submitButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: 16),
+            submitButton.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor, constant: 20),
+            submitButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -20),
+            submitButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -16),
             submitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
         
-        return container
+        submitIsland.contentView.addSubview(buttonContainer)
+        NSLayoutConstraint.activate([
+            buttonContainer.topAnchor.constraint(equalTo: submitIsland.contentView.topAnchor),
+            buttonContainer.leadingAnchor.constraint(equalTo: submitIsland.contentView.leadingAnchor),
+            buttonContainer.trailingAnchor.constraint(equalTo: submitIsland.contentView.trailingAnchor),
+            buttonContainer.bottomAnchor.constraint(equalTo: submitIsland.contentView.bottomAnchor)
+        ])
+        
+        mainStackView.addArrangedSubview(submitIsland)
+        
+        updateButtonState()
     }
     
     // MARK: - Island 1: Settings (CVC Session Toggle) - at the top
@@ -292,27 +311,29 @@ class CardFlowViewController: UIViewController {
         settingsIsland = LiquidGlassCardView()
         settingsIsland.translatesAutoresizingMaskIntoConstraints = false
         settingsIsland.cardCornerRadius = 16
-        
+
         // Settings content stack
         let settingsStack = UIStackView()
         settingsStack.translatesAutoresizingMaskIntoConstraints = false
         settingsStack.axis = .vertical
         settingsStack.spacing = 12
         settingsStack.alignment = .fill
-        settingsStack.layoutMargins = UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20)
+        settingsStack.layoutMargins = UIEdgeInsets(top: 35, left: 20, bottom: 16, right: 20)
         settingsStack.isLayoutMarginsRelativeArrangement = true
-        
-        // Settings header
+
+        // Section title
         let headerLabel = UILabel()
-        headerLabel.text = "SETTINGS"
-        headerLabel.font = .systemFont(ofSize: 11, weight: .semibold)
-        headerLabel.textColor = .secondaryLabel
+        headerLabel.text = "Settings"
+        headerLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        headerLabel.textColor = .label
+        headerLabel.accessibilityIdentifier = "settingsTitle"
         settingsStack.addArrangedSubview(headerLabel)
-        
+        settingsStack.setCustomSpacing(8, after: headerLabel)
+
         // Toggle row
         let toggleRow = createToggleRow()
         settingsStack.addArrangedSubview(toggleRow)
-        
+
         settingsIsland.contentView.addSubview(settingsStack)
         NSLayoutConstraint.activate([
             settingsStack.topAnchor.constraint(equalTo: settingsIsland.contentView.topAnchor),
@@ -320,8 +341,8 @@ class CardFlowViewController: UIViewController {
             settingsStack.trailingAnchor.constraint(equalTo: settingsIsland.contentView.trailingAnchor),
             settingsStack.bottomAnchor.constraint(equalTo: settingsIsland.contentView.bottomAnchor)
         ])
-        
-        // INSERT AT INDEX 0 to appear ABOVE the form island
+
+        // Insert above the form island
         mainStackView.insertArrangedSubview(settingsIsland, at: 0)
     }
     
@@ -351,7 +372,8 @@ class CardFlowViewController: UIViewController {
         
         row.addSubview(labelsStack)
         
-        // Toggle
+        // Remove toggle from storyboard superview before adding to our layout
+        paymentsCvcSessionToggle.removeFromSuperview()
         paymentsCvcSessionToggle.translatesAutoresizingMaskIntoConstraints = false
         paymentsCvcSessionToggle.onTintColor = worldpayRed
         row.addSubview(paymentsCvcSessionToggle)
@@ -408,17 +430,39 @@ class CardFlowViewController: UIViewController {
         
         panTextField.textContentType = .creditCardNumber
         
-        // Focus listeners
-        panTextField.setOnFocusChangedListener { view, hasFocus in
-            view.updateGlassFocusState(isFocused: hasFocus)
+        // Apply default black border to all text fields
+        [panTextField, expiryDateTextField, cvcTextField].forEach { textField in
+            textField?.layer.borderWidth = 1.0
+            textField?.layer.borderColor = UIColor.black.cgColor
         }
         
-        expiryDateTextField.setOnFocusChangedListener { view, hasFocus in
+        // Focus listeners - yellow border on focus
+        panTextField.setOnFocusChangedListener { [weak self] view, hasFocus in
             view.updateGlassFocusState(isFocused: hasFocus)
+            if hasFocus {
+                view.layer.borderColor = UIColor.systemYellow.cgColor
+            } else {
+                // Reset to black when losing focus (validation will override if needed)
+                view.layer.borderColor = UIColor.black.cgColor
+            }
         }
         
-        cvcTextField.setOnFocusChangedListener { view, hasFocus in
+        expiryDateTextField.setOnFocusChangedListener { [weak self] view, hasFocus in
             view.updateGlassFocusState(isFocused: hasFocus)
+            if hasFocus {
+                view.layer.borderColor = UIColor.systemYellow.cgColor
+            } else {
+                view.layer.borderColor = UIColor.black.cgColor
+            }
+        }
+        
+        cvcTextField.setOnFocusChangedListener { [weak self] view, hasFocus in
+            view.updateGlassFocusState(isFocused: hasFocus)
+            if hasFocus {
+                view.layer.borderColor = UIColor.systemYellow.cgColor
+            } else {
+                view.layer.borderColor = UIColor.black.cgColor
+            }
         }
         
         // Fonts
@@ -591,18 +635,21 @@ class CardFlowViewController: UIViewController {
     private func changePanValidIndicator(isValid: Bool) {
         panTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
+        panTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
         panIsValidLabel?.text = isValid ? "valid" : "invalid"
     }
 
     private func changeExpiryDateValidIndicator(isValid: Bool) {
         expiryDateTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
+        expiryDateTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
         expiryDateIsValidLabel?.text = isValid ? "valid" : "invalid"
     }
 
     private func changeCvcValidIndicator(isValid: Bool) {
         cvcTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
+        cvcTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
         cvcIsValidLabel?.text = isValid ? "valid" : "invalid"
     }
 }
