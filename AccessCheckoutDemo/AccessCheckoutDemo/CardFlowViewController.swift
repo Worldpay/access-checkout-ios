@@ -2,10 +2,9 @@ import AccessCheckoutSDK
 import UIKit
 
 // MARK: - CardFlowViewController with iOS 26 Liquid Glass Design
-/// Three floating glass islands:
-/// 1. Card Form (icon, logo, card number, expiry/cvc)
-/// 2. Submit Button
-/// 3. Settings (CVC Session toggle)
+/// Two floating glass islands:
+/// 1. Settings (CVC Session toggle) - at the top
+/// 2. Card Form (icon, logo, card number, expiry/cvc, submit button)
 
 class CardFlowViewController: UIViewController {
     
@@ -30,14 +29,11 @@ class CardFlowViewController: UIViewController {
 
     // MARK: - Glass Island Views
     
-    /// Island 1: Card form
-    private var formIsland: LiquidGlassCardView!
-    
-    /// Island 2: Submit button
-    private var submitIsland: LiquidGlassCardView!
-    
-    /// Island 3: Settings (CVC Session toggle)
+    /// Island 1: Settings (CVC Session toggle) - at the top
     private var settingsIsland: LiquidGlassCardView!
+    
+    /// Island 2: Card form (includes submit button)
+    private var formIsland: LiquidGlassCardView!
     
     /// Background view
     private var backgroundView: GradientBackgroundView!
@@ -59,14 +55,14 @@ class CardFlowViewController: UIViewController {
         submitCard()
     }
 
-    // MARK: - Lifecycle
-    
+    // MARK: - Lifecyclex
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         setupTextFields()
         setupAccessCheckout()
+
     }
     
     // MARK: - UI Setup
@@ -75,8 +71,7 @@ class CardFlowViewController: UIViewController {
         setupBackground()
         setupMainStack()
         setupFormIsland()
-        setupSubmitIsland()
-        setupSettingsIsland()
+        setupSettingsIsland() // This will insert at index 0 to appear above form
         setupSpinner()
     }
     
@@ -109,7 +104,7 @@ class CardFlowViewController: UIViewController {
         ])
     }
     
-    // MARK: - Island 1: Card Form
+    // MARK: - Island 2: Card Form (with Submit Button)
     
     private func setupFormIsland() {
         formIsland = LiquidGlassCardView()
@@ -124,7 +119,7 @@ class CardFlowViewController: UIViewController {
         let formStack = UIStackView()
         formStack.translatesAutoresizingMaskIntoConstraints = false
         formStack.axis = .vertical
-        formStack.spacing = 30
+        formStack.spacing = 20
         formStack.alignment = .fill
         formStack.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         formStack.isLayoutMarginsRelativeArrangement = true
@@ -141,6 +136,10 @@ class CardFlowViewController: UIViewController {
         let expiryCvcRow = createExpiryCvcRow()
         formStack.addArrangedSubview(expiryCvcRow)
         
+        // Row 4: Submit Button (inside form)
+        let submitSection = createSubmitSection()
+        formStack.addArrangedSubview(submitSection)
+        
         formIsland.contentView.addSubview(formStack)
         NSLayoutConstraint.activate([
             formStack.topAnchor.constraint(equalTo: formIsland.contentView.topAnchor),
@@ -150,6 +149,8 @@ class CardFlowViewController: UIViewController {
         ])
         
         mainStackView.addArrangedSubview(formIsland)
+        
+        updateButtonState()
     }
     
     private func createIconRow() -> UIView {
@@ -254,16 +255,11 @@ class CardFlowViewController: UIViewController {
         return container
     }
     
-    // MARK: - Island 2: Submit Button
+    // MARK: - Submit Button Section (inside form)
     
-    private func setupSubmitIsland() {
-        submitIsland = LiquidGlassCardView()
-        submitIsland.translatesAutoresizingMaskIntoConstraints = false
-        submitIsland.cardCornerRadius = 16
-        
-        // Button container
-        let buttonContainer = UIView()
-        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
+    private func createSubmitSection() -> UIView {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
         
         // Configure submit button
         submitButton.translatesAutoresizingMaskIntoConstraints = false
@@ -277,51 +273,20 @@ class CardFlowViewController: UIViewController {
             submitButton.layer.cornerCurve = .continuous
         }
         
-        buttonContainer.addSubview(submitButton)
+        container.addSubview(submitButton)
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: 16),
-            submitButton.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor, constant: 16),
-            submitButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -16),
-            submitButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -16),
+            submitButton.topAnchor.constraint(equalTo: container.topAnchor),
+            submitButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            submitButton.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            submitButton.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             submitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
         
-        submitIsland.contentView.addSubview(buttonContainer)
-        NSLayoutConstraint.activate([
-            buttonContainer.topAnchor.constraint(equalTo: submitIsland.contentView.topAnchor),
-            buttonContainer.leadingAnchor.constraint(equalTo: submitIsland.contentView.leadingAnchor),
-            buttonContainer.trailingAnchor.constraint(equalTo: submitIsland.contentView.trailingAnchor),
-            buttonContainer.bottomAnchor.constraint(equalTo: submitIsland.contentView.bottomAnchor)
-        ])
-        
-        mainStackView.addArrangedSubview(submitIsland)
-        
-        updateButtonState()
+        return container
     }
     
-    private func updateButtonState() {
-        UIView.animate(withDuration: 0.25) {
-            if self.isFormValid {
-                // Worldpay red when valid
-                self.submitButton.backgroundColor = self.worldpayRed
-                self.submitButton.setTitleColor(.white, for: .normal)
-                self.submitButton.layer.shadowColor = self.worldpayRed.cgColor
-                self.submitButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-                self.submitButton.layer.shadowRadius = 8
-                self.submitButton.layer.shadowOpacity = 0.3
-            } else {
-                // Grey when invalid
-                self.submitButton.backgroundColor = UIColor.systemGray5
-                self.submitButton.setTitleColor(.darkGray, for: .normal)
-                self.submitButton.layer.shadowOpacity = 0
-            }
-        }
-        
-        submitButton.isEnabled = isFormValid
-    }
-    
-    // MARK: - Island 3: Settings (CVC Session Toggle)
+    // MARK: - Island 1: Settings (CVC Session Toggle) - at the top
     
     private func setupSettingsIsland() {
         settingsIsland = LiquidGlassCardView()
@@ -339,8 +304,8 @@ class CardFlowViewController: UIViewController {
         
         // Settings header
         let headerLabel = UILabel()
-        headerLabel.text = "Settings"
-        headerLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        headerLabel.text = "SETTINGS"
+        headerLabel.font = .systemFont(ofSize: 11, weight: .semibold)
         headerLabel.textColor = .secondaryLabel
         settingsStack.addArrangedSubview(headerLabel)
         
@@ -356,7 +321,8 @@ class CardFlowViewController: UIViewController {
             settingsStack.bottomAnchor.constraint(equalTo: settingsIsland.contentView.bottomAnchor)
         ])
         
-        mainStackView.addArrangedSubview(settingsIsland)
+        // INSERT AT INDEX 0 to appear ABOVE the form island
+        mainStackView.insertArrangedSubview(settingsIsland, at: 0)
     }
     
     private func createToggleRow() -> UIView {
@@ -400,6 +366,27 @@ class CardFlowViewController: UIViewController {
         ])
         
         return row
+    }
+    
+    private func updateButtonState() {
+        UIView.animate(withDuration: 0.25) {
+            if self.isFormValid {
+                // Worldpay red when valid
+                self.submitButton.backgroundColor = self.worldpayRed
+                self.submitButton.setTitleColor(.white, for: .normal)
+                self.submitButton.layer.shadowColor = self.worldpayRed.cgColor
+                self.submitButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+                self.submitButton.layer.shadowRadius = 8
+                self.submitButton.layer.shadowOpacity = 0.3
+            } else {
+                // Grey when invalid
+                self.submitButton.backgroundColor = UIColor.systemGray5
+                self.submitButton.setTitleColor(.darkGray, for: .normal)
+                self.submitButton.layer.shadowOpacity = 0
+            }
+        }
+        
+        submitButton.isEnabled = isFormValid
     }
     
     private func setupSpinner() {
@@ -635,14 +622,23 @@ extension CardFlowViewController: AccessCheckoutCardValidationDelegate {
 
     func panValidChanged(isValid: Bool) {
         changePanValidIndicator(isValid: isValid)
+        if !isValid {
+            isFormValid = false
+        }
     }
 
     func cvcValidChanged(isValid: Bool) {
         changeCvcValidIndicator(isValid: isValid)
+        if !isValid {
+            isFormValid = false
+        }
     }
 
     func expiryDateValidChanged(isValid: Bool) {
         changeExpiryDateValidIndicator(isValid: isValid)
+        if !isValid {
+            isFormValid = false
+        }
     }
 
     func validationSuccess() {
