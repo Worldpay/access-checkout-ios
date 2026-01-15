@@ -165,9 +165,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="SKq-mN-17A" secondAttribute="trailing" id="wHk-b9-mmt"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="oxA-Pw-X23" userLabel="hview - ui tests labels">
                                         <rect key="frame" x="0.0" y="473" width="355" height="61.5"/>

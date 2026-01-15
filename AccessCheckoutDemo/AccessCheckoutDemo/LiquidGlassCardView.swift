@@ -274,10 +274,12 @@ class GradientBackgroundView: UIView {
 
 // MARK: - UIView Extension for Glass Input Styling
 
+
+
 extension UIView {
     
     /// Apply glass-style input field appearance
-    func applyGlassInputStyle(cornerRadius: CGFloat = 12) {
+    func applyGlassInputStyle(cornerRadius: CGFloat = 8) {
         if #available(iOS 26.0, *) {
             applyiOS26GlassInputStyle(cornerRadius: cornerRadius)
         } else {

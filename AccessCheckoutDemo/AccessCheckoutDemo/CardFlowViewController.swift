@@ -50,6 +50,11 @@ class CardFlowViewController: UIViewController {
         didSet { updateButtonState() }
     }
     
+    /// Track individual field validation states for border color persistence
+    private var isPanValid: Bool?
+    private var isExpiryValid: Bool?
+    private var isCvcValid: Bool?
+    
     private let unknownBrandImage = UIImage(named: "card_unknown")
     private var accessCheckoutClient: AccessCheckoutClient!
 
@@ -74,6 +79,8 @@ class CardFlowViewController: UIViewController {
     private func setupUI() {
         setupBackground()
         setupMainStack()
+        // Add views in visual order (top to bottom) - using addArrangedSubview for all
+        setupHeaderSection()
         setupSettingsIsland()
         setupFormIsland()
         setupSubmitIsland()
@@ -107,6 +114,30 @@ class CardFlowViewController: UIViewController {
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             mainStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func setupHeaderSection() {
+        let headerContainer = UIView()
+        headerContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        let logoImageView = UIImageView()
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        logoImageView.image = UIImage(named: "Worldpay_logo_c_rgb")
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.tintColor = nil
+        
+        headerContainer.addSubview(logoImageView)
+        
+//        NSLayoutConstraint.activate([
+//            logoImageView.topAnchor.constraint(equalTo: headerContainer.topAnchor, constant: 20),
+//            logoImageView.centerXAnchor.constraint(equalTo: headerContainer.centerXAnchor),
+//            logoImageView.bottomAnchor.constraint(equalTo: headerContainer.bottomAnchor, constant: -20),
+//            logoImageView.heightAnchor.constraint(equalToConstant: 40),
+//            logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 200)
+//        ])
+
+        // Add header at the top of the stack
+        mainStackView.addArrangedSubview(headerContainer)
     }
     
     // MARK: - Island 2: Card Form
@@ -155,7 +186,7 @@ class CardFlowViewController: UIViewController {
     private func createIconRow() -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        container.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
         // Generic card icon on the left
         let cardIconView = UIImageView()
@@ -188,19 +219,20 @@ class CardFlowViewController: UIViewController {
     private func createCardNumberSection() -> UIView {
         let container = UIStackView()
         container.axis = .vertical
-        container.spacing = 4
+        container.spacing = 5
         
         // Label
         let labelView = UILabel()
         labelView.text = "CARD NUMBER"
         labelView.font = .systemFont(ofSize: 11, weight: .semibold)
+        labelView.textAlignment = .left
         labelView.textColor = .secondaryLabel
         container.addArrangedSubview(labelView)
         
         // Input
         panTextField.translatesAutoresizingMaskIntoConstraints = false
         panTextField.applyGlassInputStyle()
-        panTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        panTextField.heightAnchor.constraint(equalToConstant: 36).isActive = true
         container.addArrangedSubview(panTextField)
         
         return container
@@ -225,7 +257,7 @@ class CardFlowViewController: UIViewController {
         
         expiryDateTextField.translatesAutoresizingMaskIntoConstraints = false
         expiryDateTextField.applyGlassInputStyle()
-        expiryDateTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        expiryDateTextField.heightAnchor.constraint(equalToConstant: 36).isActive = true
         expirySection.addArrangedSubview(expiryDateTextField)
         
         // CVC section
@@ -241,7 +273,7 @@ class CardFlowViewController: UIViewController {
         
         cvcTextField.translatesAutoresizingMaskIntoConstraints = false
         cvcTextField.applyGlassInputStyle()
-        cvcTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        cvcTextField.heightAnchor.constraint(equalToConstant: 36).isActive = true
         cvcSection.addArrangedSubview(cvcTextField)
         
         // Add to container first, then set constraint
@@ -281,15 +313,16 @@ class CardFlowViewController: UIViewController {
         if #available(iOS 13.0, *) {
             submitButton.layer.cornerCurve = .continuous
         }
+
         
         buttonContainer.addSubview(submitButton)
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: 16),
-            submitButton.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor, constant: 20),
-            submitButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -20),
-            submitButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -16),
-            submitButton.heightAnchor.constraint(equalToConstant: 48)
+            submitButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: 13),
+            submitButton.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor, constant: 18),
+            submitButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -18),
+            submitButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -13),
+            submitButton.heightAnchor.constraint(equalToConstant: 32)
         ])
         
         submitIsland.contentView.addSubview(buttonContainer)
@@ -299,6 +332,9 @@ class CardFlowViewController: UIViewController {
             buttonContainer.trailingAnchor.constraint(equalTo: submitIsland.contentView.trailingAnchor),
             buttonContainer.bottomAnchor.constraint(equalTo: submitIsland.contentView.bottomAnchor)
         ])
+        
+        // Prevent the submit island from expanding to fill extra space
+        submitIsland.setContentHuggingPriority(.required, for: .vertical)
         
         mainStackView.addArrangedSubview(submitIsland)
         
@@ -318,17 +354,9 @@ class CardFlowViewController: UIViewController {
         settingsStack.axis = .vertical
         settingsStack.spacing = 12
         settingsStack.alignment = .fill
-        settingsStack.layoutMargins = UIEdgeInsets(top: 35, left: 20, bottom: 16, right: 20)
+        settingsStack.layoutMargins = UIEdgeInsets(top: 26, left: 20, bottom: 26, right: 20)
         settingsStack.isLayoutMarginsRelativeArrangement = true
-
-        // Section title
-        let headerLabel = UILabel()
-        headerLabel.text = "Settings"
-        headerLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        headerLabel.textColor = .label
-        headerLabel.accessibilityIdentifier = "settingsTitle"
-        settingsStack.addArrangedSubview(headerLabel)
-        settingsStack.setCustomSpacing(8, after: headerLabel)
+        
 
         // Toggle row
         let toggleRow = createToggleRow()
@@ -342,8 +370,8 @@ class CardFlowViewController: UIViewController {
             settingsStack.bottomAnchor.constraint(equalTo: settingsIsland.contentView.bottomAnchor)
         ])
 
-        // Insert above the form island
-        mainStackView.insertArrangedSubview(settingsIsland, at: 0)
+        // Add settings island to stack
+        mainStackView.addArrangedSubview(settingsIsland)
     }
     
     private func createToggleRow() -> UIView {
@@ -436,14 +464,18 @@ class CardFlowViewController: UIViewController {
             textField?.layer.borderColor = UIColor.black.cgColor
         }
         
-        // Focus listeners - yellow border on focus
+        // Focus listeners - yellow border on focus, preserve validation state on blur
         panTextField.setOnFocusChangedListener { [weak self] view, hasFocus in
             view.updateGlassFocusState(isFocused: hasFocus)
             if hasFocus {
                 view.layer.borderColor = UIColor.systemYellow.cgColor
             } else {
-                // Reset to black when losing focus (validation will override if needed)
-                view.layer.borderColor = UIColor.black.cgColor
+                // Restore validation color when losing focus
+                if let isValid = self?.isPanValid {
+                    view.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
+                } else {
+                    view.layer.borderColor = UIColor.black.cgColor
+                }
             }
         }
         
@@ -452,7 +484,12 @@ class CardFlowViewController: UIViewController {
             if hasFocus {
                 view.layer.borderColor = UIColor.systemYellow.cgColor
             } else {
-                view.layer.borderColor = UIColor.black.cgColor
+                // Restore validation color when losing focus
+                if let isValid = self?.isExpiryValid {
+                    view.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
+                } else {
+                    view.layer.borderColor = UIColor.black.cgColor
+                }
             }
         }
         
@@ -461,7 +498,12 @@ class CardFlowViewController: UIViewController {
             if hasFocus {
                 view.layer.borderColor = UIColor.systemYellow.cgColor
             } else {
-                view.layer.borderColor = UIColor.black.cgColor
+                // Restore validation color when losing focus
+                if let isValid = self?.isCvcValid {
+                    view.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
+                } else {
+                    view.layer.borderColor = UIColor.black.cgColor
+                }
             }
         }
         
@@ -612,6 +654,16 @@ class CardFlowViewController: UIViewController {
             cardBrandsLabel?.accessibilityIdentifier = "cardBrandsLabel"
             imageView.image = unknownBrandImage
             
+            // Reset validation states
+            isPanValid = nil
+            isExpiryValid = nil
+            isCvcValid = nil
+            
+            // Reset border colors to default
+            panTextField.layer.borderColor = UIColor.black.cgColor
+            expiryDateTextField.layer.borderColor = UIColor.black.cgColor
+            cvcTextField.layer.borderColor = UIColor.black.cgColor
+            
             isFormValid = false
         }
 
@@ -633,6 +685,7 @@ class CardFlowViewController: UIViewController {
     }
 
     private func changePanValidIndicator(isValid: Bool) {
+        isPanValid = isValid
         panTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         panTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
@@ -640,6 +693,7 @@ class CardFlowViewController: UIViewController {
     }
 
     private func changeExpiryDateValidIndicator(isValid: Bool) {
+        isExpiryValid = isValid
         expiryDateTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         expiryDateTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
@@ -647,6 +701,7 @@ class CardFlowViewController: UIViewController {
     }
 
     private func changeCvcValidIndicator(isValid: Bool) {
+        isCvcValid = isValid
         cvcTextField.textColor =
             isValid ? Configuration.validCardDetailsColor : Configuration.invalidCardDetailsColor
         cvcTextField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
