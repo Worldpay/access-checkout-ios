@@ -4,9 +4,10 @@ import Swifter
 
 struct ServiceStubs {
     init() {
-        self.port = UInt16.random(in: 7000..<8000)
-        self.httpServer = .init()
-        self.baseUrl = "http://localhost:\(port)"
+    self.port = UInt16.random(in: 7000..<8000)
+    self.httpServer = .init()
+    self.baseUrl = "http://localhost:\(port)"
+    setupHealthEndpoint()
     }
 
     init(port: UInt16) {
@@ -19,12 +20,76 @@ struct ServiceStubs {
 
     private let port: UInt16
     private let httpServer: HttpServer
+    private let maxRetries = 3
+    private let initialDelay: TimeInterval = 0.1 // 100ms
 
     private let sessionsServicePath = "/sessions"
     private let sessionsServiceCardSessionPath = "/sessions/card"
     private let sessionsServicePaymentsCvcSessionPath = "/sessions/paymentsCvc"
     private let cardBinServicePath = "/public/card/bindetails"
 
+    
+    private func setupHealthEndpoint() {
+        httpServer.GET["/health"] = { _ in .ok(.text("OK")) }
+    }
+
+    func start() {
+        do {
+            try httpServer.start(port)
+            waitUntilReady()
+        } catch {
+            fatalError("Failed to start server: \(error)")
+        }
+    }
+
+    func stop() {
+        httpServer.stop()
+    }
+
+    private func waitUntilReady() {
+        var attempt = 0
+        var delay = initialDelay
+
+        while attempt < maxRetries {
+        if isServerReady() {
+            return
+        }
+
+        attempt += 1
+        Thread.sleep(forTimeInterval: delay)
+        delay = min(delay * 2, 1.0) // Cap at 1 second
+        }
+
+        fatalError("Server failed to become ready after \(maxRetries) attempts")
+    }
+
+    private func isServerReady() -> Bool {
+        guard let url = URL(string: "\(baseUrl)/health") else { return false }
+
+        let semaphore = DispatchSemaphore(value: 0)
+        var isReady = false
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        if let httpResponse = response as? HTTPURLResponse,
+           httpResponse.statusCode == 200,
+           error == nil {
+            isReady = true
+        }
+        semaphore.signal()
+        }
+
+        task.resume()
+        _ = semaphore.wait(timeout: .now() + 0.5) // 500ms timeout per check
+        
+        return isReady
+    }
+
+    private func toJSON(_ content: String) throws -> Any? {
+        let data = content.data(using: .utf8)
+        return try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+    }
+
+    
     func get200(path: String, jsonResponse: String) -> ServiceStubs {
         let jsonData = try! toJSON(jsonResponse)
         httpServer.GET[path] = { _ in .ok(.json(jsonData as AnyObject)) }
@@ -131,14 +196,6 @@ struct ServiceStubs {
         return post400(path: sessionsServicePaymentsCvcSessionPath, error: error)
     }
 
-    func start() {
-        try! httpServer.start(port)
-    }
-
-    func stop() {
-        httpServer.stop()
-    }
-
     private func successfulDiscoveryResponse() -> String {
         return """
             {
@@ -188,9 +245,4 @@ struct ServiceStubs {
         return String(data: try! JSONEncoder().encode(error), encoding: .utf8)!
     }
 
-    private func toJSON(_ content: String) throws -> Any? {
-        let data = content.data(using: .utf8)
-
-        return try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-    }
 }
