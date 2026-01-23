@@ -41,29 +41,45 @@ struct TestUtils {
         textField.typeText(text)
         
         textField.press(forDuration: 1.0)
-        if XCUIApplication().menuItems["Select All"].exists {
-            XCUIApplication().menuItems["Select All"].tap()
-            XCUIApplication().menuItems["Copy"].tap()
+        
+        if !isRunningOnSimulator() {
+            wait(seconds: 1.0)
         }
         
-        guard !isRunningOnSimulator() else {
+        if let selectAllButton = findUiElementByLabel("Select All") {
+            selectAllButton.tap()
+        } else {
+            XCTFail("Could not select all")
+        }
+        
+        if let copyButton = findUiElementByLabel("Copy") {
+            copyButton.tap()
+        } else {
+            XCTFail("Could not select copy")
+        }
+        
+        if isRunningOnSimulator() {
             UIPasteboard.general.string = text
-            return
+        } else {
+            wait(seconds: 1.0)
         }
         
-        textField.press(forDuration: 1.0)
-        textField.typeText(XCUIKeyboardKey.delete.rawValue)
+        let currentText = textField.value as? String ?? ""
+        deleteAllCharactersBackwards(textField: textField, count: currentText.count)
         
         textField.tap()
         textField.press(forDuration: 1.0)
+        
+        if !isRunningOnSimulator() {
+            wait(seconds: 1.0)
+        }
 
-        let pasteMenuItem = XCUIApplication().menuItems["Paste"]
-        guard pasteMenuItem.waitForExistence(timeout: 2.0) else {
+        if let pasteMenuItem = findUiElementByLabel("Paste") {
+            pasteMenuItem.tap()
+        } else {
             XCTFail("Failed to paste from the pasteboard")
-            return
         }
         
-        pasteMenuItem.tap()
         wait(seconds: 0.2)
     }
 
@@ -99,5 +115,48 @@ struct TestUtils {
         }
 
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
+    }
+    
+    static func findUiElementByLabel(_ label: String) -> XCUIElement? {
+        let app = XCUIApplication()
+        
+        let menuItem = app.menuItems[label]
+        if menuItem.waitForExistence(timeout: 2.0) {
+            return menuItem
+        }
+        
+        let button = app.buttons[label]
+        if button.waitForExistence(timeout: 1.0) {
+            return button
+        }
+        
+        let staticText = app.staticTexts[label]
+        if staticText.waitForExistence(timeout: 1.0) {
+            return staticText
+        }
+        
+        let otherElements = app.otherElements[label]
+        if otherElements.waitForExistence(timeout: 1.0) {
+            return otherElements
+        }
+        
+        return nil
+    }
+    
+    static func deleteAllCharactersBackwards(textField: XCUIElement, count: Int) {
+        let batchSize = 20
+        let fullBatches = count / batchSize
+        let remainder = count % batchSize
+        
+        for _ in 0..<fullBatches {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: batchSize)
+            textField.typeText(deleteString)
+            wait(seconds: 0.1)
+        }
+        
+        if remainder > 0 {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: remainder)
+            textField.typeText(deleteString)
+        }
     }
 }
