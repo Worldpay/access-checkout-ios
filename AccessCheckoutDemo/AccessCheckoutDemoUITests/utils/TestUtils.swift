@@ -46,13 +46,13 @@ struct TestUtils {
             wait(seconds: 1.0)
         }
         
-        if let selectAllButton = findButtonByLabel("Select All") {
+        if let selectAllButton = findUiElementByLabel("Select All") {
             selectAllButton.tap()
         } else {
             XCTFail("Could not select all")
         }
         
-        if let copyButton = findButtonByLabel("Copy") {
+        if let copyButton = findUiElementByLabel("Copy") {
             copyButton.tap()
         } else {
             XCTFail("Could not select copy")
@@ -60,9 +60,7 @@ struct TestUtils {
         
         if isRunningOnSimulator() {
             UIPasteboard.general.string = text
-        }
-        
-        if !isRunningOnSimulator() {
+        } else {
             wait(seconds: 1.0)
         }
         
@@ -76,7 +74,7 @@ struct TestUtils {
             wait(seconds: 1.0)
         }
 
-        if let pasteMenuItem = findButtonByLabel("Paste") {
+        if let pasteMenuItem = findUiElementByLabel("Paste") {
             pasteMenuItem.tap()
         } else {
             XCTFail("Failed to paste from the pasteboard")
@@ -119,7 +117,7 @@ struct TestUtils {
         XCTAssertNotEqual(brandAsLocalizedString, cardBrandImage.label)
     }
     
-    static func findButtonByLabel(_ label: String) -> XCUIElement? {
+    static func findUiElementByLabel(_ label: String) -> XCUIElement? {
         let app = XCUIApplication()
         
         let menuItem = app.menuItems[label]
