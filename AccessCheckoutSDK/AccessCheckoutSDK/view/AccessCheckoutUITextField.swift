@@ -152,15 +152,6 @@ public final class AccessCheckoutUITextField: UIView {
         NSLayoutConstraint.activate(self.uiTextFieldConstraints)
     }
 
-    override public var intrinsicContentSize: CGSize {
-        let width = self.uiTextField.intrinsicContentSize.height
-        let height =
-            self.uiTextField.intrinsicContentSize.height
-            + 2 * (self.borderWidth + AccessCheckoutUITextField.defaults.verticalPadding)
-
-        return CGSize(width: width, height: height)
-    }
-
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         self.setStyles()
