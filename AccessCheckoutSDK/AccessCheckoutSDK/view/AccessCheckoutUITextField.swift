@@ -24,6 +24,8 @@ public final class AccessCheckoutUITextField: UIView {
     private var uiTextFieldConstraints: [NSLayoutConstraint] = []
 
     private var _horizontalPadding: CGFloat = defaults.horizontalPadding
+    private var _verticalPadding: CGFloat = defaults.verticalPadding
+
     // Event Support
     internal var externalOnFocusChangedListener: ((AccessCheckoutUITextField, Bool) -> Void)?
 
@@ -100,7 +102,9 @@ public final class AccessCheckoutUITextField: UIView {
     internal init(_ uiTextField: UITextField) {
         super.init(frame: CGRect())
         self.uiTextField = uiTextField
+        self.addSubview(uiTextField)
         self.setStyles()
+        self.setLayout()
     }
 
     internal init() {
@@ -231,7 +235,7 @@ public final class AccessCheckoutUITextField: UIView {
     /* Padding properties */
 
     /**
-     A value that represents the padding between the border and the text
+     A value that represents the horizontal padding between the border and the text
      */
     @IBInspectable
     public var horizontalPadding: CGFloat {
@@ -241,6 +245,20 @@ public final class AccessCheckoutUITextField: UIView {
         }
         get {
             self._horizontalPadding
+        }
+    }
+
+    /**
+     A value that represents the vertical padding between the border and the text
+     */
+    @IBInspectable
+    public var verticalPadding: CGFloat {
+        set {
+            self._verticalPadding = newValue
+            self.setLayout()
+        }
+        get {
+            self._verticalPadding
         }
     }
 
@@ -259,7 +277,10 @@ public final class AccessCheckoutUITextField: UIView {
      */
     @IBInspectable
     public var borderWidth: CGFloat = defaults.borderWidth {
-        didSet { self.layer.borderWidth = self.borderWidth }
+        didSet {
+            self.layer.borderWidth = self.borderWidth
+            self.setLayout()
+        }
     }
 
     /**
@@ -293,7 +314,7 @@ public final class AccessCheckoutUITextField: UIView {
     }
 
     /**
-     The alignement of the text displayed in this component
+     The alignment of the text displayed in this component
      */
     @IBInspectable
     public var textAlignment: NSTextAlignment = defaults.textAlignment {
