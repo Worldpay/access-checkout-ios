@@ -133,19 +133,19 @@ public final class AccessCheckoutUITextField: UIView {
         self.uiTextFieldConstraints = [
             self.uiTextField.topAnchor.constraint(
                 equalTo: topAnchor,
-                constant: AccessCheckoutUITextField.defaults.verticalPadding
+                constant: self.verticalPadding + self.borderWidth
             ),
             self.uiTextField.bottomAnchor.constraint(
                 equalTo: bottomAnchor,
-                constant: -AccessCheckoutUITextField.defaults.verticalPadding
+                constant: -self.verticalPadding - self.borderWidth
             ),
             self.uiTextField.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
-                constant: self.horizontalPadding
+                constant: self.horizontalPadding + self.borderWidth
             ),
             self.uiTextField.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
-                constant: -self.horizontalPadding
+                constant: -self.horizontalPadding - self.borderWidth
             ),
         ]
 
