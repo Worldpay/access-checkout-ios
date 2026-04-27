@@ -50,10 +50,10 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         assertConstraints(
             textField,
-            top: AccessCheckoutUITextField.defaults.verticalPadding,
-            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+            top: AccessCheckoutUITextField.defaults.verticalPadding + AccessCheckoutUITextField.defaults.borderWidth,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding - AccessCheckoutUITextField.defaults.borderWidth,
+            leading: AccessCheckoutUITextField.defaults.horizontalPadding + AccessCheckoutUITextField.defaults.borderWidth,
+            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding - AccessCheckoutUITextField.defaults.borderWidth)
     }
 
     func testDefaultConstructorPositionsInternalTextFieldUsingConstraints() {
@@ -63,10 +63,10 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
 
         assertConstraints(
             textField,
-            top: AccessCheckoutUITextField.defaults.verticalPadding,
-            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+            top: AccessCheckoutUITextField.defaults.verticalPadding + AccessCheckoutUITextField.defaults.borderWidth,
+            bottom: -AccessCheckoutUITextField.defaults.verticalPadding - AccessCheckoutUITextField.defaults.borderWidth,
+            leading: AccessCheckoutUITextField.defaults.horizontalPadding + AccessCheckoutUITextField.defaults.borderWidth,
+            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding - AccessCheckoutUITextField.defaults.borderWidth)
     }
 
     // MARK: default styles values
@@ -204,25 +204,115 @@ class AccessCheckoutUITextFieldTests: XCTestCase {
     // MARK: Padding properties tests
 
     // horizontalPadding
-    func testHorizontalPaddingModifiesTheLayoutAccordingly() {
+    func testHorizontalPaddingModifiesLayoutAccordingly() {
+        let borderWidth = AccessCheckoutUITextField.defaults.borderWidth
+        var horizontalPadding = AccessCheckoutUITextField.defaults.horizontalPadding
+        let verticalPadding = AccessCheckoutUITextField.defaults.verticalPadding
+
         let textField = createTextField()
 
-        // Asserts padding is default padding to start with
+        // Asserts position corresponds to default padding + default border width
         assertConstraints(
             textField,
-            top: AccessCheckoutUITextField.defaults.verticalPadding,
-            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-            leading: AccessCheckoutUITextField.defaults.horizontalPadding,
-            trailing: -AccessCheckoutUITextField.defaults.horizontalPadding)
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
 
-        textField.horizontalPadding = 20
+        horizontalPadding = 20
+        textField.horizontalPadding = horizontalPadding
 
+        // Asserts position corresponds to custom padding + default border width
         assertConstraints(
             textField,
-            top: AccessCheckoutUITextField.defaults.verticalPadding,
-            bottom: -AccessCheckoutUITextField.defaults.verticalPadding,
-            leading: 20,
-            trailing: -20)
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+    }
+    
+    func testHorizontalPaddingModifiesLayoutAccordinglyWhenBorderWidthSet() {
+        let borderWidth = 4.0
+        var horizontalPadding = AccessCheckoutUITextField.defaults.horizontalPadding
+        let verticalPadding = AccessCheckoutUITextField.defaults.verticalPadding
+
+        let textField = createTextField()
+        textField.borderWidth = borderWidth
+        
+        // Asserts position corresponds to default padding + custom border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+
+        horizontalPadding = 20
+        textField.horizontalPadding = horizontalPadding
+
+        // Asserts position corresponds to custom padding + custom border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+    }
+
+    // verticalPadding
+    func testVerticalPaddingModifiesLayoutAccordingly() {
+        let borderWidth = AccessCheckoutUITextField.defaults.borderWidth
+        let horizontalPadding = AccessCheckoutUITextField.defaults.horizontalPadding
+        var verticalPadding = AccessCheckoutUITextField.defaults.verticalPadding
+
+        let textField = createTextField()
+
+        // Asserts position corresponds to default padding + default border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+
+        verticalPadding = 20
+        textField.verticalPadding = verticalPadding
+
+        // Asserts position corresponds to custom padding + default border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+    }
+    
+    func testVerticalPaddingModifiesLayoutAccordinglyWhenBorderWidthSet() {
+        let borderWidth = 4.0
+        let horizontalPadding = AccessCheckoutUITextField.defaults.horizontalPadding
+        var verticalPadding = AccessCheckoutUITextField.defaults.verticalPadding
+
+        let textField = createTextField()
+        textField.borderWidth = borderWidth
+
+        // Asserts position corresponds to default padding + custom border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
+
+        verticalPadding = 20
+        textField.verticalPadding = verticalPadding
+
+        // Asserts position corresponds to custom padding + custom border width
+        assertConstraints(
+            textField,
+            top: verticalPadding + borderWidth,
+            bottom: -verticalPadding - borderWidth,
+            leading: horizontalPadding + borderWidth,
+            trailing: -horizontalPadding - borderWidth)
     }
 
     // MARK: Border properties tests
