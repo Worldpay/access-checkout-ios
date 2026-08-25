@@ -41,6 +41,8 @@ public class AccessCheckoutClientBuilder {
         guard let accessBaseUrl = accessBaseUrl else {
             throw AccessCheckoutIllegalArgumentError.missingAccessBaseUrl()
         }
+        
+        try sanitise(accessBaseUrl)
 
         let cardDetailsForSessionTypeValidator = CardDetailsForSessionTypeValidator()
 

@@ -11,6 +11,8 @@
 		1BCBFECC22B8F40300A65FAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFEC822B8F40200A65FAA /* README.md */; };
 		1BCBFECE22B8F40300A65FAA /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */; };
 		1BCBFECF22B8F40300A65FAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1BCBFECB22B8F40300A65FAA /* LICENSE */; };
+		4687FF52303DD8280092ED5C /* BaseUrlSanitiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4687FF51303DD81F0092ED5C /* BaseUrlSanitiser.swift */; };
+		4687FF54303DD93B0092ED5C /* BaseUrlSanitiserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4687FF53303DD93B0092ED5C /* BaseUrlSanitiserTests.swift */; };
 		5110467D2E831295002AA11C /* UrlToDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5110467C2E83128C002AA11C /* UrlToDiscover.swift */; };
 		5115F54F2E327B0900BC3FDB /* CardBinURLRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */; };
 		511B6C4A2E40EC28005E1457 /* CardBinCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511B6C462E40EC28005E1457 /* CardBinCacheManager.swift */; };
@@ -264,6 +266,8 @@
 		1BCBFEC822B8F40200A65FAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1BCBFECA22B8F40200A65FAA /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		1BCBFECB22B8F40300A65FAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4687FF51303DD81F0092ED5C /* BaseUrlSanitiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUrlSanitiser.swift; sourceTree = "<group>"; };
+		4687FF53303DD93B0092ED5C /* BaseUrlSanitiserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUrlSanitiserTests.swift; sourceTree = "<group>"; };
 		5110467C2E83128C002AA11C /* UrlToDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlToDiscover.swift; sourceTree = "<group>"; };
 		5115F54E2E327B0500BC3FDB /* CardBinURLRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinURLRequestFactoryTests.swift; sourceTree = "<group>"; };
 		511B6C452E40EC28005E1457 /* CardBinApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBinApiClient.swift; sourceTree = "<group>"; };
@@ -968,6 +972,7 @@
 		E72C3F24248B05C900284A31 /* session */ = {
 			isa = PBXGroup;
 			children = (
+				4687FF51303DD81F0092ED5C /* BaseUrlSanitiser.swift */,
 				E72A99E32459E385004FEAD5 /* CardDetails.swift */,
 				E7D19F612462F5E2001EA13A /* CardDetailsForSessionTypeValidator.swift */,
 				E7FC4472245B1FD100CD3675 /* SessionType.swift */,
@@ -978,6 +983,7 @@
 		E72C3F25248B060200284A31 /* session */ = {
 			isa = PBXGroup;
 			children = (
+				4687FF53303DD93B0092ED5C /* BaseUrlSanitiserTests.swift */,
 				E7FC447B245B280700CD3675 /* AccessCheckoutClientBuilderTests.swift */,
 				E77B8BAC245C5A8D00564C19 /* AccessCheckoutClientTests.swift */,
 				E72A99E72459E3A8004FEAD5 /* CardDetailsBuilderTests.swift */,
@@ -1666,6 +1672,7 @@
 				E72A99E42459E385004FEAD5 /* CardDetails.swift in Sources */,
 				D7D6D5E8248116EC00D57D7A /* CardValidationStateHandler.swift in Sources */,
 				E7FC4478245B24A400CD3675 /* AccessCheckoutClient.swift in Sources */,
+				4687FF52303DD8280092ED5C /* BaseUrlSanitiser.swift in Sources */,
 				E77B8B9F245C2C1A00564C19 /* RetrieveCvcSessionHandler.swift in Sources */,
 				62AB4D8E2E9655CC00582220 /* CardValidationConfig.swift in Sources */,
 				D7D6D5F124814F5500D57D7A /* PanValidationStateHandler.swift in Sources */,
@@ -1813,6 +1820,7 @@
 				C22CF9772E3B8B3000D77EBA /* MockApiResponseLinkLookup.swift in Sources */,
 				E77B8BA7245C51CA00564C19 /* PaymentsCvcRetrieveSessionHandlerMock.swift in Sources */,
 				E7D19F6A24630EFB001EA13A /* PaymentsCvcSessionURLRequestFactoryMock.swift in Sources */,
+				4687FF54303DD93B0092ED5C /* BaseUrlSanitiserTests.swift in Sources */,
 				51F7EEEC25C88E41002FE45F /* AcceptanceTestSuite.swift in Sources */,
 				E719B09C24647DA80037DED4 /* CardSessionURLRequestFactoryTests.swift in Sources */,
 				5125FFC52DD5FCC700EF7380 /* MockCvcValidationFlow.swift in Sources */,
