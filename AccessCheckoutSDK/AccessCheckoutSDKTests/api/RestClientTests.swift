@@ -7,13 +7,20 @@ class RestClientTests: XCTestCase {
     private var serviceStubs:ServiceStubs!
     private var urlSession:URLSession!
     private var restClient:RestClient<DummyResponse>!
-    private var expectationTimeout:TimeInterval = 5
+    private var expectationTimeout:TimeInterval = 30
 
     override func setUp() {
         serviceStubs = ServiceStubs()
-        
-        let urlSessionConfig = URLSessionConfiguration.default
-        urlSessionConfig.timeoutIntervalForRequest = 4.5
+
+        let urlSessionConfig = URLSessionConfiguration.ephemeral
+        // Disable system proxy / PAC auto-detection. Against `URLSessionConfiguration.default`
+        // the first request in the process stalls for a couple of seconds while the OS
+        // resolves proxy settings, which on a busy CI machine pushed the request past the
+        // (previously 4.5s) timeout and produced intermittent "The request timed out" failures.
+        urlSessionConfig.connectionProxyDictionary = [:]
+        // Generous timeouts so loaded CI machines never trip the request timeout. These tests
+        // hit a local in-process stub, so a real hang is caught by the XCTest expectation.
+        urlSessionConfig.timeoutIntervalForRequest = 30
         urlSession = URLSession(configuration: urlSessionConfig)
         restClient = RestClient<DummyResponse>()
     }

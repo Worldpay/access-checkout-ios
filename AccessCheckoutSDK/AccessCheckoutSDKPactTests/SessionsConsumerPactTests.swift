@@ -16,7 +16,15 @@ class SessionsConsumerPactTests: XCTestCase {
 
     let pactServer = MockService(
         provider: "sessions",
-        consumer: "access-checkout-iOS-sdk")
+        consumer: "access-checkout-iOS-sdk",
+        // Target the Pact mock service over IPv4 (`127.0.0.1`) rather than the default
+        // `localhost`. On newer iOS simulators (Xcode 26/27) `localhost` resolves to
+        // IPv6 `::1` first, while `pact-mock-service` listens on IPv4, so the SDK client
+        // (which connects to this base URL via the discovered endpoints) failed with
+        // "Could not connect to the server" and the mock saw no interactions. `baseUrl`
+        // is also embedded in the stubbed discovery responses, so pinning it to IPv4
+        // fixes both the verification calls and the session requests under test.
+        pactVerificationService: PactVerificationService(url: "http://127.0.0.1", port: 1234))
 
     func testDiscoveryOfSessionsEndPoints() {
         ServiceDiscoveryProvider.clearCache()
@@ -501,7 +509,7 @@ class SessionsConsumerPactTests: XCTestCase {
     private func sessionsRootJsonResponse(baseUrl: String) -> String {
         return """
             {
-                "_links": { 
+                "_links": {
                     "sessions:card": {
                         "href": "\(baseUrl)/sessions/card"
                     },

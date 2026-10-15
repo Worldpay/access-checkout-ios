@@ -4,20 +4,35 @@ import Swifter
 
 struct ServiceStubs {
     init() {
-        self.port = UInt16.random(in: 7000..<8000)
-        self.httpServer = .init()
-        self.baseUrl = "http://localhost:\(port)"
+        let server = HttpServer()
+        // Bind to an OS-assigned free port (port 0) instead of a random port in a
+        // fixed range. Random ports could collide with another concurrently running
+        // test (or a stale server) in CI, which caused `try! httpServer.start(port)`
+        // to crash with a signal trap, or routed requests to a dead server causing
+        // the test expectation to time out. Letting the OS pick a guaranteed-free
+        // port removes both failure modes.
+        //
+        // Force IPv4 and address the server via `127.0.0.1` (rather than `localhost`).
+        // `localhost` resolves to both `::1` and `127.0.0.1`, so URLSession's
+        // Happy-Eyeballs logic races the two stacks. Against the single-stack Swifter
+        // server this adds seconds of connection latency per request and, under load
+        // (e.g. the full CI suite), pushes requests past the client timeout causing
+        // intermittent "The request timed out" failures. Pinning both ends to IPv4
+        // removes that non-determinism.
+        try! server.start(0, forceIPv4: true)
+        self.httpServer = server
+        self.baseUrl = "http://127.0.0.1:\(ServiceStubs.boundPort(of: server))"
     }
 
     init(port: UInt16) {
-        self.port = port
-        self.httpServer = .init()
-        self.baseUrl = "http://localhost:\(port)"
+        let server = HttpServer()
+        try! server.start(port, forceIPv4: true)
+        self.httpServer = server
+        self.baseUrl = "http://127.0.0.1:\(port)"
     }
 
     let baseUrl: String
 
-    private let port: UInt16
     private let httpServer: HttpServer
 
     private let sessionsServicePath = "/sessions"
@@ -132,11 +147,19 @@ struct ServiceStubs {
     }
 
     func start() {
-        try! httpServer.start(port)
+        // The HTTP server is already started on a free port during initialisation.
+        // Retained for backwards compatibility with existing test call sites that
+        // terminate the stub-configuration chain with `.start()`. Route handlers can
+        // be registered after the server has started as Swifter resolves them per
+        // request.
     }
 
     func stop() {
         httpServer.stop()
+    }
+
+    private static func boundPort(of server: HttpServer) -> Int {
+        return (try? server.port()) ?? 0
     }
 
     private func successfulDiscoveryResponse() -> String {
