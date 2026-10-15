@@ -33,7 +33,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "${SRCROOT}/pact/bin/pact-mock-service start --pact-specification-version 3.0.0 --log &quot;${SRCROOT}/pacts/logs/pact.log&quot; --pact-dir &quot;${SRCROOT}/pacts&quot; -p 1234&#10;">
+               scriptText = "${SRCROOT}/pact/bin/pact-mock-service start --pact-specification-version 3.0.0 --host 127.0.0.1 --log &quot;${SRCROOT}/pacts/logs/pact.log&quot; --pact-dir &quot;${SRCROOT}/pacts&quot; -p 1234&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
