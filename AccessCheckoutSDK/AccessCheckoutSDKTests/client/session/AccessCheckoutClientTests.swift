@@ -3,6 +3,8 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class AccessCheckoutClientTests: XCTestCase {
+    private let expectationTimeout: TimeInterval = 10
+
     private var serviceStubs: ServiceStubs?
 
     override func setUp() {
@@ -37,7 +39,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testGeneratesAPaymentsCvcSession() throws {
@@ -62,7 +64,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testGeneratesACardSessionAndACvcSession() throws {
@@ -90,7 +92,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func
@@ -119,7 +121,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testSendsBackAnErrorWhenAttemptingToRetrieve2SessionsAndBothServicesRespondWithAnError()
@@ -147,7 +149,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func
@@ -178,7 +180,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testCanSendBackAnErrorWithValidationErrorDetails() throws {
@@ -221,7 +223,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testDoesNotGenerateAnySessions_whenCardDetailsAreIncompleteForCardSession() throws {
@@ -276,7 +278,7 @@ class AccessCheckoutClientTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     private func validCardDetails() -> CardDetails {

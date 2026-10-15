@@ -4,20 +4,27 @@ import Swifter
 
 struct ServiceStubs {
     init() {
-        self.port = UInt16.random(in: 7000..<8000)
-        self.httpServer = .init()
-        self.baseUrl = "http://localhost:\(port)"
+        let server = HttpServer()
+        // Bind to an OS-assigned free port (port 0) instead of a random port in a
+        // fixed range. Random ports could collide with another concurrently running
+        // test (or a stale server) in CI, which caused `try! httpServer.start(port)`
+        // to crash with a signal trap, or routed requests to a dead server causing
+        // the test expectation to time out. Letting the OS pick a guaranteed-free
+        // port removes both failure modes.
+        try! server.start(0)
+        self.httpServer = server
+        self.baseUrl = "http://localhost:\(ServiceStubs.boundPort(of: server))"
     }
 
     init(port: UInt16) {
-        self.port = port
-        self.httpServer = .init()
+        let server = HttpServer()
+        try! server.start(port)
+        self.httpServer = server
         self.baseUrl = "http://localhost:\(port)"
     }
 
     let baseUrl: String
 
-    private let port: UInt16
     private let httpServer: HttpServer
 
     private let sessionsServicePath = "/sessions"
@@ -132,11 +139,19 @@ struct ServiceStubs {
     }
 
     func start() {
-        try! httpServer.start(port)
+        // The HTTP server is already started on a free port during initialisation.
+        // Retained for backwards compatibility with existing test call sites that
+        // terminate the stub-configuration chain with `.start()`. Route handlers can
+        // be registered after the server has started as Swifter resolves them per
+        // request.
     }
 
     func stop() {
         httpServer.stop()
+    }
+
+    private static func boundPort(of server: HttpServer) -> Int {
+        return (try? server.port()) ?? 0
     }
 
     private func successfulDiscoveryResponse() -> String {
