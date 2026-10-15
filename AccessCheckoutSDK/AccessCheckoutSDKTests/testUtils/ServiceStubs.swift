@@ -11,16 +11,24 @@ struct ServiceStubs {
         // to crash with a signal trap, or routed requests to a dead server causing
         // the test expectation to time out. Letting the OS pick a guaranteed-free
         // port removes both failure modes.
-        try! server.start(0)
+        //
+        // Force IPv4 and address the server via `127.0.0.1` (rather than `localhost`).
+        // `localhost` resolves to both `::1` and `127.0.0.1`, so URLSession's
+        // Happy-Eyeballs logic races the two stacks. Against the single-stack Swifter
+        // server this adds seconds of connection latency per request and, under load
+        // (e.g. the full CI suite), pushes requests past the client timeout causing
+        // intermittent "The request timed out" failures. Pinning both ends to IPv4
+        // removes that non-determinism.
+        try! server.start(0, forceIPv4: true)
         self.httpServer = server
-        self.baseUrl = "http://localhost:\(ServiceStubs.boundPort(of: server))"
+        self.baseUrl = "http://127.0.0.1:\(ServiceStubs.boundPort(of: server))"
     }
 
     init(port: UInt16) {
         let server = HttpServer()
-        try! server.start(port)
+        try! server.start(port, forceIPv4: true)
         self.httpServer = server
-        self.baseUrl = "http://localhost:\(port)"
+        self.baseUrl = "http://127.0.0.1:\(port)"
     }
 
     let baseUrl: String
