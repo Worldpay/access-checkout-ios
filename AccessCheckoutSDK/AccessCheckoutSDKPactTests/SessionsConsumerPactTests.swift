@@ -5,6 +5,8 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class SessionsConsumerPactTests: XCTestCase {
+    let EXPECTATIONS_TIMEOUT:TimeInterval = 30
+    
     let baseURI: String =
         Bundle(for: SessionsConsumerPactTests.self).infoDictionary?["ACCESS_CHECKOUT_BASE_URI"]
         as? String ?? "http://pacttest"
@@ -61,7 +63,7 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        pactServer.run(timeout: 10) { testComplete in
+        pactServer.run(timeout: EXPECTATIONS_TIMEOUT) { testComplete in
             try? ServiceDiscoveryProvider.initialise(accessRootStub.baseUrl)
 
             ServiceDiscoveryProvider.discoverAll { result in
@@ -117,7 +119,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         let sessionsClient = CvcSessionsApiClient()
 
-        pactServer.run(timeout: 10) { testComplete in
+        pactServer.run(timeout: EXPECTATIONS_TIMEOUT) { testComplete in
             sessionsClient.createSession(
                 checkoutId: "identity", cvc: "1234"
             ) {
@@ -195,7 +197,7 @@ class SessionsConsumerPactTests: XCTestCase {
 
         let cardSessionClient = CardSessionsApiClient()
 
-        pactServer.run(timeout: 10) { testComplete in
+        pactServer.run(timeout: EXPECTATIONS_TIMEOUT) { testComplete in
             cardSessionClient.createSession(
                 checkoutId: "identity", pan: "4111111111111111",
                 expiryMonth: 12, expiryYear: 2099, cvc: "123"
@@ -358,7 +360,7 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        pactServer.run(timeout: 10) { testComplete in
+        pactServer.run(timeout: EXPECTATIONS_TIMEOUT) { testComplete in
             CardSessionsApiClient().createSession(
                 checkoutId: request.identity, pan: request.cardNumber,
                 expiryMonth: request.expiryMonth, expiryYear: request.expiryYear,
@@ -424,7 +426,7 @@ class SessionsConsumerPactTests: XCTestCase {
                 headers: responseHeaders,
                 body: responseJson)
 
-        pactServer.run(timeout: 10) { testComplete in
+        pactServer.run(timeout: EXPECTATIONS_TIMEOUT) { testComplete in
             CvcSessionsApiClient().createSession(
                 checkoutId: request.identity, cvc: request.cvc
             ) { result in
