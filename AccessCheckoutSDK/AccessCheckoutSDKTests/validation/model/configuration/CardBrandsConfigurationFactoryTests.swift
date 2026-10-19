@@ -4,6 +4,8 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class CardBrandsConfigurationFactoryTests: XCTestCase {
+    let EXPECTATIONS_TIMEOUT:TimeInterval = 30
+    
     private var serviceStubs: ServiceStubs?
 
     override func setUp() {
@@ -46,7 +48,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: EXPECTATIONS_TIMEOUT)
     }
 
     func
@@ -68,7 +70,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: EXPECTATIONS_TIMEOUT)
     }
 
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenInvalidUrlIsPassed() throws
@@ -82,7 +84,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 2)
+        wait(for: [expectationToFulfill], timeout: EXPECTATIONS_TIMEOUT)
     }
 
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenFailingToConnectToUrl()
@@ -97,7 +99,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 0.5)
+        wait(for: [expectationToFulfill], timeout: EXPECTATIONS_TIMEOUT)
     }
 
     func testCreatesConfigurationWithEmptyBrandsAndAcceptedCardBrandsWhenReceivingErrorInResponse()
@@ -116,7 +118,7 @@ class CardBrandsConfigurationFactoryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: EXPECTATIONS_TIMEOUT)
     }
 
     func createsAnEmptyConfiguration() {

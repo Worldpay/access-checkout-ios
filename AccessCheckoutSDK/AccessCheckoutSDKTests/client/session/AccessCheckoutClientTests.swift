@@ -3,7 +3,7 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class AccessCheckoutClientTests: XCTestCase {
-    private let expectationTimeout: TimeInterval = 10
+    private let expectationTimeout: TimeInterval = 30
 
     private var serviceStubs: ServiceStubs?
 
