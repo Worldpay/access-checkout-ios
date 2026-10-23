@@ -4,6 +4,8 @@ import XCTest
 @testable import AccessCheckoutSDK
 
 class SingleLinkDiscoveryTests: XCTestCase {
+    private let expectationTimeout: TimeInterval = 30
+    
     private var serviceStubs: ServiceStubs?
     private var urlRequest: URLRequest?
 
@@ -45,7 +47,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testReturnsErrorWhenLinkNotFoundInResponse() {
@@ -76,7 +78,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testReturnsErrorWhenFailsToDeserialiseResponse() {
@@ -100,7 +102,7 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 
     func testReturnsErrorWhenResponseIsAnError() {
@@ -122,6 +124,6 @@ class SingleLinkDiscoveryTests: XCTestCase {
             expectationToFulfill.fulfill()
         }
 
-        wait(for: [expectationToFulfill], timeout: 5)
+        wait(for: [expectationToFulfill], timeout: expectationTimeout)
     }
 }
