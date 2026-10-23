@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version in the format vX.Y.Z (semantic version)"
+        description: "Creates tag and release where version us in format vX.Y.Z. Requires approval from one of the repo's maintainers"
         required: true
         type: string
 
@@ -18,8 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate version format
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION="${{ github.event.inputs.version }}"
           echo "Validating version: $VERSION"
           if [[ ! "$VERSION" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
             echo "::error::Invalid version '$VERSION'. Expected format vX.Y.Z where X.Y.Z is a semantic version (e.g. v1.2.3)."
@@ -59,26 +60,29 @@ jobs:
           fetch-depth: 0
 
       - name: Check tag does not already exist
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION="${{ github.event.inputs.version }}"
           if git rev-parse "$VERSION" >/dev/null 2>&1; then
             echo "::error::Tag '$VERSION' already exists."
             exit 1
           fi
 
       - name: Create and push tag
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          ACTOR: ${{ github.actor }}
         run: |
-          VERSION="${{ github.event.inputs.version }}"
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "$ACTOR"
+          git config user.email "${ACTOR}@users.noreply.github.com"
           git tag -a "$VERSION" -m "Release $VERSION"
           git push origin "$VERSION"
 
       - name: Create draft release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION="${{ github.event.inputs.version }}"
           gh release create "$VERSION" \
             --draft \
             --title "$VERSION" \
