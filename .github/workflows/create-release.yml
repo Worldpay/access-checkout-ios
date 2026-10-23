@@ -1,0 +1,85 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version in the format vX.Y.Z (semantic version)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  validate-version:
+    name: Validate version format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate version format
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          echo "Validating version: $VERSION"
+          if [[ ! "$VERSION" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid version '$VERSION'. Expected format vX.Y.Z where X.Y.Z is a semantic version (e.g. v1.2.3)."
+            exit 1
+          fi
+          echo "Version '$VERSION' is valid."
+
+  authorize:
+    name: Require authorization from an approver
+    needs: validate-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          # The person running the action cannot approve their own run.
+          exclude-workflow-initiator-as-approver: true
+          minimum-approvals: 1
+          approvers: ochalet-wp,abaeza-wp,TyreseWp,jmensahWP,SianK-WP,Michael-McFeat
+          issue-title: "Release authorization required for ${{ github.event.inputs.version }}"
+          issue-body: >
+            Approval is required to create the tag and draft release for
+            version ${{ github.event.inputs.version }}, triggered by
+            @${{ github.actor }}.
+            An approver (other than the person who triggered this run) must
+            comment "approved" to continue, or "denied" to cancel.
+
+  create-release:
+    name: Create tag and draft release
+    needs: authorize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check tag does not already exist
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag '$VERSION' already exists."
+            exit 1
+          fi
+
+      - name: Create and push tag
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git tag -a "$VERSION" -m "Release $VERSION"
+          git push origin "$VERSION"
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          gh release create "$VERSION" \
+            --draft \
+            --title "$VERSION" \
+            --generate-notes
