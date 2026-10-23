@@ -13,8 +13,24 @@ permissions:
   issues: write
 
 jobs:
+  authorize-actor:
+    name: Ensure workflow is run by the CI account
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check triggering account
+        env:
+          ACTOR: ${{ github.actor }}
+          REQUIRED_ACTOR: access-checkout-sdk-ci
+        run: |
+          if [[ "$ACTOR" != "$REQUIRED_ACTOR" ]]; then
+            echo "::error::This workflow can only be run by the '$REQUIRED_ACTOR' account (triggered by '$ACTOR')."
+            exit 1
+          fi
+          echo "Workflow triggered by the authorized account '$ACTOR'."
+
   validate-version:
     name: Validate version format
+    needs: authorize-actor
     runs-on: ubuntu-latest
     steps:
       - name: Validate version format
