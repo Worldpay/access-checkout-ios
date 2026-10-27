@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Creates tag and release where version us in format vX.Y.Z. Requires approval from one of the repo's maintainers"
+        description: "Creates tag and release where version is in format vX.Y.Z. Requires approval from one of the repo's maintainers"
         required: true
         type: string
 
