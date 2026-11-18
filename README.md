@@ -13,12 +13,12 @@
 
 Access Checkout iOS is split into two projects:
 
-1. The [AccessCheckoutSDK](/AccessCheckoutSDK), available as a [Cocoapods](https://cocoapods.org) pod
-2. A sample App, [AccessCheckoutDemo](/AccessCheckoutDemo), demonstrating how to integrate the different functionalities available in the SDK
+1. The [AccessCheckoutSDK](./AccessCheckoutSDK)
+2. A sample App, [AccessCheckoutDemo](./AccessCheckoutDemo), demonstrating how to integrate the different functionalities available in the SDK
 
 ## How to integrate the SDK in an iOS app
 
-Refer to the Worldpay Developers documentation to find out how to integrate the SDK in your app - [https://developer.worldpay.com/docs/access-worldpay/checkout/ios](https://developer.worldpay.com/docs/access-worldpay/checkout/ios)
+Refer to the Worldpay Developers documentation to find out how to integrate the SDK in your app - [https://docs.worldpay.com/access/products/checkout/ios](https://docs.worldpay.com/access/products/checkout/ios)
 
 ## Getting started with SDK development
 
@@ -28,28 +28,14 @@ Refer to the Worldpay Developers documentation to find out how to integrate the 
 
 ### Building the SDK project
 
-```
-Note: <access-checkout-ios-root> refers to the folder that contains your copy of the access-checkout-ios repository
-```
-
 1. Install XCode, if not already installed
 
-2. Install cocoapods (for dependency management), if not already installed
-    ```
-    sudo gem install cocoapods
-    ```
-3. Install dependencies for the SDK project (i.e. add pods)
-    ```
-    cd <access-checkout-ios-root>/AccessCheckoutSDK
-    pod install
-    pod update
-    ```
-4. Open project in XCode
-    1. Click on 'File > Open'
-    2. Select the '<access-checkout-ios-root>/AccessCheckoutSDK/' directory and click 'Open'
+2. Open project in XCode
+    1. Click on `File` > `Open`
+    2. Select the `./AccessCheckoutSDK/AccessCheckoutSDK.xcodeproj` directory and click `Open`
     
 5. Build the project
-    1. Click the `Play` button in the top left corner to build the project, the build should be successful.
+    1. Click the `Product` > `Build` menu item to build the project.
     
 ### Running tests
 
@@ -91,25 +77,7 @@ See instructions in the `AccessCheckoutSDK/scripts/mocks-build-phase.sh` script
 
 ### Running the Demo App
 
-1. Install dependencies
-   ```
-   # Install Cocoapods dependencies for the SDK first
-   cd <access-checkout-ios-root>/AccessCheckoutSDK
-   pod install
-   
-   # Install Cocoapods dependencies for the demo app
-   cd <access-checkout-ios-root>/AccessCheckoutDemo
-   pod install
-   ```
-2. Open project `AccessCheckoutDemo` in XCode
-    1. Click on `File > Open`
-    2. Select the `<access-checkout-ios-root>/AccessCheckoutSDKDemo/AccessCheckoutDemo.xcworkspace` directory and click `Open`
-    
-3. In the Project Navigator in XCode, click on the `AccessCheckoutDemo` app
-4. In the app properties, select the `AccessCheckoutDemo` target under `Targets`
-5. Scroll down to the `User-Defined` properties
-6. Replace the `ACCESS_CHECKOUT_ID` value by the `Checkout ID` that was provided to you when you were on-boarded on Access Worldpay
-7. To run the demo app, click the `Play` button in the top-left corner of the screen to open the demo app in the simulated device of your choice.
+See instructions in the [AccessCheckoutDemo](./AccessCheckoutDemo/README.md)
 
 ## Code formatting
 
@@ -123,16 +91,3 @@ Note you may see errors due to swift format trying to format swift files in `Pod
 Do not format code using XCode as the indentation settings (and other formatting configuration) would be different to that defined in the .swift-format file.
 
 **Code must be formatted using this tool before raising a PR.**
-
-## Security
-
-Checkmarx scans are triggered on push via a webhook set up in GitHub, and CRs for new releases must have a valid Checkmarx report attached to the CR
-
-## How-tos
-
-### Bumping the SDK version
-
-Run the command below to bump the SDK version in code. 
-A commit with all relevant changes will be added to the branch currently checked out. 
-
-`./scripts/bump_version.sh -v=[version] -t=[ticket_number]`
