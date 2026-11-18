@@ -28,15 +28,11 @@ Refer to the Worldpay Developers documentation to find out how to integrate the 
 
 ### Building the SDK project
 
-```
-Note: <access-checkout-ios-root> refers to the folder that contains your copy of the access-checkout-ios repository
-```
-
 1. Install XCode, if not already installed
 
 2. Open project in XCode
-    1. Click on 'File > Open'
-    2. Select the '<access-checkout-ios-root>/AccessCheckoutSDK/AccessCheckoutSDK.xcodeproj' directory and click 'Open'
+    1. Click on `File` > `Open`
+    2. Select the `./AccessCheckoutSDK/AccessCheckoutSDK.xcodeproj` directory and click `Open`
     
 5. Build the project
     1. Click the `Product` > `Build` menu item to build the project.
