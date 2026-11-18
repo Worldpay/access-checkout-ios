@@ -4,29 +4,19 @@ A sample App to demonstrate an Access Checkout SDK integration
 
 ## Running the Access Checkout Demo App
 
-1. Install dependencies
-    ```
-    # Install Cocoapods dependencies for the SDK first
-    cd <access-checkout-ios-root>/AccessCheckoutSDK
-    pod install
+1. Open the project in XCode
     
-    # Install Cocoapods dependencies for the demo app
-    cd <access-checkout-ios-root>/AccessCheckoutDemo
-    pod install
-    ```
-2. Open project `AccessCheckoutDemo` in XCode
-    1. Click on `File > Open`
-    2. Select the `<access-checkout-ios-root>/AccessCheckoutSDKDemo/AccessCheckoutDemo.xcworkspace` directory and click `Open`
+Open the `AccessCheckoutDemo.xcodeproj` folder in XCode
 
-3. In the Project Navigator in XCode, click on the `AccessCheckoutDemo` app
-4. In the app properties, select the `AccessCheckoutDemo` target under `Targets`
-5. Scroll down to the `User-Defined` properties
-6. Replace the `ACCESS_CHECKOUT_ID` value by the `Checkout ID` that was provided to you when you were on-boarded on Access Worldpay
-7. To run the demo app, click the `Play` button in the top-left corner of the screen to open the demo app in the simulated device of your choice.
+2. In the Project Navigator in XCode, click on the `AccessCheckoutDemo` app
+3. In the app properties, select the `AccessCheckoutDemo` target under `Targets`
+4. Scroll down to the `User-Defined` properties
+5. Replace the `ACCESS_CHECKOUT_ID` value by the `Checkout ID` that was provided to you when you were on-boarded on Access Worldpay
+6. To run the demo app, click the `Play` button in the top-left corner of the screen to open the demo app in the simulated device of your choice.
 
 ## How to integrate the SDK in an iOS app
 
-Refer to the Worldpay Developers documentation to find out how to integrate the SDK in your app - [https://developer.worldpay.com/docs/access-worldpay/checkout/ios](https://developer.worldpay.com/docs/access-worldpay/checkout/ios)
+Refer to the Worldpay Developers documentation to find out how to integrate the SDK in your app - [https://docs.worldpay.com/access/products/checkout/ios](https://docs.worldpay.com/access/products/checkout/ios)
 
 ## CI related variables
 
